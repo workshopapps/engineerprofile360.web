@@ -1,5 +1,5 @@
 # Contributing to Engineering360
-> Please read the [PRIORITY LIST]() before contributing.
+> Please read the [PRIORITY LIST / App Features](https://github.com/workshopapps/engineerprofile360.web/issues/1) before contributing.
 
 We love your input! We want to make contributing to this project as easy and transparent as possible, whether it's:
 - Reporting an issue
