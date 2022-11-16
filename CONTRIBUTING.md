@@ -90,3 +90,5 @@ How to run locally:
 
 We use GitHub issues to track public bugs. Please ensure your description is
 clear and has sufficient instructions to be able to reproduce the issue. Report a bug by <a href="https://github.com/workshopapps/engineerprofile360.web/issues">opening a new issue</a>; it's that easy!
+
+> **_Note!!** each issues given, must be followed by a specific track to ease the assessibility of other devs. for eg :- Reacreate the login screen page (FE), fix typo in utility class (BE). where FE & BE are Frontend and Backend respectively.
