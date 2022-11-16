@@ -14,7 +14,20 @@ return new class extends Migration
     public function up()
     {
         Schema::create('user_scores', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->string("passed_questions", 255);
+            $table->foreignUuid('org_id')
+                ->references('id')
+                ->on('companies')
+                ->onDelete('cascade');
+            $table->foreignUuid('category_id')
+                ->references('id')
+                ->on('categories')
+                ->onDelete('cascade');
+            $table->foreignUuid('assessments_id')
+                ->references('id')
+                ->on('assessments')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

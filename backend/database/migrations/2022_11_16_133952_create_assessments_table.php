@@ -14,7 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('assessments', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->string("name", 255);
+            $table->string("start_date", 255);
+            $table->string("start_time", 255);
+            $table->foreignUuid('org_id')
+                ->references('id')
+                ->on('companies')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

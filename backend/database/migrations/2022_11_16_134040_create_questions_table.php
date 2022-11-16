@@ -14,7 +14,16 @@ return new class extends Migration
     public function up()
     {
         Schema::create('questions', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->string("question", 255);
+            $table->string("options", 255);
+            $table->string("timeframe", 255);
+            $table->string("correct_answers", 255);
+            $table->boolean("is_multiple_answers");
+            $table->foreignUuid('category_id')
+                ->references('id')
+                ->on('categories')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
