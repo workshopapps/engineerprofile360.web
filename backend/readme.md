@@ -17,14 +17,20 @@
 
 ### Creating a model and migrating the model.
 
-```php
+```shell
 php artisan make:model Users --migrate
 ```
 
 ### Migrate existing model
 
-```php
+```shell
 php artisan migrate
+```
+
+### Clear application cache
+
+```shell
+php artisan cache:clear
 ```
 
 > If an error occur while migrating, cross check the `**.env**`  file and make sure you passed the correct database informations
