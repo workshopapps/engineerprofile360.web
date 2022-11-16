@@ -1,5 +1,5 @@
 {
-    "name": "Engineering360",
+    "name": "laravel/engineering360",
     "type": "project",
     "description": "Taking employee assessments to the moon.",
     "keywords": ["framework", "laravel"],
