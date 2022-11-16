@@ -38,7 +38,7 @@ commit messages are standardized:
 5. After making changes, do `git add .`
 6. Commit your changes with a descriptive commit message : `git commit -m "your commit message"`.
 7. To make sure there are no conflicts, run `git pull upstream dev`.
-8. Push changes to your new branch, run `git push origin feat-csv-parser`.
+8. Push changes to your new branch, run `git push -u origin feat-csv-parser`.
 9. Create a pull request to the `dev` branch.
 10. Ensure to describe your pull request.
 11. > If you've added code that should be tested, add some test examples.
