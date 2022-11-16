@@ -32,8 +32,8 @@ commit messages are standardized:
 ## Contribution Guidelines
 
 1. Clone the repo `git clone https://github.com/workshopapps/engineerprofile360.web.git`.
-2. Open your terminal & set the upstream branch: `git remote add upstream https://github.com/workshopapps/engineerprofile360.web.git`
-3. Pull upstream `git pull upstream dev`
+2. Open your terminal & set the origin branch: `git remote add origin https://github.com/workshopapps/engineerprofile360.web.git`
+3. Pull origin `git pull origin dev`
 4. Create a new branch for the task you were assigned to, eg : `git checkout -b feat-csv-parser`
 5. After making changes, do `git add .`
 6. Commit your changes with a descriptive commit message : `git commit -m "your commit message"`.
