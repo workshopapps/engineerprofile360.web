@@ -34,4 +34,5 @@ class UserScoreController extends Controller
     {
         return UserScoreService::getUserScoreByEmployeeID($request->employee_id);
     }
+    
 }
