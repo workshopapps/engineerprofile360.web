@@ -3,17 +3,18 @@
 namespace App\Services;
 
 use App\Models\UserScore;
+use App\Http\Actions\SendResponseAction;
 use Illuminate\Http\JsonResponse;
 
 class UserScoreService
 {
-    public static function addUserScore($userId): array
+    public static function addUserScore(array $request): JsonResponse
     {
-        return UserScore::where('id', $userId)->where('isVerified', true)->first();
+        return self::sendRequest(UserScore::create($request));
     }
 
-    function sendResponse($error = false, $code = 200, $msg = "", $data = ["" => ""]): JsonResponse
+    public function sendRequest(UserScore $data): JsonResponse
     {
-        return response()->json(["error" => $error, "code" => $code, "message" => $msg, "data" => $data], $code);
+        return SendResponseAction::handle(false, 200, "User score was added successfully!", (array) $data);
     }
 }

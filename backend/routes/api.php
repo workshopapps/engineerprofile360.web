@@ -6,7 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserScoreController;
 
 // util functions
-// require_once "../util/sendResponse.php";
+@include_once("../util/sendResponse.php");
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +29,13 @@ Route::get("/test", function () {
     return sendResponse(false, 200, "Test case pass", null);
 });
 
+//USERSCORE
+Route::prefix("userscore")->group(function () {
+    Route::controller(UserScoreController::class)->group(function () {
+        Route::post('create', 'store');
+    });
+});
+
 Route::prefix("users")->group(function(){
     Route::get('{id}', [UserController::class, 'getUserById']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
@@ -37,11 +44,3 @@ Route::prefix("users")->group(function(){
 Route::prefix("users")->group(function () {
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
 });
-
-//USERSCORE
-Route::prefix("UserScore")->group(function () {
-    Route::controller(UserScoreController::class)->group(function () {
-        Route::post('create', 'store');
-    });
-});
-
