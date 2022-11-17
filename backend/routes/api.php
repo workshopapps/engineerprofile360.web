@@ -1,12 +1,16 @@
 <?php
 
+use App\Http\Controllers\QuestionsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+// use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\UserScoreController;
+use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\AssessmentController;
 
 // util functions
-// require_once "../util/sendResponse.php";
+@include_once("../util/sendResponse.php");
 
 /*
 |--------------------------------------------------------------------------
@@ -29,20 +33,45 @@ Route::get("/test", function () {
     return sendResponse(false, 200, "Test case pass", null);
 });
 
-Route::prefix("users")->group(function(){
-    Route::get('{id}', [UserController::class, 'getUserById']);
-    Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
-});
-
-Route::prefix("users")->group(function () {
-    Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
-});
-
 //USERSCORE
-Route::prefix("UserScorce")->group(function () {
+Route::prefix("userscore")->group(function () {
     Route::controller(UserScoreController::class)->group(function () {
-        Route::get('permissions', 'index');
-        Route::post('new_permission', 'store');
+        Route::post('create', 'store');
+        Route::get('get/{employee_id}', 'getByEmployeeId');
     });
 });
 
+
+//Users operation routes
+
+Route::prefix("users")->group(function () {
+    Route::get('{id}', [UserController::class, 'getUserById']);
+    Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
+    //updateuserinfo
+    Route::put('/{userId}/update', [UserController::class, 'updateruserinfo']);
+});
+
+// assessment routes
+Route::prefix("assessment")->group(function(){
+    Route::delete('/{assId}/delete', [AssessmentController::class, 'deleteAss']);
+
+});
+
+
+Route::prefix("auth")->group(function(){
+    Route::post('register', [AuthenticationController::class, 'register']);
+    Route::post('login', [AuthenticationController::class, 'login']);
+    Route::post('logout', [AuthenticationController::class, 'logout']);
+    Route::post('refresh', [AuthenticationController::class, 'refresh']);
+});
+
+Route::prefix("questions")->group(function(){
+    Route::put('/{questId}/{assId}/update', [QuestionsController::class, 'updateQuestion']);
+
+});
+
+
+
+Route::fallback(function () {
+    return response()->json(['message' => 'no Route matched with those values!'], 404);
+});
