@@ -54,7 +54,6 @@ Route::prefix("v1")->group(function(){
             Route::post('login', [AuthenticationController::class, 'login']);
             Route::post('logout', [AuthenticationController::class, 'logout']);
             Route::post('refresh', [AuthenticationController::class, 'refresh']);
-            Route::post('me', [AuthenticationController::class, 'me']);
 
         });
     });
