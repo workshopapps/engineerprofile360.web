@@ -35,13 +35,14 @@ Route::get("/test", function () {
 Route::prefix("userscore")->group(function () {
     Route::controller(UserScoreController::class)->group(function () {
         Route::post('create', 'store');
+        Route::get('get/{employee_id}', 'getByEmployeeId');
     });
 });
 
 
 //Users operation routes
 
-Route::prefix("users")->group(function(){
+Route::prefix("users")->group(function () {
     Route::get('{id}', [UserController::class, 'getUserById']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
 });
