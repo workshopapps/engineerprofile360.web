@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\QuestionsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -59,3 +60,4 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
 
 });
+Route::put('questions/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
