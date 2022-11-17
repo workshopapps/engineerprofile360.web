@@ -11,7 +11,8 @@ class AssessmentController extends Controller
 {
     
     // @dreywandowski ---- delete an assessment
-    public function deleteAss($ass_id): JsonResponse{
+    public function deleteAss($ass_id): JsonResponse
+    {
         try{
             $assessment = Assessment::findorFail($ass_id); 
 
@@ -25,8 +26,6 @@ class AssessmentController extends Controller
             $assessment->delete(); 
 
             return $this->successResponse(true, 'Assessment deleted successfully', Response::HTTP_OK);
-
-          
         } catch (Exception $e) {
             return $this->errorResponse('Assessment not fetched', $e->getMessage());
         }
