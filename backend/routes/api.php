@@ -28,16 +28,22 @@ use App\Http\Controllers\AssessmentController;
 //     return $request->user();
 // });
 
-// userscore controller route
+// other route functions here
+Route::get("/test", function () {
+    // execute the function
+    return sendResponse(false, 200, "Test case pass", null);
+});
+
+
+//USERSCORE
 Route::prefix("userscore")->group(function () {
-    Route::controller(UserScoreController::class)->group(function () {
-        Route::post('create', 'store');
-        Route::get('get/{employee_id}/{ass_id}', 'getScores');
-    });
+    Route::get('/{employeeId}/{assId}', [UserScoreController::class, 'getScores']);
+    Route::post('/create', [UserScoreController::class, 'store']);
 });
 
 
 //Users operation routes
+
 Route::prefix("users")->group(function () {
     Route::get('{id}', [UserController::class, 'getUserById']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
@@ -49,6 +55,8 @@ Route::prefix("users")->group(function () {
 // assessment routes
 Route::prefix("assessment")->group(function () {
     Route::delete('/{assId}/delete', [AssessmentController::class, 'deleteAss']);
+    Route::post('/{id}', [AssessmentController::class, 'update']);
+
 });
 
 // Test Employee Adding using csv file
@@ -74,6 +82,12 @@ Route::prefix("questions")->group(function () {
     Route::put('/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
 });
 
+Route::put('questions/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
+Route::group(['prefix' => 'auth'], function ($router) {
+    Route::post('login', [AuthenticationController::class, 'login']);
+    Route::post('logout', [AuthenticationController::class, 'logout']);
+    Route::post('refresh', [AuthenticationController::class, 'refresh']);
+});
 
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);
