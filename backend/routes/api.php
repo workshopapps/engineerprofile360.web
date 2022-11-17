@@ -18,7 +18,7 @@ require_once "../util/sendResponse.php";
 |
 */
 
-Route::group( ['prefix' => 'v1'], function() {
+Route::prefix("v1")->group(function(){
     
     // middleware instance here
     Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -31,7 +31,7 @@ Route::group( ['prefix' => 'v1'], function() {
         return sendResponse(false, 200, "Test case pass", null); 
     });
 
-    Route::group(['prefix' => 'users'], function()  {
+    Route::prefix("users")->group(function(){
         Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
     });
 });
