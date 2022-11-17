@@ -10,9 +10,9 @@ class UserScoreController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        // $this->middleware('auth:api');
     }
-    
+
     /**
      * Store a newly created user score in database.
      *
@@ -25,25 +25,13 @@ class UserScoreController extends Controller
     }
 
     /**
-     * Get all scores own by an employee
+     * Get all scores 
      *
      * @param  Request  $request
      * @return Response
      */
-    public function getByEmployeeById(Request $request)
+    public function getScores(Request $request)
     {
-        return UserScoreService::getUserScoreByEmployeeID($request->employee_id);
-    }
-
-
-    /**
-     * Get all scores by assessment
-     *
-     * @param  Request  $request
-     * @return Response
-     */
-    public function getByEmployeeByAssId(Request $request)
-    {
-        return UserScoreService::getUserScoreByAssID($request->ass_id);
+        return UserScoreService::getUserScore($request);
     }
 }

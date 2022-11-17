@@ -26,20 +26,10 @@ class UserScoreService
         return count($request['categories']) === count($request['passed_questions']) ? 1 : 0;
     }
 
-    public static function getByColumn(string $column, string $id): JsonResponse
+    public static function getUserScore($request): JsonResponse
     {
-        $userScore = UserScore::where([$column . "_id" => $id]);
+        $userScore = UserScore::where(["employee_id" => $request->employee_id, "assessment_id" => $request->ass_id]);
         if (!$userScore->exists()) return sendResponse(true, 404, "User Score not found", null);
         return sendResponse(false, 200, "Successful", $userScore->get());
-    }
-
-    public static function getUserScoreByEmployeeID(string $id): JsonResponse
-    {
-        return self::getByColumn("employee", $id);
-    }
-
-    public static function getUserScoreByAssID(string $id): JsonResponse
-    {
-        return self::getByColumn("assessment", $id);
     }
 }
