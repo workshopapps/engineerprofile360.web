@@ -83,8 +83,8 @@ Below are the endpoints which would be used when adding any features.
 | Class Methods        | Method / Endpoints    | Auth  | Payload |
 | ------------- |:-------------:| -----:| -----:
 |`store()`| `POST /api/userScore/create` |`JWT`| `[assessment_id, employee_id, categories, passed_questions]` |
-|`getUserScoreByEmployeeId()`| `GET /api/userScore/get/{employee_id}` |`JWT`|  `user_id`  |
-|`getUserScoreByAss()`| `GET /api/userScore/get/{ass_id}` |`JWT`|  `asS_id`  |
+|`getUserScoreByEmployeeId()`| `GET /api/userScore/get/employee/{employee_id}` |`JWT`|  `user_id`  |
+|`getUserScoreByAssId()`| `GET /api/userScore/get/assessment/{ass_id}` |`JWT`|  `ass_id`  |
 
 **AuthenticationController**
 
