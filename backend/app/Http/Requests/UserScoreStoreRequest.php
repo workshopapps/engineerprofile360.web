@@ -24,7 +24,10 @@ class UserScoreStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            "category_id" => 'required|exists:categories,id',
+            "assessment_id" => 'required|exists:assessments,id',
+            "employee_id" => 'required|exists:assessments,id',
+            "categories" => 'required|array',
+            "passed_questions" => 'required|array'
         ];
     }
 }

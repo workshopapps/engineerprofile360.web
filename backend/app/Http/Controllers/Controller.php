@@ -5,63 +5,73 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Log;
 
+
+/**
+ * @OA\Info(title="My First API", version="0.1")
+ */
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
-      /**
-     * @param $message
-     * @return Response
+    
+    /**
+     * @param bool $status = true
+     * @param null $data
+     * @param string $message
+     * @param int $code
+     *
+     * @return JsonResponse
      */
-    protected function respondWithMissingField($message)
+    public function successResponse(
+        bool $status = true,
+        string $message = 'OK',
+        $data = null,
+        int $code = 200
+    ) : JsonResponse
     {
         return response()->json([
-            'status' => 400,
+            'status' => $status,
             'message' => $message,
-        ], 400);
+            'data' => $data,
+        ], $code);
     }
 
     /**
-     * @param $message
-     * @return Response
+     * Empty response without data
+     * @param $status
+     * @param int $code
+     *
+     * @return JsonResponse
      */
-    private function respondWithValidationError($message)
+    public function emptySuccessResponse($status, int $code = 201): JsonResponse
     {
         return response()->json([
-            'status' => false,
-            'message' => $message,
-        ], 400);
+            'status' => $code,
+            'data' => $status,
+        ], $code);
     }
 
     /**
-     * @param $validator
-     * @return Response
-     */
-    protected function respondWithErrorMessage($validator)
+     * Error response. It uses code 200 because "API client can't parse the error"
+     * @param string $message
+     * @param null $errors
+     * @param int $code
+     * @return JsonResponse
+    */
+    public function errorResponse(
+        string $message = 'Error message',
+        $errors = null,
+        int $code = 400
+    ) : JsonResponse
     {
-        $required = $messages = [];
-        $validatorMessages = $validator->errors()->toArray();
-        foreach($validatorMessages as $field => $message) {
-            if (strpos($message[0], 'required')) {
-                $required[] = $field;
-            }
-
-            foreach ($message as $error) {
-                $messages[] = $error;
-            }
-        }
-
-        if (count($required) > 0) {
-            $fields = implode(', ', $required);
-            $message = "Missing required fields $fields";
-
-            return $this->respondWithMissingField($message);
-        }
-
-
-        return $this->respondWithValidationError(implode(', ', $messages));
+        Log::error($errors);
+        return response()->json([
+            'status' => 'error',
+            'message' => $message,
+            'errors' => $errors,
+        ], $code);
     }
-
 }
