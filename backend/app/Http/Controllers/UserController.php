@@ -1,6 +1,5 @@
 <?php
-
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers;
 
 use App\Models\User;
 use function response;

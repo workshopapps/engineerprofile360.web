@@ -4,9 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserScoreController;
+use App\Http\Controllers\AssessmentController;
 
 // util functions
-// require_once "../util/sendResponse.php";
+ @include_once("../util/sendResponse.php");
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,8 @@ use App\Http\Controllers\UserScoreController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
 
 // other route functions here
 Route::get("/test", function () {
@@ -45,4 +48,27 @@ Route::prefix("UserScorce")->group(function () {
         Route::post('new_permission', 'store');
     });
 });
+
+
+
+
+Route::prefix("v1")->group(function(){
+    
+    // middleware instance here
+    Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+   Route::group( 
+        ['middleware' => ['auth:sanctum']], 
+        function () {
+
+             // @dreywandowski
+    Route::delete('/assessment/delete/{ass_id}', [AssessmentController::class, 'deleteAss']);
+    ////////////////////////
+        }
+    );
+    
+});
+
 
