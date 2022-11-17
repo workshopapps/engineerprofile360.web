@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 // use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\UserScoreController;
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\AssessmentController;
 
 // util functions
 @include_once("../util/sendResponse.php");
@@ -60,6 +61,7 @@ Route::prefix("assessment")->group(function(){
 
 
 Route::prefix("auth")->group(function(){
+    Route::post('register', [AuthenticationController::class, 'register']);
     Route::post('login', [AuthenticationController::class, 'login']);
     Route::post('logout', [AuthenticationController::class, 'logout']);
     Route::post('refresh', [AuthenticationController::class, 'refresh']);

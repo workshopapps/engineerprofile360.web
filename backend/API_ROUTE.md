@@ -1,6 +1,9 @@
 ## Backend API Routes
 
 This documentation throw more lights on how each routes are to be developed.
+### Note:
+Run `php artisan key:generate` and `php artisan jwt:secret` before testing out the authentication
+
 
 > Please note, all response sent to the client must follow the below convention..
 
@@ -80,7 +83,7 @@ Below are the endpoints which would be used when adding any features.
 | Class Methods        | Method / Endpoints    | Auth  | Payload |
 | ------------- |:-------------:| -----:| -----:
 |`store()`| `POST /api/userScore/create` |`JWT`| `[assessment_id, employee_id, categories, passed_questions]` |
-|`getUserScoreByUserId()`| `GET /api/userScore/get/{user_id}` |`JWT`|  `user_id`  |
+|`getUserScoreByEmployeeId()`| `GET /api/userScore/get/{employee_id}` |`JWT`|  `user_id`  |
 |`getUserScoreByAss()`| `GET /api/userScore/get/{ass_id}` |`JWT`|  `asS_id`  |
 
 **AuthenticationController**

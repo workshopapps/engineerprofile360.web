@@ -3,15 +3,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Assessment;
-use Symfony\Component\HttpFoundation\Response;
 use Exception;
+use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class AssessmentController extends Controller
 {
     
 
     // @dreywandowski ---- delete an assessment
-    public function deleteAss($ass_id){
+    public function deleteAss($ass_id): JsonResponse{
         try{
             $assessment = Assessment::findorFail($ass_id); 
 
@@ -28,7 +29,7 @@ class AssessmentController extends Controller
 
           
         } catch (Exception $e) {
-            return $this->errorResponse('Bookings are not fetched', $e->getMessage());
+            return $this->errorResponse('Assessment not fetched', $e->getMessage());
         }
     
     }
