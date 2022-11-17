@@ -63,6 +63,7 @@ Route::fallback(function () {
 });
 
 Route::group(['prefix' => 'auth'], function ($router) {
+    Route::post('register', [AuthenticationController::class, 'register']);
     Route::post('login', [AuthenticationController::class, 'login']);
     Route::post('logout', [AuthenticationController::class, 'logout']);
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
