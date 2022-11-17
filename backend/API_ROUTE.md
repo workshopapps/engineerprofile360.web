@@ -25,7 +25,7 @@ Below are the endpoints which would be used when adding any features.
 | Class Methods        | Method / Endpoints    | Auth  | Payload |
 | ------------- |:-------------:| -----:| -----:
 | `allUsers()`  | `GET /api/users/all` |`JWT`| `N/A` |
-| `byId()`      | `GET /api/user/{id}` |`JWT`|  `user_id`  |
+| `byId()`      | `GET /api/user/{id}` |`N/A`|  `user_id`  |
 | `getVerifiedUserById()` | `GET /api/user/verified/{id}` | `JWT` | `user_id` |
 
 **CompaniesControllers**
