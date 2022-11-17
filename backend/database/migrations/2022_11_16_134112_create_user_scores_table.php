@@ -16,15 +16,12 @@ return new class extends Migration
         Schema::create('user_scores', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string("passed_questions", 255);
-            $table->foreignUuid('org_id')
+            $table->string("categories", 255);
+            $table->foreignUuid('employee_id')
                 ->references('id')
-                ->on('companies')
+                ->on('employees')
                 ->onDelete('cascade');
-            $table->foreignUuid('category_id')
-                ->references('id')
-                ->on('categories')
-                ->onDelete('cascade');
-            $table->foreignUuid('assessments_id')
+            $table->foreignUuid('assessment_id')
                 ->references('id')
                 ->on('assessments')
                 ->onDelete('cascade');

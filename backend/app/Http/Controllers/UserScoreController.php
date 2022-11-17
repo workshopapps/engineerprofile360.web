@@ -12,7 +12,7 @@ class UserScoreController extends Controller
         $this->middleware('auth:api');
     }
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created user score in database.
      *
      * @param  @param  \App\Http\Requests\UserStoreRequest  $request
      * @return \Illuminate\Http\Response
