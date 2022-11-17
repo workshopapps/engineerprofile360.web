@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use function response;
+use Illuminate\Http\Request;
 use App\Services\UserService;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\JsonResponse;
@@ -55,5 +56,26 @@ class UserController extends Controller
             $verified_user,
             Response::HTTP_OK
         );
+    }
+
+    public function updateruserinfo(Request $request , $user_id){
+      $update =  User::where('id', $user_id)->update([
+            'username' => $request->username,
+            'email' => $request->email,
+            'isVerified' => $request->isVerified,
+        ]);
+        if($update){
+            return response()->json([
+               'status' => true,
+               'message' => 'User Info Updated Successfully!'
+            ], 200);
+
+        }else{
+            return response()->json([
+               'status' => false,
+               'message' => 'User Info Updated Failed!'
+            ], 200);
+
+        }
     }
 }
