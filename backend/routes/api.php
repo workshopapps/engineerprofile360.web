@@ -33,9 +33,6 @@ Route::get("/test", function () {
     return sendResponse(false, 200, "Test case pass", null);
 });
 
-//updateuserinfo
-Route::post('updateuserinfo/{id}', [UserController::class, 'updateruserinfo']);
-
 //USERSCORE
 Route::prefix("userscore")->group(function () {
     Route::controller(UserScoreController::class)->group(function () {
@@ -50,6 +47,8 @@ Route::prefix("userscore")->group(function () {
 Route::prefix("users")->group(function () {
     Route::get('{id}', [UserController::class, 'getUserById']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
+    //updateuserinfo
+Route::putt('{userId}/update', [UserController::class, 'updateruserinfo']);
 });
 
 // assessment routes
@@ -65,6 +64,7 @@ Route::fallback(function () {
 });
 
 Route::group(['prefix' => 'auth'], function ($router) {
+    Route::post('register', [AuthenticationController::class, 'register']);
     Route::post('login', [AuthenticationController::class, 'login']);
     Route::post('logout', [AuthenticationController::class, 'logout']);
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
