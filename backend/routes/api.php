@@ -2,10 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\UserController;
 
 // util functions
-// require_once "../util/sendResponse.php";
+require_once "../util/sendResponse.php";
 
 /*
 |--------------------------------------------------------------------------
@@ -18,22 +18,16 @@ use App\Http\Controllers\User\UserController;
 |
 */
 // middleware instance here
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
 // other route functions here
-// Route::get("/test", function(){
-//     // execute the function
-//     return sendResponse(false, 200, "Test case pass", null); 
-// });
+Route::get("/test", function(){
+    // execute the function
+    return sendResponse(false, 200, "Test case pass", null); 
+});
 
 Route::prefix("users")->group(function(){
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
-});
-
-Route::prefix("userScore")->group(function(){
-    Route::controller(UserScoreController::class)->group(function () {
-        Route::post('create', 'store');
-    });
 });
