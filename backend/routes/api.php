@@ -48,10 +48,8 @@ Route::prefix("users")->group(function(){
 });
 
 // assessment routes
-Route::prefix("assessment")->group(function(){
-    Route::controller(AssessmentController::class)->group(function () {
+Route::prefix("assessment")->controller(AssessmentController::class)->group(function(){
         Route::delete('delete/{ass_id}', 'deleteAss');
-    });
 });
 
 
