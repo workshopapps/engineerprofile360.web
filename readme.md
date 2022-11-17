@@ -8,7 +8,7 @@
 </p>
 
 <h3 align="center">
-  <a href="https://github.com/workshopapps/engineerprofile360.web/blob/main/CONTRIBUTING.md">Contribute</a>
+  <a href="https://github.com/workshopapps/engineerprofile360.web/blob/main/CONTRIBUTING.md">Contribute</a> | <a href="https://github.com/workshopapps/engineerprofile360.web/blob/main/API_ROUTE.md">API Routes Doc</a> | <a href="https://github.com/workshopapps/engineerprofile360.web/issues">Features</a>
 </h3>
 
 ---
