@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+// util functions
+require_once "../util/sendResponse.php";
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +17,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix("v1")->group(function(){
+    
+    // middleware instance here
+    Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    // other route functions here
+    Route::get("/test", function(){
+
+        // execute the function
+        return sendResponse(false, 200, "Test case pass", null);
+
+    });
 });
