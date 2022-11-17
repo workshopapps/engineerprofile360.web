@@ -2,12 +2,36 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
+use function response;
 use App\Services\UserService;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+
 
 class UserController extends Controller
 {
+    public function getUserById($user_id): JsonResponse
+    {
+        if (User::where('id', $user_id)->exists())
+        {
+            $user = User::find($user_id);
+            return response()->json([
+                'error' => false,
+                'message' => "User Found",
+                'data' => $user
+            ]);
+        }
+        else
+        {
+            return response()->json([
+                'error' => false,
+                'message' => "User does not exist",
+                'data' => null
+            ], 404);
+        }
+    }
+
     public function getVerifiedUserById($userId)
     {
         $verified_user = UserService::getVerifiedUser($userId);

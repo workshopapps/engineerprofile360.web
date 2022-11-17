@@ -29,6 +29,11 @@ Route::get("/test", function () {
     return sendResponse(false, 200, "Test case pass", null);
 });
 
+Route::prefix("users")->group(function(){
+    Route::get('{id}', [UserController::class, 'getUserById']);
+    Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
+});
+
 Route::prefix("users")->group(function () {
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
 });
@@ -39,3 +44,4 @@ Route::prefix("UserScore")->group(function () {
         Route::post('create', 'store');
     });
 });
+
