@@ -48,26 +48,30 @@ Route::prefix("users")->group(function () {
     Route::get('{id}', [UserController::class, 'getUserById']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
     //updateuserinfo
-Route::putt('{userId}/update', [UserController::class, 'updateruserinfo']);
+    Route::put('/{userId}/update', [UserController::class, 'updateruserinfo']);
 });
 
 // assessment routes
-Route::prefix("assessment")->controller(AssessmentController::class)->group(function(){
-        Route::delete('delete/{ass_id}', 'deleteAss');
+Route::prefix("assessment")->group(function(){
+    Route::delete('/{assId}/delete', [AssessmentController::class, 'deleteAss']);
+
 });
 
+
+Route::prefix("auth")->group(function(){
+    Route::post('register', [AuthenticationController::class, 'register']);
+    Route::post('login', [AuthenticationController::class, 'login']);
+    Route::post('logout', [AuthenticationController::class, 'logout']);
+    Route::post('refresh', [AuthenticationController::class, 'refresh']);
+});
+
+Route::prefix("questions")->group(function(){
+    Route::put('/{questId}/{assId}/update', [QuestionsController::class, 'updateQuestion']);
+
+});
 
 
 
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);
 });
-
-Route::group(['prefix' => 'auth'], function ($router) {
-    Route::post('register', [AuthenticationController::class, 'register']);
-    Route::post('login', [AuthenticationController::class, 'login']);
-    Route::post('logout', [AuthenticationController::class, 'logout']);
-    Route::post('refresh', [AuthenticationController::class, 'refresh']);
-
-});
-Route::put('questions/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
