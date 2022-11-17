@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 class AssessmentController extends Controller
 {
     
-
     // @dreywandowski ---- delete an assessment
     public function deleteAss($ass_id): JsonResponse{
         try{
@@ -33,6 +32,5 @@ class AssessmentController extends Controller
         }
     
     }
-    /////////////////////////////////////////////////////
 }
 
