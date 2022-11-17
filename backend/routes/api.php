@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User\UserController;
 
 // util functions
 require_once "../util/sendResponse.php";
@@ -26,9 +27,11 @@ Route::prefix("v1")->group(function(){
 
     // other route functions here
     Route::get("/test", function(){
-
         // execute the function
-        return sendResponse(false, 200, "Test case pass", null);
+        return sendResponse(false, 200, "Test case pass", null); 
+    });
 
+    Route::prefix("users")->group(function(){
+        Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
     });
 });
