@@ -37,8 +37,7 @@ Route::get("/test", function () {
 Route::prefix("userscore")->group(function () {
     Route::controller(UserScoreController::class)->group(function () {
         Route::post('create', 'store');
-        Route::get('get/employee/{employee_id}', 'getByEmployeeById');
-        Route::get('get/assessment/{ass_id}', 'getByEmployeeByAssId');
+        Route::get('get/{employee_id}/{ass_id}', 'getScores');
     });
 });
 
@@ -53,22 +52,20 @@ Route::prefix("users")->group(function () {
 });
 
 // assessment routes
-Route::prefix("assessment")->group(function(){
+Route::prefix("assessment")->group(function () {
     Route::delete('/{assId}/delete', [AssessmentController::class, 'deleteAss']);
-
 });
 
 
-Route::prefix("auth")->group(function(){
+Route::prefix("auth")->group(function () {
     Route::post('register', [AuthenticationController::class, 'register']);
     Route::post('login', [AuthenticationController::class, 'login']);
     Route::post('logout', [AuthenticationController::class, 'logout']);
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
 });
 
-Route::prefix("questions")->group(function(){
+Route::prefix("questions")->group(function () {
     Route::put('/{questId}/{assId}/update', [QuestionsController::class, 'updateQuestion']);
-
 });
 
 Route::put('questions/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
@@ -81,5 +78,3 @@ Route::group(['prefix' => 'auth'], function ($router) {
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);
 });
-Route::put('questions/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
-Route::put('questions/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
