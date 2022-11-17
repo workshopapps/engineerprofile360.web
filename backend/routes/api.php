@@ -10,7 +10,7 @@ use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\AssessmentController;
 
 // util functions
-@include_once("../util/sendResponse.php");
+// employee csv file parser.
 @include_once("../util/csv_parser.php");
 
 /*
@@ -24,17 +24,11 @@ use App\Http\Controllers\AssessmentController;
 |
 */
 // middleware instance here
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
-// other route functions here
-Route::get("/test", function () {
-    // execute the function
-    return sendResponse(false, 200, "Test case pass", null);
-});
-
-//USERSCORE
+// userscore controller route
 Route::prefix("userscore")->group(function () {
     Route::controller(UserScoreController::class)->group(function () {
         Route::post('create', 'store');
@@ -44,13 +38,13 @@ Route::prefix("userscore")->group(function () {
 
 
 //Users operation routes
-
 Route::prefix("users")->group(function () {
     Route::get('{id}', [UserController::class, 'getUserById']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
     //updateuserinfo
     Route::put('/{userId}/update', [UserController::class, 'updateruserinfo']);
 });
+
 
 // assessment routes
 Route::prefix("assessment")->group(function () {
@@ -59,12 +53,13 @@ Route::prefix("assessment")->group(function () {
 
 // Test Employee Adding using csv file
 // Visit http://localhost:8000 in the browser and upload a csv containing a the following attributes (s/n, fullname, username, email)
-
 Route::post("/test_csv", function(Request $req){
     $csv = new CsvParser();
     $payload = json_decode($req->getContent(), true);
     return $csv->parseEmployeeCsv($payload["csv_file"]);
 });
+
+// authentication route
 Route::prefix("auth")->group(function () {
     Route::post('register', [AuthenticationController::class, 'register']);
     Route::post('login', [AuthenticationController::class, 'login']);
@@ -72,16 +67,13 @@ Route::prefix("auth")->group(function () {
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
 });
 
+
+// questions controller route
 Route::prefix("questions")->group(function () {
     Route::put('/{questId}/{assId}/update', [QuestionsController::class, 'updateQuestion']);
+    Route::put('/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
 });
 
-Route::put('questions/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
-Route::group(['prefix' => 'auth'], function ($router) {
-    Route::post('login', [AuthenticationController::class, 'login']);
-    Route::post('logout', [AuthenticationController::class, 'logout']);
-    Route::post('refresh', [AuthenticationController::class, 'refresh']);
-});
 
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);
