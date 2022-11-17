@@ -4,8 +4,10 @@ use App\Http\Controllers\QuestionsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+// use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\UserScoreController;
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\AssessmentController;
 
 // util functions
 @include_once("../util/sendResponse.php");
@@ -31,7 +33,6 @@ Route::get("/test", function () {
     return sendResponse(false, 200, "Test case pass", null);
 });
 
-
 //USERSCORE
 Route::prefix("userscore")->group(function () {
     Route::controller(UserScoreController::class)->group(function () {
@@ -45,6 +46,13 @@ Route::prefix("userscore")->group(function () {
 Route::prefix("users")->group(function(){
     Route::get('{id}', [UserController::class, 'getUserById']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
+    //updateuserinfo
+Route::putt('{userId}/update', [UserController::class, 'updateruserinfo']);
+});
+
+// assessment routes
+Route::prefix("assessment")->controller(AssessmentController::class)->group(function(){
+        Route::delete('delete/{ass_id}', 'deleteAss');
 });
 
 
