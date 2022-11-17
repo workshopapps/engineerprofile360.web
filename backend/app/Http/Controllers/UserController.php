@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use function response;
-use Illuminate\Http\Request;
 use App\Services\UserService;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
 
 class UserController extends Controller
