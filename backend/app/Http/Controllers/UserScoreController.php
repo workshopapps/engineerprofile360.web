@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserScoreStoreRequest;
+use App\Services\UserScoreService;
 
 class UserScoreController extends Controller
 {
@@ -14,6 +15,6 @@ class UserScoreController extends Controller
      */
     public function store(UserScoreStoreRequest $request)
     {
-        
+        return UserScoreService::addUserScore($request->validated());
     }
 }
