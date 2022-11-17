@@ -28,18 +28,18 @@ class UserScoreService
 
     public static function getByColumn(string $column, string $id): JsonResponse
     {
-        $userScore = UserScore::where([strtolower($column) . "_id" => $id]);
-        if (!$userScore->exists()) return sendResponse(true, 404, "$column not found", null);
+        $userScore = UserScore::where([$column . "_id" => $id]);
+        if (!$userScore->exists()) return sendResponse(true, 404, "User Score not found", null);
         return sendResponse(false, 200, "Successful", $userScore->get());
     }
 
     public static function getUserScoreByEmployeeID(string $id): JsonResponse
     {
-        return self::getByColumn("Employee", $id);
+        return self::getByColumn("employee", $id);
     }
 
     public static function getUserScoreByAssID(string $id): JsonResponse
     {
-        return self::getByColumn("Assessment", $id);
+        return self::getByColumn("assessment", $id);
     }
 }
