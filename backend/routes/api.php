@@ -71,21 +71,15 @@ Route::prefix("questions")->group(function(){
 
 });
 
-<<<<<<< HEAD
 Route::put('questions/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
 Route::group(['prefix' => 'auth'], function ($router) {
     Route::post('login', [AuthenticationController::class, 'login']);
     Route::post('logout', [AuthenticationController::class, 'logout']);
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
-=======
->>>>>>> 1e99954375b36b290634feeacce7d24562aa5843
-
+});
 
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);
 });
-<<<<<<< HEAD
 Route::put('questions/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
 Route::put('questions/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
-=======
->>>>>>> 1e99954375b36b290634feeacce7d24562aa5843
