@@ -11,6 +11,11 @@ use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+    
     public function getUserById($user_id): JsonResponse
     {
         if (User::where('id', $user_id)->exists())

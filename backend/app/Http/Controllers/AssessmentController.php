@@ -15,10 +15,10 @@ class AssessmentController extends Controller
         $response = Assessment::findorFail($ass_id); 
         }
         catch(ModelNotFoundException $e){
-            return response()->json(['error' => false, 'message' => 'no records found for id '.$ass_id], 404); 
+            return sendResponse(false, 404, "no records found for id ".$ass_id,[] );
         }
         $response->delete();   
-        return response()->json(['error' => true, 'message' => 'deleted successfully'], 200); 
+        return sendResponse(true, 200, "deleted successfully ", []);
     }
     /////////////////////////////////////////////////////
 }

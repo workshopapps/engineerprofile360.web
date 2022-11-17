@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string("name", 255);
             $table->string("org_mail", 255)->uniqid();
-            $table->foreignUuid('user_id')
+            $table->foreignid('user_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
