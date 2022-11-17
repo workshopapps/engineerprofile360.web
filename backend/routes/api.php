@@ -4,6 +4,7 @@ use App\Http\Controllers\QuestionsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+// use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\UserScoreController;
 
 // util functions
@@ -30,6 +31,8 @@ Route::get("/test", function () {
     return sendResponse(false, 200, "Test case pass", null);
 });
 
+//updateuserinfo
+Route::post('updateuserinfo/{id}', [UserController::class, 'updateruserinfo']);
 
 //USERSCORE
 Route::prefix("userscore")->group(function () {
