@@ -54,6 +54,7 @@ Route::prefix("users")->group(function () {
 // assessment routes
 Route::prefix("assessment")->group(function(){
     Route::delete('/{assId}/delete', [AssessmentController::class, 'deleteAss']);
+    Route::post('/{id}', [AssessmentController::class, 'update']);
 
 });
 
