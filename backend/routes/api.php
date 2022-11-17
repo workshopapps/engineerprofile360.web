@@ -50,7 +50,7 @@ Route::prefix("v1")->group(function(){
             });
         });
 
-        Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
+        Route::group(['prefix' => 'auth'], function ($router) {
             Route::post('login', [AuthenticationController::class, 'login']);
             Route::post('logout', [AuthenticationController::class, 'logout']);
             Route::post('refresh', [AuthenticationController::class, 'refresh']);

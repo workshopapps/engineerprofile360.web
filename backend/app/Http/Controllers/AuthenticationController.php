@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 
 class AuthenticationController extends Controller
 {
@@ -29,13 +30,23 @@ class AuthenticationController extends Controller
             'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
+        
         $credentials = $request->only('email', 'password');
+
+        if (!auth()->validate($credentials)) {
+            return response()->json([
+                "error" => true,
+                "code" => 400,
+                "message" => "Invalid email or Password"
+            ], 400);
+        }
 
         $token = auth()->attempt($credentials);
         if (!$token) {
             return response()->json([
-                'status' => 'error',
-                'message' => 'Unauthorized',
+                'error' => 'true',
+                "code" => 401,
+                'message' => 'Unauthorized, Log in to continue',
             ], 401);
         }
 
@@ -44,23 +55,16 @@ class AuthenticationController extends Controller
                 "error" => false,
                 "code" => 200,
                 "message" => "User Logged in",
-                "data" => $user,
+                "data" => [
+                'user' => $user,
                 'authorisation' => [
                     'token' => $token,
                     'type' => 'bearer',
                 ]
+                ]
             ]);
     }
 
-    /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function me()
-    {
-        return response()->json(auth()->user());
-    }
 
     /**
      * Log the user out (Invalidate the token).
@@ -89,28 +93,14 @@ class AuthenticationController extends Controller
             "error" => false,
             "code" => 200,
             "message" => "User token refreshed",
-            "data" => auth()->user(),
+            "data" => [
+            'user' => auth()->user(),
             'authorisation' => [
                 'token' => auth()->refresh(),
                 'type' => 'bearer',
                 ]
+            ]
         ]);
     }
 
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function respondWithToken($token)
-    {
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => auth()->user()
-        ]);
-    }
 }
