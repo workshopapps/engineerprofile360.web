@@ -6,7 +6,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 // use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\UserScoreController;
+<<<<<<< HEAD
+use App\Http\Controllers\AuthenticationController;
+=======
 use App\Http\Controllers\AssessmentController;
+>>>>>>> 169dd209817f2119c988cc804db6b12fcc6de478
 
 // util functions
 @include_once("../util/sendResponse.php");
@@ -39,13 +43,14 @@ Route::post('updateuserinfo/{id}', [UserController::class, 'updateruserinfo']);
 Route::prefix("userscore")->group(function () {
     Route::controller(UserScoreController::class)->group(function () {
         Route::post('create', 'store');
+        Route::get('get/{employee_id}', 'getByEmployeeId');
     });
 });
 
 
 //Users operation routes
 
-Route::prefix("users")->group(function(){
+Route::prefix("users")->group(function () {
     Route::get('{id}', [UserController::class, 'getUserById']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
 });
@@ -62,4 +67,14 @@ Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);
 });
 
+<<<<<<< HEAD
 Route::put('questions/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
+=======
+Route::group(['prefix' => 'auth'], function ($router) {
+    Route::post('login', [AuthenticationController::class, 'login']);
+    Route::post('logout', [AuthenticationController::class, 'logout']);
+    Route::post('refresh', [AuthenticationController::class, 'refresh']);
+
+});
+Route::put('questions/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
+>>>>>>> ccc59114725e462616934146abf4265d30e20dbf
