@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserScoreController;
+use App\Http\Controllers\AssessmentController;
 
 // util functions
 @include_once("../util/sendResponse.php");
@@ -43,6 +44,13 @@ Route::prefix("userscore")->group(function () {
 Route::prefix("users")->group(function(){
     Route::get('{id}', [UserController::class, 'getUserById']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
+});
+
+// assessment routes
+Route::prefix("assessment")->group(function(){
+    Route::controller(AssessmentController::class)->group(function () {
+        Route::delete('delete/{ass_id}', 'deleteAss');
+    });
 });
 
 
