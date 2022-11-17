@@ -4,9 +4,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserScoreController;
+use Illuminate\Log\Logger;
+use Illuminate\Support\Facades\Log;
 
 // util functions
 @include_once("../util/sendResponse.php");
+@include_once("../util/csv_parser.php");
 
 /*
 |--------------------------------------------------------------------------
@@ -45,7 +48,14 @@ Route::prefix("users")->group(function(){
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
 });
 
+// Test Employee Adding using csv file
+// Visit http://localhost:8000 in the browser and upload a csv containing a the following attributes (s/n, fullname, username, email)
 
+Route::post("/test_csv", function(Request $req){
+    $csv = new CsvParser();
+    $payload = json_decode($req->getContent(), true);
+    return $csv->parseEmployeeCsv($payload["csv_file"]);
+});
 
 
 Route::fallback(function () {
