@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string("username", 255)->uniqid();
             $table->string("email", 255)->uniqid();
-            $table->string("hash", 255);
+            $table->string("password", 255);
             $table->string("reftoken", 255);
             $table->integer("role")->length(1)->default(1);
             $table->boolean("isVerified");

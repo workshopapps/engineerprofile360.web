@@ -6,6 +6,10 @@ use App\Http\Requests\UserScoreStoreRequest;
 
 class UserScoreController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
     /**
      * Store a newly created resource in storage.
      *
