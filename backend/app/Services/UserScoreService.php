@@ -23,7 +23,7 @@ class UserScoreService
 
     public static function categoryMatchesScores(array $request): int
     {
-        return  count($request['categories']) === count($request['passed_questions']) ? 1 : 0;
+        return count($request['categories']) === count($request['passed_questions']) ? 1 : 0;
     }
     
     public static function getUserScoreByEmployeeID(string $id): JsonResponse
