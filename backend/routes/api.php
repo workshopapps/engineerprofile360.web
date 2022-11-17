@@ -53,4 +53,9 @@ Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);
 });
 
+Route::group(['prefix' => 'auth'], function ($router) {
+    Route::post('login', [AuthenticationController::class, 'login']);
+    Route::post('logout', [AuthenticationController::class, 'logout']);
+    Route::post('refresh', [AuthenticationController::class, 'refresh']);
 
+});
