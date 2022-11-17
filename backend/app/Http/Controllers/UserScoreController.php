@@ -8,10 +8,15 @@ use App\Services\UserScoreService;
 
 class UserScoreController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+    
     /**
      * Store a newly created user score in database.
      *
-     * @param UserStoreRequest $request
+     * @param UserScoreStoreRequest $request
      * @return Response
      */
     public function store(UserScoreStoreRequest $request)
