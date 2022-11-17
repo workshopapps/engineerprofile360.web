@@ -33,17 +33,15 @@ Route::get("/test", function () {
     return sendResponse(false, 200, "Test case pass", null);
 });
 
+
 //USERSCORE
 Route::prefix("userscore")->group(function () {
-    Route::controller(UserScoreController::class)->group(function () {
-        Route::post('create', 'store');
-        Route::get('get/{employee_id}/{ass_id}', 'getScores');
-    });
+    Route::get('/{employeeId}/{assId}', [UserScoreController::class, 'getScores']);
+    Route::post('/create', [UserScoreController::class, 'store']);
 });
 
 
 //Users operation routes
-
 Route::prefix("users")->group(function () {
     Route::get('{id}', [UserController::class, 'getUserById']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
@@ -68,12 +66,6 @@ Route::prefix("questions")->group(function () {
     Route::put('/{questId}/{assId}/update', [QuestionsController::class, 'updateQuestion']);
 });
 
-Route::put('questions/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
-Route::group(['prefix' => 'auth'], function ($router) {
-    Route::post('login', [AuthenticationController::class, 'login']);
-    Route::post('logout', [AuthenticationController::class, 'logout']);
-    Route::post('refresh', [AuthenticationController::class, 'refresh']);
-});
 
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);
