@@ -33,17 +33,15 @@ Route::get("/test", function () {
     return sendResponse(false, 200, "Test case pass", null);
 });
 
+
 //USERSCORE
 Route::prefix("userscore")->group(function () {
-    Route::controller(UserScoreController::class)->group(function () {
-        Route::post('create', 'store');
-        Route::get('get/{employee_id}', 'getByEmployeeId');
-    });
+    Route::get('/{employeeId}/{assId}', [UserScoreController::class, 'getScores']);
+    Route::post('/create', [UserScoreController::class, 'store']);
 });
 
 
 //Users operation routes
-
 Route::prefix("users")->group(function () {
     Route::get('{id}', [UserController::class, 'getUserById']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
@@ -52,25 +50,23 @@ Route::prefix("users")->group(function () {
 });
 
 // assessment routes
-Route::prefix("assessment")->group(function(){
+Route::prefix("assessment")->group(function () {
     Route::delete('/{assId}/delete', [AssessmentController::class, 'deleteAss']);
     Route::post('/{id}', [AssessmentController::class, 'update']);
 
 });
 
 
-Route::prefix("auth")->group(function(){
+Route::prefix("auth")->group(function () {
     Route::post('register', [AuthenticationController::class, 'register']);
     Route::post('login', [AuthenticationController::class, 'login']);
     Route::post('logout', [AuthenticationController::class, 'logout']);
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
 });
 
-Route::prefix("questions")->group(function(){
+Route::prefix("questions")->group(function () {
     Route::put('/{questId}/{assId}/update', [QuestionsController::class, 'updateQuestion']);
-
 });
-
 
 
 Route::fallback(function () {
