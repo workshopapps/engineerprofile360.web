@@ -65,11 +65,18 @@ Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);
 });
 
+<<<<<<< HEAD
 Route::put('questions/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
+=======
+>>>>>>> d1dd149031a148e1bbe5020b5b6f0d5ef27f8f4e
 Route::group(['prefix' => 'auth'], function ($router) {
     Route::post('login', [AuthenticationController::class, 'login']);
     Route::post('logout', [AuthenticationController::class, 'logout']);
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
 
 });
+<<<<<<< HEAD
 Route::put('questions/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
+=======
+Route::put('questions/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
+>>>>>>> d1dd149031a148e1bbe5020b5b6f0d5ef27f8f4e
