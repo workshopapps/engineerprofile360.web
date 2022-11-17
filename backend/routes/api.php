@@ -25,9 +25,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // other route functions here
 Route::get("/test", function(){
     // execute the function
-    return sendResponse(false, 200, "Test case pass", null); 
+    return sendResponse(false, 200, "Test case pass", null);
 });
 
 Route::prefix("users")->group(function(){
+    Route::get('{id}', [UserController::class, 'getUserById']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
 });
