@@ -43,7 +43,7 @@ Route::prefix("v1")->group(function(){
         });
 
         //USERSCORE
-        Route::prefix("UserScorce")->group(function () {
+        Route::prefix("UserScore")->group(function () {
             Route::controller(UserScoreController::class)->group(function () {
                 Route::get('permissions', 'index');
                 Route::post('new_permission', 'store');
