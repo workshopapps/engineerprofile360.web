@@ -25,12 +25,11 @@ class UserScoreService
     {
         return count($request['categories']) === count($request['passed_questions']) ? 1 : 0;
     }
-    
-    public static function getUserScoreByEmployeeID(string $id): JsonResponse
+
+    public static function getUserScore($request): JsonResponse
     {
-        $userScoreExist = UserScore::where(["employee_id" => $id])->exists();
-        if (!$userScoreExist) return sendResponse(true, 404, "Employee not found", null);
-        $userScores = UserScore::where(["employee_id" => $id])->get();
-        return sendResponse(false, 200, "User score was added successfully!", $userScores);
+        $userScore = UserScore::where(["employee_id" => $request->employee_id, "assessment_id" => $request->ass_id]);
+        if (!$userScore->exists()) return sendResponse(true, 404, "User Score not found", null);
+        return sendResponse(false, 200, "Successful", $userScore->get());
     }
 }
