@@ -29,6 +29,7 @@ Route::get("/test", function () {
     return sendResponse(false, 200, "Test case pass", null);
 });
 
+
 //USERSCORE
 Route::prefix("userscore")->group(function () {
     Route::controller(UserScoreController::class)->group(function () {
@@ -36,11 +37,18 @@ Route::prefix("userscore")->group(function () {
     });
 });
 
+
+//Users operation routes
+
 Route::prefix("users")->group(function(){
     Route::get('{id}', [UserController::class, 'getUserById']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
 });
 
-Route::prefix("users")->group(function () {
-    Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
+
+
+
+Route::fallback(function () {
+    return response()->json(['message' => 'no Route matched with those values!'], 404);
 });
+
