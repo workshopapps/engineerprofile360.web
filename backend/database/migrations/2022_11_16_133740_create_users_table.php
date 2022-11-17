@@ -18,11 +18,11 @@ return new class extends Migration
             $table->string("username", 255)->uniqid();
             $table->string("email", 255)->uniqid();
             $table->string("password", 255);
-            $table->string("reftoken", 255);
+            $table->string("reftoken", 255)->nullable();
             $table->integer("role")->length(1)->default(1);
-            $table->boolean("isVerified");
-            $table->string("verify_code", 255);
-            $table->string("verify_code_exp", 255);
+            $table->boolean("isVerified")->nullable();
+            $table->string("verify_code", 255)->nullable();
+            $table->string("verify_code_exp", 255)->nullable();
             $table->timestamps();
         });
     }
