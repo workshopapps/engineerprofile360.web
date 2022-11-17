@@ -33,8 +33,6 @@ Route::get("/test", function () {
     return sendResponse(false, 200, "Test case pass", null);
 });
 
-
-
 //USERSCORE
 Route::prefix("userscore")->group(function () {
     Route::controller(UserScoreController::class)->group(function () {
@@ -54,7 +52,6 @@ Route::prefix("users")->group(function(){
 
 // assessment routes
 Route::prefix("assessment")->group(function(){
-    Route::put('/{questId}/{assId}/update', [QuestionsController::class, 'updateQuestion']);
     Route::delete('/{assId}/delete', [AssessmentController::class, 'deleteAss']);
 
 });
