@@ -10,7 +10,7 @@ class UserScoreController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        // $this->middleware('auth:api');
     }
     
     /**
@@ -30,9 +30,20 @@ class UserScoreController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function getByEmployeeId(Request $request)
+    public function getByEmployeeById(Request $request)
     {
         return UserScoreService::getUserScoreByEmployeeID($request->employee_id);
     }
-    
+
+
+    /**
+     * Get all scores by assessment
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function getByEmployeeByAssId(Request $request)
+    {
+        return UserScoreService::getUserScoreByAssID($request->ass_id);
+    }
 }
