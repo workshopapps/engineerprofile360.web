@@ -1,5 +1,4 @@
 <?php
-namespace Util;
 /*
 |--------------------------------------------------------------------------
 | SendResponse
@@ -11,9 +10,7 @@ namespace Util;
 |
 */
 
-class ResponseMessage{
-
-public function sendResponse($error=false, $code=200, $msg="", $data=[""=>""]){
+function sendResponse($error=false, $code=200, $msg="", $data=[""=>""]){
 
     $response = [
         "error"=> $error,
@@ -25,5 +22,4 @@ public function sendResponse($error=false, $code=200, $msg="", $data=[""=>""]){
     return response()->json($response, $code);
 }
 
-}
 ?>

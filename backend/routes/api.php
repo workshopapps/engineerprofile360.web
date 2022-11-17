@@ -25,7 +25,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-
 // other route functions here
 Route::get("/test", function () {
     // execute the function
