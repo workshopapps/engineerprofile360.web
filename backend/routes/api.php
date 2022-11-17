@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserScoreController;
-use App\Http\Controllers\AssessmentController;
+use App\Http\Controllers\AuthenticationController;
 
 // util functions
 @include_once("../util/sendResponse.php");
@@ -52,11 +52,14 @@ Route::prefix("assessment")->controller(AssessmentController::class)->group(func
         Route::delete('delete/{ass_id}', 'deleteAss');
 });
 
-
-
-
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);
 });
 
+Route::group(['prefix' => 'auth'], function ($router) {
+    Route::post('login', [AuthenticationController::class, 'login']);
+    Route::post('logout', [AuthenticationController::class, 'logout']);
+    Route::post('refresh', [AuthenticationController::class, 'refresh']);
+
+});
 Route::put('questions/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
