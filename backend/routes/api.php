@@ -10,7 +10,8 @@ use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\AssessmentController;
 
 // util functions
-@include_once("../util/sendResponse.php");
+// employee csv file parser.
+@include_once("../util/csv_parser.php");
 
 /*
 |--------------------------------------------------------------------------
@@ -23,9 +24,9 @@ use App\Http\Controllers\AssessmentController;
 |
 */
 // middleware instance here
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 // other route functions here
 Route::get("/test", function () {
@@ -33,12 +34,11 @@ Route::get("/test", function () {
     return sendResponse(false, 200, "Test case pass", null);
 });
 
+
 //USERSCORE
 Route::prefix("userscore")->group(function () {
-    Route::controller(UserScoreController::class)->group(function () {
-        Route::post('create', 'store');
-        Route::get('get/{employee_id}/{ass_id}', 'getScores');
-    });
+    Route::get('/{employeeId}/{assId}', [UserScoreController::class, 'getScores']);
+    Route::post('/create', [UserScoreController::class, 'store']);
 });
 
 
@@ -51,12 +51,23 @@ Route::prefix("users")->group(function () {
     Route::put('/{userId}/update', [UserController::class, 'updateruserinfo']);
 });
 
+
 // assessment routes
 Route::prefix("assessment")->group(function () {
     Route::delete('/{assId}/delete', [AssessmentController::class, 'deleteAss']);
+    Route::post('/{id}', [AssessmentController::class, 'update']);
+
 });
 
+// Test Employee Adding using csv file
+// Visit http://localhost:8000 in the browser and upload a csv containing a the following attributes (s/n, fullname, username, email)
+Route::post("/test_csv", function(Request $req){
+    $csv = new CsvParser();
+    $payload = json_decode($req->getContent(), true);
+    return $csv->parseEmployeeCsv($payload["csv_file"]);
+});
 
+// authentication route
 Route::prefix("auth")->group(function () {
     Route::post('register', [AuthenticationController::class, 'register']);
     Route::post('login', [AuthenticationController::class, 'login']);
@@ -64,8 +75,11 @@ Route::prefix("auth")->group(function () {
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
 });
 
+
+// questions controller route
 Route::prefix("questions")->group(function () {
     Route::put('/{questId}/{assId}/update', [QuestionsController::class, 'updateQuestion']);
+    Route::put('/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
 });
 
 Route::put('questions/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
