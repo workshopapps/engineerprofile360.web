@@ -2,6 +2,21 @@
 
 This documentation throw more lights on how each routes are to be developed.
 
+> Please note, all response sent to the client must follow the below convention..
+
+```js
+
+    {
+        "error": false,
+        "code": 200,
+        "message": "some message here",
+        "data": null || [] || {}
+    }
+
+```
+
+Mean while, a utility function has been created for this task and can be found in the `/util` folder.
+
 
 Below are the endpoints which would be used when adding any features.
 
