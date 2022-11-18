@@ -84,7 +84,7 @@ Below are the endpoints which would be used when adding any features.
 | ------------- |:-------------:| -----:| -----:
 |`store()`| `POST /api/userScore/create` |`JWT`| `[assessment_id, employee_id, categories, passed_questions]` |
 |`getScores()`| `GET /api/userScore/employee/{employee_id}` |`JWT`|  `employee_id`  |
-|`getScores()`| `GET /api/userScore/assessment/{assessment_id}` |`JWT`|  `ass_id`  |
+|`getScores()`| `GET /api/userScore/assessment/{ass_id}` |`JWT`|  `ass_id`  |
 |`getScores()`| `GET /api/userScore/{employee_id}/{ass_id}` |`JWT`|  `employee_id, ass_id`  |
 
 **AuthenticationController**
