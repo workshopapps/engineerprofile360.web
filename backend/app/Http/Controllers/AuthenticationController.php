@@ -27,12 +27,14 @@ class AuthenticationController extends Controller
      */
     public function register(Request $request){
         $request->validate([
+            'full_name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
         ]);
 
         $user = User::create([
+            'full_name' => $request->full_name,
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
