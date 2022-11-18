@@ -28,7 +28,8 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-            "util/sendResponse.php"
+            "util/sendResponse.php",
+            "util/csv_parser.php"
         ]
     },
     "autoload-dev": {
