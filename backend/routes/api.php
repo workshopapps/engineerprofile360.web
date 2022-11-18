@@ -9,7 +9,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserScoreController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\AssessmentController;
-use App\Http\Controllers\CompaniesController;
 
 // util functions
 // employee csv file parser.
@@ -79,10 +78,6 @@ Route::prefix("auth")->group(function () {
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
 });
 
-// company route
-Route::prefix("company")->group(function () {
-    Route::get('all', [CompaniesController::class, 'allCompanyInfo']);
-});
 
 // questions controller route
 Route::prefix("questions")->group(function () {
