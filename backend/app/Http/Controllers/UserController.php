@@ -24,11 +24,8 @@ class UserController extends Controller
         try{
             $users = User::paginate(15);
 
-            if( !$user) {
-                return $this->errorResponse(
-                    'No Record Found',
-                    Response::HTTP_NOT_FOUND
-                );
+            if( !$users ) {
+               $users = [];
             }
 
             return $this->successResponse(
@@ -92,22 +89,25 @@ class UserController extends Controller
             
     }
 
-    public function updateruserinfo(Request $request , $user_id): JsonResponse
+    public function updaterUserInfo(Request $request , $user_id): JsonResponse
     {
         try{
-            $user =  User::where('id', $user_id)->update([
+            $data = [
                 'username' => $request->username,
-                'email' => $request->email,
-                'isVerified' => $request->isVerified,
-            ]);
+                'email' => $request->email
+            ];
 
-            if( !$user) {
+            $user =  User::where('id', $user_id)->find($user_id);
+
+            if( !$user ) {
                 return $this->errorResponse(
                     'User does not exist',
                     'User not found',
                     Response::HTTP_NOT_FOUND
                 );
             }
+
+            $user->update($data);
 
             return $this->successResponse(true, 'User info updated successfully', Response::HTTP_OK);
 
