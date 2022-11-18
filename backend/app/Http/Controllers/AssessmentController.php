@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AssessmentController extends Controller
 {
 
-    
+
   public function create_assessment(Request $request)
   {
      $result = $request->validate([
@@ -30,11 +30,11 @@ class AssessmentController extends Controller
          $assessment->start_time = $data->start_time;
          $assessment->save();
          return $this->successResponse(true, 'Assessment created successfully', Response::HTTP_CREATED);
-        
+
          } catch (Exception $e) {
           return $this->errorResponse('Assessment could not be created', $e->getMessage());
          }
-         
+
      }
   }
 

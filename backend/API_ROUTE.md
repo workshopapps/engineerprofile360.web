@@ -70,6 +70,7 @@ Below are the endpoints which would be used when adding any features.
 | Class Methods        | Method / Endpoints    | Auth  | Payload |
 | ------------- |:-------------:| -----:| -----:
 |`addManually()`| `POST /api/questions/add?type=manual` |`JWT`| `category_id, category, question,wrong_answers, correct_answers, option, timeframe,is_multiple_answer` |
+|`addCSV()`| `POST /api/questions/add?type=csv` |`JWT`| `base64 file` |
 |`getQuestByOrgId()`| `GET /api/questions/get/{org_id}` |`JWT`|  `org_id`  |
 |`getQuestByAssId()`| `GET /api/questions/get/{ass_id}` |`JWT`|  `ass_id`  |
 |`getQuestByCatId()`| `GET /api/questions/get/{cat_id}` |`JWT`|  `cat_id`  |
