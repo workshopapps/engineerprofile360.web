@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->string('id')->primary();
+            $table->string("user_id");
             $table->string("name");
             $table->string("org_mail")->uniqid();
-            $table->foreignId('user_id')
+            $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
