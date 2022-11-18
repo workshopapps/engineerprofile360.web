@@ -1,9 +1,6 @@
 ## Backend API Routes
 
 This documentation throw more lights on how each routes are to be developed.
-### Note:
-Run `php artisan key:generate` and `php artisan jwt:secret` before testing out the authentication
-
 
 > Please note, all response sent to the client must follow the below convention..
 
