@@ -14,17 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('user_scores', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string("passed_questions", 255);
-            $table->string("categories", 255);
-            $table->foreignUuid('employee_id')
-                ->references('id')
-                ->on('employees')
-                ->onDelete('cascade');
-            $table->foreignUuid('assessment_id')
-                ->references('id')
-                ->on('assessments')
-                ->onDelete('cascade');
+            $table->uuid('id');
+            $table->string("passed_questions");
+            $table->string("categories");
+            $table->string('employee_id');
+            $table->string('assessment_id');
             $table->timestamps();
         });
     }
