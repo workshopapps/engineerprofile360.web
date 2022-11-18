@@ -38,6 +38,8 @@ Route::get("/test", function () {
 
 //USERSCORE
 Route::prefix("userscore")->group(function () {
+    Route::get('/employee/{employeeId}', [UserScoreController::class, 'getScores']);
+    Route::get('/assessment/{assId}', [UserScoreController::class, 'getScores']);
     Route::get('/{employeeId}/{assId}', [UserScoreController::class, 'getScores']);
     Route::post('/create', [UserScoreController::class, 'store']);
 });
@@ -58,12 +60,11 @@ Route::prefix("assessment")->group(function () {
     Route::delete('/{assId}/delete', [AssessmentController::class, 'deleteAss']);
     Route::post('/create', [AssessmentController::class, 'create_assessment']);
     Route::post('/{id}', [AssessmentController::class, 'update']);
-
 });
 
 // Test Employee Adding using csv file
 // Visit http://localhost:8000 in the browser and upload a csv containing a the following attributes (s/n, fullname, username, email)
-Route::post("/test_csv", function(Request $req){
+Route::post("/test_csv", function (Request $req) {
     $csv = new CsvParser();
     $payload = json_decode($req->getContent(), true);
     return $csv->parseEmployeeCsv($payload);
