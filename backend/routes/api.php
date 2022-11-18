@@ -36,6 +36,11 @@ Route::get("/test", function () {
     return sendResponse(false, 200, "Test case pass", null);
 });
 
+Route::prefix("users")->group(function(){
+    Route::get('all', [UserController::class, 'allUsers']);
+    Route::get('{id}', [UserController::class, 'getUserById']);
+    Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
+});
 
 //USERSCORE
 Route::prefix("userscore")->group(function () {
