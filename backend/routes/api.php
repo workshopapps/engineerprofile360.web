@@ -9,7 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserScoreController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\AssessmentController;
-use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\CategoryController;
 
 // util functions
 // employee csv file parser.
@@ -49,16 +49,16 @@ Route::prefix("userscore")->group(function () {
 Route::prefix("users")->group(function () {
     Route::get('{id}', [UserController::class, 'getUserById']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
-    Route::put('/{userId}/update', [UserController::class, 'updaterUserInfo']);
+    Route::put('{userId}/update', [UserController::class, 'updaterUserInfo']);
     Route::get('all', [UserController::class, 'allUsers']);
 });
 
 
 // assessment routes
 Route::prefix("assessment")->group(function () {
-    Route::delete('/{assId}/delete', [AssessmentController::class, 'deleteAss']);
-    Route::post('/create', [AssessmentController::class, 'createAssessment']);
-    Route::post('/{id}', [AssessmentController::class, 'updateAssessment']);
+    Route::delete('{assId}/delete', [AssessmentController::class, 'deleteAssessment']);
+    Route::post('create', [AssessmentController::class, 'createAssessment']);
+    Route::post('{id}', [AssessmentController::class, 'updateAssessment']);
 });
 
 // Test Employee Adding using csv file
@@ -84,14 +84,14 @@ Route::prefix("company")->group(function () {
 });
 
 // questions controller route
-Route::prefix("questions")->group(function () {
-    Route::post('/add', [QuestionsController::class, 'addManually']);
-    Route::put('/{questId}/{assId}/update', [QuestionsController::class, 'updateQuestion']);
+Route::prefix("question")->group(function () {
+    Route::post('add', [QuestionsController::class, 'addManually']);
+    Route::put('{questId}/{assId}/update', [QuestionsController::class, 'updateQuestion']);
 });
 
 // Categories Controller Routes
 Route::prefix("categories")->group(function () {
-    Route::put('/update/{cat_id}', [CategoriesController::class, 'updateCategory']);
+    Route::put('{catId}/update', [CategoryController::class, 'updateCategory']);
 });
 
 Route::fallback(function () {
