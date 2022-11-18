@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Employee;
 use Illuminate\Support\Facades\Hash;
 
 class AuthenticationController extends Controller
@@ -17,7 +18,7 @@ class AuthenticationController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['register', 'login']]);
+        $this->middleware('auth:api', ['except' => ['register', 'login','setPassword']]);
     }
 
     /**
@@ -128,6 +129,28 @@ class AuthenticationController extends Controller
                 'type' => 'bearer',
                 ]
             ]
+        ]);
+    }
+
+    public function setEmployeePassword(Request $request){
+        $request->validate([
+            'email' => 'required|email|exists:employees,email',
+            'password' => 'required|string|min:6',
+        ]);
+
+        $employee = Employee::whereEmail($request->email)->first();
+
+        $user = User::create([
+            'full_name' => $employee->full_name,
+            'username' => $employee->username,
+            'email' => $employee->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return response()->json([
+            "error" => false,
+            "code" => 200,
+            "message" => "Employee password update was successfull"
         ]);
     }
 

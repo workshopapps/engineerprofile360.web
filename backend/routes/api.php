@@ -10,6 +10,7 @@ use App\Http\Controllers\UserScoreController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\CompaniesController;
 
 // util functions
 // employee csv file parser.
@@ -75,6 +76,7 @@ Route::prefix("auth")->group(function () {
     Route::post('login', [AuthenticationController::class, 'login']);
     Route::post('logout', [AuthenticationController::class, 'logout']);
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
+    Route::post('employee/update/', [AuthenticationController::class, 'setEmployeePassword']);
 });
 
 // company route
