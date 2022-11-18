@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CategoriesController extends Controller
 {
@@ -20,7 +21,12 @@ class CategoriesController extends Controller
 
         $category->save();
         // success response
-        return sendResponse(true, 200, "Category Updated Successfully", $category);
+        return $this->successResponse(
+            true,
+            'Category Updated Successfully',
+            $category,
+            Response::HTTP_OK
+        );
 
     }
 }
