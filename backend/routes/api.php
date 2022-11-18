@@ -78,6 +78,11 @@ Route::prefix("auth")->group(function () {
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
 });
 
+// company route
+Route::prefix("company")->group(function () {
+    Route::get('all', [CompaniesController::class, 'allCompanyInfo']);
+    Route::put('update', [CompaniesController::class, 'updateCompanyInfo']);
+});
 
 // questions controller route
 Route::prefix("questions")->group(function () {
