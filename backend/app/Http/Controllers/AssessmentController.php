@@ -29,8 +29,9 @@ class AssessmentController extends Controller
          $assessment->start_date = $data->start_date;
          $assessment->start_time = $data->start_time;
          $assessment->save();
-         return response(json_encode(["result"=>"Assessment created successfully"],201));
-         } catch (\Throwable $e) {
+         return $this->successResponse(true, 'Assessment created successfully', Response::HTTP_OK);
+        
+         } catch (Exception $e) {
           return $this->errorResponse('Assessment could not be created', $e->getMessage());
          }
          
