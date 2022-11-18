@@ -10,7 +10,7 @@ class UserScoreController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('auth:api');
+        $this->middleware('auth:api');
     }
 
     /**
@@ -25,7 +25,7 @@ class UserScoreController extends Controller
     }
 
     /**
-     * Get all scores 
+     * Get user scores 
      *
      * @param  Request  $request
      * @return Response
