@@ -10,19 +10,28 @@ use Symfony\Component\HttpFoundation\Response;
 class AssessmentController extends Controller
 {
 
-    public function create_assessment()
+    public function create_assessment(Request $request)
     {
-       try {
-        $data = file_get_contents("php://input");
-       $assessment = new Assessment();
-       $assessment->user_id = $data->user_id;
-       $assessment->name = $data->name;
-       $assessment->start_date = $data->start_date;
-       $assessment->start_time = $data->start_time;
-       $assessment->save();
-       return response(json_encode(["result"=>"Assessment created successfully"],201));
-       } catch (\Throwable $e) {
-        return $this->errorResponse('Assessment could not be created', $e->getMessage());
+       $result = $request->validate([
+        'user_id' => 'required',
+        'name' => 'required',
+        'start_date' => 'required',
+        'start_time' => 'required',
+       ]);
+
+       if ($result) {
+        try {
+            $data = file_get_contents("php://input");
+           $assessment = new Assessment();
+           $assessment->user_id = $data->user_id;
+           $assessment->name = $data->name;
+           $assessment->start_date = $data->start_date;
+           $assessment->start_time = $data->start_time;
+           $assessment->save();
+           return response(json_encode(["result"=>"Assessment created successfully"],201));
+           } catch (\Throwable $e) {
+            return $this->errorResponse('Assessment could not be created', $e->getMessage());
+           }
        }
     }
     
