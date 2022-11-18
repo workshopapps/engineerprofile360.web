@@ -30,6 +30,7 @@ Route::get("/test", function () {
 });
 
 Route::prefix("users")->group(function(){
+    Route::get('all', [UserController::class, 'allUsers']);
     Route::get('{id}', [UserController::class, 'getUserById']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
 });
