@@ -8,6 +8,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserScoreController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\AssessmentController;
+use App\Http\Controllers\Auth;
+use App\Http\Controllers\JsonWebToken;
 
 // util functions
 // employee csv file parser.
@@ -31,7 +33,9 @@ use App\Http\Controllers\AssessmentController;
 // other route functions here
 Route::get("/test", function () {
     // execute the function
-    return sendResponse(false, 200, "Test case pass", null);
+    $auth = new Auth();
+    $jwt = new JsonWebToken();
+    return $jwt->generateRefreshToken("34", "6est@mail.com");
 });
 
 
@@ -69,8 +73,9 @@ Route::post("/test_csv", function(Request $req){
 
 // authentication route
 Route::prefix("auth")->group(function () {
-    Route::post('register', [AuthenticationController::class, 'register']);
-    Route::post('login', [AuthenticationController::class, 'login']);
+    // Route::post('register', [AuthenticationController::class, 'register']);
+    Route::post('register', [Auth::class, "registerUser"]);
+    Route::post('login', [Auth::class, 'loginUser']);
     Route::post('logout', [AuthenticationController::class, 'logout']);
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
 });
@@ -83,11 +88,6 @@ Route::prefix("questions")->group(function () {
 });
 
 Route::put('questions/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
-Route::group(['prefix' => 'auth'], function ($router) {
-    Route::post('login', [AuthenticationController::class, 'login']);
-    Route::post('logout', [AuthenticationController::class, 'logout']);
-    Route::post('refresh', [AuthenticationController::class, 'refresh']);
-});
 
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);
