@@ -89,7 +89,11 @@ Route::prefix("questions")->group(function () {
 Route::put('questions/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
 
 // Categories Controller Routes
-Route::put('/categories/update/{cat_id}', [CategoriesController::class, 'updateCategory']);
+
+Route::prefix("categories")->group(function () {
+    Route::put('/update/{cat_id}', [CategoriesController::class, 'updateCategory']);
+});
+
 
 
 Route::group(['prefix' => 'auth'], function ($router) {
