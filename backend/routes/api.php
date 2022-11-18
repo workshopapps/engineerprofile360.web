@@ -86,6 +86,7 @@ Route::prefix("company")->group(function () {
 
 // questions controller route
 Route::prefix("questions")->group(function () {
+    Route::post('/add', [QuestionsController::class, 'addManually']);
     Route::put('/{questId}/{assId}/update', [QuestionsController::class, 'updateQuestion']);
     Route::put('/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
 });
