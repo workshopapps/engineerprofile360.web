@@ -78,10 +78,13 @@ Route::prefix("auth")->group(function () {
 
 // questions controller route
 Route::prefix("questions")->group(function () {
+    Route::post('/add', [QuestionsController::class, 'addManually']);
     Route::put('/{questId}/{assId}/update', [QuestionsController::class, 'updateQuestion']);
     Route::put('/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
 });
 
+
+// Route::post('questions/add/?type=manual', [QuestionsController::class, 'addManually']);
 Route::put('questions/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
 Route::group(['prefix' => 'auth'], function ($router) {
     Route::post('login', [AuthenticationController::class, 'login']);

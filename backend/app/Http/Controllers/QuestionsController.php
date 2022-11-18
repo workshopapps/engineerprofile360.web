@@ -8,6 +8,54 @@ use Illuminate\Support\Facades\Validator;
 
 class QuestionsController extends Controller
 {
+
+    public function addManually(Request $request){
+
+        $type = $request->query('type');
+       if($type == "manual"){
+                        // attempts to validate data coming for the creation of the question model
+
+                        $validator = Validator::make($request->all(),[
+
+                            'category_id' => "required",
+                            'question' => 'required|string',
+                            'correct_answers' => 'required|string',
+                            'options' => 'required|string',
+                            'timeframe' => 'required|string',
+                            'is_multiple_answers' => 'required|boolean'
+
+                        ]
+                    );
+
+
+                // when validation of the data from the request fails
+                if ($validator->fails())
+                {
+                    return sendResponse(true, 422, "Validation fails", $validator->errors());
+                }
+                $validatedData = $validator->validated();
+
+
+                //when validation is successful, save as a new question
+                $question = new Question();
+                $question->question = $validatedData['question'];
+                $question->options = $validatedData['options'];
+                $question->timeframe = $validatedData['timeframe'];
+                $question->correct_answers = $validatedData['correct_answers'];
+                $question->is_multiple_answers = $validatedData['is_multiple_answers'];
+                $question->category_id = $validatedData['category_id'];
+                $question->save();
+
+                return sendResponse(true, 200, "Question Added Successfully", $question);
+       }
+       else{
+        return sendResponse(true, 422, "Query fails", "Query type not manual");
+       }
+
+    }
+
+
+
     public function updateQuestion(Request $request, $quest_id, $ass_id)
     {
         // attempts to validate data coming for the update of the question model
@@ -25,6 +73,8 @@ class QuestionsController extends Controller
 
             ]
         );
+
+
 
         // when validation of the data from the request fails
         if ($validator->fails())
