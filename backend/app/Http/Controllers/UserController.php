@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers;
 
 use App\Models\User;
 use function response;
@@ -11,6 +11,15 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
+    public function allUsers()
+    {
+        $user = User::paginate(15);
+        return response()->json([
+            'status' => true,
+            'data' => $user
+        ], 200);
+    }
+
     public function getUserById($user_id): JsonResponse
     {
         if (User::where('id', $user_id)->exists())
