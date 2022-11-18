@@ -36,12 +36,6 @@ Route::get("/test", function () {
     return sendResponse(false, 200, "Test case pass", null);
 });
 
-Route::prefix("users")->group(function(){
-    Route::get('all', [UserController::class, 'allUsers']);
-    Route::get('{id}', [UserController::class, 'getUserById']);
-    Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
-});
-
 //USERSCORE
 Route::prefix("userscore")->group(function () {
     Route::get('/employee/{employeeId}', [UserScoreController::class, 'getScores']);
@@ -52,20 +46,19 @@ Route::prefix("userscore")->group(function () {
 
 
 //Users operation routes
-
 Route::prefix("users")->group(function () {
     Route::get('{id}', [UserController::class, 'getUserById']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
-    //updateuserinfo
-    Route::put('/{userId}/update', [UserController::class, 'updateruserinfo']);
+    Route::put('/{userId}/update', [UserController::class, 'updaterUserInfo']);
+    Route::get('all', [UserController::class, 'allUsers']);
 });
 
 
 // assessment routes
 Route::prefix("assessment")->group(function () {
     Route::delete('/{assId}/delete', [AssessmentController::class, 'deleteAss']);
-    Route::post('/create', [AssessmentController::class, 'create_assessment']);
-    Route::post('/{id}', [AssessmentController::class, 'update']);
+    Route::post('/create', [AssessmentController::class, 'createAssessment']);
+    Route::post('/{id}', [AssessmentController::class, 'updateAssessment']);
 });
 
 // Test Employee Adding using csv file
@@ -94,23 +87,11 @@ Route::prefix("company")->group(function () {
 Route::prefix("questions")->group(function () {
     Route::post('/add', [QuestionsController::class, 'addManually']);
     Route::put('/{questId}/{assId}/update', [QuestionsController::class, 'updateQuestion']);
-    Route::put('/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
 });
-
-Route::put('questions/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
 
 // Categories Controller Routes
-
 Route::prefix("categories")->group(function () {
     Route::put('/update/{cat_id}', [CategoriesController::class, 'updateCategory']);
-});
-
-
-
-Route::group(['prefix' => 'auth'], function ($router) {
-    Route::post('login', [AuthenticationController::class, 'login']);
-    Route::post('logout', [AuthenticationController::class, 'logout']);
-    Route::post('refresh', [AuthenticationController::class, 'refresh']);
 });
 
 Route::fallback(function () {
