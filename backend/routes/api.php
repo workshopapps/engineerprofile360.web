@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\QuestionsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
 // use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UserScoreController;
-use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\AssessmentController;
+use App\Http\Controllers\AuthenticationController;
 
 // util functions
 // employee csv file parser.
@@ -87,6 +88,11 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::post('login', [AuthenticationController::class, 'login']);
     Route::post('logout', [AuthenticationController::class, 'logout']);
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
+});
+
+// Category routes
+Route::controller(CategoryController::class)->group(function () {
+    Route::post('create-category', 'createCategory');
 });
 
 Route::fallback(function () {
