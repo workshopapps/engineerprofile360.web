@@ -24,6 +24,10 @@ return new class extends Migration
                 ->references('id')
                 ->on('categories')
                 ->onDelete('cascade');
+            $table->foreignUuid('assessment_id')
+                ->references('id')
+                ->on('assessments')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

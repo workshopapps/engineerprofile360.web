@@ -18,6 +18,29 @@ class UserController extends Controller
     {
         $this->middleware('auth:api');
     }
+
+    public function allUsers(): JsonResponse
+    {
+        try{
+            $users = User::paginate(15);
+
+            if( !$user) {
+                return $this->errorResponse(
+                    'No Record Found',
+                    Response::HTTP_NOT_FOUND
+                );
+            }
+
+            return $this->successResponse(
+                true,
+                'All users',
+                $users,
+                Response::HTTP_OK
+            );
+        }catch (Exception $e) {
+            return $this->errorResponse('Records', $e->getMessage());
+        }
+    }
     
     public function getUserById($user_id): JsonResponse
     {
@@ -91,6 +114,5 @@ class UserController extends Controller
         }catch (Exception $e) {
             return $this->errorResponse('User info not updated', $e->getMessage());
         }
-       
     }
 }
