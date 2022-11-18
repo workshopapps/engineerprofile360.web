@@ -32,6 +32,7 @@ class AssessmentController extends Controller
            } catch (\Throwable $e) {
             return $this->errorResponse('Assessment could not be created', $e->getMessage());
            }
+           
        }
     }
     
