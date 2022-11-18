@@ -10,6 +10,34 @@ use Symfony\Component\HttpFoundation\Response;
 class AssessmentController extends Controller
 {
 
+    
+  public function create_assessment(Request $request)
+  {
+     $result = $request->validate([
+      'user_id' => 'required',
+      'name' => 'required',
+      'start_date' => 'required',
+      'start_time' => 'required',
+     ]);
+
+     if ($result) {
+      try {
+          $data = file_get_contents("php://input");
+         $assessment = new Assessment();
+         $assessment->user_id = $data->user_id;
+         $assessment->name = $data->name;
+         $assessment->start_date = $data->start_date;
+         $assessment->start_time = $data->start_time;
+         $assessment->save();
+         return $this->successResponse(true, 'Assessment created successfully', Response::HTTP_CREATED);
+        
+         } catch (Exception $e) {
+          return $this->errorResponse('Assessment could not be created', $e->getMessage());
+         }
+         
+     }
+  }
+
     // @dreywandowski ---- delete an assessment
     public function deleteAss($ass_id): JsonResponse
     {

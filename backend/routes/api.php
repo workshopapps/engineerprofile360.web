@@ -1,4 +1,5 @@
-<?php
+
+	<?php
 
 use App\Http\Controllers\QuestionsController;
 use Illuminate\Http\Request;
@@ -57,6 +58,7 @@ Route::prefix("users")->group(function () {
 // assessment routes
 Route::prefix("assessment")->group(function () {
     Route::delete('/{assId}/delete', [AssessmentController::class, 'deleteAss']);
+    Route::post('/create', [AssessmentController::class, 'create_assessment']);
     Route::post('/{id}', [AssessmentController::class, 'update']);
 });
 
