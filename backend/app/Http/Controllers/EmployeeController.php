@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    public function addEmpCSV()
+    public function addEmpCSV(Request $request)
     {
         return "yes I am here";
         // return response()->json([
