@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers;
 
 use App\Models\User;
 use function response;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
 
@@ -47,5 +49,26 @@ class UserController extends Controller
             'status'    => true,
             'user'   => $verified_user
         ], 200);
+    }
+
+    public function updateruserinfo(Request $request , $user_id){
+      $update =  User::where('id', $user_id)->update([
+            'username' => $request->username,
+            'email' => $request->email,
+            'isVerified' => $request->isVerified,
+        ]);
+        if($update){
+            return response()->json([
+               'status' => true,
+               'message' => 'User Info Updated Successfully!'
+            ], 200);
+
+        }else{
+            return response()->json([
+               'status' => false,
+               'message' => 'User Info Updated Failed!'
+            ], 200);
+
+        }
     }
 }
