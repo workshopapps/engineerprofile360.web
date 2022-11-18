@@ -95,7 +95,7 @@ Route::group(['prefix' => 'auth'], function ($router) {
 
 // Category routes
 Route::controller(CategoryController::class)->group(function () {
-    Route::post('create-category', 'createCategory');
+    Route::post('categories/create', 'createCategory');
 });
 
 Route::fallback(function () {

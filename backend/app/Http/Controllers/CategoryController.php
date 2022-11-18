@@ -2,20 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
     public function createCategory(Request $request)
     {
-        $category = Category::create([
-            'name' => $request->name,
-            'assessment_id' => $request->assessment_id
+        $request->validate([
+            'name' => ['required', 'string',],
+            'assessment_id' => ['required'],
         ]);
-        return response()->json([
-            'data' => $category
-        ], 201);
 
-        // dd(' e de work');
+        try {
+            $category = Category::create([
+                'name' => $request->name,
+                'assessment_id' => $request->assessment_id
+            ]);
+
+            return $this->successResponse(true, 'Category created successfully', $category, 201);
+        } catch (Exception $e) {
+            return $this->errorResponse('Category could not be created', $e->getMessage());
+        }
+
+
+
     }
 }
