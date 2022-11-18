@@ -37,7 +37,7 @@ class UserScoreController extends Controller
     public function getScores(Request $request)
     {
         $userScore = UserScore::where(UserScoreService::getCondition($request));
-        if (!$userScore->exists()) return self::errorResponse("Not found", "User Score not found", Response::HTTP_NOT_FOUND);
-        return self::successResponse(true, "Successful", $userScore->get(), Response::HTTP_OK);
+        if (!$userScore->exists()) return $this->errorResponse("Not found", "User Score not found", Response::HTTP_NOT_FOUND);
+        return $this->successResponse(true, "Successful", $userScore->get(), Response::HTTP_OK);
     }
 }
