@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Exception;
+use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class CompaniesController extends Controller
 {
@@ -23,26 +26,15 @@ class CompaniesController extends Controller
             $company = Company::all();
 
             if(!$company) {
-                return response()->json([
-                    'error' => 'true',
-                    "code" => 400,
-                    'message' => 'No Companies found',
-                ]);
+                return $this->errorResponse('Empty Companies Table', $e->getMessage());
             }
-            return response()->json([
-                    "error" => false,
-                    "code" => 200,
-                    "message" => "List of all Company Info",
+            return $this->successResponse(true, "List of all Company Info", [
                     "data" => [
                     'company' => $company,
                     ]
                 ]);
         } catch (Exception $e) {
-            return response()->json([
-                    'error' => 'true',
-                    "code" => 400,
-                    'message' => $e->getMessage(),
-                ]);
+            return $this->errorResponse('Companies not fetched', $e->getMessage());
         }
     }
 }
