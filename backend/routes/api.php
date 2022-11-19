@@ -117,8 +117,3 @@ Route::prefix('employee')->group(function () {
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);
 });
-
-Route::post("/midd", function(Request $req){
-    echo "welcome";
-    print_r($req->user);
-})->middleware("isloggedin");
