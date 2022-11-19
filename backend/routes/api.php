@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> e4d36a14956277d27b8a4b94f6e900088ea9160e
 <?php
 
 use Illuminate\Http\Request;
@@ -99,7 +103,10 @@ Route::prefix("category")->group(function () {
 //AddEmployeeByCSV
 Route::prefix('employee')->group(function () {
     Route::post('add', [EmployeeController::class, 'addEmpCSV']);
+<<<<<<< HEAD
     Route::get('{id}', [EmployeeController::class, 'getById']);
+=======
+>>>>>>> e4d36a14956277d27b8a4b94f6e900088ea9160e
 });
 
 
