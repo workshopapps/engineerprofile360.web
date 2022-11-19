@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Company;
-use Illuminate\Http\Request;
-use App\Http\Requests\CompanyRequest;
 use Exception;
+use App\Models\Company;
 use Illuminate\Http\JsonResponse;
+use App\Http\Requests\CompanyRequest;
 use Symfony\Component\HttpFoundation\Response;
 
 class CompanyController extends Controller
@@ -82,10 +81,7 @@ class CompanyController extends Controller
             if(is_null($company)) {
                 return $this->errorResponse('Company does not exists', Response::HTTP_NOT_FOUND);
             }
-            return response()->json([
-                'status'   => 'Company Successfully',
-                'Data'      => $company
-            ]);
+            return $this->successResponse(true, 'OK', $company);
         } catch (Exception $e) {
             return $this->errorResponse('Companies not fetched', $e->getMessage());
         }

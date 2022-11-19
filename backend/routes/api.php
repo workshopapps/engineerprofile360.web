@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Http\Request;
@@ -8,17 +9,10 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UserScoreController;
 use App\Http\Controllers\AssessmentController;
-<<<<<<< HEAD
-
-use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\CompaniesController;
-=======
 use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\CompanyController;
->>>>>>> e4d36a14956277d27b8a4b94f6e900088ea9160e
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers;
 
 
 // util functions
@@ -38,12 +32,7 @@ use App\Http\Controllers;
 // other route functions here
 Route::get("/test", function () {
     // execute the function
-<<<<<<< HEAD
-    
-    return sendResponse(false, 200, "Test case pass", null);
-=======
     return $this->successResponse(true, "Test case pass", null, 200);
->>>>>>> e4d36a14956277d27b8a4b94f6e900088ea9160e
 });
 
 //USERSCORE
@@ -92,14 +81,9 @@ Route::prefix("auth")->group(function () {
 
 // company route
 Route::prefix("company")->group(function () {
-<<<<<<< HEAD
-    Route::get('all', [CompaniesController::class, 'allCompanyInfo']);
-    Route::put('update', [CompaniesController::class, 'updateCompanyInfo']);
-    Route::get('{id}', [CompaniesController::class, 'byCompanyId']);
-=======
-    Route::get('all', [CompanyController::class, 'getCompanies']);
-    Route::put('update', [CompanyController::class, 'updateCompany']);
->>>>>>> e4d36a14956277d27b8a4b94f6e900088ea9160e
+    Route::get('all', [CompanyController::class, 'allCompanyInfo']);
+    Route::put('update', [CompanyController::class, 'updateCompanyInfo']);
+    Route::get('{id}', [CompanyController::class, 'byCompanyId']);
 });
 
 // questions route operations
@@ -116,7 +100,6 @@ Route::prefix("category")->group(function () {
 //AddEmployeeByCSV
 Route::prefix('employee')->group(function () {
     Route::post('add', [EmployeeController::class, 'addEmpCSV']);
-    Route::get('{id}', [EmployeeController::class, 'getById']);
 });
 
 
