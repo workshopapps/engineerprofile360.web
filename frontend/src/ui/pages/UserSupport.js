@@ -17,6 +17,7 @@ const Card = (props) => {
         padding: "24px 44px",
         background: "white",
         height: "350px",
+        borderRadius: "4px",
       }}
       ai="center"
       spacing={16}
@@ -34,7 +35,7 @@ const Card = (props) => {
 
 const UserSupport = () => {
   return (
-    <Flex stack style={{ background: "rgba(187, 187, 187, 0.5)" }}>
+    <Flex stack>
       <Flex
         style={{
           height: "40vh",
@@ -78,7 +79,7 @@ const UserSupport = () => {
           </Flex>
         </Flex>
       </Flex>
-      <Flex className="enquiries" stack>
+      <Flex className="enquiries" stack style={{ background: "#FBFBFB" }}>
         <Grid span={12}>
           <GridItem span={4} md={12}>
             <Card
