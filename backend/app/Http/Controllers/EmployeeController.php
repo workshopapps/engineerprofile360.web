@@ -29,7 +29,7 @@ class EmployeeController extends Controller
                         return $this->errorResponse('CSV Upload failed', $e->getMessage());
                     }
                 } else {
-                    //invalid file type
+                    //invalid file type(not csv)
                     return $this->errorResponse("Invalid File Type", $result["error"]);
                 }
             }   
