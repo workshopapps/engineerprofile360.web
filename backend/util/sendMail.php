@@ -1,5 +1,6 @@
 <?php
 
+use App\Mail\PasswordReset;
 use App\Mail\Signup;
 use App\Mail\Verification;
 use Illuminate\Support\Facades\Mail;
@@ -29,6 +30,20 @@ class Mailer{
 
         try {
             Mail::to($to)->send(new Verification($mailData));
+        } catch (\Exception $e) {
+            echo("Something went wrong sending mail".$e->getMessage());
+        }
+    }
+
+    public function passwordReset($from, $to,$msg, $data=""){
+        $mailData = [
+            "from"=>$from,
+            "data"=>$data,
+            "message"=>$msg
+        ];
+
+        try {
+            Mail::to($to)->send(new PasswordReset($mailData));
         } catch (\Exception $e) {
             echo("Something went wrong sending mail".$e->getMessage());
         }
