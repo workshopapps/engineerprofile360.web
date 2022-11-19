@@ -67,4 +67,26 @@ class CompaniesController extends Controller
             return $this->errorResponse('Companies not fetched', $e->getMessage());
         }
     }
+
+    /**
+     * Get company by ID.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function byCompanyId($id)
+    {
+        try {
+            $company = Company::find($id);
+            if(is_null($company)) {
+                return $this->errorResponse('Company does not exists', Response::HTTP_NOT_FOUND);
+            }
+            return response()->json([
+                'status'   => 'Company Successfully',
+                'Data'      => $company
+            ]);
+        } catch (Exception $e) {
+            return $this->errorResponse('Companies not fetched', $e->getMessage());
+        }
+    }
+    
 }
