@@ -56,9 +56,10 @@ Route::prefix("user")->group(function () {
 
 //Assessment routes operations
 Route::prefix("assessment")->group(function () {
-    Route::delete('{assId}/delete', [AssessmentController::class, 'deleteAssessment']);
-    Route::post('create', [AssessmentController::class, 'createAssessment']);
-    Route::post('{id}', [AssessmentController::class, 'updateAssessment']);
+    Route::delete('/{assId}/delete', [AssessmentController::class, 'deleteAss']);
+    Route::post('/create', [AssessmentController::class, 'createAssessment']);
+    Route::post('/{id}', [AssessmentController::class, 'updateAssessment']);
+    Route::get('/get/{org_id}', [AssessmentController::class, 'getAssByOrgId']);
 });
 
 // Test Employee Adding using csv file
