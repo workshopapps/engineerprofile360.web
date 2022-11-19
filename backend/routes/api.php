@@ -5,12 +5,10 @@ use App\Http\Controllers\QuestionsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-// use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\UserScoreController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\AssessmentController;
-use App\Http\Controllers\Auth;
-use App\Http\Controllers\JsonWebToken;
+use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\CategoriesController;
 
 // util functions
@@ -27,18 +25,6 @@ use App\Http\Controllers\CategoriesController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-// middleware instance here
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-// other route functions here
-Route::get("/test", function () {
-    // execute the function
-    $auth = new Auth();
-    $jwt = new JsonWebToken();
-    return $jwt->generateRefreshToken("34", "6est@mail.com");
-});
 
 //USERSCORE
 Route::prefix("userscore")->group(function () {
@@ -76,8 +62,9 @@ Route::post("/test_csv", function (Request $req) {
 // authentication route
 Route::prefix("auth")->group(function () {
     // Route::post('register', [AuthenticationController::class, 'register']);
-    Route::post('register', [Auth::class, "registerUser"]);
-    Route::post('login', [Auth::class, 'loginUser']);
+    Route::post('register', [AuthenticateController::class, "registerUser"]);
+    Route::post('login', [AuthenticateController::class, 'loginUser']);
+    Route::get('verify/{id}/{token}', [Auth::class, 'verifyEmail']);
     Route::post('logout', [AuthenticationController::class, 'logout']);
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
 });
