@@ -29,7 +29,6 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-            "util/sendResponse.php",
             "util/sendMail.php"
         ]
     },

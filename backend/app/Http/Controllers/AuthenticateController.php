@@ -14,7 +14,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Validator;
 use Mailer;
 
-class Auth extends Controller {
+class AuthenticateController extends Controller {
 
     public function __construct()
     {
