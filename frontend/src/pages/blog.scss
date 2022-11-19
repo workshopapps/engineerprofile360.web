@@ -1,0 +1,15 @@
+#blogPage{
+    padding: 20px;
+    width: fit-content;
+    border: black solid;
+    h1{
+        font-size: 48px;
+        color: #323130;
+    }
+}
+@media (min-width:500px) {
+    #blogPage{
+        display: flex;
+        gap:20px;
+    }
+}
