@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Category;
 use App\Http\Requests\CategoryRequest;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -39,7 +40,7 @@ class CategoryController extends Controller
             $category->update($updatedData);
 
             // success response
-            return $this->successResponse(true, 'Category updated successfully', $category);
+            return $this->successResponse(true, 'Category updated successfully', Response::HTTP_OK);
         }  catch (Exception $e) {
             return $this->errorResponse('Category not fetched', $e->getMessage());
         }
