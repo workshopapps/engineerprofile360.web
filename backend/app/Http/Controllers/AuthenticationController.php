@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+// use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Support\Str;
+
 
 class AuthenticationController extends Controller
 {
@@ -26,25 +31,61 @@ class AuthenticationController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function register(Request $request){
-        $request->validate([
+        $validator = Validator::make([
             'full_name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
         ]);
 
-        $user = User::create([
-            'full_name' => $request->full_name,
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        if($validator->fails()){
+            return $this->errorResponse('Validation Error',$validator->errors(), 422);
+        }
 
-        return response()->json([
-            "error" => false,
-            "code" => 200,
-            "message" => "User Registration successfull"
-        ]);
+        $payload = json_decode($request->getContent(), true);
+        $email = $payload["email"];
+        $username = $payload["username"];
+        $password = $payload["password"];
+
+        // check if a user already has an account
+        $userExists = User::where('email', '=', $email)->count() > 0;
+        if($userExists){
+            return $this->errorResponse("User with this email address already exists.", true, 400);
+        }
+
+        try {
+            // user data
+            $uid = Str::uuid();
+            $hash = Hash::make($password);
+            $userResp = [
+                "id"=> $uid,
+                "full_name"=>$username,
+                "email"=> $email,
+                "username"=> $username,
+                "isVerified"=> false,
+                "refToken"=> "",
+                "password"=> $hash,
+                "role"=>1
+            ];
+
+            // client data
+            $clientExtractedData = [
+                "id"=> $uid,
+                "full_name"=>$username,
+                "email"=> $email,
+                "username"=> $username,
+                "isVerified"=> false,
+                "role"=>1
+            ];
+
+
+            // create a new record in database.
+            User::create($userResp);
+
+            return $this->successResponse(true, "User registered successfully", json_encode($clientExtractedData), 200);
+        } catch (\Exception $e) {
+            return $this->errorResponse("Something went wrong registering, please try again", $e->getMessage(), 500);
+        }
     }
 
     /**
@@ -54,20 +95,19 @@ class AuthenticationController extends Controller
      */
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
+        $validator = Validator::make([
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6',
         ]);
 
-        $credentials = $request->only('email', 'password');
-
-        if (!auth()->validate($credentials)) {
-            return response()->json([
-                "error" => true,
-                "code" => 400,
-                "message" => "Invalid email or Password"
-            ], 400);
+        if($validator->fails()){
+            return $this->errorResponse('Validation Error',$validator->errors(), 422);
         }
+
+        $payload = json_decode($request->getContent(), true);
+        $email = $payload["email"];
+        $username = $payload["username"];
+        $password = $payload["password"];
 
         $token = auth()->attempt($credentials);
         if (!$token) {
