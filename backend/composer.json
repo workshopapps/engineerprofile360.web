@@ -10,7 +10,7 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
-        "php-open-source-saver/jwt-auth": "*"
+        "php-open-source-saver/jwt-auth": "^2.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -28,7 +28,6 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-            "util/sendResponse.php",
             "util/csv_parser.php"
         ]
     },
