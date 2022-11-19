@@ -1,12 +1,13 @@
-import React from "react";
-import Home from "./pages";
+import React from "react"
+import UserSupport from "./ui/pages/UserSupport"
+// import UserSupport from "./main/pages/UserSupport"
 
 const App = () => {
   return (
     <div>
-      <Home />
+      <UserSupport />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
