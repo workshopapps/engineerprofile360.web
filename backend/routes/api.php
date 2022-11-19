@@ -9,6 +9,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UserScoreController;
 use App\Http\Controllers\AssessmentController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\AuthenticationController;
 
 // util functions
@@ -46,7 +47,7 @@ Route::prefix("userscore")->group(function () {
 
 
 //Users operation routes
-Route::prefix("users")->group(function () {
+Route::prefix("user")->group(function () {
     Route::get('{id}', [UserController::class, 'getUserById']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
     Route::put('{userId}/update', [UserController::class, 'updaterUserInfo']);
@@ -79,24 +80,20 @@ Route::prefix("auth")->group(function () {
 
 // company route
 Route::prefix("company")->group(function () {
-    Route::get('all', [CompaniesController::class, 'allCompanyInfo']);
-    Route::put('update', [CompaniesController::class, 'updateCompanyInfo']);
+    Route::get('all', [CompanyController::class, 'getCompanies']);
+    Route::put('update', [CompanyController::class, 'updateCompany']);
 });
 
-// questions controller route
+// questions route operations
 Route::prefix("question")->group(function () {
     Route::post('add', [QuestionsController::class, 'addManually']);
     Route::put('{questId}/{assId}/update', [QuestionsController::class, 'updateQuestion']);
 });
 
-// Categories Controller Routes
-Route::prefix("categories")->group(function () {
+// Categories routes operation
+Route::prefix("category")->group(function () {
     Route::put('{catId}/update', [CategoryController::class, 'updateCategory']);
-});
-
-// Category routes
-Route::controller(CategoryController::class)->group(function () {
-    Route::post('categories/create', 'createCategory');
+    Route::post('add', [CategoryController::class, 'createCategory']);
 });
 
 Route::fallback(function () {
