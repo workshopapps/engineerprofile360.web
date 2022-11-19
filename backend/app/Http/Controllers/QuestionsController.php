@@ -58,12 +58,12 @@ class QuestionsController extends Controller
             if(is_null($question)) {
                 return $this->errorResponse('No questions exist for this company', Response::HTTP_NOT_FOUND);
             }
-            return $this->successResponse(true, 'OK', $question, 201);
+            return $this->successResponse(true, 'OK', $question, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->errorResponse('Questions not fetched', $e->getMessage());
         }     
     }
-}
+
     public function getByCategoryId(string $id): JsonResponse
     {
         $question = Question::where(["category_id" => $id])->first();

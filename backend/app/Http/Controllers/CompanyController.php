@@ -81,7 +81,7 @@ class CompanyController extends Controller
             if(is_null($company)) {
                 return $this->errorResponse('Company does not exists', Response::HTTP_NOT_FOUND);
             }
-            return $this->successResponse(true, 'OK', $company);
+            return $this->successResponse(true, 'Company', $company, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->errorResponse('Companies not fetched', $e->getMessage());
         }
