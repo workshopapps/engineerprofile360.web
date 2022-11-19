@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use CsvParser;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Response;
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\JsonResponse;
 use App\Models\Employee;
 use Exception;
 
@@ -12,18 +13,18 @@ class EmployeeController extends Controller
 {
     public function addEmpCSV(Request $request)
     {
-        if($request->query('type') == "csv"){
+        if ($request->query('type') == "csv") {
             $csv = new CsvParser();
             $file = json_decode($request->getContent(), true);
-            
-            if($file){
+
+            if ($file) {
                 $file = $file['csv_file'];
-                $result = $csv->parseEmployeeCsv($file); 
-                if($result["error"] == false && $result["message"] == "csv parsed"){
+                $result = $csv->parseEmployeeCsv($file);
+                if ($result["error"] == false && $result["message"] == "csv parsed") {
                     $json = $result['data'];
 
                     try {
-                        $employee = Employee::create($json);            
+                        $employee = Employee::create($json);
                         return $this->successResponse(true, 'Employee CSV Uploaded Successfully', $employee, 201);
                     } catch (Exception $e) {
                         return $this->errorResponse('CSV Upload failed', $e->getMessage());
@@ -32,7 +33,14 @@ class EmployeeController extends Controller
                     //invalid file type(not csv)
                     return $this->errorResponse("Invalid File Type", $result["error"]);
                 }
-            }   
-        }     
+            }
+        }
+    }
+
+    public function getById($user_id): JsonResponse
+    {
+        $employee = Employee::find($user_id);
+        if (!$employee) return $this->errorResponse('Employee does not exist', true, 404);
+        return $this->successResponse(true, 'Successful', $employee, 200);
     }
 }
