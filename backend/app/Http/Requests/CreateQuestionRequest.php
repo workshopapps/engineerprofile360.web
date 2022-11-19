@@ -26,7 +26,6 @@ class CreateQuestionRequest extends BaseRequest
         return [
             'category_id' => "required",
             'assessment_id' => "required",
-            'question_id' => 'required',
             'correct_answers' => 'required|string',
             'options' => 'required|string',
             'timeframe' => 'required|string',
