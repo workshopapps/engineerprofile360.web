@@ -44,43 +44,27 @@ class CategoryController extends Controller
             return $this->errorResponse('Category not fetched', $e->getMessage());
         }
     }
-    public function deleteCategory($cat_id){
-        $cat = new Category();
-        $msg= "";
-        $code = "";
-        $error = false;
-        $data = array();
 
-        if(empty($cat_id)){
-            $msg= "Please enter Category id!";
-            $code = 400;   //bad request
-            $error = true;
-            $data = null;
-        }else{
-            $findId = $cat::find($cat_id);
-            $result = $findId->delete();
-            
-            if($result){
-                $msg= "Category with Id: ".$cat_id. " was deleted successfully!";
-                $code = 200;
-                $error = false;
-                $data = ["category_id" => $cat_id];
-            }else{
-                $msg= "Oops!, Category with Id: ".$cat_id. " failed to delete!";
-                $code = 404;
-                $error = true;
-                $data = ["category_id" => $cat_id];
+    public function deleteCategory($categoryId) 
+    {
+        try{
+            // Get category by id
+            $category = Category::find($categoryId);
+
+            if( !$category ) {
+                return $this->errorResponse(
+                    'Category does not exist',
+                    'Category not found',
+                    Response::HTTP_NOT_FOUND
+                );
             }
+
+            $category->delete();
+
+            // success response
+            return $this->successResponse(true, 'Category deleted successfully', Response::HTTP_OK);
+        }  catch (Exception $e) {
+            return $this->errorResponse('Category not fetched', $e->getMessage());
         }
-
-        $response = [
-			"error" => $error,
-			"code" => $code,
-			"message" => $msg,
-			"data" => $data
-		];
-	    return json_encode($response);
-
-
     }
 }

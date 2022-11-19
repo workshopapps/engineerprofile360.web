@@ -96,7 +96,7 @@ Route::prefix("question")->group(function () {
 Route::prefix("category")->group(function () {
     Route::put('{categoryId}/update', [CategoryController::class, 'updateCategory']);
     Route::post('add', [CategoryController::class, 'createCategory']);
-    Route::delete('delete/{cat_id}', [CategoryController::class, 'deleteCategory']);
+    Route::delete('{catId}/delete', [CategoryController::class, 'deleteCategory']);
 
 
 });
