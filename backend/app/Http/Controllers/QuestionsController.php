@@ -48,7 +48,7 @@ class QuestionsController extends Controller
         }
     }
 
-    public function getQuestionsByOrgId($org_id){
+    public function getQuestByOrgId($org_id){
         try {
             $question = Question::where('org_id', $org_id)->get();
             if(is_null($question)) {
