@@ -36,26 +36,8 @@ use App\Http\Controllers\AuthenticationController;
 //     return sendResponse(false, 200, "Test case pass", null);
 // });
 
-Route::get("/userscore/test/?type=csv", function (Request $request) {
-    // execute the function
-    return sendResponse(false, 200, "csv", null);
-});
-
-<<<<<<< HEAD
-Route::get("/test/?type=manual", function () {
-    // execute the function
-    return sendResponse(false, 200, "manual", null);
-});
-
-
-
-=======
->>>>>>> 3d6dc1eb14585d4e7f264136b1b7159daff53374
 //USERSCORE
 Route::prefix("userscore")->group(function () {
-    Route::get('/test?type=csv', function (Request $request) {
-        return sendResponse(false, 200, $request->type, null);
-    });
     Route::get('/employee/{employeeId}', [UserScoreController::class, 'getScores']);
     Route::get('/assessment/{assId}', [UserScoreController::class, 'getScores']);
     Route::get('/{employeeId}/{assId}', [UserScoreController::class, 'getScores']);
