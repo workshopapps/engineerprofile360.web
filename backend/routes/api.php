@@ -94,6 +94,7 @@ Route::prefix("company")->group(function () {
 // questions route operations
 Route::prefix("question")->group(function () {
     Route::post('add', [QuestionsController::class, 'addManually']);
+    Route::get('get/{org_id}', [QuestionsController::class, 'getQuestByOrgId']);
     Route::get('category/{id}', [QuestionsController::class, 'getByCategoryId']);
     Route::put('{questionId}/{assessmenId}/update', [QuestionsController::class, 'updateQuestion']);
 });
@@ -105,7 +106,7 @@ Route::prefix("category")->group(function () {
 
 });
 
-//Employee route
+//Employee Routes
 Route::prefix('employee')->group(function () {
     Route::post('add', [EmployeeController::class, 'addEmpCSV']);
     Route::get('{id}', [EmployeeController::class, 'getById']);
@@ -116,3 +117,8 @@ Route::prefix('employee')->group(function () {
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);
 });
+
+Route::post("/midd", function(Request $req){
+    echo "welcome";
+    print_r($req->user);
+})->middleware("isloggedin");
