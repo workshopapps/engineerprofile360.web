@@ -1,5 +1,5 @@
 
-	<?php
+<?php
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -9,10 +9,18 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UserScoreController;
 use App\Http\Controllers\AssessmentController;
+<<<<<<< HEAD
 
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CompaniesController;
+=======
+use App\Http\Controllers\AuthenticateController;
+use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\CompanyController;
+>>>>>>> e4d36a14956277d27b8a4b94f6e900088ea9160e
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers;
 
 
 // util functions
@@ -29,16 +37,15 @@ use App\Http\Controllers\AuthenticationController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-// middleware instance here
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
 // other route functions here
 Route::get("/test", function () {
     // execute the function
+<<<<<<< HEAD
     
     return sendResponse(false, 200, "Test case pass", null);
+=======
+    return $this->successResponse(true, "Test case pass", null, 200);
+>>>>>>> e4d36a14956277d27b8a4b94f6e900088ea9160e
 });
 
 //USERSCORE
@@ -51,7 +58,7 @@ Route::prefix("userscore")->group(function () {
 
 
 //Users operation routes
-Route::prefix("users")->group(function () {
+Route::prefix("user")->group(function () {
     Route::get('{id}', [UserController::class, 'getUserById']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
     Route::put('{userId}/update', [UserController::class, 'updaterUserInfo']);
@@ -59,11 +66,12 @@ Route::prefix("users")->group(function () {
 });
 
 
-// assessment routes
+//Assessment routes operations
 Route::prefix("assessment")->group(function () {
-    Route::delete('{assId}/delete', [AssessmentController::class, 'deleteAssessment']);
-    Route::post('create', [AssessmentController::class, 'createAssessment']);
-    Route::post('{id}', [AssessmentController::class, 'updateAssessment']);
+    Route::delete('/{assId}/delete', [AssessmentController::class, 'deleteAss']);
+    Route::post('/create', [AssessmentController::class, 'createAssessment']);
+    Route::post('/{id}', [AssessmentController::class, 'updateAssessment']);
+    Route::get('/get/{org_id}', [AssessmentController::class, 'getAssByOrgId']);
 });
 
 // Test Employee Adding using csv file
@@ -76,33 +84,47 @@ Route::post("/test_csv", function (Request $req) {
 
 // authentication route
 Route::prefix("auth")->group(function () {
-    Route::post('register', [AuthenticationController::class, 'register']);
-    Route::post('login', [AuthenticationController::class, 'login']);
+    // Route::post('register', [AuthenticationController::class, 'register']);
+    Route::post('register', [AuthenticateController::class, "registerUser"]);
+    Route::post('login', [AuthenticateController::class, 'loginUser']);
+    Route::get('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
     Route::post('logout', [AuthenticationController::class, 'logout']);
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
 });
 
 // company route
 Route::prefix("company")->group(function () {
+<<<<<<< HEAD
     Route::get('all', [CompaniesController::class, 'allCompanyInfo']);
     Route::put('update', [CompaniesController::class, 'updateCompanyInfo']);
     Route::get('{id}', [CompaniesController::class, 'byCompanyId']);
+=======
+    Route::get('all', [CompanyController::class, 'getCompanies']);
+    Route::put('update', [CompanyController::class, 'updateCompany']);
+>>>>>>> e4d36a14956277d27b8a4b94f6e900088ea9160e
 });
 
-// questions controller route
+// questions route operations
 Route::prefix("question")->group(function () {
     Route::post('add', [QuestionsController::class, 'addManually']);
     Route::put('{questId}/{assId}/update', [QuestionsController::class, 'updateQuestion']);
 });
 
-// Categories Controller Routes
-Route::prefix("categories")->group(function () {
+// Categories routes operation
+Route::prefix("category")->group(function () {
     Route::put('{catId}/update', [CategoryController::class, 'updateCategory']);
 });
+
+//AddEmployeeByCSV
+Route::prefix('employee')->group(function () {
+    Route::post('add', [EmployeeController::class, 'addEmpCSV']);
+});
+
 
 // Category routes
 Route::controller(CategoryController::class)->group(function () {
     Route::post('categories/create', 'createCategory');
+    Route::post('add', [CategoryController::class, 'createCategory']);
 });
 
 Route::fallback(function () {

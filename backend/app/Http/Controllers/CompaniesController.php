@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use Illuminate\Http\Request;
+use App\Http\Requests\CompanyRequest;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class CompaniesController extends Controller
+class CompanyController extends Controller
 {
     public function __construct()
     {
@@ -16,56 +17,57 @@ class CompaniesController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Get all Companies
      */
-    public function allCompanyInfo()
+    public function getCompanies(): JsonResponse
     {
         try{
-            $company = Company::all();
+            $companies = Company::get();
 
-            if(!$company) {
-                return $this->errorResponse('Empty Companies Table', $e->getMessage());
+            if(!$companies) {
+                $companies = [];
             }
-            return $this->successResponse(true, "List of all Company Info", [
-                    "data" => [
-                    'company' => $company,
-                    ]
-                ]);
+
+            return $this->successResponse(
+        true,
+        'All companies',
+                $companies,
+                Response::HTTP_OK
+            );
         } catch (Exception $e) {
             return $this->errorResponse('Companies not fetched', $e->getMessage());
         }
     }
 
     /**
-     * Update a resource.
+     * Update company.
      *
      * @return \Illuminate\Http\Response
      */
-    public function updateCompanyInfo(Request $request, $id)
+    public function updateCompany(CompanyRequest $request, $companyId): JsonResponse
     {
-        try {
-            $this->validate($request, [
-                'name'             => 'required',
-                'org_mail'       => 'required',
-            ]);
+        try{
+            $updatedData = $request->all();
 
-            $company = Company::find($id);
-            if(is_null($company)) {
-                return $this->errorResponse('Company does not exists', Response::HTTP_NOT_FOUND);
+            // Get category by id
+            $company = Company::find($companyId);
+
+            if( !$company ) {
+                return $this->errorResponse(
+                    'Company does not exist',
+                    'Company not found',
+                    Response::HTTP_NOT_FOUND
+                );
             }
 
-            $company->name = $request->input['name'];
-            $company->org_mail = $request->input['org_mail'];
-            $company->save();
-            return response()->json([
-                'status'   => 'Company Updated Successfully',
-                'Data'      => $company
-            ]);
-        } catch (Exception $e) {
-            return $this->errorResponse('Companies not fetched', $e->getMessage());
+            $company->update($updatedData);
+
+            // success response
+            return $this->successResponse(true, 'Company updated successfully', Response::HTTP_OK);
+        }  catch (Exception $e) {
+            return $this->errorResponse('Company not fetched', $e->getMessage());
         }
+       
     }
 
     /**
