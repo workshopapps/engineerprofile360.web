@@ -18,6 +18,26 @@ class UserController extends Controller
     {
         $this->middleware('auth:api');
     }
+
+    public function allUsers(): JsonResponse
+    {
+        try{
+            $users = User::paginate(15);
+
+            if( !$users ) {
+               $users = [];
+            }
+
+            return $this->successResponse(
+                true,
+                'All users',
+                $users,
+                Response::HTTP_OK
+            );
+        }catch (Exception $e) {
+            return $this->errorResponse('Records', $e->getMessage());
+        }
+    }
     
     public function getUserById($user_id): JsonResponse
     {
@@ -69,16 +89,17 @@ class UserController extends Controller
             
     }
 
-    public function updateruserinfo(Request $request , $user_id): JsonResponse
+    public function updaterUserInfo(Request $request , $user_id): JsonResponse
     {
         try{
-            $user =  User::where('id', $user_id)->update([
+            $data = [
                 'username' => $request->username,
-                'email' => $request->email,
-                'isVerified' => $request->isVerified,
-            ]);
+                'email' => $request->email
+            ];
 
-            if( !$user) {
+            $user =  User::where('id', $user_id)->find($user_id);
+
+            if( !$user ) {
                 return $this->errorResponse(
                     'User does not exist',
                     'User not found',
@@ -86,11 +107,12 @@ class UserController extends Controller
                 );
             }
 
+            $user->update($data);
+
             return $this->successResponse(true, 'User info updated successfully', Response::HTTP_OK);
 
         }catch (Exception $e) {
             return $this->errorResponse('User info not updated', $e->getMessage());
         }
-       
     }
 }

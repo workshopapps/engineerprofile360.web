@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserScoreStoreRequest extends BaseRequest
+class CompanyRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,8 @@ class UserScoreStoreRequest extends BaseRequest
     public function rules()
     {
         return [
-            "assessment_id" => 'required|exists:assessments,id',
-            "employee_id" => 'required|exists:employees,id',
-            "categories" => 'required|array',
-            "passed_questions" => 'required|array'
+            'name' => 'required',
+            'org_mail' => 'required',
         ];
     }
 }
