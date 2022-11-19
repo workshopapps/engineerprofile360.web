@@ -10,6 +10,7 @@ use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UserScoreController;
 use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\EmployeeController;
 
 // util functions
 // employee csv file parser.
@@ -29,6 +30,7 @@ use App\Http\Controllers\AuthenticationController;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
 
 // other route functions here
 Route::get("/test", function () {
@@ -92,6 +94,11 @@ Route::prefix("question")->group(function () {
 // Categories Controller Routes
 Route::prefix("categories")->group(function () {
     Route::put('{catId}/update', [CategoryController::class, 'updateCategory']);
+});
+
+// Employee Controller Routes
+Route::prefix("employee")->group(function () {
+    Route::get('/{org_id}', [EmployeeController::class, 'byCompId']);
 });
 
 // Category routes
