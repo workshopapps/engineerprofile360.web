@@ -1,0 +1,21 @@
+.hero_button {
+  width: 288px;
+  height: 80px;
+  background: #141ae9;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+  color: white;
+  font-weight: 700;
+  font-size: 20px;
+  margin-top: 30px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .hero_button {
+    width: 258px;
+    height: 60px;
+    font-size: 18px;
+  }
+}
