@@ -1,15 +1,15 @@
 
 	<?php
 
-use App\Http\Controllers\QuestionsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-// use App\Http\Controllers\User\UserController;
-use App\Http\Controllers\UserScoreController;
-use App\Http\Controllers\AuthenticationController;
-use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\CategoryController;
+// use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\QuestionsController;
+use App\Http\Controllers\UserScoreController;
+use App\Http\Controllers\AssessmentController;
+use App\Http\Controllers\AuthenticationController;
 
 // util functions
 // employee csv file parser.
@@ -54,7 +54,7 @@ Route::prefix("users")->group(function () {
 });
 
 
-// assessment routes
+//Assessment routes operations
 Route::prefix("assessment")->group(function () {
     Route::delete('{assId}/delete', [AssessmentController::class, 'deleteAssessment']);
     Route::post('create', [AssessmentController::class, 'createAssessment']);
@@ -92,6 +92,11 @@ Route::prefix("question")->group(function () {
 // Categories Controller Routes
 Route::prefix("categories")->group(function () {
     Route::put('{catId}/update', [CategoryController::class, 'updateCategory']);
+});
+
+// Category routes
+Route::controller(CategoryController::class)->group(function () {
+    Route::post('categories/create', 'createCategory');
 });
 
 Route::fallback(function () {
