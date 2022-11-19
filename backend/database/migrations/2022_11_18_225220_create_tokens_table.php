@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_scores', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->string("passed_questions");
-            $table->string("categories");
-            $table->string('employee_id');
-            $table->string('assessment_id');
+        Schema::create('tokens', function (Blueprint $table) {
+            $table->string("user_id");
+            $table->string("token")->default("");
+            $table->timestamp("exp");
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_scores');
+        Schema::dropIfExists('tokens');
     }
 };

@@ -2,13 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Category;
-use App\Http\Requests\UpdateCategoryRequest;
-use Illuminate\Http\Response;
+use App\Http\Requests\CategoryRequest;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function updateCategory(UpdateCategoryRequest $request, $category_id) 
+    public function createCategory(CategoryRequest $request)
+    {
+        $data = $request->all();
+        try{
+            Category::create($data);
+            return $this->successResponse(true, 'Category created', Response::HTTP_CREATED);
+        }  catch (Exception $e) {
+            return $this->errorResponse('Category not created', $e->getMessage());
+        }
+    }
+
+    public function updateCategory(CategoryRequest $request, $category_id) 
     {
         try{
             $updatedData = $request->all();
