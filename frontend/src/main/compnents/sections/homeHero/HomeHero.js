@@ -12,7 +12,7 @@ export default function HomeHero() {
           Assess <br /> Your Engineering Teams’ Strength
         </h1>
         <p className={styles.hero_description}>
-          Get started with skript innovative performance solutions for
+          Get started with Skript <br /> innovative performance solutions for
           engineering teams
         </p>
         <HomeHeroButton />
