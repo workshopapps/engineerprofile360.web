@@ -12,6 +12,9 @@ use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers;
 
 // util functions
 // employee csv file parser.
@@ -27,6 +30,11 @@ use App\Http\Controllers\CompanyController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+// other route functions here
+Route::get("/test", function () {
+    // execute the function
+    return $this->successResponse(true, "Test case pass", null, 200);
+});
 
 //USERSCORE
 Route::prefix("userscore")->group(function () {
@@ -86,6 +94,17 @@ Route::prefix("question")->group(function () {
 // Categories routes operation
 Route::prefix("category")->group(function () {
     Route::put('{catId}/update', [CategoryController::class, 'updateCategory']);
+});
+
+//AddEmployeeByCSV
+Route::prefix('employee')->group(function () {
+    Route::post('add', [EmployeeController::class, 'addEmpCSV']);
+});
+
+
+// Category routes
+Route::controller(CategoryController::class)->group(function () {
+    Route::post('categories/create', 'createCategory');
     Route::post('add', [CategoryController::class, 'createCategory']);
 });
 
