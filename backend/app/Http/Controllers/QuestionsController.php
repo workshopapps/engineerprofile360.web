@@ -52,13 +52,16 @@ class QuestionsController extends Controller
     {
         try
         {
-            // $questions = Question::where('assessment_id', $ass_id)->get();
-            $questions = [$ass_id];
-            return $this->successResponse(true, "Questions", $questions);
+            $questions = Question::where('assessment_id', $ass_id)->get();
+
+            if(is_null($questions)){
+                return $this->errorResponse('No Question Exist for this Assessment ID', Response::HTTP_NOT_FOUND);
+            }
+            return $this->successResponse(true, "OK", $questions);
         }
         catch(Exception $e)
         {
-            return $this->errorResponse("Error Occured",$e->getMessage());
+            return $this->errorResponse("Fetch Question By Assessment ID Error",$e->getMessage());
         }
     }
 }
