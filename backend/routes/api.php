@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Http\Request;
@@ -10,7 +9,6 @@ use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UserScoreController;
 use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\AuthenticateController;
-use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\EmployeeController;
@@ -100,6 +98,7 @@ Route::prefix("category")->group(function () {
 //AddEmployeeByCSV
 Route::prefix('employee')->group(function () {
     Route::post('add', [EmployeeController::class, 'addEmpCSV']);
+    Route::get('{id}', [EmployeeController::class, 'getById']);
 });
 
 

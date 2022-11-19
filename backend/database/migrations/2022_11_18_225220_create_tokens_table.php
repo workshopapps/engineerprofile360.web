@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tokens', function (Blueprint $table) {
-            $table->string("user_id")->unique();
+            $table->string("user_id");
             $table->string("token")->default("");
             $table->timestamp("exp");
             $table->timestamps();
