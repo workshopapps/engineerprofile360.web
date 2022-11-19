@@ -3,107 +3,71 @@
 namespace App\Http\Controllers;
 
 use App\Models\Question;
+use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\CreateQuestionRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 class QuestionsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
 
-    public function addManually(Request $request) :JsonResponse{
-
-        $type = $request->query('type');
-       if($type == "manual"){
-                        // attempts to validate data coming for the creation of the question model
-
-                        $validator = Validator::make($request->all(),[
-
-                            'category_id' => "required",
-                            'assessment_id' => "required",
-                            'question' => 'required|string',
-                            'correct_answers' => 'required|string',
-                            'options' => 'required|string',
-                            'timeframe' => 'required|string',
-                            'is_multiple_answers' => 'required|boolean'
-
-                        ]
-                    );
-
-
-                // when validation of the data from the request fails
-                if ($validator->fails())
-                {
-                    return $this->errorResponse("Validation fails", $validator->errors());
-                }
-                $validatedData = $validator->validated();
-
-
-                //when validation is successful, save as a new question
-                $question = new Question();
-                $question->question = $validatedData['question'];
-                $question->options = $validatedData['options'];
-                $question->timeframe = $validatedData['timeframe'];
-                $question->correct_answers = $validatedData['correct_answers'];
-                $question->is_multiple_answers = $validatedData['is_multiple_answers'];
-                $question->category_id = $validatedData['category_id'];
-                $question->assessment_id = $validatedData['assessment_id'];
-                $question->save();
-
-                return $this->successResponse(true, "Question Added Successfully", $question);
-       }
-       else{
-        return $this->errorResponse(
-            'Query type not manual',
-            'Query fails',
-            Response::HTTP_NOT_FOUND
-        );
-       }
-
+    public function addManually(CreateQuestionRequest $request): JsonResponse
+    {
+        $data = $request->all();
+        try {
+            Question::create($data);
+            return $this->successResponse(true, 'Question created', Response::HTTP_CREATED);
+        } catch (Exception $e) {
+            return $this->errorResponse('Question not created', $e->getMessage());
+        }
     }
 
 
-    public function updateQuestion(Request $request, $quest_id, $ass_id)
+    public function updateQuestion(CreateQuestionRequest $request, $question_id)
     {
-        // attempts to validate data coming for the update of the question model
-        $validator = Validator::make($request->all(),[
+        try {
+            $updatedData = $request->all();
 
-                'question_id' => "required",
-                'assessment_id' => "required",
-                'category_id' => "required",
-                'question' => 'required|string',
-                'wrong_answers' => 'required|string',
-                'correct_answers' => 'required|string',
-                'option' => 'required|string',
-                'timeframe' => 'required|string',
-                'is_multiple_answer' => 'required|boolean'
+            // Get question by id
+            $question = Question::find($question_id);
 
-            ]
-        );
+            if (!$question) {
+                return $this->errorResponse(
+                    'Question does not exist',
+                    'Question not found',
+                    Response::HTTP_NOT_FOUND
+                );
+            }
+            $question->update($updatedData);
 
-        // when validation of the data from the request fails
-        if ($validator->fails())
-        {
-            return sendResponse(true, 422, "Validation fails", $validator->errors());
+            // success response
+            return $this->successResponse(true, 'Question updated successfully', Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->errorResponse('Question not fetched', $e->getMessage());
         }
+    }
 
-        $validatedData = $validator->validated();
+    public function getQuestByOrgId($org_id){
+        try {
+            $question = Question::where('org_id', $org_id)->get();
+            if(is_null($question)) {
+                return $this->errorResponse('No questions exist for this company', Response::HTTP_NOT_FOUND);
+            }
+            return $this->successResponse(true, 'OK', $question, Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->errorResponse('Questions not fetched', $e->getMessage());
+        }     
+    }
 
-        // fetech the Question to be updated
-
-        $question = Question::find($quest_id);
-
-        $question->question = $validatedData['question'];
-        $question->options = $validatedData['options'];
-        $question->timeframe = $validatedData['timeframe'];
-        $question->correct_answers = $validatedData['correct_answers'];
-        $question->is_multiple_answer = $validatedData['is_multiple_answer'];
-        $question->category_id = $validatedData['category_id'];
-        $question->assessment_id = $validatedData['ass_id'];
-        $question->save();
-
-
-        return sendResponse(true, 200, "Question Updated Successfully", $question);
-
+    public function getByCategoryId(string $id): JsonResponse
+    {
+        $question = Question::where(["category_id" => $id])->first();
+        if (!$question) return $this->errorResponse("Question not found", true, Response::HTTP_NOT_FOUND);
+        return $this->successResponse(true, "Successful", $question, Response::HTTP_OK);
     }
 }
