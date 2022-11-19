@@ -154,9 +154,6 @@ class AuthenticateController extends Controller {
     }
 
     public function verifyEmail(Request $request, $id, $token){
-        // get params
-        $id = $request->id;
-
         // verify if that user exists
         $user = User::where("id", $id);
         $token = Token::where("token", $token);
@@ -166,6 +163,12 @@ class AuthenticateController extends Controller {
         }
         if($token->count() == 0){
             return $this->errorResponse('Invalid verification link or verification expires',"Invalid verification link", 400);
+        }
+
+        // check if user has been verified already
+        $users = User::where("id", $id);
+        if($users->first()["isVerified"] == 1){
+            return $this->successResponse(true, "Email has been verified already", null, 200);
         }
 
         // update verified user status
