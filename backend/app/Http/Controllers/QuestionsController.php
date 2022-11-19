@@ -47,4 +47,16 @@ class QuestionsController extends Controller
             return $this->errorResponse('Question not fetched', $e->getMessage());
         }
     }
+
+    public function getQuestionsByOrgId($org_id){
+        try {
+            $question = Question::where('org_id', $org_id)->get();
+            if(is_null($question)) {
+                return $this->errorResponse('No questions exist for this company', Response::HTTP_NOT_FOUND);
+            }
+            return $this->successResponse(true, 'OK', $question, 201);
+        } catch (Exception $e) {
+            return $this->errorResponse('Questions not fetched', $e->getMessage());
+        }     
+    }
 }
