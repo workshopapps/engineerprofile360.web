@@ -52,7 +52,6 @@ class QuestionsController extends Controller
         }
     }
 
-<<<<<<< HEAD
     public function getQuestByOrgId($org_id){
         try {
             $question = Question::where('org_id', $org_id)->get();
@@ -65,7 +64,6 @@ class QuestionsController extends Controller
         }     
     }
 }
-=======
     public function getByCategoryId(string $id): JsonResponse
     {
         $question = Question::where(["category_id" => $id])->first();
@@ -73,4 +71,3 @@ class QuestionsController extends Controller
         return $this->successResponse(true, "Successful", $question, Response::HTTP_OK);
     }
 }
->>>>>>> 1025b7bc35fd10a40d34aeb570c3784bb37e6352
