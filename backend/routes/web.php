@@ -25,4 +25,4 @@ Route::get('/doc', function () {
 
 
 // reset password
-Route::get("/reset-password/{id}/{token}", [AuthenticateController::class, "verifyPasswordReset"]);
+// Route::get("/reset-password/{id}/{token}", [AuthenticateController::class, "verifyPasswordReset"]);
