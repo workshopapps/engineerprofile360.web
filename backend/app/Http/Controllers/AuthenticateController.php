@@ -37,7 +37,7 @@ class AuthenticateController extends Controller {
         
         // check if a user has an account
         if($users->count() == 0){
-            return $this->errorResponse("Invalid credentials supplied.", true, 400);
+            return $this->errorResponse("Invalid credentials supplied....", true, 400);
         }
 
         // check password
@@ -91,15 +91,18 @@ class AuthenticateController extends Controller {
         $payload = json_decode($request->getContent(), true);
         $email = $payload["email"];
         $username = $payload["username"];
+        $fullname = $payload["full_name"];
         $password = $payload["password"];
 
         // validate credentials
         $validator = Validator::make([
             "email"=>$email,
             "username"=>$username,
+            "full_name"=>$fullname,
             "password"=>$password,
         ],[
             'email' => 'required|string|email|max:255|unique:users',
+            'full_name' => 'required|string|min:6',
             'username' => 'required|string|min:6',
             'password' => 'required|string|min:4',
         ]);
@@ -120,8 +123,8 @@ class AuthenticateController extends Controller {
             $uid = Str::uuid();
             $hash = Hash::make($password);
             $userResp = [
-                "id"=> $uid,
-                "full_name"=>$username,
+                "user_id"=> $uid,
+                "full_name"=>$fullname,
                 "email"=> $email,
                 "username"=> $username,
                 "isVerified"=> false,
@@ -132,8 +135,8 @@ class AuthenticateController extends Controller {
 
             // client data
             $clientExtractedData = [
-                "id"=> $uid,
-                "full_name"=>$username,
+                "user_id"=> $uid,
+                "full_name"=>$fullname,
                 "email"=> $email,
                 "username"=> $username,
                 "isVerified"=> false,
