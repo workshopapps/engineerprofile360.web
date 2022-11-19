@@ -74,10 +74,16 @@ Route::post("/test_csv", function (Request $req) {
 Route::prefix("auth")->group(function () {
     // Route::post('register', [AuthenticationController::class, 'register']);
     Route::post('register', [AuthenticateController::class, "registerUser"]);
-    Route::post('login', [AuthenticateController::class, 'loginUser']);
+    Route::post('login', [AuthenticateController::class, 'UserAndEmployeeLogin']);
     Route::get('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
     Route::post('logout', [AuthenticationController::class, 'logout']);
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
+
+    Route::prefix("password")->group(function(){
+        // forgot password
+        Route::get("/forgot-password/{email}", [AuthenticateController::class, "forgotPassword"]);
+        Route::post("/reset/{id}/{token}", [AuthenticateController::class, "verifyPasswordReset"]);
+    });
 });
 
 // company route
