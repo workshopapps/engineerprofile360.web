@@ -10,6 +10,7 @@ use Firebase\JWT\JWT;
 use App\Mail\Signup;
 use App\Models\Token;
 use DateTime;
+use Firebase\JWT\Key;
 use Illuminate\Support\Facades\Mail;
 use Mailer;
 
@@ -55,11 +56,12 @@ class Helper
 
     public function decodeJwt($token)
     {
-        $secretKey  = config("jwt.secret");
-        return JWT::decode(
+        $key  = config("jwt.secret");
+        $decoded =  JWT::decode(
             $token,
-            $secretKey
+            new Key($key, 'HS256')
         );
+        return $decoded;
     }
 
     public function emailVerification($email, $user_id){
