@@ -12,7 +12,7 @@ class UserScoreController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('auth:api');
+        $this->middleware('auth:api');
     }
 
     /**
@@ -36,8 +36,8 @@ class UserScoreController extends Controller
      */
     public function getScores(Request $request)
     {
-        $userScore = UserScore::where(UserScoreService::getCondition($request));
+        $userScore = UserScore::where(UserScoreService::getCondition($request))->first();
         if (!$userScore) return $this->errorResponse("User Score not found", true, Response::HTTP_NOT_FOUND);
-        return $this->successResponse(true, "Successful", $userScore->get(), Response::HTTP_OK);
+        return $this->successResponse(true, "Successful", $userScore, Response::HTTP_OK);
     }
 }

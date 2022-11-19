@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Http\Request;
@@ -89,6 +88,7 @@ Route::prefix("company")->group(function () {
 // questions route operations
 Route::prefix("question")->group(function () {
     Route::post('add', [QuestionsController::class, 'addManually']);
+    Route::get('category/{id}', [QuestionsController::class, 'getByCategoryId']);
     Route::put('{questionId}/{assessmenId}/update', [QuestionsController::class, 'updateQuestion']);
 });
 
@@ -99,9 +99,11 @@ Route::prefix("category")->group(function () {
 
 });
 
-//AddEmployeeByCSV
+//Employee route
 Route::prefix('employee')->group(function () {
     Route::post('add', [EmployeeController::class, 'addEmpCSV']);
+    Route::get('{id}', [EmployeeController::class, 'getById']);
+    Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
 });
 
 
