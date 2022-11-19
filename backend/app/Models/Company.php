@@ -14,4 +14,5 @@ class Company extends Model
 
     protected $fillable = [];
     use HasFactory, Uuids;
+
 }
