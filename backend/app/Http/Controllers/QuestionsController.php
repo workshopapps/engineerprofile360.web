@@ -7,7 +7,7 @@ use Exception;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateQuestionRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 class QuestionsController extends Controller
 {
