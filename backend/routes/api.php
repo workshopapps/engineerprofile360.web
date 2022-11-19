@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Http\Request;
@@ -38,8 +37,8 @@ Route::get("/test", function () {
 //USERSCORE
 Route::prefix("userscore")->group(function () {
     Route::get('/employee/{employeeId}', [UserScoreController::class, 'getScores']);
-    Route::get('/assessment/{assId}', [UserScoreController::class, 'getScores']);
-    Route::get('/{employeeId}/{assId}', [UserScoreController::class, 'getScores']);
+    Route::get('/assessmentId', [UserScoreController::class, 'getScores']);
+    Route::get('/{employeeId}/{assessmentId}', [UserScoreController::class, 'getScores']);
     Route::post('/create', [UserScoreController::class, 'store']);
 });
 
@@ -55,10 +54,10 @@ Route::prefix("user")->group(function () {
 
 //Assessment routes operations
 Route::prefix("assessment")->group(function () {
-    Route::delete('/{assId}/delete', [AssessmentController::class, 'deleteAss']);
+    Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAss']);
     Route::post('/create', [AssessmentController::class, 'createAssessment']);
-    Route::post('/{id}', [AssessmentController::class, 'updateAssessment']);
-    Route::get('/get/{org_id}', [AssessmentController::class, 'getAssByOrgId']);
+    Route::put('/{assessmentId}', [AssessmentController::class, 'updateAssessment']);
+    Route::get('/{organisationId}', [AssessmentController::class, 'getAssByOrgId']);
 });
 
 // Test Employee Adding using csv file
@@ -73,10 +72,16 @@ Route::post("/test_csv", function (Request $req) {
 Route::prefix("auth")->group(function () {
     // Route::post('register', [AuthenticationController::class, 'register']);
     Route::post('register', [AuthenticateController::class, "registerUser"]);
-    Route::post('login', [AuthenticateController::class, 'loginUser']);
+    Route::post('login', [AuthenticateController::class, 'UserAndEmployeeLogin']);
     Route::get('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
     Route::post('logout', [AuthenticationController::class, 'logout']);
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
+
+    Route::prefix("password")->group(function(){
+        // forgot password
+        Route::get("/forgot-password/{email}", [AuthenticateController::class, "forgotPassword"]);
+        Route::post("/reset/{id}/{token}", [AuthenticateController::class, "verifyPasswordReset"]);
+    });
 });
 
 // company route
@@ -89,26 +94,25 @@ Route::prefix("company")->group(function () {
 // questions route operations
 Route::prefix("question")->group(function () {
     Route::post('add', [QuestionsController::class, 'addManually']);
-    Route::put('{questId}/{assId}/update', [QuestionsController::class, 'updateQuestion']);
     Route::get('get/{org_id}', [QuestionsController::class, 'getQuestByOrgId']);
+    Route::get('category/{id}', [QuestionsController::class, 'getByCategoryId']);
+    Route::put('{questionId}/{assessmenId}/update', [QuestionsController::class, 'updateQuestion']);
 });
 
 // Categories routes operation
 Route::prefix("category")->group(function () {
-    Route::put('{catId}/update', [CategoryController::class, 'updateCategory']);
+    Route::put('{categoryId}/update', [CategoryController::class, 'updateCategory']);
+    Route::post('add', [CategoryController::class, 'createCategory']);
+
 });
 
 //Employee Routes
 Route::prefix('employee')->group(function () {
     Route::post('add', [EmployeeController::class, 'addEmpCSV']);
+    Route::get('{id}', [EmployeeController::class, 'getById']);
+    Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
 });
 
-
-// Category routes
-Route::controller(CategoryController::class)->group(function () {
-    Route::post('categories/create', 'createCategory');
-    Route::post('add', [CategoryController::class, 'createCategory']);
-});
 
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);
