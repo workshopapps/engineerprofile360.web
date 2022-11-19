@@ -71,5 +71,28 @@ class AssessmentController extends Controller
         }
 
     }
+
+
+    // @juddee ---- get organization assessments 
+    public function getAssByOrgId(Request $request, $organization_id)
+    {
+        try{
+            $assessments = Assessment::where('org_id',$organization_id)->get();
+            if(!$assessments) 
+            {
+                return $this->errorResponse('No Companies assessments yet!', $e->getMessage());
+            }
+
+            return $this->successResponse(true, "All Company assessments", [
+                    "data" => [
+                    'assessments' => $assessments,
+                    ]
+                ]);
+
+        } catch (Exception $e) {
+            return $this->errorResponse('Company assessments not found', $e->getMessage());
+        }
+
+    }
 }
 
