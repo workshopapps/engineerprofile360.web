@@ -1,5 +1,4 @@
-
-	<?php
+<?php
 
 use App\Http\Controllers\QuestionsController;
 use Illuminate\Http\Request;
@@ -30,14 +29,28 @@ use App\Http\Controllers\AssessmentController;
 // });
 
 // other route functions here
-Route::get("/test", function () {
+// Route::get("/test", function () {
+//     // execute the function
+//     return sendResponse(false, 200, "Test case pass", null);
+// });
+
+Route::get("/userscore/test/?type=csv", function (Request $request) {
     // execute the function
-    return sendResponse(false, 200, "Test case pass", null);
+    return sendResponse(false, 200, "csv", null);
 });
+
+Route::get("/test/?type=manual", function () {
+    // execute the function
+    return sendResponse(false, 200, "manual", null);
+});
+
 
 
 //USERSCORE
 Route::prefix("userscore")->group(function () {
+    Route::get('/test?type=csv', function (Request $request) {
+        return sendResponse(false, 200, $request->type, null);
+    });
     Route::get('/employee/{employeeId}', [UserScoreController::class, 'getScores']);
     Route::get('/assessment/{assId}', [UserScoreController::class, 'getScores']);
     Route::get('/{employeeId}/{assId}', [UserScoreController::class, 'getScores']);
