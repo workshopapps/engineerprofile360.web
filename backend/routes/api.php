@@ -9,13 +9,11 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UserScoreController;
 use App\Http\Controllers\AssessmentController;
-<<<<<<< HEAD
+
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CompaniesController;
-
-=======
 use App\Http\Controllers\AuthenticationController;
->>>>>>> b43d57ffd6cd2041faac54a3d597062f4d379695
+
 
 // util functions
 // employee csv file parser.
