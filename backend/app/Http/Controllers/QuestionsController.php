@@ -52,6 +52,18 @@ class QuestionsController extends Controller
         }
     }
 
+    public function getQuestByOrgId($org_id){
+        try {
+            $question = Question::where('org_id', $org_id)->get();
+            if(is_null($question)) {
+                return $this->errorResponse('No questions exist for this company', Response::HTTP_NOT_FOUND);
+            }
+            return $this->successResponse(true, 'OK', $question, Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->errorResponse('Questions not fetched', $e->getMessage());
+        }
+    }
+
     public function getByCategoryId(string $id): JsonResponse
     {
         $question = Question::where(["category_id" => $id])->first();
@@ -59,11 +71,11 @@ class QuestionsController extends Controller
         return $this->successResponse(true, "Successful", $question, Response::HTTP_OK);
     }
 
-    public function getQuestByAssId($ass_id)
+    public function getQuestionByAssessmentId($assessmentId)
     {
         try
         {
-            $questions = Question::where('assessment_id', $ass_id)->get();
+            $questions = Question::where('assessment_id', $assessmentId)->get();
 
             if(is_null($questions)){
                 return $this->errorResponse('No Question Exist for this Assessment ID', Response::HTTP_NOT_FOUND);
@@ -76,3 +88,4 @@ class QuestionsController extends Controller
         }
     }
 }
+
