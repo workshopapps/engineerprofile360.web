@@ -12,7 +12,7 @@ use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers;
+
 
 // util functions
 // employee csv file parser.
@@ -80,8 +80,9 @@ Route::prefix("auth")->group(function () {
 
 // company route
 Route::prefix("company")->group(function () {
-    Route::get('all', [CompanyController::class, 'getCompanies']);
-    Route::put('update', [CompanyController::class, 'updateCompany']);
+    Route::get('all', [CompanyController::class, 'allCompanyInfo']);
+    Route::put('update', [CompanyController::class, 'updateCompanyInfo']);
+    Route::get('{id}', [CompanyController::class, 'byCompanyId']);
 });
 
 // questions route operations
