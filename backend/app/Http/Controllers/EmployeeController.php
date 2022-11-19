@@ -55,6 +55,6 @@ class EmployeeController extends Controller
         $employee = Employee::find($employeeId);
         if (is_null($employee)) return $this->errorResponse('Employee does not exist', true, Response::HTTP_NOT_FOUND);
         if ($employee->update($request->validated())) return $this->successResponse(true, 'Successful', $employee, Response::HTTP_OK);
-        return $this->errorResponse("Employee info wasn't modified", true, Response::NOT_MODIFIED);
+        return $this->errorResponse("Employee info wasn't modified", true, Response::HTTP_NOT_MODIFIED);
     }
 }
