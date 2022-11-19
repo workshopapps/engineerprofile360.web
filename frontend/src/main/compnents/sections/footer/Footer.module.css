@@ -1,5 +1,5 @@
 .container {
-  height: 542px;
+  height: 642px;
   width: 80%;
   /* height: auto; */
   margin: 0 auto;
@@ -10,6 +10,12 @@
   display: flex;
   justify-content: space-between;
 }
+.logoSide {
+  display: flex;
+  flex-direction: column;
+  width: 660px;
+  gap: 2rem;
+}
 
 .link__heading {
   font-family: "inter";
@@ -19,7 +25,76 @@
 }
 
 .text {
-  font-family: roboto;
+  font-family: "inter";
+  font-style: normal;
+  font-weight: 400;
   font-size: 16px;
+  color: #393a32;
+}
+
+.link {
+  display: flex;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  color: black;
+  text-decoration: none;
+  gap: 14px;
+}
+.link__col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.input_field {
+  padding: 15px;
+  width: 347px;
+  height: 46px;
+  border-radius: 8px;
+  border: 2px solid #8a8886;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.btn__subscribe {
+  padding: 15px;
+  width: 170px;
+  height: 55px;
+  background-color: white;
+  border-radius: 8px;
+  border: 2px solid #8a8886;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  color: #2667ff;
+  margin-left: 2%;
+}
+
+.divider {
+  margin-top: 5rem;
+  background-color: #171ee0;
+  width: 100%;
+  height: 1px;
+  margin-bottom: 5rem;
+}
+.lower__part {
+  display: flex;
+  justify-content: space-between;
+}
+.right {
+  font-family: "Inter";
   font-weight: lighter;
+  font-size: 9px;
+  color: #40403e;
+
+  line-height: 16px;
+}
+.lower__links {
+  display: flex;
+  gap: 25px;
 }
