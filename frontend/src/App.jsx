@@ -1,10 +1,11 @@
 import React from "react"
-import Home from "../src/main/pages"
+import UserSupport from "./ui/pages/UserSupport"
+// import UserSupport from "./main/pages/UserSupport"
 
 const App = () => {
   return (
     <div>
-      <Home />
+      <UserSupport />
     </div>
   )
 }
