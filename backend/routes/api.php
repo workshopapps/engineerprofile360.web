@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Http\Request;
@@ -99,6 +98,7 @@ Route::prefix("category")->group(function () {
 //AddEmployeeByCSV
 Route::prefix('employee')->group(function () {
     Route::post('add', [EmployeeController::class, 'addEmpCSV']);
+    Route::get('{id}', [EmployeeController::class, 'getById']);
 });
 
 
