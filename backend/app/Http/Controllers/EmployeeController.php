@@ -21,7 +21,7 @@ class EmployeeController extends Controller
      */
     public function byCompId($company_id) {
         try {
-            $employees = Employee::where('org_id', $company_id)->paginate(15);
+            $employees = Employee::where('org_id', $company_id)->paginate(5);
             if( !$employees) {
                 return $this->errorResponse(
                     'Company Emoyees do not exist',
