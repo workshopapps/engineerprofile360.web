@@ -9,4 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     use HasFactory, Uuids;
+
+    //role-incase 
+    protected $fillable = [
+        'email', 'fullname', 'username' 
+    ];
 }
