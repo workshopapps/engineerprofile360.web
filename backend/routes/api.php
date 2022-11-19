@@ -8,8 +8,12 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UserScoreController;
 use App\Http\Controllers\AssessmentController;
+use App\Http\Controllers\AuthenticateController;
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers;
 
 // util functions
 // employee csv file parser.
@@ -25,16 +29,11 @@ use App\Http\Controllers\AuthenticationController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-// middleware instance here
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
 // other route functions here
-// Route::get("/test", function () {
-//     // execute the function
-//     return sendResponse(false, 200, "Test case pass", null);
-// });
+Route::get("/test", function () {
+    // execute the function
+    return $this->successResponse(true, "Test case pass", null, 200);
+});
 
 //USERSCORE
 Route::prefix("userscore")->group(function () {
@@ -56,9 +55,10 @@ Route::prefix("user")->group(function () {
 
 //Assessment routes operations
 Route::prefix("assessment")->group(function () {
-    Route::delete('{assId}/delete', [AssessmentController::class, 'deleteAssessment']);
-    Route::post('create', [AssessmentController::class, 'createAssessment']);
-    Route::post('{id}', [AssessmentController::class, 'updateAssessment']);
+    Route::delete('/{assId}/delete', [AssessmentController::class, 'deleteAss']);
+    Route::post('/create', [AssessmentController::class, 'createAssessment']);
+    Route::post('/{id}', [AssessmentController::class, 'updateAssessment']);
+    Route::get('/get/{org_id}', [AssessmentController::class, 'getAssByOrgId']);
 });
 
 // Test Employee Adding using csv file
@@ -71,8 +71,10 @@ Route::post("/test_csv", function (Request $req) {
 
 // authentication route
 Route::prefix("auth")->group(function () {
-    Route::post('register', [AuthenticationController::class, 'register']);
-    Route::post('login', [AuthenticationController::class, 'login']);
+    // Route::post('register', [AuthenticationController::class, 'register']);
+    Route::post('register', [AuthenticateController::class, "registerUser"]);
+    Route::post('login', [AuthenticateController::class, 'loginUser']);
+    Route::get('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
     Route::post('logout', [AuthenticationController::class, 'logout']);
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
 });
@@ -92,6 +94,18 @@ Route::prefix("question")->group(function () {
 // Categories routes operation
 Route::prefix("category")->group(function () {
     Route::put('{catId}/update', [CategoryController::class, 'updateCategory']);
+});
+
+//AddEmployeeByCSV
+Route::prefix('employee')->group(function () {
+    Route::post('add', [EmployeeController::class, 'addEmpCSV']);
+    Route::get('{id}', [EmployeeController::class, 'getById']);
+});
+
+
+// Category routes
+Route::controller(CategoryController::class)->group(function () {
+    Route::post('categories/create', 'createCategory');
     Route::post('add', [CategoryController::class, 'createCategory']);
 });
 
