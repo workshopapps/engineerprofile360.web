@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Http\Request;
@@ -15,7 +14,6 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CompaniesController;
 =======
 use App\Http\Controllers\AuthenticateController;
-use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CompanyController;
 >>>>>>> e4d36a14956277d27b8a4b94f6e900088ea9160e
 use App\Http\Controllers\AuthenticationController;
@@ -118,6 +116,7 @@ Route::prefix("category")->group(function () {
 //AddEmployeeByCSV
 Route::prefix('employee')->group(function () {
     Route::post('add', [EmployeeController::class, 'addEmpCSV']);
+    Route::get('{id}', [EmployeeController::class, 'getById']);
 });
 
 
