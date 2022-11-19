@@ -19,6 +19,7 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    //
     public function byCompId($company_id) {
         try {
             $employees = Employee::where('org_id', $company_id)->paginate(5);
