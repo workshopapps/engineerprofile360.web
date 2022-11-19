@@ -5,6 +5,7 @@ import HomeHero from "../compnents/sections/homeHero/HomeHero"
 import HomeProduct from "../compnents/sections/homeProducts/HomeProduct"
 import HomeStarted from "../compnents/sections/homeStarted/HomeStarted"
 import HomeStats from "../compnents/sections/homeStats/HomeStats"
+import Footer from "../compnents/sections/footer/Footer"
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <HomeProduct />
       <HomeBlog />
       <HomeStarted />
+      <Footer />
     </div>
   )
 }

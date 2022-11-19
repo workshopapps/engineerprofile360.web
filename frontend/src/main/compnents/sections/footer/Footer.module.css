@@ -1,0 +1,25 @@
+.container {
+  height: 542px;
+  width: 80%;
+  /* height: auto; */
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+.upper {
+  margin-top: 10rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.link__heading {
+  font-family: "inter";
+  font-size: 16px;
+  font-weight: 600;
+  color: #393a32;
+}
+
+.text {
+  font-family: roboto;
+  font-size: 16px;
+  font-weight: lighter;
+}
