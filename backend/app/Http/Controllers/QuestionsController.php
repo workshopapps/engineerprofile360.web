@@ -80,7 +80,7 @@ class QuestionsController extends Controller
             if(is_null($questions)){
                 return $this->errorResponse('No Question Exist for this Assessment ID', Response::HTTP_NOT_FOUND);
             }
-            return $this->successResponse(true, "OK", $questions);
+            return $this->successResponse(true, "OK", $questions, Response::HTTP_OK);
         }
         catch(Exception $e)
         {
