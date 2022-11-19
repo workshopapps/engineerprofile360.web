@@ -1,7 +1,7 @@
 import React from "react"
 import styles from "../homeHero/HomeHero.module.css"
-import HeroImg from "../../../assets/images/hero-img.svg"
-import FloatingImg from "../../../assets/images/hero-subimg.svg"
+import HeroImg from "../../../../assets/images/hero-img.svg"
+import FloatingImg from "../../../../assets/images/hero-subimg.svg"
 import HomeHeroButton from "../../molecules/homeHero/HomeHeroButton"
 
 export default function HomeHero() {

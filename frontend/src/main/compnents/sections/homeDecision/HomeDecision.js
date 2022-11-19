@@ -1,6 +1,6 @@
 import React from "react"
-import styles from "../homedecision/HomeDecision.module.css"
-import Preview from "../../../assets/images/preview.svg"
+import styles from "./HomeDecision.module.css"
+import Preview from "../../../../assets/images/preview.svg"
 
 export default function Homedecision() {
   return (
