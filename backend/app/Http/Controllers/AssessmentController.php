@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Assessment;
 use App\Http\Requests\AssessmentRequest;
+use App\Http\Requests\UpdateAssessmentRequest;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,10 +28,10 @@ class AssessmentController extends Controller
     }
 
     // @dreywandowski ---- delete an assessment
-    public function deleteAss($ass_id): JsonResponse
+    public function deleteAssessment($assessmentId): JsonResponse
     {
         try{
-            $assessment = Assessment::findorFail($ass_id);
+            $assessment = Assessment::findorFail($assessmentId);
 
             if( !$assessment) {
                 return $this->errorResponse(
@@ -48,16 +49,14 @@ class AssessmentController extends Controller
 
     }
 
-    public function updateAssessment(Request $request, $id){
-        try {
-            // $user = auth('sanctum')->user()->id;
-            $this->validate($request, [
-                'name'             =>'required',
-                'start_date'       =>'required',
-                'start_time'       =>'required',
-            ]);
+    public function updateAssessment(UpdateAssessmentRequest $request, $assessmentId)
+    {
+        try{
+             // $user = auth('sanctum')->user()->id;
+            $updatedData = $request->all();
+           
+            $assessment = Assessment::find($assessmentId);
 
-            $assessment = Assessment::findorFail($id);
             if( !$assessment ) {
                 return $this->errorResponse(
                     'Assessment does not exist',
@@ -65,12 +64,7 @@ class AssessmentController extends Controller
                     Response::HTTP_NOT_FOUND
                 );
             }
-
-            $assessment->name = $request->input('name');
-            $assessment->start_date = $request->input('start_date');
-            $assessment->start_date = $request->input('start_date');
-            $assessment->save();
-
+            $assessment->update($updatedData);
             return $this->successResponse(true, 'Assessment updated successfully', Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->errorResponse('Assessment not fetched', $e->getMessage());

@@ -14,14 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('companies', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->string("user_id");
+            $table->uuid('id');
             $table->string("name");
-            $table->string("org_mail")->uniqid();
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+            $table->string("org_mail");
+            $table->string('user_id');
             $table->timestamps();
         });
     }
