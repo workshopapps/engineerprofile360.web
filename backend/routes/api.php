@@ -11,6 +11,7 @@ use App\Http\Controllers\UserScoreController;
 use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers;
 
 // util functions
 // employee csv file parser.
@@ -34,7 +35,7 @@ use App\Http\Controllers\EmployeeController;
 // other route functions here
 Route::get("/test", function () {
     // execute the function
-    return sendResponse(false, 200, "Test case pass", null);
+    return $this->successResponse(true, "Test case pass", null, 200);
 });
 
 //USERSCORE

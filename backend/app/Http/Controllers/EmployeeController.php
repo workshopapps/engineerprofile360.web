@@ -36,14 +36,3 @@ class EmployeeController extends Controller
         }     
     }
 }
-
-try {
-    $category = Category::create([
-        'name' => $request->name,
-        'assessment_id' => $request->assessment_id
-    ]);
-
-    return $this->successResponse(true, 'Category created successfully', $category, 201);
-} catch (Exception $e) {
-    return $this->errorResponse('Category could not be created', $e->getMessage());
-}
