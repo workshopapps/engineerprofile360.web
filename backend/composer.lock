@@ -7,12 +7,8 @@
 <<<<<<< HEAD
     "content-hash": "6660784eed8d61fecaf75a055beb7b7e",
 =======
-<<<<<<< HEAD
-    "content-hash": "6660784eed8d61fecaf75a055beb7b7e",
-=======
     "content-hash": "20559e6e60abdf3e779ad6b2fc72f270",
 >>>>>>> 966077d9ebf397c80e03aa4a65ba4247c2fc4462
->>>>>>> 4d57dda88f932787e70304085bf116cb192d6ca6
     "packages": [
         {
             "name": "brick/math",
@@ -3141,22 +3137,6 @@
             "time": "2022-11-05T23:03:38+00:00"
         },
         {
-<<<<<<< HEAD
-            "name": "symfony/console",
-            "version": "v6.1.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/console.git",
-                "reference": "a1282bd0c096e0bdb8800b104177e2ce404d8815"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/a1282bd0c096e0bdb8800b104177e2ce404d8815",
-                "reference": "a1282bd0c096e0bdb8800b104177e2ce404d8815",
-                "shasum": ""
-            },
-            "require": {
-=======
             "name": "stella-maris/clock",
             "version": "0.1.6",
             "source": {
@@ -3218,7 +3198,6 @@
                 "shasum": ""
             },
             "require": {
->>>>>>> 4d57dda88f932787e70304085bf116cb192d6ca6
                 "php": ">=8.1",
                 "symfony/deprecation-contracts": "^2.1|^3",
                 "symfony/polyfill-mbstring": "~1.0",
