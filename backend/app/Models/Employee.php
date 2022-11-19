@@ -14,4 +14,6 @@ class Employee extends Model
     protected $fillable = [
         'email', 'fullname', 'username' 
     ];
+
+    protected $hidden = ['hash']; 
 }

@@ -95,10 +95,11 @@ Route::prefix("category")->group(function () {
     Route::put('{catId}/update', [CategoryController::class, 'updateCategory']);
 });
 
-//AddEmployeeByCSV
+//Employee route
 Route::prefix('employee')->group(function () {
     Route::post('add', [EmployeeController::class, 'addEmpCSV']);
     Route::get('{id}', [EmployeeController::class, 'getById']);
+    Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
 });
 
 
