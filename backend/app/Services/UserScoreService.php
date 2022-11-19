@@ -15,12 +15,4 @@ class UserScoreService
     {
         return count($request['categories']) === count($request['passed_questions']) ? 1 : 0;
     }
-
-    public static function getCondition($request): array
-    {
-        $condition = array();
-        if (isset($request->employeeId)) $condition["employee_id"] = $request->employeeId;
-        if (isset($request->assId)) $condition["assessment_id"] = $request->assId;
-        return $condition;
-    }
 }
