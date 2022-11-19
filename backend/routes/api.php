@@ -1,13 +1,15 @@
 <?php
 
-use App\Http\Controllers\QuestionsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
 // use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UserScoreController;
-use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\AssessmentController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\AuthenticationController;
 
 // util functions
 // employee csv file parser.
@@ -39,6 +41,7 @@ Route::get("/userscore/test/?type=csv", function (Request $request) {
     return sendResponse(false, 200, "csv", null);
 });
 
+<<<<<<< HEAD
 Route::get("/test/?type=manual", function () {
     // execute the function
     return sendResponse(false, 200, "manual", null);
@@ -46,6 +49,8 @@ Route::get("/test/?type=manual", function () {
 
 
 
+=======
+>>>>>>> 3d6dc1eb14585d4e7f264136b1b7159daff53374
 //USERSCORE
 Route::prefix("userscore")->group(function () {
     Route::get('/test?type=csv', function (Request $request) {
@@ -59,20 +64,19 @@ Route::prefix("userscore")->group(function () {
 
 
 //Users operation routes
-
-Route::prefix("users")->group(function () {
+Route::prefix("user")->group(function () {
     Route::get('{id}', [UserController::class, 'getUserById']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
-    //updateuserinfo
-    Route::put('/{userId}/update', [UserController::class, 'updateruserinfo']);
+    Route::put('{userId}/update', [UserController::class, 'updaterUserInfo']);
+    Route::get('all', [UserController::class, 'allUsers']);
 });
 
 
-// assessment routes
+//Assessment routes operations
 Route::prefix("assessment")->group(function () {
-    Route::delete('/{assId}/delete', [AssessmentController::class, 'deleteAss']);
-    Route::post('/create', [AssessmentController::class, 'create_assessment']);
-    Route::post('/{id}', [AssessmentController::class, 'update']);
+    Route::delete('{assId}/delete', [AssessmentController::class, 'deleteAssessment']);
+    Route::post('create', [AssessmentController::class, 'createAssessment']);
+    Route::post('{id}', [AssessmentController::class, 'updateAssessment']);
 });
 
 // Test Employee Adding using csv file
@@ -91,18 +95,22 @@ Route::prefix("auth")->group(function () {
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
 });
 
-
-// questions controller route
-Route::prefix("questions")->group(function () {
-    Route::put('/{questId}/{assId}/update', [QuestionsController::class, 'updateQuestion']);
-    Route::put('/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
+// company route
+Route::prefix("company")->group(function () {
+    Route::get('all', [CompanyController::class, 'getCompanies']);
+    Route::put('update', [CompanyController::class, 'updateCompany']);
 });
 
-Route::put('questions/update/{quest_id}/{ass_id}', [QuestionsController::class, 'updateQuestion']);
-Route::group(['prefix' => 'auth'], function ($router) {
-    Route::post('login', [AuthenticationController::class, 'login']);
-    Route::post('logout', [AuthenticationController::class, 'logout']);
-    Route::post('refresh', [AuthenticationController::class, 'refresh']);
+// questions route operations
+Route::prefix("question")->group(function () {
+    Route::post('add', [QuestionsController::class, 'addManually']);
+    Route::put('{questId}/{assId}/update', [QuestionsController::class, 'updateQuestion']);
+});
+
+// Categories routes operation
+Route::prefix("category")->group(function () {
+    Route::put('{catId}/update', [CategoryController::class, 'updateCategory']);
+    Route::post('add', [CategoryController::class, 'createCategory']);
 });
 
 Route::fallback(function () {
