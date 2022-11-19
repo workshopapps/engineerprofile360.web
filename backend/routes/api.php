@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Http\Request;
@@ -10,11 +9,10 @@ use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UserScoreController;
 use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\AuthenticateController;
-use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers;
+
 
 // util functions
 // employee csv file parser.
@@ -39,8 +37,8 @@ Route::get("/test", function () {
 //USERSCORE
 Route::prefix("userscore")->group(function () {
     Route::get('/employee/{employeeId}', [UserScoreController::class, 'getScores']);
-    Route::get('/assessment/{assId}', [UserScoreController::class, 'getScores']);
-    Route::get('/{employeeId}/{assId}', [UserScoreController::class, 'getScores']);
+    Route::get('/assessmentId', [UserScoreController::class, 'getScores']);
+    Route::get('/{employeeId}/{assessmentId}', [UserScoreController::class, 'getScores']);
     Route::post('/create', [UserScoreController::class, 'store']);
 });
 
@@ -56,10 +54,10 @@ Route::prefix("user")->group(function () {
 
 //Assessment routes operations
 Route::prefix("assessment")->group(function () {
-    Route::delete('/{assId}/delete', [AssessmentController::class, 'deleteAss']);
+    Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAss']);
     Route::post('/create', [AssessmentController::class, 'createAssessment']);
-    Route::post('/{id}', [AssessmentController::class, 'updateAssessment']);
-    Route::get('/get/{org_id}', [AssessmentController::class, 'getAssByOrgId']);
+    Route::put('/{assessmentId}', [AssessmentController::class, 'updateAssessment']);
+    Route::get('/{organisationId}', [AssessmentController::class, 'getAssByOrgId']);
 });
 
 // Test Employee Adding using csv file
@@ -88,32 +86,32 @@ Route::prefix("auth")->group(function () {
 
 // company route
 Route::prefix("company")->group(function () {
-    Route::get('all', [CompanyController::class, 'getCompanies']);
-    Route::put('update', [CompanyController::class, 'updateCompany']);
+    Route::get('all', [CompanyController::class, 'allCompanyInfo']);
+    Route::put('update', [CompanyController::class, 'updateCompanyInfo']);
+    Route::get('{id}', [CompanyController::class, 'byCompanyId']);
 });
 
 // questions route operations
 Route::prefix("question")->group(function () {
     Route::post('add', [QuestionsController::class, 'addManually']);
-    Route::put('{questId}/{assId}/update', [QuestionsController::class, 'updateQuestion']);
+    Route::get('category/{id}', [QuestionsController::class, 'getByCategoryId']);
+    Route::put('{questionId}/{assessmenId}/update', [QuestionsController::class, 'updateQuestion']);
 });
 
 // Categories routes operation
 Route::prefix("category")->group(function () {
-    Route::put('{catId}/update', [CategoryController::class, 'updateCategory']);
+    Route::put('{categoryId}/update', [CategoryController::class, 'updateCategory']);
+    Route::post('add', [CategoryController::class, 'createCategory']);
+
 });
 
-//AddEmployeeByCSV
+//Employee route
 Route::prefix('employee')->group(function () {
     Route::post('add', [EmployeeController::class, 'addEmpCSV']);
+    Route::get('{id}', [EmployeeController::class, 'getById']);
+    Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
 });
 
-
-// Category routes
-Route::controller(CategoryController::class)->group(function () {
-    Route::post('categories/create', 'createCategory');
-    Route::post('add', [CategoryController::class, 'createCategory']);
-});
 
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);

@@ -23,7 +23,7 @@ class UserScoreController extends Controller
      */
     public function store(UserScoreStoreRequest $request)
     {
-        if (!UserScoreService::categoryMatchesScores($request->validated())) return $this->errorResponse("Couldn't store user score", "The passed questions doesn't match the categories supplied", Response::HTTP_UNPROCESSABLE_ENTITY);
+        if (!UserScoreService::categoryMatchesScores($request->validated())) return $this->errorResponse("The passed questions doesn't match the categories supplied", true, Response::HTTP_UNPROCESSABLE_ENTITY);
         $userScore = UserScore::create(UserScoreService::prepareRequest($request->validated()));
         return $this->successResponse(true, "User score was added successfully!", $userScore, Response::HTTP_OK);
     }
@@ -36,8 +36,8 @@ class UserScoreController extends Controller
      */
     public function getScores(Request $request)
     {
-        $userScore = UserScore::where(UserScoreService::getCondition($request));
-        if (!$userScore->exists()) return $this->errorResponse("Not found", "User Score not found", Response::HTTP_NOT_FOUND);
-        return $this->successResponse(true, "Successful", $userScore->get(), Response::HTTP_OK);
+        $userScore = UserScore::where(UserScoreService::getCondition($request))->first();
+        if (!$userScore) return $this->errorResponse("User Score not found", true, Response::HTTP_NOT_FOUND);
+        return $this->successResponse(true, "Successful", $userScore, Response::HTTP_OK);
     }
 }
