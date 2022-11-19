@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use \Illuminate\Http\Request;
 use App\Http\Requests\UserScoreStoreRequest;
 use App\Services\UserScoreService;
+use App\Models\UserScore;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserScoreController extends Controller
 {
@@ -21,17 +23,21 @@ class UserScoreController extends Controller
      */
     public function store(UserScoreStoreRequest $request)
     {
-        return UserScoreService::addUserScore($request->validated());
+        if (!UserScoreService::categoryMatchesScores($request->validated())) return $this->errorResponse("The passed questions doesn't match the categories supplied", true, Response::HTTP_UNPROCESSABLE_ENTITY);
+        $userScore = UserScore::create(UserScoreService::prepareRequest($request->validated()));
+        return $this->successResponse(true, "User score was added successfully!", $userScore, Response::HTTP_OK);
     }
 
     /**
-     * Get all scores 
+     * Get user scores 
      *
      * @param  Request  $request
      * @return Response
      */
     public function getScores(Request $request)
     {
-        return UserScoreService::getUserScore($request);
+        $userScore = UserScore::where(UserScoreService::getCondition($request))->first();
+        if (!$userScore) return $this->errorResponse("User Score not found", true, Response::HTTP_NOT_FOUND);
+        return $this->successResponse(true, "Successful", $userScore, Response::HTTP_OK);
     }
 }

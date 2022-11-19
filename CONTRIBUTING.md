@@ -79,7 +79,6 @@ How to run locally:
 
 2. move into the desired project folder `backend`
 3. Install all projects dependencies using `composer install`.
-4. run `php artisan key:generate` and `php artisan jwt:secret` before testing out the authentication
 
 > If you dont have composer installed, download composer with this [link](https://getcomposer.org/download/).
 

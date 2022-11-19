@@ -2,7 +2,7 @@ import React from "react";
 import Home from "./pages";
 import { Blog } from "./pages/Blog";
 
-function App() {
+const App = () => {
   return (
     <div>
       <Home />
