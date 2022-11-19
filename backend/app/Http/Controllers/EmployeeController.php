@@ -6,6 +6,7 @@ use CsvParser;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Response;
 use App\Models\Employee;
+use Exception;
 
 class EmployeeController extends Controller
 {
@@ -20,17 +21,29 @@ class EmployeeController extends Controller
                 $result = $csv->parseEmployeeCsv($file); 
                 if($result["error"] == false && $result["message"] == "csv parsed"){
                     $json = $result['data'];
-                    $employee = Employee::create($json);
-                    if($employee){
-                        return sendResponse(true, 200, "Employee CSV Uploaded Successfully", $employee);
-                    }else{
-                        return sendResponse(true, 500, "Database Insert Error", $employee);
+
+                    try {
+                        $employee = Employee::create($json);            
+                        return $this->successResponse(true, 'Employee CSV Uploaded Successfully', $employee, 201);
+                    } catch (Exception $e) {
+                        return $this->errorResponse('CSV Upload failed', $e->getMessage());
                     }
                 } else {
                     //invalid file type
-                    return sendResponse(true, 400, "Invalid File Type", $result["error"]);
+                    return $this->errorResponse("Invalid File Type", $result["error"]);
                 }
             }   
         }     
     }
+}
+
+try {
+    $category = Category::create([
+        'name' => $request->name,
+        'assessment_id' => $request->assessment_id
+    ]);
+
+    return $this->successResponse(true, 'Category created successfully', $category, 201);
+} catch (Exception $e) {
+    return $this->errorResponse('Category could not be created', $e->getMessage());
 }

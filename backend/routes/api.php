@@ -1,16 +1,16 @@
 
 	<?php
 
-use App\Http\Controllers\QuestionsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-// use App\Http\Controllers\User\UserController;
-use App\Http\Controllers\UserScoreController;
-use App\Http\Controllers\AuthenticationController;
-use App\Http\Controllers\AssessmentController;
-use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\CategoryController;
+// use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\QuestionsController;
+use App\Http\Controllers\UserScoreController;
+use App\Http\Controllers\AssessmentController;
+use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\EmployeeController;
 
 // util functions
 // employee csv file parser.
@@ -57,7 +57,7 @@ Route::prefix("users")->group(function () {
 
 // assessment routes
 Route::prefix("assessment")->group(function () {
-    Route::delete('{assId}/delete', [AssessmentController::class, 'deleteAss']);
+    Route::delete('{assId}/delete', [AssessmentController::class, 'deleteAssessment']);
     Route::post('create', [AssessmentController::class, 'createAssessment']);
     Route::post('{id}', [AssessmentController::class, 'updateAssessment']);
 });
@@ -100,6 +100,11 @@ Route::prefix('employee')->group(function () {
     Route::post('add', [EmployeeController::class, 'addEmpCSV']);
 });
 
+
+// Category routes
+Route::controller(CategoryController::class)->group(function () {
+    Route::post('categories/create', 'createCategory');
+});
 
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);
