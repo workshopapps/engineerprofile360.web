@@ -1,5 +1,5 @@
 
-	<?php
+<?php
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -9,6 +9,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UserScoreController;
 use App\Http\Controllers\AssessmentController;
+use App\Http\Controllers\AuthenticateController;
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\EmployeeController;
@@ -28,11 +30,6 @@ use App\Http\Controllers;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-// middleware instance here
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
 // other route functions here
 Route::get("/test", function () {
     // execute the function
@@ -74,8 +71,10 @@ Route::post("/test_csv", function (Request $req) {
 
 // authentication route
 Route::prefix("auth")->group(function () {
-    Route::post('register', [AuthenticationController::class, 'register']);
-    Route::post('login', [AuthenticationController::class, 'login']);
+    // Route::post('register', [AuthenticationController::class, 'register']);
+    Route::post('register', [AuthenticateController::class, "registerUser"]);
+    Route::post('login', [AuthenticateController::class, 'loginUser']);
+    Route::get('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
     Route::post('logout', [AuthenticationController::class, 'logout']);
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
 });
