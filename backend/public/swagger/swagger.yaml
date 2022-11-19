@@ -1,3 +1,4 @@
+
 openapi: 3.0.0
 servers:
   # Added by API Auto Mocking Plugin
@@ -12,11 +13,14 @@ paths:
   /auth/register:
     post:
       tags:
-        - Register
+        - Authentication
+      description: 'Register user'
       operationId: register
       responses:
         '200':
-          description: successfully registered user
+          description: successful operation
+        '400':
+          description: Bad request
       requestBody:
         content:
           application/json:
@@ -26,17 +30,420 @@ paths:
   /auth/login:
     post:
       tags:
-        - Login
+        - Authentication
+      description: 'Login user'
       operationId: login
       responses:
         '200':
-          description: successfully logged user in
+          description: successful operation
+        '400':
+          description: Bad request
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/LoginInfo'
-  '/lighting/dimmers/{deviceId}/{value}':
+  # /auth/logout:
+  #   post:
+  #     tags:
+  #       - Authentication
+  #     description: 'Logout user'
+  #     operationId: logout
+  #     responses:
+  #       '200':
+  #         description: successful operation
+  #       '400':
+  #         description: Bad request
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: '#/components/schemas/LogoutInfo'
+  # /auth/refresh:
+  #   post:
+  #     tags:
+  #       - Authentication
+  #     description: 'Refresh token'
+  #     operationId: refresh
+  #     responses:
+  #       '200':
+  #         description: successful operation
+  #       '400':
+  #         description: Bad request
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: '#/components/schemas/Refresh'
+  "/auth/password/forgot-password/{email}":
+    get:
+      tags:
+        - Authentication
+      description: 'Forgot Password'
+      operationId: forgot password
+      parameters:
+        - name: email
+          in: path
+          required: true
+          type: string
+          format: email
+          example: "test@mail.com"
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Bad request
+  "/auth/password/reset/{id}/{token}":
+    post:
+      tags:
+        - Authentication
+      description: 'Reset Password'
+      operationId: reset password
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          format: uuid
+          example: "3998502f-f63a-4ba6-b84d-0d85a300dbb4"
+        - name: token
+          in: path
+          required: true
+          type: string
+          format: uuid
+          example: "79b3ac1d2fa1f1f31993"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPassword'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Bad request
+        '404':
+          description: Not Found
+  "/auth/verify/{id}/{token}":
+    get:
+      tags:
+        - Authentication
+      description: 'Email verification'
+      operationId: verify email
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Bad request
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          example: "3379cfe6-dd11-448f-b3be-47d191a7c724"
+        - name: token
+          in: path
+          required: true
+          type: string
+          example: "9cc2e4b47a6cf88aa4f7"
+  /company/all:
+    get:
+      tags:
+        - Company
+      description: 'Fetch all companies'
+      operationId: company
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Bad request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Company'
+  /company/update:
+    put:
+      tags:
+        - Company
+      description: "Update company's info"
+      operationId: update
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Bad request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyInfo'
+  /user/all:
+    get:
+      tags:
+        - Users
+      description: 'Fetch Users'
+      operationId: users
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Bad request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Users'
+    # fetch user
+  "/user/{userId}":
+    get:
+      tags:
+        - Users
+      description: 'Fetch User'
+      operationId: user
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Bad request
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+    # fetch verified user
+  "/user/verified/{userId}":
+    get:
+      tags:
+        - Users
+      description: 'Fetch Verified User'
+      operationId: verified_user
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Bad request
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+    # update user
+  "/user/{userId}/update":
+    put:
+      tags:
+        - Users
+      description: 'Update User'
+      operationId: update
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Bad request
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          example: "3998502f-f63a-4ba6-b84d-0d85a300dbb4"
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+    # create employee
+  /employee/add:
+    post:
+      tags:
+        - Employee
+      description: 'Create employee'
+      operationId: employee
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Bad request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Employee'
+    # create category
+  /category/add:
+    post:
+      tags:
+        - Category
+      description: 'Create Category'
+      operationId: category
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Bad request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+    # update category
+  /user/categoryId/update:
+    put:
+      tags:
+        - Category
+      description: 'Update Category'
+      operationId: update
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Bad request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+    # fetch assessment by organisation
+  /assessment/organisationId:
+    get:
+      tags:
+        - Assessment
+      description: 'Fetch assessment by organisation'
+      operationId: assessment
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Bad request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Assessment'
+    # update assessment
+  /assessment/assessmentId:
+    put:
+      tags:
+        - Assessment
+      description: 'Update assessment'
+      operationId: update
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Bad request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Assessment'
+    # create assessment
+  /assessment/create:
+    post:
+      tags:
+        - Assessment
+      description: 'Create Assessment'
+      operationId: assessment
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Bad request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Assessment'
+    # delete assessment
+  /assessment/assessmentId/delete:
+    delete:
+      tags:
+        - Assessment
+      description: 'Delete assessment'
+      operationId: assessment
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Bad request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Assessment'
+    # create question
+  /question/add:
+    post:
+      tags:
+        - Question
+      description: 'Create question'
+      operationId: question
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Bad request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Question'
+    # update question
+  /question/questionId/assessmentId/update:
+    put:
+      tags:
+        - Question
+      description: 'Update question'
+      operationId: update
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Bad request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Question'
+    # create userscore
+  /userscore/create:
+    post:
+      tags:
+        - Userscore
+      description: 'Create user score'
+      operationId: userscore
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Bad request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Userscore'
+  # get userscore
+  /userscore/employeeId/assessmentId:
+    get:
+      tags:
+        - Userscore
+      description: 'Get user score'
+      operationId: userscore
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Bad request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Userscore'
+    '/lighting/dimmers/{deviceId}/{value}':
     post:
       tags:
         - Z-Wave
@@ -333,6 +740,11 @@ paths:
           description: ok
       x-swagger-router-controller: Zones
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 
   schemas:
     LightingSummary:
       type: object
@@ -536,15 +948,44 @@ components:
         night:
           type: number
           format: double
-    WeatherForecast:
+    ResetPassword:
       type: object
       properties:
-        summary:
+        new_password:
           type: string
-        description:
+          format: string
+          example: '12345'
+          required: true
+        type:
           type: string
-        icon:
+          format: string
+          example: 'organization | employee'
+          required: true
+    UserUpdate:
+      type: object
+      properties:
+        email:
           type: string
+          format: email
+          example: 'test@mail.com'
+        username:
+          type: string
+          format: username
+          example: 'johny16'
+        full_name:
+          type: string
+          format: string
+          example: "John Doe"
+    UsersById:
+      parameters:
+        - name: zoneId
+          in: path
+          required: true
+          schema:
+            type: string
+    EmailVerificatikon:
+      type: object
+      
     RegisterationInfo:
       type: object
       properties:
@@ -552,6 +993,11 @@ components:
           type: string
           format: email
           example: 'test@mail.com'
+        full_name:
+          type: string
+          format: string
+          example: "John Doe"
+          required: true
         username:
           type: string
           format: text

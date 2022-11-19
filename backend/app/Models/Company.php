@@ -8,10 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
-    use HasFactory;
+    use HasFactory, Uuids;
 
     protected $guarded = [];
 
+    /**
+     * @var $fillable
+    */
     protected $fillable = [];
-    use HasFactory, Uuids;
+   
 }

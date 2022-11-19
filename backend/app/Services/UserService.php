@@ -12,8 +12,7 @@ class UserService
 
     public static function getVerifiedUser($userId)
     {        
-        $user = User::where('id', $userId)->where('isVerified', true)->first();
-
+        $user = User::where('user_id',"=", $userId)->first();
         return $user;
     }
 }

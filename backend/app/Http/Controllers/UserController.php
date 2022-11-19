@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use function response;
+// use function response;
 use Illuminate\Http\Request;
 use App\Services\UserService;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +16,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        // $this->middleware('isloggedin');
     }
 
     public function allUsers(): JsonResponse
@@ -34,7 +34,7 @@ class UserController extends Controller
                 $users,
                 Response::HTTP_OK
             );
-        }catch (Exception $e) {
+        }catch (\Exception $e) {
             return $this->errorResponse('Records', $e->getMessage());
         }
     }
@@ -42,9 +42,9 @@ class UserController extends Controller
     public function getUserById($user_id): JsonResponse
     {
         try{
-            $user = User::find($user_id);
+            $user = User::where("user_id","=",$user_id);
 
-            if( !$user) {
+            if( $user->count() == 0) {
                 return $this->errorResponse(
                     'User does not exist',
                     'User not found',
@@ -52,24 +52,34 @@ class UserController extends Controller
                 );
             }
 
+            // extract valid user info
+            $validUserInfo = [
+                "id"=>$user->first()["id"],
+                "user_id"=>$user->first()["user_id"],
+                "full_name"=>$user->first()["full_name"],
+                "username"=>$user->first()["username"],
+                "email"=>$user->first()["email"],
+                "isVerified"=>$user->first()["isVerified"] > 0 ? true : false,
+            ];
+
             return $this->successResponse(
                 true,
                 'User',
-                $user,
+                $validUserInfo,
                 Response::HTTP_OK
             );
-        }catch (Exception $e) {
+        }catch (\Exception $e) {
             return $this->errorResponse('User not fetched', $e->getMessage());
         }
 
     }
 
-    public function getVerifiedUserById(string $userId): JsonResponse
+    public function getVerifiedUserById(string $userId)
     {
         try{
             $verified_user = UserService::getVerifiedUser($userId);
 
-            if( !$verified_user) {
+            if(!$verified_user) {
                 return $this->errorResponse(
                     'User does not exist or is not a verified user',
                     'User not found',
@@ -77,29 +87,43 @@ class UserController extends Controller
                 );
             }
 
+            // extract valid info from data
+            $validUserInfo = [
+                "id"=>$verified_user["id"],
+                "user_id"=>$verified_user["user_id"],
+                "full_name"=>$verified_user["full_name"],
+                "username"=>$verified_user["username"],
+                "email"=>$verified_user["email"],
+                "isVerified"=>$verified_user["isVerified"] > 0 ? true : false,
+            ];
+
             return $this->successResponse(
                 true,
                 'Verified user',
-                $verified_user,
+                $validUserInfo,
                 Response::HTTP_OK
             );
-        }catch (Exception $e) {
+        }catch (\Exception $e) {
             return $this->errorResponse('Verified user not fetched', $e->getMessage());
         }
             
     }
 
-    public function updaterUserInfo(Request $request , $user_id): JsonResponse
+    public function updaterUserInfo(Request $request , $user_id)
     {
         try{
+            $payload = json_decode($request->getContent(), true);
+        
             $data = [
-                'username' => $request->username,
-                'email' => $request->email
+                'username' => $payload["username"],
+                'email' =>  $payload["email"],
+                'full_name'=> $payload["full_name"]
             ];
 
-            $user =  User::where('id', $user_id)->find($user_id);
+            $userExists =  User::where('user_id', $user_id)->first();
 
-            if( !$user ) {
+            // check if user exists or not
+            if($userExists->count() == 0) {
                 return $this->errorResponse(
                     'User does not exist',
                     'User not found',
@@ -107,11 +131,11 @@ class UserController extends Controller
                 );
             }
 
-            $user->update($data);
+            $userExists->update($data);
 
             return $this->successResponse(true, 'User info updated successfully', Response::HTTP_OK);
 
-        }catch (Exception $e) {
+        }catch (\Exception $e) {
             return $this->errorResponse('User info not updated', $e->getMessage());
         }
     }
