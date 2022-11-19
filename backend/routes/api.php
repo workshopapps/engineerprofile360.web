@@ -90,6 +90,7 @@ Route::prefix("company")->group(function () {
 Route::prefix("question")->group(function () {
     Route::post('add', [QuestionsController::class, 'addManually']);
     Route::put('{questId}/{assId}/update', [QuestionsController::class, 'updateQuestion']);
+    Route::get('/assessment/{assId}', [QuestionsController::class, 'getQuestByAssId']);
 });
 
 // Categories routes operation

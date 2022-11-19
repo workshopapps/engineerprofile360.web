@@ -47,4 +47,18 @@ class QuestionsController extends Controller
             return $this->errorResponse('Question not fetched', $e->getMessage());
         }
     }
+
+    public function getQuestByAssId($ass_id)
+    {
+        try
+        {
+            // $questions = Question::where('assessment_id', $ass_id)->get();
+            $questions = [$ass_id];
+            return $this->successResponse(true, "Questions", $questions);
+        }
+        catch(Exception $e)
+        {
+            return $this->errorResponse("Error Occured",$e->getMessage());
+        }
+    }
 }
