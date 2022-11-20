@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Question;
 use Exception;
-use Illuminate\Http\Request;
 use App\Http\Requests\CreateQuestionRequest;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,9 +18,15 @@ class QuestionsController extends Controller
     public function addManually(CreateQuestionRequest $request): JsonResponse
     {
         $data = $request->all();
+        $query = $request->query("type");
         try {
-            Question::create($data);
-            return $this->successResponse(true, 'Question created', Response::HTTP_CREATED);
+            if($query === "manual"){
+                Question::create($data);
+                return $this->successResponse(true, 'Question created', Response::HTTP_CREATED);
+            }else {
+                return $this->errorResponse('Query failed', Response::HTTP_FAILED);
+            }
+
         } catch (Exception $e) {
             return $this->errorResponse('Question not created', $e->getMessage());
         }
@@ -52,22 +57,40 @@ class QuestionsController extends Controller
         }
     }
 
-    public function getQuestByOrgId($org_id){
+    public function getQuestByOrgId($org_id)
+    {
         try {
             $question = Question::where('org_id', $org_id)->get();
-            if(is_null($question)) {
+            if (is_null($question)) {
                 return $this->errorResponse('No questions exist for this company', Response::HTTP_NOT_FOUND);
             }
             return $this->successResponse(true, 'OK', $question, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->errorResponse('Questions not fetched', $e->getMessage());
-        }     
+        }
     }
 
     public function getByCategoryId(string $id): JsonResponse
     {
-        $question = Question::where(["category_id" => $id])->first();
-        if (!$question) return $this->errorResponse("Question not found", true, Response::HTTP_NOT_FOUND);
-        return $this->successResponse(true, "Successful", $question, Response::HTTP_OK);
+        $question = Question::where(["category_id" => $id]);
+        if (!$question->first()) return $this->errorResponse("Question not found", true, Response::HTTP_NOT_FOUND);
+        return $this->successResponse(true, "Successful", $question->get(), Response::HTTP_OK);
+    }
+
+    public function getQuestionByAssessmentId($assessmentId)
+    {
+        try
+        {
+            $questions = Question::where('assessment_id', $assessmentId)->get();
+
+            if(is_null($questions)){
+                return $this->errorResponse('No Question Exist for this Assessment ID', Response::HTTP_NOT_FOUND);
+            }
+            return $this->successResponse(true, "OK", $questions, Response::HTTP_OK);
+        }
+        catch(Exception $e)
+        {
+            return $this->errorResponse("Fetch Question By Assessment ID Error",$e->getMessage());
+        }
     }
 }

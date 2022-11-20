@@ -3,6 +3,7 @@ import styles from "../homeHero/HomeHero.module.css"
 import HeroImg from "../../../../assets/images/hero-img.svg"
 import FloatingImg from "../../../../assets/images/hero-subimg.svg"
 import HomeHeroButton from "../../molecules/homeHero/HomeHeroButton"
+import { Link } from "react-router-dom"
 
 export default function HomeHero() {
   return (
@@ -15,7 +16,9 @@ export default function HomeHero() {
           Get started with Skript <br /> innovative performance solutions for
           engineering teams
         </p>
-        <HomeHeroButton />
+        <Link to="/demo">
+          <HomeHeroButton />
+        </Link>
       </div>
       <div className={styles.hero_img}>
         <img src={HeroImg} alt="hero-img" />
