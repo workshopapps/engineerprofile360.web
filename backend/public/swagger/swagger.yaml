@@ -233,7 +233,7 @@ paths:
           in: path
           required: true
           type: company_id
-          format: company_id
+          format: string
           example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
       operationId: update
       responses:
@@ -242,19 +242,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponse200'
+                # $ref: '#/components/schemas/ApiResponse200'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponse401'
+                # $ref: '#/components/schemas/ApiResponse401'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponse400'
+                # $ref: '#/components/schemas/ApiResponse400'
       requestBody:
         content:
           application/json:
@@ -1176,8 +1176,8 @@ components:
         - name: name
           type: string
           format: name
-          example: 'Company name'
-        - org_mail: email
+          example: 'AxlePlex'
+        - name: org_mail
           type: string
           format: email
           example: 'main@company.com' 
