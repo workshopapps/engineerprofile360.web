@@ -7,6 +7,7 @@ import ScheduleDemo from "./main/compnents/demo-pages-components/components/Sche
 import { GlobalStyles, theme } from "./styles/globalStyles"
 import Contact from "../src/main/pages/Contact"
 import Support from "../src/ui/pages/UserSupport"
+import Terms from "../src/ui/pages/TermsAndService/TermsAndService"
 import UserProfile from "./ui/pages/user-profile/UserProfile"
 
 const App = () => {
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/confirm-demo" element={<Confirmed />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/support" element={<Support />} />
+        <Route path="/terms" element={<Terms />} />
       </Routes>
       {/* <UserProfile /> */}
     </ThemeProvider>
