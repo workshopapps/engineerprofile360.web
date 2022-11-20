@@ -107,6 +107,40 @@
   gap: 25px;
 }
 
+@media screen and (max-width: 1100px) {
+  .upper {
+    flex-direction: column;
+  }
+  /* .text {
+    font-size: 10px;
+    width: 100%;
+  } */
+
+  .logo__section {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+  .links__section {
+    width: 100%;
+  }
+  .container {
+    height: 842px;
+    padding: 1rem 0;
+  }
+
+  /* .input_field {
+    padding: 10px;
+    width: 247px;
+    height: 40px;
+    border-radius: 5px;
+    border: 2px solid #8a8886;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+  } */
+}
+
 @media screen and (max-width: 768px) {
   .upper {
     flex-direction: column;
