@@ -11,6 +11,7 @@ const theme = {
         lighterAlt: "#EFF6FC",
         lighter: "#DEECF9",
         light: "#C7E0F4",
+        // contact: "#2667FF",
       },
       tertiary: {
         tertiary: "#3D94DF",

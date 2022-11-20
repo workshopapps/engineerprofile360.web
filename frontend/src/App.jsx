@@ -4,16 +4,18 @@ import { ThemeProvider } from "styled-components"
 
 import { GlobalStyles, theme } from "./styles/globalStyles"
 
+import Contact from "./Main/pages/Contact"
+
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <AppContainer>
-        <h1>Hello, World!</h1>
+        <Contact />
       </AppContainer>
     </ThemeProvider>
-  );
-};
+  )
+}
 
 export default App
 
