@@ -1,6 +1,6 @@
-import React from "react"
 import styles from "./HomeDecision.module.css"
 import Preview from "../../../../assets/images/preview.svg"
+import { Link } from "react-router-dom"
 
 export default function Homedecision() {
   return (
@@ -17,7 +17,9 @@ export default function Homedecision() {
         can be faster!
       </p>
       <div className={styles.cta_container}>
-        <button className={styles.button}>Request a demo</button>
+        <Link to="/demo">
+          <button className={styles.button}>Request a demo</button>
+        </Link>
         <a href="#/">Let's chat?</a>
       </div>
     </div>

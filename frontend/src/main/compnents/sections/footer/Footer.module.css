@@ -93,6 +93,7 @@
 .lower__part {
   display: flex;
   justify-content: space-between;
+  padding-bottom: 20px;
 }
 .right {
   font-family: "Inter";

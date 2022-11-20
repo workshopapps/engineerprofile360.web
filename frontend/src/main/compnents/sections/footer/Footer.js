@@ -2,6 +2,7 @@ import React from "react"
 import styles from "../footer/Footer.module.css"
 import Logo from "../../../../assets/icons/footerLOgo.svg"
 import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedin } from "react-icons/fa"
+import { Link } from "react-router-dom"
 
 const Footer = () => {
   return (
@@ -47,9 +48,9 @@ const Footer = () => {
             <a href="#/" className={styles.link}>
               About us
             </a>
-            <a href="#/" className={styles.link}>
+            <Link to="/contact" className={styles.link}>
               Contact us
-            </a>
+            </Link>
             <a href="#/" className={styles.link}>
               Careers
             </a>
