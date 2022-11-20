@@ -1,0 +1,22 @@
+
+main{
+    width: 915px;
+    width: 70%;
+    padding: 10px 10px 10px 50px;
+    font-size: 16px;
+    color: #2E2E2E;
+    font-family: Inter;
+    font-weight: 400;
+    box-sizing: border-box;
+    position: relative;
+    
+}
+
+h2{
+    margin: 10px 0 10px 0;
+}
+main ul li{
+    margin-left: 20px;
+}
+
+
