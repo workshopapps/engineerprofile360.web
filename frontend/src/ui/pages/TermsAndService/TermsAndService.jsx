@@ -1,20 +1,20 @@
 import React from 'react'
-// import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import Sms from '../../assets/icons/sms.png'
+import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import Sms from '../../../assets/icons/sms.png'
+import './style.css'
 
 
 function TermsAndService() {
   return (
-    <div className=' py-16'>
+    <div className=' mainDiv'>
       <div className='container'>
-        <div className='mb-5'>
-          <h1 className=' mb-1 font-semibold text-3xl'>Terms of <span className=' text-[#295a9a]'>Service</span></h1>
-          <p className=' text-xs'>Last updated on November 15, 2022</p>
+        <div className='terms'>
+          <h1>Terms of <span>Service</span></h1>
+          <p>Last updated on November 15, 2022</p>
         </div>
 
-        <div>
-          <p className='text-lg mb-5'>
+        <div className='first'>
+          <p>
             PLEASE READ THESE CONDITIONS CAREFULLY
             BEFORE USING THE 360 ENGINEERING SERVICES. 
             BY USING THE ENGINEERING SERVICES SIGNIFY 
@@ -23,9 +23,9 @@ function TermsAndService() {
           </p>
         </div>
 
-        <div>
-          <h2 className='font-semibold mb-3 text-2xl'>Website Terms</h2>
-          <p className=' text-xl mb-3'>
+        <div className='second'>
+          <h2>Website Terms</h2>
+          <p>
             The Website terms basically explains how a 
             visitor can use the website and understand 
             the content provided by the Institution of Mechanical 
@@ -37,9 +37,9 @@ function TermsAndService() {
           </p>
         </div>
 
-        <div>
-          <h2 className='font-semibold mb-3 text-2xl'>Use of Website</h2>
-          <p className=' text-xl mb-3'>
+        <div className='second'>
+          <h2>Use of Website</h2>
+          <p>
             The Website is made available free of charge. 
             There's no guarantee whatsoever that the site or the 
             contents on it would be made available on a regular basis. 
@@ -55,9 +55,9 @@ function TermsAndService() {
           </p>
         </div>
 
-        <div>
-          <h2 className='font-semibold mb-3 text-2xl'>Safety and Regulations</h2>
-          <p className=' text-xl mb-3'>
+        <div className='second'>
+          <h2>Safety and Regulations</h2>
+          <p>
             As part of security procedures, some piece of information and 
             password would be provided which must be treated as confidential 
             and not disclosed to a third party. Failure to comply with any of the 
@@ -66,9 +66,9 @@ function TermsAndService() {
           </p>
         </div>
 
-        <div className=' text-black'>
-          <h2 className='font-semibold mb-3 text-2xl'>License</h2>
-          <p className=' text-xl mb-3'>
+        <div className='second'>
+          <h2>License</h2>
+          <p>
             As the licensed owner of the intellectual property rights on our 
             site and the published material. The works are protected by copyright 
             laws and treaties around the world. All rights are reserved. <br />
@@ -85,9 +85,9 @@ function TermsAndService() {
           </p>
         </div>
 
-        <div className=' mt-20 mb-40'>
-          <div className=' border-2 d-flex px-3 py-2 rounded-sm w-fit float-right'>
-            <img src={Sms} alt='Sms icon' className=' pr-2' />
+        <div className='button'>
+          <div className=' wrapper'>
+            <img src={Sms} alt='Sms icon' />
             <span>Questions? Leave a message</span>
           </div>
         </div>

@@ -1,0 +1,54 @@
+.mainDiv{
+ padding-top: 4rem;
+ padding-bottom: 4rem;
+ .terms{
+    margin-bottom: 2rem;
+    h1{
+        margin-bottom: 0.25rem;
+        font-weight: 600;
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+        span{
+            color: #295a9a;
+        }
+    }
+    p{
+        font-size: 0.75rem;
+        line-height: 1rem;
+    }
+ }
+ .first{
+    p{
+        margin-bottom: 2.5rem;
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+    }
+ }
+ .second{
+    h1{
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 600;
+    }
+    p{
+        margin-top: 1rem;
+        margin-bottom: 2rem;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+    }
+ }
+ .button{
+     margin-bottom: 10rem;
+     margin-top: 5rem;
+    .wrapper{
+        float: right;
+        padding: 0.5rem 0.75rem;
+        width: 16.5rem;
+        border: 2px solid #8b8b8d;
+        border-radius: 0.125rem;
+        img{
+            padding-right: 0.5rem;
+        }
+    }
+ }
+}
