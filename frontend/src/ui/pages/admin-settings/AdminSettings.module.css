@@ -1,0 +1,37 @@
+.main {
+  display: grid;
+  grid-template-columns: auto;
+  row-gap: 24px;
+  padding: 50px 24px;
+}
+
+.main_heading {
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 37px;
+  color: #323130;
+}
+
+.nav_list {
+  display: grid;
+  /* max-width: 75%; */
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.nav_item {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  color: #a19f9d;
+  width:fit-content;
+  cursor: pointer;
+}
+
+.nav_active {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 28px;
+  padding-bottom: 5px;
+  border-bottom: 5px solid #141AE9;;
+  color: #323130;
+}

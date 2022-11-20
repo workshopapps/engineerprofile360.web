@@ -1,0 +1,34 @@
+.details {
+  display: grid;
+}
+hr {
+    border:none;
+height: 2px;
+background: #EDEBE9;
+}
+
+.form__control {
+  display: grid;
+  justify-content: space-between;
+  align-items: center;
+  grid-template-columns: 1fr 1fr;
+  max-width: 50%;
+  padding: 20px 0;
+}
+
+.form__input {
+  width: 284px;
+  padding: 6px 8px;
+  background: #edebe9;
+  border-radius: 2px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #a19f9d;
+  border: none;
+}
+.form__label {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  color: #323130;
+}
