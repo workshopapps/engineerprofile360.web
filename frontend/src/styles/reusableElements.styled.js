@@ -1,44 +1,45 @@
 import styled, { css } from "styled-components";
 
 export const Container = styled.div`
-    width: 100%;
-    max-width: 1440px;
-    margin: auto;
+  width: 100%;
+  max-width: 1440px;
+  margin: auto;
 `;
 
 export const Title = styled.h1`
-    font-weight: 48px;
+  font-weight: 48px;
 `;
 
 export const Button = styled.button`
-    min-width: 77px;
-    min-height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: ${({theme}) => theme.spacing(1)};
-    border-radius: ${({theme}) => theme.spacing(0.5)}; 
-    padding: ${({theme}) => theme.spacing(1.2)} ${({theme}) => theme.spacing(2.5)}; 
+  min-width: 77px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: ${({ theme }) => theme.spacing(1)};
+  border-radius: ${({ theme }) => theme.spacing(0.5)};
+  padding: ${({ theme }) => theme.spacing(1.2)}
+    ${({ theme }) => theme.spacing(2.5)};
+  cursor: pointer;
 
-    ${(props) => {
-        switch(props.$variant) {
-            case "outlined" :
-                return css`
-                    border: 1px solid #106EBE;
-                    color: #323130;
-                    background: none;
-                `
-            default : 
-                return css`
-                    border: none;
-                    background: #106EBE;
-                    color: #FFFFFF;
-                    font-weight: 700;
-                `
-        }
-    }}
+  ${(props) => {
+    switch (props.$variant) {
+      case "outlined":
+        return css`
+          border: 1px solid #106ebe;
+          color: #323130;
+          background: none;
+        `;
+      default:
+        return css`
+          border: none;
+          background: #106ebe;
+          color: #ffffff;
+          font-weight: 700;
+        `;
+    }
+  }}
 `;
-
 
 // THE STYLES HERE ARE GOING TO BE USED FOR LAYOUTS AND EVERY OTHER REUSABLE CONTAINERS
 
@@ -47,7 +48,7 @@ export const MainContainer = styled.div`
   grid-template-columns: 220px auto;
   height: 100vh;
   overflow: hidden;
-`
+`;
 
 export const Divider = styled.div`
   width: 85%;
@@ -56,4 +57,4 @@ export const Divider = styled.div`
   position: absolute;
   right: 0;
   background: ${({ theme }) => theme.palette.divider};
-`
+`;
