@@ -50,9 +50,14 @@ p {
   line-height: 28px;
 }
 
+.light {
+  font-family: light;
+}
+
 .regular {
   font-family: regular;
 }
+
 .semibold {
   font-family: semibold;
 }
