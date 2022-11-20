@@ -4,7 +4,7 @@ import { ThemeProvider } from "styled-components"
 
 import { GlobalStyles, theme } from "./styles/globalStyles"
 
-// import Contact from "./Main/pages/Contact"
+import Contact from "./Main/pages/Contact"
 import UserProfile from "./ui/pages/user-profile/UserProfile"
 
 const App = () => {
@@ -12,8 +12,8 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <AppContainer>
-        {/* <Contact /> */}
-        <UserProfile />
+        <Contact />
+        {/* <UserProfile /> */}
       </AppContainer>
     </ThemeProvider>
   )

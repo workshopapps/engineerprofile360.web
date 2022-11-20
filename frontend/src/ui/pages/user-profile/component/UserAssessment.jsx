@@ -67,8 +67,6 @@ const GraphContainer = styled.div`
 `
 
 const Graph = styled.div`
-  /* width: 100%; */
-
   display: flex;
   align-items: center;
   justify-content: center;
