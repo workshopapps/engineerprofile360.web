@@ -4,16 +4,24 @@ import styled from "styled-components";
 import logo from "../../../assets/images/logo.svg";
 import { Container, Button } from "../../../styles/reusableElements.styled";
 import NavBar from "./NavBar";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
     <HeaderTag>
       <HeaderContainer>
-        <img src={logo} alt="Logo of Skript" />
+        <Link to="/">
+          <img src={logo} alt="Logo of Skript" />
+        </Link>
+
         <NavBar />
         <ButtonGroup>
-          <Button>Register</Button>
-          <Button $variant="outlined">Login</Button>
+          <Link to="/register">
+            <Button>Register</Button>
+          </Link>
+          <Link to="/login">
+            <Button $variant="outlined">Login</Button>
+          </Link>
         </ButtonGroup>
       </HeaderContainer>
     </HeaderTag>
@@ -42,6 +50,10 @@ const ButtonGroup = styled.div`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing(2)};
+
+  a {
+    text-decoration: none;
+  }
 
   @media (max-width: 767px) {
     display: none;

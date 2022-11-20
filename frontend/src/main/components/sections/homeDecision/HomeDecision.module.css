@@ -39,7 +39,7 @@
   color: white;
   font-weight: 700;
   font-size: 20px;
-  margin: 0 10px;
+  margin: 0 5px;
   cursor: pointer;
 }
 
@@ -49,5 +49,5 @@
   line-height: 20px;
   color: #c8c6c4;
   text-decoration: none;
-  margin: 0 10px;
+  margin: 0 5px;
 }

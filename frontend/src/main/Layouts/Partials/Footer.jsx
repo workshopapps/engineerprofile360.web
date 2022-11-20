@@ -11,6 +11,7 @@ import {
   Container,
   Title,
 } from "../../../styles/reusableElements.styled";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -49,7 +50,9 @@ const Footer = () => {
           <ListTitle as="h6">About</ListTitle>
           <List>
             <li>About us</li>
-            <li>Contact us</li>
+            <Link to="/contact">
+              <li>Contact us</li>
+            </Link>
             <li>Careers</li>
           </List>
         </About>
@@ -121,6 +124,7 @@ const SkriptContact = styled.div`
   @media (max-width: 767px) {
     grid-column: 1 / 5;
     padding-right: ${({ theme }) => theme.spacing(4)};
+    padding-top: 20px;
   }
 
   img {
@@ -191,6 +195,11 @@ const List = styled.ul`
     display: flex;
     align-items: center;
     gap: ${({ theme }) => theme.spacing(2)};
+  }
+
+  a {
+    text-decoration: none;
+    color: #393a32;
   }
 `;
 
