@@ -1173,13 +1173,13 @@ components:
     UpdateCompanyInfo:
       type: object
       properties:
-        - name: name
+        name:
           type: string
           format: name
           example: 'AxlePlex'
-        - name: org_mail
+        email:
           type: string
-          format: email
+          format: org_email
           example: 'main@company.com' 
     CreateEmployeeCSV:
       type: string
