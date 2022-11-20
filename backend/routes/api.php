@@ -97,6 +97,7 @@ Route::prefix("question")->group(function () {
     Route::get('get/{org_id}', [QuestionsController::class, 'getQuestByOrgId']);
     Route::get('category/{id}', [QuestionsController::class, 'getByCategoryId']);
     Route::put('{questionId}/{assessmenId}/update', [QuestionsController::class, 'updateQuestion']);
+    Route::get('/assessment/{assessmentId}', [QuestionsController::class, 'getQuestionByAssessmentId']);
 });
 
 // Categories routes operation
