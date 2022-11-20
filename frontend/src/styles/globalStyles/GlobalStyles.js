@@ -10,8 +10,10 @@ const GlobalStyles = createGlobalStyle`
         box-sizing: border-box;
         position: relative;
     }
+
     body {
-     
+        font-family: 'Inter', sans-serif;
+     background-color: #fff;
     }
     ul, ol {
         list-style: none;
