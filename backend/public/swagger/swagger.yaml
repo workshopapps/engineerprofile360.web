@@ -2,12 +2,12 @@
 openapi: 3.0.0
 servers:
   # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Skript App
-    url: http://localhost:8000/api
+  - description: Engineering 360 App
+    url: http://104.225.216.199:8000/api/doc
 info:
   version: "1.0.0"
-  title: Skript App API
-  description: The API for the EatBacon IOT project
+  title: Engineering 360 API
+  description: Taking employee assessments to the moon 🚀
 paths:
   # register user
   /auth/register:
@@ -155,29 +155,53 @@ paths:
       responses:
         '200':
           description: successful operation
-        '400':
-          description: Bad request
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Company'
-  /company/update:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate401'
+  "/company/update/{company_id}":
     put:
       tags:
         - Company
       description: "Update company's info"
+      parameters:
+        - name: company_id
+          in: path
+          required: true
+          type: company_id
+          format: company_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
       operationId: update
       responses:
         '200':
           description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate401'
         '400':
-          description: Bad request
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate400'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CompanyInfo'
+              $ref: '#/components/schemas/UpdateCompanyInfo'
   /user/all:
     get:
       tags:
@@ -415,34 +439,58 @@ paths:
       tags:
         - Userscore
       description: 'Create user score'
-      operationId: userscore
+      operationId: createuserscore
       responses:
         '200':
           description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate200'
         '400':
           description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate400'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Userscore'
+              $ref: '#/components/schemas/UserScoreCreate'
   # get userscore
-  /userscore/employeeId/assessmentId:
+  /userscore/employee_id/assessment_id:
     get:
       tags:
         - Userscore
       description: 'Get user score'
-      operationId: userscore
+      operationId: getuserscore
+      parameters:
+        - name: assessment_id
+          in: path
+          required: true
+          type: assessment_id
+          format: assessment_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+        - name: employee_id
+          in: path
+          required: true
+          type: employee_id
+          format: employee_id
+          example: "4ea09b93-6682-11ed-9941-3863bbb7c6e"
       responses:
         '200':
           description: successful operation
-        '400':
-          description: Bad request
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Userscore'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate100'
     '/lighting/dimmers/{deviceId}/{value}':
     post:
       tags:
@@ -1017,3 +1065,90 @@ components:
           type: string
           format: password
           example: "1234"
+    UserScoreCreate:
+      type: object
+      properties:
+        assessment_id:
+          type: string
+          format: assessment_id
+          example: '9ea09b93-6682-11ed-9941-3863bbb7c6d'
+        employee_id:
+          type: string
+          format: assessment_id
+          example: '9ea09b93-6682-11ed-9941-3863bbb7c6d'
+        categories:
+          type: array
+          format: categories
+          example: ['PHP','SQL','REACTJS']
+        passed_questions:
+          type: array
+          format: passed_questions
+          example: [20,2,11]
+    UserScoreCreate200:
+      type: object
+      properties:
+        status:
+          type: boolean
+          format: status
+          example: true
+        message:
+          type: string
+          format: message
+          example: 'successful'
+        data:
+          type: array
+          format: data
+          example: [...]
+    UserScoreCreate400:
+      type: object
+      properties:
+        status:
+          type: string
+          format: status
+          example: 'error'
+        message:
+          type: string
+          format: message
+          example: 'The given data was invalid.'
+        errors:
+          type: array
+          format: errors
+          example: [...]
+    UserScoreCreate401:
+      type: object
+      properties:
+        message:
+          type: string
+          format: message
+          example: 'Unauthenticated.'
+    GetUserscore:
+      type: object
+      properties:
+        assessment_id:
+          type: string
+          format: assessment_id
+          example: '9ea09b93-6682-11ed-9941-3863bbb7c6d'
+        employee_id:
+          type: string
+          format: assessment_id
+          example: '9ea09b93-6682-11ed-9941-3863bbb7c6d'
+        categories:
+          type: array
+          format: categories
+          example: ['PHP','SQL','REACTJS']
+        passed_questions:
+          type: array
+          format: passed_questions
+          example: [20,2,11]
+    UpdateCompanyInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          format: name
+          example: 'Company Name'
+        org_mail:
+          type: string
+          format: email
+          example: 'main@company.com'  
+    
