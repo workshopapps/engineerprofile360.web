@@ -8,13 +8,13 @@ const GlobalStyles = createGlobalStyle`
     * {
         padding: 0;
         margin: 0;
-        font-family: 'Inter', sans-serif;
         box-sizing: border-box;
         position: relative;
     }
-
+    
     body {
-     
+        font-family: 'Inter', sans-serif;
+     background-color: #fff;
     }
 
     ul, ol {
