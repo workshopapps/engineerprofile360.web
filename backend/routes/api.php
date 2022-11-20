@@ -87,7 +87,7 @@ Route::prefix("auth")->group(function () {
 // company route
 Route::prefix("company")->group(function () {
     Route::get('all', [CompanyController::class, 'allCompanyInfo']);
-    Route::put('update', [CompanyController::class, 'updateCompanyInfo']);
+    Route::put('update/{companyId}', [CompanyController::class, 'updateCompanyInfo']);
     Route::get('{id}', [CompanyController::class, 'byCompanyId']);
 });
 
@@ -112,7 +112,7 @@ Route::prefix("category")->group(function () {
 Route::prefix('employee')->group(function () {
     Route::post('add', [EmployeeController::class, 'addEmpCSV']);
     Route::get('{id}', [EmployeeController::class, 'getById']);
-    Route::get('/{org_id}', [EmployeeController::class, 'byCompId']);
+    Route::get('/company/{org_id}', [EmployeeController::class, 'byCompId']);
     Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
 });
 
