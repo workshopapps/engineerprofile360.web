@@ -6,7 +6,7 @@ import ScheduleDemo from "./main/compnents/demo-pages-components/components/Sche
 import Confirmed from "./main/compnents/demo-pages-components/components/ScheduleDemo"
 import { GlobalStyles, theme } from "./styles/globalStyles"
 import Contact from "../src/main/pages/Contact"
-import UserProfile from "./ui/pages/user-profile/UserProfile"
+// import UserProfile from "./ui/pages/user-profile/UserProfile"
 
 const App = () => {
   return (
