@@ -105,7 +105,7 @@ Route::prefix("category")->group(function () {
     Route::put('{categoryId}/update', [CategoryController::class, 'updateCategory']);
     Route::post('add', [CategoryController::class, 'createCategory']);
     Route::delete('{catId}/delete', [CategoryController::class, 'deleteCategory']);
-    Route::get('/assessment/{id}', [CategoryController::class, 'getByAssessmentID'])-> middleware("isloggedin", "isadmin");
+    Route::get('/assessment/{id}', [CategoryController::class, 'getByAssessmentId'])-> middleware("isloggedin", "isadmin");
 });
 
 //Employee Routes
