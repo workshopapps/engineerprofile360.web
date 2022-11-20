@@ -1,9 +1,10 @@
 import React from "react"
+import Demo from "./demo-pages/Demo"
 
 export default function Home() {
   return (
-    <div>
-      <h1>Axle</h1>
-    </div>
+    <>
+      <Demo />
+    </>
   )
 }
