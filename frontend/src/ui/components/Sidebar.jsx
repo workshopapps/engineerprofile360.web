@@ -31,6 +31,10 @@ const SidebarContainer = styled.div`
   padding: 60px 30px;
   flex-direction: column;
   gap: 60px;
+  height: calc(100vh - 96px);
+  /* position: sticky; */
+  top: 96px;
+  overflow: hidden;
 
   /* THE BLUE COLORED ICON AND TEXT REPRESENT THE ACTIVE STATE */
   div:last-child {

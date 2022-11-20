@@ -4,7 +4,6 @@ const GlobalStyles = createGlobalStyle`
     html {
         scroll-behaviour: smooth;
     }
-
     * {
         padding: 0;
         margin: 0;
@@ -12,12 +11,11 @@ const GlobalStyles = createGlobalStyle`
         position: relative;
         font-family: 'Inter', sans-serif;
     }
-    
+
     body {
         font-family: 'Inter', sans-serif;
      background-color: #fff;
     }
-
     ul, ol {
         list-style: none;
     }

@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import logo from "../../../../assets/images/logo.svg";
-import { Container, Button } from "../../../../styles/reusableElements.styled";
+import logo from "../../../assets/images/logo.svg";
+import { Container, Button } from "../../../styles/reusableElements.styled";
 import NavBar from "./NavBar";
 
 const Header = () => {
