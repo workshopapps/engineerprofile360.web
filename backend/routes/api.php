@@ -55,7 +55,7 @@ Route::prefix("user")->group(function () {
 //Assessment routes operations
 Route::prefix("assessment")->group(function () {
     Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAss']);
-    Route::post('/create', [AssessmentController::class, 'createAssessment']);
+    Route::post('/create', [AssessmentController::class, 'createAssessment'])->middleware("isloggedin","isadmin");
     Route::put('/{assessmentId}', [AssessmentController::class, 'updateAssessment']);
     Route::get('/{organisationId}', [AssessmentController::class, 'getAssByOrgId']);
 });
