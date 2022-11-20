@@ -55,7 +55,7 @@ Route::prefix("user")->group(function () {
 //Assessment routes operations
 Route::prefix("assessment")->group(function () {
     Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAss']);
-    Route::post('/create', [AssessmentController::class, 'createAssessment']);
+    Route::post('/create', [AssessmentController::class, 'createAssessment'])->middleware("isloggedin","isadmin");
     Route::put('/{assessmentId}', [AssessmentController::class, 'updateAssessment']);
     Route::get('/{organisationId}', [AssessmentController::class, 'getAssByOrgId']);
 });
@@ -94,6 +94,7 @@ Route::prefix("company")->group(function () {
     Route::put('update/{companyId}', [CompanyController::class, 'updateCompanyInfo']);
 >>>>>>> c9671bdab843122d483e00e6492634497784afc2
     Route::get('{id}', [CompanyController::class, 'byCompanyId']);
+    Route::get('user/{userId}', [CompanyController::class, 'getCompanyByUserId']);
 });
 
 // questions route operations
@@ -115,10 +116,12 @@ Route::prefix("category")->group(function () {
 
 //Employee Routes
 Route::prefix('employee')->group(function () {
-    Route::post('add', [EmployeeController::class, 'addEmpCSV']);
+    Route::post('add', [EmployeeController::class, 'addEmployee'])->middleware("isloggedin", "isadmin");
+    Route::post('confirm', [EmployeeController::class, 'confirmCSV'])->middleware("isloggedin", "isadmin");
     Route::get('{id}', [EmployeeController::class, 'getById']);
     Route::get('/company/{org_id}', [EmployeeController::class, 'byCompId']);
     Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
+
 });
 
 
