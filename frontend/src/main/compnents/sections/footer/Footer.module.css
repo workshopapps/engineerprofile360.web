@@ -176,7 +176,7 @@
   }
   .link {
     font-weight: 200;
-    font-size: 5px;
+    font-size: 10px;
 
     gap: 10px;
   }
@@ -196,7 +196,7 @@
   .right {
     font-family: "Inter";
     font-weight: 200;
-    font-size: 3px;
+    font-size: 4px;
     color: #40403e;
     line-height: 10px;
   }
