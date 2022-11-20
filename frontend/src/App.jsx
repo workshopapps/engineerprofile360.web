@@ -1,7 +1,9 @@
+
 import React from "react";
 import { Blog } from "./main/pages/Blog";
 import { BrowserRouter, Routes, Route} from 'react-router-dom'
 import { Blogstory } from "./main/pages/Blogstory";
+import Home from "../src/main/pages";
 
 const App = () => {
   return (
@@ -13,7 +15,7 @@ const App = () => {
           </Routes>
         </BrowserRouter>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
