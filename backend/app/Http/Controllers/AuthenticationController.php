@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 // use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Employee;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class AuthenticationController extends Controller
@@ -22,7 +24,7 @@ class AuthenticationController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['register', 'login']]);
+        $this->middleware('auth:api', ['except' => ['register', 'login','setEmployeePassword']]);
     }
 
     /**
@@ -169,6 +171,42 @@ class AuthenticationController extends Controller
                 ]
             ]
         ]);
+    }
+
+    public function setEmployeePassword(Request $request){
+        $request->validate([
+            'email' => 'required|email|exists:employees,email',
+            'password' => 'required|string|min:6',
+        ]);
+
+        try{
+
+            $employee = Employee::whereEmail($request->email)->first();
+            if($employee){
+                $employee->hash = Hash::make($password);
+                $employee->save();
+                return response()->json([
+                    "status" => true,
+                    "code" => 200,
+                    "message" => "Employee password set successfully"
+                ]);    
+            }
+
+            return response()->json([
+                "error" => false,
+                "code" => 404,
+                "message" => "Employee not found",
+            ],404);
+
+        }catch (\Exception $e) {
+
+            return response()->json([
+            "error" => false,
+            "code" => 200,
+            "message" => $e->getMessage()
+            ],422);
+        }
+
     }
 
 }

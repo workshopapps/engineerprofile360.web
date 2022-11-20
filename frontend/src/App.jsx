@@ -10,7 +10,8 @@ import Contact from "../src/main/pages/Contact";
 import Support from "../src/ui/pages/UserSupport";
 import Terms from "../src/ui/pages/TermsAndService/TermsAndService";
 import UserProfile from "./ui/pages/user-profile/UserProfile";
-import AdminSettings from "./ui/pages/admin-settings/AdminSettings";
+import Register from "../src/main/components/sections/adminSignup/AdminSignup";
+import Login from "../src/main/components/sections/adminLogin/AdminLogin";
 
 const App = () => {
   return (
@@ -24,6 +25,8 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/support" element={<Support />} />
           <Route path="/terms" element={<Terms />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </MainLayout>
     </ThemeProvider>

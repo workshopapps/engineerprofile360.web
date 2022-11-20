@@ -124,6 +124,7 @@ const SkriptContact = styled.div`
   @media (max-width: 767px) {
     grid-column: 1 / 5;
     padding-right: ${({ theme }) => theme.spacing(4)};
+    padding-top: 20px;
   }
 
   img {
