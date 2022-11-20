@@ -1,4 +1,44 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components";
+
+export const Container = styled.div`
+    width: 100%;
+    max-width: 1440px;
+    margin: auto;
+`;
+
+export const Title = styled.h1`
+    font-weight: 48px;
+`;
+
+export const Button = styled.button`
+    min-width: 77px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: ${({theme}) => theme.spacing(1)};
+    border-radius: ${({theme}) => theme.spacing(0.5)}; 
+    padding: ${({theme}) => theme.spacing(1.2)} ${({theme}) => theme.spacing(2.5)}; 
+
+    ${(props) => {
+        switch(props.$variant) {
+            case "outlined" :
+                return css`
+                    border: 1px solid #106EBE;
+                    color: #323130;
+                    background: none;
+                `
+            default : 
+                return css`
+                    border: none;
+                    background: #106EBE;
+                    color: #FFFFFF;
+                    font-weight: 700;
+                `
+        }
+    }}
+`;
+
 
 // THE STYLES HERE ARE GOING TO BE USED FOR LAYOUTS AND EVERY OTHER REUSABLE CONTAINERS
 
