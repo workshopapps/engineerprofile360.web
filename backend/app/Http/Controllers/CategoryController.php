@@ -72,10 +72,16 @@ class CategoryController extends Controller
         }
     }
 
-    public function getCategory(string $id): JsonResponse
+    public function getByAssessmentId(string $assessmentId): JsonResponse
     {
-        $category = Category::find($id);
-        if (!$category) return $this->errorResponse('Category not found', true, Response::HTTP_NOT_FOUND);
-        return $this->successResponse(true, 'Successful', $category, Response::HTTP_OK);
+        try{
+            $category = Category::find($assessmentId);
+            if (!$category) return $this->errorResponse('Category not found', true, Response::HTTP_NOT_FOUND);
+            return $this->successResponse(true, 'Successful', $category, Response::HTTP_OK);
+        }
+        catch(Exception $e)
+        {
+            return $this->errorResponse("Error fetching category", $e->getMessage());
+        }
     }
 }
