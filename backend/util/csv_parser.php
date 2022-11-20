@@ -24,21 +24,28 @@ class CsvParser{
     ];
 
     private function parseBase64($b64){
-        // extract file type from base64 url
-        $data = explode(",",  $b64);
-        $type = $data[0];
+        try {
+                
+            // extract file type from base64 url
+            $data = explode(",",  $b64);
+            $type = $data[0];
 
-        if(!str_contains($type, "text/csv")){
+            if(!str_contains($type, "text/csv")){
+                $this->res["error"] = true;
+                $this->res["message"] = "Invalid file type";
+                return $this->res;
+            }
+
+            // extract base64 part of the string
+            $csvData = $data[1];
+            $this->res["error"] = false;
+            $this->res["data"] = base64_decode($csvData);
+            return $this->res;
+        } catch (\Exception $e) {
             $this->res["error"] = true;
-            $this->res["message"] = "Invalid file type";
+            $this->res["message"] = "Invalid file";
             return $this->res;
         }
-
-        // extract base64 part of the string
-        $csvData = $data[1];
-        $this->res["error"] = false;
-        $this->res["data"] = base64_decode($csvData);
-        return $this->res;
     }
     
     public function parseEmployeeCsv($b64){

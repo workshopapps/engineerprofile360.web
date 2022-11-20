@@ -32,7 +32,7 @@ use App\Http\Controllers\EmployeeController;
 Route::get("/test", function () {
     // execute the function
     return $this->successResponse(true, "Test case pass", null, 200);
-});
+}); 
 
 //USERSCORE
 Route::prefix("userscore")->group(function () {
@@ -87,8 +87,7 @@ Route::prefix("auth")->group(function () {
 // company route
 Route::prefix("company")->group(function () {
     Route::get('all', [CompanyController::class, 'getCompanies']);
-    Route::put('update', [CompanyController::class, 'updateCompanyInfo'])->middleware("isloggedin", "isadmin");
-    Route::put('update/{companyId}', [CompanyController::class, 'updateCompanyInfo']);
+    Route::put('update/{companyId}', [CompanyController::class, 'updateCompany'])->middleware("isloggedin", "isadmin");
     Route::get('{id}', [CompanyController::class, 'byCompanyId']);
     Route::get('user/{userId}', [CompanyController::class, 'getCompanyByUserId']);
 });
@@ -107,7 +106,7 @@ Route::prefix("category")->group(function () {
     Route::put('{categoryId}/update', [CategoryController::class, 'updateCategory']);
     Route::post('add', [CategoryController::class, 'createCategory']);
     Route::delete('{catId}/delete', [CategoryController::class, 'deleteCategory']);
-    Route::get('/assessment/{id}', [CategoryController::class, 'getByAssessmentID'])-> middleware("isloggedin", "isadmin");
+    Route::get('/assessment/{id}', [CategoryController::class, 'getByAssessmentId'])-> middleware("isloggedin", "isadmin");
 });
 
 //Employee Routes

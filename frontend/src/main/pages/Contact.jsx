@@ -1,115 +1,113 @@
-import React from "react"
-import styled from "styled-components"
-import BasicLayout from "../layouts/BasicLayout"
+import React from "react";
+import styled from "styled-components";
 
-import contactImage from "../../assets/images/contact-image.png"
-import sms from "../../assets/icons/contact-page/sms-edit.svg"
-import call from "../../assets/icons/contact-page/call.svg"
-import map from "../../assets/icons/contact-page/map.svg"
-import facebook from "../../assets/icons/contact-page/Facebook.svg"
-import instagram from "../../assets/icons/contact-page/instagram.svg"
-import twitter from "../../assets/icons/contact-page/twitter.svg"
-import linkedin from "../../assets/icons/contact-page/linkedin.svg"
+import contactImage from "../../assets/images/contact-image.png";
+import sms from "../../assets/icons/contact-page/sms-edit.svg";
+import call from "../../assets/icons/contact-page/call.svg";
+import map from "../../assets/icons/contact-page/map.svg";
+import facebook from "../../assets/icons/contact-page/Facebook.svg";
+import instagram from "../../assets/icons/contact-page/instagram.svg";
+import twitter from "../../assets/icons/contact-page/twitter.svg";
+import linkedin from "../../assets/icons/contact-page/linkedin.svg";
 
 const Contact = () => {
   return (
-    <BasicLayout>
-      <ContactContainer>
-        <Top>
-          <GetInTouch>
-            <h1>Get In Touch</h1>
-            <div></div>
+    <ContactContainer>
+      <Top>
+        <GetInTouch>
+          <h1>Get In Touch</h1>
+          <div></div>
+          <p>
+            We Will Love To Hear From You.
+            <br /> Our Team Is Always Happy To Help
+          </p>
+        </GetInTouch>
+      </Top>
+      <CardInfo>
+        <form>
+          <Title>
+            <h1>Send Us A Message</h1>
             <p>
-              We Will Love To Hear From You.
-              <br /> Our Team Is Always Happy To Help
+              {" "}
+              You Can Reach Us At Anytime Via <span>Hi@skripthq.com</span>
             </p>
-          </GetInTouch>
-        </Top>
-        <CardInfo>
-          <form>
-            <Title>
-              <h1>Send Us A Message</h1>
-              <p>
-                {" "}
-                You Can Reach Us At Anytime Via <span>Hi@skripthq.com</span>
-              </p>
-            </Title>
+          </Title>
 
-            <Container>
-              <FormData>
-                <label htmlFor="full_name">Full Name</label>
-                <input id="full_name" type="text" />
-              </FormData>
-              <FormData>
-                <label htmlFor="phone_number">Phone Number</label>
-                <input id="phone_number" type="text" />
-              </FormData>
-              <FormData>
-                <label htmlFor="email">Email Address</label>
-                <input id="email" type="email" />
-              </FormData>
-              <FormData>
-                <label htmlFor="message">How Can We Help?</label>
-                <textarea id="message" />
-              </FormData>
-            </Container>
-            <Button>
-              <button type="submit">Submit</button>
-            </Button>
-          </form>
-          <MainInfo>
-            <Heading>
-              <h1>Contact Information</h1>
-              <div></div>
-            </Heading>
-            <Body>
-              <Info>
-                <img src={sms} alt="sms svg" />
-                <div>
-                  <h2>Chat With Us</h2>
-                  <p>Our Friendly Team Is Here To Help</p>
-                  <a href="malito:skriptassessmenthq@gmail.com">
-                    skriptassessmenthq@gmail.com
-                  </a>
-                </div>
-              </Info>
-              <Info>
-                <img src={call} alt="call svg" />
-                <div>
-                  <h2>Phone</h2>
-                  <p>Our Friendly Team Is Here To Help</p>
-                  <a href="tel:4065550120">(406) 555-0120</a>
-                </div>
-              </Info>
-              <Info>
-                <img src={map} alt="map svg" />
-                <div>
-                  <h2>Our Address</h2>
-                  <p>Our Friendly Team Is Here To Help</p>
-                  <p>3517 W. Gray St. Utica, Pennsylvania 57867</p>
-                </div>
-              </Info>
-            </Body>
-            <SocialContainer>
-              <img src={facebook} alt="facebook icon" />
-              <img src={instagram} alt="instagram icon" />
-              <img src={twitter} alt="twitter icon" />
-              <img src={linkedin} alt="linkedin icon" />
-            </SocialContainer>
-          </MainInfo>
-        </CardInfo>
-      </ContactContainer>
-    </BasicLayout>
-  )
-}
+          <Container>
+            <FormData>
+              <label htmlFor="full_name">Full Name</label>
+              <input id="full_name" type="text" />
+            </FormData>
+            <FormData>
+              <label htmlFor="phone_number">Phone Number</label>
+              <input id="phone_number" type="text" />
+            </FormData>
+            <FormData>
+              <label htmlFor="email">Email Address</label>
+              <input id="email" type="email" />
+            </FormData>
+            <FormData>
+              <label htmlFor="message">How Can We Help?</label>
+              <textarea id="message" />
+            </FormData>
+          </Container>
+          <Button>
+            <button type="submit">Submit</button>
+          </Button>
+        </form>
+        <MainInfo>
+          <Heading>
+            <h1>Contact Information</h1>
+            <div></div>
+          </Heading>
+          <Body>
+            <Info>
+              <img src={sms} alt="sms svg" />
+              <div>
+                <h2>Chat With Us</h2>
+                <p>Our Friendly Team Is Here To Help</p>
+                <a href="malito:skriptassessmenthq@gmail.com">
+                  skriptassessmenthq@gmail.com
+                </a>
+              </div>
+            </Info>
+            <Info>
+              <img src={call} alt="call svg" />
+              <div>
+                <h2>Phone</h2>
+                <p>Our Friendly Team Is Here To Help</p>
+                <a href="tel:4065550120">(406) 555-0120</a>
+              </div>
+            </Info>
+            <Info>
+              <img src={map} alt="map svg" />
+              <div>
+                <h2>Our Address</h2>
+                <p>Our Friendly Team Is Here To Help</p>
+                <p>3517 W. Gray St. Utica, Pennsylvania 57867</p>
+              </div>
+            </Info>
+          </Body>
+          <SocialContainer>
+            <img src={facebook} alt="facebook icon" />
+            <img src={instagram} alt="instagram icon" />
+            <img src={twitter} alt="twitter icon" />
+            <img src={linkedin} alt="linkedin icon" />
+          </SocialContainer>
+        </MainInfo>
+      </CardInfo>
+    </ContactContainer>
+  );
+};
 
-export default Contact
+export default Contact;
 
 const ContactContainer = styled.div`
   display: grid;
   grid-template-rows: 1fr 1fr;
   flex-direction: column;
-`
+  margin-bottom: 250px;
+`;
 const Top = styled.div`
   width: 100%;
   height: 120vh;
@@ -118,7 +116,7 @@ const Top = styled.div`
   background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
     url(${contactImage});
   background-position: center;
-`
+`;
 const GetInTouch = styled.div`
   width: 50%;
   margin-left: 26px;
@@ -146,7 +144,7 @@ const GetInTouch = styled.div`
     line-height: 28px;
     font-weight: 400;
   }
-`
+`;
 
 const CardInfo = styled.div`
   background-color: ${({ theme }) => theme.palette.main.primary};
@@ -168,7 +166,7 @@ const CardInfo = styled.div`
   @media (max-width: 911px) {
     width: 100%;
   }
-`
+`;
 const Title = styled.div`
   text-align: center;
   padding-top: 50px;
@@ -192,11 +190,11 @@ const Title = styled.div`
       color: #2667ff;
     }
   }
-`
+`;
 
 const Container = styled.div`
   padding: 45px 45px 10px;
-`
+`;
 
 const FormData = styled.div`
   display: flex;
@@ -233,7 +231,7 @@ const FormData = styled.div`
     padding-left: 10px;
     padding-top: 5px;
   }
-`
+`;
 const Button = styled.div`
   display: flex;
   width: 100%;
@@ -251,10 +249,10 @@ const Button = styled.div`
     font-weight: 400;
     color: ${({ theme }) => theme.palette.grey.white};
   }
-`
+`;
 const MainInfo = styled.div`
   padding: 110px 0 5px 40px;
-`
+`;
 
 const Heading = styled.div`
   display: flex;
@@ -273,11 +271,11 @@ const Heading = styled.div`
     border: 3.7px solid ${({ theme }) => theme.palette.grey.white};
     width: 75%;
   }
-`
+`;
 
 const Body = styled.div`
   margin-top: 100px;
-`
+`;
 
 const Info = styled.div`
   display: flex;
@@ -317,7 +315,7 @@ const Info = styled.div`
     flex-direction: column;
     gap: 15px;
   }
-`
+`;
 
 const SocialContainer = styled.div`
   display: flex;
@@ -328,4 +326,4 @@ const SocialContainer = styled.div`
   img {
     cursor: pointer;
   }
-`
+`;
