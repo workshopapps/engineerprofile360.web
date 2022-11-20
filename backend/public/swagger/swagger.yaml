@@ -3,7 +3,7 @@ openapi: 3.0.0
 servers:
   # Added by API Auto Mocking Plugin
   - description: Engineering 360 App
-    url: http://104.225.216.199:8000/api/doc
+    url: http://104.225.216.199:8000/api
 info:
   version: "1.0.0"
   title: Engineering 360 API
@@ -158,13 +158,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate401'
+                $ref: '#/components/schemas/ApiResponse401'
   "/company/{company_id}":
     get:
       tags:
@@ -186,13 +186,41 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate401'
+                $ref: '#/components/schemas/ApiResponse401'
+  "/company/user/{user_id}":
+    get:
+      tags:
+        - Company
+      description: 'Get all companies own by a user'
+      operationId: getcompanybyuser
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          type: user_id
+          format: user_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
   "/company/update/{company_id}":
     put:
       tags:
@@ -214,19 +242,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate401'
+                $ref: '#/components/schemas/ApiResponse401'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate400'
+                $ref: '#/components/schemas/ApiResponse400'
       requestBody:
         content:
           application/json:
@@ -244,13 +272,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate401'
+                $ref: '#/components/schemas/ApiResponse401'
     # fetch user
   "/user/{user_id}":
     get:
@@ -271,13 +299,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate401'
+                $ref: '#/components/schemas/ApiResponse401'
     # fetch verified user
   "/user/verified/{user_id}":
     get:
@@ -291,13 +319,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '400':
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate400'
+                $ref: '#/components/schemas/ApiResponse400'
       parameters:
         - name: user_id
           in: path
@@ -320,13 +348,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '400':
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate400'
+                $ref: '#/components/schemas/ApiResponse400'
       parameters:
         - name: user_id
           in: path
@@ -349,18 +377,44 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '400':
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate400'
+                $ref: '#/components/schemas/ApiResponse400'
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Employee'
+  /employee/confirm:
+    post:
+      tags:
+        - Employee
+      description: 'Confirm employee CSV upload file'
+      operationId: employeecsv
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEmployeeCSV'
   /employee/{employee_id}:
     get:
       tags:
@@ -382,19 +436,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '400':
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate400'
+                $ref: '#/components/schemas/ApiResponse400'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate401'
+                $ref: '#/components/schemas/ApiResponse401'
   /employee/company/{org_id}:
     get:
       tags:
@@ -416,19 +470,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '400':
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate400'
+                $ref: '#/components/schemas/ApiResponse400'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate401'
+                $ref: '#/components/schemas/ApiResponse401'
   "/employee/{employee_id}/update":
     put:
       tags:
@@ -450,19 +504,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate401'
+                $ref: '#/components/schemas/ApiResponse401'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate400'
+                $ref: '#/components/schemas/ApiResponse400'
       requestBody:
         content:
           application/json:
@@ -483,19 +537,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '400':
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate400'
+                $ref: '#/components/schemas/ApiResponse400'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate401'
+                $ref: '#/components/schemas/ApiResponse401'
       requestBody:
         content:
           application/json:
@@ -523,19 +577,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '400':
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate400'
+                $ref: '#/components/schemas/ApiResponse400'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate401'
+                $ref: '#/components/schemas/ApiResponse401'
       requestBody:
         content:
           application/json:
@@ -562,13 +616,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate401'
+                $ref: '#/components/schemas/ApiResponse401'
   "/category/{category_id}/delete":
     delete:
       tags:
@@ -590,13 +644,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate401'
+                $ref: '#/components/schemas/ApiResponse401'
     # fetch assessment by organisation
   "/assessment/{organisation_id}":
     get:
@@ -619,13 +673,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate401'
+                $ref: '#/components/schemas/ApiResponse401'
     # update assessment
   "/assessment/{assessment_id}":
     put:
@@ -648,13 +702,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate401'
+                $ref: '#/components/schemas/ApiResponse401'
       requestBody:
         content:
           application/json:
@@ -675,13 +729,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate401'
+                $ref: '#/components/schemas/ApiResponse401'
       requestBody:
         content:
           application/json:
@@ -707,13 +761,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate401'
+                $ref: '#/components/schemas/ApiResponse401'
     # create question
   /question/add:
     post:
@@ -729,13 +783,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate401'
+                $ref: '#/components/schemas/ApiResponse401'
       requestBody:
         content:
           application/json:
@@ -756,13 +810,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate401'
+                $ref: '#/components/schemas/ApiResponse401'
       requestBody:
         content:
           application/json:
@@ -789,13 +843,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate401'
+                $ref: '#/components/schemas/ApiResponse401'
   "/question/category/{category_id}":
     get:
       tags:
@@ -817,13 +871,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate401'
+                $ref: '#/components/schemas/ApiResponse401'
   "/question/assessment/{assessment_id}":
     get:
       tags:
@@ -845,13 +899,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate401'
+                $ref: '#/components/schemas/ApiResponse401'
     # create userscore
   /userscore/create:
     post:
@@ -867,13 +921,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '400':
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate400'
+                $ref: '#/components/schemas/ApiResponse400'
       requestBody:
         content:
           application/json:
@@ -907,13 +961,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate401'
+                $ref: '#/components/schemas/ApiResponse401'
   "/userscore/assessment/{assessment_id}":
     get:
       tags:
@@ -935,13 +989,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate401'
+                $ref: '#/components/schemas/ApiResponse401'
   "/userscore/category/{category_id}":
     get:
       tags:
@@ -963,309 +1017,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate200'
+                $ref: '#/components/schemas/ApiResponse200'
         '401':
           description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate401'
-    '/lighting/dimmers/{deviceId}/{value}':
-    post:
-      tags:
-        - Z-Wave
-      operationId: setDimmer
-      parameters:
-        - name: deviceId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: value
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-            maximum: 100
-      responses:
-        '200':
-          description: response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-      x-swagger-router-controller: ZWave
-  '/lighting/dimmers/{deviceId}/{value}/timer/{timeunit}':
-    post:
-      tags:
-        - Z-Wave
-      description: sets a dimmer to a specific value on a timer
-      operationId: setDimmerTimer
-      parameters:
-        - name: deviceId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: value
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int32
-        - name: timeunit
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int32
-        - name: units
-          in: query
-          required: false
-          schema:
-            type: string
-            enum:
-              - seconds
-              - minutes
-              - milliseconds
-            default: milliseconds
-      responses:
-        '200':
-          description: response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-      x-swagger-router-controller: ZWave
-  '/lighting/switches/{deviceId}':
-    get:
-      tags:
-        - Z-Wave
-      operationId: getSwitchState
-      parameters:
-        - name: deviceId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeviceState'
-      x-swagger-router-controller: ZWave
-  '/lighting/switches/{deviceId}/{value}':
-    post:
-      tags:
-        - Z-Wave
-      operationId: setSwitch
-      parameters:
-        - name: deviceId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: value
-          in: path
-          required: true
-          schema:
-            type: string
-            enum:
-              - true
-              - false
-      responses:
-        '200':
-          description: response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-      x-swagger-router-controller: ZWave
-  '/lighting/switches/{deviceId}/{value}/timer/{minutes}':
-    post:
-      tags:
-        - Z-Wave
-      description: sets a switch to a specific value on a timer
-      operationId: setSwitchTimer
-      parameters:
-        - name: deviceId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: value
-          in: path
-          required: true
-          schema:
-            type: string
-            enum:
-              - true
-              - false
-        - name: minutes
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int32
-      responses:
-        '200':
-          description: response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-      x-swagger-router-controller: ZWave
-  /lightingSummary:
-    get:
-      tags:
-        - Z-Wave
-      operationId: getLightingSummary
-      responses:
-        '200':
-          description: ok
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LightingSummary'
-      x-swagger-router-controller: ZWave
-  /temperature:
-    get:
-      tags:
-        - Environment
-      operationId: temperatureSummary
-      responses:
-        '200':
-          description: ok
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TemperatureSummary'
-      x-swagger-router-controller: Environment
-  '/temperature/forecast/{days}':
-    get:
-      tags:
-        - Environment
-      operationId: getForecast
-      parameters:
-        - name: days
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int32
-      responses:
-        '200':
-          description: the forecast
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForecastResponse'
-      x-swagger-router-controller: Environment
-  '/temperature/{zoneId}':
-    get:
-      tags:
-        - Environment
-      operationId: getZoneTemperature
-      parameters:
-        - name: zoneId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Zone temperature
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TemperatueZoneStatus'
-      x-swagger-router-controller: Environment
-  '/temperature/{zoneId}/heater':
-    get:
-      tags:
-        - Environment
-      description: gets the state of the heater
-      operationId: getHeaterState
-      parameters:
-        - name: zoneId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: heater state
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HeaterState'
-      x-swagger-router-controller: Environment
-  '/temperature/{zoneId}/heater/{state}':
-    post:
-      tags:
-        - Environment
-      description: turns the heater on or off
-      operationId: setHeaterState
-      parameters:
-        - name: zoneId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: state
-          in: path
-          required: true
-          schema:
-            type: string
-            enum:
-              - false
-              - true
-      responses:
-        '200':
-          description: Status of the operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-      x-swagger-router-controller: Environment
-  /zones:
-    get:
-      tags:
-        - Zones
-      operationId: getZones
-      responses:
-        '200':
-          description: ok
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: string
-      x-swagger-router-controller: Zones
-  '/zones/{zoneId}/quiet':
-    get:
-      tags:
-        - Zones
-      operationId: quietZone
-      parameters:
-        - name: zoneId
-          in: path
-          required: true
-          schema:
-            type: string
-            enum:
-              - basement
-              - first-floor
-              - second-floor
-      responses:
-        '200':
-          description: ok
-      x-swagger-router-controller: Zones
+                $ref: '#/components/schemas/ApiResponse401'
 components:
   schemas:
     ResetPassword:
@@ -1356,7 +1114,7 @@ components:
           type: array
           format: passed_questions
           example: [20,2,11]
-    UserScoreCreate200:
+    ApiResponse200:
       type: object
       properties:
         status:
@@ -1371,7 +1129,7 @@ components:
           type: array
           format: data
           example: [...]
-    UserScoreCreate400:
+    ApiResponse400:
       type: object
       properties:
         status:
@@ -1386,7 +1144,7 @@ components:
           type: array
           format: errors
           example: [...]
-    UserScoreCreate401:
+    ApiResponse401:
       type: object
       properties:
         message:
@@ -1422,7 +1180,11 @@ components:
         - org_mail: email
           type: string
           format: email
-          example: 'main@company.com'  
+          example: 'main@company.com' 
+    CreateEmployeeCSV:
+      type: string
+      example: 'data:text/csv;Uy9OLEZ1bGwgTmFtZSxVc2VybmFtZSxFbWFpbA0KMSxqb2huIGRvZSxqb2hubnksam9obkBtYWlsLmNvbQ0KMSxqb2huIGRvZSxqb2hubnksam9obkBtYWlsLmNvbQ0KMSxqb2huIGRvZSxqb2hubnksam9obkBtYWlsLmNvbQ=='
+          
     UpdateEmployeeInfo:
       type: object
       properties:
