@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Http\Request;
@@ -37,8 +36,8 @@ Route::get("/test", function () {
 
 //USERSCORE
 Route::prefix("userscore")->group(function () {
-    Route::get('/employee/{employeeId}', [UserScoreController::class, 'getScores']);
-    Route::get('/assessmentId', [UserScoreController::class, 'getScores']);
+    Route::get('/employee/{id}', [UserScoreController::class, 'getScoresByEmployeeID']);
+    Route::get('/assessment/{id}', [UserScoreController::class, 'getScoresByAssessmentID']);
     Route::get('/{employeeId}/{assessmentId}', [UserScoreController::class, 'getScores']);
     Route::post('/create', [UserScoreController::class, 'store']);
 });
@@ -46,9 +45,9 @@ Route::prefix("userscore")->group(function () {
 
 //Users operation routes
 Route::prefix("user")->group(function () {
-    Route::get('{id}', [UserController::class, 'getUserById']);
+    Route::get('/{id}', [UserController::class, 'getUserById']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
-    Route::put('{userId}/update', [UserController::class, 'updaterUserInfo']);
+    Route::put('/{userId}/update', [UserController::class, 'updaterUserInfo'])->middleware("isloggedin");
     Route::get('all', [UserController::class, 'allUsers']);
 });
 
@@ -73,35 +72,48 @@ Route::post("/test_csv", function (Request $req) {
 Route::prefix("auth")->group(function () {
     // Route::post('register', [AuthenticationController::class, 'register']);
     Route::post('register', [AuthenticateController::class, "registerUser"]);
-    Route::post('login', [AuthenticateController::class, 'loginUser']);
+    Route::post('login', [AuthenticateController::class, 'UserAndEmployeeLogin']);
     Route::get('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
     Route::post('logout', [AuthenticationController::class, 'logout']);
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
+
+    Route::prefix("password")->group(function () {
+        // forgot password
+        Route::get("/forgot-password/{email}", [AuthenticateController::class, "forgotPassword"]);
+        Route::post("/reset/{id}/{token}", [AuthenticateController::class, "verifyPasswordReset"]);
+    });
 });
 
 // company route
 Route::prefix("company")->group(function () {
     Route::get('all', [CompanyController::class, 'allCompanyInfo']);
-    Route::put('update', [CompanyController::class, 'updateCompanyInfo']);
+    Route::put('update/{companyId}', [CompanyController::class, 'updateCompanyInfo']);
     Route::get('{id}', [CompanyController::class, 'byCompanyId']);
 });
 
 // questions route operations
 Route::prefix("question")->group(function () {
     Route::post('add', [QuestionsController::class, 'addManually']);
+    Route::get('get/{org_id}', [QuestionsController::class, 'getQuestByOrgId']);
+    Route::get('category/{id}', [QuestionsController::class, 'getByCategoryId']);
     Route::put('{questionId}/{assessmenId}/update', [QuestionsController::class, 'updateQuestion']);
+    Route::get('/assessment/{assessmentId}', [QuestionsController::class, 'getQuestionByAssessmentId']);
 });
 
 // Categories routes operation
 Route::prefix("category")->group(function () {
     Route::put('{categoryId}/update', [CategoryController::class, 'updateCategory']);
     Route::post('add', [CategoryController::class, 'createCategory']);
-
+    Route::delete('{catId}/delete', [CategoryController::class, 'deleteCategory']);
+    Route::get('/assessment/{id}', [CategoryController::class, 'getByAssessmentID'])-> middleware("isloggedin");
 });
 
-//AddEmployeeByCSV
+//Employee Routes
 Route::prefix('employee')->group(function () {
     Route::post('add', [EmployeeController::class, 'addEmpCSV']);
+    Route::get('{id}', [EmployeeController::class, 'getById']);
+    Route::get('/company/{org_id}', [EmployeeController::class, 'byCompId']);
+    Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
 });
 
 

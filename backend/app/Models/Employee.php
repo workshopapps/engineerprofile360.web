@@ -19,4 +19,6 @@ class Employee extends Model
         'email', 'fullname', 'username', 'hash', 'image',
         'occupation', 'reftoken', 'role', 'org_id'
     ];
+
+    protected $hidden = ['hash']; 
 }
