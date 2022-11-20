@@ -1,12 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Container } from "../../../../styles/reusableElements.styled";
 import arrowDown from "../../../../assets/icons/arrow-down.svg";
 
 const NavBar = () => {
   return (
-    <nav>
+    <Nav>
       <List>
         <li>Home</li>
         <li>Pricing</li>
@@ -18,16 +17,22 @@ const NavBar = () => {
           About <img src={arrowDown} alt="" />
         </li>
       </List>
-    </nav>
+    </Nav>
   );
 };
 
 export default NavBar;
 
+const Nav = styled.nav`
+  @media (max-width: 767px) {
+    display: none;
+  }
+`;
+
 const List = styled.ul`
   display: flex;
   align-items: center;
-  gap: ${({ theme }) => theme.spacing(4)};
+  gap: ${({ theme }) => theme.spacing(3)};
 
   li {
     font-size: 14px;

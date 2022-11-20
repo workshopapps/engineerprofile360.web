@@ -59,6 +59,7 @@ const theme = {
   spacing: (num) => {
     return `${8 * num}px`
   },
+  
 }
 
 export default theme

@@ -32,10 +32,18 @@ const HeaderContainer = styled(Container)`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media (max-width: 480px) {
+    padding: 0 ${({ theme }) => theme.spacing(2)};
+  }
 `;
 
 const ButtonGroup = styled.div`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing(2)};
+
+  @media (max-width: 767px) {
+    display: none;
+  }
 `;

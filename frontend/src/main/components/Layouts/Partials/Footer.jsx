@@ -27,31 +27,32 @@ const Footer = () => {
               <SubscribeButton $variant="outlined">Subscribe</SubscribeButton>
             </form>
             <span>
-              By subscribing you agree to with our Privacy Policy and provide
-              consent to receive updates from our company.
+              By subscribing you agree to with our{" "}
+              <span style={{ textDecoration: "underline" }}>Privacy Policy</span>{" "}
+              and provide consent to receive updates from our company.
             </span>
           </Newsletter>
         </SkriptContact>
 
-        <ListContainer>
+        <Resources>
           <ListTitle as="h6">Resources</ListTitle>
           <List>
             <li>Help Centre</li>
             <li>Blog</li>
             <li>Customers</li>
           </List>
-        </ListContainer>
+        </Resources>
 
-        <ListContainer>
+        <About>
           <ListTitle as="h6">About</ListTitle>
           <List>
             <li>About us</li>
             <li>Contact us</li>
             <li>Careers</li>
           </List>
-        </ListContainer>
+        </About>
 
-        <ListContainer>
+        <Follow>
           <ListTitle as="h6">Follow Us</ListTitle>
           <List>
             <li>
@@ -67,7 +68,7 @@ const Footer = () => {
               <img src={linkedin} alt="" /> LinkedIn
             </li>
           </List>
-        </ListContainer>
+        </Follow>
 
         <Copyright>
           <span>&copy; 2022 Skript. All rights reserved.</span>
@@ -91,6 +92,14 @@ const FooterContainer = styled(Container)`
   grid-template-columns: 3fr 1fr 1fr 1fr;
   column-gap: ${({ theme }) => theme.spacing(10)};
   row-gap: ${({ theme }) => theme.spacing(8)};
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 ${({ theme }) => theme.spacing(2)};
+  }
 `;
 
 const SkriptContact = styled.div`
@@ -98,6 +107,15 @@ const SkriptContact = styled.div`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(4)};
   box-sizing: initial;
+
+  @media (max-width: 960px) {
+    grid-column: 1 / 3;
+  }
+
+  @media (max-width: 767px) {
+    grid-column: 1 / 5;
+    padding-right: ${({ theme }) => theme.spacing(4)};
+  }
 
   img {
     width: 175px;
@@ -116,6 +134,7 @@ const Newsletter = styled.div`
   span {
     color: #393a32;
     font-size: 12px;
+    line-height: 18px;
   }
 
   form {
@@ -125,7 +144,8 @@ const Newsletter = styled.div`
     input {
       border: 1px solid #8a8886;
       padding: ${({ theme }) => theme.spacing(1.2)};
-      width: 345px;
+      max-width: 345px;
+      width: 70%;
       border-radius: ${({ theme }) => theme.spacing(1)};
       background: #f2f3f6;
     }
@@ -135,7 +155,12 @@ const Newsletter = styled.div`
 const SubscribeButton = styled(Button)`
   font-size: 18px;
   color: #106ebe;
-  width: 139px;
+  width: 30%;
+  min-width: 139px;
+
+  @media (max-width: 480px) {
+    min-width: 105px;
+  }
 `;
 
 const ListContainer = styled.div`
@@ -169,7 +194,8 @@ const Copyright = styled.div`
   justify-content: space-between;
   padding: ${({ theme }) => theme.spacing(6)} 0;
   border-top: 2px solid #171ee0;
-
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing(3)};
   span {
     font-size: 14px;
   }
@@ -183,5 +209,21 @@ const Copyright = styled.div`
       text-decoration: underline;
       font-size: 14px;
     }
+  }
+`;
+
+const About = styled(ListContainer)`
+  @media (max-width: 480px) {
+    grid-column: 1 / 5;
+  }
+`;
+const Resources = styled(ListContainer)`
+  @media (max-width: 767px) {
+    grid-column: 1 / 5;
+  }
+`;
+const Follow = styled(ListContainer)`
+  @media (max-width: 767px) {
+    grid-column: 1 / 5;
   }
 `;
