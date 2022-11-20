@@ -7,18 +7,20 @@ import HomeStarted from "../compnents/sections/homeStarted/HomeStarted"
 import HomeStats from "../compnents/sections/homeStats/HomeStats"
 import Footer from "../compnents/sections/footer/Footer"
 import HomeTestimony from "../compnents/sections/homeTestimony/HomeTestimony"
+import BasicLayout from "../layouts/BasicLayout"
 
 export default function Home() {
   return (
-    <div>
-      <HomeHero />
-      <HomeStats />
-      <Homedecision />
-      <HomeProduct />
-      <HomeTestimony />
-      <HomeBlog />
-      <HomeStarted />
-      {/* <Footer /> */}
-    </div>
+    <>
+      <BasicLayout>
+        <HomeHero />
+        <HomeStats />
+        <Homedecision />
+        <HomeProduct />
+        <HomeTestimony />
+        <HomeBlog />
+        <HomeStarted />
+      </BasicLayout>
+    </>
   )
 }
