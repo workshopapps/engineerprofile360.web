@@ -39,12 +39,12 @@ li{
 }
 .mainDiv .button {
   margin-bottom: 10rem;
-  margin-top: 5rem;
+  margin-top: 3rem;
 }
 .mainDiv .button .wrapper {
   float: right;
   padding: 0.5rem 0.75rem;
-  width: 16.5rem;
+  /* width: 16.5rem; */
   border: 2px solid #8b8b8d;
   border-radius: 0.125rem;
 }

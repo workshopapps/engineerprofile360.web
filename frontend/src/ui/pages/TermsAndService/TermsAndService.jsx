@@ -159,7 +159,7 @@ function TermsAndService() {
               <li>Use of Personal/Company Info</li>
               <li>Viruses/Bugs</li>
             </ul>
-            <div className='button'>
+            <div className='button col-12'>
               <div className=' wrapper'>
                 <img src={Sms} alt='Sms icon' />
                 <span>Questions? Leave a message</span>
