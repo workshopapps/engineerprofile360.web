@@ -1,16 +1,19 @@
+<?php
 
-	<?php
-
-use App\Http\Controllers\QuestionsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
 // use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UserScoreController;
-use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\AssessmentController;
-use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\CompaniesController;
+
+use App\Http\Controllers\AuthenticateController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\EmployeeController;
+
 
 // util functions
 // employee csv file parser.
@@ -26,40 +29,36 @@ use App\Http\Controllers\CompaniesController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-// middleware instance here
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
 // other route functions here
 Route::get("/test", function () {
     // execute the function
-    return sendResponse(false, 200, "Test case pass", null);
+    return $this->successResponse(true, "Test case pass", null, 200);
 });
 
 //USERSCORE
 Route::prefix("userscore")->group(function () {
-    Route::get('/employee/{employeeId}', [UserScoreController::class, 'getScores']);
-    Route::get('/assessment/{assId}', [UserScoreController::class, 'getScores']);
-    Route::get('/{employeeId}/{assId}', [UserScoreController::class, 'getScores']);
+    Route::get('/employee/{id}', [UserScoreController::class, 'getScoresByEmployeeID']);
+    Route::get('/assessment/{id}', [UserScoreController::class, 'getScoresByAssessmentID']);
+    Route::get('/{employeeId}/{assessmentId}', [UserScoreController::class, 'getScores']);
     Route::post('/create', [UserScoreController::class, 'store']);
 });
 
 
 //Users operation routes
-Route::prefix("users")->group(function () {
-    Route::get('{id}', [UserController::class, 'getUserById']);
+Route::prefix("user")->group(function () {
+    Route::get('/{id}', [UserController::class, 'getUserById']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
-    Route::put('/{userId}/update', [UserController::class, 'updaterUserInfo']);
+    Route::put('/{userId}/update', [UserController::class, 'updaterUserInfo'])->middleware("isloggedin");
     Route::get('all', [UserController::class, 'allUsers']);
 });
 
 
-// assessment routes
+//Assessment routes operations
 Route::prefix("assessment")->group(function () {
-    Route::delete('/{assId}/delete', [AssessmentController::class, 'deleteAss']);
+    Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAss']);
     Route::post('/create', [AssessmentController::class, 'createAssessment']);
-    Route::post('/{id}', [AssessmentController::class, 'updateAssessment']);
+    Route::put('/{assessmentId}', [AssessmentController::class, 'updateAssessment']);
+    Route::get('/{organisationId}', [AssessmentController::class, 'getAssByOrgId']);
 });
 
 // Test Employee Adding using csv file
@@ -72,29 +71,54 @@ Route::post("/test_csv", function (Request $req) {
 
 // authentication route
 Route::prefix("auth")->group(function () {
-    Route::post('register', [AuthenticationController::class, 'register']);
-    Route::post('login', [AuthenticationController::class, 'login']);
+    // Route::post('register', [AuthenticationController::class, 'register']);
+    Route::post('register', [AuthenticateController::class, "registerUser"]);
+    Route::post('login', [AuthenticateController::class, 'UserAndEmployeeLogin']);
+    Route::get('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
     Route::post('logout', [AuthenticationController::class, 'logout']);
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
+
     Route::post('employee/update/', [AuthenticationController::class, 'setEmployeePassword']);
+
+    Route::prefix("password")->group(function () {
+        // forgot password
+        Route::get("/forgot-password/{email}", [AuthenticateController::class, "forgotPassword"]);
+        Route::post("/reset/{id}/{token}", [AuthenticateController::class, "verifyPasswordReset"]);
+    });
 });
 
 // company route
 Route::prefix("company")->group(function () {
-    Route::get('all', [CompaniesController::class, 'allCompanyInfo']);
-    Route::put('update', [CompaniesController::class, 'updateCompanyInfo']);
+    Route::get('all', [CompanyController::class, 'allCompanyInfo']);
+    Route::put('update/{companyId}', [CompanyController::class, 'updateCompanyInfo']);
+    Route::get('{id}', [CompanyController::class, 'byCompanyId']);
 });
 
-// questions controller route
-Route::prefix("questions")->group(function () {
-    Route::post('/add', [QuestionsController::class, 'addManually']);
-    Route::put('/{questId}/{assId}/update', [QuestionsController::class, 'updateQuestion']);
+// questions route operations
+Route::prefix("question")->group(function () {
+    Route::post('add', [QuestionsController::class, 'addManually']);
+    Route::get('get/{org_id}', [QuestionsController::class, 'getQuestByOrgId']);
+    Route::get('category/{id}', [QuestionsController::class, 'getByCategoryId']);
+    Route::put('{questionId}/{assessmenId}/update', [QuestionsController::class, 'updateQuestion']);
+    Route::get('/assessment/{assessmentId}', [QuestionsController::class, 'getQuestionByAssessmentId']);
 });
 
-// Categories Controller Routes
-Route::prefix("categories")->group(function () {
-    Route::put('/update/{cat_id}', [CategoriesController::class, 'updateCategory']);
+// Categories routes operation
+Route::prefix("category")->group(function () {
+    Route::put('{categoryId}/update', [CategoryController::class, 'updateCategory']);
+    Route::post('add', [CategoryController::class, 'createCategory']);
+    Route::delete('{catId}/delete', [CategoryController::class, 'deleteCategory']);
+    Route::get('/assessment/{id}', [CategoryController::class, 'getByAssessmentID'])-> middleware("isloggedin");
 });
+
+//Employee Routes
+Route::prefix('employee')->group(function () {
+    Route::post('add', [EmployeeController::class, 'addEmpCSV']);
+    Route::get('{id}', [EmployeeController::class, 'getById']);
+    Route::get('/company/{org_id}', [EmployeeController::class, 'byCompId']);
+    Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
+});
+
 
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);

@@ -20,5 +20,4 @@ yarn-error.log
 composer.lock
 
 # ignore .http file
-
 /.http
