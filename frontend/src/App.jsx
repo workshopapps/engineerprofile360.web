@@ -4,10 +4,9 @@ import { Route, Routes } from "react-router-dom"
 import Home from "../src/main/pages"
 import Confirmed from "./main/compnents/demo-pages-components/components/Confirmed"
 import ScheduleDemo from "./main/compnents/demo-pages-components/components/ScheduleDemo"
+import Confirmed from "./main/compnents/demo-pages-components/components/ScheduleDemo"
 import { GlobalStyles, theme } from "./styles/globalStyles"
 import Contact from "../src/main/pages/Contact"
-import Support from "../src/ui/pages/UserSupport"
-import Terms from "../src/ui/pages/TermsAndService/TermsAndService"
 import UserProfile from "./ui/pages/user-profile/UserProfile"
 
 const App = () => {
