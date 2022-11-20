@@ -10,18 +10,16 @@ import UserProfile from "./ui/pages/user-profile/UserProfile"
 
 const App = () => {
   return (
-    // <ThemeProvider theme={theme}>
-    //   <GlobalStyles />
-    //   <Routes>
-    //     <Route path="/" element={<Home />} />
-    //     <Route path="/demo" element={<ScheduleDemo />} />
-    //     <Route path="/confirm-demo" element={<Confirmed />} />
-    //     <Route path="/contact" element={<Contact />} />
-    //   </Routes>
-    //   {/* <UserProfile /> */}
-    // </ThemeProvider>
-    <div>
-    <div/>
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/demo" element={<ScheduleDemo />} />
+        <Route path="/confirm-demo" element={<Confirmed />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+      {/* <UserProfile /> */}
+    </ThemeProvider>
   )
 }
 export default App
