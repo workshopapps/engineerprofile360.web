@@ -1,12 +1,17 @@
 import React from "react";
-import Home from "./pages";
-import { Blog } from "./pages/Blog";
+import { Blog } from "./main/pages/Blog";
+import { BrowserRouter, Routes, Route} from 'react-router-dom'
+import { Blogstory } from "./main/pages/Blogstory";
 
 const App = () => {
   return (
     <div>
-      <Home />
-      <Blog />
+      <BrowserRouter>
+          <Routes >
+            <Route path="/blog" exact element={<Blog />}></Route>
+            <Route path="blog/skillaquisition" element={<Blogstory />}></Route>
+          </Routes>
+        </BrowserRouter>
     </div>
   );
 }

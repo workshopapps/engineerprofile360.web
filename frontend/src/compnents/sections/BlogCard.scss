@@ -1,38 +1,87 @@
+
 #blog{
-    width: fit-content;
+    width: 330px;
     height: fit-content;
-    padding: 32px 32px 46px ;
-    border:2px solid #edebe9;
-    border-radius: 20px;
-    margin-bottom: 20px;
-    h3{
+    padding: 20px;
+    border: 1px solid #D1D1D1;
+    border-radius:8px ;
+    margin-bottom: 30px;
+    #links{
+        text-decoration: none;
         color: #323130;
     }
-    p{
-        font-weight:500;
-        color: #605e5C;
+    #blogImage{
+        width: 330px;
+        height: 200px;
     }
-    img{
-        width: 300px;
+    #blogname{
+        display: flex;
+        justify-content: space-between;
+        color: #605E5C;
+        align-items: center;
+        margin: auto;
+        
+        
+        #blogtime{
+            margin: 0;
+            padding: 0;
+        }
+        #time{
+            display: flex;
+            align-items: center;
+        }
+        #span{
+            background: #328CC1;
+            font-size: 5em;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
     }
-    a{
-        color: #141AE9;
+    h1{
+        font-size: 18px;
+    }
+    #description{
+        color: #605E5C;
+        font-size: 14px;
+        margin-bottom: 50px;
+    }
+    #blogDisplayPicture{
+        display: flex;
+        align-items: center;
 
-        &:hover{
-            text-decoration: underline;
+        img{
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        #name{
+            display: grid;
+            align-items: center;
+            p{
+                margin: 0;
+                padding: 0;
+                &:nth-child(1){
+                    color: #323130;
+                    font-size: 14px;
+                }
+                &:nth-child(2){
+                    color: #605E5C;
+                    font-size: 12px;
+                }
+            }
         }
     }
 }
 @media (min-width:500px) {
     #blog{
-        display: grid;
-        justify-content: center;
+       
     }
 }
 @media (min-width:1000px) {
     #blog{
-        img{
-            width:500px
-        }
+       
     }
 }
