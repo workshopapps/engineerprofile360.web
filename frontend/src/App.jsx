@@ -1,5 +1,8 @@
 import React from "react"
-import Home from "./pages"
+import styled from "styled-components"
+import { ThemeProvider } from "styled-components"
+
+import { GlobalStyles, theme } from "./styles/globalStyles"
 
 import Contact from "./Main/pages/Contact"
 // import Header from "./ui/components/Header"
@@ -11,10 +14,23 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <AppContainer>
-        <h1>Hello, World!</h1>
+        <Contact />
+        {/* <Header />
+        <Divider />
+        <MainContainer>
+          <Main>
+            <Sidebar />
+          </Main>
+        </MainContainer> */}
       </AppContainer>
     </ThemeProvider>
   )
 }
 
 export default App
+
+const AppContainer = styled.div`
+  width: 100%;
+  max-width: 1440px;
+  margin: auto;
+`
