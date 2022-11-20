@@ -32,7 +32,7 @@ use App\Http\Controllers\EmployeeController;
 Route::get("/test", function () {
     // execute the function
     return $this->successResponse(true, "Test case pass", null, 200);
-});
+}); 
 
 //USERSCORE
 Route::prefix("userscore")->group(function () {
@@ -55,7 +55,7 @@ Route::prefix("user")->group(function () {
 //Assessment routes operations
 Route::prefix("assessment")->group(function () {
     Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAss']);
-    Route::post('/create', [AssessmentController::class, 'createAssessment']);
+    Route::post('/create', [AssessmentController::class, 'createAssessment'])->middleware("isloggedin","isadmin");
     Route::put('/{assessmentId}', [AssessmentController::class, 'updateAssessment']);
     Route::get('/{organisationId}', [AssessmentController::class, 'getAssByOrgId']);
 });
@@ -86,9 +86,10 @@ Route::prefix("auth")->group(function () {
 
 // company route
 Route::prefix("company")->group(function () {
-    Route::get('all', [CompanyController::class, 'allCompanyInfo']);
-    Route::put('update', [CompanyController::class, 'updateCompanyInfo']);
+    Route::get('all', [CompanyController::class, 'getCompanies']);
+    Route::put('update/{companyId}', [CompanyController::class, 'updateCompanyInfo'])->middleware("isloggedin", "isadmin");
     Route::get('{id}', [CompanyController::class, 'byCompanyId']);
+    Route::get('user/{userId}', [CompanyController::class, 'getCompanyByUserId']);
 });
 
 // questions route operations
@@ -110,10 +111,12 @@ Route::prefix("category")->group(function () {
 
 //Employee Routes
 Route::prefix('employee')->group(function () {
-    Route::post('add', [EmployeeController::class, 'addEmpCSV']);
+    Route::post('add', [EmployeeController::class, 'addEmployee'])->middleware("isloggedin", "isadmin");
+    Route::post('confirm', [EmployeeController::class, 'confirmCSV'])->middleware("isloggedin", "isadmin");
     Route::get('{id}', [EmployeeController::class, 'getById']);
-    Route::get('/{org_id}', [EmployeeController::class, 'byCompId']);
+    Route::get('/company/{org_id}', [EmployeeController::class, 'byCompId']);
     Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
+
 });
 
 
