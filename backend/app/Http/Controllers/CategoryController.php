@@ -12,11 +12,14 @@ class CategoryController extends Controller
 {
     public function createCategory(CategoryRequest $request)
     {
+
+        $payload = json_decode($request->getContent(), true);
+
         $data = $request->all();
         try{
             Category::create($data);
             return $this->successResponse(true, 'Category created', Response::HTTP_CREATED);
-        }  catch (Exception $e) {
+        }  catch (\Exception $e) {
             return $this->errorResponse('Category not created', $e->getMessage());
         }
     }

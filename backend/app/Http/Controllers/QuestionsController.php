@@ -70,4 +70,21 @@ class QuestionsController extends Controller
         if (!$question->first()) return $this->errorResponse("Question not found", true, Response::HTTP_NOT_FOUND);
         return $this->successResponse(true, "Successful", $question->get(), Response::HTTP_OK);
     }
+
+    public function getQuestionByAssessmentId($assessmentId)
+    {
+        try
+        {
+            $questions = Question::where('assessment_id', $assessmentId)->get();
+
+            if(is_null($questions)){
+                return $this->errorResponse('No Question Exist for this Assessment ID', Response::HTTP_NOT_FOUND);
+            }
+            return $this->successResponse(true, "OK", $questions, Response::HTTP_OK);
+        }
+        catch(Exception $e)
+        {
+            return $this->errorResponse("Fetch Question By Assessment ID Error",$e->getMessage());
+        }
+    }
 }

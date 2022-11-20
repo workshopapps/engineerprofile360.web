@@ -96,7 +96,7 @@ class Helper
     
             $mail = new Mailer();
             $mailMsg = "Reset your password using the link above.";
-            $mailData = "http://localhost:8000/api/auth/pasword/reset/${user_id}/${token}";
+            $mailData = "http://localhost:8000/api/auth/password/reset/${user_id}/${token}";
             $mail->passwordReset("test@mail.com", $email, $mailMsg, $mailData);
         } catch (\Exception $e) {
             echo "Could not send password reset link".$e->getMessage();
