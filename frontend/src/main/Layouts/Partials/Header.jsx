@@ -1,19 +1,28 @@
 import React from "react";
 import styled from "styled-components";
+import { useLocation } from "react-router-dom";
 
 import logo from "../../../assets/images/logo.svg";
 import { Container, Button } from "../../../styles/reusableElements.styled";
 import NavBar from "./NavBar";
 
 const Header = () => {
+  const { pathname } = useLocation();
+
   return (
     <HeaderTag>
       <HeaderContainer>
         <img src={logo} alt="Logo of Skript" />
         <NavBar />
         <ButtonGroup>
-          <Button>Register</Button>
-          <Button $variant="outlined">Login</Button>
+          <Button $variant={pathname === "/contact" ? "outlined" : ""}>
+            {pathname === "/about-us"
+              ? "Get Started"
+              : pathname === "/contact"
+              ? "Request Demo"
+              : "Register"}
+          </Button>
+          <Button $variant={pathname === "/contact" ? "" : "outlined"}>Login</Button>
         </ButtonGroup>
       </HeaderContainer>
     </HeaderTag>

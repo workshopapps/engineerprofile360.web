@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { Container, Title } from "../../../styles/reusableElements.styled";
+import storyBg from "./assets/images/story-section.svg";
 
 const AboutStory = () => {
   return (
@@ -52,6 +53,9 @@ const AboutStorySection = styled.div`
   padding: 0 ${({ theme }) => theme.spacing(6)};
   background: #004578;
   text-align: center;
+  background-image: url(${storyBg});
+  background-position: center;
+  background-repeat: no-repeat;
 
   @media (max-width: 480px) {
     padding: 0 ${({ theme }) => theme.spacing(3)};

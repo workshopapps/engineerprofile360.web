@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { Container, Title } from "../../../styles/reusableElements.styled";
+import visionBg from "./assets/images/vision-section.svg";
 
 const AboutVision = () => {
   return (
@@ -29,6 +30,9 @@ const AboutVisionSection = styled.div`
   padding: 0 ${({ theme }) => theme.spacing(6)};
   background: #c7e0f4;
   text-align: center;
+  background-image: url(${visionBg});
+  background-position: right;
+  background-repeat: no-repeat;
 
   @media (max-width: 480px) {
     padding: 0 ${({ theme }) => theme.spacing(3)};

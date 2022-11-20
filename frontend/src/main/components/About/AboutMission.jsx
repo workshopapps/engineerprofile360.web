@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { Container, Title } from "../../../styles/reusableElements.styled";
+import missionBg from "./assets/images/mission-section.svg";
 
 const AboutMission = () => {
   return (
@@ -45,6 +46,9 @@ const AboutMissionSection = styled.div`
   padding: 0 ${({ theme }) => theme.spacing(6)};
   background: #004578;
   text-align: center;
+  background-image: url(${missionBg});
+  background-position: center;
+  background-repeat: no-repeat;
 
   @media (max-width: 480px) {
     padding: 0 ${({ theme }) => theme.spacing(3)};

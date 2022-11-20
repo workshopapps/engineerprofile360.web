@@ -73,7 +73,7 @@ const Footer = () => {
         </Follow>
 
         <Copyright>
-          <span>&copy; 2022 Skript. All rights reserved.</span>
+          <span>&copy; {new Date().getFullYear()} Skript. All rights reserved.</span>
           <ul>
             <li>Privacy policy</li>
             <li>Terms of service</li>
