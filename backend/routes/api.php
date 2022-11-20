@@ -110,8 +110,8 @@ Route::prefix("category")->group(function () {
 
 //Employee Routes
 Route::prefix('employee')->group(function () {
-    Route::post('add', [EmployeeController::class, 'addEmployee']);
-    Route::post('confirm', [EmployeeController::class, 'confirmCSV']);
+    Route::post('add', [EmployeeController::class, 'addEmployee'])->middleware("isloggedin", "isadmin");
+    Route::post('confirm', [EmployeeController::class, 'confirmCSV'])->middleware("isloggedin", "isadmin");
     Route::get('{id}', [EmployeeController::class, 'getById']);
     Route::get('/{org_id}', [EmployeeController::class, 'byCompId']);
     Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
