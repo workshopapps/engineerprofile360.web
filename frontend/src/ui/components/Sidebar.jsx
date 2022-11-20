@@ -30,7 +30,7 @@ const SidebarContainer = styled.div`
   display: flex;
   padding: 60px 30px;
   flex-direction: column;
-  gap: 50px;
+  gap: 60px;
 
   /* THE BLUE COLORED ICON AND TEXT REPRESENT THE ACTIVE STATE */
   div:last-child {
