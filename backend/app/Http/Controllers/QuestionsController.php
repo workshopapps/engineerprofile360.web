@@ -24,7 +24,7 @@ class QuestionsController extends Controller
                 Question::create($data);
                 return $this->successResponse(true, 'Question created', Response::HTTP_CREATED);
             }else {
-                return $this->errorResponse('Query failed', "Query parameter not manual");
+                return $this->errorResponse('Query failed', Response::HTTP_NOT_FOUND);
             }
 
         } catch (Exception $e) {
