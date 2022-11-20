@@ -13,10 +13,10 @@ use Exception;
 
 class EmployeeController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('isloggedin');
-    // }
+    public function __construct()
+    {
+        $this->middleware('isloggedin');
+    }
 
     /**
      * Fetch employees by company id.
