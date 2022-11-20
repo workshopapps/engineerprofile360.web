@@ -6,7 +6,7 @@ use Exception;
 use App\Models\Category;
 use App\Http\Requests\CategoryRequest;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class CategoryController extends Controller
 {
@@ -70,5 +70,12 @@ class CategoryController extends Controller
         }  catch (Exception $e) {
             return $this->errorResponse('Category not fetched', $e->getMessage());
         }
+    }
+
+    public function getCategory(string $id): JsonResponse
+    {
+        $category = Category::find($id);
+        if (!$category) return $this->errorResponse('Category not found', true, Response::HTTP_NOT_FOUND);
+        return $this->successResponse(true, 'Successful', $category, Response::HTTP_OK);
     }
 }
