@@ -41,7 +41,7 @@ class CompanyController extends Controller
     public function updateCompany(CompanyRequest $request, $companyId): JsonResponse
     {
         try{
-            $updatedData = $request->all();
+            $updatedData = json_decode($request->getContent(), true);
 
             // Get category by id
             $company = Company::find($companyId);
