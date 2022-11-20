@@ -6,8 +6,6 @@ import ChartDiagram from "../Images/Frame 3467026.png"
 
 const Container = styled.div`
   height: 384px;
-  margin-bottom: -3rem;
-
   @media (max-width: 768px) {
     height: 100%;
   }
@@ -18,7 +16,7 @@ const Stats = styled.div`
   justify-content: center;
   align-items: center;
   background: #f8fcfe;
-  margin-top: -0.8rem;
+  margin-top: 1rem;
   height: 70%;
   border: 0.12em solid #c7e0f4;
   border-radius: 0.8rem;
@@ -40,6 +38,7 @@ const SkillsGrade = styled.div`
   background-color: #ffffff;
   width: 30%;
   display: flex;
+  height:100%;
   flex-direction: column;
   justify-content: center;
   padding-inline: 2em;
@@ -59,7 +58,7 @@ const SkillsGrade = styled.div`
 `
 
 const Skill = styled.div`
-  padding: 0;
+  padding: .5em;
   margin: 0;
   width: 100%;
 
@@ -71,7 +70,7 @@ const Skill = styled.div`
     padding: 0 #{&} p {
       font-size: 0.8rem;
       color: #142245;
-      margin-top: -0.2em;
+      margin-top: .4em;
     }
   }
 `

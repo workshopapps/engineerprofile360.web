@@ -11,19 +11,20 @@ const Container = styled.div`
   @media (max-width: 768px) {
     width: 100%;
     min-width: 250px;
-    padding: 0 0.5rem;
+    padding: 1rem;
   }
 `
 const Home = () => {
   return (
     <Container>
-      <BrowserRouter>
+      {/* <BrowserRouter> */}
         <Nav />
-
+      <Dashboard />
+{/* 
         <Routes>
           <Route path="/" element={<Dashboard />}></Route>
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter> */}
     </Container>
   )
 }

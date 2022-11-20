@@ -24,7 +24,7 @@ const Container = styled.div`
 `
 
 const AssessmentType = styled.div`
-  margin-top: -1.7rem;
+  margin-top: .7rem;
 
   @media (max-width: 768px) {
     width: 100%;
