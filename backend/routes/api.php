@@ -87,7 +87,7 @@ Route::prefix("auth")->group(function () {
 // company route
 Route::prefix("company")->group(function () {
     Route::get('all', [CompanyController::class, 'getCompanies']);
-    Route::put('update', [CompanyController::class, 'updateCompanyInfo']);
+    Route::put('update', [CompanyController::class, 'updateCompanyInfo'])->middleware("isloggedin", "isadmin");
     Route::get('{id}', [CompanyController::class, 'byCompanyId']);
 });
 

@@ -12,7 +12,7 @@ class CompanyController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        
     }
 
     /**
@@ -27,12 +27,7 @@ class CompanyController extends Controller
                 $companies = [];
             }
 
-            return $this->successResponse(
-        true,
-        'All companies',
-                $companies,
-                Response::HTTP_OK
-            );
+            return $this->successResponse(true,'All companies',$companies,Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->errorResponse('Companies not fetched', $e->getMessage());
         }
