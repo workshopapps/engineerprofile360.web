@@ -77,7 +77,7 @@ Route::prefix("auth")->group(function () {
     Route::post('logout', [AuthenticationController::class, 'logout']);
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
 
-    Route::prefix("password")->group(function(){
+    Route::prefix("password")->group(function () {
         // forgot password
         Route::get("/forgot-password/{email}", [AuthenticateController::class, "forgotPassword"]);
         Route::post("/reset/{id}/{token}", [AuthenticateController::class, "verifyPasswordReset"]);
@@ -104,8 +104,7 @@ Route::prefix("category")->group(function () {
     Route::put('{categoryId}/update', [CategoryController::class, 'updateCategory']);
     Route::post('add', [CategoryController::class, 'createCategory']);
     Route::delete('{catId}/delete', [CategoryController::class, 'deleteCategory']);
-
-
+    Route::get('{id}', [CategoryController::class, 'getCategories']);
 });
 
 //Employee Routes
