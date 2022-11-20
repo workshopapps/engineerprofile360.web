@@ -10,7 +10,9 @@ const AccountOverview = () => {
     <>
       <OverviewContainer>
         <OverviewText>
-          <Title $color="#004578" $size="42px" $weight="600">OVERVIEW <img src={overviewWing} alt="" /></Title>
+          <Title $color="#004578" $size="42px" $weight="600">
+            OVERVIEW <img src={overviewWing} alt="" />
+          </Title>
           <p>
             Skript is a skill evaluator tool that is used for assessing
             engineers in an organisation.
@@ -40,8 +42,11 @@ const OverviewContainer = styled(Container)`
   padding: 0 ${({ theme }) => theme.spacing(6)};
   display: flex;
   align-items: center;
-  min-height: 100vh;
   gap: ${({ theme }) => theme.spacing(8)};
+
+  @media (max-width: 480px) {
+    padding: 0 ${({ theme }) => theme.spacing(3)};
+  }
 `;
 
 const OverviewText = styled.div`
@@ -49,19 +54,29 @@ const OverviewText = styled.div`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(6)};
   flex: 0 0 calc(50% - ${({ theme }) => theme.spacing(3)});
+  padding: ${({ theme }) => theme.spacing(10)} 0;
+
+  @media (max-width: 767px) {
+    flex: initial;
+  }
 
   p {
     line-height: 28px;
-    color: #605E5C;
+    color: #605e5c;
     font-size: 20px;
   }
 `;
 
 const OverviewImage = styled.div`
-  height: 100%;
+  // height: 100%;
   flex: 0 0 calc(50% - ${({ theme }) => theme.spacing(3)});
+
+  @media (max-width: 767px) {
+    display: none;
+  }
+
   img {
     max-width: 100%;
-    height: 100%;
+    // height: 100%;
   }
 `;

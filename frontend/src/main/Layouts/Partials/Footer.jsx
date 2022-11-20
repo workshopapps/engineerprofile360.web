@@ -104,7 +104,7 @@ const FooterContainer = styled(Container)`
   }
 
   @media (max-width: 480px) {
-    padding: 0 ${({ theme }) => theme.spacing(2)};
+    padding: ${({ theme }) => theme.spacing(6)} ${({ theme }) => theme.spacing(2)};
   }
 `;
 

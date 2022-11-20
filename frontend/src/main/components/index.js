@@ -1,5 +1,3 @@
-export { default as MainLayout } from "./Layouts/MainLayout";
-
 // About exports
 
 export { default as AboutOverview } from "./About/AboutOverview";

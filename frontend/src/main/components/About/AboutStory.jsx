@@ -52,6 +52,10 @@ const AboutStorySection = styled.div`
   padding: 0 ${({ theme }) => theme.spacing(6)};
   background: #004578;
   text-align: center;
+
+  @media (max-width: 480px) {
+    padding: 0 ${({ theme }) => theme.spacing(3)};
+  }
 `;
 
 const AboutStoryContainer = styled(Container)`
@@ -61,6 +65,7 @@ const AboutStoryContainer = styled(Container)`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(6)};
   min-height: 850px;
+  padding: ${({ theme }) => theme.spacing(10)} 0;
 
   div:nth-of-type(1) {
     p {
@@ -73,8 +78,12 @@ const AboutStoryContainer = styled(Container)`
 
   p {
     line-height: 28px;
-    color: #C8C6C4;
+    color: #c8c6c4;
     width: 75%;
     font-size: 20px;
+
+    @media (max-width: 767px) {
+      width: initial;
+    }
   }
 `;

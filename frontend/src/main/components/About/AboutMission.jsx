@@ -45,6 +45,10 @@ const AboutMissionSection = styled.div`
   padding: 0 ${({ theme }) => theme.spacing(6)};
   background: #004578;
   text-align: center;
+
+  @media (max-width: 480px) {
+    padding: 0 ${({ theme }) => theme.spacing(3)};
+  }
 `;
 
 const AboutMissionContainer = styled(Container)`
@@ -54,6 +58,7 @@ const AboutMissionContainer = styled(Container)`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(6)};
   min-height: 650px;
+  padding: ${({ theme }) => theme.spacing(10)} 0;
 
   div:nth-of-type(1) {
     p {
@@ -65,20 +70,27 @@ const AboutMissionContainer = styled(Container)`
   }
 
   ul {
-    color: #C8C6C4;
+    color: #c8c6c4;
     text-align: left;
     list-style-type: initial;
     width: 75%;
+    display: flex;
+    flex-direction: column;
+    gap: ${({ theme }) => theme.spacing(2)};
+
+    @media (max-width: 767px) {
+      width: initial;
+    }
 
     li {
-        font-size: 20px;
-        line-height: 28px;
+      font-size: 20px;
+      line-height: 28px;
     }
   }
 
   p {
     line-height: 28px;
     color: #f3f2f1;
-       font-size: 20px;
+    font-size: 20px;
   }
 `;

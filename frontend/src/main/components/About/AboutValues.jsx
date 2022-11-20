@@ -2,6 +2,10 @@ import React from "react";
 import styled from "styled-components";
 
 import { Container, Title } from "../../../styles/reusableElements.styled";
+import reliability from "./assets/images/reliability.png";
+import intuitiveness from "./assets/images/intuitiveness.png";
+import satisfaction from "./assets/images/satisfaction.png";
+import engineerCentric from "./assets/images/engineer-centric.png";
 
 const AboutValues = () => {
   return (
@@ -24,18 +28,51 @@ const AboutValues = () => {
               You can trust us to give you accurate insights.
             </p>
           </Text>
-          <Image></Image>
+          <Image>
+            <img src={reliability} alt="" />
+          </Image>
         </Reliability>
-        {/* 
-        <Intuitiveness>
 
+        <Intuitiveness>
+          <Text>
+            <Title $color="#004578" $size="42px" $weight="600">
+              Intuitiveness
+            </Title>
+            <p>Our software interface is easy to understand and use.</p>
+          </Text>
+          <Image>
+            <img src={intuitiveness} alt="" />
+          </Image>
         </Intuitiveness>
         <Satisfaction>
-
+          <Text>
+            <Title $color="#004578" $size="42px" $weight="600">
+              Satisfaction
+            </Title>
+            <p>
+              We want you to have a seamless experience and gain maximum
+              satisfaction from using this tool.
+            </p>
+          </Text>
+          <Image>
+            <img src={satisfaction} alt="" />
+          </Image>
         </Satisfaction>
         <EngineerCentric>
-
-        </EngineerCentric> */}
+          <Text>
+            <Title $color="#004578" $size="42px" $weight="600">
+              Engineer Centric
+            </Title>
+            <p>
+              They are an integral part of your organisation. We help you
+              analyse their strengths and weaknesses, and leave you with every
+              information you need to assign tasks and ensure efficiency.
+            </p>
+          </Text>
+          <Image>
+            <img src={satisfaction} alt="" />
+          </Image>
+        </EngineerCentric>
       </AboutValuesContainer>
     </AboutValuesSection>
   );
@@ -48,40 +85,66 @@ const AboutValuesSection = styled.div`
   padding: 0 ${({ theme }) => theme.spacing(6)};
   background: #ffffff;
   text-align: center;
+
+  @media (max-width: 480px) {
+    padding: 0 ${({ theme }) => theme.spacing(3)};
+  }
 `;
 
 const AboutValuesContainer = styled(Container)`
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(6)};
   min-height: 300px;
-
-  p {
-    line-height: 28px;
-    color: #323130;
-    font-size: 20px;
-    font-weight: 600;
-    width: 75%;
-  }
+  padding: ${({ theme }) => theme.spacing(10)} 0;
 `;
 
 const Flex = styled.div`
   display: flex;
   align-items: center;
-  gap: ${({ theme }) => theme.spacing(6)};
+  text-align: left;
+  justify-content: space-between;
+  width: 100%;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+  }
 `;
 
 const Text = styled.div`
   display: flex;
-  align-items: center;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(6)};
+  gap: ${({ theme }) => theme.spacing(4)};
+  flex: 0 0 45%;
+
+  p {
+    line-height: 28px;
+    font-size: 20px;
+    color: #605e5c;
+  }
 `;
 
 const Image = styled.div`
+  flex: 0 0 50%;
+
   img {
     width: 100%;
+  }
+`;
+
+const Reliability = styled(Flex)``;
+const Intuitiveness = styled(Flex)`
+  flex-direction: row-reverse;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+  }
+`;
+const Satisfaction = styled(Flex)``;
+const EngineerCentric = styled(Flex)`
+  flex-direction: row-reverse;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
   }
 `;
