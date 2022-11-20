@@ -1,23 +1,53 @@
-import MyDetails from "./components/MyDetails"
-import classes from "./AdminSettings.module.css"
+import MyDetails from "./components/MyDetails";
+import classes from "./AdminSettings.module.css";
+import { useState } from "react";
+import Password from "./components/Password";
+import Notifications from "./components/Notifcations";
+import Teams from "./components/Teams";
+import Integrations from "./components/Integration";
+import API from "./components/API";
 
 const AdminSettings = () => {
+  const [activeNav, setActiveNav] = useState("My Details");
+
+  const nav_heading = [
+    "My Details",
+    "Password",
+    "Notifications",
+    "Teams",
+    "Integrations",
+    "API",
+  ];
+
+  const navClickHandler = (event) => {
+    setActiveNav(event.target.textContent)
+  }
   return (
     <main className={classes.main}>
-        <h1 className={classes.main_heading}>Settings</h1>
-        <nav className={classes.nav}>
-            <ul className={classes.nav_list}>
-                <li className={`${classes.nav_item} ${classes.nav_active}`}>My Details</li>
-                <li className={classes.nav_item}>Password</li>
-                <li className={classes.nav_item}>Notifications</li>
-                <li className={classes.nav_item}>Teams</li>
-                <li className={classes.nav_item}>Integration</li>
-                <li className={classes.nav_item}>API</li>
-            </ul>
-        </nav>
-        <MyDetails />
-    </main>
-  )
-}
+      <h1 className={classes.main_heading}>Settings</h1>
+      <nav className={classes.nav}>
+        <ul className={classes.nav_list}>
+          {nav_heading.map((item) => (
+            <li
+              onClick={navClickHandler}
+              className={`${classes.nav_item} ${
+                activeNav === item ? classes.nav_active : ""
+              }`}
+            >
+              {item}
+            </li>
+          ))}
+        </ul>
+      </nav>
+      {activeNav === "My Details" && <MyDetails />}
+      {activeNav === "Password" && <Password />}
+      {activeNav === "Notifications" && <Notifications />}
+      {activeNav === "Teams" && <Teams />}
+      {activeNav === "Integrations" && <Integrations />}
+      {activeNav === "API" && <API />}
 
-export default AdminSettings
+    </main>
+  );
+};
+
+export default AdminSettings;

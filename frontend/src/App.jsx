@@ -10,6 +10,7 @@ import Contact from "../src/main/pages/Contact";
 import Support from "../src/ui/pages/UserSupport";
 import Terms from "../src/ui/pages/TermsAndService/TermsAndService";
 import UserProfile from "./ui/pages/user-profile/UserProfile";
+import AdminSettings from "./ui/pages/admin-settings/AdminSettings";
 
 const App = () => {
   return (

@@ -14,8 +14,8 @@
 
 .nav_list {
   display: grid;
-  /* max-width: 75%; */
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  align-items: center;
 }
 
 .nav_item {
@@ -25,13 +25,15 @@
   color: #a19f9d;
   width:fit-content;
   cursor: pointer;
+  transition: ease-in-out;
 }
 
 .nav_active {
   font-weight: 600;
   font-size: 20px;
   line-height: 28px;
-  padding-bottom: 5px;
+  padding-bottom: 3px;
   border-bottom: 5px solid #141AE9;;
   color: #323130;
+  align-self: center;
 }
