@@ -598,73 +598,122 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserScoreCreate401'
     # fetch assessment by organisation
-  /assessment/organisationId:
+  "/assessment/{organisation_id}":
     get:
       tags:
         - Assessment
       description: 'Fetch assessment by organisation'
       operationId: assessment
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: organisation_id
+          in: path
+          required: true
+          type: organisation_id
+          format: organisation_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
       responses:
         '200':
           description: successful operation
-        '400':
-          description: Bad request
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Assessment'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate401'
     # update assessment
-  /assessment/assessmentId:
+  "/assessment/{assessment_id}":
     put:
       tags:
         - Assessment
       description: 'Update assessment'
-      operationId: update
+      operationId: updateAssessment
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: assessment_id
+          in: path
+          required: true
+          type: assessment_id
+          format: assessment_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
       responses:
         '200':
           description: successful operation
-        '400':
-          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate401'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Assessment'
+              $ref: '#/components/schemas/UpdateAssessment'
     # create assessment
   /assessment/create:
     post:
       tags:
         - Assessment
       description: 'Create Assessment'
-      operationId: assessment
+      operationId: createassessment
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: successful operation
-        '400':
-          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate401'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Assessment'
+              $ref: '#/components/schemas/CreateAssessment'
     # delete assessment
-  /assessment/assessmentId/delete:
+  "/assessment/{assessment_id}/delete":
     delete:
       tags:
         - Assessment
       description: 'Delete assessment'
-      operationId: assessment
+      operationId: deleteassessment
+      parameters:
+        - name: assessment_id
+          in: path
+          required: true
+          type: assessment_id
+          format: assessment_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
       responses:
         '200':
           description: successful operation
-        '400':
-          description: Bad request
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Assessment'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate401'
     # create question
   /question/add:
     post:
@@ -672,33 +721,137 @@ paths:
         - Question
       description: 'Create question'
       operationId: question
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: successful operation
-        '400':
-          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate401'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Question'
+              $ref: '#/components/schemas/CreateQuestion'
     # update question
-  /question/questionId/assessmentId/update:
+  "/question/{question_id}/{assessment_id}/update":
     put:
       tags:
         - Question
       description: 'Update question'
       operationId: update
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: successful operation
-        '400':
-          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate401'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Question'
+              $ref: '#/components/schemas/UpdateQuestion'
+  "/question/get/{organisation_id}":
+    get:
+      tags:
+        - Question
+      description: 'Get all the questions set by an organisation'
+      operationId: getquestionbyorg
+      parameters:
+        - name: organisation_id
+          in: path
+          required: true
+          type: organisation_id
+          format: organisation_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate401'
+  "/question/category/{category_id}":
+    get:
+      tags:
+        - Question
+      description: 'Get all the questions set by it category'
+      operationId: getquestionbycategory
+      parameters:
+        - name: category_id
+          in: path
+          required: true
+          type: category_id
+          format: category_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate401'
+  "/question/assessment/{assessment_id}":
+    get:
+      tags:
+        - Question
+      description: 'Get all assessment questions'
+      operationId: getquestionbyassessment
+      parameters:
+        - name: assessment_id
+          in: path
+          required: true
+          type: assessment_id
+          format: assessment_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate401'
     # create userscore
   /userscore/create:
     post:
@@ -727,7 +880,7 @@ paths:
             schema:
               $ref: '#/components/schemas/UserScoreCreate'
   # get userscore
-  /userscore/employee_id/assessment_id:
+  "/userscore/{employee_id}/{assessment_id}":
     get:
       tags:
         - Userscore
@@ -760,7 +913,63 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserScoreCreate100'
+                $ref: '#/components/schemas/UserScoreCreate401'
+  "/userscore/assessment/{assessment_id}":
+    get:
+      tags:
+        - Userscore
+      description: 'Get all assessment scores'
+      operationId: getscorebyassessment
+      parameters:
+        - name: assessment_id
+          in: path
+          required: true
+          type: assessment_id
+          format: assessment_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate401'
+  "/userscore/category/{category_id}":
+    get:
+      tags:
+        - Userscore
+      description: 'Get all scores for a category of questions'
+      operationId: getscorebycategory
+      parameters:
+        - name: category_id
+          in: path
+          required: true
+          type: category_id
+          format: category_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserScoreCreate401'
     '/lighting/dimmers/{deviceId}/{value}':
     post:
       tags:
@@ -1458,4 +1667,72 @@ components:
           type: string
           format: name
           example: 'PHP'
+    UpdateAssessment:
+      type: object
+      properties:
+        name:
+          type: string
+          format: name
+          example: 'First Assessment'
+    CreateAssessment:
+      type: object
+      properties:
+        name:
+          type: string
+          format: name
+          example: 'First Assessment'
+        org_id:
+          type: string
+          format: org_id
+          example: '9ea09b93-6682-11ed-9941-3863bbb7c6d'
+    CreateQuestion:
+      type: object
+      properties:
+        category_id:
+          type: string
+          format: category_id
+          example: '9ea09b93-6682-11ed-9941-3863bbb7c6d'
+        assessment_id:
+          type: string
+          format: assessment_id
+          example: '2ea09b93-6682-11ed-9941-3863bbb7c6d'
+        question_id:
+          type: string
+          format: question_id
+          example: '5ea09b93-6682-11ed-9941-3863bbb7c6d'
+        correct_answers:
+          type: string
+          format: correct_answers
+          example: '[1]'
+        options:
+          type: string
+          format: options
+          example: '["PHP", "SQL", "REACT"]'
+        timeframe:
+          type: string
+          format: timeframe
+          example: '10'
+        is_multiple_answers:
+          type: boolean
+          format: is_multiple_answers
+          example: false
+    UpdateQuestion:
+      type: object
+      properties:
+        correct_answers:
+          type: string
+          format: correct_answers
+          example: '[1]'
+        options:
+          type: string
+          format: options
+          example: '["PHP", "SQL", "REACT"]'
+        timeframe:
+          type: string
+          format: timeframe
+          example: '10'
+        is_multiple_answers:
+          type: boolean
+          format: is_multiple_answers
+          example: false
     
