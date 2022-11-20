@@ -51,17 +51,19 @@ class CsvParser{
         $csvData = $oup["data"];
         $splitData = explode("\n", $csvData);
         $slicedData = array_slice(array_chunk($splitData, 4)[0], 1);
-        $finalJsonData = [];
+        $finalJsonData = []; $i=1;
 
         foreach($slicedData as $val){
             $ext = explode(",", str_replace("\r", "", $val));
             $item = array_slice($ext, 1);
             $arr = [
+                "id"=> $i,
                 "fullname"=> $item[0],
                 "username"=> $item[1],
                 "email"=> $item[2]
             ];
             array_push($finalJsonData, $arr);
+            $i++;
         }
         
         $this->res["error"] = false;
@@ -69,6 +71,14 @@ class CsvParser{
         $this->res["data"] = $finalJsonData;
 
         return $this->res;
+    }
+
+    public function trimEmployeeCSV($json){
+        foreach($json as $key => $item){
+            unset($json[$key]["id"]);
+        }
+
+        return json_encode($json);
     }
 
 }

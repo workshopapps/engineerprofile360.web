@@ -1,5 +1,6 @@
 import React from "react"
 import styled from "styled-components"
+import BasicLayout from "../layouts/BasicLayout"
 
 import contactImage from "../../assets/images/contact-image.png"
 import sms from "../../assets/icons/contact-page/sms-edit.svg"
@@ -12,91 +13,93 @@ import linkedin from "../../assets/icons/contact-page/linkedin.svg"
 
 const Contact = () => {
   return (
-    <ContactContainer>
-      <Top>
-        <GetInTouch>
-          <h1>Get In Touch</h1>
-          <div></div>
-          <p>
-            We Will Love To Hear From You.
-            <br /> Our Team Is Always Happy To Help
-          </p>
-        </GetInTouch>
-      </Top>
-      <CardInfo>
-        <form>
-          <Title>
-            <h1>Send Us A Message</h1>
-            <p>
-              {" "}
-              You Can Reach Us At Anytime Via <span>Hi@skripthq.com</span>
-            </p>
-          </Title>
-
-          <Container>
-            <FormData>
-              <label htmlFor="full_name">Full Name</label>
-              <input id="full_name" type="text" />
-            </FormData>
-            <FormData>
-              <label htmlFor="phone_number">Phone Number</label>
-              <input id="phone_number" type="text" />
-            </FormData>
-            <FormData>
-              <label htmlFor="email">Email Address</label>
-              <input id="email" type="email" />
-            </FormData>
-            <FormData>
-              <label htmlFor="message">How Can We Help?</label>
-              <textarea id="message" />
-            </FormData>
-          </Container>
-          <Button>
-            <button type="submit">Submit</button>
-          </Button>
-        </form>
-        <MainInfo>
-          <Heading>
-            <h1>Contact Information</h1>
+    <BasicLayout>
+      <ContactContainer>
+        <Top>
+          <GetInTouch>
+            <h1>Get In Touch</h1>
             <div></div>
-          </Heading>
-          <Body>
-            <Info>
-              <img src={sms} alt="sms svg" />
-              <div>
-                <h2>Chat With Us</h2>
-                <p>Our Friendly Team Is Here To Help</p>
-                <a href="malito:skriptassessmenthq@gmail.com">
-                  skriptassessmenthq@gmail.com
-                </a>
-              </div>
-            </Info>
-            <Info>
-              <img src={call} alt="call svg" />
-              <div>
-                <h2>Phone</h2>
-                <p>Our Friendly Team Is Here To Help</p>
-                <a href="tel:4065550120">(406) 555-0120</a>
-              </div>
-            </Info>
-            <Info>
-              <img src={map} alt="map svg" />
-              <div>
-                <h2>Our Address</h2>
-                <p>Our Friendly Team Is Here To Help</p>
-                <p>3517 W. Gray St. Utica, Pennsylvania 57867</p>
-              </div>
-            </Info>
-          </Body>
-          <SocialContainer>
-            <img src={facebook} alt="facebook icon" />
-            <img src={instagram} alt="instagram icon" />
-            <img src={twitter} alt="twitter icon" />
-            <img src={linkedin} alt="linkedin icon" />
-          </SocialContainer>
-        </MainInfo>
-      </CardInfo>
-    </ContactContainer>
+            <p>
+              We Will Love To Hear From You.
+              <br /> Our Team Is Always Happy To Help
+            </p>
+          </GetInTouch>
+        </Top>
+        <CardInfo>
+          <form>
+            <Title>
+              <h1>Send Us A Message</h1>
+              <p>
+                {" "}
+                You Can Reach Us At Anytime Via <span>Hi@skripthq.com</span>
+              </p>
+            </Title>
+
+            <Container>
+              <FormData>
+                <label htmlFor="full_name">Full Name</label>
+                <input id="full_name" type="text" />
+              </FormData>
+              <FormData>
+                <label htmlFor="phone_number">Phone Number</label>
+                <input id="phone_number" type="text" />
+              </FormData>
+              <FormData>
+                <label htmlFor="email">Email Address</label>
+                <input id="email" type="email" />
+              </FormData>
+              <FormData>
+                <label htmlFor="message">How Can We Help?</label>
+                <textarea id="message" />
+              </FormData>
+            </Container>
+            <Button>
+              <button type="submit">Submit</button>
+            </Button>
+          </form>
+          <MainInfo>
+            <Heading>
+              <h1>Contact Information</h1>
+              <div></div>
+            </Heading>
+            <Body>
+              <Info>
+                <img src={sms} alt="sms svg" />
+                <div>
+                  <h2>Chat With Us</h2>
+                  <p>Our Friendly Team Is Here To Help</p>
+                  <a href="malito:skriptassessmenthq@gmail.com">
+                    skriptassessmenthq@gmail.com
+                  </a>
+                </div>
+              </Info>
+              <Info>
+                <img src={call} alt="call svg" />
+                <div>
+                  <h2>Phone</h2>
+                  <p>Our Friendly Team Is Here To Help</p>
+                  <a href="tel:4065550120">(406) 555-0120</a>
+                </div>
+              </Info>
+              <Info>
+                <img src={map} alt="map svg" />
+                <div>
+                  <h2>Our Address</h2>
+                  <p>Our Friendly Team Is Here To Help</p>
+                  <p>3517 W. Gray St. Utica, Pennsylvania 57867</p>
+                </div>
+              </Info>
+            </Body>
+            <SocialContainer>
+              <img src={facebook} alt="facebook icon" />
+              <img src={instagram} alt="instagram icon" />
+              <img src={twitter} alt="twitter icon" />
+              <img src={linkedin} alt="linkedin icon" />
+            </SocialContainer>
+          </MainInfo>
+        </CardInfo>
+      </ContactContainer>
+    </BasicLayout>
   )
 }
 
