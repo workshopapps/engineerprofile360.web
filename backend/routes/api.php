@@ -86,13 +86,9 @@ Route::prefix("auth")->group(function () {
 
 // company route
 Route::prefix("company")->group(function () {
-<<<<<<< HEAD
     Route::get('all', [CompanyController::class, 'getCompanies']);
     Route::put('update', [CompanyController::class, 'updateCompanyInfo'])->middleware("isloggedin", "isadmin");
-=======
-    Route::get('all', [CompanyController::class, 'allCompanyInfo']);
     Route::put('update/{companyId}', [CompanyController::class, 'updateCompanyInfo']);
->>>>>>> c9671bdab843122d483e00e6492634497784afc2
     Route::get('{id}', [CompanyController::class, 'byCompanyId']);
     Route::get('user/{userId}', [CompanyController::class, 'getCompanyByUserId']);
 });

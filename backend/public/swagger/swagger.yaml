@@ -913,9 +913,6 @@ paths:
           content:
             application/json:
               schema:
-<<<<<<< HEAD
-                $ref: '#/components/schemas/UserScoreCreate100'
-=======
                 $ref: '#/components/schemas/UserScoreCreate401'
   "/userscore/assessment/{assessment_id}":
     get:
@@ -1269,7 +1266,6 @@ paths:
         '200':
           description: ok
       x-swagger-router-controller: Zones
->>>>>>> c9671bdab843122d483e00e6492634497784afc2
 components:
   schemas:
     ResetPassword:
