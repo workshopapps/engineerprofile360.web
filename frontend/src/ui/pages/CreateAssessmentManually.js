@@ -1,27 +1,27 @@
-import React from "react"
-import Flex from "../components/layout/Flex"
-import logo from "../../assets/icons/skript-logo.svg"
-import notif from "../../assets/icons/notification.svg"
-import down from "../../assets/icons/arrow-down.svg"
-import icon from "../../assets/icons/search-alt.svg"
-import dashboard from "../../assets/icons/dashboard-logo.svg"
-import assessment from "../../assets/icons/assessment.svg"
-import user from "../../assets/icons/profile-2user.svg"
-import dropdown from "../../assets/icons/dropdown.svg"
-import profile from "../../assets/icons/profile.svg"
-import settings from "../../assets/icons/settings.svg"
-import logout from "../../assets/icons/logout.svg"
-import dots from "../../assets/icons/dots.svg"
-import avatar from "../../assets/images/avatar.svg"
-import "../../styles/assessment.css"
-import Grid, { GridItem } from "../components/layout/Grid"
-import { useState } from "react"
+import React from "react";
+import Flex from "../components/layout/Flex";
+import logo from "../../assets/icons/skript-logo.svg";
+import notif from "../../assets/icons/notification.svg";
+import down from "../../assets/icons/arrow-down.svg";
+import icon from "../../assets/icons/search-alt.svg";
+import dashboard from "../../assets/icons/dashboard-logo.svg";
+import assessment from "../../assets/icons/assessment.svg";
+import user from "../../assets/icons/profile-2user.svg";
+import dropdown from "../../assets/icons/dropdown.svg";
+import profile from "../../assets/icons/profile.svg";
+import settings from "../../assets/icons/settings.svg";
+import logout from "../../assets/icons/logout.svg";
+import dots from "../../assets/icons/dots.svg";
+import avatar from "../../assets/images/avatar.svg";
+import "../../styles/assessment.css";
+import Grid, { GridItem } from "../components/layout/Grid";
+import { useState } from "react";
 
 const options = [
   { value: "short answer", label: "Short Answer" },
   { value: "paragraph", label: "Paragraph" },
   { value: "essay", label: "Essay" },
-]
+];
 
 const DropdownItem = (props) => {
   return (
@@ -31,15 +31,15 @@ const DropdownItem = (props) => {
         <p className="regular ">{props.text}</p>
       </Flex>
     </li>
-  )
-}
+  );
+};
 
 const DropDown = (props) => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   const handleDropdown = () => {
-    return setOpen(!open)
-  }
+    return setOpen(!open);
+  };
 
   return (
     <div>
@@ -68,8 +68,8 @@ const DropDown = (props) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
 const Header = () => {
   return (
@@ -148,8 +148,8 @@ const Header = () => {
         </GridItem>
       </Grid>
     </Flex>
-  )
-}
+  );
+};
 
 const Sidebar = () => {
   return (
@@ -169,8 +169,8 @@ const Sidebar = () => {
         </Flex>
       </Flex>
     </div>
-  )
-}
+  );
+};
 
 const Question = () => {
   return (
@@ -240,8 +240,8 @@ const Question = () => {
         </Flex>
       </form>
     </div>
-  )
-}
+  );
+};
 
 const AssessmentForm = () => {
   return (
@@ -318,16 +318,16 @@ const AssessmentForm = () => {
         </Flex>
       </Flex>
     </Flex>
-  )
-}
+  );
+};
 
 const AssessmentPage = () => {
   return (
     <Flex stack style={{ width: "100%" }} className="">
       <AssessmentForm />
     </Flex>
-  )
-}
+  );
+};
 
 const CreateAssessmentManually = () => {
   return (
@@ -338,7 +338,7 @@ const CreateAssessmentManually = () => {
         <AssessmentPage />
       </Flex>
     </div>
-  )
-}
+  );
+};
 
-export default CreateAssessmentManually
+export default CreateAssessmentManually;

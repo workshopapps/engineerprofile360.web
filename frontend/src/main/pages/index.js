@@ -1,16 +1,15 @@
-import React from "react"
-import HomeBlog from "../compnents/sections/homeBlog/HomeBlog"
-import Homedecision from "../compnents/sections/homeDecision/HomeDecision"
-import HomeHero from "../compnents/sections/homeHero/HomeHero"
-import HomeProduct from "../compnents/sections/homeProducts/HomeProduct"
-import HomeStarted from "../compnents/sections/homeStarted/HomeStarted"
-import HomeStats from "../compnents/sections/homeStats/HomeStats"
-import Footer from "../compnents/sections/footer/Footer"
-import HomeTestimony from "../compnents/sections/homeTestimony/HomeTestimony"
+import React from "react";
+import HomeBlog from "../components/sections/homeBlog/HomeBlog";
+import Homedecision from "../components/sections/homeDecision/HomeDecision";
+import HomeHero from "../components/sections/homeHero/HomeHero";
+import HomeProduct from "../components/sections/homeProducts/HomeProduct";
+import HomeStarted from "../components/sections/homeStarted/HomeStarted";
+import HomeStats from "../components/sections/homeStats/HomeStats";
+import HomeTestimony from "../components/sections/homeTestimony/HomeTestimony";
 
 export default function Home() {
   return (
-    <div>
+    <>
       <HomeHero />
       <HomeStats />
       <Homedecision />
@@ -18,7 +17,6 @@ export default function Home() {
       <HomeTestimony />
       <HomeBlog />
       <HomeStarted />
-      {/* <Footer /> */}
-    </div>
-  )
+    </>
+  );
 }

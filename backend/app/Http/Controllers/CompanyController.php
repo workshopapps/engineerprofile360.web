@@ -12,7 +12,7 @@ class CompanyController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        
     }
 
     /**
@@ -27,12 +27,7 @@ class CompanyController extends Controller
                 $companies = [];
             }
 
-            return $this->successResponse(
-        true,
-        'All companies',
-                $companies,
-                Response::HTTP_OK
-            );
+            return $this->successResponse(true,'All companies',$companies,Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->errorResponse('Companies not fetched', $e->getMessage());
         }
@@ -46,7 +41,7 @@ class CompanyController extends Controller
     public function updateCompany(CompanyRequest $request, $companyId): JsonResponse
     {
         try{
-            $updatedData = $request->all();
+            $updatedData = json_decode($request->getContent(), true);
 
             // Get category by id
             $company = Company::find($companyId);
@@ -87,4 +82,17 @@ class CompanyController extends Controller
         }
     }
     
+
+    public function getCompanyByUserId($userId): JsonResponse
+    {
+        try {
+            $company = Company::where('user_id', $userId)->first();
+            if(is_null($company)) {
+                return $this->errorResponse('Company does not exists', Response::HTTP_NOT_FOUND);
+            }
+            return $this->successResponse(true, 'Company', $company, Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->errorResponse('Companies not fetched', $e->getMessage());
+        }
+    }
 }
