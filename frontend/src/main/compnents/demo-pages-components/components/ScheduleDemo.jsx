@@ -30,7 +30,6 @@ import {
   TrustedBy,
   Body,
   Reviews,
-  Main,
 } from "./ScheduleDemo.styled"
 import SupportPartners from "./SupportPartners"
 import { useState, useEffect } from "react"
@@ -215,8 +214,8 @@ function ScheduleDemo() {
             <ReviewImage src={Avatar} alt="Review avatar" className="" />
             <ReviewContainerText>
               <ReviewText>
-                Engineer 360 brings company using their software to an entire
-                new level...
+                Skript brings company using their software to an entire new
+                level...
               </ReviewText>
               <ReviewName>Sophia Victory,CEO @Awest industry</ReviewName>
             </ReviewContainerText>
@@ -225,8 +224,8 @@ function ScheduleDemo() {
             <ReviewImage src={Avatar} alt="Review avatar" className="" />
             <ReviewContainerText>
               <ReviewText>
-                Engineer 360 brings company using their software to an entire
-                new level...
+                Skript brings company using their software to an entire new
+                level...
               </ReviewText>
               <ReviewName>Sophia Victory,CEO @Awest industry</ReviewName>
             </ReviewContainerText>
@@ -235,8 +234,8 @@ function ScheduleDemo() {
             <ReviewImage src={Avatar} alt="Review avatar" className="" />
             <ReviewContainerText>
               <ReviewText>
-                Engineer 360 brings company using their software to an entire
-                new level...
+                Skript brings company using their software to an entire new
+                level...
               </ReviewText>
               <ReviewName>Sophia Victory,CEO @Awest industry</ReviewName>
             </ReviewContainerText>

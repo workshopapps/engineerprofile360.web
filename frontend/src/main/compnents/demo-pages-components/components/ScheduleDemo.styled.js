@@ -1,11 +1,18 @@
 import styled from "styled-components"
 
 export const DemoHero = styled.div`
-  max-width: 100%;
+  max-width: 100vw;
   height: 400px;
-  padding: 0 10px;
+  padding: 0 7px;
   margin: 0 auto;
   background-color: #2667ff;
+  @media (min-width: 540px) {
+    max-width: 100%;
+    height: 400px;
+    padding: 0 10px;
+    margin: 0 auto;
+    background-color: #2667ff;
+  }
 
   @media (min-width: 748px) {
     max-width: 100%;
@@ -60,8 +67,8 @@ export const InputForm = styled.form`
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  width: 500px;
-  height: 720px;
+  width: 100%;
+  height: 500px;
 
   margin: 0 auto;
   border: 1px solid #edebe9;
@@ -69,6 +76,20 @@ export const InputForm = styled.form`
 
   background-color: white;
 
+  @media (min-width: 540px) {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 500px;
+    height: 720px;
+
+    margin: 0 auto;
+    border: 1px solid #edebe9;
+    border-radius: 8px;
+
+    background-color: white;
+  }
   @media (min-width: 748px) {
     display: flex;
     align-items: center;
