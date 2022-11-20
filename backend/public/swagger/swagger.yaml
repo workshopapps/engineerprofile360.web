@@ -3,7 +3,7 @@ openapi: 3.0.0
 servers:
   # Added by API Auto Mocking Plugin
   - description: Engineering 360 App
-    url: http://104.225.216.199:8000/api
+    url: http://localhost:8000/api
 info:
   version: "1.0.0"
   title: Engineering 360 API
@@ -1290,4 +1290,5 @@ components:
           type: boolean
           format: is_multiple_answers
           example: false
-    
+security:
+  - bearerAuth: []
