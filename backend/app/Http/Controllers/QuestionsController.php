@@ -18,9 +18,15 @@ class QuestionsController extends Controller
     public function addManually(CreateQuestionRequest $request): JsonResponse
     {
         $data = $request->all();
+        $query = $request->query('type');
         try {
-            Question::create($data);
-            return $this->successResponse(true, 'Question created', Response::HTTP_CREATED);
+            if($query === "manual"){
+                Question::create($data);
+                return $this->successResponse(true, 'Question created', Response::HTTP_CREATED);
+            }else {
+                return $this->errorResponse('Query failed', "Query parameter not manual");
+            }
+
         } catch (Exception $e) {
             return $this->errorResponse('Question not created', $e->getMessage());
         }
