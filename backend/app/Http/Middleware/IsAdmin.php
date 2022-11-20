@@ -32,10 +32,10 @@ class IsAdmin extends Controller
             $uid = $user["id"];
     
             // check if user exists.
-            $org_user = User::where("id", $uid)->first();
+            $org_user = User::where("id", $uid);
     
             // if not user is found
-            if($org_user->count() == 0 || $user["role"] != 1){
+            if($org_user->count() == 0 || $user->first()["role"] != 1){
                 return $this->errorResponse("Access Denied ", "Not permitted to perform this action.", 403);
             }
 
