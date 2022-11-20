@@ -1,4 +1,7 @@
-.mainDiv {
+li{
+  list-style-type: none;
+  margin-bottom: 10px;
+}.mainDiv {
   padding-top: 4rem;
   padding-bottom: 4rem;
 }
