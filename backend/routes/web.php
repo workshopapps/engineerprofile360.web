@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthenticateController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,3 +22,7 @@ Route::get('/', function () {
 Route::get('/doc', function () {
     return view('swagger/index');
 });
+
+
+// reset password
+// Route::get("/reset-password/{id}/{token}", [AuthenticateController::class, "verifyPasswordReset"]);

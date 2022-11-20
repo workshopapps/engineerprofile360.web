@@ -44,20 +44,16 @@ export const Button = styled.button`
 
 export const MainContainer = styled.div`
   display: grid;
-  width: 100%;
-  height: 100vh;
-  grid-template-rows: 58px minmax(0, 1fr);
-  position: relative;
-`
-export const Main = styled.div`
-  display: grid;
   grid-template-columns: 220px auto;
   height: 100vh;
+  overflow: hidden;
 `
 
 export const Divider = styled.div`
-  width: 100%;
+  width: 85%;
   height: 2px;
-  margin-top: 3px;
+  margin-top: 96px;
+  position: absolute;
+  right: 0;
   background: ${({ theme }) => theme.palette.divider};
 `

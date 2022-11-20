@@ -1,14 +1,14 @@
-import React from "react"
-import styled from "styled-components"
+import React from "react";
+import styled from "styled-components";
 
-import contactImage from "../../assets/images/contact-image.png"
-import sms from "../../assets/icons/contact-page/sms-edit.svg"
-import call from "../../assets/icons/contact-page/call.svg"
-import map from "../../assets/icons/contact-page/map.svg"
-import facebook from "../../assets/icons/contact-page/Facebook.svg"
-import instagram from "../../assets/icons/contact-page/instagram.svg"
-import twitter from "../../assets/icons/contact-page/twitter.svg"
-import linkedin from "../../assets/icons/contact-page/linkedin.svg"
+import contactImage from "../../assets/images/contact-image.png";
+import sms from "../../assets/icons/contact-page/sms-edit.svg";
+import call from "../../assets/icons/contact-page/call.svg";
+import map from "../../assets/icons/contact-page/map.svg";
+import facebook from "../../assets/icons/contact-page/Facebook.svg";
+import instagram from "../../assets/icons/contact-page/instagram.svg";
+import twitter from "../../assets/icons/contact-page/twitter.svg";
+import linkedin from "../../assets/icons/contact-page/linkedin.svg";
 
 const Contact = () => {
   return (
@@ -97,17 +97,17 @@ const Contact = () => {
         </MainInfo>
       </CardInfo>
     </ContactContainer>
-  )
-}
+  );
+};
 
-export default Contact
+export default Contact;
 
 const ContactContainer = styled.div`
   display: grid;
   grid-template-rows: 1fr 1fr;
   flex-direction: column;
   margin-bottom: 250px;
-`
+`;
 const Top = styled.div`
   width: 100%;
   height: 120vh;
@@ -116,7 +116,7 @@ const Top = styled.div`
   background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
     url(${contactImage});
   background-position: center;
-`
+`;
 const GetInTouch = styled.div`
   width: 50%;
   margin-left: 26px;
@@ -144,7 +144,7 @@ const GetInTouch = styled.div`
     line-height: 28px;
     font-weight: 400;
   }
-`
+`;
 
 const CardInfo = styled.div`
   background-color: ${({ theme }) => theme.palette.main.primary};
@@ -166,7 +166,7 @@ const CardInfo = styled.div`
   @media (max-width: 911px) {
     width: 100%;
   }
-`
+`;
 const Title = styled.div`
   text-align: center;
   padding-top: 50px;
@@ -190,11 +190,11 @@ const Title = styled.div`
       color: #2667ff;
     }
   }
-`
+`;
 
 const Container = styled.div`
   padding: 45px 45px 10px;
-`
+`;
 
 const FormData = styled.div`
   display: flex;
@@ -231,7 +231,7 @@ const FormData = styled.div`
     padding-left: 10px;
     padding-top: 5px;
   }
-`
+`;
 const Button = styled.div`
   display: flex;
   width: 100%;
@@ -249,10 +249,10 @@ const Button = styled.div`
     font-weight: 400;
     color: ${({ theme }) => theme.palette.grey.white};
   }
-`
+`;
 const MainInfo = styled.div`
   padding: 110px 0 5px 40px;
-`
+`;
 
 const Heading = styled.div`
   display: flex;
@@ -271,11 +271,11 @@ const Heading = styled.div`
     border: 3.7px solid ${({ theme }) => theme.palette.grey.white};
     width: 75%;
   }
-`
+`;
 
 const Body = styled.div`
   margin-top: 100px;
-`
+`;
 
 const Info = styled.div`
   display: flex;
@@ -315,7 +315,7 @@ const Info = styled.div`
     flex-direction: column;
     gap: 15px;
   }
-`
+`;
 
 const SocialContainer = styled.div`
   display: flex;
@@ -326,4 +326,4 @@ const SocialContainer = styled.div`
   img {
     cursor: pointer;
   }
-`
+`;

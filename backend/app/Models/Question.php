@@ -10,4 +10,11 @@ class Question extends Model
 {
     use HasFactory, Uuids;
     protected $guarded = [];
+    /**
+     * @var $fillable
+    */
+    protected $fillable = [
+        'questiion_id', 'assessment_id', 'category_id', 'is_multiple_answers',
+        'correct_answers', 'timeframe', 'options'
+    ];
 }

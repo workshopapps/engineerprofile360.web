@@ -2,8 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Controllers\Controller;
 // use App\Helper\Helper;
+use App\Http\Controllers\Controller;
+use App\Helper\Helper;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,7 @@ class IsLoggedIn extends Controller
 
     public function __construct()
     {
-        $this->helper = new App\Helper\Helper;
+        $this->helper = new Helper();
     }
 
     public function handle(Request $request, Closure $next)
@@ -33,14 +34,24 @@ class IsLoggedIn extends Controller
             return $this->errorResponse("Authorization header is missing", "Authorizaion is missing", 403);
         }
 
+        // split header and extract the jwt token
         $token = explode(" ", $header)[1];
 
         try {
             $jwt = $this->helper->decodeJwt($token);
-            return var_dump($jwt);
+            
+            $user = [
+                "id"=>$jwt->id,
+                "email"=>$jwt->email
+            ];
+
+            //pass the attribute onto the request
+            $request->merge(['user' => $user]);
+            
+            // call the next operation
+            return $next($request);
         } catch (\Exception $e) {
-            return print($e->getMessage());
+            return $this->errorResponse("Invalid Authorization header", "Invalid JWT Token ".$e->getMessage(), 500);
         }
-        return $next($request);
     }
 }

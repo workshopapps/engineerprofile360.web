@@ -1,16 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 
-import logo from "../../../../assets/images/logo.svg";
-import facebook from "../../../../assets/icons/facebook.svg";
-import instagram from "../../../../assets/icons/instagram.svg";
-import twitter from "../../../../assets/icons/twitter.svg";
-import linkedin from "../../../../assets/icons/linkedin.svg";
+import logo from "../../../assets/images/logo.svg";
+import facebook from "../../../assets/icons/facebook.svg";
+import instagram from "../../../assets/icons/instagram.svg";
+import twitter from "../../../assets/icons/twitter.svg";
+import linkedin from "../../../assets/icons/linkedin.svg";
 import {
   Button,
   Container,
   Title,
-} from "../../../../styles/reusableElements.styled";
+} from "../../../styles/reusableElements.styled";
 
 const Footer = () => {
   return (
@@ -28,7 +28,9 @@ const Footer = () => {
             </form>
             <span>
               By subscribing you agree to with our{" "}
-              <span style={{ textDecoration: "underline" }}>Privacy Policy</span>{" "}
+              <span style={{ textDecoration: "underline" }}>
+                Privacy Policy
+              </span>{" "}
               and provide consent to receive updates from our company.
             </span>
           </Newsletter>
@@ -86,7 +88,7 @@ const Footer = () => {
 export default Footer;
 
 const FooterTag = styled.footer`
-  background: ${({theme}) => theme.palette.grey.white};
+  background: ${({ theme }) => theme.palette.grey.white};
 `;
 
 const FooterContainer = styled(Container)`
@@ -96,7 +98,7 @@ const FooterContainer = styled(Container)`
   grid-template-columns: 3fr 1fr 1fr 1fr;
   column-gap: ${({ theme }) => theme.spacing(10)};
   row-gap: ${({ theme }) => theme.spacing(8)};
-  
+
   @media (max-width: 767px) {
     grid-template-columns: 1fr 1fr;
   }

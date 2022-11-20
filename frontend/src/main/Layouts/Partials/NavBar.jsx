@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import arrowDown from "../../../../assets/icons/arrow-down.svg";
+import arrowDown from "../../../assets/icons/arrow-down.svg";
 
 const NavBar = () => {
   return (
