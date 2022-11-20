@@ -1,86 +1,19 @@
+
 openapi: 3.0.0
 servers:
   # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Skript App
-    url: http://localhost:8000/api
+  - description: Engineering 360 App
+    url: http://104.225.216.199:8000/api
 info:
   version: "1.0.0"
-  title: Skript App API
-  description: The API for the EatBacon IOT project
+  title: Engineering 360 API
+  description: Taking employee assessments to the moon 🚀
 paths:
   # register user
   /auth/register:
     post:
       tags:
-        - Register
-      description: 'Register user'
-      operationId: register
-      responses:
-        '200':
-          description: successful operation
-        '400':
-          description: Bad request
-        requestBody:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RegisterationInfo'
-  # login user
-  /auth/login:
-    post:
-      tags:
-        - Login
-      description: 'Login user'
-      operationId: login
-      responses:
-        '200':
-          description: successful operation
-        '400':
-          description: Bad request
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LoginInfo'
-  # logout user
-  /auth/logout:
-    post:
-      tags:
-        - Logout
-      description: 'Logout user'
-      operationId: logout
-      responses:
-        '200':
-          description: successful operation
-        '400':
-          description: Bad request
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LogoutInfo'
-    # refresh token
-  /auth/refresh:
-    post:
-      tags:
-        - Refresh
-      description: 'Refresh token'
-      operationId: refresh
-      responses:
-        '200':
-          description: successful operation
-        '400':
-          description: Bad request
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Refresh'
-    # verify user email
-  "/auth/verify/{id}/{token}":
-    get:
-      tags:
-        - Register
+        - Authentication
       description: 'Register user'
       operationId: register
       responses:
@@ -93,7 +26,126 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/RegisterationInfo'
-    # fetch all companies
+  # login user
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      description: 'Login user'
+      operationId: login
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Bad request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginInfo'
+  # /auth/logout:
+  #   post:
+  #     tags:
+  #       - Authentication
+  #     description: 'Logout user'
+  #     operationId: logout
+  #     responses:
+  #       '200':
+  #         description: successful operation
+  #       '400':
+  #         description: Bad request
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: '#/components/schemas/LogoutInfo'
+  # /auth/refresh:
+  #   post:
+  #     tags:
+  #       - Authentication
+  #     description: 'Refresh token'
+  #     operationId: refresh
+  #     responses:
+  #       '200':
+  #         description: successful operation
+  #       '400':
+  #         description: Bad request
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: '#/components/schemas/Refresh'
+  "/auth/password/forgot-password/{email}":
+    get:
+      tags:
+        - Authentication
+      description: 'Forgot Password'
+      operationId: forgot password
+      parameters:
+        - name: email
+          in: path
+          required: true
+          type: string
+          format: email
+          example: "test@mail.com"
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Bad request
+  "/auth/password/reset/{id}/{token}":
+    post:
+      tags:
+        - Authentication
+      description: 'Reset Password'
+      operationId: reset password
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          format: uuid
+          example: "3998502f-f63a-4ba6-b84d-0d85a300dbb4"
+        - name: token
+          in: path
+          required: true
+          type: string
+          format: uuid
+          example: "79b3ac1d2fa1f1f31993"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPassword'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Bad request
+        '404':
+          description: Not Found
+  "/auth/verify/{id}/{token}":
+    get:
+      tags:
+        - Authentication
+      description: 'Email verification'
+      operationId: verify email
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Bad request
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          example: "3379cfe6-dd11-448f-b3be-47d191a7c724"
+        - name: token
+          in: path
+          required: true
+          type: string
+          example: "9cc2e4b47a6cf88aa4f7"
   /company/all:
     get:
       tags:
@@ -103,31 +155,111 @@ paths:
       responses:
         '200':
           description: successful operation
-        '400':
-          description: Bad request
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Company'
-    # update company
-  /company/update:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
+  "/company/{company_id}":
+    get:
+      tags:
+        - Company
+      description: 'Get a company details'
+      operationId: getcompanybyid
+      parameters:
+        - name: company_id
+          in: path
+          required: true
+          type: company_id
+          format: company_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
+  "/company/user/{user_id}":
+    get:
+      tags:
+        - Company
+      description: 'Get all companies own by a user'
+      operationId: getcompanybyuser
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          type: user_id
+          format: user_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
+  "/company/update/{company_id}":
     put:
       tags:
-        - Update
-      description: 'Update company's info'
+        - Company
+      description: "Update company's info"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: company_id
+          in: path
+          required: true
+          type: company_id
+          format: string
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
       operationId: update
       responses:
         '200':
           description: successful operation
-        '400':
-          description: Bad request
-        requestBody:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CompanyInfo'
-    # fetch users
+                # $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                # $ref: '#/components/schemas/ApiResponse401'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                # $ref: '#/components/schemas/ApiResponse400'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCompanyInfo'
   /user/all:
     get:
       tags:
@@ -137,64 +269,99 @@ paths:
       responses:
         '200':
           description: successful operation
-        '400':
-          description: Bad request
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Users'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
     # fetch user
-  /user/userId:
+  "/user/{user_id}":
     get:
       tags:
-        - User
+        - Users
       description: 'Fetch User'
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          type: user_id
+          format: user_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
       operationId: user
       responses:
         '200':
           description: successful operation
-        '400':
-          description: Bad request
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
     # fetch verified user
-  /user/verified/userId:
+  "/user/verified/{user_id}":
     get:
       tags:
-        - User
+        - Users
       description: 'Fetch Verified User'
-      operationId: user
+      operationId: verified_user
       responses:
         '200':
           description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
         '400':
           description: Bad request
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          type: user_id
+          format: user_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
     # update user
-  /user/userId/update:
+  "/user/{userId}/update":
     put:
       tags:
-        - Update
+        - Users
       description: 'Update User'
       operationId: update
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
         '400':
           description: Bad request
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          type: user_id
+          format: user_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
     # create employee
   /employee/add:
     post:
@@ -202,118 +369,405 @@ paths:
         - Employee
       description: 'Create employee'
       operationId: employee
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
         '400':
           description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Employee'
+  /employee/confirm:
+    post:
+      tags:
+        - Employee
+      description: 'Confirm employee CSV upload file'
+      operationId: employeecsv
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEmployeeCSV'
+  /employee/{employee_id}:
+    get:
+      tags:
+        - Employee
+      security:
+        - bearerAuth: []
+      description: 'Fetch an employee details'
+      operationId: getemployee
+      parameters:
+        - name: employee_id
+          in: path
+          required: true
+          type: employee_id
+          format: employee_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
+  /employee/company/{org_id}:
+    get:
+      tags:
+        - Employee
+      security:
+        - bearerAuth: []
+      description: 'Fetch all from an organisation'
+      operationId: getemployeebyorg
+      parameters:
+        - name: org_id
+          in: path
+          required: true
+          type: org_id
+          format: org_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
+  "/employee/{employee_id}/update":
+    put:
+      tags:
+        - Employee
+      description: "Update employee's info"
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: employee_id
+          in: path
+          required: true
+          type: employee_id
+          format: employee_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      operationId: updateemployee
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateEmployeeInfo'
     # create category
   /category/add:
     post:
       tags:
         - Category
+      security:
+        - bearerAuth: []
       description: 'Create Category'
       operationId: category
       responses:
         '200':
           description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
         '400':
           description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Category'
+              $ref: '#/components/schemas/CreateCategory'
     # update category
-  /user/categoryId/update:
+  "/category/{category_id}/update":
     put:
       tags:
-        - Update
+        - Category
       description: 'Update Category'
       operationId: update
+      parameters:
+        - name: category_id
+          in: path
+          required: true
+          type: category_id
+          format: category_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
         '400':
           description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Category'
+              $ref: '#/components/schemas/UpdateCategory'
+  "/category/{category_id}":
+    get:
+      tags:
+        - Category
+      description: 'Get a category details'
+      operationId: getcategory
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: category_id
+          in: path
+          required: true
+          type: category_id
+          format: category_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
+  "/category/{category_id}/delete":
+    delete:
+      tags:
+        - Category
+      description: 'Delete Category'
+      operationId: deleteCategory
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: category_id
+          in: path
+          required: true
+          type: category_id
+          format: category_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
     # fetch assessment by organisation
-  /assessment/organisationId:
+  "/assessment/{organisation_id}":
     get:
       tags:
         - Assessment
       description: 'Fetch assessment by organisation'
       operationId: assessment
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: organisation_id
+          in: path
+          required: true
+          type: organisation_id
+          format: organisation_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
       responses:
         '200':
           description: successful operation
-        '400':
-          description: Bad request
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Assessment'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
     # update assessment
-  /assessment/assessmentId:
+  "/assessment/{assessment_id}":
     put:
       tags:
-        - Update
+        - Assessment
       description: 'Update assessment'
-      operationId: update
+      operationId: updateAssessment
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: assessment_id
+          in: path
+          required: true
+          type: assessment_id
+          format: assessment_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
       responses:
         '200':
           description: successful operation
-        '400':
-          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Assessment'
+              $ref: '#/components/schemas/UpdateAssessment'
     # create assessment
   /assessment/create:
     post:
       tags:
         - Assessment
       description: 'Create Assessment'
-      operationId: assessment
+      operationId: createassessment
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: successful operation
-        '400':
-          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Assessment'
+              $ref: '#/components/schemas/CreateAssessment'
     # delete assessment
-  /assessment/assessmentId/delete:
+  "/assessment/{assessment_id}/delete":
     delete:
       tags:
         - Assessment
       description: 'Delete assessment'
-      operationId: assessment
+      operationId: deleteassessment
+      parameters:
+        - name: assessment_id
+          in: path
+          required: true
+          type: assessment_id
+          format: assessment_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
       responses:
         '200':
           description: successful operation
-        '400':
-          description: Bad request
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Assessment'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
     # create question
   /question/add:
     post:
@@ -321,576 +775,295 @@ paths:
         - Question
       description: 'Create question'
       operationId: question
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: successful operation
-        '400':
-          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Question'
+              $ref: '#/components/schemas/CreateQuestion'
     # update question
-  /question/questionId/assessmentId/update:
+  "/question/{question_id}/{assessment_id}/update":
     put:
       tags:
-        - Update
+        - Question
       description: 'Update question'
       operationId: update
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: successful operation
-        '400':
-          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Question'
+              $ref: '#/components/schemas/UpdateQuestion'
+  "/question/get/{organisation_id}":
+    get:
+      tags:
+        - Question
+      description: 'Get all the questions set by an organisation'
+      operationId: getquestionbyorg
+      parameters:
+        - name: organisation_id
+          in: path
+          required: true
+          type: organisation_id
+          format: organisation_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
+  "/question/category/{category_id}":
+    get:
+      tags:
+        - Question
+      description: 'Get all the questions set by it category'
+      operationId: getquestionbycategory
+      parameters:
+        - name: category_id
+          in: path
+          required: true
+          type: category_id
+          format: category_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
+  "/question/assessment/{assessment_id}":
+    get:
+      tags:
+        - Question
+      description: 'Get all assessment questions'
+      operationId: getquestionbyassessment
+      parameters:
+        - name: assessment_id
+          in: path
+          required: true
+          type: assessment_id
+          format: assessment_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
     # create userscore
   /userscore/create:
-  post:
-    tags:
-      - Userscore
-    description: 'Create user score'
-    operationId: userscore
-    responses:
-      '200':
-        description: successful operation
-      '400':
-        description: Bad request
-    requestBody:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Userscore'
+    post:
+      tags:
+        - Userscore
+      description: 'Create user score'
+      operationId: createuserscore
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserScoreCreate'
   # get userscore
-  /userscore/employeeId/assessmentId:
+  "/userscore/{employee_id}/{assessment_id}":
     get:
       tags:
         - Userscore
       description: 'Get user score'
-      operationId: userscore
+      operationId: getuserscore
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: assessment_id
+          in: path
+          required: true
+          type: assessment_id
+          format: assessment_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+        - name: employee_id
+          in: path
+          required: true
+          type: employee_id
+          format: employee_id
+          example: "4ea09b93-6682-11ed-9941-3863bbb7c6e"
       responses:
         '200':
           description: successful operation
-        '400':
-          description: Bad request
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Userscore'
-    '/lighting/dimmers/{deviceId}/{value}':
-    post:
-      tags:
-        - Z-Wave
-      operationId: setDimmer
-      parameters:
-        - name: deviceId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: value
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-            maximum: 100
-      responses:
-        '200':
-          description: response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponse'
-      x-swagger-router-controller: ZWave
-  '/lighting/dimmers/{deviceId}/{value}/timer/{timeunit}':
-    post:
-      tags:
-        - Z-Wave
-      description: sets a dimmer to a specific value on a timer
-      operationId: setDimmerTimer
-      parameters:
-        - name: deviceId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: value
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int32
-        - name: timeunit
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int32
-        - name: units
-          in: query
-          required: false
-          schema:
-            type: string
-            enum:
-              - seconds
-              - minutes
-              - milliseconds
-            default: milliseconds
-      responses:
-        '200':
-          description: response
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponse'
-      x-swagger-router-controller: ZWave
-  '/lighting/switches/{deviceId}':
+                $ref: '#/components/schemas/ApiResponse401'
+  "/userscore/assessment/{assessment_id}":
     get:
       tags:
-        - Z-Wave
-      operationId: getSwitchState
+        - Userscore
+      description: 'Get all assessment scores'
+      operationId: getscorebyassessment
       parameters:
-        - name: deviceId
+        - name: assessment_id
           in: path
           required: true
-          schema:
-            type: string
+          type: assessment_id
+          format: assessment_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      security:
+        - bearerAuth: []
       responses:
         '200':
-          description: response
+          description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeviceState'
-      x-swagger-router-controller: ZWave
-  '/lighting/switches/{deviceId}/{value}':
-    post:
-      tags:
-        - Z-Wave
-      operationId: setSwitch
-      parameters:
-        - name: deviceId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: value
-          in: path
-          required: true
-          schema:
-            type: string
-            enum:
-              - true
-              - false
-      responses:
-        '200':
-          description: response
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponse'
-      x-swagger-router-controller: ZWave
-  '/lighting/switches/{deviceId}/{value}/timer/{minutes}':
-    post:
-      tags:
-        - Z-Wave
-      description: sets a switch to a specific value on a timer
-      operationId: setSwitchTimer
-      parameters:
-        - name: deviceId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: value
-          in: path
-          required: true
-          schema:
-            type: string
-            enum:
-              - true
-              - false
-        - name: minutes
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int32
-      responses:
-        '200':
-          description: response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-      x-swagger-router-controller: ZWave
-  /lightingSummary:
+                $ref: '#/components/schemas/ApiResponse401'
+  "/userscore/category/{category_id}":
     get:
       tags:
-        - Z-Wave
-      operationId: getLightingSummary
-      responses:
-        '200':
-          description: ok
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LightingSummary'
-      x-swagger-router-controller: ZWave
-  /temperature:
-    get:
-      tags:
-        - Environment
-      operationId: temperatureSummary
-      responses:
-        '200':
-          description: ok
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TemperatureSummary'
-      x-swagger-router-controller: Environment
-  '/temperature/forecast/{days}':
-    get:
-      tags:
-        - Environment
-      operationId: getForecast
+        - Userscore
+      description: 'Get all scores for a category of questions'
+      operationId: getscorebycategory
       parameters:
-        - name: days
+        - name: category_id
           in: path
           required: true
-          schema:
-            type: integer
-            format: int32
+          type: category_id
+          format: category_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      security:
+        - bearerAuth: []
       responses:
         '200':
-          description: the forecast
+          description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ForecastResponse'
-      x-swagger-router-controller: Environment
-  '/temperature/{zoneId}':
-    get:
-      tags:
-        - Environment
-      operationId: getZoneTemperature
-      parameters:
-        - name: zoneId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Zone temperature
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TemperatueZoneStatus'
-      x-swagger-router-controller: Environment
-  '/temperature/{zoneId}/heater':
-    get:
-      tags:
-        - Environment
-      description: gets the state of the heater
-      operationId: getHeaterState
-      parameters:
-        - name: zoneId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: heater state
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HeaterState'
-      x-swagger-router-controller: Environment
-  '/temperature/{zoneId}/heater/{state}':
-    post:
-      tags:
-        - Environment
-      description: turns the heater on or off
-      operationId: setHeaterState
-      parameters:
-        - name: zoneId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: state
-          in: path
-          required: true
-          schema:
-            type: string
-            enum:
-              - false
-              - true
-      responses:
-        '200':
-          description: Status of the operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-      x-swagger-router-controller: Environment
-  /zones:
-    get:
-      tags:
-        - Zones
-      operationId: getZones
-      responses:
-        '200':
-          description: ok
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: string
-      x-swagger-router-controller: Zones
-  '/zones/{zoneId}/quiet':
-    get:
-      tags:
-        - Zones
-      operationId: quietZone
-      parameters:
-        - name: zoneId
-          in: path
-          required: true
-          schema:
-            type: string
-            enum:
-              - basement
-              - first-floor
-              - second-floor
-      responses:
-        '200':
-          description: ok
-      x-swagger-router-controller: Zones
+                $ref: '#/components/schemas/ApiResponse401'
 components:
   schemas:
-    LightingSummary:
+    ResetPassword:
       type: object
       properties:
-        zones:
-          type: array
-          items:
-            $ref: '#/components/schemas/LightingZone'
-        zoneStatus:
-          type: array
-          items:
-            $ref: '#/components/schemas/LightingZoneStatus'
-      description: ok
-    LightingZone:
+        new_password:
+          type: string
+          format: string
+          example: '12345'
+          required: true
+        type:
+          type: string
+          format: string
+          example: 'organization | employee'
+          required: true
+    UserUpdate:
       type: object
       properties:
-        id:
+        email:
           type: string
-        name:
+          format: email
+          example: 'test@mail.com'
+        username:
           type: string
-        deviceId:
-          type: integer
-          format: int32
-        deviceType:
+          format: username
+          example: 'johny16'
+        full_name:
           type: string
-          enum:
-            - dimmer
-            - switch
-        zone:
-          type: string
-    LightingZoneStatus:
+          format: string
+          example: "John Doe"
+    UsersById:
+      parameters:
+        - name: zoneId
+          in: path
+          required: true
+          schema:
+            type: string
+    EmailVerificatikon:
       type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        lastUpdate:
-          type: string
-          format: date-time
-        level:
-          type: integer
-          format: int32
-      description: the status of the lighting zone.
-    TemperatureSummary:
-      type: object
-      properties:
-        zones:
-          type: array
-          items:
-            $ref: '#/components/schemas/TemperatureZone'
-        zoneStatus:
-          type: array
-          items:
-            $ref: '#/components/schemas/TemperatueZoneStatus'
-      description: ok
-    TemperatureZone:
-      type: object
-      required:
-        - id
-        - name
-      properties:
-        id:
-          type: integer
-          format: int32
-          description: the unique identifier for the zone
-        name:
-          type: string
-        inputPosition:
-          type: integer
-          format: int32
-        outputPosition:
-          type: integer
-          format: int32
-        zone:
-          type: string
-      description: a single temperature zone
-    TemperatueZoneStatus:
-      type: object
-      required:
-        - id
-        - timestamp
-        - value
-      properties:
-        id:
-          type: string
-          description: the unique identifier for the zone
-        name:
-          type: string
-          description: the name of the zone
-        value:
-          type: number
-          format: double
-          description: the temperature in the zone
-        units:
-          type: string
-          description: the temperature units
-          enum:
-            - celsius
-            - fahrenheit
-          default: fahrenheit
-        timestamp:
-          type: string
-          format: date-time
-          description: the timestamp when the temperature was measured
-      description: status of a single zone
-    ApiResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-          example: everything is ok
-    HeaterState:
-      type: object
-      properties:
-        id:
-          type: string
-        state:
-          type: string
-    DeviceState:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        lastUpdate:
-          type: string
-          format: date-time
-        level:
-          type: integer
-          format: int32
-    ForecastResponse:
-      type: object
-      properties:
-        city:
-          $ref: '#/components/schemas/City'
-        values:
-          type: array
-          items:
-            $ref: '#/components/schemas/Forecast'
-    Forecast:
-      type: object
-      properties:
-        date:
-          type: string
-          format: date-time
-        pressure:
-          type: number
-          format: double
-        humidity:
-          type: integer
-          format: int32
-        windSpeed:
-          type: number
-          format: double
-        clouds:
-          type: integer
-          format: int32
-        temperature:
-          $ref: '#/components/schemas/ForecastTemperature'
-        weather:
-          $ref: '#/components/schemas/WeatherForecast'
-    City:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        name:
-          type: string
-        lat:
-          type: number
-          format: double
-        lon:
-          type: number
-          format: double
-        country:
-          type: string
-    ForecastTemperature:
-      type: object
-      properties:
-        low:
-          type: number
-          format: double
-        high:
-          type: number
-          format: double
-        morning:
-          type: number
-          format: double
-        day:
-          type: number
-          format: double
-        evening:
-          type: number
-          format: double
-        night:
-          type: number
-          format: double
-    WeatherForecast:
-      type: object
-      properties:
-        summary:
-          type: string
-        description:
-          type: string
-        icon:
-          type: string
+      
     RegisterationInfo:
       type: object
       properties:
@@ -898,6 +1071,11 @@ components:
           type: string
           format: email
           example: 'test@mail.com'
+        full_name:
+          type: string
+          format: string
+          example: "John Doe"
+          required: true
         username:
           type: string
           format: text
@@ -917,3 +1095,199 @@ components:
           type: string
           format: password
           example: "1234"
+    UserScoreCreate:
+      type: object
+      properties:
+        assessment_id:
+          type: string
+          format: assessment_id
+          example: '9ea09b93-6682-11ed-9941-3863bbb7c6d'
+        employee_id:
+          type: string
+          format: assessment_id
+          example: '9ea09b93-6682-11ed-9941-3863bbb7c6d'
+        categories:
+          type: array
+          format: categories
+          example: ['PHP','SQL','REACTJS']
+        passed_questions:
+          type: array
+          format: passed_questions
+          example: [20,2,11]
+    ApiResponse200:
+      type: object
+      properties:
+        status:
+          type: boolean
+          format: status
+          example: true
+        message:
+          type: string
+          format: message
+          example: 'successful'
+        data:
+          type: array
+          format: data
+          example: [...]
+    ApiResponse400:
+      type: object
+      properties:
+        status:
+          type: string
+          format: status
+          example: 'error'
+        message:
+          type: string
+          format: message
+          example: 'The given data was invalid.'
+        errors:
+          type: array
+          format: errors
+          example: [...]
+    ApiResponse401:
+      type: object
+      properties:
+        message:
+          type: string
+          format: message
+          example: 'Unauthenticated.'
+    GetUserscore:
+      type: object
+      properties:
+        assessment_id:
+          type: string
+          format: assessment_id
+          example: '9ea09b93-6682-11ed-9941-3863bbb7c6d'
+        employee_id:
+          type: string
+          format: assessment_id
+          example: '9ea09b93-6682-11ed-9941-3863bbb7c6d'
+        categories:
+          type: array
+          format: categories
+          example: ['PHP','SQL','REACTJS']
+        passed_questions:
+          type: array
+          format: passed_questions
+          example: [20,2,11]
+    UpdateCompanyInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          format: name
+          example: 'AxlePlex'
+        email:
+          type: string
+          format: org_email
+          example: 'main@company.com' 
+    CreateEmployeeCSV:
+      type: string
+      example: 'data:text/csv;base64,Uy9OLEZ1bGwgTmFtZSxVc2VybmFtZSxFbWFpbA0KMSxqb2huIGRvZSxqb2hubnksam9obkBtYWlsLmNvbQ0KMSxqb2huIGRvZSxqb2hubnksam9obkBtYWlsLmNvbQ0KMSxqb2huIGRvZSxqb2hubnksam9obkBtYWlsLmNvbQ=='
+          
+    UpdateEmployeeInfo:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: 'johndoe@gmail.com'
+        fullname:
+          type: string
+          format: fullname
+          example: 'John Doe'
+        username:
+          type: string
+          format: username
+          example: 'Johndoe'
+        occupation:
+          type: string
+          format: occupation
+          example: 'Manager'
+    CreateCategory:
+      type: object
+      properties:
+        name:
+          type: string
+          format: name
+          example: 'PHP'
+        assessment_id:
+          type: string
+          format: assessment_id
+          example: '9ea09b93-6682-11ed-9941-3863bbb7c6d'
+    UpdateCategory:
+      type: object
+      properties:
+        name:
+          type: string
+          format: name
+          example: 'PHP'
+    UpdateAssessment:
+      type: object
+      properties:
+        name:
+          type: string
+          format: name
+          example: 'First Assessment'
+    CreateAssessment:
+      type: object
+      properties:
+        name:
+          type: string
+          format: name
+          example: 'First Assessment'
+        org_id:
+          type: string
+          format: org_id
+          example: '9ea09b93-6682-11ed-9941-3863bbb7c6d'
+    CreateQuestion:
+      type: object
+      properties:
+        category_id:
+          type: string
+          format: category_id
+          example: '9ea09b93-6682-11ed-9941-3863bbb7c6d'
+        assessment_id:
+          type: string
+          format: assessment_id
+          example: '2ea09b93-6682-11ed-9941-3863bbb7c6d'
+        question_id:
+          type: string
+          format: question_id
+          example: '5ea09b93-6682-11ed-9941-3863bbb7c6d'
+        correct_answers:
+          type: string
+          format: correct_answers
+          example: '[1]'
+        options:
+          type: string
+          format: options
+          example: '["PHP", "SQL", "REACT"]'
+        timeframe:
+          type: string
+          format: timeframe
+          example: '10'
+        is_multiple_answers:
+          type: boolean
+          format: is_multiple_answers
+          example: false
+    UpdateQuestion:
+      type: object
+      properties:
+        correct_answers:
+          type: string
+          format: correct_answers
+          example: '[1]'
+        options:
+          type: string
+          format: options
+          example: '["PHP", "SQL", "REACT"]'
+        timeframe:
+          type: string
+          format: timeframe
+          example: '10'
+        is_multiple_answers:
+          type: boolean
+          format: is_multiple_answers
+          example: false
+    

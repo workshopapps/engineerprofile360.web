@@ -7,11 +7,12 @@ use App\Services\UserScoreService;
 use App\Models\UserScore;
 use Symfony\Component\HttpFoundation\Response;
 
+
 class UserScoreController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        // $this->middleware('auth:api');
     }
 
     /**
@@ -49,11 +50,9 @@ class UserScoreController extends Controller
      */
     public function getScoresByAssessmentID(string $id)
     {
-        $userScore = UserScore::where("assessment_id", $id)->get();
-        if (!$userScore){ 
-            return $this->errorResponse("User Score not found", true, Response::HTTP_NOT_FOUND);
-        }
-        return $this->successResponse(true, "User Score", $userScore, Response::HTTP_OK);
+        $userScore = UserScore::where("assessment_id", $id);
+        if (!$userScore->first()) return $this->errorResponse("User Score not found", true, Response::HTTP_NOT_FOUND);
+        return $this->successResponse(true, "User Score", $userScore->get(), Response::HTTP_OK);
     }
 
     /**
@@ -65,9 +64,7 @@ class UserScoreController extends Controller
     public function getScoresByEmployeeID(string $id)
     {
         $userScore = UserScore::where("employee_id", $id)->get();
-        if (!$userScore) {
-            return $this->errorResponse("User Score not found", true, Response::HTTP_NOT_FOUND);
-        }
-        return $this->successResponse(true, "User Score", $userScore, Response::HTTP_OK);
+        if (!$userScore->first()) return $this->errorResponse("User Score not found", true, Response::HTTP_NOT_FOUND);
+        return $this->successResponse(true, "User Score", $userScore->get(), Response::HTTP_OK);
     }
 }

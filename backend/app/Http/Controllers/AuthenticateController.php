@@ -255,6 +255,12 @@ class AuthenticateController extends Controller {
             $newHash = Hash::make($payload["new_password"]);
             $allToken = Token::all();
             $userTokenExists = Token::where("user_id", $id);
+            
+            // check if token exists
+            if ($userTokenExists->count() == 0) {
+                return $this->errorResponse('Invalid password reset link. user token not found',"", 400);
+            }
+            
             $hasExpired = $userTokenExists->first()["exp"];
             $count = 0;
 
@@ -263,9 +269,6 @@ class AuthenticateController extends Controller {
 
                 $userExists = User::where("user_id", $id);
 
-                if ($userTokenExists->count() == 0) {
-                    return $this->errorResponse('Invalid password reset link. user token not found',"", 400);
-                }
 
                 if ($userExists->count() == 0) {
                     return $this->errorResponse('Invalid password reset link. user not found',"", 404);
@@ -289,6 +292,9 @@ class AuthenticateController extends Controller {
                     
                     // update users table
                     User::where("user_id", $id)->update(array("password"=>$newHash));
+
+                    // removed token from database
+                    Token::where("user_id", $id)->delete();
 
                     return $this->successResponse(true, "Password reset successfully", null, 200);
                 } catch (\Exception $e) {
@@ -330,10 +336,10 @@ class AuthenticateController extends Controller {
                 }
             }
             else{
-                return $this->errorResponse("Something went wrong resetting password, please try again", "Invalid type", 400);
+                return $this->errorResponse("Something went wrong resetting password, please try again", "Invalid type ", 400);
             }
-        } catch (\Throwable $th) {
-            return $this->errorResponse("Something went wrong resetting password, please try again", "Invalid type", 500);
+        } catch (\Throwable $e) {
+            return $this->errorResponse("Something went wrong resetting password, please try again", "Invalid type ".$e->getMessage(), 500);
         }
 
     }
