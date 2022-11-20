@@ -1,0 +1,1 @@
+export { default as MainLayout} from "./Layouts/MainLayout";
