@@ -72,7 +72,7 @@ class CategoryController extends Controller
         }
     }
 
-    public function getCategories(string $id): JsonResponse
+    public function getCategory(string $id): JsonResponse
     {
         $category = Category::find($id);
         if (!$category) return $this->errorResponse('Category not found', true, Response::HTTP_NOT_FOUND);
