@@ -343,6 +343,30 @@ class AuthenticateController extends Controller {
         }
 
     }
+
+    public function setEmployeePassword(Request $request){
+        $request->validate([
+            'email' => 'required|email|exists:employees,email',
+            'password' => 'required|string|min:6',
+        ]);
+
+        $employee = Employee::whereEmail($request->email)->first();
+
+        $user = User::create([
+            'full_name' => $employee->full_name,
+            'username' => $employee->username,
+            'email' => $employee->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return response()->json([
+            "error" => false,
+            "code" => 200,
+            "message" => "Employee password update was successfull"
+        ]);
+    }
+
+
 }
 
 ?>
