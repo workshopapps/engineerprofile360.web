@@ -105,7 +105,7 @@ Route::prefix("category")->group(function () {
     Route::put('{categoryId}/update', [CategoryController::class, 'updateCategory']);
     Route::post('add', [CategoryController::class, 'createCategory']);
     Route::delete('{catId}/delete', [CategoryController::class, 'deleteCategory']);
-    Route::get('{id}', [CategoryController::class, 'getCategories']);
+    Route::get('{id}', [CategoryController::class, 'getCategory']);
 });
 
 //Employee Routes
