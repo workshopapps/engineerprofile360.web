@@ -4,24 +4,16 @@ import { ThemeProvider } from "styled-components"
 
 import { GlobalStyles, theme } from "./styles/globalStyles"
 
-import Contact from "./Main/pages/Contact"
-// import Header from "./ui/components/Header"
-// import { Divider, Main, MainContainer } from "./styles/reusableElements.styled"
-// import Sidebar from "./ui/components/Sidebar"
+// import Contact from "./Main/pages/Contact"
+import UserProfile from "./ui/pages/user-profile/UserProfile"
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <AppContainer>
-        <Contact />
-        {/* <Header />
-        <Divider />
-        <MainContainer>
-          <Main>
-            <Sidebar />
-          </Main>
-        </MainContainer> */}
+        {/* <Contact /> */}
+        <UserProfile />
       </AppContainer>
     </ThemeProvider>
   )
