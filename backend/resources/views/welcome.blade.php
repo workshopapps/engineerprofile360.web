@@ -38,7 +38,7 @@
                     headers: {
                         "content-type": "application/json"
                     },
-                    body: JSON.stringify({csv_file: base64})
+                    body: JSON.stringify(base64)
                 })
 
                 const data = await res.json();

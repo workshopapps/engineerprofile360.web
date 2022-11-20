@@ -65,7 +65,7 @@ function SupportPartners() {
           Width={"100px"}
           src={interswitch}
           alt="interswitch"
-        />{" "}
+        />
       </PartnersContainer>
     </>
   )
