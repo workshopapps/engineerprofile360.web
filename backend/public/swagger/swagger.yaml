@@ -1290,5 +1290,3 @@ components:
           type: boolean
           format: is_multiple_answers
           example: false
-security:
-  - bearerAuth: []
