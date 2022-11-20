@@ -350,20 +350,21 @@ class AuthenticateController extends Controller {
             'password' => 'required|string|min:6',
         ]);
 
-        $employee = Employee::whereEmail($request->email)->first();
+        try{
 
-        $user = User::create([
-            'full_name' => $employee->full_name,
-            'username' => $employee->username,
-            'email' => $employee->email,
-            'password' => Hash::make($request->password),
-        ]);
+            $employee = Employee::whereEmail($request->email)->first();
+            if($employee){
+                $employee->hash = Hash::make($password);
+                $employee->save();
+                
+                return $this->successResponse(true, "Employee password set successfully", null, 200);
+            }
+            
+            return $this->errorResponse("Not found", "Employee id not found", 404);       
+        }catch (\Throwable $e) {
+            return $this->errorResponse("An error occured", $e->getMessage(), 422);       
+        }
 
-        return response()->json([
-            "error" => false,
-            "code" => 200,
-            "message" => "Employee password update was successfull"
-        ]);
     }
 
 
