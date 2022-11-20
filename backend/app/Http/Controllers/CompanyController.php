@@ -88,7 +88,7 @@ class CompanyController extends Controller
     }
     
 
-    public function getCompanyByUserId($userId)
+    public function getCompanyByUserId($userId): JsonResponse
     {
         try {
             $company = Company::where('user_id', $userId)->first();
