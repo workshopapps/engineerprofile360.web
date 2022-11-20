@@ -113,6 +113,7 @@ Route::prefix("category")->group(function () {
 Route::prefix('employee')->group(function () {
     Route::post('add', [EmployeeController::class, 'addEmpCSV']);
     Route::get('{id}', [EmployeeController::class, 'getById']);
+    Route::get('/{org_id}', [EmployeeController::class, 'byCompId']);
     Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
 });
 
