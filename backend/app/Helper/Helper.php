@@ -18,7 +18,7 @@ use Mailer;
 class Helper extends Controller
 {
 
-    public $baseUrl = "http://localhost:8000";
+    public $baseUrl = "http://104.225.216.199/:8000";
 
     public function generateRefreshToken($userId, $user_email)
     {
