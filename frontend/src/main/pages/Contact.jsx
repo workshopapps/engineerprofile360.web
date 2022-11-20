@@ -161,6 +161,10 @@ const CardInfo = styled.div`
     margin-top: -130px;
     filter: drop-shadow(0px 19px 40px rgba(229, 229, 229, 0.25));
   }
+
+  @media (max-width: 911px) {
+    width: 100%;
+  }
 `
 const Title = styled.div`
   text-align: center;
@@ -217,7 +221,7 @@ const FormData = styled.div`
 
   textarea {
     outline: none;
-    height: 54vh;
+    height: 50vh;
     font-family: inherit;
     font-size: 28px;
     background: #fafbfc;
