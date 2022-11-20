@@ -106,6 +106,7 @@ const ContactContainer = styled.div`
   display: grid;
   grid-template-rows: 1fr 1fr;
   flex-direction: column;
+  margin-bottom: 250px;
 `
 const Top = styled.div`
   width: 100%;

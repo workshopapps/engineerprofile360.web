@@ -14,7 +14,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer>
+    <FooterTag>
       <FooterContainer>
         <SkriptContact>
           <img src={logo} alt="Logo of Skript" />
@@ -79,20 +79,24 @@ const Footer = () => {
           </ul>
         </Copyright>
       </FooterContainer>
-    </footer>
+    </FooterTag>
   );
 };
 
 export default Footer;
 
+const FooterTag = styled.footer`
+  background: ${({theme}) => theme.palette.grey.white};
+`;
+
 const FooterContainer = styled(Container)`
-  padding: 0 ${({ theme }) => theme.spacing(4)};
+  padding: ${({ theme }) => theme.spacing(6)} ${({ theme }) => theme.spacing(4)};
   height: 96px;
   display: grid;
   grid-template-columns: 3fr 1fr 1fr 1fr;
   column-gap: ${({ theme }) => theme.spacing(10)};
   row-gap: ${({ theme }) => theme.spacing(8)};
-
+  
   @media (max-width: 767px) {
     grid-template-columns: 1fr 1fr;
   }
