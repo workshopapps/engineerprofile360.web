@@ -1,16 +1,16 @@
 import styled, { css } from "styled-components";
 
-const Container = styled.div`
+export const Container = styled.div`
     width: 100%;
     max-width: 1440px;
     margin: auto;
 `;
 
-const Title = styled.h1`
+export const Title = styled.h1`
     font-weight: 48px;
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
     min-width: 77px;
     min-height: 44px;
     display: flex;
@@ -40,4 +40,24 @@ const Button = styled.button`
 `;
 
 
-export { Container, Button, Title };
+// THE STYLES HERE ARE GOING TO BE USED FOR LAYOUTS AND EVERY OTHER REUSABLE CONTAINERS
+
+export const MainContainer = styled.div`
+  display: grid;
+  width: 100%;
+  height: 100vh;
+  grid-template-rows: 58px minmax(0, 1fr);
+  position: relative;
+`
+export const Main = styled.div`
+  display: grid;
+  grid-template-columns: 220px auto;
+  height: 100vh;
+`
+
+export const Divider = styled.div`
+  width: 100%;
+  height: 2px;
+  margin-top: 3px;
+  background: ${({ theme }) => theme.palette.divider};
+`

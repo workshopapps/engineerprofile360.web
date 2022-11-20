@@ -12,9 +12,10 @@ const GlobalStyles = createGlobalStyle`
         position: relative;
         font-family: 'Inter', sans-serif;
     }
-
+    
     body {
-     
+        font-family: 'Inter', sans-serif;
+     background-color: #fff;
     }
 
     ul, ol {
