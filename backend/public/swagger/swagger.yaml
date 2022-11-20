@@ -1176,14 +1176,14 @@ components:
         - name: name
           type: string
           format: name
-          example: 'Company Name'
+          example: 'Company name'
         - org_mail: email
           type: string
           format: email
           example: 'main@company.com' 
     CreateEmployeeCSV:
       type: string
-      example: 'data:text/csv;Uy9OLEZ1bGwgTmFtZSxVc2VybmFtZSxFbWFpbA0KMSxqb2huIGRvZSxqb2hubnksam9obkBtYWlsLmNvbQ0KMSxqb2huIGRvZSxqb2hubnksam9obkBtYWlsLmNvbQ0KMSxqb2huIGRvZSxqb2hubnksam9obkBtYWlsLmNvbQ=='
+      example: 'data:text/csv;base64,Uy9OLEZ1bGwgTmFtZSxVc2VybmFtZSxFbWFpbA0KMSxqb2huIGRvZSxqb2hubnksam9obkBtYWlsLmNvbQ0KMSxqb2huIGRvZSxqb2hubnksam9obkBtYWlsLmNvbQ0KMSxqb2huIGRvZSxqb2hubnksam9obkBtYWlsLmNvbQ=='
           
     UpdateEmployeeInfo:
       type: object
