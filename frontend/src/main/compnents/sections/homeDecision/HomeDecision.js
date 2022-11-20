@@ -1,4 +1,3 @@
-import React from "react"
 import styles from "./HomeDecision.module.css"
 import Preview from "../../../../assets/images/preview.svg"
 
