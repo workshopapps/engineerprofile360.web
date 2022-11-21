@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import BasicLayout from "../layouts/BasicLayout";
 
 import contactImage from "../../assets/images/contact-image.png";
 import sms from "../../assets/icons/contact-page/sms-edit.svg";
@@ -12,21 +13,12 @@ import linkedin from "../../assets/icons/contact-page/linkedin.svg";
 
 const Contact = () => {
   return (
-    <ContactContainer>
-      <Top>
-        <GetInTouch>
-          <h1>Get In Touch</h1>
-          <div></div>
-          <p>
-            We Will Love To Hear From You.
-            <br /> Our Team Is Always Happy To Help
-          </p>
-        </GetInTouch>
-      </Top>
-      <CardInfo>
-        <form>
-          <Title>
-            <h1>Send Us A Message</h1>
+    <BasicLayout>
+      <ContactContainer>
+        <Top>
+          <GetInTouch>
+            <h1>Get In Touch</h1>
+            <div></div>
             <p>
               Let us help you highlight your best engineers and bring you one
               step closer to your goal!
@@ -99,7 +91,7 @@ const Contact = () => {
                 <div>
                   <h2>Our Address</h2>
                   {/* <p>Our Friendly Team Is Here To Help</p> */}
-                  <a href="">3517 W. Gray St. Utica, Pennsylvania 57867</a>
+                  <a href="f">3517 W. Gray St. Utica, Pennsylvania 57867</a>
                 </div>
               </Info>
             </Body>
@@ -113,10 +105,10 @@ const Contact = () => {
         </CardInfo>
       </ContactContainer>
     </BasicLayout>
-  )
-}
+  );
+};
 
-export default Contact
+export default Contact;
 
 const ContactContainer = styled.div`
   display: grid;
@@ -129,7 +121,7 @@ const ContactContainer = styled.div`
   @media (max-width: 901px) {
     margin-bottom: 100px;
   }
-`
+`;
 const Top = styled.div`
   width: 100%;
   height: 120vh;
@@ -139,7 +131,7 @@ const Top = styled.div`
     url(${contactImage});
   background-position: center;
   background-repeat: no-repeat;
-`
+`;
 const GetInTouch = styled.div`
   width: 50%;
   margin-left: 26px;
@@ -272,7 +264,7 @@ const Title = styled.div`
       font-size: 24px;
     }
   }
-`
+`;
 
 const Container = styled.div`
   padding: 35px 0;
@@ -280,7 +272,7 @@ const Container = styled.div`
   @media (max-width: 550px) {
     padding: 25px 25px 5px;
   }
-`
+`;
 
 const FormData = styled.div`
   display: flex;
@@ -405,7 +397,7 @@ const MainInfo = styled.div`
       font-size: 14px;
     }
   }
-`
+`;
 
 const Heading = styled.div`
   display: flex;
@@ -434,7 +426,7 @@ const Heading = styled.div`
       margin-top: -20px;
     }
   }
-`
+`;
 
 const Body = styled.div`
   margin-top: 100px;
@@ -453,7 +445,7 @@ const Body = styled.div`
     align-items: flex-start;
     justify-content: flex-start;
   }
-`
+`;
 
 const Info = styled.div`
   display: flex;
@@ -528,7 +520,7 @@ const Info = styled.div`
       margin-bottom: 0px;
     }
   }
-`
+`;
 
 const SocialContainer = styled.div`
   display: flex;
@@ -544,4 +536,4 @@ const SocialContainer = styled.div`
     margin-top: 60px;
     margin-bottom: 60px;
   }
-`
+`;
