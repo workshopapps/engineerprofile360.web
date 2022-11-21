@@ -41,7 +41,7 @@ const App = () => {
             path="/take-assessment-list"
             element={<UserTakeAssessment />}
           />
-          <Route path="/settings" element={<AdminSettings />} />
+          <Route path="/setting" element={<AdminSettings />} />1 
         </Routes>
       </MainLayout>
 
