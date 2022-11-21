@@ -7,11 +7,11 @@
 .container {
   height: 100px;
   display: grid;
-  grid-template-columns: 0.1fr 1fr 1fr;
+  grid-template-columns: 0.1fr 2fr 1fr;
   align-items: center;
   column-gap: 16px;
-  box-shadow: 2px 1px 1px 1px #605e5c;
-  border-radius: 5px;
+  border: 3px solid rgba(96, 94, 92, 0.2);
+  border-radius: 8px;
   padding: 12px;
   color: #605e5c;
 }
@@ -32,9 +32,8 @@
   justify-content: end;
 }
 
-
 .logo_img {
-    max-height: 48px;
+  max-height: 48px;
 }
 /* Rounded sliders */
 

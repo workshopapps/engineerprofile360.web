@@ -19,7 +19,7 @@ const Integrations = () => {
         <div className={classes.learn_more}>
           <label>Learn more</label>
           <label className={classes.switch}>
-            <input type="checkbox" checked/>
+            <input type="checkbox" />
             <span className={classes.slider}></span>
           </label>
         </div>
@@ -49,7 +49,7 @@ const Integrations = () => {
         <div className={classes.learn_more}>
           <label>Learn more</label>
           <label className={classes.switch}>
-            <input type="checkbox" checked />
+            <input type="checkbox" />
             <span className={classes.slider}></span>
           </label>
         </div>

@@ -7,6 +7,7 @@ import HomeStarted from "../components/sections/homeStarted/HomeStarted";
 import HomeStats from "../components/sections/homeStats/HomeStats";
 import HomeTestimony from "../components/sections/homeTestimony/HomeTestimony";
 
+
 export default function Home() {
   return (
     <>
@@ -17,6 +18,9 @@ export default function Home() {
       <HomeTestimony />
       <HomeBlog />
       <HomeStarted />
+      
+     
+      
     </>
   );
 }

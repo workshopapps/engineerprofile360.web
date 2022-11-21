@@ -49,8 +49,6 @@ export const Button = styled.button`
 export const MainContainer = styled.div`
   display: grid;
   grid-template-columns: 220px auto;
-  height: 100vh;
-  overflow: hidden;
 `;
 
 export const Divider = styled.div`

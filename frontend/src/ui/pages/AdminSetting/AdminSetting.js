@@ -1,5 +1,5 @@
 import MyDetails from "./components/MyDetails";
-import classes from "./AdminSettings.module.css";
+import classes from "./AdminSetting.module.css";
 import { useState } from "react";
 import Password from "./components/Password";
 import Notifications from "./components/Notifcations";
@@ -10,7 +10,7 @@ import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import { MainContainer } from "../../../styles/reusableElements.styled";
 
-const AdminSettings = () => {
+const AdminSetting = () => {
   const [activeNav, setActiveNav] = useState("My Details");
 
   const nav_heading = [
@@ -38,6 +38,7 @@ const AdminSettings = () => {
               {nav_heading.map((item) => (
                 <li
                   onClick={navClickHandler}
+                  key={item}
                   className={`${classes.nav_item} ${
                     activeNav === item ? classes.nav_active : ""
                   }`}
@@ -59,4 +60,4 @@ const AdminSettings = () => {
   );
 };
 
-export default AdminSettings;
+export default AdminSetting;
