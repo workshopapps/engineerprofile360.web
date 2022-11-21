@@ -6,8 +6,12 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+<<<<<<< HEAD
+    "bootstrap": "^5.2.2",
+=======
     "eslint": "^8.28.0",
     "eslint-plugin-jest": "^27.1.5",
+>>>>>>> cc9053df0383b10d915206bc8aeecf746ea32777
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
