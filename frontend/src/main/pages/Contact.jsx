@@ -119,12 +119,10 @@ const Contact = () => {
 export default Contact
 
 const ContactContainer = styled.div`
-  /* max-width: 1440px; */
   display: grid;
   grid-template-rows: 1fr 1fr;
   flex-direction: column;
   @media (max-width: 911px) {
-    /* height: 100vh; */
     margin-bottom: 450px;
   }
 
@@ -209,10 +207,11 @@ const GetInTouch = styled.div`
 
 const CardInfo = styled.div`
   background-color: ${({ theme }) => theme.palette.main.primary};
-  height: 1000px;
+  height: 996px;
   margin: -110px auto;
+  width: 95%;
   background-color: #2667ff;
-  padding: 0 120px;
+  padding: 0 60px;
   display: flex;
   max-width: 1440px;
 
@@ -374,8 +373,8 @@ const Button = styled.div`
   }
 `;
 const MainInfo = styled.div`
-  /* padding: 110px 0 5px 40px; */
-  padding: 60px 0 5px 40px;
+  padding: 110px 0 5px 40px;
+  /* padding: 60px 0 5px 40px; */
 
   p {
     width: 35vw;
