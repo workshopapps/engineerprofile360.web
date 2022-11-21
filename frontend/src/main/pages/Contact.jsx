@@ -112,13 +112,13 @@ const ContactContainer = styled.div`
   grid-template-rows: 1fr 1fr;
   flex-direction: column;
   @media (max-width: 911px) {
-    margin-bottom: 450px;
+    margin-bottom: 480px;
   }
 
   @media (max-width: 793px) {
-    margin-bottom: 300px;
+    margin-bottom: 730px;
   }
-  @media (max-width: 787px) {
+  @media (max-width: 789px) {
     margin-bottom: 800px;
   }
 `;
@@ -200,7 +200,7 @@ const GetInTouch = styled.div`
 const CardInfo = styled.div`
   background-color: ${({ theme }) => theme.palette.main.primary};
   height: 996px;
-  margin: -110px auto;
+  margin: -230px auto;
   width: 95%;
   background-color: #2667ff;
   padding: 0 60px;
@@ -395,7 +395,7 @@ const MainInfo = styled.div`
 
   @media (max-width: 596px) {
     p {
-      font-size: 14px;
+      font-size: 13px;
     }
   }
 `;
@@ -537,9 +537,9 @@ const SocialContainer = styled.div`
     cursor: pointer;
   }
 
-  @media (max-width: 793px) {
-    /* padding-top: 100px; */
-    margin-bottom: 160px;
+  @media (max-width: 910px) {
+    margin-top: 80px;
+    margin-bottom: 60px;
   }
   @media (max-width: 793px) {
     /* margin-top: 60px; */
