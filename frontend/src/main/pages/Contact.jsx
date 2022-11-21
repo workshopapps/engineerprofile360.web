@@ -121,7 +121,7 @@ const ContactContainer = styled.div`
     margin-bottom: 730px;
   }
   @media (max-width: 789px) {
-    margin-bottom: 800px;
+    margin-bottom: 5i00px;
   }
 `;
 const Top = styled.div`
