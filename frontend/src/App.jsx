@@ -28,7 +28,6 @@ const App = () => {
           <Route path="/terms" element={<Terms />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/ovrperf" element={<AdminOverallPerformance />} />
         </Routes>
       </MainLayout>
     </ThemeProvider>
