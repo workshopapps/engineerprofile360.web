@@ -6,8 +6,7 @@ import './style.css'
 
 function TermsAndService() {
   return (
-    <div>      
-      <div className=' mainDiv container'>
+    <div className=' mainDiv container'>
       <div className='terms'>
         <h1>Skript <span> Terms of Service</span></h1>
         <p>Last updated on November 15, 2022</p>
@@ -192,11 +191,8 @@ function TermsAndService() {
             </div>
           </div>
         </div>
-
-        
       </div>
     </div>
-  </div>
   )
 }
 
