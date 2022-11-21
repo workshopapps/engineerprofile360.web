@@ -1,4 +1,6 @@
 const theme = {
+
+  // Every color used within the project lives here
   palette: {
     divider: "#EDEBE9",
     border: {
@@ -11,7 +13,6 @@ const theme = {
         lighterAlt: "#EFF6FC",
         lighter: "#DEECF9",
         light: "#C7E0F4",
-        // contact: "#2667FF",
       },
       tertiary: {
         tertiary: "#3D94DF",
@@ -33,7 +34,7 @@ const theme = {
         background: "#FFF4CE",
         color: "#797775",
       },
-      severeWorking: {
+      severeWarning: {
         background: "#FED9CC",
         color: "#D83B01",
       },
@@ -50,17 +51,59 @@ const theme = {
         thirty: "#EDEBE9",
         sixty: "#C8C6C4",
         nintey: "#A19F9D",
-        oneThrity: "#605E5C",
+        oneThirty: "#605E5C",
         oneSixty: "#323130",
         oneNinty: "#201F1E",
       },
     },
   },
 
-  spacing: (num) => {
-    return `${8 * num}px`
+  // Function for spacing, default spacing is 8px
+  spacing: (num = 1) => {
+    return `${8 * num}px`;
   },
-  
+
+  // Breakpoints for responsiveness lives right here
+  breakpoints: {
+    xs: 480,
+    sm: 767,
+    md: 959,
+    lg: 1023,
+    xl: 1439,
+    up: (screen) => {
+      switch (screen) {
+        case "xs":
+          return `@media (min-width: ${this.breakpoints.xs + 1}px)`;
+        case "sm":
+          return `@media (min-width: ${this.breakpoints.sm + 1}px)`;
+        case "md":
+          return `@media (min-width: ${this.breakpoints.md + 1}px)`;
+        case "lg":
+          return `@media (min-width: ${this.breakpoints.lg + 1}px)`;
+        case "xl":
+          return `@media (min-width: ${this.breakpoints.xl + 1}px)`;
+        default:
+          return ``;
+      }
+    },
+    down: (screen) => {
+      switch (screen) {
+        case "xs":
+          return `@media (max-width: ${this.breakpoints.xs}px)`;
+        case "sm":
+          return `@media (max-width: ${this.breakpoints.sm}px)`;
+        case "md":
+          return `@media (max-width: ${this.breakpoints.md}px)`;
+        case "lg":
+          return `@media (max-width: ${this.breakpoints.lg}px)`;
+        case "xl":
+          return `@media (max-width: ${this.breakpoints.xl}px)`;
+        default:
+          return ``;
+      }
+    },
+  }
+
 }
 
-export default theme
+export default theme;
