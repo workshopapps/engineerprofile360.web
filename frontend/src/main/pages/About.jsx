@@ -1,6 +1,12 @@
 import React from "react";
 
-import { AboutOverview, AboutStory, AboutMission, AboutVision, AboutValues } from "../components";
+import {
+  AboutOverview,
+  AboutStory,
+  AboutMission,
+  AboutVision,
+  AboutValues,
+} from "../components";
 
 const About = () => {
   return (
