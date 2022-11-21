@@ -6,6 +6,9 @@ import Notifications from "./components/Notifcations";
 import Teams from "./components/Teams";
 import Integrations from "./components/Integration";
 import API from "./components/API";
+import Sidebar from "../../components/Sidebar";
+import Header from "../../components/Header";
+import { MainContainer } from "../../../styles/reusableElements.styled";
 
 const AdminSettings = () => {
   const [activeNav, setActiveNav] = useState("My Details");
@@ -20,33 +23,39 @@ const AdminSettings = () => {
   ];
 
   const navClickHandler = (event) => {
-    setActiveNav(event.target.textContent)
-  }
+    setActiveNav(event.target.textContent);
+  };
   return (
-    <main className={classes.main}>
-      <h1 className={classes.main_heading}>Settings</h1>
-      <nav className={classes.nav}>
-        <ul className={classes.nav_list}>
-          {nav_heading.map((item) => (
-            <li
-              onClick={navClickHandler}
-              className={`${classes.nav_item} ${
-                activeNav === item ? classes.nav_active : ""
-              }`}
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
-      </nav>
-      {activeNav === "My Details" && <MyDetails />}
-      {activeNav === "Password" && <Password />}
-      {activeNav === "Notifications" && <Notifications />}
-      {activeNav === "Teams" && <Teams />}
-      {activeNav === "Integrations" && <Integrations />}
-      {activeNav === "API" && <API />}
+    <>
+      <Header />
+      <MainContainer>
+        <Sidebar />
 
-    </main>
+        <main className={classes.main}>
+          <h1 className={classes.main_heading}>Settings</h1>
+          <nav className={classes.nav}>
+            <ul className={classes.nav_list}>
+              {nav_heading.map((item) => (
+                <li
+                  onClick={navClickHandler}
+                  className={`${classes.nav_item} ${
+                    activeNav === item ? classes.nav_active : ""
+                  }`}
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </nav>
+          {activeNav === "My Details" && <MyDetails />}
+          {activeNav === "Password" && <Password />}
+          {activeNav === "Notifications" && <Notifications />}
+          {activeNav === "Teams" && <Teams />}
+          {activeNav === "Integrations" && <Integrations />}
+          {activeNav === "API" && <API />}
+        </main>
+      </MainContainer>
+    </>
   );
 };
 

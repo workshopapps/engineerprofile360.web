@@ -18,6 +18,7 @@ import Login from "../src/main/components/sections/adminLogin/AdminLogin";
 import Blog from "../src/main/pages/Blog";
 import AssessmentList from "./main/components/sections/userAssessmentList/AssessmentList";
 import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
+import AdminSettings from "./ui/pages/admin-settings/AdminSettings";
 
 const App = () => {
   return (
@@ -40,6 +41,7 @@ const App = () => {
             path="/take-assessment-list"
             element={<UserTakeAssessment />}
           />
+          <Route path="/settings" element={<AdminSettings />} />
         </Routes>
       </MainLayout>
 

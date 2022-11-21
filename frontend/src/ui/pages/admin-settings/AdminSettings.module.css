@@ -1,6 +1,7 @@
 .main {
   display: grid;
-  grid-template-columns: auto;
+  grid-template-columns: 1fr;
+  grid-template-rows: 40px 40px 1fr;
   row-gap: 24px;
   padding: 50px 24px;
 }
