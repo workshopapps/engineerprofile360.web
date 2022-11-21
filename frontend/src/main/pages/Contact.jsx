@@ -12,97 +12,96 @@ import linkedin from "../../assets/icons/contact-page/linkedin.svg";
 
 const Contact = () => {
   return (
-      <ContactContainer>
-        <Top>
-          <GetInTouch>
-            <h1>Get In Touch</h1>
+    <ContactContainer>
+      <Top>
+        <GetInTouch>
+          <h1>Get In Touch</h1>
+          <div></div>
+          <p>
+            Let us help you highlight your best engineers and bring you one step
+            closer to your goal!
+          </p>
+        </GetInTouch>
+      </Top>
+      <CardInfo>
+        <form>
+          <Title>
+            <h1>Send Us A Message</h1>
+            <p>
+              {" "}
+              You Can Reach Us At Anytime Via <span>Hi@skripthq.com</span>
+            </p>
+          </Title>
+
+          <Container>
+            <FormData>
+              <label htmlFor="full_name">Full Name</label>
+              <input id="full_name" type="text" />
+            </FormData>
+            <FormData>
+              <label htmlFor="phone_number">Phone Number</label>
+              <input id="phone_number" type="text" />
+            </FormData>
+            <FormData>
+              <label htmlFor="email">Email Address</label>
+              <input id="email" type="email" />
+            </FormData>
+            <FormData>
+              <label htmlFor="message">How Can We Help?</label>
+              <textarea id="message" />
+            </FormData>
+          </Container>
+          <Button>
+            <button type="submit">Submit</button>
+          </Button>
+        </form>
+        <MainInfo>
+          <p>
+            We also have customer care representatives who are ready to help you
+            in any capacity. Click on the button below to get in touch with a
+            representative.
+          </p>
+          <Heading>
+            <h1>Contact Us Here</h1>
             <div></div>
-            <p>
-              Let us help you highlight your best engineers and bring you one
-              step closer to your goal!
-            </p>
-          </GetInTouch>
-        </Top>
-        <CardInfo>
-          <form>
-            <Title>
-              <h1>Send Us A Message</h1>
-              <p>
-                {" "}
-                You Can Reach Us At Anytime Via <span>Hi@skripthq.com</span>
-              </p>
-            </Title>
-
-            <Container>
-              <FormData>
-                <label htmlFor="full_name">Full Name</label>
-                <input id="full_name" type="text" />
-              </FormData>
-              <FormData>
-                <label htmlFor="phone_number">Phone Number</label>
-                <input id="phone_number" type="text" />
-              </FormData>
-              <FormData>
-                <label htmlFor="email">Email Address</label>
-                <input id="email" type="email" />
-              </FormData>
-              <FormData>
-                <label htmlFor="message">How Can We Help?</label>
-                <textarea id="message" />
-              </FormData>
-            </Container>
-            <Button>
-              <button type="submit">Submit</button>
-            </Button>
-          </form>
-          <MainInfo>
-            <p>
-              We also have customer care representatives who are ready to help
-              you in any capacity. Click on the button below to get in touch
-              with a representative.
-            </p>
-            <Heading>
-              <h1>Contact Us Here</h1>
-              <div></div>
-            </Heading>
-            <Body>
-              <Info>
-                <img src={sms} alt="sms svg" />
-                <div>
-                  <h2>Chat With Us</h2>
-                  {/* <p>Our Friendly Team Is Here To Help</p> */}
-                  <a href="malito:skriptassessmenthq@gmail.com">
-                    skriptassessmenthq@gmail.com
-                  </a>
-                </div>
-              </Info>
-              <Info>
-                <img src={call} alt="call svg" />
-                <div>
-                  <h2>Phone</h2>
-                  {/* <p>Our Friendly Team Is Here To Help</p> */}
-                  <a href="tel:4065550120">(406) 555-0120</a>
-                </div>
-              </Info>
-              <Info>
-                <img src={map} alt="map svg" />
-                <div>
-                  <h2>Our Address</h2>
-                  {/* <p>Our Friendly Team Is Here To Help</p> */}
-                  <a href="f">3517 W. Gray St. Utica, Pennsylvania 57867</a>
-                </div>
-              </Info>
-            </Body>
-            <SocialContainer>
-              <img src={facebook} alt="facebook icon" />
-              <img src={instagram} alt="instagram icon" />
-              <img src={twitter} alt="twitter icon" />
-              <img src={linkedin} alt="linkedin icon" />
-            </SocialContainer>
-          </MainInfo>
-        </CardInfo>
-      </ContactContainer>
-
+          </Heading>
+          <Body>
+            <Info>
+              <img src={sms} alt="sms svg" />
+              <div>
+                <h2>Chat With Us</h2>
+                {/* <p>Our Friendly Team Is Here To Help</p> */}
+                <a href="malito:skriptassessmenthq@gmail.com">
+                  skriptassessmenthq@gmail.com
+                </a>
+              </div>
+            </Info>
+            <Info>
+              <img src={call} alt="call svg" />
+              <div>
+                <h2>Phone</h2>
+                {/* <p>Our Friendly Team Is Here To Help</p> */}
+                <a href="tel:4065550120">(406) 555-0120</a>
+              </div>
+            </Info>
+            <Info>
+              <img src={map} alt="map svg" />
+              <div>
+                <h2>Our Address</h2>
+                {/* <p>Our Friendly Team Is Here To Help</p> */}
+                <a href="f">3517 W. Gray St. Utica, Pennsylvania 57867</a>
+              </div>
+            </Info>
+          </Body>
+          <SocialContainer>
+            <img src={facebook} alt="facebook icon" />
+            <img src={instagram} alt="instagram icon" />
+            <img src={twitter} alt="twitter icon" />
+            <img src={linkedin} alt="linkedin icon" />
+          </SocialContainer>
+        </MainInfo>
+      </CardInfo>
+    </ContactContainer>
   );
 };
 
@@ -116,8 +115,11 @@ const ContactContainer = styled.div`
     margin-bottom: 450px;
   }
 
-  @media (max-width: 901px) {
-    margin-bottom: 100px;
+  @media (max-width: 793px) {
+    margin-bottom: 300px;
+  }
+  @media (max-width: 787px) {
+    margin-bottom: 800px;
   }
 `;
 const Top = styled.div`
@@ -204,6 +206,7 @@ const CardInfo = styled.div`
   padding: 0 60px;
   display: flex;
   max-width: 1440px;
+  margin-bottom: 300px;
 
   form {
     /* width: calc(1440px - 60%); */
@@ -268,7 +271,7 @@ const Container = styled.div`
   padding: 35px 0;
 
   @media (max-width: 550px) {
-    padding: 25px 25px 5px;
+    padding: 25px 5px 5px;
   }
 `;
 
@@ -380,7 +383,7 @@ const MainInfo = styled.div`
     width: 100%;
     flex-direction: column;
     background-color: #2667ff;
-    padding: 40px 0 5px 20px;
+    padding: 40px 20px 5px 20px;
     display: flex;
     align-items: center;
 
@@ -518,6 +521,10 @@ const Info = styled.div`
       margin-bottom: 0px;
     }
   }
+
+  @media (max-width: 793px) {
+    margin-bottom: 50px;
+  }
 `;
 
 const SocialContainer = styled.div`
@@ -530,8 +537,12 @@ const SocialContainer = styled.div`
     cursor: pointer;
   }
 
-  @media (max-width: 911px) {
-    margin-top: 60px;
-    margin-bottom: 60px;
+  @media (max-width: 793px) {
+    /* padding-top: 100px; */
+    margin-bottom: 160px;
+  }
+  @media (max-width: 793px) {
+    /* margin-top: 60px; */
+    /* padding-bottom: 200px; */
   }
 `;
