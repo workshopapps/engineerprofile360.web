@@ -19,7 +19,7 @@ import Blog from "../src/main/pages/Blog";
 import BlogStory from "../src/main/components/blog/Blogstory";
 import AssessmentList from "./main/components/sections/userAssessmentList/AssessmentList";
 import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
-import AdminSettings from "./ui/pages/admin-settings/AdminSettings";
+import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 
 const App = () => {
   return (
@@ -43,7 +43,7 @@ const App = () => {
             path="/take-assessment-list"
             element={<UserTakeAssessment />}
           />
-          <Route path="/setting" element={<AdminSettings />} />1 
+          <Route path="/setting" element={<AdminSetting />} />1 
         </Routes>
       </MainLayout>
 
