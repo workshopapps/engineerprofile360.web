@@ -18,6 +18,5 @@ const HelpCenter = () => {
 export default HelpCenter;
 
 const HelpCenterContainer = styled.div`
-  max-width: 1440px;
   margin-bottom: 100px;
 `;
