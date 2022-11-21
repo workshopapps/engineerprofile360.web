@@ -5,7 +5,7 @@ import { GlobalStyles, theme } from "./styles/globalStyles";
 import MainLayout from "./main/Layouts/MainLayout";
 
 import Contact from "./main/pages/Contact";
-import { About } from "./main/pages";
+import { About } from "./main/pages/About";
 import Home from "../src/main/pages/Home";
 import Confirmed from "./main/components/demo-pages-components/components/Confirmed";
 import ScheduleDemo from "./main/components/demo-pages-components/components/ScheduleDemo";

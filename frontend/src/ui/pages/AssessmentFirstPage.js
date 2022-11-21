@@ -1,5 +1,3 @@
-// import React from "react";
-
 import React, { useState } from "react";
 import Flex from "../components/layout/Flex";
 import Grid, { GridItem } from "../components/layout/Grid";
