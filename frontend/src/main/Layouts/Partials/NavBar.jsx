@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import arrowDown from "../../../assets/icons/arrow-down.svg";
 
@@ -28,7 +29,7 @@ const NavBar = () => {
 export default NavBar;
 
 const Nav = styled.nav`
-  @media (max-width: 767px) {
+  @media (max-width: 960px) {
     display: none;
   }
 `;
