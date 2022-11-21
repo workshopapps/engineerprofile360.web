@@ -114,7 +114,7 @@ const TopicContainer = styled.div`
   align-items: center;
   place-items: center;
   justify-content: center;
-  max-width: 1300px;
+  max-width: 1400px;
 
   @media (max-width: 778px) {
     display: grid;
@@ -135,7 +135,7 @@ const Box = styled.div`
   align-items: center;
   justify-content: center;
   gap: 24px;
-  padding: 24px 12px;
+  padding: 24px 14px;
 
   h3 {
     text-align: center;
@@ -148,10 +148,10 @@ const Box = styled.div`
 
   p {
     font-weight: 400;
-    font-size: 17px;
+    font-size: 16px;
     line-height: 22px;
     text-align: center;
-    color: #323130;
+    color: #000;
   }
 
   @media (max-width: 1046px) {
