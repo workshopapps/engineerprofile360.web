@@ -1,5 +1,4 @@
 const theme = {
-
   // Every color used within the project lives here
   palette: {
     divider: "#EDEBE9",
@@ -70,40 +69,39 @@ const theme = {
     md: 959,
     lg: 1023,
     xl: 1439,
-    up: (screen) => {
+    up: function (screen) {
       switch (screen) {
         case "xs":
-          return `@media (min-width: ${this.breakpoints.xs + 1}px)`;
+          return `@media (min-width: ${this.xs + 1}px)`;
         case "sm":
-          return `@media (min-width: ${this.breakpoints.sm + 1}px)`;
+          return `@media (min-width: ${this.sm + 1}px)`;
         case "md":
-          return `@media (min-width: ${this.breakpoints.md + 1}px)`;
+          return `@media (min-width: ${this.md + 1}px)`;
         case "lg":
-          return `@media (min-width: ${this.breakpoints.lg + 1}px)`;
+          return `@media (min-width: ${this.lg + 1}px)`;
         case "xl":
-          return `@media (min-width: ${this.breakpoints.xl + 1}px)`;
+          return `@media (min-width: ${this.xl + 1}px)`;
         default:
           return ``;
       }
     },
-    down: (screen) => {
+    down: function (screen) {
       switch (screen) {
         case "xs":
-          return `@media (max-width: ${this.breakpoints.xs}px)`;
+          return `@media (max-width: ${this.xs}px)`;
         case "sm":
-          return `@media (max-width: ${this.breakpoints.sm}px)`;
+          return `@media (max-width: ${this.sm}px)`;
         case "md":
-          return `@media (max-width: ${this.breakpoints.md}px)`;
+          return `@media (max-width: ${this.md}px)`;
         case "lg":
-          return `@media (max-width: ${this.breakpoints.lg}px)`;
+          return `@media (max-width: ${this.lg}px)`;
         case "xl":
-          return `@media (max-width: ${this.breakpoints.xl}px)`;
+          return `@media (max-width: ${this.xl}px)`;
         default:
           return ``;
       }
     },
-  }
-
-}
+  },
+};
 
 export default theme;
