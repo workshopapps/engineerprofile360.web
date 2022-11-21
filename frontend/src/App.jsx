@@ -20,7 +20,7 @@ import Login from "../src/main/components/sections/adminLogin/AdminLogin";
 import Blog from "../src/main/pages/Blog";
 import BlogStory from "../src/main/components/blog/Blogstory";
 import AssessmentList from "./main/components/sections/userAssessmentList/AssessmentList";
-import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList"
+import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
 import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
 import AdminSettings from "./ui/pages/admin-settings/AdminSettings";
 import Privacy from "./main/pages/Privacy/privacy";
@@ -43,7 +43,11 @@ const App = () => {
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/skillaquisition" element={<BlogStory />} />
           <Route path="/assessment-list" element={<AssessmentList />} />
-          <Route path="/admin-assessment-list" element={<AdminAssessmentList/>} />
+          <Route path="/admin-assessment" element={<AdminAssessmentList />} />
+          <Route
+            path="/admin-assessment-list"
+            element={<AdminAssessmentList />}
+          />
           <Route path="/help-center" element={<HelpCenter />} />
           <Route
             path="/take-assessment-list"

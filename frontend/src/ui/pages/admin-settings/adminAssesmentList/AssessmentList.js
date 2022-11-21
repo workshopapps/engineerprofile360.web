@@ -1,119 +1,124 @@
-import React from 'react'
-import styled from 'styled-components'
-import { MainContainer } from '../../../../styles/reusableElements.styled'
-import Header from '../../../components/Header'
-import Sidebar from '../../../components/Sidebar'
-import addCircle from "../../../../assets/icons/app/add-circle.svg"
-import dashboard from "../../../../assets/icons/app/dashboard.svg"
-import hamburger from "../../../../assets/icons/app/hamburger.svg"
+import React from "react";
+import styled from "styled-components";
+import { MainContainer } from "../../../../styles/reusableElements.styled";
+import Header from "../../../components/Header";
+import Sidebar from "../../../components/Sidebar";
+import addCircle from "../../../../assets/icons/app/add-circle.svg";
+import dashboard from "../../../../assets/icons/app/dashboard.svg";
+import hamburger from "../../../../assets/icons/app/hamburger.svg";
 
-
-const AdminAssessmentList = () => {
+export default function AssessmentList() {
   return (
     <>
-    <Header/>
-    <MainContainer>
-    <Sidebar/>
-    <AssessmentDiv>
-      <AssesmentNav>
-        <div className='assesment-toggler'>
-          <div>
-            <p>Assessments {' >  '} <span>Assessments list</span></p>
-          </div>
-          <div className='assesment-toggler-div'>
-            <span>Available (60)</span>
-            <span>Completed (47)</span>
-          </div>
-        </div>
-        <div className='assessment-button-div'>
-          <button id='create__assessment'><img src={addCircle} alt = ""/>Create New Assesment</button>
-          <button id = "employee__send">Send To Employee</button>
-        </div>
-      </AssesmentNav>
-      <AssessmentListDiv>
-        <div className='assessment_filter'>
-          <div>
-            <button id='assessment-type'> <p>Assesment Type</p> <span>⌵</span> </button>
-          </div>
-          <div className='assessment-sort'> 
-            <button><p>Sort by Date</p> <span>⌵</span></button>
-            <img src = {dashboard} alt = "dashboard" />
-            <img src = {hamburger} alt = "dashboard" />
-          </div>
-        </div>
-        <div className='assessments'>
-          <div className='assessments-header'>
-            <p>#</p>
-            <p>Department</p>
-            <p>Course</p>
-            <p>Duration</p>
-            <p>Deadline</p>
-          </div>
-          <div className='assessments-list-div'>
-            <div>
-            <p>1</p>
-            <p>Introduction to Software Engineering</p>
-            <p>Python 101</p>
-            <p>30 mins</p>
-            <p>25th Apr 2022</p>
-            <button>View Assessment</button>
+      <Header />
+      <MainContainer>
+        <Sidebar />
+        <AssessmentDiv>
+          <AssesmentNav>
+            <div className="assesment-toggler">
+              <div>
+                <p>
+                  Assessments {" >  "} <span>Assessments list</span>
+                </p>
+              </div>
+              <div className="assesment-toggler-div">
+                <span>Available (60)</span>
+                <span>Completed (47)</span>
+              </div>
             </div>
-            <div>
-            <p>1</p>
-            <p>Introduction to Software Engineering</p>
-            <p>Python 101</p>
-            <p>30 mins</p>
-            <p>25th Apr 2022</p>
-            <button>View Assessment</button>
+            <div className="assessment-button-div">
+              <button id="create__assessment">
+                <img src={addCircle} alt="" />
+                Create New Assesment
+              </button>
+              <button id="employee__send">Send To Employee</button>
             </div>
-            <div>
-            <p>1</p>
-            <p>Introduction to Software Engineering</p>
-            <p>Python 101</p>
-            <p>30 mins</p>
-            <p>25th Apr 2022</p>
-            <button>View Assessment</button>
+          </AssesmentNav>
+          <AssessmentListDiv>
+            <div className="assessment_filter">
+              <div>
+                <button id="assessment-type">
+                  {" "}
+                  <p>Assesment Type</p> <span>⌵</span>{" "}
+                </button>
+              </div>
+              <div className="assessment-sort">
+                <button>
+                  <p>Sort by Date</p> <span>⌵</span>
+                </button>
+                <img src={dashboard} alt="dashboard" />
+                <img src={hamburger} alt="dashboard" />
+              </div>
             </div>
-            <div>
-            <p>1</p>
-            <p>Introduction to Software Engineering</p>
-            <p>Python 101</p>
-            <p>30 mins</p>
-            <p>25th Apr 2022</p>
-            <button>View Assessment</button>
+            <div className="assessments">
+              <div className="assessments-header">
+                <p>#</p>
+                <p>Department</p>
+                <p>Course</p>
+                <p>Duration</p>
+                <p>Deadline</p>
+              </div>
+              <div className="assessments-list-div">
+                <div>
+                  <p>1</p>
+                  <p>Introduction to Software Engineering</p>
+                  <p>Python 101</p>
+                  <p>30 mins</p>
+                  <p>25th Apr 2022</p>
+                  <button>View Assessment</button>
+                </div>
+                <div>
+                  <p>1</p>
+                  <p>Introduction to Software Engineering</p>
+                  <p>Python 101</p>
+                  <p>30 mins</p>
+                  <p>25th Apr 2022</p>
+                  <button>View Assessment</button>
+                </div>
+                <div>
+                  <p>1</p>
+                  <p>Introduction to Software Engineering</p>
+                  <p>Python 101</p>
+                  <p>30 mins</p>
+                  <p>25th Apr 2022</p>
+                  <button>View Assessment</button>
+                </div>
+                <div>
+                  <p>1</p>
+                  <p>Introduction to Software Engineering</p>
+                  <p>Python 101</p>
+                  <p>30 mins</p>
+                  <p>25th Apr 2022</p>
+                  <button>View Assessment</button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </AssessmentListDiv>
-    </AssessmentDiv>
-    </MainContainer>
+          </AssessmentListDiv>
+        </AssessmentDiv>
+      </MainContainer>
     </>
-  )
+  );
 }
-
-export default AssessmentList
 
 export const AssessmentDiv = styled.div`
   width: 95%;
   display: grid;
   grid-template-rows: 105px auto;
-
-  
-`
+`;
 
 export const AssessmentListDiv = styled.div`
   display: grid;
   grid-template-rows: 55px auto;
 
   button {
-      padding:0 3%;
-      border: none;
-      background: transparent;
-      border: 1px solid #8A8886;
-      border-radius: 4px;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
+    padding: 0 3%;
+    border: none;
+    background: transparent;
+    border: 1px solid #8a8886;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
   }
 
   .assessments {
@@ -124,14 +129,14 @@ export const AssessmentListDiv = styled.div`
   .assessments-header {
     display: grid;
     grid-template-columns: 9% 30% 12% 12% 12% 25%;
-    background: #F8FBFD;
+    background: #f8fbfd;
     padding: 0.5%;
 
     p {
       font-weight: 600;
       font-size: 16px;
       line-height: 22px;
-      color: #605E5C;
+      color: #605e5c;
     }
   }
 
@@ -145,8 +150,8 @@ export const AssessmentListDiv = styled.div`
     margin: 2% 0;
 
     button {
-      border: 1px solid #2667FF;
-      color: #2667FF;
+      border: 1px solid #2667ff;
+      color: #2667ff;
       width: 20%;
       margin-top: -1%;
       height: 2rem;
@@ -179,16 +184,15 @@ export const AssessmentListDiv = styled.div`
     button {
       width: 178px;
       height: 35px;
-      
     }
   }
-`
+`;
 
 export const AssesmentNav = styled.div`
   display: grid;
   grid-template-columns: 55% 45%;
   padding-bottom: 0.5%;
-  border-bottom: 1px solid #8A8886;
+  border-bottom: 1px solid #8a8886;
 
   .assessment-button-div {
     display: flex;
@@ -196,7 +200,7 @@ export const AssesmentNav = styled.div`
     /* align-items: center; */
 
     button {
-      display:flex;
+      display: flex;
       justify-content: space-around;
       align-items: center;
       border: none;
@@ -211,7 +215,7 @@ export const AssesmentNav = styled.div`
       gap: 10px;
       width: 237px;
       height: 48px;
-      background: #2667FF;
+      background: #2667ff;
       color: #fff;
     }
 
@@ -220,12 +224,11 @@ export const AssesmentNav = styled.div`
       width: 171px;
       height: 42px;
       margin-top: 1%;
-      border: 1px solid #2667FF;
+      border: 1px solid #2667ff;
       background: #fff;
-      color: #2667FF;
+      color: #2667ff;
     }
   }
-
 
   .assesment-toggler {
     display: grid;
@@ -234,13 +237,12 @@ export const AssesmentNav = styled.div`
     padding-bottom: 3px;
     width: 100%;
 
-
     div {
       padding-top: 5px;
 
       p {
         font-size: 16px;
-        color: #605E5C;
+        color: #605e5c;
       }
 
       span {
@@ -251,21 +253,19 @@ export const AssesmentNav = styled.div`
       }
     }
 
-   
+    .assesment-toggler-div {
+      padding-bottom: 5px;
+      display: flex;
+      align-items: flex-end;
 
-  .assesment-toggler-div {
-       padding-bottom: 5px;
-       display: flex;
-       align-items: flex-end;
-   
       span {
         font-weight: 600;
         font-size: 14px;
       }
 
       span:first-of-type {
-        color: #2667FF;
+        color: #2667ff;
       }
+    }
   }
-  }
-`
+`;
