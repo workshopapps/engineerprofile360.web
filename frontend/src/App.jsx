@@ -16,7 +16,8 @@ import UserProfile from "./ui/pages/user-profile/UserProfile";
 import Register from "../src/main/components/sections/adminSignup/AdminSignup";
 import Login from "../src/main/components/sections/adminLogin/AdminLogin";
 import Blog from "../src/main/pages/Blog";
-
+import AssessmentList from "./main/components/sections/userAssessmentList/AssessmentList";
+import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
 
 const App = () => {
   return (
@@ -34,14 +35,18 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/assessment-list" element={<AssessmentList />} />
+          <Route
+            path="/take-assessment-list"
+            element={<UserTakeAssessment />}
+          />
         </Routes>
       </MainLayout>
-      
+
       {/* <UserProfile /> */}
       {/* <UiLayout> */}
       {/* ALL APP PAGES SHOULD BE ROUTED WITH THIS LAYOUT COMPONENET */}
       {/* </UiLayout> */}
-
     </ThemeProvider>
   );
 };
