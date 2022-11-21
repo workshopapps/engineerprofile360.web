@@ -1,19 +1,20 @@
-import { BlogCard } from "../../compnents/sections/BlogCard"
-import "./blog.css"
-import { Link } from "react-router-dom"
-import frame1 from "../../assets/images/dp1.png"
-import frame2 from "../../assets/images/frame2.png"
-import frame3 from "../../assets/images/frame3.png"
-import frame4 from "../../assets/images/frame4.png"
-import frame5 from "../../assets/images/frame5.png"
-import frame6 from "../../assets/images/frame6.png"
-import frame7 from "../../assets/images/frame7.png"
-import frame8 from "../../assets/images/frame8.png"
-import frame9 from "../../assets/images/frame9.png"
-import dp from "../../assets/images/dp.png"
-import dp2 from "../../assets/images/dp2.png"
-import dp3 from "../../assets/images/dp3.png"
-export function Blog() {
+import { BlogCard } from "../components/blog/BlogCard";
+import "../components/blog/blog.css";
+import { Link } from "react-router-dom";
+import frame1 from "../../assets/images/dp1.png";
+import frame2 from "../../assets/images/frame2.png";
+import frame3 from "../../assets/images/frame3.png";
+import frame4 from "../../assets/images/frame4.png";
+import frame5 from "../../assets/images/frame5.png";
+import frame6 from "../../assets/images/frame6.png";
+import frame7 from "../../assets/images/frame7.png";
+import frame8 from "../../assets/images/frame8.png";
+import frame9 from "../../assets/images/frame9.png";
+import dp from "../../assets/images/dp.png";
+import dp2 from "../../assets/images/dp2.png";
+import dp3 from "../../assets/images/dp3.png";
+
+export default function Blog() {
   return (
     <div id="blogPage">
       <div id="dropdown">
@@ -146,5 +147,5 @@ export function Blog() {
         </p>
       </div>
     </div>
-  )
+  );
 }

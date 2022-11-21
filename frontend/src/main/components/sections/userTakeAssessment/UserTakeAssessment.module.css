@@ -1,0 +1,123 @@
+
+.UserTakeAssessment_container {
+    height: auto;
+    width: 80%;
+    margin:40px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 40px;
+    padding: 40px;
+    color:#323130;
+  }
+
+  .Text_muted {
+    opacity: 0.3;
+    margin-right: 20px;
+  }
+ 
+  .Button_next {
+    margin: 0 20px;
+    padding: 10px 16px;
+    width: 139px;
+    height: 60px;
+    background-color: #FFFFFF;
+    border: 1px solid #2667FF;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #2667FF;
+    cursor: pointer;
+  }
+
+  .Button_submit {
+    margin: 0 20px;
+    padding: 10px 16px;
+    width: 139px;
+    height: 60px;
+    background-color: #2667FF;
+    border: 1px solid #FFFFFF;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #FFFFFF;
+    cursor: pointer;
+  }
+
+  .Filter_wrapper {
+    display: flex;
+    width: 100%!important;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+
+  }
+
+  .Filter_Next_Submit {
+    display: flex;
+    width: 100%!important;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .Questions {
+    display: flex;
+    width: 100%!important;
+    flex-direction: column;
+    margin:100px 0;
+  }
+
+  .Questions p{
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .Questions label{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #201F1E;
+    padding-left: 10px;
+  }
+
+  .Questions input[type=radio]{
+    margin-left: 10px;
+  }
+
+  .Questions div{
+    margin-bottom: 40px;
+  }
+
+  .Description {
+    margin-top: 10px;
+    border-top: 1px solid #323130;
+    font-size: 16px;
+    line-height: 22px;
+    padding:20px 0;
+    border-bottom: 1px solid #323130;
+  }
+
+  .Filter_flex {
+    display: flex;
+    width: 20%;
+    padding: 20px;
+    border: 1px solid;
+    justify-content: space-between;
+  }
+
+  
+  /* Media queries */
+  @media screen and (max-width: 767px) {
+    .UserTakeAssessment_container {
+      align-items: stretch;
+      text-align: center;
+    }
+  
+  }
+  

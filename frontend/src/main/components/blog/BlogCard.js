@@ -1,6 +1,5 @@
-import arrow from "../../assets/images/vuesax.png"
-import "./BlogCard.css"
-import { Link } from "react-router-dom"
+import "./BlogCard.css";
+import { Link } from "react-router-dom";
 export function BlogCard(props) {
   return (
     <div id="blog">
@@ -24,5 +23,5 @@ export function BlogCard(props) {
         </div>
       </div>
     </div>
-  )
+  );
 }
