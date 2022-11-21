@@ -126,6 +126,10 @@ const SkriptContact = styled.div`
     grid-column: 1 / 5;
   }
 
+  ${({ theme }) => theme.breakpoints.down("xs")} {
+    grid-column: 1 / 5;
+  }
+
   img {
     width: 175px;
   }
@@ -225,7 +229,7 @@ const Copyright = styled.div`
 
 const About = styled(ListContainer)`
   ${({ theme }) => theme.breakpoints.down("md")} {
-    grid-column: 2 / 4;
+    grid-column: 2 / 3;
   }
 
   ${({ theme }) => theme.breakpoints.down("xs")} {
@@ -242,10 +246,10 @@ const Resources = styled(ListContainer)`
 `;
 const Follow = styled(ListContainer)`
   ${({ theme }) => theme.breakpoints.down("md")} {
-    grid-column: 4 / 5;
+    grid-column: 3 / 4;
   }
 
   ${({ theme }) => theme.breakpoints.down("xs")} {
-    grid-column: 1 / 5;
+    grid-column: 1 / 4;
   }
 `;
