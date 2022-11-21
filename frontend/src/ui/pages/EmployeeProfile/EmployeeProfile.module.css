@@ -1,0 +1,71 @@
+.employee_profile {
+  display: grid;
+  grid-template-rows: 0.1fr 1fr;
+  padding: 51px 10px;
+  row-gap: 50px;
+}
+
+.main_content {
+  display: grid;
+  background: hwb(204 97% 1%);
+  grid-template-columns: 500px 500px;
+  row-gap: 32px;
+  padding: 38px 45px 98px 45px;
+  align-items: center;
+}
+
+.form_control {
+  display: grid;
+  grid-template-columns: auto;
+  row-gap: 10px;
+  width: fit-content;
+}
+
+.form_label {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  text-transform: capitalize;
+  color: #323130;
+}
+
+.form_input {
+  padding: 30px 22px;
+  max-width: 428px;
+  border: 0.647238px solid #9194fc;
+}
+
+.submit_btn {
+  grid-column: span 2;
+  width: 462px;
+  height: 83px;
+  justify-self: center;
+  background: #2667ff;
+  border: none;
+
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 28px;
+  text-align: center;
+  margin-top: 20px;
+  color: #ffffff;
+}
+
+@media screen and (max-width: 1024px) {
+    .main_content {
+        padding: 38px 30px 98px 30px;
+      }
+    .form_input {
+        max-width: 290px;
+    }
+}
+
+@media screen and (max-width: 769px) {
+    .main_content {
+        grid-template-columns: 1fr;
+        padding: 38px 30px 98px 30px;
+      }
+    .submit_btn {
+        grid-row: span 1;
+    }
+}
