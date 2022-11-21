@@ -48,7 +48,7 @@ const Footer = () => {
             <a href="#/" className={styles.link}>
               About us
             </a>
-            <Link to="/TermsAndService" className={styles.link}>
+            <Link to="/termsAndService" className={styles.link}>
               Contact us
             </Link>
             <a href="#/" className={styles.link}>
