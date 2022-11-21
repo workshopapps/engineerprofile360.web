@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 
 import logo from "../../../assets/images/logo.svg";
+import menuIcon from "../../../assets/icons/menu.svg";
 import { Container, Button } from "../../../styles/reusableElements.styled";
 import NavBar from "./NavBar";
 import { Link } from "react-router-dom";
+import MobileNav from "./MobileNav";
 
 const Header = () => {
   const { pathname } = useLocation();
+  const [menu, setMenu] = useState(false);
+
+  const handleMenu = () => {
+    setMenu(!menu);
+  };
 
   return (
     <HeaderTag>
@@ -43,6 +50,11 @@ const Header = () => {
             </Button>
           </Link>
         </ButtonGroup>
+
+        <div onClick={handleMenu}>
+          <img src={menuIcon} alt="" />
+        </div>
+        {menu && <MobileNav handleMenu={handleMenu} />}
       </HeaderContainer>
     </HeaderTag>
   );
@@ -64,6 +76,12 @@ const HeaderContainer = styled(Container)`
   @media (max-width: 480px) {
     padding: 0 ${({ theme }) => theme.spacing(2)};
   }
+
+  div:last-of-type {
+    @media (min-width: 961px) {
+      display: none;
+    }
+  }
 `;
 
 const ButtonGroup = styled.div`
@@ -71,11 +89,7 @@ const ButtonGroup = styled.div`
   align-items: center;
   gap: ${({ theme }) => theme.spacing(2)};
 
-  a {
-    text-decoration: none;
-  }
-
-  @media (max-width: 767px) {
+  @media (max-width: 960px) {
     display: none;
   }
 `;
