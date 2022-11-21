@@ -7,15 +7,19 @@ const NavBar = () => {
   return (
     <Nav>
       <List>
-        <li>Home</li>
+        <Link to="/">
+          <li>Home</li>
+        </Link>
         <li>Pricing</li>
         <li>
           Resources
           <img src={arrowDown} alt="" />
         </li>
-        <li>
-          About <img src={arrowDown} alt="" />
-        </li>
+        <Link to="/about-us">
+          <li>
+            About <img src={arrowDown} alt="" />
+          </li>
+        </Link>
       </List>
     </Nav>
   );
