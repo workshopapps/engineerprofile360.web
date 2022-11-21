@@ -22,9 +22,9 @@ import BlogStory from "../src/main/components/blog/Blogstory";
 import AssessmentList from "./main/components/sections/userAssessmentList/AssessmentList";
 import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
 import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
-import AdminSettings from "./ui/pages/admin-settings/AdminSettings";
 import Privacy from "./main/pages/Privacy/privacy";
 import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
+import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 
 const App = () => {
   return (
@@ -54,7 +54,7 @@ const App = () => {
             path="/take-assessment-list"
             element={<UserTakeAssessment />}
           />
-          <Route path="/setting" element={<AdminSettings />} />
+          <Route path="/setting" element={<AdminSetting />} />
           <Route path="/privacy-policy" element={<Privacy />} />
           <Route path="/employee-profile" element={<EmployeeProfile />} />
         </Routes>
