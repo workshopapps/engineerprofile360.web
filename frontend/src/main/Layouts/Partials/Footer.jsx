@@ -78,7 +78,9 @@ const Footer = () => {
         </Follow>
 
         <Copyright>
-          <span>&copy; {new Date().getFullYear()} Skript. All rights reserved.</span>
+          <span>
+            &copy; {new Date().getFullYear()} Skript. All rights reserved.
+          </span>
           <ul>
             <li>Privacy policy</li>
             <li>Terms of service</li>
@@ -109,7 +111,8 @@ const FooterContainer = styled(Container)`
   }
 
   @media (max-width: 480px) {
-    padding: ${({ theme }) => theme.spacing(6)} ${({ theme }) => theme.spacing(2)};
+    padding: ${({ theme }) => theme.spacing(6)}
+      ${({ theme }) => theme.spacing(2)};
   }
 `;
 
@@ -120,7 +123,7 @@ const SkriptContact = styled.div`
   box-sizing: initial;
 
   @media (max-width: 960px) {
-    grid-column: 1 / 3;
+    grid-column: 1 / 5;
   }
 
   @media (max-width: 767px) {
@@ -230,17 +233,31 @@ const Copyright = styled.div`
 `;
 
 const About = styled(ListContainer)`
+@media (max-width: 960px) {
+  grid-column: 2 / 4;
+}
+
   @media (max-width: 480px) {
     grid-column: 1 / 5;
   }
 `;
 const Resources = styled(ListContainer)`
-  @media (max-width: 767px) {
+
+@media (max-width: 960px) {
+  grid-column: 1 / 2;
+}
+
+  @media (max-width: 480px) {
     grid-column: 1 / 5;
   }
 `;
 const Follow = styled(ListContainer)`
-  @media (max-width: 767px) {
+
+@media (max-width: 960px) {
+  grid-column: 4 / 5;
+}
+
+  @media (max-width: 480px) {
     grid-column: 1 / 5;
   }
 `;
