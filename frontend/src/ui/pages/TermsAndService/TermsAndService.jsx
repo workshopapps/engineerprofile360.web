@@ -175,7 +175,6 @@ function TermsAndService() {
                 <li>Viruses/Bugs</li>
               </a>
             </ul>
-
             <div className='button col-12'>
               <div className=' wrapper'>
                 <img src={Sms} alt='Sms icon' />
@@ -183,9 +182,7 @@ function TermsAndService() {
               </div>
             </div>
           </div>
-        </div>
-
-        
+        </div>        
       </div>
     </div>
   )
