@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UserScoreController;
 use App\Http\Controllers\AssessmentController;
+
 use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\AuthenticationController;
@@ -76,6 +77,8 @@ Route::prefix("auth")->group(function () {
     Route::get('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
     Route::post('logout', [AuthenticationController::class, 'logout']);
     Route::post('refresh', [AuthenticationController::class, 'refresh']);
+
+    Route::post('employee/update/', [AuthenticationController::class, 'setEmployeePassword']);
 
     Route::prefix("password")->group(function () {
         // forgot password
