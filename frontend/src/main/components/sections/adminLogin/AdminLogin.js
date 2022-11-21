@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 import styles from "./AdminLogin.module.css"
 import LogoSvg from "../../../../assets/images/skriptlogo.svg"
 import EyeSvg from "../../../../assets/icons/eye.svg"
@@ -31,7 +32,7 @@ export default function adminLogin () {
                 </div>
 
                 <div className='forgot'>
-                    <a href='forgot'>Forgot password?</a>
+                    <Link to='/forgot'>Forgot password?</Link>
                 </div>
                 
             </div>
@@ -39,7 +40,7 @@ export default function adminLogin () {
             <input type="submit" id="Proceed" value="Sign in"/>
         </form>
 
-        <p>Don’t have an account? <a href='register'>Sign up</a></p>
+        <p>Don’t have an account? <Link to='/register'>Sign up</Link></p>
     </div>
   )
 }
