@@ -243,60 +243,34 @@ class AuthenticateController extends Controller {
 
     public function verifyPasswordReset(Request $req, $id, $token){
 
-        // generate new hash password
-        $payload = json_decode($req->getContent(), true);
-        $newHash = Hash::make($payload["new_password"]);
-        $allToken = Token::all();
-        $userTokenExists = Token::where("user_id", $id);
-        $hasExpired = $userTokenExists->first()["exp"];
-        $count = 0;
+        try {
+            // generate new hash password
+            $payload = json_decode($req->getContent(), true);
 
-        // update table
-        if($payload["type"] == "organization"){
+            // verify payload
+            if(!isset($payload["new_password"]) || !isset($payload["type"])){
+                return $this->errorResponse("Payload are missing", "Invalid payload specified", 400);
+            }
 
-            $userExists = User::where("user_id", $id);
-
+            $newHash = Hash::make($payload["new_password"]);
+            $allToken = Token::all();
+            $userTokenExists = Token::where("user_id", $id);
+            
+            // check if token exists
             if ($userTokenExists->count() == 0) {
                 return $this->errorResponse('Invalid password reset link. user token not found',"", 400);
             }
+            
+            $hasExpired = $userTokenExists->first()["exp"];
+            $count = 0;
 
-            if ($userExists->count() == 0) {
-                return $this->errorResponse('Invalid password reset link. user not found',"", 404);
-            }
+            // update table
+            if($payload["type"] == "organization"){
 
-            if ($hasExpired > 0) {
-                return $this->errorResponse('Invalid password reset link',"", 400);
-            }
+                $userExists = User::where("user_id", $id);
 
-            // check if token match db record
-            for ($i=0; $i < count($allToken); $i++) { 
-                if($allToken[$i]["token"] == $token){
-                    $count+=1;
-                }
-            }
-            if($count == 0){
-                return $this->errorResponse('Invalid password reset link',"", 404);
-            }
 
-            try {
-                
-                // update users table
-                User::where("user_id", $id)->update(array("password"=>$newHash));
-
-                return $this->successResponse(true, "Password reset successfully", null, 200);
-            } catch (\Exception $e) {
-                return $this->errorResponse("Something went wrong resetting password, please try again", $e->getMessage(), 500);
-            }
-        }
-        else if($payload["type"] == "employee"){
-            try {
-                $employeeExists = Employee::where("id", $id);
-
-                if ($userTokenExists->count() == 0) {
-                    return $this->errorResponse('Invalid password reset link. user token not found',"", 400);
-                }
-
-                if ($employeeExists->count() == 0) {
+                if ($userExists->count() == 0) {
                     return $this->errorResponse('Invalid password reset link. user not found',"", 404);
                 }
 
@@ -314,19 +288,86 @@ class AuthenticateController extends Controller {
                     return $this->errorResponse('Invalid password reset link',"", 404);
                 }
 
-                // update users table
-                Employee::where("user_id", $id)->update(array("hash"=>$newHash));
+                try {
+                    
+                    // update users table
+                    User::where("user_id", $id)->update(array("password"=>$newHash));
 
-                return $this->successResponse(true, "Password reset successfully", null, 200);
-            } catch (\Exception $e) {
-                return $this->errorResponse("Something went wrong resetting password, please try again", $e->getMessage(), 500);
+                    // removed token from database
+                    Token::where("user_id", $id)->delete();
+
+                    return $this->successResponse(true, "Password reset successfully", null, 200);
+                } catch (\Exception $e) {
+                    return $this->errorResponse("Something went wrong resetting password, please try again", $e->getMessage(), 500);
+                }
             }
-        }
-        else{
-            return $this->errorResponse("Something went wrong resetting password, please try again", "Invalid type", 400);
+            else if($payload["type"] == "employee"){
+                try {
+                    $employeeExists = Employee::where("id", $id);
+
+                    if ($userTokenExists->count() == 0) {
+                        return $this->errorResponse('Invalid password reset link. user token not found',"", 400);
+                    }
+
+                    if ($employeeExists->count() == 0) {
+                        return $this->errorResponse('Invalid password reset link. user not found',"", 404);
+                    }
+
+                    if ($hasExpired > 0) {
+                        return $this->errorResponse('Invalid password reset link',"", 400);
+                    }
+
+                    // check if token match db record
+                    for ($i=0; $i < count($allToken); $i++) { 
+                        if($allToken[$i]["token"] == $token){
+                            $count+=1;
+                        }
+                    }
+                    if($count == 0){
+                        return $this->errorResponse('Invalid password reset link',"", 404);
+                    }
+
+                    // update users table
+                    Employee::where("user_id", $id)->update(array("hash"=>$newHash));
+
+                    return $this->successResponse(true, "Password reset successfully", null, 200);
+                } catch (\Exception $e) {
+                    return $this->errorResponse("Something went wrong resetting password, please try again", $e->getMessage(), 500);
+                }
+            }
+            else{
+                return $this->errorResponse("Something went wrong resetting password, please try again", "Invalid type ", 400);
+            }
+        } catch (\Throwable $e) {
+            return $this->errorResponse("Something went wrong resetting password, please try again", "Invalid type ".$e->getMessage(), 500);
         }
 
     }
+
+    public function setEmployeePassword(Request $request){
+        $request->validate([
+            'email' => 'required|email|exists:employees,email',
+            'password' => 'required|string|min:6',
+        ]);
+
+        try{
+
+            $employee = Employee::whereEmail($request->email)->first();
+            if($employee){
+                $employee->hash = Hash::make($password);
+                $employee->save();
+                
+                return $this->successResponse(true, "Employee password set successfully", null, 200);
+            }
+            
+            return $this->errorResponse("Not found", "Employee id not found", 404);       
+        }catch (\Throwable $e) {
+            return $this->errorResponse("An error occured", $e->getMessage(), 422);       
+        }
+
+    }
+
+
 }
 
 ?>

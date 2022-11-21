@@ -4,14 +4,14 @@ const GlobalStyles = createGlobalStyle`
     html {
         scroll-behaviour: smooth;
     }
-
     * {
         padding: 0;
         margin: 0;
         box-sizing: border-box;
         position: relative;
+        font-family: 'Inter', sans-serif;
     }
-    
+
     body {
         font-family: 'Inter', sans-serif;
      background-color: #fff;

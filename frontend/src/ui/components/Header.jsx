@@ -5,6 +5,7 @@ import logo from "../../assets/icons/app/logo.svg"
 import notification from "../../assets/icons/app/notification.svg"
 import arrowDown from "../../assets/icons/app/arrow-down.svg"
 import userButton from "../../assets/images/app/User-button.png"
+import { Divider } from "../../styles/reusableElements.styled"
 
 const Header = () => {
   return (
@@ -22,6 +23,7 @@ const Header = () => {
         <img src={notification} alt="notification icon" />
         <img src={arrowDown} alt="Arrow-Down icon" />
       </UserContainer>
+      <Divider />
     </HeaderContainer>
   )
 }
@@ -30,11 +32,15 @@ export default Header
 
 const HeaderContainer = styled.div`
   display: flex;
-  height: 10vh;
+  height: 96px;
   padding: 0 45px;
   width: 100%;
   align-items: center;
   justify-content: space-between;
+  position: fixed;
+  top: 0;
+  background-color: #fff;
+  z-index: 10;
 `
 const LogoAndSearch = styled.div`
   display: flex;
