@@ -1,33 +1,32 @@
 import styled from "styled-components"
 
 export const DemoHero = styled.div`
-  max-width: 100vw;
-  height: 400px;
-  padding: 0 7px;
-  margin: 0 auto;
-  background-color: #2667ff;
-  @media (min-width: 540px) {
-    max-width: 100%;
-    height: 400px;
-    padding: 0 10px;
-    margin: 0 auto;
-    background-color: #2667ff;
-  }
+  width: 100%;
 
-  @media (min-width: 748px) {
-    max-width: 100%;
-    height: 547px;
-    padding: 40px;
-    margin: 0;
-    background-color: #2667ff;
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  background-color: #2667ff;
+
+  align-items: center;
+
+  @media (min-width: 940px) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 50px;
+
+    max-height: 547px;
+    justify-content: space-between;
   }
 `
 
 export const HeroContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
 `
 
 export const HeroHeading = styled.h3`
@@ -35,6 +34,7 @@ export const HeroHeading = styled.h3`
   font-size: 27px;
   line-height: 35px;
   white-space: wrap;
+  margin-bottom: 10px;
   font-weight: 600;
   font-family: "Roboto", sans-serif;
 
@@ -42,11 +42,10 @@ export const HeroHeading = styled.h3`
     color: white;
     font-size: 32px;
     line-height: 44px;
-    font-weight: 600;
-    font-family: "Roboto", sans-serif;
+    margin-bottom: 60px;
   }
 `
-export const HeroCheck = styled.section``
+
 export const CheckDiv = styled.div`
   display: flex;
   align-items: center;
@@ -67,8 +66,8 @@ export const InputForm = styled.form`
   align-items: center;
   flex-direction: column;
   justify-content: center;
+
   width: 100%;
-  height: 500px;
 
   margin: 0 auto;
   border: 1px solid #edebe9;
@@ -76,59 +75,40 @@ export const InputForm = styled.form`
 
   background-color: white;
 
-  @media (min-width: 540px) {
-    display: flex;
+  @media (min-width: 940px) {
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    width: 500px;
-    height: 720px;
-
-    margin: 0 auto;
-    border: 1px solid #edebe9;
-    border-radius: 8px;
-
-    background-color: white;
-  }
-  @media (min-width: 748px) {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    width: 752px;
-    height: 720px;
-    border: 1px solid #edebe9;
-    border-radius: 8px;
-    position: absolute;
-    top: 40px;
-    right: 40px;
-    background-color: white;
+    width: 553px;
+    height: 620px;
+    transform: translate(80px, 14%);
   }
 `
 export const InputHeading = styled.header`
   width: 100%;
-  height: 107px;
-  margin-bottom: 10px;
+  height: 80px;
+  margin-bottom: 0px;
   font-family: "Poppins", sans-serif;
-  @media (max-width: 748px) {
+  @media (min-width: 748px) {
     width: 100%;
     height: 107px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     font-family: "Poppins", sans-serif;
   }
 `
 
 export const InputHeader = styled.h1`
   font-weight: 600px;
-  font-size: 32px;
-  line-height: 37.5px;
+  font-size: 27px;
+  line-height: 30.5px;
   text-align: center;
   color: #201f1e;
-  @media (max-width: 748px) {
+  padding-top: 20px;
+
+  @media (min-width: 940px) {
     font-weight: 600px;
-    font-size: 27px;
-    line-height: 30.5px;
-    text-align: center;
-    color: #201f1e;
+    font-size: 32px;
+    line-height: 37.5px;
   }
 `
 export const InputText = styled.p`
@@ -141,6 +121,17 @@ export const InputText = styled.p`
 export const FormDiv = styled.div`
   display: flex;
   flex-direction: column;
+  margin: 10px 0;
+
+  width: 450px;
+`
+export const FormDivWrapper = styled.div`
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  width: 450px;
   margin: 12px 0;
 `
 export const Label = styled.label`
@@ -152,39 +143,25 @@ export const Label = styled.label`
   padding: 0;
 `
 export const Input = styled.input`
-  width: 380px;
   height: 38px;
   border: 1px solid #a19f9d;
   border-radius: 2px;
   padding: 0 4px;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 500px;
   font-family: "Roboto", sans-serif;
   color: #201f1e;
-
+  width: 100%;
   outline: none;
 
   &:focus {
     border: 1px solid #2667ff;
   }
-  @media (min-width: 784px) {
-    width: 560px;
+  @media (min-width: 748px) {
     height: 46px;
-    border: 1px solid #a19f9d;
-    border-radius: 2px;
+
     padding: 0 8px;
-    font-size: 18px;
-    font-weight: 500px;
-    font-family: "Roboto", sans-serif;
-    color: #201f1e;
-
-    outline: none;
   }
-`
-
-export const ErrorMessageDiv = styled.div`
-  display: flex;
-  align-items: center;
 `
 
 export const ErrorMessage = styled.div`
@@ -196,8 +173,8 @@ export const ErrorMessage = styled.div`
 
 export const Submit = styled.button`
   display: flex;
-  width: 400px;
-  height: 60px;
+  width: 450px;
+  height: 50px;
   border-radius: 4px;
   outline: none;
   background: #106ebe;
@@ -215,32 +192,15 @@ export const Submit = styled.button`
     cursor: pointer;
   }
 
-  @media (min-width: 748px) {
-    display: flex;
-    width: 560px;
-    height: 80px;
-    border-radius: 4px;
-    outline: none;
-    background: #106ebe;
-    color: white;
-    display: flex;
-    border: none;
-    font-size: 14px;
-    line-height: 20px;
-    font-weight: 600px;
-    transition: all 0.3s ease;
-    justify-content: center;
-    align-items: center;
-    &:hover {
-      background-color: #201f1e;
-      cursor: pointer;
-    }
+  @media (min-width: 940px) {
+    width: 450px;
+    height: 70px;
   }
 `
 export const Body = styled.div`
-  padding: 100px 40px;
-  @media (min-width: 748px) {
-    padding: 270px 40px 65px;
+  padding: 50px 0px;
+  @media (min-width: 940px) {
+    padding: 170px 40px 65px;
   }
 `
 export const TrustedBy = styled.h2`
@@ -252,17 +212,19 @@ export const TrustedBy = styled.h2`
 `
 export const Reviews = styled.div`
   display: flex;
+
+  flex-direction: column;
   align-items: center;
 
-  justify-content: space-between;
-  @media (min-width: 748px) {
-    display: flex;
+  justify-content: center;
+
+  margin: 55px 0 80px;
+  @media (min-width: 940px) {
     align-items: center;
+    flex-direction: row;
 
     justify-content: space-between;
   }
-
-  margin: 55px 0 80px;
 `
 export const ReviewContainer = styled.div`
   display: flex;
