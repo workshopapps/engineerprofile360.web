@@ -28,12 +28,12 @@ export default Sidebar
 
 const SidebarContainer = styled.div`
   display: flex;
-  padding: 60px 30px;
+  padding: 30px 30px;
   flex-direction: column;
-  gap: 60px;
+  gap: 40px;
 
   /* THE BLUE COLORED ICON AND TEXT REPRESENT THE ACTIVE STATE */
-  div:last-child {
+  div:nth-child(2) {
     p {
       color: #2667ff;
     }
