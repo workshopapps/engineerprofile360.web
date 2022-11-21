@@ -3,12 +3,16 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import arrowDown from "../../../assets/icons/arrow-down.svg";
+import close from "../../../assets/icons/close.svg";
 import { Button } from "../../../styles/reusableElements.styled";
 
-const MobileNav = ({ pathname }) => {
+const MobileNav = ({ handleMenu }) => {
   return (
-    <MobileNavBar>
+    <MobileNavBar onClick={handleMenu}>
       <List>
+        <div onClick={handleMenu}>
+          <img src={close} alt="" />
+        </div>
         <Link to="/">
           <li>Home</li>
         </Link>
@@ -25,9 +29,7 @@ const MobileNav = ({ pathname }) => {
         <li>
           <ButtonGroup>
             <Link to="/register">
-              <MobileMenuButton>
-                Get Started
-              </MobileMenuButton>
+              <MobileMenuButton>Get Started</MobileMenuButton>
             </Link>
           </ButtonGroup>
         </li>
@@ -42,14 +44,14 @@ const MobileNavBar = styled.nav`
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
+  right: 0px;
   bottom: 0;
   width: 100%;
   height: 100vh;
   background: ${({ theme }) => theme.palette.overlay.dark};
   z-index: 2;
 
-  @media (min-width: 960px) {
+  @media (min-width: 961px) {
     display: none;
   }
 `;
@@ -68,6 +70,16 @@ const List = styled.ul`
   gap: ${({ theme }) => theme.spacing(6)};
   padding: 0 ${({ theme }) => theme.spacing(6)};
 
+  > div {
+    position: absolute;
+    top: ${({ theme }) => theme.spacing(3)};
+    right: ${({ theme }) => theme.spacing(3)};
+
+    img {
+        width: 24px;
+    }
+  }
+
   li {
     font-size: 14px;
     color: #000000;
@@ -77,13 +89,11 @@ const List = styled.ul`
   }
 `;
 
-
 const ButtonGroup = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(2)};
-
 `;
 
 const MobileMenuButton = styled(Button)`
