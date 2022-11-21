@@ -96,12 +96,12 @@ const Header = () => {
               <span
                 style={{
                   position: "absolute",
-                  bottom: "15px",
+                  bottom: "23px",
                   left: "15px",
                   zIndex: "2",
                 }}
               >
-                <img src={icon} alt="" />
+                <img src={icon} alt="" className="avatar" />
               </span>
               <input
                 style={{
@@ -115,7 +115,20 @@ const Header = () => {
               />
             </Flex>
           </GridItem>
-          <GridItem span={1} />
+          <GridItem span={1}>
+            <Flex jc="flex-end">
+              <div
+                className=""
+                style={{
+                  padding: "16px 11px",
+                  background: "#FAF9F8",
+                  borderRadius: "8px",
+                }}
+              >
+                <img src={notif} />
+              </div>
+            </Flex>
+          </GridItem>
           <GridItem
             span={2}
             className=""
@@ -124,27 +137,13 @@ const Header = () => {
               background: "#FAF9F8",
               opacity: "0.8",
               borderRadius: "8px",
-              flexBasis: "30%",
             }}
           >
-            <Flex spacing={12} ai="center">
-              <div style={{ flexBasis: "10%" }}>
-                <img src={avatar} />
-              </div>
-              <Flex style={{ flexBasis: "70%" }} jc="center">
-                <p className="semibold-alt">Mark Jilaga</p>
-              </Flex>
-
-              <div
-                style={{
-                  width: "2px",
-                  height: "24px",
-                  borderRadius: "2px",
-                  background: "#EDEBE9",
-                }}
-              ></div>
-              <Flex spacing={10} style={{ width: "100%" }}>
-                <img src={notif} />
+            <Flex ai="center" spacing={10}>
+              <img src={avatar} />
+              <Flex jc="space-between" style={{ width: "100%" }} ai="center">
+                <p className="mark-text">Mark Jilaga</p>
+                {/* <img src={down} alt="" /> */}
                 <DropDown />
               </Flex>
             </Flex>
@@ -170,21 +169,20 @@ const Sidebar = () => {
   return (
     <div style={{ flexBasis: "10%", padding: "29px 24px" }} className="hide">
       <Flex stack spacing={24}>
-        <Flex spacing={18} ai="center" style={{ padding: "16px 20px" }}>
+        <Flex spacing={18} ai="center" style={{ padding: "16px 10px" }}>
           <img src={dashboard} />
           <p className="semibold-alt">Dashboard</p>
         </Flex>
         <Flex
           spacing={18}
           ai="center"
-          className="bg-primary-tint"
-          style={{ padding: "16px 20px", borderRadius: "4px" }}
+          style={{ padding: "10px 10px", borderRadius: "4px" }}
         >
-          <img src={assessment} />
+          <img src={assessment} className="assessment-logo" />
           <p className=" primary semibold-alt">Assessment</p>
         </Flex>
 
-        <Flex spacing={18} ai="center" style={{ padding: "16px 20px" }}>
+        <Flex spacing={18} ai="center" style={{ padding: "16px 10px" }}>
           <img src={user} />
           <p className="semibold-alt">Employees</p>
         </Flex>
@@ -196,13 +194,13 @@ const Sidebar = () => {
 const Heading = () => {
   return (
     <Flex jc="space-between" className="" ai="center">
-      <h2>Assessments</h2>
+      <p className="semibold head-text">Assessments</p>
       <div className="button-container">
         <button className="bg-primary create-button">
           <Flex spacing={10} ai="center">
             <img src={plus} alt="" />
             <div className="hide">
-              <p className="white">Create New Assessment</p>
+              <p className="white createnew-text">Create New Assessment</p>
             </div>
           </Flex>
         </button>
@@ -229,8 +227,10 @@ const Card = (props) => {
       className="bg-primary-tint"
     >
       <Flex stack spacing={16} style={{ textAlign: "center" }}>
-        <p>{props.text}</p>
-        <h1 style={{ color: "#323130" }}>{props.num}</h1>
+        <p className="card-text">{props.text}</p>
+        <p style={{ color: "#323130" }} className="card-num">
+          {props.num}
+        </p>
       </Flex>
     </Flex>
   );
@@ -256,7 +256,7 @@ const Staff = () => {
         </Flex>
       </Flex>
       <Flex ai="center" style={{ flexBasis: "40%" }} className="">
-        <p>Software Engineer</p>
+        <p className="dept-text">Software Engineer</p>
       </Flex>
       <Flex
         ai="center"
@@ -264,7 +264,9 @@ const Staff = () => {
         className=""
         jc="space-between"
       >
-        <p style={{ color: "#323130" }}>103</p>
+        <p style={{ color: "#323130" }} className="points-text">
+          103
+        </p>
         <img src={dots} alt="" />
       </Flex>
     </Flex>

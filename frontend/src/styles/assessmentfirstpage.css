@@ -2,11 +2,6 @@ p {
   color: #605e5c;
 }
 
-h1,
-h2 {
-  color: #605e5c;
-}
-
 ul {
   list-style: none;
   padding: 20px;
@@ -90,6 +85,57 @@ li {
   line-height: 36px;
 }
 
+.head-text {
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 37px;
+}
+
+.createnew-text {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.card-text {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.card-num {
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 36px;
+}
+
+.dept-text {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.points-text {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.avatar {
+  width: 100%;
+}
+
+.mark-text {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 0px;
+}
+
+.assessment-logo {
+  width: 100% !important;
+}
+
 @media screen and (max-width: 1023px) {
   .hide {
     display: none;
@@ -116,5 +162,11 @@ li {
   .button-container {
     display: flex;
     gap: 10px;
+  }
+
+  .head-text {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 37px;
   }
 }

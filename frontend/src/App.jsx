@@ -25,6 +25,7 @@ import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import HelpCenter from "../src/main/pages/HelpCenter";
+import AssessmentFirstPage from "./ui/pages/AssessmentFirstPage";
 
 const App = () => {
   return (
@@ -49,6 +50,7 @@ const App = () => {
             element={<AdminAssessmentList />}
           />
           <Route path="/help-center" element={<HelpCenter />} />
+          <Route path="/first-assessment" element={<AssessmentFirstPage />} />
           <Route
             path="/take-assessment-list"
             element={<UserTakeAssessment />}
