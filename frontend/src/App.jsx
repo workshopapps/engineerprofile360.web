@@ -16,6 +16,7 @@ import UserProfile from "./ui/pages/user-profile/UserProfile";
 import Register from "../src/main/components/sections/adminSignup/AdminSignup";
 import Login from "../src/main/components/sections/adminLogin/AdminLogin";
 import Blog from "../src/main/pages/Blog";
+import BlogStory from "../src/main/components/blog/Blogstory";
 import AssessmentList from "./main/components/sections/userAssessmentList/AssessmentList";
 import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
 import AdminSettings from "./ui/pages/admin-settings/AdminSettings";
@@ -36,6 +37,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/skillaquisition" element={<BlogStory />} />
           <Route path="/assessment-list" element={<AssessmentList />} />
           <Route
             path="/take-assessment-list"

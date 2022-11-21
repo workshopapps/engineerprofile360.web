@@ -1,18 +1,18 @@
-import React from "react"
-import { BlogCard } from "../../compnents/sections/BlogCard"
-import dp from "../../assets/images/dp.png"
-import dp2 from "../../assets/images/dp2.png"
-import dp3 from "../../assets/images/dp3.png"
-import frame4 from "../../assets/images/frame4.png"
-import frame5 from "../../assets/images/frame5.png"
-import frame6 from "../../assets/images/frame6.png"
-import icons from "../../assets/images/icons.png"
-import desktop from "../../assets/images/desktop.png"
-import avatar from "../../assets/images/Avatar.png"
+import React from "react";
+import { BlogCard } from "../blog/BlogCard";
+import dp from "../../../assets/images/dp.png";
+import dp2 from "../../../assets/images/dp2.png";
+import dp3 from "../../../assets/images/dp3.png";
+import frame4 from "../../../assets/images/frame4.png";
+import frame5 from "../../../assets/images/frame5.png";
+import frame6 from "../../../assets/images/frame6.png";
+import icons from "../../../assets/images/icons.png";
+import desktop from "../../../assets/images/desktop.png";
+import avatar from "../../../assets/images/Avatar.png";
 
-import "./blogstory.css"
+import "./blogstory.css";
 
-export function Blogstory() {
+export default function Blogstory() {
   return (
     <div id="blogstory">
       <img src={desktop} alt="" id="desktop" />
@@ -159,5 +159,5 @@ export function Blogstory() {
         </div>
       </div>
     </div>
-  )
+  );
 }
