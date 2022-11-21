@@ -18,8 +18,8 @@ const Contact = () => {
           <h1>Get In Touch</h1>
           <div></div>
           <p>
-            We Will Love To Hear From You.
-            <br /> Our Team Is Always Happy To Help
+            Let us help you highlight your best engineers and bring you one step
+            closer to your goal!
           </p>
         </GetInTouch>
       </Top>
@@ -56,8 +56,13 @@ const Contact = () => {
           </Button>
         </form>
         <MainInfo>
+          <p>
+            We also have customer care representatives who are ready to help you
+            in any capacity. Click on the button below to get in touch with a
+            representative.
+          </p>
           <Heading>
-            <h1>Contact Information</h1>
+            <h1>Contact Us Here</h1>
             <div></div>
           </Heading>
           <Body>
@@ -65,7 +70,7 @@ const Contact = () => {
               <img src={sms} alt="sms svg" />
               <div>
                 <h2>Chat With Us</h2>
-                <p>Our Friendly Team Is Here To Help</p>
+                {/* <p>Our Friendly Team Is Here To Help</p> */}
                 <a href="malito:skriptassessmenthq@gmail.com">
                   skriptassessmenthq@gmail.com
                 </a>
@@ -75,7 +80,7 @@ const Contact = () => {
               <img src={call} alt="call svg" />
               <div>
                 <h2>Phone</h2>
-                <p>Our Friendly Team Is Here To Help</p>
+                {/* <p>Our Friendly Team Is Here To Help</p> */}
                 <a href="tel:4065550120">(406) 555-0120</a>
               </div>
             </Info>
@@ -83,8 +88,8 @@ const Contact = () => {
               <img src={map} alt="map svg" />
               <div>
                 <h2>Our Address</h2>
-                <p>Our Friendly Team Is Here To Help</p>
-                <p>3517 W. Gray St. Utica, Pennsylvania 57867</p>
+                {/* <p>Our Friendly Team Is Here To Help</p> */}
+                <a href="f">3517 W. Gray St. Utica, Pennsylvania 57867</a>
               </div>
             </Info>
           </Body>
@@ -106,7 +111,16 @@ const ContactContainer = styled.div`
   display: grid;
   grid-template-rows: 1fr 1fr;
   flex-direction: column;
-  margin-bottom: 250px;
+  @media (max-width: 911px) {
+    margin-bottom: 480px;
+  }
+
+  @media (max-width: 793px) {
+    margin-bottom: 730px;
+  }
+  @media (max-width: 789px) {
+    margin-bottom: 800px;
+  }
 `;
 const Top = styled.div`
   width: 100%;
@@ -116,6 +130,7 @@ const Top = styled.div`
   background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
     url(${contactImage});
   background-position: center;
+  background-repeat: no-repeat;
 `;
 const GetInTouch = styled.div`
   width: 50%;
@@ -143,28 +158,82 @@ const GetInTouch = styled.div`
     font-size: 20px;
     line-height: 28px;
     font-weight: 400;
+    width: 30vw;
+  }
+
+  @media (max-width: 911px) {
+    h1 {
+      font-size: 48px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 596px) {
+    h1 {
+      font-size: 36px;
+    }
+
+    p {
+      width: 35vw;
+    }
+  }
+  @media (max-width: 456px) {
+    h1 {
+      font-size: 35px;
+      width: 90vw;
+    }
+
+    div {
+      border: 3.71429px solid ${({ theme }) => theme.palette.grey.white};
+    }
+
+    p {
+      width: 70vw;
+      font-size: 20px;
+    }
   }
 `;
 
 const CardInfo = styled.div`
   background-color: ${({ theme }) => theme.palette.main.primary};
-  width: 95%;
   height: 996px;
-  margin: -110px auto;
+  margin: -230px auto;
+  width: 95%;
   background-color: #2667ff;
-  padding: 0 30px 0 60px;
+  padding: 0 60px;
   display: flex;
+  max-width: 1440px;
+  margin-bottom: 300px;
 
   form {
-    width: 60%;
+    /* width: calc(1440px - 60%); */
+    width: 70%;
     background-color: ${({ theme }) => theme.palette.grey.white};
     height: 1297px;
     margin-top: -130px;
+    padding: 0 30px;
     filter: drop-shadow(0px 19px 40px rgba(229, 229, 229, 0.25));
+
+    @media (max-width: 911px) {
+      width: 100%;
+      margin-top: 0;
+    }
   }
 
   @media (max-width: 911px) {
+    /* width: 50%; */
+    /* display: none; */
     width: 100%;
+    flex-direction: column;
+    background-color: transparent;
+    height: 0;
+    /* height: 100vh; */
+    padding: 0;
+    gap: 3rem;
+    margin: 0 auto;
   }
 `;
 const Title = styled.div`
@@ -190,10 +259,20 @@ const Title = styled.div`
       color: #2667ff;
     }
   }
+
+  @media (max-width: 911px) {
+    h1 {
+      font-size: 24px;
+    }
+  }
 `;
 
 const Container = styled.div`
-  padding: 45px 45px 10px;
+  padding: 35px 0;
+
+  @media (max-width: 550px) {
+    padding: 25px 5px 5px;
+  }
 `;
 
 const FormData = styled.div`
@@ -207,6 +286,11 @@ const FormData = styled.div`
     font-size: 20px;
     font-weight: 600;
     line-height: 28px;
+
+    @media (max-width: 911px) {
+      font-size: 16px;
+      line-height: 18px;
+    }
   }
 
   input {
@@ -218,6 +302,16 @@ const FormData = styled.div`
     border: 2px solid #dddddd;
     border-radius: 3px;
     padding-left: 10px;
+
+    @media (max-width: 911px) {
+      height: 0px;
+      padding: 20px 20px;
+      font-size: 18px;
+    }
+
+    @media (max-width: 550px) {
+      padding: 15px;
+    }
   }
 
   textarea {
@@ -230,6 +324,17 @@ const FormData = styled.div`
     border-radius: 3px;
     padding-left: 10px;
     padding-top: 5px;
+
+    @media (max-width: 911px) {
+      height: 15vh;
+      padding: 20px 20px;
+      font-size: 18px;
+      padding: 0;
+    }
+  }
+
+  @media (max-width: 911px) {
+    margin-bottom: 18px;
   }
 `;
 const Button = styled.div`
@@ -245,13 +350,54 @@ const Button = styled.div`
     border-radius: 4px;
     border: none;
     font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 24px;
     font-weight: 400;
     color: ${({ theme }) => theme.palette.grey.white};
+
+    @media (max-width: 911px) {
+      height: 6vh;
+      padding: 20px 20px;
+      font-size: 18px;
+      text-align: center;
+    }
   }
 `;
 const MainInfo = styled.div`
   padding: 110px 0 5px 40px;
+  /* padding: 60px 0 5px 40px; */
+
+  p {
+    width: 35vw;
+    min-width: 30vw;
+    font-size: 18px;
+    line-height: 30px;
+    color: ${({ theme }) => theme.palette.grey.white};
+    margin-bottom: 40px;
+  }
+
+  @media (max-width: 911px) {
+    /* display: none; */
+    width: 100%;
+    flex-direction: column;
+    background-color: #2667ff;
+    padding: 40px 20px 5px 20px;
+    display: flex;
+    align-items: center;
+
+    p {
+      width: 80vw;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 596px) {
+    p {
+      font-size: 13px;
+    }
+  }
 `;
 
 const Heading = styled.div`
@@ -271,14 +417,41 @@ const Heading = styled.div`
     border: 3.7px solid ${({ theme }) => theme.palette.grey.white};
     width: 75%;
   }
+
+  @media (max-width: 911px) {
+    h1 {
+      font-size: 28px;
+    }
+
+    div {
+      margin-top: -20px;
+    }
+  }
 `;
 
 const Body = styled.div`
   margin-top: 100px;
+
+  @media (max-width: 911px) {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* flex-wrap: wrap; */
+    gap: 10px;
+  }
+
+  @media (max-width: 991px) {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
 `;
 
 const Info = styled.div`
   display: flex;
+  align-items: center;
+  /* justify-content: center; */
   gap: 30px;
   color: ${({ theme }) => theme.palette.grey.white};
   font-family: inherit;
@@ -311,9 +484,46 @@ const Info = styled.div`
   }
 
   div {
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 15px;
+  }
+
+  @media (max-width: 911px) {
+    gap: 5px;
+    margin-bottom: 0;
+
+    img {
+      height: 24px;
+      width: 24px;
+    }
+
+    h2 {
+      font-size: 16px;
+      line-height: 28px;
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    a:link,
+    a:visited,
+    p:last-child {
+      font-size: 14px;
+    }
+
+    div {
+      /* width: 40%; */
+      gap: 5px;
+      margin-bottom: 0px;
+    }
+  }
+
+  @media (max-width: 793px) {
+    margin-bottom: 50px;
   }
 `;
 
@@ -325,5 +535,14 @@ const SocialContainer = styled.div`
 
   img {
     cursor: pointer;
+  }
+
+  @media (max-width: 910px) {
+    margin-top: 80px;
+    margin-bottom: 60px;
+  }
+  @media (max-width: 793px) {
+    /* margin-top: 60px; */
+    /* padding-bottom: 200px; */
   }
 `;

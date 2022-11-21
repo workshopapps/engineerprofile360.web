@@ -7,7 +7,9 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.h1`
-  font-weight: 48px;
+    color: ${({$color}) => $color ? $color : "initial"};
+    font-size: ${({$size}) => $size ? $size : "48px"};
+    font-weight: ${({$weight}) => $weight ? $weight : "700"};
 `;
 
 export const Button = styled.button`
