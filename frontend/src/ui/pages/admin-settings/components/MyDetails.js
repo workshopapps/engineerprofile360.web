@@ -3,7 +3,7 @@ import classes from "./MyDetails.module.css"
 const MyDetails = () => {
   return (
     <section className={classes.details}>
-      <form>
+      <form method="post">
         <hr />
         <div className={classes.form__control}>
           <label className={classes.form__label} htmlFor="name">
