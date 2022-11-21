@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import BasicLayout from "../layouts/BasicLayout";
 
 import contactImage from "../../assets/images/contact-image.png";
 import sms from "../../assets/icons/contact-page/sms-edit.svg";
@@ -13,7 +12,6 @@ import linkedin from "../../assets/icons/contact-page/linkedin.svg";
 
 const Contact = () => {
   return (
-    <BasicLayout>
       <ContactContainer>
         <Top>
           <GetInTouch>
@@ -104,7 +102,7 @@ const Contact = () => {
           </MainInfo>
         </CardInfo>
       </ContactContainer>
-    </BasicLayout>
+
   );
 };
 
