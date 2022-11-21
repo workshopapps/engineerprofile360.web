@@ -1,12 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
+import { MainContainer } from '../../../../styles/reusableElements.styled'
+import Header from '../../../components/Header'
+import Sidebar from '../../../components/Sidebar'
 import addCircle from "../../assets/icons/app/add-circle.svg"
 import dashboard from "../../assets/icons/app/dashboard.svg"
 import hamburger from "../../assets/icons/app/hamburger.svg"
 
 
-const AssessmentList = () => {
+const AdminAssessmentList = () => {
   return (
+    <>
+    <Header/>
+    <MainContainer>
+    <Sidebar/>
     <AssessmentDiv>
       <AssesmentNav>
         <div className='assesment-toggler'>
@@ -79,6 +86,8 @@ const AssessmentList = () => {
         </div>
       </AssessmentListDiv>
     </AssessmentDiv>
+    </MainContainer>
+    </>
   )
 }
 
