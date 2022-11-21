@@ -18,6 +18,8 @@ import Login from "../src/main/components/sections/adminLogin/AdminLogin";
 import Blog from "../src/main/pages/Blog";
 import AssessmentList from "./main/components/sections/userAssessmentList/AssessmentList";
 import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
+import PricingHero from "./main/components/pricing/PricingHero";
+import PricingPage from "./main/components/pricing/PricingPage";
 
 const App = () => {
   return (
@@ -36,6 +38,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/assessment-list" element={<AssessmentList />} />
+          <Route path="/pricing-page" element={<PricingPage></PricingPage>} />
           <Route
             path="/take-assessment-list"
             element={<UserTakeAssessment />}
