@@ -6,20 +6,24 @@ import MainLayout from "./main/Layouts/MainLayout";
 
 import Contact from "./main/pages/Contact";
 import { About } from "./main/pages";
-import Home from "../src/main/pages/Home";
+import Home from "./main/pages/Home";
 import Confirmed from "./main/components/demo-pages-components/components/Confirmed";
 import ScheduleDemo from "./main/components/demo-pages-components/components/ScheduleDemo";
+
 import Support from "../src/ui/pages/UserSupport";
 import Terms from "../src/ui/pages/TermsAndService/TermsAndService";
+import HelpCenter from "./main/pages/HelpCenter";
 
 import UserProfile from "./ui/pages/user-profile/UserProfile";
 import Register from "../src/main/components/sections/adminSignup/AdminSignup";
 import Login from "../src/main/components/sections/adminLogin/AdminLogin";
 import Blog from "../src/main/pages/Blog";
+import BlogStory from "../src/main/components/blog/Blogstory";
 import AssessmentList from "./main/components/sections/userAssessmentList/AssessmentList";
 import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList"
 import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
 import AdminSettings from "./ui/pages/admin-settings/AdminSettings";
+import Privacy from "./main/pages/Privacy/privacy";
 
 const App = () => {
   return (
@@ -37,15 +41,16 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/skillaquisition" element={<BlogStory />} />
           <Route path="/assessment-list" element={<AssessmentList />} />
           <Route path="/admin-assessment-list" element={<AdminAssessmentList/>} />
-
-
+          <Route path="/help-center" element={<HelpCenter />} />
           <Route
             path="/take-assessment-list"
             element={<UserTakeAssessment />}
           />
-          <Route path="/setting" element={<AdminSettings />} />1 
+          <Route path="/setting" element={<AdminSettings />} />
+          <Route path="/privacy-policy" element={<Privacy />} />
         </Routes>
       </MainLayout>
 
