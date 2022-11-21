@@ -12,7 +12,6 @@ import ScheduleDemo from "./main/components/demo-pages-components/components/Sch
 
 import Support from "../src/ui/pages/UserSupport";
 import Terms from "../src/ui/pages/TermsAndService/TermsAndService";
-import HelpCenter from "./main/pages/HelpCenter";
 
 import UserProfile from "./ui/pages/user-profile/UserProfile";
 import Register from "../src/main/components/sections/adminSignup/AdminSignup";
@@ -26,6 +25,8 @@ import Privacy from "./main/pages/Privacy/privacy";
 import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 
+
+
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
@@ -38,7 +39,7 @@ const App = () => {
           <Route path="/confirm-demo" element={<Confirmed />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/support" element={<Support />} />
-          <Route path="/terms" element={<Terms />} />
+          <Route path="/termsAndService" element={<Terms />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/blog" element={<Blog />} />
@@ -59,6 +60,7 @@ const App = () => {
           <Route path="/employee-profile" element={<EmployeeProfile />} />
         </Routes>
       </MainLayout>
+
 
       {/* <UserProfile /> */}
       {/* <UiLayout> */}
