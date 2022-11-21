@@ -4,7 +4,11 @@ export const Container = styled.div`
   width: 100%;
   max-width: 1440px;
   margin: auto;
-  padding: ${({theme}) => theme.spacing(6)} ${({theme}) => theme.spacing(4)}; 
+  padding: ${({theme}) => theme.spacing(6)} ${({theme}) => theme.spacing(10)}; 
+
+  ${({theme}) => theme.breakpoints.down("md")} {
+    padding: ${({theme}) => theme.spacing(6)} ${({theme}) => theme.spacing(6)};
+  }
 
   ${({theme}) => theme.breakpoints.down("xs")} {
     padding: ${({theme}) => theme.spacing(6)} ${({theme}) => theme.spacing(2)};
@@ -14,13 +18,17 @@ export const Container = styled.div`
 export const Title = styled.h1`
   color: ${({ $color }) => ($color ? $color : "initial")};
   font-size: ${({ $size }) => ($size ? $size : "48px")};
-  font-weight: ${({ $weight }) => ($weight ? $weight : "700")};
+  font-weight: ${({ $weight }) => ($weight ? $weight : "900")};
   line-height: ${({ $lHeight }) => ($lHeight ? $lHeight : "52px")};
 `;
 
 export const Button = styled.button`
   min-width: 77px;
   min-height: 44px;
+  max-width: 288px;
+  height: ${(props => props.$size === "lg" ? "80px" : "auto")};
+  width: ${(props => props.$size === "lg" ? "280px" : "auto")};
+  font-size: ${(props => props.$size === "lg" ? "20px" : "auto")};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,6 +44,11 @@ export const Button = styled.button`
         return css`
           border: 1px solid #106ebe;
           color: #323130;
+          background: none;
+        `;
+      case "disabled":
+        return css`
+          color: #C8C6C4;
           background: none;
         `;
       default:
