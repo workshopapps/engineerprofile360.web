@@ -8,6 +8,7 @@ import { GlobalStyles, theme } from "./styles/globalStyles"
 import Contact from "../src/main/pages/Contact"
 import UserProfile from "./ui/pages/user-profile/UserProfile"
 
+
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
