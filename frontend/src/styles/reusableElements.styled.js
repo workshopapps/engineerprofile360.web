@@ -7,9 +7,10 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.h1`
-    color: ${({$color}) => $color ? $color : "initial"};
-    font-size: ${({$size}) => $size ? $size : "48px"};
-    font-weight: ${({$weight}) => $weight ? $weight : "700"};
+  color: ${({ $color }) => ($color ? $color : "initial")};
+  font-size: ${({ $size }) => ($size ? $size : "48px")};
+  font-weight: ${({ $weight }) => ($weight ? $weight : "700")};
+  line-height: ${({ $lHeight }) => ($lHeight ? $lHeight : "52px")};
 `;
 
 export const Button = styled.button`

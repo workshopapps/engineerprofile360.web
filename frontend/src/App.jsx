@@ -11,6 +11,7 @@ import Confirmed from "./main/components/demo-pages-components/components/Confir
 import ScheduleDemo from "./main/components/demo-pages-components/components/ScheduleDemo";
 import Support from "../src/ui/pages/UserSupport";
 import Terms from "../src/ui/pages/TermsAndService/TermsAndService";
+import HelpCenter from "./main/pages/HelpCenter";
 
 import UserProfile from "./ui/pages/user-profile/UserProfile";
 import Register from "../src/main/components/sections/adminSignup/AdminSignup";
@@ -37,11 +38,12 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/assessment-list" element={<AssessmentList />} />
+          <Route path="/help-center" element={<HelpCenter />} />
           <Route
             path="/take-assessment-list"
             element={<UserTakeAssessment />}
           />
-          <Route path="/setting" element={<AdminSettings />} />1 
+          <Route path="/setting" element={<AdminSettings />} />1
         </Routes>
       </MainLayout>
 
