@@ -15,7 +15,7 @@ const Privacy = () => {
         <div className={styles.right_left}>
           <div className={styles.main__content}>
             <div>
-              <p>
+              <p className={styles.text}>
                 Skript, owned by the mechanic team Axle group and affiliated
                 companies described as "we," "our," and "us" on this page, put
                 in a lot of effort in managing your data (the information we
@@ -41,7 +41,7 @@ const Privacy = () => {
                 <li>11. Privacy policy changes</li>
                 <li>12. Contact us</li>
               </ol>
-              <p>
+              <p className={styles.text}>
                 To avoid doubt, when we use "you" on this page, we're referring
                 to visitors, partners, prospective clients, and their engineer
                 employees.
@@ -50,7 +50,7 @@ const Privacy = () => {
 
             <div id="data_collection">
               <h2 className={styles.title}>Data Collection</h2>
-              <p>
+              <p className={styles.text}>
                 To serve you better, we collect different information from you
                 across your interaction with our platform.
                 <br /> Types of data collected
@@ -75,7 +75,7 @@ const Privacy = () => {
                 <li>- Cookies and usage data</li>
               </ul>
 
-              <p>
+              <p className={styles.text}>
                 <br />
                 <b>Usage Data</b> <br />
                 In your interaction with our platform, we may collect
@@ -109,7 +109,7 @@ const Privacy = () => {
 
             <div id="use_of_data">
               <h2 className={styles.title}>Use Of Data</h2>
-              <p>
+              <p className={styles.text}>
                 Skripts uses your personal data for a more personalised and
                 secure experience on our platform. General data, including
                 direct engineer data in our skill assessment tests, help us
@@ -150,7 +150,7 @@ const Privacy = () => {
 
             <div id="data_retention">
               <h2 className={styles.title}>Data Retention</h2>
-              <p>
+              <p className={styles.text}>
                 To provide accurate engineer skill assessments on our platform,
                 we retain the data we collect from you for as long as required.
                 In addition, Skript may also retain your data for as long as
@@ -164,7 +164,7 @@ const Privacy = () => {
 
             <div id="data_transfer">
               <h2 className={styles.title}>Data Transfer</h2>
-              <p>
+              <p className={styles.text}>
                 Data Transfer To deliver our services to you, we may maintain or
                 transfer your data outside the jurisdiction of the privacy laws
                 in your region. However, Skript ensures that your data is safe
@@ -178,7 +178,7 @@ const Privacy = () => {
 
             <div id="data_sharing">
               <h2 className={styles.title}>Data Sharing</h2>
-              <p>
+              <p className={styles.text}>
                 While we ensure your data is safe, we will share your data with
                 relevant authorities on special requests like when subpoenaed or
                 ordered by the courts. However, we will only share your data
@@ -198,7 +198,7 @@ const Privacy = () => {
 
             <div id="data_security">
               <h2 className={styles.title}>Data Security</h2>
-              <p>
+              <p className={styles.text}>
                 Skript ensures data safety by using commercially available data
                 protection systems to keep your data safe online and
                 electronically. We ensure that all third-party companies we
@@ -211,7 +211,7 @@ const Privacy = () => {
 
             <div id="legal_basis">
               <h2 className={styles.title}>Legal Basis</h2>
-              <p>
+              <p className={styles.text}>
                 In compliance with the General Data Protection Regulation for
                 users in the European economic area and the UK, here are some of
                 the reasons Skript may access your data:
@@ -226,7 +226,7 @@ const Privacy = () => {
 
             <div id="your_right">
               <h2 className={styles.title}>Your Data Right</h2>
-              <p>
+              <p className={styles.text}>
                 You are not obligated to give us your data and can revoke our
                 access to your data anytime. Depending on the privacy law
                 governing your area, some laws, like the GDPR privacy law
@@ -253,7 +253,7 @@ const Privacy = () => {
 
             <div id="other_site">
               <h2 className={styles.title}>Links to Other Sites</h2>
-              <p>
+              <p className={styles.text}>
                 Skript may include links to other sites; however, we are not
                 responsible for the privacy policies on these sites or how they
                 process your data. Therefore, you should pay extra attention to
@@ -263,7 +263,7 @@ const Privacy = () => {
             </div>
             <div id="chidren">
               <h2 className={styles.title}>Children Privacy</h2>
-              <p>
+              <p className={styles.text}>
                 We do not offer services to children (under 18 years) and, as
                 such, do not collect children's data. Consequently, our clients
                 register their engineers on our platforms and are obligated to
@@ -274,7 +274,7 @@ const Privacy = () => {
             </div>
             <div id="policy_change">
               <h2 className={styles.title}>Changes to Privacy Policy</h2>
-              <p>
+              <p className={styles.text}>
                 In line with best practices, we may update our privacy policy
                 occasionally. When we make these changes, we'll notify you
                 through any available communication channel and on our platform.
@@ -284,7 +284,7 @@ const Privacy = () => {
             </div>
             <div id="contact">
               <h2 className={styles.title}>Contact Us</h2>
-              <p>
+              <p className={styles.text}>
                 If you require clarifications to any point in this privacy
                 policy or you choose to exercise your right to your data, reach
                 out to us on any of the following platforms:
