@@ -24,7 +24,9 @@ const HelpTopics = () => {
           >
             Getting started
           </Title>
-          <p>All you need to know to make you prepared and get started</p>
+          <p>
+            You're just a step ahead to test and improve your engineers skills.
+          </p>
         </Box>
         <Box>
           <img src={laptop} alt="About Skript SVG" />
@@ -33,11 +35,14 @@ const HelpTopics = () => {
             $color="#A19F9D"
             $weight="400"
             $lHeight="36px"
-            $size="28px"
+            $size="24px"
           >
-            Using Skript
+            How it Works
           </Title>
-          <p>All you need to know to make you prepared and get started</p>
+          <p>
+            <a href="a">Here</a> is a link to a comprehensive video to guide you
+            on how it works
+          </p>
         </Box>
         <Box>
           <img src={management} alt="Manage account SVG" />
@@ -46,24 +51,24 @@ const HelpTopics = () => {
             $color="#A19F9D"
             $weight="400"
             $lHeight="36px"
-            $size="28px"
+            $size="24px"
           >
             Account Management
           </Title>
-          <p>All you need to know to make you prepared and get started</p>
+          <p>Here you view all activities of your account </p>
         </Box>
         <Box>
-          <img src={rocket} alt="Getting Started SVG" />
+          <img src={management} alt="Manage account SVG" />
           <Title
             as={"h3"}
             $color="#A19F9D"
             $weight="400"
             $lHeight="36px"
-            $size="28px"
+            $size="24px"
           >
-            Getting started
+            FAQs
           </Title>
-          <p>All you need to know to make you prepared and get started</p>
+          <p>Check out our custormers frequently asked questions</p>
         </Box>
         <Box>
           <img src={laptop} alt="About Skript SVG" />
@@ -72,22 +77,9 @@ const HelpTopics = () => {
             $color="#A19F9D"
             $weight="400"
             $lHeight="36px"
-            $size="28px"
+            $size="24px"
           >
-            Using Skript
-          </Title>
-          <p>All you need to know to make you prepared and get started</p>
-        </Box>
-        <Box>
-          <img src={management} alt="Manage account SVG" />
-          <Title
-            as={"h3"}
-            $color="#A19F9D"
-            $weight="400"
-            $lHeight="36px"
-            $size="28px"
-          >
-            Account Management
+            Privacy policy
           </Title>
           <p>All you need to know to make you prepared and get started</p>
         </Box>
@@ -105,17 +97,37 @@ const HelpTopicsContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 36px;
+  padding: 0 40px;
+
+  @media (max-width: 368px) {
+    h2 {
+      font-size: 26px;
+    }
+  }
 `;
 
 const TopicContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  display: flex;
+  /* grid-template-columns: repeat(3, 1fr); */
   gap: 36px;
+  flex-wrap: wrap;
+  align-items: center;
+  place-items: center;
+  justify-content: center;
+  max-width: 1300px;
+
+  @media (max-width: 778px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 490px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const Box = styled.div`
-  width: 404px;
+  width: 30%;
   height: 280px;
   border: 1px solid rgba(0, 0, 0, 0.5);
   display: flex;
@@ -123,7 +135,11 @@ const Box = styled.div`
   align-items: center;
   justify-content: center;
   gap: 24px;
-  padding: 24px;
+  padding: 24px 12px;
+
+  h3 {
+    text-align: center;
+  }
 
   img {
     width: 120px;
@@ -132,9 +148,111 @@ const Box = styled.div`
 
   p {
     font-weight: 400;
-    font-size: 16px;
+    font-size: 17px;
     line-height: 22px;
     text-align: center;
     color: #323130;
+  }
+
+  @media (max-width: 1046px) {
+    gap: 12px;
+
+    h3 {
+      font-size: 22px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+
+    img {
+      width: 90px;
+      height: 90px;
+    }
+  }
+
+  @media (max-width: 954px) {
+    padding: 24px 12px;
+
+    h3 {
+      font-size: 14px;
+    }
+
+    p {
+      font-size: 12px;
+    }
+
+    img {
+      width: 84px;
+      height: 84px;
+    }
+  }
+
+  @media (max-width: 778px) {
+    width: 100%;
+  }
+
+  @media (max-width: 710px) {
+    padding: 24px 14px;
+
+    h3 {
+      font-size: 19px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+
+    img {
+      height: 90px;
+      width: 90px;
+    }
+  }
+
+  @media (max-width: 569px) {
+    padding: 14px 8px;
+    h3 {
+      font-size: 16px;
+    }
+
+    p {
+      font-size: 13px;
+    }
+
+    img {
+      height: 72px;
+      width: 72px;
+    }
+  }
+
+  @media (max-width: 490px) {
+    padding: 24px 14px;
+    img {
+      width: 100px;
+      height: 100px;
+    }
+
+    h3 {
+      font-size: 22px;
+    }
+
+    p {
+      font-size: 18px;
+    }
+  }
+
+  @media (max-width: 368px) {
+    img {
+      width: 95px;
+      height: 95px;
+    }
+
+    h3 {
+      font-size: 18px;
+    }
+
+    p {
+      font-size: 14px;
+    }
   }
 `;

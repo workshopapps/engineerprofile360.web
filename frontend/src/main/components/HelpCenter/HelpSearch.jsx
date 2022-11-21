@@ -32,6 +32,15 @@ const Hero = styled.div`
   width: 100%;
   height: 348px;
   background: #87bfff;
+  padding: 0 48px;
+
+  @media (max-width: 680px) {
+    height: 300px;
+  }
+
+  @media (max-width: 483px) {
+    height: 250px;
+  }
 `;
 
 const TextContainer = styled.div`
@@ -41,11 +50,27 @@ const TextContainer = styled.div`
   justify-content: center;
   gap: 28px;
 
-  h1 {
-    font-weight: 400;
-    font-size: 42px;
-    line-height: 52px;
-    color: #323130;
+  @media (max-width: 680px) {
+    h1 {
+      font-size: 28px;
+    }
+  }
+  @media (max-width: 483px) {
+    gap: 16px;
+
+    h1 {
+      font-size: 20px;
+    }
+  }
+
+  @media (max-width: 428px) {
+    gap: 5px;
+
+    input {
+      ::placeholder {
+        font-size: 8px;
+      }
+    }
   }
 `;
 
@@ -73,9 +98,6 @@ const Input = styled.div`
     }
   }
 
-  img {
-  }
-
   button {
     border: none;
     background: #2667ff;
@@ -83,5 +105,57 @@ const Input = styled.div`
     width: 30%;
     height: 100%;
     color: #f0f0f0;
+  }
+
+  @media (max-width: 647px) {
+    width: 500px;
+    height: 50px;
+
+    img {
+      width: 22px;
+    }
+  }
+  @media (max-width: 550px) {
+    width: 450px;
+    height: 45px;
+
+    img {
+      width: 20px;
+    }
+
+    input {
+      ::placeholder {
+        font-size: 12px;
+      }
+    }
+  }
+
+  @media (max-width: 483px) {
+    width: 400px;
+    height: 40px;
+
+    img {
+      width: 18px;
+    }
+
+    input {
+      ::placeholder {
+        font-size: 10px;
+      }
+    }
+  }
+
+  @media (max-width: 428px) {
+    width: 300px;
+
+    img {
+      width: 16px;
+    }
+
+    input {
+      ::placeholder {
+        font-size: 8px;
+      }
+    }
   }
 `;

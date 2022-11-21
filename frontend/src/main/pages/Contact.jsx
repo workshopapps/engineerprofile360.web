@@ -265,6 +265,12 @@ const Title = styled.div`
       font-size: 24px;
     }
   }
+
+  @media (max-width: 550px) {
+    p {
+      font-size: 14px;
+    }
+  }
 `;
 
 const Container = styled.div`
