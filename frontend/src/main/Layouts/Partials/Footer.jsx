@@ -78,7 +78,7 @@ const Footer = () => {
         </Follow>
 
         <Copyright>
-          <span>&copy; 2022 Skript. All rights reserved.</span>
+          <span>&copy; {new Date().getFullYear()} Skript. All rights reserved.</span>
           <ul>
             <li>Privacy policy</li>
             <li>Terms of service</li>
@@ -109,7 +109,7 @@ const FooterContainer = styled(Container)`
   }
 
   @media (max-width: 480px) {
-    padding: 0 ${({ theme }) => theme.spacing(2)};
+    padding: ${({ theme }) => theme.spacing(6)} ${({ theme }) => theme.spacing(2)};
   }
 `;
 
