@@ -29,6 +29,15 @@
   transition: ease-in-out;
 }
 
+
+@keyframes animate {
+  50%{
+  transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 .nav_active {
   font-weight: 600;
   font-size: 20px;
@@ -37,4 +46,6 @@
   border-bottom: 5px solid #141AE9;;
   color: #323130;
   align-self: center;
+  animation: animate 1s;
+  transition: ease-in-out ;
 }
