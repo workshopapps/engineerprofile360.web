@@ -12,6 +12,7 @@ import Terms from "../src/ui/pages/TermsAndService/TermsAndService";
 import UserProfile from "./ui/pages/user-profile/UserProfile";
 import Register from "../src/main/components/sections/adminSignup/AdminSignup";
 import Login from "../src/main/components/sections/adminLogin/AdminLogin";
+import Blog from "../src/main/pages/Blog";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="/terms" element={<Terms />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/blog" element={<Blog />} />
         </Routes>
       </MainLayout>
     </ThemeProvider>

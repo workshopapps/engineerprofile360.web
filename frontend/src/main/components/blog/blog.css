@@ -7,6 +7,7 @@
 #blogPage h1 {
   color: #323130;
   text-align: center;
+  margin: 2rem 0;
 }
 #blogPage .bloglist {
   margin-bottom: 104px;
@@ -72,6 +73,8 @@
   }
   #blogPage #blognav {
     display: block;
+    width: 90%;
+    margin: 0 auto;
   }
   #blogPage #blognav ul {
     display: flex;

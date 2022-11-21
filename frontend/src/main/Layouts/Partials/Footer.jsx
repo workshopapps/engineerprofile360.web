@@ -41,7 +41,9 @@ const Footer = () => {
           <ListTitle as="h6">Resources</ListTitle>
           <List>
             <li>Help Centre</li>
-            <li>Blog</li>
+            <Link to="/blog">
+              <li>Blog</li>
+            </Link>
             <li>Customers</li>
           </List>
         </Resources>
