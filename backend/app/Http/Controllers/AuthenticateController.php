@@ -343,6 +343,31 @@ class AuthenticateController extends Controller {
         }
 
     }
+
+    public function setEmployeePassword(Request $request){
+        $request->validate([
+            'email' => 'required|email|exists:employees,email',
+            'password' => 'required|string|min:6',
+        ]);
+
+        try{
+
+            $employee = Employee::whereEmail($request->email)->first();
+            if($employee){
+                $employee->hash = Hash::make($password);
+                $employee->save();
+                
+                return $this->successResponse(true, "Employee password set successfully", null, 200);
+            }
+            
+            return $this->errorResponse("Not found", "Employee id not found", 404);       
+        }catch (\Throwable $e) {
+            return $this->errorResponse("An error occured", $e->getMessage(), 422);       
+        }
+
+    }
+
+
 }
 
 ?>
