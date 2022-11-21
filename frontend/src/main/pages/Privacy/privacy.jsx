@@ -48,7 +48,7 @@ const Privacy = () => {
               </p>
             </div>
 
-            <div>
+            <div id="data_collection">
               <h2 className={styles.title}>Data Collection</h2>
               <p>
                 To serve you better, we collect different information from you
@@ -107,7 +107,7 @@ const Privacy = () => {
               </ul>
             </div>
 
-            <div>
+            <div id="use_of_data">
               <h2 className={styles.title}>Use Of Data</h2>
               <p>
                 Skripts uses your personal data for a more personalised and
@@ -148,7 +148,7 @@ const Privacy = () => {
               </ul>
             </div>
 
-            <div>
+            <div id="data_retention">
               <h2 className={styles.title}>Data Retention</h2>
               <p>
                 To provide accurate engineer skill assessments on our platform,
@@ -162,7 +162,7 @@ const Privacy = () => {
               </p>
             </div>
 
-            <div>
+            <div id="data_transfer">
               <h2 className={styles.title}>Data Transfer</h2>
               <p>
                 Data Transfer To deliver our services to you, we may maintain or
@@ -176,7 +176,7 @@ const Privacy = () => {
               </p>
             </div>
 
-            <div>
+            <div id="data_sharing">
               <h2 className={styles.title}>Data Sharing</h2>
               <p>
                 While we ensure your data is safe, we will share your data with
@@ -196,7 +196,7 @@ const Privacy = () => {
               </p>
             </div>
 
-            <div>
+            <div id="data_security">
               <h2 className={styles.title}>Data Security</h2>
               <p>
                 Skript ensures data safety by using commercially available data
@@ -209,7 +209,7 @@ const Privacy = () => {
               </p>
             </div>
 
-            <div>
+            <div id="legal_basis">
               <h2 className={styles.title}>Legal Basis</h2>
               <p>
                 In compliance with the General Data Protection Regulation for
@@ -224,7 +224,7 @@ const Privacy = () => {
               </ul>
             </div>
 
-            <div>
+            <div id="your_right">
               <h2 className={styles.title}>Your Data Right</h2>
               <p>
                 You are not obligated to give us your data and can revoke our
@@ -251,7 +251,7 @@ const Privacy = () => {
               </p>
             </div>
 
-            <div>
+            <div id="other_site">
               <h2 className={styles.title}>Links to Other Sites</h2>
               <p>
                 Skript may include links to other sites; however, we are not
@@ -261,7 +261,7 @@ const Privacy = () => {
                 platform.
               </p>
             </div>
-            <div>
+            <div id="chidren">
               <h2 className={styles.title}>Children Privacy</h2>
               <p>
                 We do not offer services to children (under 18 years) and, as
@@ -272,7 +272,7 @@ const Privacy = () => {
                 we can delete the data where necessary.
               </p>
             </div>
-            <div>
+            <div id="policy_change">
               <h2 className={styles.title}>Changes to Privacy Policy</h2>
               <p>
                 In line with best practices, we may update our privacy policy
@@ -282,7 +282,7 @@ const Privacy = () => {
                 this document
               </p>
             </div>
-            <div>
+            <div id="contact">
               <h2 className={styles.title}>Contact Us</h2>
               <p>
                 If you require clarifications to any point in this privacy
@@ -301,62 +301,62 @@ const Privacy = () => {
             <h2 className={styles.title__table}>TABLE OF CONTENT</h2>
             <div className={styles.table}>
               <div>
-                <a href="#/" className={styles.link__section}>
+                <a href="#data_collection" className={styles.link__section}>
                   Data Collection
                 </a>
               </div>
               <div>
-                <a href="#/" className={styles.link__section}>
+                <a href="#use_of_data" className={styles.link__section}>
                   Use Of Data
                 </a>
               </div>
               <div>
-                <a href="#/" className={styles.link__section}>
+                <a href="#data_retention" className={styles.link__section}>
                   Data Retention
                 </a>
               </div>
               <div>
-                <a href="#/" className={styles.link__section}>
+                <a href="#data_transfer" className={styles.link__section}>
                   Data Transfer
                 </a>
               </div>
               <div>
-                <a href="#/" className={styles.link__section}>
+                <a href="#data_sharing" className={styles.link__section}>
                   Data Sharing
                 </a>
               </div>
               <div>
-                <a href="#/" className={styles.link__section}>
+                <a href="#data_security" className={styles.link__section}>
                   Data Security
                 </a>
               </div>
               <div>
-                <a href="#/" className={styles.link__section}>
+                <a href="#legal_basis" className={styles.link__section}>
                   Legal Basis
                 </a>
               </div>
               <div>
-                <a href="#/" className={styles.link__section}>
+                <a href="#your_right" className={styles.link__section}>
                   Your Data Right
                 </a>
               </div>
               <div>
-                <a href="#/" className={styles.link__section}>
+                <a href="#other_site" className={styles.link__section}>
                   Links to Other Sites
                 </a>
               </div>
               <div>
-                <a href="#/" className={styles.link__section}>
+                <a href="#children" className={styles.link__section}>
                   Children Privacy
                 </a>
               </div>
               <div>
-                <a href="#/" className={styles.link__section}>
+                <a href="#policy_change" className={styles.link__section}>
                   Changes to Privacy Policy
                 </a>
               </div>
               <div>
-                <a href="#/" className={styles.link__section}>
+                <a href="#contact" className={styles.link__section}>
                   Contact Us
                 </a>
               </div>
