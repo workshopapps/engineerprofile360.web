@@ -1,24 +1,32 @@
-import React from "react"
-import styled from "styled-components"
-import BasicLayout from "../layouts/BasicLayout"
+import React from "react";
+import styled from "styled-components";
 
-import contactImage from "../../assets/images/contact-image.png"
-import sms from "../../assets/icons/contact-page/sms-edit.svg"
-import call from "../../assets/icons/contact-page/call.svg"
-import map from "../../assets/icons/contact-page/map.svg"
-import facebook from "../../assets/icons/contact-page/Facebook.svg"
-import instagram from "../../assets/icons/contact-page/instagram.svg"
-import twitter from "../../assets/icons/contact-page/twitter.svg"
-import linkedin from "../../assets/icons/contact-page/linkedin.svg"
+import contactImage from "../../assets/images/contact-image.png";
+import sms from "../../assets/icons/contact-page/sms-edit.svg";
+import call from "../../assets/icons/contact-page/call.svg";
+import map from "../../assets/icons/contact-page/map.svg";
+import facebook from "../../assets/icons/contact-page/Facebook.svg";
+import instagram from "../../assets/icons/contact-page/instagram.svg";
+import twitter from "../../assets/icons/contact-page/twitter.svg";
+import linkedin from "../../assets/icons/contact-page/linkedin.svg";
 
 const Contact = () => {
   return (
-    <BasicLayout>
-      <ContactContainer>
-        <Top>
-          <GetInTouch>
-            <h1>Get In Touch</h1>
-            <div></div>
+    <ContactContainer>
+      <Top>
+        <GetInTouch>
+          <h1>Get In Touch</h1>
+          <div></div>
+          <p>
+            We Will Love To Hear From You.
+            <br /> Our Team Is Always Happy To Help
+          </p>
+        </GetInTouch>
+      </Top>
+      <CardInfo>
+        <form>
+          <Title>
+            <h1>Send Us A Message</h1>
             <p>
               Let us help you highlight your best engineers and bring you one
               step closer to your goal!
@@ -197,7 +205,7 @@ const GetInTouch = styled.div`
       font-size: 20px;
     }
   }
-`
+`;
 
 const CardInfo = styled.div`
   background-color: ${({ theme }) => theme.palette.main.primary};
@@ -235,7 +243,7 @@ const CardInfo = styled.div`
     gap: 3rem;
     margin: 0 auto;
   }
-`
+`;
 const Title = styled.div`
   text-align: center;
   padding-top: 50px;
@@ -336,7 +344,7 @@ const FormData = styled.div`
   @media (max-width: 911px) {
     margin-bottom: 18px;
   }
-`
+`;
 const Button = styled.div`
   display: flex;
   width: 100%;
@@ -364,7 +372,7 @@ const Button = styled.div`
       text-align: center;
     }
   }
-`
+`;
 const MainInfo = styled.div`
   /* padding: 110px 0 5px 40px; */
   padding: 60px 0 5px 40px;
