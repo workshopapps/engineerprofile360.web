@@ -6,4 +6,17 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
+    justify-content: center;
+   
+}
+
+@media screen and (min-width:320px) and (max-width:1200px){
+    
+    .Testimonial-wrap{
+        margin-left: 50px;
+    }
+    
+    .Testimonial-div{
+        grid-template-columns: 1fr;
+    }
 }
