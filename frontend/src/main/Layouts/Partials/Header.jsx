@@ -19,14 +19,29 @@ const Header = () => {
 
         <NavBar />
         <ButtonGroup>
-          <Button $variant={pathname === "/contact" ? "outlined" : ""}>
-            {pathname === "/about-us"
-              ? "Get Started"
-              : pathname === "/contact"
-              ? "Request Demo"
-              : "Register"}
-          </Button>
-          <Button $variant={pathname === "/contact" ? "" : "outlined"}>Login</Button>
+          <Link
+            to={
+              pathname === "/"
+                ? "/register"
+                : pathname === "/contact"
+                ? "/demo"
+                : "/register"
+            }
+          >
+            <Button $variant={pathname === "/contact" ? "outlined" : ""}>
+              {pathname === "/about-us"
+                ? "Get Started"
+                : pathname === "/contact"
+                ? "Request Demo"
+                : "Register"}
+            </Button>
+          </Link>
+
+          <Link to="/login">
+            <Button $variant={pathname === "/contact" ? "" : "outlined"}>
+              Login
+            </Button>
+          </Link>
         </ButtonGroup>
       </HeaderContainer>
     </HeaderTag>
