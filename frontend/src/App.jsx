@@ -36,6 +36,12 @@ const App = () => {
           <Route path="/blog" element={<Blog />} />
         </Routes>
       </MainLayout>
+      
+      {/* <UserProfile /> */}
+      {/* <UiLayout> */}
+      {/* ALL APP PAGES SHOULD BE ROUTED WITH THIS LAYOUT COMPONENET */}
+      {/* </UiLayout> */}
+
     </ThemeProvider>
   );
 };
