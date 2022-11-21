@@ -1,0 +1,9 @@
+.Testimonial-wrap{
+    margin-left: 172px;
+
+}
+.Testimonial-div{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}

@@ -2,6 +2,7 @@ import TestimonialHeader from "./TestimonialHeader"
 import TestimonialOverview from "./TestimonialOverview"
 import testimonialData from "./testimonialData"
 import TestimonialCard from "./TestimonialCard"
+import "./Testimonial.css"
 
 export default function Testimonial(){
 
@@ -13,7 +14,7 @@ export default function Testimonial(){
       })
 
     return(
-        <div>
+        <div className="Testimonial-wrap">
             <TestimonialHeader />
             < TestimonialOverview/>
             <section className="Testimonial-div">
