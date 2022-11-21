@@ -4,6 +4,11 @@ export const Container = styled.div`
   width: 100%;
   max-width: 1440px;
   margin: auto;
+  padding: ${({theme}) => theme.spacing(6)} ${({theme}) => theme.spacing(4)}; 
+
+  ${({theme}) => theme.breakpoints.down("xs")} {
+    padding: ${({theme}) => theme.spacing(6)} ${({theme}) => theme.spacing(2)};
+  }
 `;
 
 export const Title = styled.h1`

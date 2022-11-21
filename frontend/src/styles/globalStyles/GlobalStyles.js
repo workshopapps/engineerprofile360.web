@@ -41,8 +41,8 @@ const GlobalStyles = createGlobalStyle`
     }
 
     span {
-        font-size: 14px;
-        line-height: 28px;
+        font-size: 12px;
+        line-height: 18px;
     }
 
     small {
