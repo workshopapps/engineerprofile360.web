@@ -20,6 +20,7 @@
 
   .Login_container header img {
     margin-bottom: 80px;
+    display: initial!important;
   }
 
   .Login_container header h1 {
