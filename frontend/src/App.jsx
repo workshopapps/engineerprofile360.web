@@ -7,6 +7,7 @@ import Confirmed from "./main/compnents/demo-pages-components/components/Schedul
 import { GlobalStyles, theme } from "./styles/globalStyles"
 import Contact from "../src/main/pages/Contact"
 import UserProfile from "./ui/pages/user-profile/UserProfile"
+import TermsAndService from "./main/compnents/sections/TermsAndService/TermsAndService"
 
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/demo" element={<ScheduleDemo />} />
         <Route path="/confirm-demo" element={<Confirmed />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/TermsAndService" element={<TermsAndService />} />
       </Routes>
       {/* <UserProfile /> */}
     </ThemeProvider>

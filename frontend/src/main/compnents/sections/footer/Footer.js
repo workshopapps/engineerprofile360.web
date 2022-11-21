@@ -48,7 +48,7 @@ const Footer = () => {
             <a href="#/" className={styles.link}>
               About us
             </a>
-            <Link to="/contact" className={styles.link}>
+            <Link to="/TermsAndService" className={styles.link}>
               Contact us
             </Link>
             <a href="#/" className={styles.link}>
@@ -87,9 +87,9 @@ const Footer = () => {
           <a href="#/" className={styles.link}>
             Privacy Policy
           </a>
-          <a href="#/" className={styles.link}>
+          <Link to='/termsAndService' className={styles.link}>
             Terms of Service
-          </a>
+          </Link>
           <a href="#/" className={styles.link}>
             Cookies Settings
           </a>
