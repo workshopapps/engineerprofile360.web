@@ -8,7 +8,7 @@ import { Button } from "../../../styles/reusableElements.styled";
 
 const MobileNav = ({ handleMenu }) => {
   return (
-    <MobileNavBar>
+    <MobileNavBar onClick={handleMenu}>
       <List>
         <div onClick={handleMenu}>
           <img src={close} alt="" />
