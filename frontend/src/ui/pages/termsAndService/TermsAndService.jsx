@@ -96,13 +96,13 @@ function TermsAndService() {
             </a>
           </ul>
         </div>
+        <div className='button col-12'>
+          <div className=' wrapper'>
+            <img src={Sms} alt='Sms icon' />
+            <span>Questions? Leave a message</span>
+          </div>
+        </div>      
       </div>
-          <div className='button col-12'>
-            <div className=' wrapper'>
-              <img src={Sms} alt='Sms icon' />
-              <span>Questions? Leave a message</span>
-            </div>
-          </div>      
       <div className=' d-flex'>
         <div className='col-sm-12 col-md-8'>
 
