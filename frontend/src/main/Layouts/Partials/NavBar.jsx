@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
 import arrowDown from "../../../assets/icons/arrow-down.svg";
 
@@ -8,21 +7,15 @@ const NavBar = () => {
   return (
     <Nav>
       <List>
-        <Link to="/">
-          <li>Home</li>
-        </Link>
-        <Link to="/pricing">
-          <li>Pricing</li>
-        </Link>
+        <li>Home</li>
+        <li>Pricing</li>
         <li>
           Resources
           <img src={arrowDown} alt="" />
         </li>
-        <Link to="/about-us">
-          <li>
-            About <img src={arrowDown} alt="" />
-          </li>
-        </Link>
+        <li>
+          About <img src={arrowDown} alt="" />
+        </li>
       </List>
     </Nav>
   );
