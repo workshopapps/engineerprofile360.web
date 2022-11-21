@@ -1,9 +1,10 @@
+import { Button } from "../../../../styles/reusableElements.styled"
 import classes from "./Password.module.css"
 
 const Password = () => {
   return (
     <section className={classes.password}>
-      <form>
+      <form method="post">
         <hr />
         <div className={classes.form__control}>
           <label className={classes.form__label} htmlFor="name">
@@ -42,7 +43,10 @@ const Password = () => {
           />
         </div>
         <hr />
-
+        <div className={classes.btns}>
+            <button className={classes.cancel_btn} type="cancel">Cancel</button>
+            <button className={classes.update_btn} type="submit">Update Password</button>
+        </div>
 
       </form>
     </section>
