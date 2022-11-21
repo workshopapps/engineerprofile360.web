@@ -48,7 +48,7 @@ Route::prefix("user")->group(function () {
     Route::get('/{id}', [UserController::class, 'getUserById']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
     Route::put('/{userId}/update', [UserController::class, 'updaterUserInfo'])->middleware("isloggedin");
-    Route::get('all', [UserController::class, 'allUsers']);
+    Route::get('/get/all', [UserController::class, 'allUsers']);
 });
 
 
