@@ -43,7 +43,7 @@ const App = () => {
             path="/take-assessment-list"
             element={<UserTakeAssessment />}
           />
-          <Route path="/setting" element={<AdminSettings />} />1 
+          <Route path="/setting" element={<AdminSettings />} />1
         </Routes>
       </MainLayout>
 
