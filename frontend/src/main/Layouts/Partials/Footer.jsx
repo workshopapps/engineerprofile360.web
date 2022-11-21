@@ -51,9 +51,7 @@ const Footer = () => {
         <About>
           <ListTitle as="h6">About</ListTitle>
           <List>
-          <Link to="/about-us">
-              <li>About us</li>
-            </Link>
+            <li>About us</li>
             <Link to="/contact">
               <li>Contact us</li>
             </Link>
