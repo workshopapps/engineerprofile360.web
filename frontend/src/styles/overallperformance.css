@@ -34,6 +34,13 @@ li {
   background-color: #f8fbfd;
 }
 
+.white {
+  color: #ffffff;
+}
+.bg-white {
+  background-color: #ffffff;
+}
+
 .semibold {
   font-family: semibold;
 }
