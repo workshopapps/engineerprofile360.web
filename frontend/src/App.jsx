@@ -23,6 +23,7 @@ import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/As
 import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
 import AdminSettings from "./ui/pages/admin-settings/AdminSettings";
 import Privacy from "./main/pages/Privacy/privacy";
+import AssessmentFirstPage from "./ui/pages/AssessmentFirstPage";
 
 const App = () => {
   return (
@@ -53,6 +54,7 @@ const App = () => {
           />
           <Route path="/setting" element={<AdminSettings />} />
           <Route path="/privacy-policy" element={<Privacy />} />
+          <Route path="/first" element={<AssessmentFirstPage />} />
         </Routes>
       </MainLayout>
 

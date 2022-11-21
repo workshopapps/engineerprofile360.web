@@ -70,92 +70,105 @@ const DropDown = (props) => {
 
 const Header = () => {
   return (
-    <Flex
-      style={{
-        padding: "24px 24px 24px 56px",
-        borderBottom: "2px solid #EDEBE9",
-      }}
-      spacing={84}
-      className=""
-    >
-      <Grid
-        span={12}
-        style={{ width: "100%", alignItems: "center" }}
-        className=""
+    <div className="hide">
+      <Flex
+        style={{
+          padding: "24px 24px 24px 56px",
+          borderBottom: "2px solid #EDEBE9",
+        }}
+        spacing={84}
       >
-        <GridItem span={2}>
-          <Flex ai="center" className="" style={{ height: "100%" }}>
-            <img src={logo} alt="" />
-          </Flex>
-        </GridItem>
-        <GridItem span={7}>
-          <Flex style={{ flexBasis: "60%", position: "relative" }} className="">
-            <span
-              style={{
-                position: "absolute",
-                bottom: "15px",
-                left: "15px",
-                zIndex: "2",
-              }}
-            >
-              <img src={icon} alt="" />
-            </span>
-            <input
-              style={{
-                padding: "18px 18px 18px 50px",
-                width: "100%",
-                height: "auto",
-                border: "2px solid #8A8886",
-                borderRadius: "8px",
-              }}
-              placeholder="Search"
-            />
-          </Flex>
-        </GridItem>
-        <GridItem span={1} />
-        <GridItem
-          span={2}
+        <Grid
+          span={12}
+          style={{ width: "100%", alignItems: "center" }}
           className=""
-          style={{
-            padding: "10px 26px",
-            background: "#FAF9F8",
-            opacity: "0.8",
-            borderRadius: "8px",
-            flexBasis: "30%",
-          }}
         >
-          <Flex spacing={12} ai="center">
-            <div style={{ flexBasis: "10%" }}>
-              <img src={avatar} />
-            </div>
-            <Flex style={{ flexBasis: "70%" }} jc="center">
-              <p className="" style={{ fontSize: "14px", fontWeight: "600" }}>
-                Mark Jilaga
-              </p>
+          <GridItem span={2}>
+            <Flex ai="center" className="" style={{ height: "100%" }}>
+              <img src={logo} alt="" />
             </Flex>
+          </GridItem>
+          <GridItem span={7}>
+            <Flex
+              style={{ flexBasis: "60%", position: "relative" }}
+              className=""
+            >
+              <span
+                style={{
+                  position: "absolute",
+                  bottom: "15px",
+                  left: "15px",
+                  zIndex: "2",
+                }}
+              >
+                <img src={icon} alt="" />
+              </span>
+              <input
+                style={{
+                  padding: "18px 18px 18px 50px",
+                  width: "100%",
+                  height: "auto",
+                  border: "2px solid #8A8886",
+                  borderRadius: "8px",
+                }}
+                placeholder="Search"
+              />
+            </Flex>
+          </GridItem>
+          <GridItem span={1} />
+          <GridItem
+            span={2}
+            className=""
+            style={{
+              padding: "10px 26px",
+              background: "#FAF9F8",
+              opacity: "0.8",
+              borderRadius: "8px",
+              flexBasis: "30%",
+            }}
+          >
+            <Flex spacing={12} ai="center">
+              <div style={{ flexBasis: "10%" }}>
+                <img src={avatar} />
+              </div>
+              <Flex style={{ flexBasis: "70%" }} jc="center">
+                <p className="semibold-alt">Mark Jilaga</p>
+              </Flex>
 
-            <div
-              style={{
-                width: "2px",
-                height: "24px",
-                borderRadius: "2px",
-                background: "#EDEBE9",
-              }}
-            ></div>
-            <Flex spacing={10} style={{ width: "100%" }}>
-              <img src={notif} />
-              <DropDown />
+              <div
+                style={{
+                  width: "2px",
+                  height: "24px",
+                  borderRadius: "2px",
+                  background: "#EDEBE9",
+                }}
+              ></div>
+              <Flex spacing={10} style={{ width: "100%" }}>
+                <img src={notif} />
+                <DropDown />
+              </Flex>
             </Flex>
-          </Flex>
-        </GridItem>
-      </Grid>
-    </Flex>
+          </GridItem>
+        </Grid>
+      </Flex>
+    </div>
+  );
+};
+
+const HeaderMobile = () => {
+  return (
+    <div className="show">
+      <Flex jc="space-between" style={{ padding: "16px" }}>
+        <img src={logo} alt="" />
+        <img src={dots} />
+      </Flex>
+    </div>
   );
 };
 
 const Sidebar = () => {
   return (
-    <div style={{ flexBasis: "10%", padding: "29px 24px" }}>
+    <div style={{ flexBasis: "10%", padding: "29px 24px" }} className="hide">
       <Flex stack spacing={24}>
         <Flex spacing={18} ai="center" style={{ padding: "16px 20px" }}>
           <img src={dashboard} />
@@ -184,27 +197,25 @@ const Heading = () => {
   return (
     <Flex jc="space-between" className="" ai="center">
       <h2>Assessments</h2>
-      <Flex spacing={30}>
-        <button
-          style={{ padding: "12px 20px", borderRadius: "4px", border: "none" }}
-          className="bg-primary"
-        >
+      <div className="button-container">
+        <button className="bg-primary create-button">
           <Flex spacing={10} ai="center">
             <img src={plus} alt="" />
-            <p className="white">Create New Assessment</p>
+            <div className="hide">
+              <p className="white">Create New Assessment</p>
+            </div>
           </Flex>
         </button>
         <button
           style={{
-            padding: "12px 20px",
             border: "2px solid #2667FF",
-            borderRadius: "4px",
           }}
-          className="bg-white"
+          className="bg-white create-button"
         >
-          <p className="primary semibold-alt">View Assessments</p>
+          <p className="primary semibold-alt hide">View Assessments</p>
+          <p className="primary semibold-alt show">View </p>
         </button>
-      </Flex>
+      </div>
     </Flex>
   );
 };
@@ -262,7 +273,7 @@ const Staff = () => {
 
 const TopStaff = () => {
   return (
-    <Flex stack spacing={14}>
+    <Flex stack spacing={14} className="" style={{ width: "100%" }}>
       <Flex jc="space-between" ai="flex-end">
         <Flex ai="center">
           <p className="light">Top Staff</p>
@@ -314,8 +325,8 @@ const TopPerformance = () => {
         style={{
           border: "2px solid #F8FBFD",
           borderRadius: " 8px",
-          padding: "60px 49px 56px 91px",
         }}
+        className="chart-padding"
       >
         <img src={chart} alt="" />
       </div>
@@ -325,9 +336,9 @@ const TopPerformance = () => {
 
 const Assessments = () => {
   return (
-    <Flex stack style={{ padding: "28px 22px", width: "100%" }} spacing={58}>
+    <Flex stack style={{ width: "100%" }} spacing={58} className="page-padding">
       <Heading />
-      <Grid span={12}>
+      <Grid span={12} className>
         <GridItem span={4} md={12}>
           <Card text={"Available for Assessment"} num={"98"} />
         </GridItem>
@@ -338,14 +349,17 @@ const Assessments = () => {
           <Card text={"Assessment Results"} num={"60"} />
         </GridItem>
       </Grid>
-      <Grid span={12} gap="60px">
-        <GridItem span={6} md={12} className="">
+      <Grid
+        span={12}
+        gap="60px"
+        className=""
+        style={{ maxWidth: "100%", overflow: "scroll" }}
+      >
+        <GridItem span={6} md={12}>
           <TopStaff />
         </GridItem>
-        <GridItem span={6} md={12} className="">
-          <Flex jc="center">
-            <TopPerformance />
-          </Flex>
+        <GridItem span={6} md={12} className="" style={{ width: "100%" }}>
+          <TopPerformance />
         </GridItem>
       </Grid>
     </Flex>
@@ -355,6 +369,7 @@ const Assessments = () => {
 const AssessmentFirstPage = () => {
   return (
     <div>
+      <HeaderMobile />
       <Header />
       <Flex>
         <Sidebar />

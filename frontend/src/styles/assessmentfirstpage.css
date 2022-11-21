@@ -17,8 +17,34 @@ li {
   padding: 10px 15px;
 }
 
+.hide {
+  display: block;
+}
+.show {
+  display: none;
+}
+
 .bordered {
   border: 1px dotted;
+}
+
+.page-padding {
+  padding: 28px 22px;
+}
+
+.chart-padding {
+  padding: 60px 49px 56px 91px;
+}
+
+.create-button {
+  padding: 12px 20px;
+  border-radius: 4px;
+  border: none;
+}
+
+.button-container {
+  display: flex;
+  gap: 30px;
 }
 
 .primary {
@@ -62,4 +88,33 @@ li {
   font-weight: 400;
   font-size: 24px;
   line-height: 36px;
+}
+
+@media screen and (max-width: 1023px) {
+  .hide {
+    display: none;
+  }
+
+  .show {
+    display: block;
+  }
+
+  .page-padding {
+    padding: 16px;
+  }
+
+  .chart-padding {
+    padding: 16px 0px;
+  }
+
+  .create-button {
+    padding: 8px;
+    border-radius: 4px;
+    border: none;
+  }
+
+  .button-container {
+    display: flex;
+    gap: 10px;
+  }
 }
