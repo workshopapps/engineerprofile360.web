@@ -38,6 +38,7 @@ const AdminSetting = () => {
               {nav_heading.map((item) => (
                 <li
                   onClick={navClickHandler}
+                  key={item}
                   className={`${classes.nav_item} ${
                     activeNav === item ? classes.nav_active : ""
                   }`}
