@@ -54,7 +54,7 @@ const Header = () => {
         <div onClick={handleMenu}>
           <img src={menuIcon} alt="" />
         </div>
-        {/* <MobileNav pathname={pathname} /> */}
+        {menu && <MobileNav handleMenu={handleMenu} />}
       </HeaderContainer>
     </HeaderTag>
   );
@@ -76,13 +76,18 @@ const HeaderContainer = styled(Container)`
   @media (max-width: 480px) {
     padding: 0 ${({ theme }) => theme.spacing(2)};
   }
+
+  div:last-of-type {
+    @media (min-width: 961px) {
+      display: none;
+    }
+  }
 `;
 
 const ButtonGroup = styled.div`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing(2)};
-
 
   @media (max-width: 960px) {
     display: none;

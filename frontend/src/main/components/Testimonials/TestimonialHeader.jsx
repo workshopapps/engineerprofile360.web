@@ -1,5 +1,5 @@
 import "./TestimonialHead.css"
-import tesimonialpicture from "../../../assets/images/tesimonialHead.png";
+import tesimonialpicture from "../../../assets/images/tesimonialHead.png"
 
 
 export default function TestimonialHeader(){

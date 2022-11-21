@@ -16,6 +16,11 @@ const GlobalStyles = createGlobalStyle`
         font-family: 'Inter', sans-serif;
      background-color: #fff;
     }
+
+    button {
+        font-family: 'Inter', sans-serif;
+    }
+
     ul, ol {
         list-style: none;
     }
