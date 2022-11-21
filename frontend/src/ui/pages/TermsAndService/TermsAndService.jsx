@@ -1,19 +1,19 @@
 import React from 'react'
 import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import Sms from '../../../assets/icons/sms.png'
-import '../../../index.css'
 import './style.css'
 
 
 function TermsAndService() {
   return (
-    <div className=' mainDiv'>
-      <div className='container d-flex'>
-        <div className='col-sm-12 col-md-9'>
-          <div className='terms'>
-            <h1>Skript <span> Terms of Service</span></h1>
-            <p>Last updated on November 15, 2022</p>
-          </div>
+    <div className=' mainDiv container'>
+      <div className='terms'>
+        <h1>Skript <span> Terms of Service</span></h1>
+        <p>Last updated on November 15, 2022</p>
+      </div>
+      
+      <div className=' d-flex'>
+        <div className='col-sm-12 col-md-8'>
 
           <div className='first'>
             <p>
@@ -32,7 +32,7 @@ function TermsAndService() {
           </div>
 
           <div className='second'>
-            <h2>Registration and Account</h2>
+            <h2 id='RegistrationandAccount'>Registration and Account</h2>
             <p>
             Your Company/team must create a Business account by providing accurate, current, and complete information, including its valid legal business phone number, Company name, and other information we require. The company will keep its business account information updated. Company’s name must not: (a) be false, misleading, deceptive, or defamatory; (b) parody a third party or include character symbols, excessive punctuation, or trademark designations; or (c) infringe any trademark, violate any right of publicity, or otherwise violate anyone’s rights. We reserve the right to reclaim account names on behalf of any business or individual that holds a legal claim in those name.
 
@@ -40,7 +40,7 @@ function TermsAndService() {
           </div>
 
           <div className='second'>
-            <h2>Subscription</h2>
+            <h2 id='Subscription'>Subscription</h2>
             <p>
             1. Your Skript software subscription will continue until terminated.
   To use the Skript service you/your company must have Internet access and a ready device, and provide us with one or more Payment Methods. “Payment Method” means a current, valid, accepted method of payment, as may be updated from time to time, and which may include payment through your account with a third party.
@@ -53,7 +53,7 @@ function TermsAndService() {
           </div>
 
           <div className='second'>
-            <h2>Billing and Cancellation</h2>
+            <h2 id='BillingandCancellation'>Billing and Cancellation</h2>
             <p>
             1. Billing Cycle.
   The Subscription fee for the Skript service and any other charges you may incur in connection with your use of the service, such as taxes and possible transaction fees, will be charged to your Payment Method on the specific payment date indicated on the "Account" page. The length of your billing cycle will depend on the type of subscription that you choose when you signed up for the service. In some cases, your payment date may change, for example, if your Payment Method has not successfully settled, when you change your subscription plan or if your paid membership began on a day not contained in a given month. Visit the Skript.com website and click on the "Billing details" link on the "Account" page to see your next payment date. We may authorize your Payment Method in anticipation of membership or service-related charges through various methods, including authorizing it for up to approximately one month of service as soon as you register. If you signed up for Enineering360 using your account with a third party as a Payment Method, you can find the billing information about your Skript subscription by visiting your account with the applicable third party.
@@ -70,43 +70,35 @@ function TermsAndService() {
           </div>
 
           <div className='second'>
-            <h2>Passwords and Account Access</h2>
+            <h2 id='PasswordsandAccountAccess'>Passwords and Account Access</h2>
             <p>
             The member who created the Skript account and whose Payment Method is charged (the "Account Owner") is responsible for any activity that occurs through the Skript account. To maintain control over the account and to prevent anyone from accessing the account (which would include information on the viewing history for the account), the Account Owner should maintain control over the Skript-ready devices that are used to access the service and not reveal the password or details of the Payment Method associated with the account to anyone. You are responsible for updating and maintaining the accuracy of the information you provide to us relating to your account. We can terminate your account or place your account on hold to protect you, Skript or our partners from identity theft or other fraudulent activity.
             </p>
           </div>
 
           <div className='second'>
-            <h2>License</h2>
-            <p>
-            The member who created the Skript account and whose Payment Method is charged (the "Account Owner") is responsible for any activity that occurs through the Skript account. To maintain control over the account and to prevent anyone from accessing the account (which would include information on the viewing history for the account), the Account Owner should maintain control over the Skript-ready devices that are used to access the service and not reveal the password or details of the Payment Method associated with the account to anyone. You are responsible for updating and maintaining the accuracy of the information you provide to us relating to your account. We can terminate your account or place your account on hold to protect you, Skript or our partners from identity theft or other fraudulent activity.
-
-            </p>
-          </div>
-
-          <div className='second'>
-            <h2>Warranties and Limitations on Liability</h2>
+            <h2 id='WarrantiesandLimitationsonLiability'>Warranties and Limitations on Liability</h2>
             <p>
             The Skript service is provided "as is" and without warranty or condition. In particular, our service may not be uninterrupted or error-free. You waive all special, indirect and consequential damages against us. These terms will not limit any non-waivable warranties or consumer protection rights that you may be entitled to under the mandatory laws of your country of residence.
             </p>
           </div>
 
           <div className='second'>
-            <h2>Safety and Regulations</h2>
+            <h2 id='SafetyandRegulations'>Safety and Regulations</h2>
             <p>
             As part of security procedures, some piece of information and password would be provided which must be treated as confidential and not disclosed to a third party. Failure to comply with any of the provisions of the terms of use would result in the user identification code or passwording being disabled.
             </p>
           </div>
 
           <div className='second'>
-            <h2>Use of Your personal/Company Information</h2>
+            <h2 id='UseofYourpersonal/CompanyInformation'>Use of Your personal/Company Information</h2>
             <p>
             We will only use your personal information as set out in our Privacy Policy.
             </p>
           </div>
 
           <div className='second' >
-            <h2>Viruses/Bug</h2>
+            <h2 id='Viruses/Bug'>Viruses/Bug</h2>
             <p>
             We do not guarantee that our site will be secure or free from bugs or viruses.
   You are responsible for configuring your information technology, computer programmes and platform to access our site. You should use your virus protection software.
@@ -115,7 +107,7 @@ function TermsAndService() {
           </div>
 
           <div className='second' >
-            <h2>License</h2>
+            <h2 id='License'>License</h2>
             <p>
             s the licensed owner of the intellectual property rights on our site and the published material. The works are protected by copyright laws and treaties around the world. All rights are reserved.
   A copy or page can be downloaded from the site for personal use. No modification of the paper and digital copies downloaded in any way. No illustrations, photographs, video or any audio sequence or graphics. Our status and that of any other contributor as the legitimate authors of content must be acknowledged; except for where the content is user-generated.
@@ -125,14 +117,14 @@ function TermsAndService() {
           </div>
 
           <div className='second' >
-            <h2>Use of Our Trademarks</h2>
+            <h2 id='UseofOurTrademarks'>Use of Our Trademarks</h2>
             <p>
             Our trademarks are registered, and you are not permitted to use them without our approval.
             </p>
           </div>
 
           <div className='second' >
-            <h2>Miscelleneous</h2>
+            <h2 id='Miscelleneous'>Miscelleneous</h2>
             <p>
             12.1. Governing Law.
   These Terms of Service shall be governed by and construed by the laws of Nigeria.
@@ -147,18 +139,43 @@ function TermsAndService() {
           </div>
         </div>
 
-        <div className='col-sm-12 col-md-3 d-none d-md-block '>
+        <div className='aside col-sm-12 col-md-3 offset-md-1 d-none d-md-block '>
+          <h6 className='mx-auto'>TABLE OF CONTENT</h6>
           <div>
             <ul>
-              <li className=' list-none'>Registration and Account</li>
-              <li>Subscription</li>
-              <li>Billing and Cancellation</li>
-              <li>Passwords and Account Access</li>
-              <li>Warranties and limitations</li>
-              <li>Safety and Regulations</li>
-              <li>Use of Personal/Company Info</li>
-              <li>Viruses/Bugs</li>
+              <a href='#RegistrationandAccount'>
+                <li className=' list-none'>Registration and Account</li>
+              </a>
+
+              <a href='#Subscription'>
+                <li>Subscription</li>
+              </a>
+
+              <a href='#BillingandCancellation'>
+                <li>Billing and Cancellation</li>
+              </a>
+
+              <a href='#PasswordsandAccountAccess'>
+                <li>Passwords and Account Access</li>
+              </a>
+
+              <a href='#Warrantiesandlimitations'>
+                <li>Warranties and limitations</li>
+              </a>
+
+              <a href='#SafetyandRegulations'>
+                <li>Safety and Regulations</li>
+              </a>
+
+              <a href='#UseofPersonal/CompanyInfo'>
+                <li>Use of Personal/Company Info</li>
+              </a>
+
+              <a href='#Viruses/Bugs'>
+                <li>Viruses/Bugs</li>
+              </a>
             </ul>
+
             <div className='button col-12'>
               <div className=' wrapper'>
                 <img src={Sms} alt='Sms icon' />
@@ -169,39 +186,6 @@ function TermsAndService() {
         </div>
 
         
-      </div>
-
-      <div className='container'>
-        <div className="row">
-          <div className='col-sm-12 col-md-6 col-lg-3'>
-
-          </div>
-          <div className='col-sm-12 col-md-6 col-lg-3'>
-            <h1>Resources</h1>
-            <ul>
-              <li>Help centre</li>
-              <li>Blog</li>
-              <li>Customers</li>
-            </ul>
-          </div>
-          <div className='col-sm-12 col-md-6 col-lg-3'>
-            <h1>About </h1>
-            <ul>
-              <li>About</li>
-              <li>Contact us</li>
-              <li>Careers</li>
-            </ul>
-          </div>
-          <div className='col-sm-12 col-md-6 col-lg-3'>
-            <h1>Follow Us</h1>
-            <ul>
-              <li>Facebook</li>
-              <li>Instagram</li>
-              <li>Twitter</li>
-              <li>LinkedIn</li>
-            </ul>
-          </div>
-        </div>
       </div>
     </div>
   )

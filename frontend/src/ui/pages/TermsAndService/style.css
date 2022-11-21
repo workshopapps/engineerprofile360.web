@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 li{
   list-style-type: none;
   margin-bottom: 10px;
@@ -31,11 +35,19 @@ li{
   line-height: 2rem;
   font-weight: 600;
 }
+.mainDiv .second h2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 600;
+}
 .mainDiv .second p {
   margin-top: 1rem;
   margin-bottom: 2rem;
   font-size: 1.25rem;
   line-height: 1.75rem;
+}
+.aside{
+  background-color: #ffff;
 }
 .mainDiv .button {
   margin-bottom: 10rem;
@@ -47,7 +59,17 @@ li{
   /* width: 16.5rem; */
   border: 2px solid #8b8b8d;
   border-radius: 0.125rem;
+  display: flex;
 }
 .mainDiv .button .wrapper img {
   padding-right: 0.5rem;
-}/*# sourceMappingURL=style.css.map */
+}
+ul{
+  background-color: #EFF6FC;
+  padding: 1rem 1.5rem;
+}
+h6{
+  text-align: center;
+  margin-bottom: 5px;
+}
+/*# sourceMappingURL=style.css.map */

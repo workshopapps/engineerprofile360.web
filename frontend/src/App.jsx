@@ -7,23 +7,19 @@ import Confirmed from "./main/compnents/demo-pages-components/components/Schedul
 import { GlobalStyles, theme } from "./styles/globalStyles"
 import Contact from "../src/main/pages/Contact"
 import UserProfile from "./ui/pages/user-profile/UserProfile"
-import TermsAndService from "./ui/pages/TermsAndService/TermsAndService"
 
 const App = () => {
   return (
-    // <ThemeProvider theme={theme}>
-    //   <GlobalStyles />
-    //   <Routes>
-    //     <Route path="/" element={<Home />} />
-    //     <Route path="/demo" element={<ScheduleDemo />} />
-    //     <Route path="/confirm-demo" element={<Confirmed />} />
-    //     <Route path="/contact" element={<Contact />} />
-    //   </Routes>
-    //   {/* <UserProfile /> */}
-    // </ThemeProvider>
-    <div>
-      <TermsAndService />
-    </div>
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/demo" element={<ScheduleDemo />} />
+        <Route path="/confirm-demo" element={<Confirmed />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+      {/* <UserProfile /> */}
+    </ThemeProvider>
   )
 }
 export default App
