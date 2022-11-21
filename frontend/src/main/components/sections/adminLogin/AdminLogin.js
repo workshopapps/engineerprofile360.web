@@ -39,7 +39,7 @@ export default function adminLogin () {
             <input type="submit" id="Proceed" value="Sign in"/>
         </form>
 
-        <p>Don’t have an account? <a href='login'>Sign up</a></p>
+        <p>Don’t have an account? <a href='register'>Sign up</a></p>
     </div>
   )
 }
