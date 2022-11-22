@@ -39,7 +39,7 @@ export default function AssessmentList() {
               <div>
                 <button id="assessment-type">
                   {" "}
-                  <p>Assesment Type</p> <span>⌵</span>{" "}
+                  <p>Assessment Type</p> <span>⌵</span>{" "}
                 </button>
               </div>
               <div className="assessment-sort">
@@ -155,6 +155,7 @@ export const AssessmentListDiv = styled.div`
       width: 20%;
       margin-top: -1%;
       height: 2rem;
+      font-size: 14px;
       position: absolute;
       right: 2%;
     }
@@ -184,6 +185,9 @@ export const AssessmentListDiv = styled.div`
     button {
       width: 178px;
       height: 35px;
+      p {
+        font-size: 14px;
+      }
     }
   }
 `;
@@ -201,6 +205,7 @@ export const AssesmentNav = styled.div`
 
     button {
       display: flex;
+      font-size: 14px;
       justify-content: space-around;
       align-items: center;
       border: none;
