@@ -34,6 +34,10 @@
   border: 0.6px solid #9194fc;
 }
 
+.form_input:focus {
+    outline: 1px solid #3F8EFC;
+}
+
 .submit_btn {
   grid-column: span 2;
   width: 462px;
@@ -41,7 +45,7 @@
   justify-self: center;
   background: #2667ff;
   border: none;
-
+  cursor: pointer;
   font-weight: 400;
   font-size: 20px;
   line-height: 28px;
@@ -49,6 +53,11 @@
   margin-top: 20px;
   color: #ffffff;
 }
+
+.submit_btn:hover {
+    background: #3F8EFC;; 
+}
+
 
 @media screen and (max-width: 1024px) {
     .main_content {
