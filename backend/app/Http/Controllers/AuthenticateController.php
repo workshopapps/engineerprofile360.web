@@ -40,7 +40,7 @@ class AuthenticateController extends Controller {
         $employee = Employee::where('email', $email);
 
         if ($users->count() > 0) {
-
+            
             $checkPassword = Hash::check($password, $users->first()["password"]);
 
             if(!$checkPassword){
@@ -48,7 +48,7 @@ class AuthenticateController extends Controller {
             }
 
             try {
-
+            
                 // generate access and refresh token
                 $refToken = $this->helper->generateRefreshToken($users->first()["user_id"], $email);
                 $accToken = $this->helper->generateAccessTokrn($users->first()["user_id"], $email);
@@ -81,14 +81,14 @@ class AuthenticateController extends Controller {
                     Company::create($companyData);
                 }
 
-
+                
                 // check if user is unverified
                 if($users->first()["isVerified"] < 1){
                     $this->helper->emailVerification($email,$user_id);
                     return $this->sendResponse(false, "account not verfied.. a verification link has been sent to you account.", "failed to login.. verify your account.", null, 200);
                 }
-
-
+                
+                
                 return $this->sendResponse(false, null, "User logged in successfully", json_encode($userResp), 200);
             } catch (\Exception $e) {
                 print_r($e);
@@ -96,7 +96,7 @@ class AuthenticateController extends Controller {
             }
         }
         else if ($employee->count() > 0) {
-
+            
             $checkPassword = Hash::check($password, $employee->first()["hash"]);
 
             if(!$checkPassword){
@@ -104,7 +104,7 @@ class AuthenticateController extends Controller {
             }
 
             try {
-
+            
                 // generate access and refresh token
                 $refToken = $this->helper->generateRefreshToken($employee->first()["id"], $email);
                 $accToken = $this->helper->generateAccessTokrn($employee->first()["id"], $email);
@@ -157,7 +157,7 @@ class AuthenticateController extends Controller {
 
 
         // check if a user already has an account
-        $userExists = User::where('email', $email)->first();
+        $userExists = User::where('email', '=', $email)->count() > 0;
         if($userExists){
             return $this->sendResponse(true,"user with this exists already exists","User with this email address already exists.", null, 400);
         }
@@ -208,7 +208,7 @@ class AuthenticateController extends Controller {
         if($user->count() == 0){
             return $this->sendResponse(true, 'Invalid verification link or verification expires',"Invalid verification link", null, 400);
         }
-
+        
         if($token->count() == 0){
             return $this->sendResponse(true, 'Invalid verification link or verification expires',"Invalid verification link", null, 400);
         }
@@ -262,7 +262,7 @@ class AuthenticateController extends Controller {
             $this->sendResponse(true, "Expected a verify param in paylaod, but got none", "Verify parameter not found.",null, 404);
         }
 
-        // update variable
+        // update variable 
         $verify = $payload["verify"];
 
         if(!$verify){
@@ -271,25 +271,25 @@ class AuthenticateController extends Controller {
             try {
                 // generate new hash password
                 $pwd = $payload;
-
+    
                 // verify payload
                 if(!isset($payload["new_password"])){
                     return $this->sendResponse(true, "new_password parameter is missing", "Expected a valid new_password field but got none.", null, 400);
                 }
-
+    
                 // check if user and employee exists.
                 $user = User::where("user_id", $id);
                 $employee = Employee::where("id", $id);
-
+                
                 // generate new hash password
                 $newHash = Hash::make($pwd["new_password"]);
-
+                
                 // check if token exists
                 $userTokenExists = Token::where([
                     "token"=>$token,
                     "user_id"=> $id
                 ])->get();
-
+    
                 // run password update on either the organization or employee
                 if($user->count() > 0){
                     // if no token available
@@ -299,12 +299,12 @@ class AuthenticateController extends Controller {
 
                     // Updated user password
                     User::where("id", $id)->update(array("password"=> $newHash));
-
+    
                     // removed token from database
                     Token::where("user_id", $id)->delete();
-
+    
                     return $this->sendResponse(false, null, "Password updated", null, 200);
-
+    
                 }
                 else if($employee->count() > 0){
                     // if no token available
@@ -314,10 +314,10 @@ class AuthenticateController extends Controller {
 
                     // Updated user password
                     Employee::where("id", $id)->update(array("hash"=> $newHash));
-
+    
                     // removed token from database
                     Token::where("user_id", $id)->delete();
-
+    
                     return $this->sendResponse(false, null, "Password updated", null, 200);
                 }
                 else{
@@ -333,7 +333,7 @@ class AuthenticateController extends Controller {
                 // check if user and employee exists.
                 $user = User::where("user_id", $id);
                 $employee = Employee::where("id", $id);
-
+                
                 // check if token exists
                 $userTokenExists = Token::where([
                     "token"=>$token,
@@ -366,7 +366,7 @@ class AuthenticateController extends Controller {
     //         'password' => 'required|string|min:6',
     //     ]);
 
-
+        
 
     //     try{
 
@@ -374,13 +374,13 @@ class AuthenticateController extends Controller {
     //         if($employee){
     //             $employee->hash = Hash::make($password);
     //             $employee->save();
-
+                
     //             return $this->successResponse(true, "Employee password set successfully", null, 200);
     //         }
-
-    //         return $this->errorResponse("Not found", "Employee id not found", 404);
+            
+    //         return $this->errorResponse("Not found", "Employee id not found", 404);       
     //     }catch (\Throwable $e) {
-    //         return $this->errorResponse("An error occured", $e->getMessage(), 422);
+    //         return $this->errorResponse("An error occured", $e->getMessage(), 422);       
     //     }
 
     // }
