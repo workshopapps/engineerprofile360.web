@@ -93,6 +93,8 @@ const Footer = () => {
             Cookies Settings
           </a>
         </div>
+
+        
       </div>
     </div>
   )
