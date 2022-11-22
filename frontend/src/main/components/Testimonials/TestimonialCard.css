@@ -1,0 +1,43 @@
+
+.test-card{
+    inline-size: 30rem;
+    padding: 1rem;
+    background: #F8FBFD;
+    border: 1px solid #C7E0F4;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.testimonial-words{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 48px;
+    
+}
+
+.testimonial-profile{
+    display: flex;
+}
+
+.testimonial-name{
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.testimonial-role{
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+@media screen and (min-width:320px) and (max-width:450px){
+    
+    .test-card{
+        inline-size: 20rem;
+    }
+}

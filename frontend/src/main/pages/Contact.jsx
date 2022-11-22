@@ -111,6 +111,8 @@ const ContactContainer = styled.div`
   display: grid;
   grid-template-rows: 1fr 1fr;
   flex-direction: column;
+  max-width: 1440px;
+  margin: 0 auto;
   @media (max-width: 911px) {
     margin-bottom: 480px;
   }
@@ -119,20 +121,22 @@ const ContactContainer = styled.div`
     margin-bottom: 730px;
   }
   @media (max-width: 789px) {
-    margin-bottom: 800px;
+    margin-bottom: 5i00px;
   }
 `;
 const Top = styled.div`
   width: 100%;
-  height: 120vh;
+  height: 100vh;
   display: flex;
   align-items: center;
   background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
     url(${contactImage});
   background-position: center;
   background-repeat: no-repeat;
+  position: relative;
 `;
 const GetInTouch = styled.div`
+  max-width: 1440px;
   width: 50%;
   margin-left: 26px;
   margin-bottom: 30px;
@@ -200,7 +204,7 @@ const GetInTouch = styled.div`
 const CardInfo = styled.div`
   background-color: ${({ theme }) => theme.palette.main.primary};
   height: 996px;
-  margin: -230px auto;
+  margin: -280px auto;
   width: 95%;
   background-color: #2667ff;
   padding: 0 60px;
@@ -233,7 +237,7 @@ const CardInfo = styled.div`
     /* height: 100vh; */
     padding: 0;
     gap: 3rem;
-    margin: 0 auto;
+    margin: -180px auto;
   }
 `;
 const Title = styled.div`
@@ -263,6 +267,12 @@ const Title = styled.div`
   @media (max-width: 911px) {
     h1 {
       font-size: 24px;
+    }
+  }
+
+  @media (max-width: 550px) {
+    p {
+      font-size: 14px;
     }
   }
 `;
