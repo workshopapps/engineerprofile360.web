@@ -11,7 +11,6 @@ import Confirmed from "./main/components/demo-pages-components/components/Confir
 import ScheduleDemo from "./main/components/demo-pages-components/components/ScheduleDemo";
 
 import Support from "../src/ui/pages/UserSupport";
-import Terms from "../src/ui/pages/TermsAndService/TermsAndService";
 
 import UserProfile from "./ui/pages/user-profile/UserProfile";
 import Register from "../src/main/components/sections/adminSignup/AdminSignup";
@@ -23,8 +22,6 @@ import UserTakeAssessment from "./main/components/sections/userTakeAssessment/Us
 import Privacy from "./main/pages/Privacy/privacy";
 import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
-
-
 
 const App = () => {
   return (
@@ -38,7 +35,7 @@ const App = () => {
           <Route path="/confirm-demo" element={<Confirmed />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/support" element={<Support />} />
-          <Route path="/termsAndService" element={<Terms />} />
+
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/blog" element={<Blog />} />
@@ -48,7 +45,7 @@ const App = () => {
             path="/admin-assessment-list"
             element={<AdminAssessmentList />}
           />
-          <Route path="/help-center" element={<HelpCenter />} />
+
           <Route
             path="/take-assessment-list"
             element={<UserTakeAssessment />}
@@ -58,7 +55,6 @@ const App = () => {
           <Route path="/employee-profile" element={<EmployeeProfile />} />
         </Routes>
       </MainLayout>
-
 
       {/* <UserProfile /> */}
       {/* <UiLayout> */}
