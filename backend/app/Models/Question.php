@@ -10,7 +10,6 @@ class Question extends Model
 {
     use HasFactory, Uuids;
     protected $guarded = [];
-
     /**
      * @var $fillable
     */
