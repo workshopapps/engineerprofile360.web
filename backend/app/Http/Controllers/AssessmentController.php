@@ -11,6 +11,20 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AssessmentController extends Controller
 {
+    public function sendResponse(
+        bool $errorState = true,
+        string $error = null,
+        string $message = 'OK',
+        $data = null,
+        int $code = 200
+    ): JsonResponse {
+        return response()->json([
+            'errorState' => $errorState,
+            'error' => ucfirst($error),
+            'message' => ucfirst($message),
+            'data' => $data,
+        ], $code);
+    }
 
     public function createAssessment(AssessmentRequest $request)
     {
@@ -20,10 +34,10 @@ class AssessmentController extends Controller
             //$data = file_get_contents("php://input");
             Assessment::create($data);
 
-            return $this->successResponse(true, 'Assessment created successfully', Response::HTTP_CREATED);
+            return $this->sendResponse(false,null, 'Assessment created successfully',null, 201);
 
         } catch (Exception $e) {
-            return $this->errorResponse('Assessment could not be created', $e->getMessage());
+            return $this->sendResponse(true, $e->getMessage(), 'Assessment could not be created',null, 400);
         }
     }
 
