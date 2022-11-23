@@ -52,6 +52,7 @@ const App = () => {
       {/* <UserProfile /> */}
       {/* <UiLayout> */}
       {/* ALL APP PAGES SHOULD BE ROUTED WITH THIS LAYOUT COMPONENET */}
+
       {/* </UiLayout> */}
     </ThemeProvider>
   );
