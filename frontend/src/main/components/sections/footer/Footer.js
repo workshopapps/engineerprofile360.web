@@ -86,9 +86,9 @@ const Footer = () => {
           <a href="#/" className={styles.link}>
             Privacy Policy
           </a>
-          <a href="#/" className={styles.link}>
+          <Link to='/termsAndService' className={styles.link}>
             Terms of Service
-          </a>
+          </Link>
           <a href="#/" className={styles.link}>
             Cookies Settings
           </a>
