@@ -54,7 +54,12 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 50px;
+    flex-wrap: wrap;
 
+  }
+
+  .Filter_wrapper p{
+    margin-bottom: 20px;
   }
 
   .Filter_Next_Submit {
@@ -105,10 +110,11 @@
 
   .Filter_flex {
     display: flex;
-    width: 20%;
+    width: 30%;
     padding: 20px;
     border: 1px solid;
     justify-content: space-between;
+
   }
 
   
@@ -117,6 +123,17 @@
     .UserTakeAssessment_container {
       align-items: stretch;
       text-align: center;
+      width: 100%;
+    }
+    .Filter_flex {
+      width: 100%;
+    }
+    .Filter_wrapper {
+      text-align: left;
+    }
+
+    .Description,.Questions {
+      text-align: left;
     }
   
   }
