@@ -1,8 +1,8 @@
 import React from "react";
 import { CardWrapper, Cards } from "./PriceCards.style";
-import cardOne from "./assets/cardOne.png";
-import cardTwo from "./assets/cardTwo.png";
-import cardThree from "./assets/cardThree.png";
+import cardOne from "../assets/cardOne.png";
+import cardTwo from "../assets/cardTwo.png";
+import cardThree from "../assets/cardThree.png";
 
 function PriceCards() {
   return (

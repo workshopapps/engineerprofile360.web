@@ -1,19 +1,28 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
+  max-width: 1300px;
   width: 100%;
-  height: 100vh;
+
   background-color: #fff;
 
   font-family: "Inter", sans-serif;
   display: flex;
   align-items: center;
-  justify-content: center;
+  padding: 20px 5px 50px;
   flex-direction: column;
+
+  @media (min-width: 748px) {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
 `;
 export const HeroHeader = styled.h2`
   font-size: 42px;
-
+  text-align: center;
   font-weight: 600;
   line-height: 52px;
 `;
@@ -28,7 +37,7 @@ export const HeroButtonDiv = styled.p`
   align-items: center;
   justify-content: center;
   margin-top: 30px;
-  padding-bottom: 40px;
+  padding-bottom: 150px;
 `;
 export const HeroButtonShade = styled.button`
   font-size: 18px;

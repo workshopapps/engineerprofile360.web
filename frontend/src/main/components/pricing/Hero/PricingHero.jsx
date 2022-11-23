@@ -1,6 +1,4 @@
 import React from "react";
-import GetToKnow from "./GetToKnow";
-import PriceCards from "./PriceCards";
 
 import {
   HeroButtonClear,

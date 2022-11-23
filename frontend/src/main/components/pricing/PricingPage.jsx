@@ -1,15 +1,18 @@
 import React from "react";
-import GetToKnow from "./GetToKnow";
-import PriceCards from "./PriceCards";
-import PricingHero from "./PricingHero";
+import GetToKnow from "./GetToKnow/GetToKnow";
+import PriceCards from "./Pricecards/PriceCards";
+import PricingHero from "./Hero/PricingHero";
+import Accordion from "./Accordion/Accordion";
+import { PricingWrapper } from "./PricingPage.style";
 
 function PricingPage() {
   return (
-    <>
-      <PricingHero />
+    <PricingWrapper>
+      <PricingHero />;
       <PriceCards />
       <GetToKnow />
-    </>
+      <Accordion />
+    </PricingWrapper>
   );
 }
 
