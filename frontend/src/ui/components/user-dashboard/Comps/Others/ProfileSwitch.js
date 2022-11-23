@@ -9,6 +9,7 @@ const Container = styled.div`
   background: #faf9f8;
   opacity: 0.7;
   width: 7%;
+  padding:.5em;
 
   @media (max-width: 768px) {
     top: 11rem;
@@ -18,9 +19,10 @@ const Container = styled.div`
 
   #{&} a {
     display: flex;
-    justify-content: center;
-    gap: 0.5rem;
+    justify-content: flex-start;
     align-items: center;
+    margin-top:.5em;
+    gap: 0.5rem;
     text-decoration: none;
   }
 `

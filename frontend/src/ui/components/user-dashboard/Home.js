@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 const Container = styled.div`
   min-width: 1240px;
   box-sizing: border-box;
+  padding:1.5rem;
 
   @media (max-width: 768px) {
     width: 100%;
