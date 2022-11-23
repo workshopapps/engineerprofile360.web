@@ -106,6 +106,7 @@ const FooterContainer = styled(Container)`
   grid-template-columns: 3fr 1fr 1fr 1fr;
   column-gap: ${({ theme }) => theme.spacing(10)};
   row-gap: ${({ theme }) => theme.spacing(8)};
+  padding: ${({theme}) => theme.spacing(6)} ${({theme}) => theme.spacing(6)};
 
   ${({ theme }) => theme.breakpoints.down("md")} {
     grid-template-columns: 1fr 1fr 1fr;
@@ -113,6 +114,7 @@ const FooterContainer = styled(Container)`
 
   ${({ theme }) => theme.breakpoints.down("xs")} {
     grid-template-columns: 1fr;
+    padding: ${({theme}) => theme.spacing(6)} ${({theme}) => theme.spacing(2)};
   }
 `;
 

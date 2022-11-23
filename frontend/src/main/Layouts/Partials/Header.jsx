@@ -71,6 +71,11 @@ const HeaderContainer = styled(Container)`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 ${({theme}) => theme.spacing(6)};
+
+  ${({theme}) => theme.breakpoints.down("xs")} {
+    padding: ${({theme}) => theme.spacing(6)} ${({theme}) => theme.spacing(2)};
+  }
 
   div:last-of-type {
     ${({ theme }) => theme.breakpoints.up("md")} {
