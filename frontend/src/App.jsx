@@ -16,6 +16,7 @@ import Terms from "../src/ui/pages/termsAndService/TermsAndService";
 import UserProfile from "./ui/pages/user-profile/UserProfile";
 import Register from "../src/main/components/sections/adminSignup/AdminSignup";
 import Login from "../src/main/components/sections/adminLogin/AdminLogin";
+import Forgot from "../src/main/components/sections/adminForgot/AdminForgot";
 import Blog from "../src/main/pages/Blog";
 import AssessmentList from "./main/components/sections/userAssessmentList/AssessmentList";
 import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
@@ -41,6 +42,7 @@ const App = () => {
           <Route path="/termsAndService" element={<Terms />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot" element={<Forgot />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/assessment-list" element={<AssessmentList />} />
           <Route path="/admin-assessment" element={<AdminAssessmentList />} />
