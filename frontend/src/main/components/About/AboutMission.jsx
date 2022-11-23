@@ -43,16 +43,11 @@ export default AboutMission;
 
 const AboutMissionSection = styled.div`
   width: 100%;
-  padding: 0 ${({ theme }) => theme.spacing(6)};
   background: #004578;
   text-align: center;
   background-image: url(${missionBg});
   background-position: center;
   background-repeat: no-repeat;
-
-  @media (max-width: 480px) {
-    padding: 0 ${({ theme }) => theme.spacing(3)};
-  }
 `;
 
 const AboutMissionContainer = styled(Container)`
@@ -62,14 +57,12 @@ const AboutMissionContainer = styled(Container)`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(6)};
   min-height: 650px;
-  padding: ${({ theme }) => theme.spacing(10)} 0;
 
   div:nth-of-type(1) {
     p {
       color: #f3f2f1;
       font-weight: 600;
       width: initial;
-      font-size: 20px;
     }
   }
 
@@ -79,22 +72,29 @@ const AboutMissionContainer = styled(Container)`
     list-style-type: initial;
     width: 75%;
     display: flex;
+    padding-left: ${({ theme }) => theme.spacing(2)};
     flex-direction: column;
     gap: ${({ theme }) => theme.spacing(2)};
 
-    @media (max-width: 767px) {
+    ${({ theme }) => theme.breakpoints.down("sm")} {
       width: initial;
     }
 
     li {
       font-size: 20px;
       line-height: 28px;
+
+      ${({ theme }) => theme.breakpoints.down("sm")} {
+        font-size: 18px;
+      }
+
+      ${({ theme }) => theme.breakpoints.down("xs")} {
+        font-size: 16px;
+      }
     }
   }
 
   p {
-    line-height: 28px;
     color: #f3f2f1;
-    font-size: 20px;
   }
 `;

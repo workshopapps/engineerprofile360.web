@@ -50,16 +50,11 @@ export default AboutStory;
 
 const AboutStorySection = styled.div`
   width: 100%;
-  padding: 0 ${({ theme }) => theme.spacing(6)};
   background: #004578;
   text-align: center;
   background-image: url(${storyBg});
   background-position: center;
   background-repeat: no-repeat;
-
-  @media (max-width: 480px) {
-    padding: 0 ${({ theme }) => theme.spacing(3)};
-  }
 `;
 
 const AboutStoryContainer = styled(Container)`
@@ -69,24 +64,20 @@ const AboutStoryContainer = styled(Container)`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(6)};
   min-height: 850px;
-  padding: ${({ theme }) => theme.spacing(10)} 0;
 
   div:nth-of-type(1) {
     p {
       color: #f3f2f1;
       font-weight: 600;
       width: initial;
-      font-size: 20px;
     }
   }
 
   p {
-    line-height: 28px;
     color: #c8c6c4;
     width: 75%;
-    font-size: 20px;
 
-    @media (max-width: 767px) {
+    ${({ theme }) => theme.breakpoints.down("sm")} {
       width: initial;
     }
   }

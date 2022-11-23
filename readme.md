@@ -27,7 +27,7 @@
 
 ## Contributions
 
-Engineering360 is open to contributions, but I recommend creating an issue or replying in a comment to let us know what you are working on first that way we don't overwrite each other.
+Engineering360 is open to contributions, but I recommend creating an issue or replying in a comment to let us know what you are working on first that way we don't overwrite each other..
 
 Please read [CONTRIBUTING.md](https://github.com/workshopapps/engineerprofile360.web/blob/main/CONTRIBUTING.md) for details on this project.
 
