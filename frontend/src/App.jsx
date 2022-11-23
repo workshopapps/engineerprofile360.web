@@ -11,11 +11,12 @@ import Confirmed from "./main/components/demo-pages-components/components/Confir
 import ScheduleDemo from "./main/components/demo-pages-components/components/ScheduleDemo";
 
 import Support from "../src/ui/pages/UserSupport";
-import Terms from "../src/ui/pages/TermsAndService/TermsAndService";
+import Terms from "../src/ui/pages/termsAndService/TermsAndService";
 
 import UserProfile from "./ui/pages/user-profile/UserProfile";
 import Register from "../src/main/components/sections/adminSignup/AdminSignup";
 import Login from "../src/main/components/sections/adminLogin/AdminLogin";
+import Forgot from "../src/main/components/sections/adminForgot/AdminForgot";
 import Blog from "../src/main/pages/Blog";
 import AssessmentList from "./main/components/sections/userAssessmentList/AssessmentList";
 import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
@@ -23,8 +24,8 @@ import UserTakeAssessment from "./main/components/sections/userTakeAssessment/Us
 import Privacy from "./main/pages/Privacy/privacy";
 import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
-
-
+import Testimonial from "./main/components/Testimonials/Testimonial";
+import HelpCenter from "../src/main/pages/HelpCenter";
 
 const App = () => {
   return (
@@ -38,9 +39,10 @@ const App = () => {
           <Route path="/confirm-demo" element={<Confirmed />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/support" element={<Support />} />
-          <Route path="/termsAndService" element={<Terms />} />
+          <Route path="/terms" element={<Terms />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot" element={<Forgot />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/assessment-list" element={<AssessmentList />} />
           <Route path="/admin-assessment" element={<AdminAssessmentList />} />
@@ -56,9 +58,9 @@ const App = () => {
           <Route path="/setting" element={<AdminSetting />} />
           <Route path="/privacy-policy" element={<Privacy />} />
           <Route path="/employee-profile" element={<EmployeeProfile />} />
+          <Route path="/testimonial" element={<Testimonial />} />
         </Routes>
       </MainLayout>
-
 
       {/* <UserProfile /> */}
       {/* <UiLayout> */}
