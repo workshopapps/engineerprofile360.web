@@ -92,11 +92,11 @@ Route::prefix("company")->group(function () {
 
 // questions route operations
 Route::prefix("question")->group(function () {
-    Route::post('add', [QuestionsController::class, 'addManually']);
-    Route::get('get/{org_id}', [QuestionsController::class, 'getQuestByOrgId']);
-    Route::get('category/{id}', [QuestionsController::class, 'getByCategoryId']);
-    Route::put('{questionId}/{assessmenId}/update', [QuestionsController::class, 'updateQuestion']);
-    Route::get('/assessment/{assessmentId}', [QuestionsController::class, 'getQuestionByAssessmentId']);
+    Route::post('add', [QuestionsController::class, 'addManually'])->middleware("isloggedin");
+    Route::get('get/{org_id}', [QuestionsController::class, 'getQuestByOrgId'])->middleware("isloggedin");
+    Route::get('category/{id}', [QuestionsController::class, 'getByCategoryId'])->middleware("isloggedin");
+    Route::put('{questionId}/{assessmenId}/update', [QuestionsController::class, 'updateQuestion'])->middleware("isloggedin");
+    Route::get('/assessment/{assessmentId}', [QuestionsController::class, 'getQuestionByAssessmentId'])->middleware("isloggedin");
 });
 
 // Categories routes operation
@@ -114,7 +114,6 @@ Route::prefix('employee')->group(function () {
     Route::get('{id}', [EmployeeController::class, 'getById']);
     Route::get('/company/{org_id}', [EmployeeController::class, 'byCompId']);
     Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
-
 });
 
 

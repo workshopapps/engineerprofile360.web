@@ -12,7 +12,7 @@ class QuestionsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        // $this->middleware('auth:api');
     }
 
     public function addManually(CreateQuestionRequest $request): JsonResponse
@@ -24,7 +24,7 @@ class QuestionsController extends Controller
                 Question::create($data);
                 return $this->successResponse(true, 'Question created', Response::HTTP_CREATED);
             }else {
-                return $this->errorResponse('Query failed', Response::HTTP_FAILED);
+                return $this->errorResponse('Invalid Request', Response::HTTP_NOT_FOUND);
             }
 
         } catch (Exception $e) {
