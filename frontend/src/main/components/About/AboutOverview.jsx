@@ -39,14 +39,11 @@ const AccountOverview = () => {
 export default AccountOverview;
 
 const OverviewContainer = styled(Container)`
-  padding: 0 ${({ theme }) => theme.spacing(6)};
+  padding-top: 0;
+  padding-bottom: 0;
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing(8)};
-
-  @media (max-width: 480px) {
-    padding: 0 ${({ theme }) => theme.spacing(3)};
-  }
 `;
 
 const OverviewText = styled.div`
@@ -56,27 +53,23 @@ const OverviewText = styled.div`
   flex: 0 0 calc(50% - ${({ theme }) => theme.spacing(3)});
   padding: ${({ theme }) => theme.spacing(10)} 0;
 
-  @media (max-width: 767px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     flex: initial;
   }
 
   p {
-    line-height: 28px;
     color: #605e5c;
-    font-size: 20px;
   }
 `;
 
 const OverviewImage = styled.div`
-  // height: 100%;
   flex: 0 0 calc(50% - ${({ theme }) => theme.spacing(3)});
 
-  @media (max-width: 767px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     display: none;
   }
 
   img {
     max-width: 100%;
-    // height: 100%;
   }
 `;

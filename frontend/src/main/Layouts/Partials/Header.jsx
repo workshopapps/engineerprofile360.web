@@ -67,18 +67,18 @@ const HeaderTag = styled.header`
 `;
 
 const HeaderContainer = styled(Container)`
-  padding: 0 ${({ theme }) => theme.spacing(4)};
   height: 96px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 ${({theme}) => theme.spacing(6)};
 
-  @media (max-width: 480px) {
-    padding: 0 ${({ theme }) => theme.spacing(2)};
+  ${({theme}) => theme.breakpoints.down("xs")} {
+    padding: ${({theme}) => theme.spacing(6)} ${({theme}) => theme.spacing(2)};
   }
 
   div:last-of-type {
-    @media (min-width: 961px) {
+    ${({ theme }) => theme.breakpoints.up("md")} {
       display: none;
     }
   }
@@ -89,7 +89,7 @@ const ButtonGroup = styled.div`
   align-items: center;
   gap: ${({ theme }) => theme.spacing(2)};
 
-  @media (max-width: 960px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     display: none;
   }
 `;
