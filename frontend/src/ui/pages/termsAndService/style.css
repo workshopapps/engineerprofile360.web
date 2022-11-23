@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+li{
+  list-style-type: none;
+  margin-bottom: 10px;
+}.mainDiv {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+.mainDiv .terms {
+  margin-bottom: 2rem;
+}
+.mainDiv .terms h1 {
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+.mainDiv .terms h1 span {
+  color: #295a9a;
+  font-size: 1.8rem;
+}
+.mainDiv .terms p {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+.mainDiv .first p {
+  margin-bottom: 2.5rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+.mainDiv .second h1 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 600;
+}
+.mainDiv .second h2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 600;
+}
+.mainDiv .second p {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+.aside{
+  background-color: #ffff;
+}
+.mainDiv .button {
+  margin-bottom: 10rem;
+  margin-top: 3rem;
+}
+.mainDiv .button .wrapper {
+  float: right;
+  padding: 0.5rem 0.75rem;
+  /* width: 16.5rem; */
+  border: 2px solid #8b8b8d;
+  border-radius: 0.125rem;
+  display: flex;
+}
+.mainDiv .button .wrapper img {
+  padding-right: 0.5rem;
+}
+.aside ul{
+  background-color: #EFF6FC;
+  padding: 1rem 1.5rem;
+}
+h6{
+  text-align: center;
+  margin-bottom: 5px;
+}
+/*# sourceMappingURL=style.css.map */
