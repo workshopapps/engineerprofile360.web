@@ -6,7 +6,7 @@ import MainLayout from "./main/Layouts/MainLayout";
 
 import Contact from "./main/pages/Contact";
 import { Home, About } from "./main/pages";
-import { AdminAuthLayout, AdminSignup } from "./main/components";
+// import { AdminAuthLayout, AdminSignup } from "./main/components";
 import Confirmed from "./main/components/demo-pages-components/components/Confirmed";
 import ScheduleDemo from "./main/components/demo-pages-components/components/ScheduleDemo";
 
@@ -56,9 +56,9 @@ const App = () => {
           <Route path="/privacy-policy" element={<Privacy />} />
           <Route path="/employee-profile" element={<EmployeeProfile />} /> 
         </Route>
-        <Route element={<AdminAuthLayout />}>
+        {/* <Route element={<AdminAuthLayout />}>
           <Route path="/signup" element={<AdminSignup />} />
-        </Route>
+        </Route> */}
       </Routes>
 
       {/* <UserProfile /> */}
