@@ -1,4 +1,4 @@
-# 360deg Evaluator
+# 360deg Evaluator.
 
 ## 🚀 Quick start
 
