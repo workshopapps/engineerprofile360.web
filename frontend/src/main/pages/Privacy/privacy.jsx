@@ -6,7 +6,7 @@ const Privacy = () => {
       <div className={styles.container}>
         <div className={styles.page__header}>
           <h1 className={styles.page__head}>
-            Skript <span>Privacy Policy</span>
+            Skript <span className={styles.span}>Privacy Policy</span>
           </h1>
           <div className={styles.page__date}>
             Last updated on November 15, 2022
@@ -297,7 +297,7 @@ const Privacy = () => {
               </p>
             </div>
           </div>
-          <div className={styles.righ_feature}>
+          <div className={styles.right_feature}>
             <h2 className={styles.title__table}>TABLE OF CONTENT</h2>
             <div className={styles.table}>
               <div>
