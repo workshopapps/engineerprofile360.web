@@ -20,6 +20,7 @@
 
   .Signup_container header img {
     margin-bottom: 80px;
+    display: initial!important;
   }
 
   .Signup_container header h1 {

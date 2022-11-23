@@ -8,17 +8,17 @@
 .main_content {
   display: grid;
   background: hwb(204 97% 1%);
-  grid-template-columns: 500px 500px;
-  row-gap: 32px;
+  grid-template-columns: auto auto;
+  row-gap: 35px;
+  column-gap: 180px;
   padding: 38px 45px 98px 45px;
   align-items: center;
 }
 
 .form_control {
   display: grid;
-  grid-template-columns: auto;
+  grid-template-columns: 1fr;
   row-gap: 10px;
-  width: fit-content;
 }
 
 .form_label {
@@ -31,8 +31,11 @@
 
 .form_input {
   padding: 30px 22px;
-  max-width: 428px;
-  border: 0.647238px solid #9194fc;
+  border: 0.6px solid #9194fc;
+}
+
+.form_input:focus {
+    outline: 1px solid #3F8EFC;
 }
 
 .submit_btn {
@@ -42,7 +45,7 @@
   justify-self: center;
   background: #2667ff;
   border: none;
-
+  cursor: pointer;
   font-weight: 400;
   font-size: 20px;
   line-height: 28px;
@@ -51,21 +54,29 @@
   color: #ffffff;
 }
 
+.submit_btn:hover {
+    background: #3F8EFC;; 
+}
+
+
 @media screen and (max-width: 1024px) {
     .main_content {
         padding: 38px 30px 98px 30px;
       }
-    .form_input {
+    /* .form_input {
         max-width: 290px;
-    }
+    } */
 }
 
 @media screen and (max-width: 769px) {
     .main_content {
-        grid-template-columns: 1fr;
-        padding: 38px 30px 98px 30px;
+        padding: 38px 25px 98px 25px;
       }
     .submit_btn {
         grid-row: span 1;
+    }
+
+    .form_control {
+        grid-column: span 2;
     }
 }

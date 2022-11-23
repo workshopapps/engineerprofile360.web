@@ -16,6 +16,7 @@ import Support from "../src/ui/pages/UserSupport";
 import UserProfile from "./ui/pages/user-profile/UserProfile";
 import Register from "../src/main/components/sections/adminSignup/AdminSignup";
 import Login from "../src/main/components/sections/adminLogin/AdminLogin";
+import Forgot from "../src/main/components/sections/adminForgot/AdminForgot";
 import Blog from "../src/main/pages/Blog";
 import AssessmentList from "./main/components/sections/userAssessmentList/AssessmentList";
 import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
@@ -23,6 +24,8 @@ import UserTakeAssessment from "./main/components/sections/userTakeAssessment/Us
 import Privacy from "./main/pages/Privacy/privacy";
 import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
+import Testimonial from "./main/components/Testimonials/Testimonial";
+import HelpCenter from "../src/main/pages/HelpCenter";
 
 const App = () => {
   return (
@@ -40,6 +43,7 @@ const App = () => {
           {/* <Route path="/termsAndService" element={<Terms />} /> */}
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot" element={<Forgot />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/assessment-list" element={<AssessmentList />} />
           <Route path="/admin-assessment" element={<AdminAssessmentList />} />
