@@ -18,5 +18,5 @@ export { default as AboutVision } from "./About/AboutVision";
 
 // Admin auth exports
 
-export { default as AdminAuthLayout } from "./Auth/Layout/AdminAuthLayout";
-export { default as AdminSignup } from "./Auth/AdminSignup";
+//export { default as AdminAuthLayout } from "./Auth/Layout/AdminAuthLayout";
+//export { default as AdminSignup } from "./Auth/AdminSignup";
