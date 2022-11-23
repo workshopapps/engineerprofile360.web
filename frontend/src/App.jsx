@@ -26,6 +26,7 @@ import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import HelpCenter from "../src/main/pages/HelpCenter";
 
+
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
@@ -60,9 +61,11 @@ const App = () => {
         </Routes>
       </MainLayout>
 
+
       {/* <UserProfile /> */}
       {/* <UiLayout> */}
       {/* ALL APP PAGES SHOULD BE ROUTED WITH THIS LAYOUT COMPONENET */}
+
       {/* </UiLayout> */}
     </ThemeProvider>
   );
