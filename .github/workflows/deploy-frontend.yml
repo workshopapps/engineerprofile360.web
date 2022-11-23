@@ -1,7 +1,9 @@
 on:
   push:
     branches:
-    - dev
+      - dev
+    paths:
+      - 'frontend'
    
   
     
@@ -15,9 +17,9 @@ jobs:
         with:
           node-version: '16.10.0'
       - name: install packages
-        run: yarn install
+        run: cd frontend &&  yarn install
       - name: build application
-        run: yarn build
+        run: cd frontend && yarn build
         
 
   build:
