@@ -29,7 +29,7 @@ const NavBar = () => {
 export default NavBar;
 
 const Nav = styled.nav`
-  @media (max-width: 960px) {
+  ${({ theme }) => theme.breakpoints.down("md")} {
     display: none;
   }
 `;
