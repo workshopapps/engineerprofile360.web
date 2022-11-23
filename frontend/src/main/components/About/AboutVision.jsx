@@ -27,16 +27,11 @@ export default AboutVision;
 
 const AboutVisionSection = styled.div`
   width: 100%;
-  padding: 0 ${({ theme }) => theme.spacing(6)};
   background: #c7e0f4;
   text-align: center;
   background-image: url(${visionBg});
   background-position: right;
   background-repeat: no-repeat;
-
-  @media (max-width: 480px) {
-    padding: 0 ${({ theme }) => theme.spacing(3)};
-  }
 `;
 
 const AboutVisionContainer = styled(Container)`
@@ -46,16 +41,13 @@ const AboutVisionContainer = styled(Container)`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(6)};
   min-height: 300px;
-  padding: ${({ theme }) => theme.spacing(10)} 0;
 
   p {
-    line-height: 28px;
     color: #323130;
-    font-size: 20px;
     font-weight: 600;
     width: 75%;
 
-    @media (max-width: 767px) {
+    ${({ theme }) => theme.breakpoints.down("sm")} {
       width: initial;
     }
   }
