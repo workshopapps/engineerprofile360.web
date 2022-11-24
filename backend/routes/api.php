@@ -3,18 +3,19 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\CategoryController;
-// use App\Http\Controllers\User\UserController;
-use App\Http\Controllers\QuestionsController;
-use App\Http\Controllers\UserScoreController;
-use App\Http\Controllers\AssessmentController; 
-use App\Http\Controllers\UserAssessmentController;
-
-use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\AuthenticationController;
+// use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\InterviewController;
+use App\Http\Controllers\QuestionsController;
+
+use App\Http\Controllers\UserScoreController;
+use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\AuthenticateController;
+use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\UserAssessmentController;
 
 
 // util functions
@@ -35,7 +36,7 @@ use App\Http\Controllers\DepartmentController;
 Route::get("/test", function () {
     // execute the function
     return $this->successResponse(true, "Test case pass", null, 200);
-}); 
+});
 
 //USERSCORE
 Route::prefix("userscore")->group(function () {
@@ -133,6 +134,12 @@ Route::prefix('employee')->group(function () {
 Route::prefix("department")->group(function () {
     Route::get('{id}', [DepartmentController::class, 'getDeptByID']);
     Route::post('/add', [DepartmentController::class, 'addDepartment']);
+});
+
+// Interview routes
+Route::prefix('interview')->group(function () {
+    Route::get('all', [InterviewController::class, 'getInterviews']);
+    Route::get('{id}', [InterviewController::class, 'getInterviewById']);
 });
 
 
