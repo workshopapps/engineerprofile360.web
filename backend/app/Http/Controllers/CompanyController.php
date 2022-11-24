@@ -88,7 +88,6 @@ class CompanyController extends Controller
     {
         try {
             $company = Company::find($user_id);
-            dd($company);
             $checkCompany = Company::where('user_id', $user_id)->exists();
 
             if(!$checkCompany) {
