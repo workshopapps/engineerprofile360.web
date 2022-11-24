@@ -14,27 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('userassessments', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->uuid('id')->unique();
             $table->integer("completed")->length(1)->default(0);
             $table->integer("total_questions")->nullable();
             $table->integer("correct_questions")->nullable();
             $table->integer("result")->nullable();
-            $table->foreignUuid('employee_id')
-                ->references('id')
-                ->on('employees')
-                ->onDelete('cascade');
-            $table->foreignUuid('assessment_id')
-                ->references('id')
-                ->on('assessments')
-                ->onDelete('cascade');
-            $table->foreignUuid('org_id')
-                ->references('id')
-                ->on('companies')
-                ->onDelete('cascade');
-            $table->foreignUuid('userscore_id')
-                ->references('id')
-                ->on('user_scores')
-                ->onDelete('cascade');
+            $table->foreignUuid('employee_id')->references('id')->on('employees')->onDelete('cascade');
+            $table->foreignUuid('assessment_id')->references('id')->on('assessments')->onDelete('cascade');
+            $table->foreignUuid('org_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->foreignUuid('userscore_id')->references('id')->on('user_scores')->onDelete('cascade');
             $table->timestamps();
             
         });
