@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import useInputValidation from "../../../hooks/useInputValidation";
 
 const InputField = ({
   id,
@@ -9,6 +10,7 @@ const InputField = ({
   placeholder,
   name,
   value,
+  helperText,
   startIcon,
   endIcon,
 
@@ -18,7 +20,7 @@ const InputField = ({
   $fullWidth = true,
 
   handleChange,
-  handleBlur
+  handleBlur,
 }) => {
   return (
     <InputGroup>
@@ -38,9 +40,11 @@ const InputField = ({
           name={name}
           onChange={handleChange}
           onBlur={handleBlur}
+          required
         />
         {endIcon && <span>{endIcon}</span>}
       </InputContainer>
+      <span>{helperText}</span>
     </InputGroup>
   );
 };
@@ -60,11 +64,9 @@ const InputGroup = styled.div`
   gap: ${({ theme }) => theme.spacing(1)};
 
   label {
-    font-size: ${(props) =>
-      props.$size === "lg" ? "20px" : "16px"};
+    font-size: ${(props) => (props.$size === "lg" ? "20px" : "16px")};
     color: #323130;
-    font-weight: ${(props) =>
-      props.$size === "lg" ? "600" : "400"};
+    font-weight: ${(props) => (props.$size === "lg" ? "600" : "400")};
     ${({ theme }) => theme.breakpoints.down("sm")} {
       font-size: 18px;
     }
@@ -72,6 +74,11 @@ const InputGroup = styled.div`
     ${({ theme }) => theme.breakpoints.down("xs")} {
       font-size: 16px;
     }
+  }
+
+  span {
+    color: red;
+    font-size: 12px;
   }
 `;
 
@@ -94,8 +101,7 @@ const InputContainer = styled.div`
   }
 
   input {
-    font-size: ${(props) =>
-      props.$size === "lg" ? "24px" : "14px"};
+    font-size: ${(props) => (props.$size === "lg" ? "24px" : "14px")};
   }
 `;
 
