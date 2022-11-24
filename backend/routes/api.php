@@ -14,7 +14,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\DepartmentController;
-
+use App\Http\Controllers\UserAssessmentController;
 
 // util functions
 // employee csv file parser.
@@ -127,6 +127,10 @@ Route::prefix("department")->group(function () {
     Route::post('/add', [DepartmentController::class, 'addDepartment']);
 });
 
+// UserAssessment Toures
+Route::prefix("userassessment")->group(function() {
+    Route::get('{id}', [UserAssessmentController::class, 'getAssessmentByID']);
+});
 
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);
