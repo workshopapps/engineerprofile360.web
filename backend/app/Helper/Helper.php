@@ -20,7 +20,7 @@ class Helper extends Controller
 
     public $baseUrl = "http://api.skript.hng.tech";
     // public $baseUrl = "http://localhost:8000";
-    public $clientUrl = "http://localhost:8000"; // this would be the frontend client url
+    public $clientUrl = "http://api.skript.hng.tech"; // this would be the frontend client url
 
     public function generateRefreshToken($userId, $user_email)
     {
