@@ -15,7 +15,6 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\UserAssessmentController;
-use App\Http\Controllers\DepartmentController;
 
 
 // util functions
