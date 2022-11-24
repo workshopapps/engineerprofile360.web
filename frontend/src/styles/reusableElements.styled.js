@@ -29,9 +29,9 @@ export const Button = styled.button`
   min-width: 77px;
   min-height: 44px;
   max-width: 288px;
-  height: ${(props) => (props.$size === "lg" ? "80px" : "auto")};
-  width: ${(props) => (props.$size === "lg" ? "280px" : "auto")};
-  font-size: ${(props) => (props.$size === "lg" ? "20px" : "auto")};
+  height: ${(props) => (props.$size === "md" ? "48px" : props.$size === "lg" ? "80px" : "auto")};
+  width: ${(props) => (props.$size === "md" ? "201px" : props.$size === "lg" ? "280px" : "auto")};
+  font-size: ${(props) => (props.$size === "md" ? "14px" : props.$size === "lg" ? "20px" : "auto")};
   display: flex;
   align-items: center;
   justify-content: center;

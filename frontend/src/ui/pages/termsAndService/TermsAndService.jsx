@@ -4,7 +4,7 @@ import "./style.css";
 
 function TermsAndService() {
   return (
-    <div className="container  mainDiv">
+    <div className="container mainDiv">
       <div className="terms">
         <h1>
           Skript <span> Terms of Service</span>
@@ -372,6 +372,7 @@ function TermsAndService() {
             </p>
           </div>
         </div>
+
         <div className="aside col-sm-12 col-md-3 offset-md-1 d-none d-md-block ">
           <h6 className="mx-auto">TABLE OF CONTENT</h6>
           <div>
@@ -408,6 +409,7 @@ function TermsAndService() {
                 <li>Viruses/Bugs</li>
               </a>
             </ul>
+
             <div className="button col-12">
               <div className=" wrapper">
                 <img src={Sms} alt="Sms icon" />

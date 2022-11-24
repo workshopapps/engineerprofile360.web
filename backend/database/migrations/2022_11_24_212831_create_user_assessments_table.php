@@ -13,15 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('assessments', function (Blueprint $table) {
+        Schema::create('user_assessments', function (Blueprint $table) {
             $table->uuid('id')->unique();
-            $table->string("name");
-            $table->string("start_date");
-            $table->string("start_time");
+            $table->string("completed");
+            $table->string("total_questions")->nullable();
+            $table->string("correct_questions")->nullable();
+            $table->string("result")->nullable();
+            $table->string('employee_id');
+            $table->string('assessment_id');
             $table->string('org_id');
+            $table->string('userscore_id');
             $table->timestamps();
-            // $table->foreignId('user_id')->nullable()->constrained();
-            // $table->foreign("org_id")->references("user")->on("user_id")->onDelete("cascade");
         });
     }
 
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('assessments');
+        Schema::dropIfExists('user_assessments');
     }
 };

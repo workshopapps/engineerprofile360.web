@@ -1,0 +1,42 @@
+name: deploy skript frontend
+on:
+  push:
+    branches:
+      - dev
+    paths:
+      - frontend/**
+   
+  
+    
+jobs:
+  
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.10.0'
+      - name: install packages
+        run: cd frontend/ && git init && yarn install --ignore-scripts
+      - name: build application
+        run: cd frontend/ && yarn build
+        env:
+           CI: ""
+        
+
+  build:
+    needs: run-tests
+    runs-on: ubuntu-latest
+    steps:
+    - name: deploy to server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: |
+          cd engineerprofile360.web/
+          git pull origin dev
+          docker-compose up -d --build frontend
