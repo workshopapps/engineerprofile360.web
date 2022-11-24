@@ -7,7 +7,8 @@ use App\Http\Controllers\CategoryController;
 // use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UserScoreController;
-use App\Http\Controllers\AssessmentController;
+use App\Http\Controllers\AssessmentController; 
+use App\Http\Controllers\UserAssessmentController;
 
 use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\CompanyController;
@@ -51,6 +52,13 @@ Route::prefix("user")->group(function () {
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
     Route::put('/{userId}/update', [UserController::class, 'updaterUserInfo'])->middleware("isloggedin");
     Route::get('/get/all', [UserController::class, 'allUsers']);
+});
+
+
+//userAssessment routes operations
+Route::prefix("userassessment")->group(function () {
+    Route::post('/accept/{assessmentId}/{employmentId}', [UserAssessmentController::class, 'acceptUserAssessment']);
+    Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
 });
 
 
