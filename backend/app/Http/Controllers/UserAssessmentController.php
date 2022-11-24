@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Models\UserAssessment;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\UserAssessmentRequest;
 use Illuminate\Support\Facades\DB;
 use Exception;
+use Illuminate\Http\JsonResponse;
 
 class UserAssessmentController extends Controller
 {
@@ -44,6 +44,49 @@ class UserAssessmentController extends Controller
           }
      }
 
+    /**
+     * Fetch available user assessment by company id.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    //
+    public function GetOrgAvailableAssessment($id): JsonResponse
+    {
+        try 
+        {
+            $userassessment = UserAssessment::where('org_id', $id)->where("completed", false)->get();
+            $checkuserassessment = UserAssessment::where('org_id', $id)->where("completed", false)->exists();
+            if (!$checkuserassessment) {
+                return $this->sendResponse(true, 'Fetch Available User Assessment By Company ID failed', 'No Available User Assessment exist for this Company ID', null, Response::HTTP_NOT_FOUND);
+            }
+            return $this->sendResponse(false, null, 'OK', $userassessment, Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, 'Fetch Available User Assessment By Company ID failed', $e->getMessage());
+        }
+    }
+
+
+    /**
+     * Fetch completed user assessment by company id.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    //
+    public function GetOrgCompletedAssessment($id): JsonResponse
+    {
+        try 
+        {
+            $userassessment = UserAssessment::where('org_id', $id)->where("completed", true)->get();
+            $checkuserassessment = UserAssessment::where('org_id', $id)->where("completed", true)->exists();
+            if (!$checkuserassessment) {
+                return $this->sendResponse(true, 'Fetch Completed User Assessment By Company ID failed', 'No User Assessment exist for this company ID', null, Response::HTTP_NOT_FOUND);
+            }
+            return $this->sendResponse(false, null, 'OK', $userassessment, Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, 'Fetch Completed User Assessment By ID Company failed', $e->getMessage());
+        }
+    }
+    
 
 
     /**
