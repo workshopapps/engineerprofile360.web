@@ -280,4 +280,30 @@ class UserAssessmentController extends Controller
 
 
     }
+
+    public function getUserTopPerformance($userid)
+    {
+        try
+        {
+            $userResults = UserAssessment::where('employee_id',$userid)->get()->pluck('result');
+
+            if(count($userResults) > 0) {
+
+                $max = $userResults->max();
+
+                return $this->sendResponse(true, null, 'User Top Performance',$max,Response::HTTP_OK);
+            }
+
+            return $this->sendResponse(true, null, 'No Score found for the given User Id', [], Response::HTTP_NOT_FOUND);
+
+        }catch (Exception $e)
+        {
+            Log::error("UserScore Error", array("details" => $e->getMessage()));
+
+            return $this->sendResponse(false, null, "Unable to fetch User's Top Performance",Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+
+
+    }
 }
