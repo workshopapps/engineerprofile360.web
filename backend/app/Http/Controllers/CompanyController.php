@@ -10,11 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CompanyController extends Controller
 {
-    public function __construct()
-    {
-        
-    }
-
     /**
      * Get all Companies
      */
@@ -22,14 +17,16 @@ class CompanyController extends Controller
     {
         try{
             $companies = Company::get();
+            $checkCompanies = Company::exists();
 
-            if(!$companies) {
-                $companies = [];
+            if(!$checkCompanies) {
+                $checkCompanies = [];
+                return $this->sendResponse(true, null, 'Companies is empty', $checkCompanies, Response::HTTP_NOT_FOUND);
             }
 
-            return $this->successResponse(true,'All companies',$companies,Response::HTTP_OK);
+            return $this->sendResponse(false, null, 'All companies fetched successfully', $companies, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->errorResponse('Companies not fetched', $e->getMessage());
+            return $this->sendResponse(true, null, 'Something went wrong', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -38,30 +35,26 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function updateCompany(CompanyRequest $request, $companyId): JsonResponse
+    public function updateCompany(CompanyRequest $request, $company_id): JsonResponse
     {
         try{
-            $updatedData = json_decode($request->getContent(), true);
+            $updateCompany  = $request->all();
 
-            // Get category by id
-            $company = Company::find($companyId);
+            $company = Company::find($company_id);
+            $checkCompany = Company::where('id', $company_id)->exists();
 
-            if( !$company ) {
-                return $this->errorResponse(
-                    'Company does not exist',
-                    'Company not found',
-                    Response::HTTP_NOT_FOUND
-                );
+            if(!$checkCompany) {
+                $checkCompany = [];
+                return $this->sendResponse(true, null, 'This company does\'nt exists', $checkCompany, Response::HTTP_NOT_FOUND);
             }
 
-            $company->update($updatedData);
+            $company->update($updateCompany);
 
-            // success response
-            return $this->successResponse(true, 'Company updated successfully', Response::HTTP_OK);
+            return $this->sendResponse(false, null, 'Company Updated Successfully', $checkCompany, Response::HTTP_OK);
         }  catch (Exception $e) {
-            return $this->errorResponse('Company not fetched', $e->getMessage());
+            return $this->sendResponse(true, null, 'Something went wrong', Response::HTTP_BAD_REQUEST);
         }
-       
+
     }
 
     /**
@@ -73,26 +66,38 @@ class CompanyController extends Controller
     {
         try {
             $company = Company::find($id);
-            if(is_null($company)) {
-                return $this->errorResponse('Company does not exists', Response::HTTP_NOT_FOUND);
+            $checkCompany = Company::where('id', $id)->exists();
+
+            if(!$checkCompany) {
+                $checkCompany = [];
+                return $this->sendResponse(true, null, 'The company doesn\'t exists', $checkCompany, Response::HTTP_NOT_FOUND);
             }
-            return $this->successResponse(true, 'Company', $company, Response::HTTP_OK);
+
+            return $this->sendResponse(false, null, 'Company fetched successfully', $company, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->errorResponse('Companies not fetched', $e->getMessage());
+            return $this->sendResponse(true, null, 'Something went wrong', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-    
 
-    public function getCompanyByUserId($userId): JsonResponse
+    /**
+     * Get company by user_id.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getCompanyByUserId($user_id): JsonResponse
     {
         try {
-            $company = Company::where('user_id', $userId)->first();
-            if(is_null($company)) {
-                return $this->errorResponse('Company does not exists', Response::HTTP_NOT_FOUND);
+            $company = Company::find($user_id);
+            $checkCompany = Company::where('user_id', $user_id)->exists();
+
+            if(!$checkCompany) {
+                $checkCompany = [];
+                return $this->sendResponse(true, null, 'The company doesn\'t exists', $checkCompany, Response::HTTP_NOT_FOUND);
             }
-            return $this->successResponse(true, 'Company', $company, Response::HTTP_OK);
+
+            return $this->sendResponse(false, null, 'Company fetched successfully', $company, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->errorResponse('Companies not fetched', $e->getMessage());
+            return $this->sendResponse(true, null, 'Something went wrong', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }
