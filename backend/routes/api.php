@@ -147,6 +147,7 @@ Route::prefix("user-assessment")->group(function () {
     Route::get('{org_id}/org-available', [UserAssessmentController::class, 'GetOrgAvailableAssessment']);
     Route::get('{org_id}/org-completed', [UserAssessmentController::class, 'GetOrgCompletedAssessment']);
     Route::get('{id}', [UserAssessmentController::class, 'getAssessmentByID']);
+    Route::get('top-performance/{userId}', [UserAssessmentController::class, 'getUserTopPerformance']);
 });
 
 Route::fallback(function () {

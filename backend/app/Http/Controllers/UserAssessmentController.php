@@ -281,11 +281,11 @@ class UserAssessmentController extends Controller
 
     }
 
-    public function getUserTopPerformance($userid)
+    public function getUserTopPerformance($userId)
     {
         try
         {
-            $userResults = UserAssessment::where('employee_id',$userid)->get()->pluck('result');
+            $userResults = UserAssessment::where('employee_id',$userId)->get()->pluck('result');
 
             if(count($userResults) > 0) {
 
