@@ -122,6 +122,7 @@ Route::prefix('employee')->group(function () {
 // department route
 Route::prefix("department")->group(function () {
     Route::get('{id}', [DepartmentController::class, 'getDeptByID']);
+    Route::post('/add', [DepartmentController::class, 'addDepartment']);
 });
 
 
