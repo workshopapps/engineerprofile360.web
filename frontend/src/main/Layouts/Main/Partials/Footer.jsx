@@ -1,16 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 
-import logo from "../../../assets/images/logo.svg";
-import facebook from "../../../assets/icons/facebook.svg";
-import instagram from "../../../assets/icons/instagram.svg";
-import twitter from "../../../assets/icons/twitter.svg";
-import linkedin from "../../../assets/icons/linkedin.svg";
+import logo from "../../../../assets/images/logo.svg";
+import facebook from "../../../../assets/icons/facebook.svg";
+import instagram from "../../../../assets/icons/instagram.svg";
+import twitter from "../../../../assets/icons/twitter.svg";
+import linkedin from "../../../../assets/icons/linkedin.svg";
 import {
   Button,
   Container,
   Title,
-} from "../../../styles/reusableElements.styled";
+} from "../../../../styles/reusableElements.styled";
 import { Link } from "react-router-dom";
 
 const Footer = () => {

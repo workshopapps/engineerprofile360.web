@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-import arrowDown from "../../../assets/icons/arrow-down.svg";
-import close from "../../../assets/icons/close.svg";
-import { Button } from "../../../styles/reusableElements.styled";
+import arrowDown from "../../../../assets/icons/arrow-down.svg";
+import close from "../../../../assets/icons/close.svg";
+import { Button } from "../../../../styles/reusableElements.styled";
 
 const MobileNav = ({ handleMenu }) => {
   return (
