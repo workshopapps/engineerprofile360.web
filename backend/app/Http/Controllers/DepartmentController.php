@@ -22,7 +22,7 @@ class DepartmentController extends Controller
             return $this->sendResponse(false, null, 'Department created successfully', $department, Response::HTTP_CREATED);
 
         } catch (Exception $e) {
-            $this->sendResponse(true, 'Error creating the department', $e->getMessage(), null, Response::HTTP_INTERNAL_SERVER_ERROR);
+            $this->sendResponse(true, 'Error creating the department', $e->getMessage(), null, Response::HTTP_BAD_REQUEST);
         }
     }
 
@@ -45,7 +45,7 @@ class DepartmentController extends Controller
             return $this->sendResponse(false,null, "department retrieved sucessfully", $department, Response::HTTP_OK);
 
         } catch (Exception $e) {
-            $this->sendResponse(true, 'Error fetching the departments', $e->getMessage(), null, Response::HTTP_INTERNAL_SERVER_ERROR);
+            $this->sendResponse(true, 'Error fetching the departments', $e->getMessage(), null, Response::HTTP_BAD_REQUEST);
         }
     }
 }
