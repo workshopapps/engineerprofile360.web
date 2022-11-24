@@ -133,7 +133,7 @@ class AuthenticateController extends Controller {
     public function registerUser(Request $request){
         // validate
         $payload = json_decode($request->getContent(), true);
-        $email = $payload["register"];
+        $email = $payload["email"];
         $username = $payload["username"];
         $fullname = $payload["full_name"];
         $password = $payload["password"];
