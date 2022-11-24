@@ -1,0 +1,127 @@
+.Forgot_container {
+    height: auto;
+    width: 100%;
+    margin:40px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 40px;
+  }
+
+  .Forgot_container a{
+    text-decoration: none;
+    color: #2667FF;
+  }
+  .Forgot_container header {
+    color: #323130;
+    text-align: center;
+    align-self: center;
+  }
+
+  .Forgot_container header img {
+    margin-bottom: 80px;
+    display: initial!important;
+  }
+
+  .Header_second_img {
+    margin-bottom: 0px !important;
+  }
+
+  .Forgot_container header h1 {
+    font-weight: 600;
+    font-size: 42px;
+    line-height: 52px;
+  }
+
+  .Forgot_container header p {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 36px;
+  }
+
+  .Form_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: start;
+    padding: 40px;
+  }
+
+  .Form_container input {
+    width: 531px;
+    height: 60px;
+    border: 1px solid #8A8886;
+    border-radius: 4px;
+    margin-bottom: 24px;
+    padding: 14px 16px;
+  }
+
+  .Form_container input:focus-visible {
+    background: #FFFFFF;
+    border: 2px solid #2667ff !important;
+    border-radius: 2px;
+    outline: none;
+}
+
+  .Form_container label {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 28px;color: #323130;
+    margin-bottom: -18px;
+  }
+
+  .Form_container img{
+    position: relative;
+    right: -90%;
+    top: 43px;
+  }
+ 
+
+  .Form_container input[type=submit] {
+    padding: 6px 20px;
+    width: 201px;
+    height: 48px;
+    background: #2667FF;
+    border-radius: 2px;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    align-self: center;
+  }
+
+  
+  /* Media queries */
+  @media screen and (max-width: 767px) {
+    .Forgot_container {
+      align-items: stretch;
+      text-align: center;
+    }
+
+    
+    .Forgot_container header h1 {
+      font-size: 32px;
+    }
+  
+    .Forgot_container header p {
+      font-size: 14px;
+    }
+
+    .Form_container input {
+      width: 100%;
+      padding: 14px 16px;
+    }
+
+    .Form_container img{
+      position: relative;
+      right: -90%;
+      top: 43px;
+    }
+
+    .Form_container input[type=submit] {
+      width: 100%;
+    }
+  
+  }
+  
