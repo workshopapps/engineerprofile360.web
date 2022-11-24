@@ -55,15 +55,6 @@ Route::prefix("user")->group(function () {
 });
 
 
-//userAssessment routes operations
-Route::prefix("userassessment")->group(function () {
-    Route::post('/accept/{assessmentId}/{employmentId}', [UserAssessmentController::class, 'acceptUserAssessment']);
-    Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
-    Route::get('{org_id}/available', [UserAssessmentController::class, 'GetOrgAvailableAssessment']);
-    Route::get('{org_id}/completed', [UserAssessmentController::class, 'GetOrgCompletedAssessment']);
-});
-
-
 //Assessment routes operations
 Route::prefix("assessment")->group(function () {
     Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAssessment']);
@@ -137,6 +128,14 @@ Route::prefix("department")->group(function () {
     Route::post('/add', [DepartmentController::class, 'addDepartment']);
 });
 
+// User Assessment routes
+Route::prefix("user-assessment")->group(function () {
+    Route::post('/accept/{assessmentId}/{employmentId}', [UserAssessmentController::class, 'acceptUserAssessment']);
+    Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
+    Route::get('/{employee_id}/completed', [UserAssessmentController::class, 'getEmployeeCompletedAssessment'])->middleware("isloggedin");
+    Route::get('{org_id}/available', [UserAssessmentController::class, 'GetOrgAvailableAssessment']);
+    Route::get('{org_id}/completed', [UserAssessmentController::class, 'GetOrgCompletedAssessment']);
+});
 
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);
