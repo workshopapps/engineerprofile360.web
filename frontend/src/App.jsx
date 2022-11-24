@@ -68,7 +68,6 @@ const App = () => {
         <Route element={<AdminAuthLayout />}>
           <Route path="/register" element={<AdminSignup />} />
           <Route path="/login" element={<AdminLogin />} />
-          <Route path="/signup" element={<AdminSignup />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route
             path="/reset-password-success"
