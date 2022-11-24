@@ -206,11 +206,11 @@ class AuthenticateController extends Controller {
         $token = Token::where("token", $token);
 
         if($user->count() == 0){
-            return $this->sendResponse(true, 'Invalid verification link or verification expires',"Invalid verification link", null, 400);
+            return $this->sendResponse(true, 'Invalid verification link, no user was found',"Invalid verification link", null, 404);
         }
         
         if($token->count() == 0){
-            return $this->sendResponse(true, 'Invalid verification link or verification expires',"Invalid verification link", null, 400);
+            return $this->sendResponse(true, 'Invalid verification link or verification expires',"Invalid verification link....", null, 400);
         }
 
         // check if user has been verified already

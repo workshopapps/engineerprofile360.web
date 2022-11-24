@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateEmployeeRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\JsonResponse;
 use App\Models\Employee;
+use App\Models\Department;
 use Exception;
 
 
@@ -102,6 +103,37 @@ class EmployeeController extends Controller
             return $this->successResponse(true, 'Employee Added Successfully', $employee, Response::HTTP_CREATED);
         } catch (Exception $e) {
             return $this->errorResponse('Employee Action Failed', $e->getMessage());
+        } 
+    }
+
+    public function getEmplyeeByDepartment($departmentId, $employeeId)
+    {
+        try {
+            $department = Department::find($departmentId);
+
+            if( !$department ) {
+                return $this->sendResponse(
+                    'Department do not exist',
+                    'Department not found',
+                    Response::HTTP_NOT_FOUND
+                );
+            }
+            $employee = Employee::find($employeeId);
+
+            if( !$employee ) {
+                return $this->sendResponse(
+                    false,
+                    'Empoyee do not exist',
+                    'Employees not found',
+                    Response::HTTP_NOT_FOUND
+                );
+            }
+
+            $departmentEmployee = Employee::where('department_id', $departmentId)->where('id', $employee->id)->get();
+
+            return $this->sendResponse(false, 'Employee', $departmentEmployee, Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->sendResponse('Employee could not be fetched', $e->getMessage());
         } 
     }
 }

@@ -3,16 +3,19 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CompanyController;
 // use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\QuestionsController;
+
 use App\Http\Controllers\UserScoreController;
-use App\Http\Controllers\AssessmentController;
+use App\Http\Controllers\AssessmentController; 
+use App\Http\Controllers\UserAssessmentController;
 
 use App\Http\Controllers\AuthenticateController;
-use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\AuthenticationController;
-use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\DepartmentController;
 
 
 // util functions
@@ -33,7 +36,7 @@ use App\Http\Controllers\EmployeeController;
 Route::get("/test", function () {
     // execute the function
     return $this->successResponse(true, "Test case pass", null, 200);
-}); 
+});
 
 //USERSCORE
 Route::prefix("userscore")->group(function () {
@@ -53,9 +56,18 @@ Route::prefix("user")->group(function () {
 });
 
 
+//userAssessment routes operations
+Route::prefix("userassessment")->group(function () {
+    Route::post('/accept/{assessmentId}/{employmentId}', [UserAssessmentController::class, 'acceptUserAssessment']);
+    Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
+    Route::delete('/{id}/delete', [UserAssessmentController::class,'deleteUserAssessment']);
+    Route::put('/{id}/update', [UserAssessmentController::class, 'updateUserAssessment']);
+});
+
+
 //Assessment routes operations
 Route::prefix("assessment")->group(function () {
-    Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAss']);
+    Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAssessment']);
     Route::post('/create', [AssessmentController::class, 'createAssessment'])->middleware("isloggedin","isadmin");
     Route::put('/{assessmentId}', [AssessmentController::class, 'updateAssessment']);
     Route::get('/{organisationId}', [AssessmentController::class, 'getAssByOrgId']);
@@ -93,10 +105,11 @@ Route::prefix("company")->group(function () {
 // questions route operations
 Route::prefix("question")->group(function () {
     Route::post('add', [QuestionsController::class, 'addManually']);
-    Route::get('get/{org_id}', [QuestionsController::class, 'getQuestByOrgId']);
-    Route::get('category/{id}', [QuestionsController::class, 'getByCategoryId']);
-    Route::put('{questionId}/{assessmenId}/update', [QuestionsController::class, 'updateQuestion']);
-    Route::get('/assessment/{assessmentId}', [QuestionsController::class, 'getQuestionByAssessmentId']);
+    Route::get('{id}', [QuestionsController::class, 'getQuestById']);
+    Route::get('company/{id}', [QuestionsController::class, 'getQuestByComId']);
+    Route::get('category/{id}', [QuestionsController::class, 'getQuestByCatId']);
+    Route::put('update/{questionId}', [QuestionsController::class, 'updateQuestion']);
+    Route::get('/assessment/{id}', [QuestionsController::class, 'getQuestByAssId']);
 });
 
 // Categories routes operation
@@ -114,9 +127,25 @@ Route::prefix('employee')->group(function () {
     Route::get('{id}', [EmployeeController::class, 'getById']);
     Route::get('/company/{org_id}', [EmployeeController::class, 'byCompId']);
     Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
+    Route::get('{departmentId}/{employeeId}', [EmployeeController::class, 'getEmplyeeByDepartment']);
 
 });
 
+
+// department route
+Route::prefix("department")->group(function () {
+    Route::get('{id}', [DepartmentController::class, 'getDeptByID']);
+    Route::post('/add', [DepartmentController::class, 'addDepartment']);
+});
+
+// User Assessment routes
+Route::prefix("user-assessment")->group(function () {
+    Route::post('/accept/{assessmentId}/{employmentId}', [UserAssessmentController::class, 'acceptUserAssessment']);
+    Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
+    Route::get('/{employee_id}/completed', [UserAssessmentController::class, 'getEmployeeCompletedAssessment'])->middleware("isloggedin");
+    Route::get('{org_id}/org-available', [UserAssessmentController::class, 'GetOrgAvailableAssessment']);
+    Route::get('{org_id}/org-completed', [UserAssessmentController::class, 'GetOrgCompletedAssessment']);
+});
 
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);

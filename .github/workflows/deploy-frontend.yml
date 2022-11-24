@@ -1,17 +1,10 @@
-<<<<<<< HEAD
-=======
 name: deploy skript frontend
->>>>>>> 23dba6b686bd6cf3a0fb146779fd5f2f272afad2
 on:
   push:
     branches:
       - dev
     paths:
-<<<<<<< HEAD
-      - 'frontend'
-=======
       - frontend/**
->>>>>>> 23dba6b686bd6cf3a0fb146779fd5f2f272afad2
    
   
     
@@ -25,20 +18,14 @@ jobs:
         with:
           node-version: '16.10.0'
       - name: install packages
-<<<<<<< HEAD
-        run: cd frontend &&  yarn install
-      - name: build application
-        run: cd frontend && yarn build
-=======
         run: cd frontend/ && git init && yarn install --ignore-scripts
-      - name:  build application
+      - name: build application
         run: cd frontend/ && yarn build
         env:
            CI: ""
->>>>>>> 23dba6b686bd6cf3a0fb146779fd5f2f272afad2
         
 
-  build:
+  deploy-to-server:
     needs: run-tests
     runs-on: ubuntu-latest
     steps:
@@ -47,20 +34,9 @@ jobs:
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
-<<<<<<< HEAD
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
-        script: |
-          cd /srv/engineerprofile360.web/
-          git pull origin dev
-          docker-compose up -d --build frontend
-          
-          
-=======
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         script: |
           cd engineerprofile360.web/
           git pull origin dev
           docker-compose up -d --build frontend
->>>>>>> 23dba6b686bd6cf3a0fb146779fd5f2f272afad2

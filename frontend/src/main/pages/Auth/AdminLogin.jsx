@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import { Container, Button } from "../../../styles/reusableElements.styled";
 import { AuthTitle, InputField } from "../../components";
@@ -34,7 +35,7 @@ const AdminLogin = () => {
               <input type="checkbox" /> Remember me
             </label>
 
-            <a href="/">Forgot password?</a>
+            <Link to="/">Forgot password?</Link>
           </Checkbox>
 
           <Button $size="md" type="submit">
@@ -43,7 +44,7 @@ const AdminLogin = () => {
 
           <div>
             <span>
-              Don't have an account? <a href="/signup">Sign up</a>
+              Don't have an account? <Link to="/register">Sign up</Link>
             </span>
           </div>
         </LoginForm>
@@ -84,5 +85,10 @@ const Checkbox = styled.div`
     align-self: center;
     display: flex;
     gap: ${({ theme }) => theme.spacing(1)};
+  }
+
+  a:active,
+  a:visited {
+    color: #2667ff;
   }
 `;
