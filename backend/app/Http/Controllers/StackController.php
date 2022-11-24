@@ -25,31 +25,4 @@ class StackController extends Controller
             return $this->sendResponse(true, 'Stack not created', $e->getMessage());
         }
     }
-
-
-    public function updateStack(StackRequest $request, $stack_id)
-    {
-        try {
-            $updatedStack = $request->all();
-
-            // Get question by id
-            $stack = Stack::find($stack_id);
-            $checkStack = Stack::where('id', $stack_id)->exists();
-            if (!$checkStack) {
-                return $this->sendResponse(
-                    true,
-                    'Fetch Stack By ID failed',
-                    'Stack does not exist',
-                    null,
-                    Response::HTTP_NOT_FOUND
-                );
-            }
-            $stack->update($updatedStack);
-
-            // send response
-            return $this->sendResponse(false, null, 'Stack updated', $updatedStack, Response::HTTP_OK);
-        } catch (Exception $e) {
-            return $this->sendResponse(true, 'Stack not fetched', $e->getMessage());
-        }
-    }
 }
