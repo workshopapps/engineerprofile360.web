@@ -141,7 +141,7 @@ Route::prefix("department")->group(function () {
 
 // Stack Route
 Route::prefix("stack")->group(function () {
-    Route::post('add', [StackController::class, 'addStack']);
+    Route::post('add', [StackController::class, 'addStack'])->middleware("isloggedin", "isadmin");
 });
 
 
