@@ -116,6 +116,7 @@ Route::prefix('employee')->group(function () {
     Route::get('{id}', [EmployeeController::class, 'getById']);
     Route::get('/company/{org_id}', [EmployeeController::class, 'byCompId']);
     Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
+    Route::get('{departmentId}/{employeeId}', [EmployeeController::class, 'getEmplyeeByDepartment']);
 
 });
 
