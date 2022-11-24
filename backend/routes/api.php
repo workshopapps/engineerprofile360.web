@@ -55,7 +55,7 @@ Route::prefix("user")->group(function () {
 });
 
 
-//Assessment routes operations
+//userAssessment routes operations
 Route::prefix("userAssessment")->group(function () {
     Route::post('/accept/{assessmentId}/{employmentId}', [UserAssessmentController::class, 'acceptUserAssessment']);
 });
