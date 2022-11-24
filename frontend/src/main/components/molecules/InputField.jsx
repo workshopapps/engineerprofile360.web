@@ -16,6 +16,12 @@ const InputField = ({
   $background = false,
   $size,
   $fullWidth = true,
+<<<<<<< HEAD
+=======
+
+  handleChange,
+  handleBlur
+>>>>>>> 23dba6b686bd6cf3a0fb146779fd5f2f272afad2
 }) => {
   return (
     <InputGroup>
@@ -23,7 +29,11 @@ const InputField = ({
       <InputContainer
         $rounded={$rounded}
         $background={$background}
+<<<<<<< HEAD
         $size="lg"
+=======
+        $size={$size}
+>>>>>>> 23dba6b686bd6cf3a0fb146779fd5f2f272afad2
         $fullWidth={$fullWidth}
       >
         {startIcon && <span>{startIcon}</span>}
@@ -33,6 +43,11 @@ const InputField = ({
           value={value}
           placeholder={placeholder}
           name={name}
+<<<<<<< HEAD
+=======
+          onChange={handleChange}
+          onBlur={handleBlur}
+>>>>>>> 23dba6b686bd6cf3a0fb146779fd5f2f272afad2
         />
         {endIcon && <span>{endIcon}</span>}
       </InputContainer>
@@ -55,9 +70,17 @@ const InputGroup = styled.div`
   gap: ${({ theme }) => theme.spacing(1)};
 
   label {
+<<<<<<< HEAD
     font-size: 20px;
     color: #696969;
     font-weight: 600;
+=======
+    font-size: ${(props) =>
+      props.$size === "lg" ? "20px" : "16px"};
+    color: #323130;
+    font-weight: ${(props) =>
+      props.$size === "lg" ? "600" : "400"};
+>>>>>>> 23dba6b686bd6cf3a0fb146779fd5f2f272afad2
     ${({ theme }) => theme.breakpoints.down("sm")} {
       font-size: 18px;
     }
@@ -74,7 +97,11 @@ const InputContainer = styled.div`
   gap: ${({ theme }) => theme.spacing(2)};
   padding: ${({ theme }) => theme.spacing(2)};
   height: ${(props) =>
+<<<<<<< HEAD
     props.$size === "md" ? "56px" : props.$size === "lg" ? "88px" : "32px"};
+=======
+    props.$size === "md" ? "56px" : props.$size === "lg" ? "80px" : "32px"};
+>>>>>>> 23dba6b686bd6cf3a0fb146779fd5f2f272afad2
   width: ${(props) => (props.$fullWidth ? "100%" : "auto")};
   border: 1px solid ${({ theme }) => theme.palette.border.default};
   border-radius: ${(props) =>
