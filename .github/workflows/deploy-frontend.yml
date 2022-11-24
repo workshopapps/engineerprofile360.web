@@ -21,6 +21,8 @@ jobs:
         run: cd frontend/ && git init && yarn install --ignore-scripts
       - name:  build application
         run: cd frontend/ && yarn build
+        env:
+           CI: ""
         
 
   build:
