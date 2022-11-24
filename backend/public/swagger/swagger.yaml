@@ -3,7 +3,7 @@ openapi: 3.0.0
 servers:
   # Added by API Auto Mocking Plugin
   - description: Engineering 360 App
-    url: https://api.skript.hng.tech/api
+    url: http://api.skript.hng.tech/api
 info:
   version: "1.0.0"
   title: Engineering 360 API
