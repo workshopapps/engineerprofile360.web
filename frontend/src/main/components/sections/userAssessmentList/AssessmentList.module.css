@@ -1,0 +1,146 @@
+
+.Assessment_container {
+    height: auto;
+    width: 100%;
+    margin:40px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 40px;
+    padding: 40px;
+  }
+
+  .Assessment_container table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .Assessment_container th {
+    background-color: #F8FBFD;
+    text-align: left;
+    padding: 10px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    color: #605E5C;
+
+  }
+  
+  .Assessment_container td {
+    text-align: left;
+    padding: 8px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    color: #605E5C;
+  }
+  
+
+  .Table_container {
+    width: 100%;
+    overflow-x: auto;
+  }
+ 
+  .Assessment_container button {
+    width: 201px;
+    height: 48px;
+    padding: 6px 20px;
+    background-color: #FFFFFF;
+    border: 2px solid #2667FF;
+    border-radius: 2px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #2667FF;
+    cursor: pointer;
+    
+  }
+
+  .Filter_wrapper {
+    display: flex;
+    width: 100%!important;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+  }
+
+  .Filter_flex {
+    display: flex;
+    width: 25%;
+    justify-content: space-between;
+  }
+
+  .Filter_button {
+    background-color: #FFFFFF!important;
+    border: 1px solid #8A8886!important;
+    border-radius: 4px!important;
+    color: #8A8886!important;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  th,td{
+    white-space: normal;
+  }
+
+  
+  /*scrolling responsive table*/
+  table{
+    border-collapse:collapse;
+    width:100%;
+    }
+    
+  td,th {
+    text-align:left;
+    padding:8px;
+  }
+    
+  th:first-child, td:first-child{
+    background-color:white!important;
+    position:sticky!important;
+    left:0px!important;
+    width: 10px!important;
+    z-index: 1;
+  }
+  
+  th:nth-child(2), td:nth-child(2){
+    min-width: 67px!important;
+  }
+  
+  th:nth-child(3), td:nth-child(3){
+    min-width: 210px!important;
+  }
+
+  
+  /* Media queries */
+  @media screen and (max-width: 767px) {
+    .Assessment_container {
+      align-items: stretch;
+      text-align: center;
+    }
+
+    .Filter_wrapper {
+      flex-direction: column;
+      justify-content: space-between;
+  
+    }
+
+    .Filter_flex {
+      display: flex;
+      width: 100%!important;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+  }
+
+  @media screen and (max-width:1000px){
+    .Filter_flex {
+      width: 50%;
+    }
+  }
+  

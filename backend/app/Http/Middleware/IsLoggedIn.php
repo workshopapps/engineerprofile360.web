@@ -2,8 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Controllers\Controller;
 // use App\Helper\Helper;
+use App\Http\Controllers\Controller;
+use App\Helper\Helper;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -19,28 +20,36 @@ class IsLoggedIn extends Controller
 
     public function __construct()
     {
-        $this->helper = new App\Helper\Helper;
+        $this->helper = new Helper();
     }
 
     public function handle(Request $request, Closure $next)
-    {
-
-        // get token from request
-        $header = $request->header('Authorization');
-
-        // check if authorization header has been passed
-        if(!isset($header)){
-            return $this->errorResponse("Authorization header is missing", "Authorizaion is missing", 403);
-        }
-
-        $token = explode(" ", $header)[1];
-
+    {        
         try {
+            // get token from request
+            $header = $request->header('Authorization');
+    
+            // check if authorization header has been passed
+            if(!isset($header)){
+                return $this->sendResponse(true,"Authorization header is missing", "Authorizaion is missing", null, 403);
+            }
+    
+            // split header and extract the jwt token
+            $token = explode(" ", $header)[1];
             $jwt = $this->helper->decodeJwt($token);
-            return var_dump($jwt);
+            
+            $user = [
+                "id"=>$jwt->id,
+                "email"=>$jwt->email
+            ];
+
+            //pass the attribute onto the request
+            $request->merge(['user' => $user]);
+            
+            // call the next operation
+            return $next($request);
         } catch (\Exception $e) {
-            return print($e->getMessage());
+            return $this->sendResponse(true,"Invalid Authorization header", "Invalid JWT Token ".$e->getMessage(),null, 500);
         }
-        return $next($request);
     }
 }

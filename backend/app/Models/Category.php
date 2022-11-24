@@ -10,8 +10,12 @@ class Category extends Model
 {
     use HasFactory, Uuids;
 
+    /**
+     * @var $fillable
+    */
     protected $fillable = [
         'name',
         'assessment_id'
     ];
+
 }

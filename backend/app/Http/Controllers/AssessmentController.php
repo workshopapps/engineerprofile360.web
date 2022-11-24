@@ -81,14 +81,10 @@ class AssessmentController extends Controller
             $assessments = Assessment::where('org_id',$organization_id)->get();
             if(!$assessments) 
             {
-                return $this->errorResponse('No Companies assessments yet!', $e->getMessage());
+                $assessments = []; 
             }
 
-            return $this->successResponse(true, "All Company assessments", [
-                    "data" => [
-                    'assessments' => $assessments,
-                    ]
-                ]);
+            return $this->successResponse(true, "Organisation assessments", $assessments, Response::HTTP_OK);
 
         } catch (Exception $e) {
             return $this->errorResponse('Company assessments not found', $e->getMessage());
