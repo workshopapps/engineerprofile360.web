@@ -16,10 +16,12 @@
   .Forgot_container header {
     color: #323130;
     text-align: center;
+    align-self: center;
   }
 
   .Forgot_container header img {
     margin-bottom: 80px;
+    display: initial!important;
   }
 
   .Header_second_img {

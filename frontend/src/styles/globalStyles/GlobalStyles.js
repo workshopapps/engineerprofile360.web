@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components"
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
     html {
@@ -14,7 +14,7 @@ const GlobalStyles = createGlobalStyle`
 
     body {
         font-family: 'Inter', sans-serif;
-     background-color: #fff;
+        background-color: ${({theme}) => theme.palette.grey.white};
     }
 
     button {
@@ -22,7 +22,7 @@ const GlobalStyles = createGlobalStyle`
     }
 
     ul, ol {
-        list-style: none;
+        list-style-type: none;
     }
     a {
         text-decoration: none;
@@ -31,20 +31,22 @@ const GlobalStyles = createGlobalStyle`
         font-size: 20px;
         line-height: 28px;
 
-        @media (max-width: 767px) {
+        ${({ theme }) => theme.breakpoints.down("sm")} {
             font-size: 18px;
         }
 
-        
-        @media (max-width: 480px) {
+        ${({ theme }) => theme.breakpoints.down("xs")} {
             font-size: 16px;
         }
     }
 
     span {
-        font-size: 14px;
-        line-height: 28px;
-
+        font-size: 12px;
+        line-height: 18px;
     }
-`
-export default GlobalStyles
+
+    small {
+        font-size: 12px;
+    }
+`;
+export default GlobalStyles;

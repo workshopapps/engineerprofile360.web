@@ -101,20 +101,20 @@ const FooterTag = styled.footer`
 `;
 
 const FooterContainer = styled(Container)`
-  padding: ${({ theme }) => theme.spacing(6)} ${({ theme }) => theme.spacing(4)};
   height: 96px;
   display: grid;
   grid-template-columns: 3fr 1fr 1fr 1fr;
   column-gap: ${({ theme }) => theme.spacing(10)};
   row-gap: ${({ theme }) => theme.spacing(8)};
+  padding: ${({theme}) => theme.spacing(6)} ${({theme}) => theme.spacing(6)};
 
-  @media (max-width: 767px) {
-    grid-template-columns: 1fr 1fr;
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 
-  @media (max-width: 480px) {
-    padding: ${({ theme }) => theme.spacing(6)}
-      ${({ theme }) => theme.spacing(2)};
+  ${({ theme }) => theme.breakpoints.down("xs")} {
+    grid-template-columns: 1fr;
+    padding: ${({theme}) => theme.spacing(6)} ${({theme}) => theme.spacing(2)};
   }
 `;
 
@@ -124,14 +124,12 @@ const SkriptContact = styled.div`
   gap: ${({ theme }) => theme.spacing(4)};
   box-sizing: initial;
 
-  @media (max-width: 960px) {
-    grid-column: 1 / 3;
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    grid-column: 1 / 5;
   }
 
-  @media (max-width: 767px) {
+  ${({ theme }) => theme.breakpoints.down("xs")} {
     grid-column: 1 / 5;
-    padding-right: ${({ theme }) => theme.spacing(4)};
-    padding-top: 20px;
   }
 
   img {
@@ -150,8 +148,6 @@ const Newsletter = styled.div`
 
   span {
     color: #393a32;
-    font-size: 12px;
-    line-height: 18px;
   }
 
   form {
@@ -175,7 +171,7 @@ const SubscribeButton = styled(Button)`
   width: 30%;
   min-width: 139px;
 
-  @media (max-width: 480px) {
+  ${({ theme }) => theme.breakpoints.down("xs")} {
     min-width: 105px;
   }
 `;
@@ -205,7 +201,6 @@ const List = styled.ul`
   }
 
   a {
-    text-decoration: none;
     color: #393a32;
   }
 `;
@@ -235,17 +230,28 @@ const Copyright = styled.div`
 `;
 
 const About = styled(ListContainer)`
-  @media (max-width: 480px) {
-    grid-column: 1 / 5;
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    grid-column: 2 / 3;
+  }
+
+  ${({ theme }) => theme.breakpoints.down("xs")} {
+    grid-column: 2 / 4;
   }
 `;
 const Resources = styled(ListContainer)`
-  @media (max-width: 767px) {
-    grid-column: 1 / 5;
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    grid-column: 1 / 2;
+  }
+  ${({ theme }) => theme.breakpoints.down("xs")} {
+    grid-column: 1 / 2;
   }
 `;
 const Follow = styled(ListContainer)`
-  @media (max-width: 767px) {
-    grid-column: 1 / 5;
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    grid-column: 3 / 4;
+  }
+
+  ${({ theme }) => theme.breakpoints.down("xs")} {
+    grid-column: 1 / 4;
   }
 `;
