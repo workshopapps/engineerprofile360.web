@@ -10,7 +10,7 @@
 
 4. Start backend server locally.. `php artisan serve`. This should startup a local server @ `http://localhost:8000`
 
-> make sure MYSQL server has started locally before running the above commands.
+> make sure MYSQL server has started locally before running the above commands..
 
 
 # Useful Commands.
