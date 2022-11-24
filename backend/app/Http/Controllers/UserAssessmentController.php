@@ -6,7 +6,6 @@ use App\Models\Employee;
 use App\Models\UserAssessment;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Http\Requests\UserAssessmentRequest;
 use Illuminate\Support\Facades\DB;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -16,11 +15,11 @@ class UserAssessmentController extends Controller
    
 
    //Accepts user assessment
-   public function acceptUserAssessment(UserAssessmentRequest $request,$assessmentId,$employeeId)
+   public function acceptUserAssessment($assessmentId,$employeeId,$orgId)
    {
      try {
-     $userAssessment = UserAssessment::create(['employee_id'=>$employeeId,'assessment_id'=>$assessmentId,
-     'org_id'=>$request->org_id,'userscore_id'=>$request->userscore_id,'completed'=>0,
+      UserAssessment::create(['employee_id'=>$employeeId,'assessment_id'=>$assessmentId,
+     'org_id'=>$org_id,'userscore_id'=>' ','completed'=>0,
      'total_questions'=>0,'correct_questions'=>0,'result'=>0,]);
 
     return $this->sendResponse(false,null, 'Accepted user assessment successfully',null, Response::HTTP_CREATED);
@@ -38,7 +37,12 @@ class UserAssessmentController extends Controller
             ->orderBy('result', 'desc')
             ->get();
 
-            return $this->sendResponse(false,null, 'Organisation assessment sent successfully',$org_assessments, Response::HTTP_OK);
+            if ($org_assessments) {
+                return $this->sendResponse(false,null, 'Organisation assessment sent successfully',$org_assessments, Response::HTTP_OK);
+            }
+            else{
+                return $this->sendResponse(false,null, 'No record was found',null, Response::HTTP_OK);
+            }
           } catch (Exception $e) {
             return $this->sendResponse(true, $e->getMessage(), 'Organisation assessment could not be sent ',null, Response::HTTP_BAD_REQUEST);
           }
