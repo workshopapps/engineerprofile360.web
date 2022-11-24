@@ -27,7 +27,11 @@
 
 ## Contributions
 
+<<<<<<< HEAD
+Engineering360 is open to contributions, but I recommend creating an issue or replying in a comment to let us know what you are working on first that way we don't overwrite each other..
+=======
 Engineering360 is open to contributions, but I recommend creating an issue or replying in a comment to let us know what you are working on first that way we don't overwrite each other.
+>>>>>>> 23dba6b686bd6cf3a0fb146779fd5f2f272afad2
 
 Please read [CONTRIBUTING.md](https://github.com/workshopapps/engineerprofile360.web/blob/main/CONTRIBUTING.md) for details on this project.
 
@@ -77,4 +81,8 @@ Please read [CODE_OF_CONDUCT.md](https://github.com/workshopapps/engineerprofile
 
 ## How to run locally
 
+<<<<<<< HEAD
 Check <a href="https://github.com/workshopapps/engineerprofile360.web/blob/main/CONTRIBUTING.md#">here</a> on how to run locally</a>
+=======
+Check <a href="https://github.com/workshopapps/engineerprofile360.web/blob/main/CONTRIBUTING.md#">here</a> on how to run locally</a>
+>>>>>>> 23dba6b686bd6cf3a0fb146779fd5f2f272afad2
