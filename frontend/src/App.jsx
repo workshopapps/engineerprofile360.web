@@ -19,7 +19,7 @@ import Confirmed from "./main/components/demo-pages-components/components/Confir
 import ScheduleDemo from "./main/components/demo-pages-components/components/ScheduleDemo";
 
 import Support from "../src/ui/pages/UserSupport";
-import Terms from "../src/ui/pages/TermsAndService/TermsAndService";
+import Terms from "../src/ui/pages/termsAndService/TermsAndService";
 
 import UserProfile from "./ui/pages/user-profile/UserProfile";
 
