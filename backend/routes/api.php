@@ -53,7 +53,6 @@ Route::prefix("user")->group(function () {
     Route::get('/get/all', [UserController::class, 'allUsers']);
 });
 
-
 //Assessment routes operations
 Route::prefix("assessment")->group(function () {
     Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAssessment']);
@@ -126,6 +125,10 @@ Route::prefix("department")->group(function () {
     Route::post('/add', [DepartmentController::class, 'addDepartment']);
 });
 
+// User Assessment routes
+Route::prefix("user-assessment")->group(function () {
+    Route::get('/completed/{employee_id}', [UserAssessmentController::class, 'getEmployeeCompletedAssessment'])->middleware("isloggedin");
+});
 
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);
