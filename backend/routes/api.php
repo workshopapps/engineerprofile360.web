@@ -34,7 +34,7 @@ use App\Http\Controllers\DepartmentController;
 Route::get("/test", function () {
     // execute the function
     return $this->successResponse(true, "Test case pass", null, 200);
-}); 
+});
 
 //USERSCORE
 Route::prefix("userscore")->group(function () {
