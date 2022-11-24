@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: '16.10.0'
       - name: install packages
-        run: cd frontend/ && git init && yarn install
+        run: cd frontend/ && git init && yarn install --ignore-scripts
       - name:  build application
         run: cd frontend/ && yarn build
         
