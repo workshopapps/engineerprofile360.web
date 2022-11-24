@@ -9,13 +9,13 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\InterviewController;
 use App\Http\Controllers\QuestionsController;
-
 use App\Http\Controllers\UserScoreController;
 use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\UserAssessmentController;
+use App\Http\Controllers\DepartmentController;
 
 
 // util functions
@@ -60,6 +60,8 @@ Route::prefix("user")->group(function () {
 Route::prefix("userassessment")->group(function () {
     Route::post('/accept/{assessmentId}/{employmentId}', [UserAssessmentController::class, 'acceptUserAssessment']);
     Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
+    Route::delete('/{id}/delete', [UserAssessmentController::class,'deleteUserAssessment']);
+    Route::put('/{id}/update', [UserAssessmentController::class, 'updateUserAssessment']);
 });
 
 
@@ -142,6 +144,14 @@ Route::prefix('interview')->group(function () {
     Route::get('{id}', [InterviewController::class, 'getInterviewById']);
 });
 
+// User Assessment routes
+Route::prefix("user-assessment")->group(function () {
+    Route::post('/accept/{assessmentId}/{employmentId}', [UserAssessmentController::class, 'acceptUserAssessment']);
+    Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
+    Route::get('/{employee_id}/completed', [UserAssessmentController::class, 'getEmployeeCompletedAssessment'])->middleware("isloggedin");
+    Route::get('{org_id}/org-available', [UserAssessmentController::class, 'GetOrgAvailableAssessment']);
+    Route::get('{org_id}/org-completed', [UserAssessmentController::class, 'GetOrgCompletedAssessment']);
+});
 
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);
