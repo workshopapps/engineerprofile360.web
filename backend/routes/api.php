@@ -133,8 +133,8 @@ Route::prefix("user-assessment")->group(function () {
     Route::post('/accept/{assessmentId}/{employmentId}', [UserAssessmentController::class, 'acceptUserAssessment']);
     Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
     Route::get('/{employee_id}/completed', [UserAssessmentController::class, 'getEmployeeCompletedAssessment'])->middleware("isloggedin");
-    Route::get('{org_id}/available', [UserAssessmentController::class, 'GetOrgAvailableAssessment']);
-    Route::get('{org_id}/completed', [UserAssessmentController::class, 'GetOrgCompletedAssessment']);
+    Route::get('{org_id}/org-available', [UserAssessmentController::class, 'GetOrgAvailableAssessment']);
+    Route::get('{org_id}/org-completed', [UserAssessmentController::class, 'GetOrgCompletedAssessment']);
 });
 
 Route::fallback(function () {

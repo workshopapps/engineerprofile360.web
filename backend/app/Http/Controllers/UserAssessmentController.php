@@ -4,14 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Models\UserAssessment;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\UserAssessmentRequest;
 use Illuminate\Support\Facades\DB;
 use Exception;
 use Illuminate\Http\JsonResponse;
-use App\Models\UserAssessment;
 
 class UserAssessmentController extends Controller
 {
