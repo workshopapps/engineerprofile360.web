@@ -15,7 +15,7 @@ class DepartmentController extends Controller
     public function addDepartment(AddDepartmentRequest $request)
     {
         $data = $request->all();
-        
+
         try{
             $department = Department::create($data);
 
@@ -28,7 +28,7 @@ class DepartmentController extends Controller
 
     // @dreywandowski --- get department by ID
     public function getDeptByID(string $departmentId)
-    {  
+    {
         try{
             $department = Department::find($departmentId);
 
@@ -48,5 +48,7 @@ class DepartmentController extends Controller
             $this->sendResponse(true, 'Error fetching the departments', $e->getMessage(), null, Response::HTTP_BAD_REQUEST);
         }
     }
+
+    
 }
 
