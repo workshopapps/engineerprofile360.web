@@ -33,7 +33,7 @@ class AssessmentController extends Controller
     {
         try{
             $assessment = Assessment::findorFail($assessmentId);
-
+            
             if( !$assessment) {
                 return $this->errorResponse(
                     'Assessment does not exist',
@@ -89,6 +89,10 @@ class AssessmentController extends Controller
         } catch (Exception $e) {
             return $this->errorResponse('Company assessments not found', $e->getMessage());
         }
+
+    }
+
+    public function notifyEmployeeAssessment(Request $req){
 
     }
 }
