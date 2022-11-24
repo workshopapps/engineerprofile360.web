@@ -13,6 +13,7 @@ use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\DepartmentController;
 
 
 // util functions
@@ -55,7 +56,7 @@ Route::prefix("user")->group(function () {
 
 //Assessment routes operations
 Route::prefix("assessment")->group(function () {
-    Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAss']);
+    Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAssessment']);
     Route::post('/create', [AssessmentController::class, 'createAssessment'])->middleware("isloggedin","isadmin");
     Route::put('/{assessmentId}', [AssessmentController::class, 'updateAssessment']);
     Route::get('/{organisationId}', [AssessmentController::class, 'getAssByOrgId']);
@@ -116,6 +117,12 @@ Route::prefix('employee')->group(function () {
     Route::get('/company/{org_id}', [EmployeeController::class, 'byCompId']);
     Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
 
+});
+
+
+// department route
+Route::prefix("department")->group(function () {
+    Route::get('{id}', [DepartmentController::class, 'getDeptByID']);
 });
 
 
