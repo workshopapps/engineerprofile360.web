@@ -55,13 +55,6 @@ Route::prefix("user")->group(function () {
 });
 
 
-//userAssessment routes operations
-Route::prefix("userassessment")->group(function () {
-    Route::post('/accept/{assessmentId}/{employmentId}', [UserAssessmentController::class, 'acceptUserAssessment']);
-    Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
-});
-
-
 //Assessment routes operations
 Route::prefix("assessment")->group(function () {
     Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAssessment']);
@@ -138,6 +131,8 @@ Route::prefix("department")->group(function () {
 // User Assessment routes
 Route::prefix("user-assessment")->group(function () {
     Route::get('/completed/{employee_id}', [UserAssessmentController::class, 'getEmployeeCompletedAssessment'])->middleware("isloggedin");
+    Route::post('/accept/{assessmentId}/{employmentId}', [UserAssessmentController::class, 'acceptUserAssessment']);
+    Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
 });
 
 Route::fallback(function () {
