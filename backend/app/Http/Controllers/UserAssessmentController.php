@@ -44,7 +44,33 @@ class UserAssessmentController extends Controller
           }
      }
 
-
+      /**
+      * It gets all the assessments for a given employee
+      * 
+      * @param string employee_id The id of the employee whose assessments you want to get.
+      * 
+      * @return JsonResponse All the assessments for the given employee.
+      */
+      public function getEmployeeAvailableAssessments($employee_id): JsonResponse 
+      {
+         try {
+ 
+           // Get all assessments for the employee
+             $employee = Employee::find($employee_id);
+ 
+             if (!$employee) {
+                 return $this->sendResponse(true, 'Employee not found', null, null, Response::HTTP_NOT_FOUND);
+             }
+ 
+             $employeeAssessments = UserAssessment::where('employee_id', $employee_id)->get();
+                
+             return $this->sendResponse(false, null, 'Employee assessments sent successfully', $employeeAssessments, Response::HTTP_OK);
+         } catch (Exception $e) {
+             return $this->sendResponse(true, $e->getMessage(), 'Employee assessments could not be sent ', null, Response::HTTP_BAD_REQUEST);
+         }
+      }
+ 
+ 
 
     /**
      * It gets all assessments completed by an employee where completed = true
