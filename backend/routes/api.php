@@ -58,6 +58,7 @@ Route::prefix("user")->group(function () {
 //userAssessment routes operations
 Route::prefix("userAssessment")->group(function () {
     Route::post('/accept/{assessmentId}/{employmentId}', [UserAssessmentController::class, 'acceptUserAssessment']);
+    Route::get('/org/{orgId}/', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
 });
 
 
