@@ -1,26 +1,27 @@
 import React from "react";
-import HomeBlog from "../components/sections/homeBlog/HomeBlog";
-import Homedecision from "../components/sections/homeDecision/HomeDecision";
-import HomeHero from "../components/sections/homeHero/HomeHero";
-import HomeProduct from "../components/sections/homeProducts/HomeProduct";
-import HomeStarted from "../components/sections/homeStarted/HomeStarted";
-import HomeStats from "../components/sections/homeStats/HomeStats";
-import HomeTestimony from "../components/sections/homeTestimony/HomeTestimony";
 
+import {
+  HomeHero,
+  HomeStats,
+  HomeDecision,
+  HomeFeatures,
+  HomeTestimonials,
+  HomeBlog,
+  HomeGetStarted,
+} from "../components";
 
-export default function Home() {
+const Home = () => {
   return (
     <>
       <HomeHero />
       <HomeStats />
-      <Homedecision />
-      <HomeProduct />
-      <HomeTestimony />
+      <HomeDecision />
+      <HomeFeatures />
+      <HomeTestimonials />
       <HomeBlog />
-      <HomeStarted />
-      
-     
-      
+      <HomeGetStarted />
     </>
   );
-}
+};
+
+export default Home;

@@ -84,7 +84,7 @@ class Helper extends Controller
             $mail = new Mailer();
             $mailMsg = "Verify your email using the link above";
             $mailData = "{$apiUrl}/api/auth/verify/${user_id}/${token}";
-            $mail->verifyEmail("test@mail.com", $email, $mailMsg, $mailData);
+            $mail->verifyEmail("mail@dicodetech.com", $email, $mailMsg, $mailData);
         } catch (\Exception $e) {
             return Log::info("Something went wrong sending email verification code.. ".$e->getMessage());
         }

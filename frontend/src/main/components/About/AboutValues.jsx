@@ -82,13 +82,8 @@ export default AboutValues;
 
 const AboutValuesSection = styled.div`
   width: 100%;
-  padding: 0 ${({ theme }) => theme.spacing(6)};
   background: #ffffff;
   text-align: center;
-
-  @media (max-width: 480px) {
-    padding: 0 ${({ theme }) => theme.spacing(3)};
-  }
 `;
 
 const AboutValuesContainer = styled(Container)`
@@ -96,7 +91,6 @@ const AboutValuesContainer = styled(Container)`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(6)};
   min-height: 300px;
-  padding: ${({ theme }) => theme.spacing(10)} 0;
 `;
 
 const Flex = styled.div`
@@ -106,7 +100,7 @@ const Flex = styled.div`
   justify-content: space-between;
   width: 100%;
 
-  @media (max-width: 767px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     flex-direction: column;
   }
 `;
@@ -118,8 +112,6 @@ const Text = styled.div`
   flex: 0 0 45%;
 
   p {
-    line-height: 28px;
-    font-size: 20px;
     color: #605e5c;
   }
 `;
@@ -136,7 +128,7 @@ const Reliability = styled(Flex)``;
 const Intuitiveness = styled(Flex)`
   flex-direction: row-reverse;
 
-  @media (max-width: 767px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     flex-direction: column;
   }
 `;
@@ -144,7 +136,7 @@ const Satisfaction = styled(Flex)``;
 const EngineerCentric = styled(Flex)`
   flex-direction: row-reverse;
 
-  @media (max-width: 767px) {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     flex-direction: column;
   }
 `;
