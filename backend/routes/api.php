@@ -139,6 +139,11 @@ Route::prefix("department")->group(function () {
     Route::post('/add', [DepartmentController::class, 'addDepartment']);
 });
 
+// Stack Route
+Route::prefix("stack")->group(function () {
+    Route::post('add', [StackController::class, 'addStack']);
+});
+
 
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);
