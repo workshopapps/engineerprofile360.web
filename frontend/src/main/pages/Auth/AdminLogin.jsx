@@ -86,4 +86,9 @@ const Checkbox = styled.div`
     display: flex;
     gap: ${({ theme }) => theme.spacing(1)};
   }
+
+  a:active,
+  a:visited {
+    color: #2667ff;
+  }
 `;
