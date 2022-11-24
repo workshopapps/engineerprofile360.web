@@ -1,3 +1,7 @@
+//  General exports
+
+export {default as InputField} from "./molecules/InputField";
+
 // Home exports
 
 export { default as HomeHero } from "./Home/HomeHero";
@@ -16,7 +20,7 @@ export { default as AboutValues } from "./About/AboutValues";
 export { default as AboutMission } from "./About/AboutMission";
 export { default as AboutVision } from "./About/AboutVision";
 
-// Admin auth exports
+//  Auth Layout export
 
-// export { default as AdminAuthLayout } from "./Auth/Layout/AdminAuthLayout";
-// export { default as AdminSignup } from "./Auth/AdminSignup";
+export { default as AdminAuthLayout } from "./Auth/Layout/AdminAuthLayout";
+export { default as AuthTitle } from "./Auth/molecules/AuthTitle";

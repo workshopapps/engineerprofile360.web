@@ -5,8 +5,8 @@ import { GlobalStyles, theme } from "./styles/globalStyles";
 import MainLayout from "./main/Layouts/MainLayout";
 
 import Contact from "./main/pages/Contact";
-import { Home, About } from "./main/pages";
-// import { AdminAuthLayout, AdminSignup } from "./main/components";
+import { AdminAuthLayout } from "./main/components";
+import { Home, About, AdminSignup, AdminLogin, ResetPassword, ResetPasswordSuccess, VerifyEmail } from "./main/pages";
 import Confirmed from "./main/components/demo-pages-components/components/Confirmed";
 import ScheduleDemo from "./main/components/demo-pages-components/components/ScheduleDemo";
 
@@ -14,9 +14,7 @@ import Support from "../src/ui/pages/UserSupport";
 // import Terms from "../src/ui/pages/TermsAndService/TermsAndService";
 
 import UserProfile from "./ui/pages/user-profile/UserProfile";
-import Register from "../src/main/components/sections/adminSignup/AdminSignup";
-import Login from "../src/main/components/sections/adminLogin/AdminLogin";
-import Forgot from "../src/main/components/sections/adminForgot/AdminForgot";
+
 import Blog from "../src/main/pages/Blog";
 import AssessmentList from "./main/components/sections/userAssessmentList/AssessmentList";
 import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
@@ -41,9 +39,6 @@ const App = () => {
  
           <Route path="/support" element={<Support />} />
           {/* <Route path="/termsAndService" element={<Terms />} /> */}
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/forgot" element={<Forgot />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/assessment-list" element={<AssessmentList />} />
           <Route path="/admin-assessment" element={<AdminAssessmentList />} />
@@ -51,7 +46,7 @@ const App = () => {
             path="/admin-assessment-list"
             element={<AdminAssessmentList />}
           />
-          {/* <Route path="/help-center" element={<HelpCenter />} /> */}
+          <Route path="/help-center" element={<HelpCenter />} />
           <Route
             path="/take-assessment-list"
             element={<UserTakeAssessment />}
@@ -60,9 +55,16 @@ const App = () => {
           <Route path="/privacy-policy" element={<Privacy />} />
           <Route path="/employee-profile" element={<EmployeeProfile />} /> 
         </Route>
-        {/* <Route element={<AdminAuthLayout />}>
-          <Route path="/signup" element={<AdminSignup />} />
-        </Route> */}
+
+        {/* Auth routes */}
+        <Route element={<AdminAuthLayout />}>
+          <Route path="/register" element={<AdminSignup />} />
+          <Route path="/login" element={<AdminLogin />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/reset-password-success" element={<ResetPasswordSuccess />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
+        </Route>
+
       </Routes>
 
       {/* <UserProfile /> */}
