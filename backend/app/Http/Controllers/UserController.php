@@ -19,23 +19,47 @@ class UserController extends Controller
         // $this->middleware('isloggedin');
     }
 
-    public function allUsers(): JsonResponse
+    public function allUsers()
     {
         try{
-            $users = User::paginate(15);
+            $users = User::all();
+            $msg = count($users) < 1 ? "No user found" : "All users";
+            $customUserData = [];
 
-            if( !$users ) {
-               $users = [];
+            if(count($users) == 0){
+                $customUserData = [];
+                return $this->sendResponse(
+                    true,
+                    $msg,
+                    $msg,
+                    $users,
+                    Response::HTTP_OK
+                );
             }
 
-            return $this->successResponse(
-                true,
-                'All users',
-                $users,
+            foreach ($users as $val) {
+                $stripData = [
+                    "id"=>$val["id"],
+                    "user_id"=>$val["user_id"],
+                    "full_name"=>$val["full_name"],
+                    "username"=>$val["username"],
+                    "email"=>$val["email"],
+                    "role"=>$val["role"],
+                    "isVerified"=>$val["isVerified"]
+                ];
+
+                array_push($customUserData, $stripData);
+            }
+
+            return $this->sendResponse(
+                false,
+                null,
+                $msg,
+                $customUserData,
                 Response::HTTP_OK
             );
         }catch (\Exception $e) {
-            return $this->errorResponse('Records', $e->getMessage());
+            return $this->sendResponse(true, 'Something went wrong getting users', $e->getMessage(), null, 500);
         }
     }
     
@@ -45,9 +69,11 @@ class UserController extends Controller
             $user = User::where("user_id","=",$user_id);
 
             if( $user->count() == 0) {
-                return $this->errorResponse(
+                return $this->sendResponse(
+                    true,
                     'User does not exist',
                     'User not found',
+                    null,
                     Response::HTTP_NOT_FOUND
                 );
             }
@@ -62,14 +88,15 @@ class UserController extends Controller
                 "isVerified"=>$user->first()["isVerified"] > 0 ? true : false,
             ];
 
-            return $this->successResponse(
-                true,
-                'User',
+            return $this->sendResponse(
+                false,
+                null,
+                "User by id",
                 $validUserInfo,
                 Response::HTTP_OK
             );
         }catch (\Exception $e) {
-            return $this->errorResponse('User not fetched', $e->getMessage());
+            return $this->sendResponse(false,'User not fetched', $e->getMessage(), null, 500);
         }
 
     }
@@ -113,6 +140,16 @@ class UserController extends Controller
     {
         try{
             $payload = json_decode($request->getContent(), true);
+
+            if(!isset($payload["username"]) || !isset($payload["email"]) || !isset($payload["full_name"])){
+                return $this->sendResponse(
+                    true,
+                    'Expected a valid payload,but got none',
+                    'Missing email, username or full_name',
+                    null,
+                    Response::HTTP_BAD_REQUEST
+                );
+            }
         
             $data = [
                 'username' => $payload["username"],
@@ -120,23 +157,38 @@ class UserController extends Controller
                 'full_name'=> $payload["full_name"]
             ];
 
-            $userExists =  User::where('user_id', $user_id)->first();
+            $uid =$request->user["id"];
+
+            $userExists =  User::where('user_id', $user_id);
 
             // check if user exists or not
             if($userExists->count() == 0) {
-                return $this->errorResponse(
+                return $this->sendResponse(
+                    true,
                     'User does not exist',
                     'User not found',
+                    null,
                     Response::HTTP_NOT_FOUND
                 );
             }
 
-            $userExists->update($data);
+            // check if the user is authorised to update info which doesnt belong to him.
+            if($uid != $user_id){
+                return $this->sendResponse(
+                    true,
+                    'Unauthorised',
+                    'Unauthorised to update info',
+                    null,
+                    Response::HTTP_UNAUTHORIZED
+                );
+            }
 
-            return $this->successResponse(true, 'User info updated successfully', Response::HTTP_OK);
+            User::where("user_id", $user_id)->update($data);
+
+            return $this->sendResponse(false,null, 'User info updated successfully', Response::HTTP_OK);
 
         }catch (\Exception $e) {
-            return $this->errorResponse('User info not updated', $e->getMessage());
+            return $this->sendResponse(true,'User info not updated', $e->getMessage(), null, 500);
         }
     }
 }

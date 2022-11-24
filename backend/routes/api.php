@@ -7,11 +7,14 @@ use App\Http\Controllers\CategoryController;
 // use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UserScoreController;
-use App\Http\Controllers\AssessmentController;
+use App\Http\Controllers\AssessmentController; 
+use App\Http\Controllers\UserAssessmentController;
+
 use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\DepartmentController;
 
 
 // util functions
@@ -48,13 +51,20 @@ Route::prefix("user")->group(function () {
     Route::get('/{id}', [UserController::class, 'getUserById']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
     Route::put('/{userId}/update', [UserController::class, 'updaterUserInfo'])->middleware("isloggedin");
-    Route::get('all', [UserController::class, 'allUsers']);
+    Route::get('/get/all', [UserController::class, 'allUsers']);
+});
+
+
+//userAssessment routes operations
+Route::prefix("userassessment")->group(function () {
+    Route::post('/accept/{assessmentId}/{employmentId}', [UserAssessmentController::class, 'acceptUserAssessment']);
+    Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
 });
 
 
 //Assessment routes operations
 Route::prefix("assessment")->group(function () {
-    Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAss']);
+    Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAssessment']);
     Route::post('/create', [AssessmentController::class, 'createAssessment'])->middleware("isloggedin","isadmin");
     Route::put('/{assessmentId}', [AssessmentController::class, 'updateAssessment']);
     Route::get('/{organisationId}', [AssessmentController::class, 'getAssByOrgId']);
@@ -70,13 +80,10 @@ Route::post("/test_csv", function (Request $req) {
 
 // authentication route
 Route::prefix("auth")->group(function () {
-    // Route::post('register', [AuthenticationController::class, 'register']);
     Route::post('register', [AuthenticateController::class, "registerUser"]);
     Route::post('login', [AuthenticateController::class, 'UserAndEmployeeLogin']);
     Route::get('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
-    Route::post('logout', [AuthenticationController::class, 'logout']);
-    Route::post('refresh', [AuthenticationController::class, 'refresh']);
-
+    Route::post('employee/update/', [AuthenticationController::class, 'setEmployeePassword']);
     Route::prefix("password")->group(function () {
         // forgot password
         Route::get("/forgot-password/{email}", [AuthenticateController::class, "forgotPassword"]);
@@ -95,10 +102,11 @@ Route::prefix("company")->group(function () {
 // questions route operations
 Route::prefix("question")->group(function () {
     Route::post('add', [QuestionsController::class, 'addManually']);
-    Route::get('get/{org_id}', [QuestionsController::class, 'getQuestByOrgId']);
-    Route::get('category/{id}', [QuestionsController::class, 'getByCategoryId']);
-    Route::put('{questionId}/{assessmenId}/update', [QuestionsController::class, 'updateQuestion']);
-    Route::get('/assessment/{assessmentId}', [QuestionsController::class, 'getQuestionByAssessmentId']);
+    Route::get('{id}', [QuestionsController::class, 'getQuestById']);
+    Route::get('company/{id}', [QuestionsController::class, 'getQuestByComId']);
+    Route::get('category/{id}', [QuestionsController::class, 'getQuestByCatId']);
+    Route::put('update/{questionId}', [QuestionsController::class, 'updateQuestion']);
+    Route::get('/assessment/{id}', [QuestionsController::class, 'getQuestByAssId']);
 });
 
 // Categories routes operation
@@ -116,7 +124,15 @@ Route::prefix('employee')->group(function () {
     Route::get('{id}', [EmployeeController::class, 'getById']);
     Route::get('/company/{org_id}', [EmployeeController::class, 'byCompId']);
     Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
+    Route::get('{departmentId}/{employeeId}', [EmployeeController::class, 'getEmplyeeByDepartment']);
 
+});
+
+
+// department route
+Route::prefix("department")->group(function () {
+    Route::get('{id}', [DepartmentController::class, 'getDeptByID']);
+    Route::post('/add', [DepartmentController::class, 'addDepartment']);
 });
 
 
