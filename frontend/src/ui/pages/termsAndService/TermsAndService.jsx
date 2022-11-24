@@ -412,7 +412,7 @@ function TermsAndService() {
 
             <div className="button col-12">
               <div className=" wrapper">
-                <img src={Sms} alt="Sms icon" />
+                <img src={Sms} alt="sms icon" />
                 <span>Questions? Leave a message</span>
               </div>
             </div>
