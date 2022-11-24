@@ -59,7 +59,7 @@ class UserAssessmentController extends Controller
              $employee = Employee::find($employee_id);
  
              if (!$employee) {
-                 return $this->sendResponse(true, 'Employee not found', null, null, Response::HTTP_NOT_FOUND);
+                 return $this->sendResponse(true, 'Employee not found', "", null, Response::HTTP_NOT_FOUND);
              }
  
              $employeeAssessments = UserAssessment::where('employee_id', $employee_id)->get();
