@@ -93,10 +93,11 @@ Route::prefix("company")->group(function () {
 // questions route operations
 Route::prefix("question")->group(function () {
     Route::post('add', [QuestionsController::class, 'addManually']);
-    Route::get('get/{org_id}', [QuestionsController::class, 'getQuestByOrgId']);
-    Route::get('category/{id}', [QuestionsController::class, 'getByCategoryId']);
-    Route::put('{questionId}/{assessmenId}/update', [QuestionsController::class, 'updateQuestion']);
-    Route::get('/assessment/{assessmentId}', [QuestionsController::class, 'getQuestionByAssessmentId']);
+    Route::get('{id}', [QuestionsController::class, 'getQuestById']);
+    Route::get('company/{id}', [QuestionsController::class, 'getQuestByComId']);
+    Route::get('category/{id}', [QuestionsController::class, 'getQuestByCatId']);
+    Route::put('update/{questionId}', [QuestionsController::class, 'updateQuestion']);
+    Route::get('/assessment/{id}', [QuestionsController::class, 'getQuestByAssId']);
 });
 
 // Categories routes operation
