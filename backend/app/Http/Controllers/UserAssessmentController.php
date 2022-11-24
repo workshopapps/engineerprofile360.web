@@ -19,9 +19,16 @@ class UserAssessmentController extends Controller
     public function acceptUserAssessment(UserAssessmentRequest $request, $assessmentId, $employeeId)
     {
         try {
-            $userAssessment = UserAssessment::create(['employee_id' => $employeeId, 'assessment_id' => $assessmentId,
-                'org_id' => $request->org_id, 'userscore_id' => $request->userscore_id, 'completed' => 0,
-                'total_questions' => 0, 'correct_questions' => 0, 'result' => 0]);
+            $userAssessment = UserAssessment::create([
+                'employee_id' => $employeeId,
+                'assessment_id' => $assessmentId,
+                'org_id' => $request->org_id,
+                'userscore_id' => $request->userscore_id,
+                'completed' => 0,
+                'total_questions' => 0,
+                'correct_questions' => 0,
+                'result' => 0
+            ]);
 
             return $this->sendResponse(false, null, 'Accepted user assessment successfully', null, Response::HTTP_CREATED);
         } catch (Exception $e) {
@@ -33,45 +40,45 @@ class UserAssessmentController extends Controller
     public function getOrgUserAssessmentByPerformance($orgId)
     {
         try {
-            $org_assessments = DB::table('UserAssessment')
-                ->where('org_id', '=', $orgId)
+            // Get all user assessments in an organisation
+            $orgUserAssessments = UserAssessment::where('org_id', $orgId)
                 ->orderBy('result', 'desc')
                 ->get();
 
-            return $this->sendResponse(false,null, 'Organisation assessment sent successfully',$org_assessments, Response::HTTP_OK);
-          } catch (Exception $e) {
-            return $this->sendResponse(true, $e->getMessage(), 'Organisation assessment could not be sent ',null, Response::HTTP_BAD_REQUEST);
-          }
-     }
+            return $this->sendResponse(false, null, 'Organisation assessment sent successfully', $orgUserAssessments, Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, $e->getMessage(), 'Organisation assessment could not be sent ', null, Response::HTTP_BAD_REQUEST);
+        }
+    }
 
 
-      /**
-      * It gets all the assessments for a given employee
-      * 
-      * @param string employee_id The id of the employee whose assessments you want to get.
-      * 
-      * @return JsonResponse All the assessments for the given employee.
-      */
-      public function getEmployeeAvailableAssessments($employee_id): JsonResponse 
-      {
-         try {
- 
-           // Get all assessments for the employee
-             $employee = Employee::find($employee_id);
- 
-             if (!$employee) {
-                 return $this->sendResponse(true, 'Employee not found', "", null, Response::HTTP_NOT_FOUND);
-             }
- 
-             $employeeAssessments = UserAssessment::where('employee_id', $employee_id)->get();
-                
-             return $this->sendResponse(false, null, 'Employee assessments sent successfully', $employeeAssessments, Response::HTTP_OK);
-         } catch (Exception $e) {
-             return $this->sendResponse(true, $e->getMessage(), 'Employee assessments could not be sent ', null, Response::HTTP_BAD_REQUEST);
-         }
-      }
- 
- 
+    /**
+     * It gets all the assessments for a given employee
+     * 
+     * @param string employee_id The id of the employee whose assessments you want to get.
+     * 
+     * @return JsonResponse All the assessments for the given employee.
+     */
+    public function getEmployeeAvailableAssessments($employee_id): JsonResponse
+    {
+        try {
+
+            // Get all assessments for the employee
+            $employee = Employee::find($employee_id);
+
+            if (!$employee) {
+                return $this->sendResponse(true, 'Employee not found', "", null, Response::HTTP_NOT_FOUND);
+            }
+
+            $employeeAssessments = UserAssessment::where('employee_id', $employee_id)->get();
+
+            return $this->sendResponse(false, null, 'Employee assessments sent successfully', $employeeAssessments, Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, $e->getMessage(), 'Employee assessments could not be sent ', null, Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+
 
     /**
      * Fetch available user assessment by company id.
@@ -79,16 +86,15 @@ class UserAssessmentController extends Controller
      * @return \Illuminate\Http\Response
      */
     //
-    public function GetOrgAvailableAssessment($id): JsonResponse
+    public function getOrgAvailableAssessment($id): JsonResponse
     {
-        try 
-        {
-            $userassessment = UserAssessment::where('org_id', $id)->where("completed", false)->get();
-            $checkuserassessment = UserAssessment::where('org_id', $id)->where("completed", false)->exists();
-            if (!$checkuserassessment) {
+        try {
+            $userAssessment = UserAssessment::where('org_id', $id)->where("completed", false)->get();
+            $checkUserAssessment = UserAssessment::where('org_id', $id)->where("completed", false)->exists();
+            if (!$checkUserAssessment) {
                 return $this->sendResponse(true, 'Fetch Available User Assessment By Company ID failed', 'No Available User Assessment exist for this Company ID', null, Response::HTTP_NOT_FOUND);
             }
-            return $this->sendResponse(false, null, 'OK', $userassessment, Response::HTTP_OK);
+            return $this->sendResponse(false, null, 'OK', $userAssessment, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, 'Fetch Available User Assessment By Company ID failed', $e->getMessage());
         }
@@ -101,21 +107,20 @@ class UserAssessmentController extends Controller
      * @return \Illuminate\Http\Response
      */
     //
-    public function GetOrgCompletedAssessment($id): JsonResponse
+    public function getOrgCompletedAssessment($id): JsonResponse
     {
-        try 
-        {
-            $userassessment = UserAssessment::where('org_id', $id)->where("completed", true)->get();
-            $checkuserassessment = UserAssessment::where('org_id', $id)->where("completed", true)->exists();
-            if (!$checkuserassessment) {
+        try {
+            $userAssessment = UserAssessment::where('org_id', $id)->where("completed", true)->get();
+            $checkUserAssessment = UserAssessment::where('org_id', $id)->where("completed", true)->exists();
+            if (!$checkUserAssessment) {
                 return $this->sendResponse(true, 'Fetch Completed User Assessment By Company ID failed', 'No User Assessment exist for this company ID', null, Response::HTTP_NOT_FOUND);
             }
-            return $this->sendResponse(false, null, 'OK', $userassessment, Response::HTTP_OK);
+            return $this->sendResponse(false, null, 'OK', $userAssessment, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, 'Fetch Completed User Assessment By ID Company failed', $e->getMessage());
         }
     }
-    
+
 
 
     /**
@@ -133,29 +138,23 @@ class UserAssessmentController extends Controller
             $employee = Employee::where('id', $employee_id)->first();
 
             if (!$employee) {
-                return $this->sendResponse(
-                    true,
-                    'Employee does not exist',
-                    'Employee does not exist',
-                    null,
-                    Response::HTTP_NOT_FOUND
-                );
+                return $this->sendResponse(true, 'Employee not found', "", null, Response::HTTP_NOT_FOUND);
             }
 
-            
+
 
             // Get all assessments completed by an employee where completed = true
             $completedAssessments = UserAssessment::where('employee_id', $employee_id)->where('completed', true)->get();
             $msg = count($completedAssessments) < 1 ? "No completed assessment found" : "All completed assessments";
 
             return $this->sendResponse(
-                    false,
-                    null,
-                    $msg,
-                    $completedAssessments,
-                    Response::HTTP_OK
-                );
-            
+                false,
+                null,
+                $msg,
+                $completedAssessments,
+                Response::HTTP_OK
+            );
+
         } catch (\Throwable $th) {
             return $this->sendResponse(
                 true,
@@ -168,15 +167,14 @@ class UserAssessmentController extends Controller
     }
 
 
-    //delete userassessment
+    //delete userAssessment
     public function deleteUserAssessment(Request $request, $id)
     {
-        try
-        {
+        try {
             //checking if assessment id exists in assessment table
             $assessment = new Assessment();
-            $asse_id = UserAssessment::where('assessment_id', $assessment->id);
-            if ($asse_id->count() > 0) {
+            $assessmentId = UserAssessment::where('assessment_id', $assessment->id);
+            if ($assessmentId->count() > 0) {
                 return $this->sendResponse(
                     true,
                     'Assessment Id does not exist',
@@ -185,37 +183,38 @@ class UserAssessmentController extends Controller
                     Response::HTTP_NOT_FOUND
                 );
             }
-            //checking if the org_id in userassessment is the same as org_id that created the assessment
+            //checking if the org_id in userAssessment is the same as org_id that created the assessment
             $checkid = UserAssessment::where('org_id', $assessment->org_id || 'assessment_id', $assessment->id);
             if (!$checkid) {
                 return $this->sendResponse(
                     true,
                     'You are not Authorize to Delete This Assessment',
-                    'success',
+                    'error',
                     null,
                     Response::HTTP_UNAUTHORIZED
                 );
             } else {
-                // $delete = $checkid->find($id);
-                $dele = UserAssessment::where('id', $id)->delete();
-                // $dele->delete();
+                // delete userAssessment
+                $userAssessment = UserAssessment::find($id);
+                $userAssessment->delete();
+
                 return $this->sendResponse(
-                    true,
-                    'Assessment Deleted Successfully',
-                    'success',
+                    false,
+                    null,
+                    'User Assessment Deleted Successfully',
                     null,
                     Response::HTTP_OK
                 );
+
             }
-        } catch (\Exception$e) {
+        } catch (\Exception $e) {
             return $this->sendResponse(true, 'Assessment not deleted', $e->getMessage(), null, 500);
         }
     }
 
     public function updateUserAssessment(Request $request, $id)
     {
-        try
-        {
+        try {
 
             //validating input request
             $inputsValidate = $request->validate([
@@ -242,8 +241,8 @@ class UserAssessmentController extends Controller
             } else {
                 //check if assessment id exist or not
                 $assessExist = new Assessment();
-                $asse_id = UserAssessment::where('assessment_id', $assessExist->id);
-                if ($asse_id->count() > 0) {
+                $assessmentId = UserAssessment::where('assessment_id', $assessExist->id);
+                if ($assessmentId->count() > 0) {
                     return $this->sendResponse(
                         true,
                         'Assessment Id does not exist',
@@ -276,7 +275,7 @@ class UserAssessmentController extends Controller
 
             }
 
-        } catch (\Exception$e) {
+        } catch (\Exception $e) {
             return $this->sendResponse(true, 'Assessment not Updated', $e->getMessage(), null, 500);
         }
     }
