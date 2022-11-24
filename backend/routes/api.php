@@ -3,17 +3,18 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CompanyController;
 // use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\QuestionsController;
+
 use App\Http\Controllers\UserScoreController;
 use App\Http\Controllers\AssessmentController; 
 use App\Http\Controllers\UserAssessmentController;
 
 use App\Http\Controllers\AuthenticateController;
-use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\AuthenticationController;
-use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\DepartmentController;
 
 
@@ -35,7 +36,7 @@ use App\Http\Controllers\DepartmentController;
 Route::get("/test", function () {
     // execute the function
     return $this->successResponse(true, "Test case pass", null, 200);
-}); 
+});
 
 //USERSCORE
 Route::prefix("userscore")->group(function () {
@@ -52,6 +53,15 @@ Route::prefix("user")->group(function () {
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
     Route::put('/{userId}/update', [UserController::class, 'updaterUserInfo'])->middleware("isloggedin");
     Route::get('/get/all', [UserController::class, 'allUsers']);
+});
+
+
+//userAssessment routes operations
+Route::prefix("userassessment")->group(function () {
+    Route::post('/accept/{assessmentId}/{employmentId}', [UserAssessmentController::class, 'acceptUserAssessment']);
+    Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
+    Route::delete('/{id}/delete', [UserAssessmentController::class,'deleteUserAssessment']);
+    Route::put('/{id}/update', [UserAssessmentController::class, 'updateUserAssessment']);
 });
 
 
@@ -134,6 +144,8 @@ Route::prefix("user-assessment")->group(function () {
     Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
     Route::get('/{employee_id}', [UserAssessmentController::class, 'getEmployeeAvailableAssessments'])->middleware("isloggedin");
     Route::get('/{employee_id}/completed', [UserAssessmentController::class, 'getEmployeeCompletedAssessment'])->middleware("isloggedin");
+    Route::get('{org_id}/org-available', [UserAssessmentController::class, 'GetOrgAvailableAssessment']);
+    Route::get('{org_id}/org-completed', [UserAssessmentController::class, 'GetOrgCompletedAssessment']);
 });
 
 Route::fallback(function () {
