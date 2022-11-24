@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StackController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -10,7 +11,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\QuestionsController;
 
 use App\Http\Controllers\UserScoreController;
-use App\Http\Controllers\AssessmentController; 
+use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\UserAssessmentController;
 
 use App\Http\Controllers\AuthenticateController;
@@ -147,6 +148,10 @@ Route::prefix("user-assessment")->group(function () {
     Route::get('{org_id}/org-completed', [UserAssessmentController::class, 'GetOrgCompletedAssessment']);
 });
 
+// Stack route
+Route::prefix("stack")->group(function () {
+    Route::post('update', [StackController::class, 'updateStack']);
+});
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);
 });
