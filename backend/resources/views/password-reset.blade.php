@@ -35,7 +35,7 @@
 
         async function verifyPasswordLink(){
 
-            const url = `http://localhost:8000/api/auth/password/reset/${uid}/${token}`
+            const url = `http://api.skript.hng.tech/api/auth/password/reset/${uid}/${token}`
             
             let res = await fetch(url,{
                 method: "POST",
@@ -65,7 +65,7 @@
                 return alert("password field cant be empty");
             }
 
-            const url = `http://localhost:8000/api/auth/password/reset/${uid}/${token}`
+            const url = `http://api.skript.hng.tech/api/auth/password/reset/${uid}/${token}`
             
             const payload = {
                 new_password: pwd.value,
