@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => ['*', "http://skript.hng.tech", "https://skript.hng.tech", "http://localhost:3000"],
 
     'allowed_origins_patterns' => [],
 
