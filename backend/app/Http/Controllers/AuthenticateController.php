@@ -145,7 +145,7 @@ class AuthenticateController extends Controller {
             "full_name"=>$fullname,
             "password"=>$password,
         ],[
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255',
             'full_name' => 'required|string|min:6',
             'username' => 'required|string|min:6',
             'password' => 'required|string|min:4',
