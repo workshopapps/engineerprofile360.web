@@ -18,8 +18,8 @@ use Mailer;
 class Helper extends Controller
 {
 
-    // public $baseUrl = "http://104.225.216.199/:8000";
-    public $baseUrl = "http://localhost:8000";
+    public $baseUrl = "http://api.skript.hng.tech";
+    // public $baseUrl = "http://localhost:8000";
     public $clientUrl = "http://localhost:8000"; // this would be the frontend client url
 
     public function generateRefreshToken($userId, $user_email)
