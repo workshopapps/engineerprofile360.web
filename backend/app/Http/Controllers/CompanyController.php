@@ -50,7 +50,7 @@ class CompanyController extends Controller
 
             $company->update($updateCompany);
 
-            return $this->sendResponse(false, null, 'Company Updated Successfully', $checkCompany, Response::HTTP_OK);
+            return $this->sendResponse(false, null, 'Company Updated Successfully', $company, Response::HTTP_OK);
         }  catch (Exception $e) {
             return $this->sendResponse(true, null, 'Something went wrong', Response::HTTP_BAD_REQUEST);
         }
