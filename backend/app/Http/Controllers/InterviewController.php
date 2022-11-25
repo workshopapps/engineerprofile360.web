@@ -13,7 +13,7 @@ class InterviewController extends Controller
     public function getInterviews()
     {
         try {
-           $interviews = Interview::paginate();
+           $interviews = Interview::paginate(10);
             return $this->sendResponse(false, null, 'Interviews retrieved', $interviews, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, $e->getMessage(), 'Unable to retrieve interviews',null, Response::HTTP_BAD_REQUEST);
