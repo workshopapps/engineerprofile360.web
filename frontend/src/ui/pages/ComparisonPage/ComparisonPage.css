@@ -1,0 +1,289 @@
+.comparisonHeading{
+    display:grid;
+    padding:95px ;
+    color: #323130;
+    text-align: center;
+    width: 300px;
+    justify-content: center;
+    margin: auto;
+}
+.comparisonHeading h1 {
+    font-weight:600;
+    font-size:38px;
+    margin-bottom: 20px;
+}
+.comparisonHeading p{
+    font-size:18px;
+    font-weight:400;
+}
+.comparisonHeading span{
+    font-weight:600;
+    font-size:38px;
+    text-align:center
+}
+.comparisonHeader{
+    display: grid;
+    padding:0 30px;
+}
+ #firstParagraph{
+    font-weight: 700;
+    font-size: 20px;
+    color: #323130;
+    margin-bottom: 20px;
+}
+.comparisonHeader p{
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #323130;
+}
+.comparisonHeader button{
+    width: 201px;
+    height: 48px;
+    padding: 6px 20px;
+    background-color: #2667FF;
+    border: 2px solid #2667FF;
+    border-radius: 2px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: white;
+    cursor: pointer;
+}
+.secondHeader{
+    display: grid;
+    justify-content: center;
+    margin: auto;
+    text-align: center;
+    width: 100%;
+    padding: 50px 30px;
+}
+.secondHeader h1{
+    font-weight: 600;
+    font-size: 32px;
+}
+.secondHeader span{
+    font-weight: 600;
+    font-size: 32px;
+}
+.secondHeader p{
+    font-weight:400;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.features{
+    width:100%;
+    padding:79px 30px;
+    background: #201F1E;
+    color: #F8FBFD;
+    text-align: center;
+    display:grid;
+    justify-content: center;
+}
+.features h1{
+    font-weight: 600;
+    font-size: 32px;
+    margin-bottom:20px;
+}
+.features p{
+    font-weight: 400;
+    font-size: 20px;
+}
+.tablelist{
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing:0.015em;
+    color: #605E5C;
+    line-height: 50px;
+    padding: 0 30px;
+}
+.tableheading{
+    font-weight: 700;
+}
+.tablelist div{
+    border: 1px solid #B3B3B3;
+    padding: 10px;
+    width: 370px;
+}
+.tablecontent td{
+    width: 10px;
+    height: fit-content;
+    margin: 0;
+}
+.tableheading img{
+    padding:0;
+    margin: 0;
+}
+table{
+    width: 100%;
+}
+.competitor{
+    display: grid;
+    padding: 122px 0;
+    text-align: center;
+    justify-content: center;
+}
+.competitor h1{
+    font-weight: 600;
+    font-size: 32px;
+}
+.competitor div{
+    background: #201F1E;
+    width: 100%;
+    color:white;
+    padding:30px
+}
+.frequentlyAsked{
+    display: grid;
+    padding: 0 30px;
+}
+.frequentlyAsked h2{
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 50px;
+}
+.questions{
+    font-size:20px;
+    font-weight: 400;
+    padding-bottom: 15px;
+    border-bottom: solid 4px #f6f6f6;
+}
+.questions p{
+    color: #323130;
+}
+.questions p:nth-child(2){
+    background: #f6f6f6;
+    padding:2px;
+    margin-top: 10px;
+}
+.getReady{
+    display: grid;
+    text-align: center;
+    background:#201F1E ;
+    color:white;
+    padding:120px 30px;
+    justify-content:center;
+    margin: auto;
+}
+.getReady h2{
+    font-weight: 700;
+    font-size: 32px;
+}
+.getReady p{
+    font-weight:500;
+    font-size: 24px;
+    margin: 20px 0;
+}
+.getReady button{
+    width: 201px;
+    height: 48px;
+    padding: 6px 20px;
+    background-color: #2667FF;
+    border: 2px solid #2667FF;
+    border-radius: 2px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: white;
+    cursor: pointer;
+    margin: auto;
+}
+
+@media (min-width:600px) {
+    .comparisonHeading{
+        width: 100%;
+    }
+    .comparisonHeading{
+        font-size:42px;
+    }
+    img{
+        margin: auto;
+    }
+    table{
+        width: 100%;
+    }
+    .tableheading{
+        font-size: 26px;
+    }
+    .tablelist div{
+        width: 100%;
+        display: block;
+        font-size: 26px;
+
+    }
+    .column{
+        border: black solid;
+        column-width: 400px;
+    }
+    td{
+        column-width: 1000px;
+    }
+    .tablecontent td{
+        width: fit-content;
+        padding:50px 50px 50px 10px;
+
+    }
+}
+
+@media (min-width:1000px) {
+    .comparisonHeader{
+        display: grid;
+        padding:0 100px;
+        align-items: center;
+        grid-template-columns: 1fr 1fr;
+    }
+    .comparisonHeader div:nth-child(2){
+        grid-row-start:1 ;
+        grid-row-end: 2;
+    }
+    .secondHeader{
+        padding: 50px 100px;
+    }
+    .secondHeader h1{
+        width: 657px;
+        text-align: center;
+        margin:auto;
+    }
+    .thirdheader {
+        display: grid;
+        padding:0 100px;
+        align-items: center;
+        grid-template-columns: 1fr 1fr;
+        margin:151px 0;
+        text-align: right;
+        gap:30px
+
+    }
+    .thirdheader div:nth-child(2){
+        grid-row-start:1 ;
+        grid-row-end: 2;
+    }
+    .fourtheader{
+        display: grid;
+        padding:0 100px;
+        align-items: center;
+        grid-template-columns: 1fr 1fr;
+        margin-bottom: 151px;
+        text-align: left;
+    }
+    .fourtheader div:nth-child(1){
+        grid-row-start:1 ;
+        grid-row-end: 2;
+        margin-right: 30px;
+    }
+    .features p{
+        width:886px;
+    }
+    .competitor h1{
+        width: 546px;
+        padding-bottom:107px;
+        margin: auto;
+    }
+   .competitor div{
+        padding: 53px 48px;
+        width:996px;
+   }
+   .frequentlyAsked{
+    padding: 0 100px 200px;
+   }
+}

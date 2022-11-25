@@ -31,11 +31,13 @@ import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import HelpCenter from "../src/main/pages/HelpCenter";
 import AdminViewAssessment from "./ui/pages/admin-view-assessment/AdminViewAssessment";
+import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <Routes>
+      <Route path="/comparison" element={<ComparisonPage />} />
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/about-us" element={<About />} />
