@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles, theme } from "./styles/globalStyles";
-import MainLayout from "./main/Layouts/Main/MainLayout";
+import MainLayout from "./Layouts/Main/MainLayout";
 
 import Contact from "./main/pages/Contact";
 import { AdminAuthLayout } from "./main/components";
@@ -31,14 +31,15 @@ import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import HelpCenter from "../src/main/pages/HelpCenter";
 import { User2FA } from "./ui/pages/userSignUp/User2FA";
-import { DashboardLayout } from "./main/Layouts/Dashboard/DashboardLayout";
+import { DashboardLayout } from "../src/Layouts/Dashboard/DashboardLayout";
 import AdminViewAssessment from "./ui/pages/admin-view-assessment/AdminViewAssessment";
+import Assessment from "./ui/pages/assessment/Assessment.jsx";
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <Routes>
-      <Route path='/2FA' element={<User2FA />}/>
+        <Route path="/2FA" element={<User2FA />} />
 
         <Route element={<MainLayout />}>
           {/* Public routes */}
@@ -84,7 +85,9 @@ const App = () => {
           <Route path="/verify-email" element={<VerifyEmail />} />
         </Route>
 
-        <Route element={<DashboardLayout />}></Route>
+        <Route element={<DashboardLayout />}>
+          <Route path="/assessment" element={<Assessment />} />
+        </Route>
       </Routes>
       {/* Protected Routes */}
 

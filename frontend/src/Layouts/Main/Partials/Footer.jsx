@@ -179,6 +179,7 @@ const SubscribeButton = styled(Button)`
 const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: ${({ theme }) => theme.spacing(3.5)};
 `;
 
