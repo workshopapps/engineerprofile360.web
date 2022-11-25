@@ -14,7 +14,7 @@ import {
   AdminLogin,
   ResetPassword,
   ResetPasswordSuccess,
-  VerifyEmail,
+  VerifyEmail,SetPassword,
 } from "./main/pages";
 import Confirmed from "./main/components/demo-pages-components/components/Confirmed";
 import ScheduleDemo from "./main/components/demo-pages-components/components/ScheduleDemo";
@@ -100,6 +100,10 @@ const App = () => {
           <Route
             path="/reset-password-success"
             element={<ResetPasswordSuccess />}
+          />
+          <Route
+            path="/set-password"
+            element={<SetPassword />}
           />
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/2fa" element={<User2FA />} />
