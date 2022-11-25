@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Models\Assessment;
 use App\Http\Requests\AssessmentRequest;
@@ -15,8 +16,8 @@ class AssessmentController extends Controller
     public function createAssessment(AssessmentRequest $request)
     {
         $data = $request->all();
-        
-        try{
+
+        try {
             //$data = file_get_contents("php://input");
             Assessment::create($data);
 
@@ -30,10 +31,10 @@ class AssessmentController extends Controller
     // @dreywandowski ---- delete an assessment
     public function deleteAssessment($assessmentId): JsonResponse
     {
-        try{
+        try {
             $assessment = Assessment::findorFail($assessmentId);
-            
-            if( !$assessment) {
+
+            if (!$assessment) {
                 return $this->errorResponse(
                     'Assessment does not exist',
                     'Assessment not found',
@@ -51,13 +52,13 @@ class AssessmentController extends Controller
 
     public function updateAssessment(UpdateAssessmentRequest $request, $assessmentId)
     {
-        try{
-             // $user = auth('sanctum')->user()->id;
+        try {
+            // $user = auth('sanctum')->user()->id;
             $updatedData = $request->all();
-           
+
             $assessment = Assessment::find($assessmentId);
 
-            if( !$assessment ) {
+            if (!$assessment) {
                 return $this->errorResponse(
                     'Assessment does not exist',
                     'Assessment not found',
@@ -76,11 +77,10 @@ class AssessmentController extends Controller
     // @juddee ---- get organization assessments 
     public function getAssByOrgId(Request $request, $organization_id)
     {
-        try{
-            $assessments = Assessment::where('org_id',$organization_id)->get();
-            if(!$assessments) 
-            {
-                $assessments = []; 
+        try {
+            $assessments = Assessment::where('org_id', $organization_id)->get();
+            if (!$assessments) {
+                $assessments = [];
             }
 
             return $this->successResponse(true, "Organisation assessments", $assessments, Response::HTTP_OK);
@@ -91,8 +91,72 @@ class AssessmentController extends Controller
 
     }
 
-    public function notifyEmployeeAssessment(Request $req){
+    public function notifyEmployeeAssessment($assessment_id, $employee_id)
+    {
+        try {
 
+
+            $assessment = Assessment::find($assessment_id);
+            if (!$assessment) {
+                return $this->sendResponse(
+                    true,
+                    'Assessment does not exist',
+                    'Assessment not found',
+                    null,
+                    Response::HTTP_NOT_FOUND
+                );
+            }
+
+            $employee = Employee::find($employee_id);
+            if (!$employee || $employee->org_id != $assessment->org_id) {
+                return $this->sendResponse(
+                    true,
+                    'Employee does not exist',
+                    'Employee not found',
+                    null,
+                    Response::HTTP_NOT_FOUND
+                );
+            }
+
+
+
+            $assessment_name = $assessment->name;
+            $assessment_start_date = $assessment->start_date;
+            $assessment_start_time = $assessment->start_time;
+            $org_id = $assessment->org_id;
+
+            $details = [
+                'title' => 'Assessment Notification',
+                'body' => 'You have been assigned an assessment',
+                'name' => $employee->fullname,
+                'assessment' => $assessment_name,
+                'assessment_id' => $assessment_id,
+                'assessment_start_date' => $assessment_start_date,
+                'assessment_start_time' => $assessment_start_time,
+                'org_id' => $org_id
+            ];
+
+            // Send email to employee
+            // \Mail::to($email)->send(new \App\Mail\AssessmentNotification($details));
+
+            return $this->sendResponse(
+                false,
+                null,
+                'Assessment notification sent successfully',
+                $details,
+                Response::HTTP_OK
+            );
+
+
+        } catch (Exception $e) {
+            return $this->sendResponse(
+                true,
+                'Assessment notification not sent',
+                $e->getMessage(),
+                null,
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+
+        }
     }
 }
-
