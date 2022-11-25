@@ -8,9 +8,9 @@
 
 > If you dont have composer installed, download composer with this [link](https://getcomposer.org/download/).
 
-4. Start backend server locally.. `php artisan serve`. This should startup a local server @ `http://localhost:8000`
+4. Start backend server locally.. `php artisan serve`. This should startup a local server @ `http://localhost:8000
 
-> make sure MYSQL server has started locally before running the above commands..
+> make sure MYSQL server has started locally before running the above commands.
 
 
 # Useful Commands.
@@ -43,4 +43,8 @@ DB_PORT=3306
 DB_DATABASE=engineering360
 DB_USERNAME=root
 DB_PASSWORD= 
+<<<<<<< HEAD
 ```
+=======
+```
+>>>>>>> 23dba6b686bd6cf3a0fb146779fd5f2f272afad2
