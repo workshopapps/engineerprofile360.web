@@ -1,28 +1,48 @@
 import styled from "styled-components";
 
 export const Main = styled.div`
-  height: 1000rem;
-  overflow: hidden;
+  height: 620rem;
+  width: 100vw;
 `;
 export const Container = styled.div`
   height: 100vh;
-  width: 80%;
+  width: 1500px;
   margin: 0 auto;
   padding: 2rem 0;
   align-items: center;
   justify-content: space-between;
-  min-height: 750px;
+
+  @media screen and (max-width: 768px) {
+    width: 100vw;
+    padding: 0;
+    text-align: center;
+  }
+  /* @media (min-width: 768px) and (max-width: 1024px) {
+    margin-top: -100px;
+  } */
 `;
 
 export const FirstPage = styled.div`
   width: 100%;
-  /* height: 100vh; */
+  /* height: 600px; */
+
+  /* @media screen and (max-width: 768px) {
+    height: 100%;
+  } */
 `;
 export const Upper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  margin-top: 10rem;
+  margin-top: 20rem;
+
+  @media screen and (max-width: 768px) {
+    margin-top: 2rem;
+    flex-direction: column;
+  }
+  /* @media (min-width: 768px) and (max-width: 1024px) {
+    margin-top: -100px;
+  } */
 `;
 export const Left = styled.div`
   width: 100%;
@@ -31,15 +51,29 @@ export const Left = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+
+  @media screen and (max-width: 768px) {
+    width: 95%;
+    height: 100%;
+    padding: 0;
+    gap: 2rem;
+  }
+  /* @media (min-width: 768px) and (max-width: 1024px) {
+    margin-top: -100px;
+  } */
 `;
 export const Down = styled.div`
   width: 100%;
   display: flex;
+
+  @media screen and (max-width: 768px) {
+    width: 100vw;
+    margin: 0 12rem;
+  }
 `;
 export const Text1 = styled.h1`
   width: 100%;
   height: 100%;
-
   font-family: "Inter";
   font-style: normal;
   font-weight: 900;
@@ -47,6 +81,20 @@ export const Text1 = styled.h1`
   line-height: 90px;
   letter-spacing: 0.01em;
   color: #323130;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 40px;
+    letter-spacing: 0.01em;
+    text-align: center;
+  }
+  /* @media (min-width: 768px) and (max-width: 1024px) {
+    margin-top: -100px;
+  } */
 `;
 export const Textvs = styled.h2`
   width: 82px;
@@ -59,12 +107,30 @@ export const Textvs = styled.h2`
   letter-spacing: 0.01em;
   color: #323130;
   margin-left: 17rem;
+
+  @media screen and (max-width: 768px) {
+    width: -50%;
+    height: 100%;
+    padding: 0;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 40px;
+    letter-spacing: 0.01em;
+    text-align: center;
+    margin-left: 40%;
+  }
 `;
 export const Right = styled.div`
   width: 70%;
   height: 100%;
   padding: 25px;
   margin-top: -4rem;
+
+  @media screen and (max-width: 768px) {
+    width: 90%;
+    margin-top: -2rem;
+    margin-left: 5%;
+  }
 `;
 export const SideImg = styled.img`
   width: 100%;
@@ -74,12 +140,20 @@ export const TranSIde = styled.img`
   width: 20%;
   height: 100%;
   margin-top: -12%;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 export const DescBelow = styled.div`
   width: 100%;
   height: 100%
   display: flex;
   margin-top: 1rem;
+
+   @media screen and (max-width: 768px) {
+    margin-top: 0rem;
+  }
 `;
 
 export const Line = styled.div`
@@ -103,12 +177,27 @@ export const Text = styled.h2`
   color: #323130;
   margin-top: -4rem;
   margin-left: -14rem;
+
+  @media screen and (max-width: 768px) {
+    font-style: normal;
+    width: 70%;
+    font-weight: 200;
+    font-size: 12px;
+    line-height: 23px;
+    margin-top: -7rem;
+    margin-left: -7rem;
+  }
 `;
 export const SecondPage = styled.div`
   width: 100%;
   height: 720px;
   background: #201f1e;
   text-align: center;
+
+  @media screen and (max-width: 768px) {
+    height: 320px;
+    margin-top: -19rem;
+  }
 `;
 export const SPtext = styled.h4`
   margin-top: 10rem;
@@ -119,9 +208,16 @@ export const SPtext = styled.h4`
   font-weight: 500;
   font-size: 36px;
   line-height: 72px;
-  z-index: 999;
   letter-spacing: 0.015em;
   color: #edebe9;
+
+  @media screen and (max-width: 768px) {
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 20px;
+    width: 100%;
+    padding: 70px 25px;
+  }
 `;
 
 export const UpperSvg = styled.img`
@@ -130,6 +226,11 @@ export const UpperSvg = styled.img`
   height: 543.38px;
   top: 0%;
   left: -45%;
+
+  @media screen and (max-width: 768px) {
+    width: 50rem;
+    height: 143.38px;
+  }
 `;
 export const LowerSvg = styled.img`
   position: absolute;
@@ -137,6 +238,11 @@ export const LowerSvg = styled.img`
   height: 543.38px;
   bottom: 0%;
   right: -40%;
+
+  @media screen and (max-width: 768px) {
+    width: 50rem;
+    height: 143.38px;
+  }
 `;
 
 export const ThirdPage = styled.div`
@@ -145,13 +251,18 @@ export const ThirdPage = styled.div`
 export const ScriptText = styled.h1`
   width: 381px;
   height: 100px;
-
   font-family: "Inter";
   font-style: normal;
   font-weight: 600;
   font-size: 48px;
   line-height: 50px;
   color: #323130;
+
+  @media screen and (max-width: 768px) {
+    font-style: Bolder;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 50px;
 `;
 
 export const How = styled.div`
@@ -169,6 +280,11 @@ export const Box = styled.div`
   border: 2px solid #c7e0f4;
   border-radius: 20px;
   padding: 23px;
+
+  @media screen and (max-width: 768px) {
+    width: 294px;
+    height: 140px;
+  }
 `;
 
 export const Content = styled.div`
@@ -180,8 +296,18 @@ export const Logo = styled.img`
   width: 120px;
   height: 120px;
   margin-top: 2rem;
+
+  @media screen and (max-width: 768px) {
+    width: 40px;
+    height: 40px;
+    margin-top: 0.5rem;
+  }
 `;
-export const SubContent = styled.div``;
+export const SubContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
 export const Title = styled.h1`
   width: 100%;
   height: 50px;
@@ -193,6 +319,15 @@ export const Title = styled.h1`
   letter-spacing: 0.015em;
   text-transform: capitalize;
   color: #605e5c;
+
+  @media screen and (max-width: 768px) {
+    font-weight: 300;
+    font-weight: Bolder;
+    font-size: 10px;
+    line-height: 50px;
+    letter-spacing: 0.015em;
+    margin-top: -3rem;
+  }
 `;
 export const WriteUp = styled.p`
   width: 680px;
@@ -206,6 +341,17 @@ export const WriteUp = styled.p`
   letter-spacing: 0.015em;
   text-transform: capitalize;
   color: #605e5c;
+
+  @media screen and (max-width: 768px) {
+    width: 220px;
+    height: 56px;
+
+    font-weight: 200;
+    font-size: 6px;
+    line-height: 200%;
+    margin-top: -2rem;
+    margin-left: -3rem;
+  }
 `;
 
 export const HowContent = styled.div`
@@ -213,9 +359,18 @@ export const HowContent = styled.div`
   flex-direction: column;
   gap: 4rem;
   margin-left: 15%;
+
+  @media screen and (max-width: 768px) {
+    margin-top: -8rem;
+    gap: 3rem;
+  }
 `;
 export const Wrapper = styled.div`
   margin-left: 10%;
+
+  @media screen and (max-width: 768px) {
+    margin-left: 0%;
+  }
 `;
 
 export const Heading = styled.div`
@@ -234,6 +389,11 @@ export const T1 = styled.h1`
   letter-spacing: 0.015em;
   text-transform: capitalize;
   color: #605e5c;
+
+  @media screen and (max-width: 768px) {
+    font-weight: 100;
+    font-size: 4px;
+  }
 `;
 export const T2 = styled.h1`
   width: 100%;
@@ -245,6 +405,11 @@ export const T2 = styled.h1`
   font-size: 36px;
   line-height: 43px;
   letter-spacing: 0.025em;
+
+  @media screen and (max-width: 768px) {
+    font-weight: 100;
+    font-size: 4px;
+  }
 `;
 export const T3 = styled.h1`
   width: 70%;
@@ -256,6 +421,11 @@ export const T3 = styled.h1`
   font-size: 36px;
   line-height: 42px;
   letter-spacing: 0.02em;
+
+  @media screen and (max-width: 768px) {
+    font-weight: 100;
+    font-size: 4px;
+  }
 `;
 
 export const Which = styled.div`
@@ -270,6 +440,14 @@ export const WhichText = styled.h1`
   font-size: 48px;
   line-height: 50px;
   color: #323130;
+
+  @media screen and (max-width: 768px) {
+    width: 50%;
+    height: 100%;
+    font-weight: 200;
+    font-size: 20px;
+    line-height: 30px;
+  }
 `;
 export const BoxWhich = styled.div`
   box-sizing: border-box;
@@ -281,6 +459,13 @@ export const BoxWhich = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3rem;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: 100%;
+    padding: 2px;
+    gap: 1rem;
+  }
 `;
 export const ContentWhich = styled.div`
   display: flex;
@@ -297,6 +482,11 @@ export const Item = styled.h1`
   letter-spacing: 0.015em;
   text-transform: capitalize;
   color: #605e5c;
+
+  @media screen and (max-width: 768px) {
+    font-weight: 100;
+    font-size: 10px;
+  }
 `;
 export const Script = styled.h4`
   width: 10%;
@@ -329,6 +519,65 @@ export const WhichContent = styled.div`
   flex-direction: column;
   gap: 4rem;
   margin-top: 5%;
+
+  @media screen and (max-width: 768px) {
+    padding: 10px;
+  }
 `;
-export const What = styled.div``;
+export const What = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10rem;
+`;
+export const TestimonyHead = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+`;
+export const TestText = styled.h1`
+  width: 906px;
+  height: 116px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 48px;
+  line-height: 50px;
+  color: #323130;
+`;
+export const Quote = styled.img`
+  width: 167.16px;
+  height: 124.75px;
+  background: #f3f2f1;
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+`;
+export const TestimonyContent = styled.div`
+  width: 90%;
+  height: 233px;
+  background: #201f1e;
+  border-radius: 10px;
+  margin: 0 6rem;
+  padding: 25px;
+`;
+export const TC = styled.p`
+  width: 899px;
+  height: 128px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 200%;
+  text-align: center;
+  letter-spacing: 0.015em;
+  text-transform: lowercase;
+  color: #ffffff;
+  margin: 3rem 15rem;
+`;
+export const PicTest = styled.img`
+  position: absolute;
+  width: 108px;
+  height: 108px;
+  left: 1062px;
+  top: 253px;
+`;
 export const Fag = styled.div``;

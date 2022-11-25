@@ -33,6 +33,12 @@ import {
   T2,
   T3,
   Down,
+  TestimonyHead,
+  TestimonyContent,
+  TestText,
+  Quote,
+  TC,
+  PicTest,
 } from "./Market.styled";
 import HowFrag from "./HowFrag";
 import WhichFrag from "./WhichFrag";
@@ -42,6 +48,8 @@ import UpperS from "../../../assets/images/markt3.svg";
 import UpperL from "../../../assets/images/mrket4.svg";
 import How1 from "../../../assets/images/how1.svg";
 import How2 from "../../../assets/images/how2.svg";
+import Quote1 from "../../../assets/images/quote.svg";
+import Pic1 from "../../../assets/images/pic21.png";
 
 const Market = () => {
   console.log(MarketImg);
@@ -278,7 +286,26 @@ const Market = () => {
                 </BoxWhich>
               </WhichContent>
             </Which>
-            <What></What>
+            <What>
+              <TestimonyHead>
+                <TestText>
+                  What They Say <br /> About us against our competitors.
+                </TestText>
+                <Quote src={Quote1} alt="/" />
+              </TestimonyHead>
+              <TestimonyContent>
+                <PicTest scr={Pic1} alt="/" />
+                <TC>
+                  “ With Skript, we’ve been able to optimize the performance of
+                  our engineering team significantly. Engineers are given tasks
+                  where they can produce efficient results, and redundancy is at
+                  an all time low. The engineers also benefit personally. The
+                  analyses of their strengths have given them a confidence boost
+                  which they apply to their work everyday. It has definitely
+                  also made my work easier! “
+                </TC>
+              </TestimonyContent>
+            </What>
             <Fag></Fag>
           </Container>
         </ThirdPage>
