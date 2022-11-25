@@ -186,7 +186,13 @@ const AdminSignup = () => {
               touched.confirmPassword &&
               errors.confirmPassword?.length > 0
             }
-            endIcon={<img src={eyeSvg} alt="" />}
+            endIcon={
+              <img
+                onClick={() => setShowPassword((prevState) => !prevState)}
+                src={eyeSvg}
+                alt=""
+              />
+            }
             helperText={
               errors && errors.confirmPassword && touched.confirmPassword
                 ? errors.confirmPassword
