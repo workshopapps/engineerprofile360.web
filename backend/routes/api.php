@@ -144,6 +144,7 @@ Route::prefix('employee')->group(function () {
 // department route
 Route::prefix("department")->group(function () {
     Route::get('{id}', [DepartmentController::class, 'getDeptByID']);
+    Route::get('company/{id}', [DepartmentController::class, 'getDeptByOrgID']);
     Route::post('/add', [DepartmentController::class, 'addDepartment']);
     Route::put('update/{departmentId}', [DepartmentController::class, 'updateDepartment']);
     Route::delete('delete/{departmentId}', [DepartmentController::class, 'deleteDepartment']);
@@ -168,7 +169,7 @@ Route::prefix("user-assessment")->group(function () {
     Route::put('/{id}/update', [UserAssessmentController::class, 'updateUserAssessment']);
     Route::delete('/{id}/delete', [UserAssessmentController::class, 'deleteUserAssessment']);
 
-
+});
 
 // Stack route
 Route::prefix("stack")->group(function () {
