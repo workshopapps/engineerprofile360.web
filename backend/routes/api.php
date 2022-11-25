@@ -49,10 +49,10 @@ Route::prefix("userscore")->group(function () {
 
 //Users operation routes
 Route::prefix("user")->group(function () {
-    Route::get('/{id}', [UserController::class, 'getUserById']);
+    Route::get('all', [UserController::class, 'getUsers']);
+    Route::get('/{userId}', [UserController::class, 'getUser']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
     Route::put('/{userId}/update', [UserController::class, 'updaterUserInfo'])->middleware("isloggedin");
-    Route::get('/get/all', [UserController::class, 'allUsers']);
 });
 
 
