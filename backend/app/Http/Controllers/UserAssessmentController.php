@@ -33,8 +33,6 @@ class UserAssessmentController extends Controller
             else{
                 return $this->sendResponse(true, 'Provide a valid assessment Id or employee Id', null, null, Response::HTTP_BAD_REQUEST);
             }
-          
-
 
        
         } catch (Exception $e) {
@@ -51,7 +49,12 @@ class UserAssessmentController extends Controller
                 ->orderBy('result', 'desc')
                 ->get();
 
+           if ($orgUserAssessments) {
             return $this->sendResponse(false, null, 'Organisation assessment sent successfully', $orgUserAssessments, Response::HTTP_OK);
+           }
+           else{
+            return $this->sendResponse(true, 'no record was found', null, null, Response::HTTP_BAD_REQUEST);
+           }
         } catch (Exception $e) {
             return $this->sendResponse(true, $e->getMessage(), 'Organisation assessment could not be sent ', null, Response::HTTP_BAD_REQUEST);
         }
