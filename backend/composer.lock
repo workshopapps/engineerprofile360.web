@@ -5480,14 +5480,10 @@
             "autoload": {
                 "psr-4": {
                     "Symfony\\Contracts\\Service\\": ""
-<<<<<<< HEAD
                 },
                 "exclude-from-classmap": [
                     "/Test/"
                 ]
-=======
-                }
->>>>>>> 317739f21369a167f462dc1261bbfb759cafbcbf
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -5745,14 +5741,10 @@
             "autoload": {
                 "psr-4": {
                     "Symfony\\Contracts\\Translation\\": ""
-<<<<<<< HEAD
                 },
                 "exclude-from-classmap": [
                     "/Test/"
                 ]
-=======
-                }
->>>>>>> 317739f21369a167f462dc1261bbfb759cafbcbf
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -8685,5 +8677,5 @@
         "php": "^8.0.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0" 
 }
