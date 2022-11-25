@@ -1,4 +1,7 @@
 import classes from "./MyDetails.module.css"
+import flag from "../assets/flag.svg"
+import clock from "../assets/clock.svg"
+import downArrow from "../assets/downArrow.svg"
 
 const MyDetails = () => {
   return (
@@ -57,24 +60,36 @@ const MyDetails = () => {
           <label className={classes.form__label} htmlFor="name">
             Country
           </label>
-          <input
-            placeholder="Nigeria"
-            className={classes.form__input}
-            type="text"
-            name="country"
-          />
+          <div className={`${classes.form__input} ${classes.form__wrapper}`}>
+
+            <img src={flag} alt='' />
+            <input
+              placeholder="Nigeria"
+              className={classes.form__input}
+              type="text"
+              name="country"
+            />
+            <img src={downArrow} alt='' />
+          </div>
+
         </div>
-        <hr /> 
+        <hr />
         <div className={classes.form__control}>
           <label className={classes.form__label} htmlFor="name">
             Timezone
           </label>
-          <input
-            placeholder="West African Time"
-            className={classes.form__input}
-            type="text"
-            name="timezone"
-          />
+          <div className={`${classes.form__input} ${classes.form__wrapper}`}>
+
+            <img src={clock} alt='' />
+            <input
+              placeholder="West African Time"
+              className={classes.form__input}
+              type="text"
+              name="timezone"
+            />
+            <img src={downArrow} alt='' />
+          </div>
+
         </div>
         <hr />
       </form>
