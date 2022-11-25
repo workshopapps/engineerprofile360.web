@@ -9,18 +9,36 @@ export const Navigation = styled.div`
   background: #fff;
   width: 350px;
   height: 100%;
-  z-index: -10;
-  overfloy-y: auto;
   padding: 1rem 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
   overflow-y: auto;
+  overflow-x: hidden;
   border-right: 1px solid #edebe9;
 
-  img {
-    height: 50px;
-    margin-bottom: 10rem;
+  header {
+    padding: 1rem 3rem;
+    display: flex;
+
+    .logo {
+      height: 50px;
+      margin-bottom: 10rem;
+    }
+
+    .header-toggle {
+      margin: 10px 0 0 5rem;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    position: fixed;
+    z-index: 1000;
+
+    header {
+      .logo {
+        height: 40px;
+      }
+    }
   }
 `;
 
@@ -47,10 +65,24 @@ export const Content = styled.div`
   width: 100vw;
   display: flex;
   flex-direction: column;
+
+  .toggle {
+    position: absolute;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    z-index: 100;
+
+    button {
+      cursor: pointer;
+    }
+  }
 `;
 
 export const Header = styled.div`
-  height: 60%;
+  position: relative;
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -63,6 +95,7 @@ export const Header = styled.div`
     height: 6vh;
     outline: none;
     padding-left: 10px;
+    margin-left: 3rem;
     font-size: 18px;
     border: 2px solid ${({ theme }) => theme.palette.border.default};
     border-radius: 8px;
@@ -72,6 +105,10 @@ export const Header = styled.div`
       font-size: 14px;
       line-height: 20px;
       color: ${({ theme }) => theme.palette.border.hover};
+    }
+
+    @media screen and (max-width: 500px) {
+      margin-left: 2rem;
     }
   }
 `;
@@ -103,7 +140,7 @@ export const Dropdown = styled.div`
   border-radius: 8px;
   right: 3%;
   top: 100%;
-  z-index: 20;
+  z-index: 100;
   padding: 0 15px;
 
   a {
