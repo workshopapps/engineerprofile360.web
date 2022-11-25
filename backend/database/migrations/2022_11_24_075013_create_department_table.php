@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -17,6 +16,7 @@ return new class extends Migration
         Schema::create('departments', function (Blueprint $table) {
             $table->uuid('id')->unique();
             $table->string('name');
+            $table->string('org_id');
             $table->timestamps();
         });
     }
