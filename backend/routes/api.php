@@ -42,7 +42,7 @@ Route::prefix("userscore")->group(function () {
     Route::get('/employee/{id}', [UserScoreController::class, 'getScoresByEmployeeID']);
     Route::get('/assessment/{id}', [UserScoreController::class, 'getScoresByAssessmentID']);
     Route::get('/{employeeId}/{assessmentId}', [UserScoreController::class, 'getScores']);
-    Route::post('/create', [UserScoreController::class, 'store']);
+    Route::post('/create', [UserScoreController::class, 'store'])->middleware("cors");
 });
 
 
