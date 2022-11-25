@@ -1,0 +1,159 @@
+p {
+  color: #605e5c;
+}
+
+h1,
+h2 {
+  color: #605e5c;
+}
+
+ul {
+  list-style: none;
+  padding: 20px;
+  margin: 0;
+}
+
+li {
+  padding: 10px 15px;
+}
+
+.hide {
+  display: block;
+}
+
+.show {
+  display: none;
+}
+
+.bordered {
+  border: 1px dotted;
+}
+
+.primary {
+  color: #2667ff;
+}
+.bg-primary {
+  background-color: #2667ff;
+}
+.primary-tint {
+  color: #f8fbfd;
+}
+.bg-primary-tint {
+  background-color: #f8fbfd;
+}
+
+.white {
+  color: #ffffff;
+}
+.bg-white {
+  background-color: #ffffff;
+}
+
+.semibold {
+  font-family: semibold;
+}
+
+.map-text {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.sidebar-text {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.card-title-text {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.card-num-text {
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 36px;
+}
+
+.overalltext {
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 37px;
+}
+
+.sorttext {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.headingtext {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.stafftext {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.depttext {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.buttontxt {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.profiletext {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+@media screen and (max-width: 1023px) {
+  .hide {
+    display: none;
+  }
+  .show {
+    display: block;
+  }
+
+  .map-text {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 19px;
+  }
+
+  .overalltext {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 37px;
+  }
+
+  .stafftext {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 24px;
+  }
+
+  .buttontxt {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 22px;
+  }
+
+  .headingtext {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 22px;
+  }
+}

@@ -33,12 +33,13 @@ import HelpCenter from "../src/main/pages/HelpCenter";
 import { User2FA } from "./ui/pages/userSignUp/User2FA";
 import { DashboardLayout } from "./main/Layouts/Dashboard/DashboardLayout";
 import AdminViewAssessment from "./ui/pages/admin-view-assessment/AdminViewAssessment";
+import AdminOverallPerformance from "./ui/pages/admin-overall-performance/AdminOverallPerformance";
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <Routes>
-      <Route path='/2FA' element={<User2FA />}/>
+        <Route path="/2FA" element={<User2FA />} />
 
         <Route element={<MainLayout />}>
           {/* Public routes */}
@@ -83,7 +84,10 @@ const App = () => {
           />
           <Route path="/verify-email" element={<VerifyEmail />} />
         </Route>
-
+        <Route
+          path="/overallperformance"
+          element={<AdminOverallPerformance />}
+        />
         <Route element={<DashboardLayout />}></Route>
       </Routes>
       {/* Protected Routes */}
