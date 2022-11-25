@@ -30,6 +30,7 @@ import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import HelpCenter from "../src/main/pages/HelpCenter";
+import { User2FA } from "./ui/pages/userSignUp/User2FA";
 import { DashboardLayout } from "./main/Layouts/Dashboard/DashboardLayout";
 import AdminViewAssessment from "./ui/pages/admin-view-assessment/AdminViewAssessment";
 const App = () => {
@@ -37,6 +38,8 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <Routes>
+      <Route path='/2FA' element={<User2FA />}/>
+
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/about-us" element={<About />} />
@@ -50,6 +53,7 @@ const App = () => {
           <Route path="/blog" element={<Blog />} />
           <Route path="/assessment-list" element={<AssessmentList />} />
           <Route path="/admin-assessment" element={<AdminAssessmentList />} />
+
           <Route
             path="/admin-assessment-list"
             element={<AdminAssessmentList />}
