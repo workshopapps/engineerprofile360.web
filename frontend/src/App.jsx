@@ -9,6 +9,7 @@ import { AdminAuthLayout } from "./main/components";
 import {
   Home,
   About,
+  BioMedical,
   AdminSignup,
   AdminLogin,
   ResetPassword,
@@ -30,7 +31,7 @@ import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import HelpCenter from "../src/main/pages/HelpCenter";
 import { DashboardLayout } from "./main/Layouts/Dashboard/DashboardLayout";
-
+import AdminViewAssessment from "./ui/pages/admin-view-assessment/AdminViewAssessment";
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
@@ -39,6 +40,7 @@ const App = () => {
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/about-us" element={<About />} />
+          <Route path="/biomedical-landing" element={<BioMedical />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/demo" element={<ScheduleDemo />} />
           <Route path="/confirm-demo" element={<Confirmed />} />
@@ -57,6 +59,11 @@ const App = () => {
             path="/take-assessment-list"
             element={<UserTakeAssessment />}
           />
+          <Route
+            path="/admin-view-assessment"
+            element={<AdminViewAssessment />}
+          />
+
           <Route path="/setting" element={<AdminSetting />} />
           <Route path="/privacy-policy" element={<Privacy />} />
           <Route path="/employee-profile" element={<EmployeeProfile />} />

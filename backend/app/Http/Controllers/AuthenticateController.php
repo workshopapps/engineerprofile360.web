@@ -115,8 +115,6 @@ class AuthenticateController extends Controller {
                     "id"=>$users->first()["id"],
                     "username"=>$users->first()["username"]
                 ];
-
-
                 // update refToken in database
                 Employee::where('email', '=', $email)->update(array('refToken' => $refToken));
 
