@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->uuid('id');
             $table->string("name");
-            $table->string('assessment_id');
+            $table->string('org_id');
             $table->timestamps();
         });
     }
