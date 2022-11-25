@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import {
   Container,
@@ -17,34 +17,59 @@ import Users from "../../../assets/icons/profile.svg";
 import Setting from "../../../assets/icons/setting.svg";
 import Logout from "../../../assets/icons/logout.svg";
 import Logo from "../../../assets/icons/app/logo.svg";
-import { SidebarContainer, SidebarItem } from "../../../ui/components/Sidebar";
 import Dashboard from "../../../assets/icons/app/dashboard.svg";
 import Assessment from "../../../assets/icons/app/assessment.svg";
 import Employee from "../../../assets/icons/app/user.svg";
+import menuIcon from "../../../assets/icons/menu.svg";
+import { Link } from "react-router-dom";
 
 export function DashboardLayout() {
   const [dropdown, setDropdown] = useState(false);
+  const [open, setOpen] = useState(true);
+
+  const handleToggle = () => {
+    setOpen(!open);
+  };
 
   return (
     <Container>
-      <Navigation>
-        <img src={Logo} alt="" />
-        <NavItems>
-          <div>
-            <img src={Dashboard} alt="" />
-            <p>Dashboard</p>
-          </div>
-          <div>
-            <img src={Assessment} alt="" />
-            <p>Assessment</p>
-          </div>
-          <div>
-            <img src={Employee} alt="" />
-            <p>Employee</p>
-          </div>
-        </NavItems>
-      </Navigation>
+      {open && (
+        <Navigation>
+          <header>
+            <img src={Logo} alt="" className="logo" />
+            <div className="toggle">
+              <button onClick={handleToggle} className="header-toggle">
+                <img src={menuIcon} alt="" />
+              </button>
+            </div>
+          </header>
+
+          <NavItems>
+            <div>
+              <img src={Dashboard} alt="" />
+              <p>Dashboard</p>
+            </div>
+            <Link to="/assessment">
+              <div>
+                <img src={Assessment} alt="" />
+                <p>Assessment</p>
+              </div>
+            </Link>
+
+            <div>
+              <img src={Employee} alt="" />
+              <p>Employee</p>
+            </div>
+          </NavItems>
+        </Navigation>
+      )}
+
       <Content>
+        <div className="toggle">
+          <button onClick={handleToggle}>
+            <img src={menuIcon} alt="" />
+          </button>
+        </div>
         <Header>
           <input type="search" placeholder="Search" />
           <Profile>
