@@ -70,11 +70,11 @@ Route::prefix("user-assessment")->group(function () {
 
 //Assessment routes operations
 Route::prefix("assessment")->group(function () {
-    Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAssessment']);
-    Route::get('/{assessmentId}/notify/{employeeId}', [AssessmentController::class, 'notifyEmployeeAssessment']);
     Route::post('/create', [AssessmentController::class, 'createAssessment'])->middleware("isloggedin", "isadmin");
-    Route::put('/{assessmentId}', [AssessmentController::class, 'updateAssessment']);
+    Route::get('/{assessmentId}/notify/{employeeId}', [AssessmentController::class, 'notifyEmployeeAssessment']);
     Route::get('/{organisationId}', [AssessmentController::class, 'getAssByOrgId']);
+    Route::put('/{assessmentId}', [AssessmentController::class, 'updateAssessment']);
+    Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAssessment']);
 
 });
 

@@ -10,22 +10,48 @@ use App\Http\Requests\UpdateAssessmentRequest;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Str;
+
 
 class AssessmentController extends Controller
 {
 
-    public function createAssessment(AssessmentRequest $request)
+    public function createAssessment(Request $request)
     {
-        $data = $request->all();
+        try{
+            $payload = json_decode($request->getContent(), true);
+    
+            
+            if(!isset($payload["name"]) || !isset($payload["start_date"]) || !isset($payload["start_time"])){
+                return $this->sendResponse(true, "expected a valid payload", "invalid payload given.", null, 400);
+            }
+            
+            $uid = $request->user["id"];
+            $id = Str::uuid();
+            $name = $payload["name"];
+            $start_date = $payload["start_date"];
+            $start_time = $payload["start_time"];
+            
+            $restAssessment = Assessment::where("name", $name);
 
-        try {
-            //$data = file_get_contents("php://input");
+            if($restAssessment->count() > 0){
+                return $this->sendResponse(true, "assessment name already exists", "name already exists.", null, 400);
+            }
+
+            // category data
+            $data = [
+                "id"=> $id,
+                "name"=>$name,
+                "start_date"=> $start_date,
+                "start_time"=> $start_time,
+                "org_id"=> $uid
+            ];
+
             Assessment::create($data);
 
-            return $this->successResponse(true, 'Assessment created successfully', Response::HTTP_CREATED);
-
-        } catch (Exception $e) {
-            return $this->errorResponse('Assessment could not be created', $e->getMessage());
+            return $this->sendResponse(false,null, "assessment created.", $data, 200);
+        }  catch (\Exception $e) {
+            return $this->sendResponse(true,'something went wrong creating assessment', $e->getMessage(), null, 500);
         }
     }
 
