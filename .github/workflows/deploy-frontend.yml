@@ -19,13 +19,13 @@ jobs:
           node-version: '16.10.0'
       - name: install packages
         run: cd frontend/ && git init && yarn install --ignore-scripts
-      - name:  build application
+      - name: build application
         run: cd frontend/ && yarn build
         env:
            CI: ""
         
 
-  build:
+  deploy-to-server:
     needs: run-tests
     runs-on: ubuntu-latest
     steps:

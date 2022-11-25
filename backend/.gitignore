@@ -18,6 +18,6 @@ yarn-error.log
 /.idea
 /.vscode
 composer.lock
-
+server.php
 # ignore .http file
 /.http

@@ -24,20 +24,18 @@ class IsLoggedIn extends Controller
     }
 
     public function handle(Request $request, Closure $next)
-    {
-
-        // get token from request
-        $header = $request->header('Authorization');
-
-        // check if authorization header has been passed
-        if(!isset($header)){
-            return $this->errorResponse("Authorization header is missing", "Authorizaion is missing", 403);
-        }
-
-        // split header and extract the jwt token
-        $token = explode(" ", $header)[1];
-
+    {        
         try {
+            // get token from request
+            $header = $request->header('Authorization');
+    
+            // check if authorization header has been passed
+            if(!isset($header)){
+                return $this->sendResponse(true,"Authorization header is missing", "Authorizaion is missing", null, 403);
+            }
+    
+            // split header and extract the jwt token
+            $token = explode(" ", $header)[1];
             $jwt = $this->helper->decodeJwt($token);
             
             $user = [
@@ -51,7 +49,7 @@ class IsLoggedIn extends Controller
             // call the next operation
             return $next($request);
         } catch (\Exception $e) {
-            return $this->errorResponse("Invalid Authorization header", "Invalid JWT Token ".$e->getMessage(), 500);
+            return $this->sendResponse(true,"Invalid Authorization header", "Invalid JWT Token ".$e->getMessage(),null, 500);
         }
     }
 }
