@@ -91,8 +91,6 @@ Route::prefix("auth")->group(function () {
     Route::post('register', [AuthenticateController::class, "registerUser"]);
     Route::post('login', [AuthenticateController::class, 'UserAndEmployeeLogin']);
     Route::get('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
-    Route::post('employee/update/', [AuthenticationController::class, 'setEmployeePassword']);
-
     Route::prefix("password")->group(
         function () {
             // forgot password
