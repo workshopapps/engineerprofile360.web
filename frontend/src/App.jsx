@@ -34,6 +34,7 @@ import { User2FA } from "./ui/pages/userSignUp/User2FA";
 import { DashboardLayout } from "../src/Layouts/Dashboard/DashboardLayout";
 import AdminViewAssessment from "./ui/pages/admin-view-assessment/AdminViewAssessment";
 import Assessment from "./ui/pages/assessment/Assessment.jsx";
+import UserAssessmentResult from "./ui/pages/user-assessment-result/UserAssessmentResult";
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
@@ -63,6 +64,11 @@ const App = () => {
           <Route
             path="/take-assessment-list"
             element={<UserTakeAssessment />}
+          />
+
+          <Route
+            path="/user-assessment-result"
+            element={<UserAssessmentResult />}
           />
           <Route
             path="/admin-view-assessment"
