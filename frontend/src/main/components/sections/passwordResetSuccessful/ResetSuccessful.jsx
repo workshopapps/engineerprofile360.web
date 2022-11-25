@@ -1,5 +1,7 @@
 import skriptlogo from "./assets/Skriptlogo.png"
 import successfulImg from "./assets/successful.png"
+import styled from "styled-components";
+import {Button} from "../../../../styles/reusableElements.styled"
 
 export default function ResetSuccessful(){
     return(
@@ -13,7 +15,9 @@ export default function ResetSuccessful(){
                 <p>You can now use your new password to log in to your account</p>
             </div>
             <div>
-                
+                <Button $size="lg">
+                    Login
+                </Button>
             </div>
         </div>
     )
