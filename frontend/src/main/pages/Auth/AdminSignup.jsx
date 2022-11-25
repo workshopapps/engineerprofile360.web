@@ -34,7 +34,7 @@ const AdminSignup = () => {
     const res = await fetch("http://localhost:8000/api/auth/register", {
       method: "POST",
       headers: {
-        "content-type": "application/json"
+        "content-type": "text/plain"
       },
       body: JSON.stringify({
       "full_name": "ben"
