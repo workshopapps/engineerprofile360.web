@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string("hash")->nullable();
             $table->string("image")->nullable();
             $table->string("occupation")->nullable();
-            $table->string("department_id");
+            $table->string("department_id")->nullable();
             $table->string("reftoken")->nullable();
             $table->integer("role")->length(1)->default(0);
             $table->string('org_id');
