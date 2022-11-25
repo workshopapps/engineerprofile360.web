@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StackController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -155,6 +156,10 @@ Route::prefix("user-assessment")->group(function () {
     Route::get('top-performance/{userId}', [UserAssessmentController::class, 'getUserTopPerformance']);
 });
 
+// Stack route
+Route::prefix("stack")->group(function () {
+    Route::put('update/{stackId}', [StackController::class, 'updateStack']);
+});
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);
 });
