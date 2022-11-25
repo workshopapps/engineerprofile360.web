@@ -37,6 +37,7 @@ class InterviewController extends Controller
         try {
             $updatedData = $request->all();
             //Get Interview to be updated
+            $interview = Interview::find($interviewId);
             $interview = Interview::where('id', $interviewId)->exists();
             //Return an error if fetching failed
             if (!$interview) {
