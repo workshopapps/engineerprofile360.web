@@ -30,7 +30,7 @@ import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import HelpCenter from "../src/main/pages/HelpCenter";
-
+import AdminViewAssessment from "./ui/pages/admin-view-assessment/AdminViewAssessment";
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
@@ -58,6 +58,11 @@ const App = () => {
             path="/take-assessment-list"
             element={<UserTakeAssessment />}
           />
+          <Route
+            path="/admin-view-assessment"
+            element={<AdminViewAssessment />}
+          />
+
           <Route path="/setting" element={<AdminSetting />} />
           <Route path="/privacy-policy" element={<Privacy />} />
           <Route path="/employee-profile" element={<EmployeeProfile />} />

@@ -49,6 +49,19 @@ class DepartmentController extends Controller
         }
     }
 
+    /**
+     * Get all departments created by an Organisation
+     *
+     * @param  string  $id
+     * @return Response
+     */
+    public function getDeptByOrgID(string $id)
+    {
+        $department = Department::where("org_id", $id);
+        if (!$department->first()) return $this->sendResponse(true, "Department not found", true, Response::HTTP_NOT_FOUND);
+        return $this->sendResponse(false, "Successful", $department->get(), Response::HTTP_OK);
+    }
+
     public function updateDepartment(AddDepartmentRequest $request, $id)
     {
         try{
@@ -89,4 +102,3 @@ class DepartmentController extends Controller
         }
     }
 }
-
