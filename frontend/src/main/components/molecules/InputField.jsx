@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import useInputValidation from "../../../hooks/useInputValidation";
 
 const InputField = ({
   id,
@@ -9,6 +10,7 @@ const InputField = ({
   placeholder,
   name,
   value,
+  helperText,
   startIcon,
   endIcon,
 
@@ -38,9 +40,11 @@ const InputField = ({
           name={name}
           onChange={handleChange}
           onBlur={handleBlur}
+          required
         />
         {endIcon && <span>{endIcon}</span>}
       </InputContainer>
+      <span>{helperText}</span>
     </InputGroup>
   );
 };
@@ -70,6 +74,11 @@ const InputGroup = styled.div`
     ${({ theme }) => theme.breakpoints.down("xs")} {
       font-size: 16px;
     }
+  }
+
+  span {
+    color: red;
+    font-size: 12px;
   }
 `;
 
