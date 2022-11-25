@@ -6,16 +6,15 @@ use App\Models\UserAssessment;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UserAssessmentRequest;
 use App\Models\Assessment;
 use Exception;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 
 class UserAssessmentController extends Controller
 {
-
     //Accepts user assessment
     public function acceptUserAssessment(UserAssessmentRequest $request, $assessmentId, $employeeId)
     {
@@ -39,7 +38,12 @@ class UserAssessmentController extends Controller
                 ->orderBy('result', 'desc')
                 ->get();
 
-            return $this->sendResponse(false,null, 'Organisation assessment sent successfully',$org_assessments, Response::HTTP_OK);
+            if ($org_assessments) {
+                return $this->sendResponse(false,null, 'Organisation assessment sent successfully',$org_assessments, Response::HTTP_OK);
+            }
+            else{
+                return $this->sendResponse(false,null, 'No record was found',null, Response::HTTP_OK);
+            }
           } catch (Exception $e) {
             return $this->sendResponse(true, $e->getMessage(), 'Organisation assessment could not be sent ',null, Response::HTTP_BAD_REQUEST);
           }
