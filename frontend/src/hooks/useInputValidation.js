@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { removeSpaces } from "../helpers/helper";
 
@@ -13,8 +13,13 @@ const useInputValidation = (initialState = {}) => {
       error.fname = "Name is required";
     }
 
+    if (formData && !formData.uname) {
+      error.uname = "Username is required";
+    }
+
     if (formData && !formData.email) {
       error.email = "Email is required";
+      console.log(formData);
     } else if (
       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formData.email)
     ) {
@@ -25,8 +30,8 @@ const useInputValidation = (initialState = {}) => {
       error.password = "Password is required";
     } else if (formData.password.search(/[A-Z]/) < 0) {
       error.passwordUppercase = "Must have at least one uppercase";
-    } else if (formData.password.search(/[a-z]/) < 0) {
-      error.passwordLowercase = "Must have at least one lowercase";
+    } else if (formData.password.length > 8) {
+      error.passwordLength = "Password must be more than 8 characters";
     } else if (formData.password.search(/[0-9]/) < 0) {
       error.passwordNumber = "Must have at least 1 number";
     } else if (formData.password.search(/[#?!@$%^&*-]/) < 0) {
@@ -35,7 +40,7 @@ const useInputValidation = (initialState = {}) => {
 
     if (formData && !formData.confirmPassword) {
       error.confirmPassword = "Confirm password is required";
-    } else if (formData.confirm !== formData.password) {
+    } else if (formData.confirmPassword !== formData.password) {
       error.confirmPassword = "Password does not match";
     }
     setErrors(error);
@@ -53,10 +58,7 @@ const useInputValidation = (initialState = {}) => {
   const onBlur = (e) => {
     setFormData((prevState) => ({
       ...prevState,
-      [e.target.id]:
-        e.target.getAttribute("id") !== "fname"
-          ? removeSpaces(e.target.value)
-          : e.target.value,
+      [e.target.id]: e.target.value.trim(),
     }));
 
     setTouched((prevState) => ({
@@ -64,7 +66,17 @@ const useInputValidation = (initialState = {}) => {
       [e.target.id]: true,
     }));
   };
-  return { formData, changeInputValue, errors, onBlur, touched };
+
+  return {
+    formData,
+    changeInputValue,
+    errors,
+    onBlur,
+    touched,
+    validation,
+    setTouched,
+    setFormData,
+  };
 };
 
 export default useInputValidation;

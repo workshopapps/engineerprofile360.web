@@ -13,10 +13,12 @@ const InputField = ({
   helperText,
   startIcon,
   endIcon,
+  error,
 
   $rounded = true,
   $background = false,
   $size,
+  // $borderColor,
   $fullWidth = true,
 
   handleChange,
@@ -30,6 +32,8 @@ const InputField = ({
         $background={$background}
         $size={$size}
         $fullWidth={$fullWidth}
+        error={error}
+        // $borderColor={$borderColor}
       >
         {startIcon && <span>{startIcon}</span>}
         <Input
@@ -40,7 +44,6 @@ const InputField = ({
           name={name}
           onChange={handleChange}
           onBlur={handleBlur}
-          required
         />
         {endIcon && <span>{endIcon}</span>}
       </InputContainer>
@@ -77,7 +80,7 @@ const InputGroup = styled.div`
   }
 
   span {
-    color: red;
+    color: ${({ theme }) => theme.palette.status.error.color};
     font-size: 12px;
   }
 `;
@@ -90,7 +93,11 @@ const InputContainer = styled.div`
   height: ${(props) =>
     props.$size === "md" ? "56px" : props.$size === "lg" ? "80px" : "32px"};
   width: ${(props) => (props.$fullWidth ? "100%" : "auto")};
-  border: 1px solid ${({ theme }) => theme.palette.border.default};
+  border: 1px solid
+    ${({ theme, error }) =>
+      error === true
+        ? theme.palette.status.error.color
+        : theme.palette.border.default};
   border-radius: ${(props) =>
     props.$rounded === true ? props.theme.spacing(1) : "0px"};
 
