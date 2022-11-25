@@ -31,6 +31,9 @@ import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import PricingPage from "./main/pages/PricingPage";
 import HelpCenter from "../src/main/pages/HelpCenter";
+import AdminCSVUpload from "./ui/pages/AdminUpload/AdminCSVUpload";
+// import UserAssessmentListCompleted from "./ui/pages/UserAssestList/UserAssestListCompleted";
+
 import { User2FA } from "./ui/pages/userSignUp/User2FA";
 import { DashboardLayout } from "../src/Layouts/Dashboard/DashboardLayout";
 import AdminViewAssessment from "./ui/pages/admin-view-assessment/AdminViewAssessment";
@@ -74,6 +77,8 @@ const App = () => {
           <Route path="/setting" element={<AdminSetting />} />
           <Route path="/privacy-policy" element={<Privacy />} />
           <Route path="/employee-profile" element={<EmployeeProfile />} />
+          <Route path="/admin-csv-upload" element={<AdminCSVUpload />} />
+          {/* <Route path="/user-assessment-completed" element={<UserAssessmentListCompleted />} /> */}
         </Route>
 
         <Route element={<AdminAuthLayout />}>
