@@ -151,9 +151,10 @@ Route::prefix("department")->group(function () {
 
 // Interview routes
 Route::prefix('interview')->group(function () {
+
     Route::get('all', [InterviewController::class, 'getInterviews']);
-    Route::get('{id}', [InterviewController::class, 'getInterviewById']);
-    Route::get('/stack/{stack_id}', [InterviewController::class, 'getInterviewByStack']);
+    Route::post('add', [InterviewController::class, 'addInterview'])->middleware('isloggedin', 'isadmin');
+    Route::get('get/{id}', [InterviewController::class, 'getInterviewById']);
 });
 
 // User Assessment routes
