@@ -25,142 +25,147 @@ class AuthenticateController extends Controller {
 
     public function UserAndEmployeeLogin(Request $request){
 
-        $payload = json_decode($request->getContent(), true);
-        $email = $payload["email"];
-        $password = $payload["password"];
-
-        // validate credentials
-        if(!isset($email) || !isset($password)){
-            return $this->sendResponse(true,'Invalid Credentials',"Expected valid email and password", null, 422);
-        }
-
-        // fetch users by email
-        $users = User::where('email', $email);
-        // fetch employee by email
-        $employee = Employee::where('email', $email);
-
-        if ($users->count() > 0) {
-            
-            $checkPassword = Hash::check($password, $users->first()["password"]);
-
-            if(!$checkPassword){
-                return $this->sendResponse(true,"Invalid credentials supplied.", "password given do not match our record.", null, 400);
+        try {
+            $payload = json_decode($request->getContent(), true);
+            $email = $payload["email"];
+            $password = $payload["password"];
+    
+            // validate credentials
+            if(!isset($email) || !isset($password)){
+                return $this->sendResponse(true,'Invalid Credentials',"Expected valid email and password", null, 422);
             }
-
-            try {
-            
-                // generate access and refresh token
-                $refToken = $this->helper->generateRefreshToken($users->first()["user_id"], $email);
-                $accToken = $this->helper->generateAccessTokrn($users->first()["user_id"], $email);
-                $uid = Str::uuid();
-                // user record
-                $userResp = [
-                    "accessToken"=>$accToken,
-                    "id"=>$users->first()["user_id"],
-                    "username"=>$users->first()["username"]
-                ];
-
-                // company data
-                $companyData = [
-                    "id"=> $uid,
-                    "user_id"=>$users->first()["id"],
-                    "name"=> "",
-                    "org_mail"=> $users->first()["email"]
-                ];
-
-
-                // update refToken in database
-                User::where('email', '=', $email)->update(array('refToken' => $refToken));
-
-                // check if user has a company created
-                $user_id = $users->first()["user_id"];
-                $comp = Company::where("user_id", $user_id);
-
-                if($comp->count() == 0){
-                    // save data in company table
-                    Company::create($companyData);
+    
+            // fetch users by email
+            $users = User::where('email', $email);
+            // fetch employee by email
+            $employee = Employee::where('email', $email);
+    
+            if ($users->count() > 0) {
+                
+                $checkPassword = Hash::check($password, $users->first()["password"]);
+    
+                if(!$checkPassword){
+                    return $this->sendResponse(true,"Invalid credentials supplied.", "password given do not match our record.", null, 400);
                 }
-
+    
+                try {
                 
-                // check if user is unverified
-                if($users->first()["isVerified"] < 1){
-                    $this->helper->emailVerification($email,$user_id);
-                    return $this->sendResponse(false, "account not verfied.. a verification link has been sent to you account.", "failed to login.. verify your account.", null, 200);
+                    // generate access and refresh token
+                    $refToken = $this->helper->generateRefreshToken($users->first()["user_id"], $email);
+                    $accToken = $this->helper->generateAccessTokrn($users->first()["user_id"], $email);
+                    $uid = Str::uuid();
+                    // user record
+                    $userResp = [
+                        "accessToken"=>$accToken,
+                        "id"=>$users->first()["user_id"],
+                        "username"=>$users->first()["username"]
+                    ];
+    
+                    // company data
+                    $companyData = [
+                        "id"=> $uid,
+                        "user_id"=>$users->first()["id"],
+                        "name"=> "",
+                        "org_mail"=> $users->first()["email"]
+                    ];
+    
+    
+                    // update refToken in database
+                    User::where('email', '=', $email)->update(array('refToken' => $refToken));
+    
+                    // check if user has a company created
+                    $user_id = $users->first()["user_id"];
+                    $comp = Company::where("user_id", $user_id);
+    
+                    if($comp->count() == 0){
+                        // save data in company table
+                        Company::create($companyData);
+                    }
+    
+                    
+                    // check if user is unverified
+                    if($users->first()["isVerified"] < 1){
+                        $this->helper->emailVerification($email,$user_id);
+                        return $this->sendResponse(false, "account not verfied.. a verification link has been sent to you account.", "failed to login.. verify your account.", null, 200);
+                    }
+                    
+                    
+                    return $this->sendResponse(false, null, "User logged in successfully", $userResp, 200);
+                } catch (\Exception $e) {
+                    print_r($e);
+                    return $this->sendResponse(true,$e->getMessage(),"Something went wrong loggin in, please try again", null, 500);
                 }
+            }
+            else if ($employee->count() > 0) {
                 
+                $checkPassword = Hash::check($password, $employee->first()["hash"]);
+    
+                if(!$checkPassword){
+                    return $this->sendResponse(true,"Invalid credentials supplied.", true, 400);
+                }
+    
+                try {
                 
-                return $this->sendResponse(false, null, "User logged in successfully", $userResp, 200);
-            } catch (\Exception $e) {
-                print_r($e);
-                return $this->sendResponse(true,$e->getMessage(),"Something went wrong loggin in, please try again", null, 500);
+                    // generate access and refresh token
+                    $refToken = $this->helper->generateRefreshToken($employee->first()["id"], $email);
+                    $accToken = $this->helper->generateAccessTokrn($employee->first()["id"], $email);
+                    $uid = Str::uuid();
+                    // user record
+                    $userResp = [
+                        "accessToken"=>$accToken,
+                        "id"=>$users->first()["id"],
+                        "username"=>$users->first()["username"]
+                    ];
+                    // update refToken in database
+                    Employee::where('email', '=', $email)->update(array('refToken' => $refToken));
+    
+                    return $this->sendResponse(false, null, "User logged in successfully", $userResp, 200);
+                } catch (\Exception $e) {
+                    return $this->errorResponse("Something went wrong loggin in, please try again", $e->getMessage(), 500);
+                }
             }
-        }
-        else if ($employee->count() > 0) {
-            
-            $checkPassword = Hash::check($password, $employee->first()["hash"]);
-
-            if(!$checkPassword){
-                return $this->sendResponse(true,"Invalid credentials supplied.", true, 400);
+            else{
+                return $this->sendResponse(true,"No user found with this email", "user not found", null, 404);
             }
-
-            try {
-            
-                // generate access and refresh token
-                $refToken = $this->helper->generateRefreshToken($employee->first()["id"], $email);
-                $accToken = $this->helper->generateAccessTokrn($employee->first()["id"], $email);
-                $uid = Str::uuid();
-                // user record
-                $userResp = [
-                    "accessToken"=>$accToken,
-                    "id"=>$users->first()["id"],
-                    "username"=>$users->first()["username"]
-                ];
-                // update refToken in database
-                Employee::where('email', '=', $email)->update(array('refToken' => $refToken));
-
-                return $this->sendResponse(false, null, "User logged in successfully", $userResp, 200);
-            } catch (\Exception $e) {
-                return $this->errorResponse("Something went wrong loggin in, please try again", $e->getMessage(), 500);
-            }
-        }
-        else{
-            return $this->sendResponse(true,"No user found with this email", "user not found", null, 404);
+        } catch (\Exception $e) {
+            return $this->sendResponse(true,"Something went wrong login in ".$e->getMessage(), "user not found", null, 404);
         }
     }
 
     public function registerUser(Request $request){
-        // validate
-        $payload = json_decode($request->getContent(), true);
-        $email = $payload["email"];
-        $username = $payload["username"];
-        $fullname = $payload["full_name"];
-        $password = $payload["password"];
-
-        // validate credentials
-        $validator = Validator::make([
-            "email"=>$email,
-            "username"=>$username,
-            "full_name"=>$fullname,
-            "password"=>$password,
-        ],[
-            'email' => 'required|string|email|max:255',
-            'full_name' => 'required|string|min:6',
-            'username' => 'required|string|min:6',
-            'password' => 'required|string|min:4',
-        ]);
-
-        if($validator->fails()){
-            return $this->sendResponse(true,$validator->errors(), 'invalid credentials supplied', null, 422);
-        }
-
-
-        // check if a user already has an account
-        $userExists = User::where('email', '=', $email)->count() > 0;
-        if($userExists){
-            return $this->sendResponse(true,"user with this exists already exists","User with this email address already exists.", null, 400);
-        }
-
+        
         try {
+            // validate
+            $payload = json_decode($request->getContent(), true);
+            $email = $payload["email"];
+            $username = $payload["username"];
+            $fullname = $payload["full_name"];
+            $password = $payload["password"];
+
+            // validate credentials
+            $validator = Validator::make([
+                "email"=>$email,
+                "username"=>$username,
+                "full_name"=>$fullname,
+                "password"=>$password,
+            ],[
+                'email' => 'required|string|email|max:255',
+                'full_name' => 'required|string|min:6',
+                'username' => 'required|string|min:6',
+                'password' => 'required|string|min:4',
+            ]);
+
+            if($validator->fails()){
+                return $this->sendResponse(true,$validator->errors(), 'invalid credentials supplied', null, 422);
+            }
+
+
+            // check if a user already has an account
+            $userExists = User::where('email', '=', $email)->count() > 0;
+            if($userExists){
+                return $this->sendResponse(true,"user with this exists already exists","User with this email address already exists.", null, 400);
+            }
+
             // user data
             $uid = Str::uuid();
             $hash = Hash::make($password);
@@ -194,7 +199,7 @@ class AuthenticateController extends Controller {
 
             return $this->sendResponse(false, null, "User registered successfully", $clientExtractedData, 200);
         } catch (\Exception $e) {
-            return $this->sendResponse(true,$e->getMessage(), "Something went wrong registering, please try again", 500);
+            return $this->sendResponse(true,$e->getMessage(), "Something went wrong registering, please try again",  null, 500);
         }
     }
 
