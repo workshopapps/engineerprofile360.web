@@ -24,10 +24,27 @@ const AdminSignup = () => {
     changeInputValue(e);
   };
 
-  console.log(errors);
-  console.log(touched);
+  // console.log(errors);
+  // console.log(touched);
 
   const { fname, email, password, confirmPassword } = formData;
+
+  async function handleSubmit(){
+    const res = await fetch("http://api.skript.hng.tech/api/auth/register", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({
+      "full_name": "ben"
+      })
+    })
+
+    const data =await res.json();
+
+    console.log(data)
+  }
+
   return (
     <>
       <FormContainer>
@@ -106,7 +123,7 @@ const AdminSignup = () => {
             </label>
           </Checkbox>
 
-          <Button $size="md" type="submit">
+          <Button $size="md" type="submit" onClick={handleSubmit}>
             Proceed to Signup
           </Button>
 
