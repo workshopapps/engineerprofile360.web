@@ -4,7 +4,7 @@ import "./style.css";
 
 function TermsAndService() {
   return (
-    <div className=" mainDiv container">
+    <div className="container mainDiv">
       <div className="terms">
         <h1>
           Skript <span> Terms of Service</span>
@@ -12,6 +12,96 @@ function TermsAndService() {
         <p>Last updated on November 15, 2022</p>
       </div>
 
+      <div className="aside col-sm-12 col-md-3 offset-md-1 d-block d-md-none ">
+        <h6 className="mx-auto">TABLE OF CONTENT</h6>
+        <div>
+          <ul>
+            <a href="#RegistrationandAccount">
+              <li className="list-none ">Registration and Account</li>
+            </a>
+
+            <a href="#Subscription">
+              <li>Subscription</li>
+            </a>
+
+            <a href="#BillingandCancellation">
+              <li>Billing and Cancellation</li>
+            </a>
+
+            <a href="#PasswordsandAccountAccess">
+              <li>Passwords and Account Access</li>
+            </a>
+
+            <a href="#Warrantiesandlimitations">
+              <li>Warranties and limitations</li>
+            </a>
+
+            <a href="#SafetyandRegulations">
+              <li>Safety and Regulations</li>
+            </a>
+
+            <a href="#UseofPersonal/CompanyInfo">
+              <li>Use of Personal/Company Info</li>
+            </a>
+
+            <a href="#Viruses/Bugs">
+              <li>Viruses/Bugs</li>
+            </a>
+          </ul>
+        </div>
+
+        <div className="button col-12">
+          <div className=" wrapper">
+            <img src={Sms} alt="Sms icon" />
+            <span>Questions? Leave a message</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="aside col-sm-12 col-md-3 offset-md-1 d-block d-md-none ">
+        <h6 className="mx-auto">TABLE OF CONTENT</h6>
+        <div>
+          <ul>
+            <a href="#RegistrationandAccount">
+              <li className="list-none ">Registration and Account</li>
+            </a>
+
+            <a href="#Subscription">
+              <li>Subscription</li>
+            </a>
+
+            <a href="#BillingandCancellation">
+              <li>Billing and Cancellation</li>
+            </a>
+
+            <a href="#PasswordsandAccountAccess">
+              <li>Passwords and Account Access</li>
+            </a>
+
+            <a href="#Warrantiesandlimitations">
+              <li>Warranties and limitations</li>
+            </a>
+
+            <a href="#SafetyandRegulations">
+              <li>Safety and Regulations</li>
+            </a>
+
+            <a href="#UseofPersonal/CompanyInfo">
+              <li>Use of Personal/Company Info</li>
+            </a>
+
+            <a href="#Viruses/Bugs">
+              <li>Viruses/Bugs</li>
+            </a>
+          </ul>
+        </div>
+        <div className="button col-12">
+          <div className=" wrapper">
+            <img src={Sms} alt="Sms icon" />
+            <span>Questions? Leave a message</span>
+          </div>
+        </div>
+      </div>
       <div className=" d-flex">
         <div className="col-sm-12 col-md-8">
           <div className="first">
@@ -288,7 +378,7 @@ function TermsAndService() {
           <div>
             <ul>
               <a href="#RegistrationandAccount">
-                <li className=" list-none">Registration and Account</li>
+                <li className="list-none ">Registration and Account</li>
               </a>
 
               <a href="#Subscription">
@@ -322,7 +412,7 @@ function TermsAndService() {
 
             <div className="button col-12">
               <div className=" wrapper">
-                <img src={Sms} alt="Sms icon" />
+                <img src={Sms} alt="sms icon" />
                 <span>Questions? Leave a message</span>
               </div>
             </div>

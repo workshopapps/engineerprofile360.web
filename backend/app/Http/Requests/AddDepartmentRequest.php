@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateQuestionRequest extends BaseRequest
+class AddDepartmentRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,10 @@ class CreateQuestionRequest extends BaseRequest
     public function rules()
     {
         return [
-            'category_id' => "required",
-            'assessment_id' => "required",
-            'company_id' => "required",
-            'correct_answers' => 'required',
-            'options' => 'required',
-            'timeframe' => 'required|string',
-            'is_multiple_answers' => 'required|boolean'
+            "name" => 'required',
+           /* "employee_id" => 'required|exists:employees,id',
+            "categories" => 'required|array',
+            "passed_questions" => 'required|array'*/
         ];
     }
 }
