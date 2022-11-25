@@ -19,7 +19,6 @@ const useInputValidation = (initialState = {}) => {
 
     if (formData && !formData.email) {
       error.email = "Email is required";
-      console.log(formData);
     } else if (
       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formData.email)
     ) {
@@ -30,7 +29,7 @@ const useInputValidation = (initialState = {}) => {
       error.password = "Password is required";
     } else if (formData.password.search(/[A-Z]/) < 0) {
       error.passwordUppercase = "Must have at least one uppercase";
-    } else if (formData.password.length > 8) {
+    } else if (formData.password.length <= 8) {
       error.passwordLength = "Password must be more than 8 characters";
     } else if (formData.password.search(/[0-9]/) < 0) {
       error.passwordNumber = "Must have at least 1 number";

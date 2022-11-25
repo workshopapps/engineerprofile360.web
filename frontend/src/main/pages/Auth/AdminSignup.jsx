@@ -38,7 +38,6 @@ const AdminSignup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("i am running");
 
     try {
       validation(formData);
@@ -52,8 +51,6 @@ const AdminSignup = () => {
         });
       }
 
-      console.log(Object.keys(errors).length);
-      console.log(errors);
       if (Object.keys(errors).length === 0) {
         setTouched({
           fname: false,
@@ -75,7 +72,6 @@ const AdminSignup = () => {
             withCredentials: true,
           }
         );
-        console.log(response.data);
 
         // Clear input fields
         setFormData({
