@@ -3,6 +3,11 @@ import styled from "styled-components";
 export const Main = styled.div`
   height: 620rem;
   width: 100vw;
+  overflow: hidden;
+
+  @media screen and (max-width: 768px) {
+    height: 420rem;
+  }
 `;
 export const Container = styled.div`
   height: 100vh;
@@ -377,6 +382,10 @@ export const Heading = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+
+  @media screen and (max-width: 768px) {
+    font-weight: Bolder;
+  }
 `;
 export const T1 = styled.h1`
   width: 80%;
@@ -463,8 +472,8 @@ export const BoxWhich = styled.div`
   @media screen and (max-width: 768px) {
     width: 100%;
     height: 100%;
-    padding: 2px;
-    gap: 1rem;
+    padding: 0 10px;
+    gap: -0rem;
   }
 `;
 export const ContentWhich = styled.div`
@@ -500,6 +509,15 @@ export const Script = styled.h4`
   letter-spacing: 0.015em;
   text-transform: capitalize;
   color: #605e5c;
+
+  @media screen and (max-width: 768px) {
+    width: 20%;
+    height: 100%;
+    font-weight: 200;
+    font-size: 8px;
+    line-height: 150%;
+    margin-top: 1.5rem;
+  }
 `;
 export const Improvement = styled.h4`
   width: 20%;
@@ -513,6 +531,15 @@ export const Improvement = styled.h4`
   letter-spacing: 0.015em;
   text-transform: capitalize;
   color: #605e5c;
+
+  @media screen and (max-width: 768px) {
+    width: 30%;
+    height: 100%;
+    font-weight: 200;
+    font-size: 8px;
+    line-height: 150%;
+    margin-top: 1.5rem;
+  }
 `;
 export const WhichContent = styled.div`
   display: flex;
@@ -522,6 +549,8 @@ export const WhichContent = styled.div`
 
   @media screen and (max-width: 768px) {
     padding: 10px;
+    gap: 0;
+    margin-top: 0;
   }
 `;
 export const What = styled.div`
