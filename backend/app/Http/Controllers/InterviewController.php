@@ -56,4 +56,21 @@ class InterviewController extends Controller
                 return $this->sendResponse(true, $e->getMessage(), "Interviews Not Found", null, Response::HTTP_BAD_REQUEST);
         }
     }
+
+    public function deleteInterview($id){
+        try {
+            //code...
+            $interviewCheck = Interview::where('id', $id)->exists();
+            if(!$interviewCheck){
+                $interviewCheck = [];
+                return $this->sendResponse(true, null, 'Interview does not exists', $interviewCheck, Response::HTTP_NOT_FOUND);
+            }
+
+            $deleted = Interview::where('id', $id)->delete();
+            return $this->sendResponse(false, null, 'Interview deleted successfully', Response::HTTP_OK);
+        } catch (Exception $e) {
+            //throw $th;
+            return $this->sendResponse(true, null, 'Something went wrong', Response::HTTP_BAD_REQUEST);
+        }
+    }
 }

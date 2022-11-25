@@ -146,6 +146,7 @@ Route::prefix('interview')->group(function () {
     Route::get('all', [InterviewController::class, 'getInterviews']);
     Route::get('{id}', [InterviewController::class, 'getInterviewById']);
     Route::get('/stack/{stack_id}', [InterviewController::class, 'getInterviewByStack']);
+    Route::delete('delete/{id}', [InterviewController::class, 'deleteInterview']);
 });
 
 // User Assessment routes
