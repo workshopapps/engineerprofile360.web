@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { json, Link } from "react-router-dom";
 
@@ -6,31 +6,19 @@ import { Container, Button } from "../../../styles/reusableElements.styled";
 import { AuthTitle, InputField } from "../../components";
 
 import useInputValidation from "../../../hooks/useInputValidation";
-import axios from "../../../api/axios";
 
 import eyeSvg from "../../../assets/icons/eye.svg";
 import smsSvg from "../../../assets/icons/smsenvelope.svg";
 import editSvg from "../../../assets/icons/edit-2.svg";
 
 const AdminSignup = () => {
-  const isFormSubmitted = useRef(false);
-  const {
-    formData,
-    changeInputValue,
-    onBlur,
-    validation,
-    errors,
-    setTouched,
-    setFormData,
-    touched,
-  } = useInputValidation({
-    fname: "",
-    uname: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const [showPassword, setShowPassword] = useState(false);
+  const { formData, changeInputValue, onBlur, errors, touched } =
+    useInputValidation({
+      fname: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
 
   // const onChange = (e) => {
   //   changeInputValue(e);
@@ -42,12 +30,6 @@ const AdminSignup = () => {
     config["headers"] = {
       "content-type": "application/json",
     };
-
-    let res = await fetch(url, config);
-    let data = await res.json();
-
-    return { res, data };
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,32 +56,19 @@ const AdminSignup = () => {
         });
 
         const { email, fname: full_name, uname: username, password } = formData;
-
-        const { res, data } = await Fetch(
-          "http://api.skript.hng.tech/api/auth/register",
+        const response = await axios.post(
+          "auth/register",
+          JSON.stringify({ email, full_name, username, password }),
           {
-            method: "Post",
-            body: JSON.stringify({ email, full_name, username, password }),
+            headers: {
+              "content-type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
+            withCredentials: true,
           }
         );
 
-        console.log(data);
-
-        // const response = await fetch(
-        //   "https://api.skript.hng.tech/api/auth/register",
-        //   {
-        //     method: "POST",
-        //     mode: "no-cors",
-
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({ email, full_name, username, password }),
-        //   }
-        // );
-        // const data = await response.json();
-        // console.log(data);
-
+        // Clear input fields
         setFormData({
           fname: "",
           uname: "",
@@ -107,10 +76,12 @@ const AdminSignup = () => {
           password: "",
           confirmPassword: "",
         });
-      }
+      } else if (errors) throw new Error();
     } catch (err) {
-      console.error(err);
       isFormSubmitted.current = false;
+
+      if (!err?.response) {
+      }
     }
   };
 
@@ -120,7 +91,7 @@ const AdminSignup = () => {
     <>
       <FormContainer>
         <AuthTitle title="Sign up" text="Let's get started" />
-        <SignupForm onSubmit={handleSubmit}>
+        <SignupForm>
           <InputField
             $size="md"
             type="text"
@@ -128,27 +99,11 @@ const AdminSignup = () => {
             id="fname"
             placeholder="Jane Doe"
             value={fname}
-            handleChange={(e) => changeInputValue(e)}
+            handleChange={changeInputValue}
             handleBlur={onBlur}
-            error={errors && touched.fname && errors.fname?.length > 0}
             endIcon={<img src={editSvg} alt="" />}
             helperText={
               errors && errors.fname && touched.fname ? errors.fname : ""
-            }
-          />
-          <InputField
-            $size="md"
-            type="text"
-            label="User Name"
-            id="uname"
-            placeholder="@Jane_Doe"
-            value={uname}
-            handleChange={(e) => changeInputValue(e)}
-            handleBlur={onBlur}
-            error={errors && touched.uname && errors.uname?.length > 0}
-            endIcon={<img src={editSvg} alt="" />}
-            helperText={
-              errors && errors.uname && touched.uname ? errors.uname : ""
             }
           />
           <InputField
@@ -158,9 +113,8 @@ const AdminSignup = () => {
             id="email"
             placeholder="janedoe@gmail.com"
             value={email}
-            handleChange={(e) => changeInputValue(e)}
+            handleChange={onChange}
             handleBlur={onBlur}
-            error={errors && touched.email && errors.email?.length > 0}
             endIcon={<img src={smsSvg} alt="" />}
             helperText={
               errors && errors.email && touched.email ? errors.email : ""
@@ -168,17 +122,16 @@ const AdminSignup = () => {
           />
           <InputField
             $size="md"
-            type={showPassword ? "text" : "password"}
+            // type={showPassword ? "password" : "text"}
             label="Password"
             id="password"
             placeholder="enter password"
             value={password}
-            handleChange={(e) => changeInputValue(e)}
+            handleChange={onChange}
             handleBlur={onBlur}
-            error={errors && touched.password && errors.password?.length > 0}
             endIcon={
               <img
-                onClick={() => setShowPassword((prevState) => !prevState)}
+                // onClick={() => setShowPassword((prevState) => !prevState)}
                 src={eyeSvg}
                 alt=""
               />
@@ -189,32 +142,21 @@ const AdminSignup = () => {
                 : ""
             }
           />
-          {errors && touched.password ? (
-            <Spans>
-              {errors.passwordLength ||
-              errors.passwordUppercase ||
-              errors.passwordNumber ||
-              errors.passwordCharacter ? (
-                <p>Your Password should have:</p>
-              ) : (
-                ""
-              )}
-              <span>{errors.passwordLength}</span>
-              <span>{errors.passwordUppercase}</span>
-              <span>{errors.passwordNumber}</span>
-              <span>{errors.passwordCharacter}</span>
-            </Spans>
-          ) : (
-            ""
-          )}
+          {/* <Spans color={error}>
+            <p>Your Password should have:</p>
+            <span>At least 8 characters</span>
+            <span>At least one capital letter</span>
+            <span>At least one number</span>
+            <span>At least one special character</span>
+          </Spans> */}
           <InputField
             $size="md"
-            type={showPassword ? "text" : "password"}
+            type="password"
             label="Confirm Password"
             id="confirmPassword"
             placeholder="confirm password"
             value={confirmPassword}
-            handleChange={(e) => changeInputValue(e)}
+            handleChange={onChange}
             handleBlur={onBlur}
             error={
               errors &&
@@ -230,16 +172,12 @@ const AdminSignup = () => {
           />
           <Checkbox>
             <label>
-              <input required type="checkbox" /> I agree to the{" "}
+              <input type="checkbox" /> I agree to the{" "}
               <a href="/terms"> Terms and Conditions</a>
             </label>
           </Checkbox>
 
-          <Button
-            // disabled={errors && Object.keys(errors).length > 0 ? true : false}
-            $size="md"
-            type="submit"
-          >
+          <Button $size="md" type="submit" onClick={handleSubmit}>
             Proceed to Signup
           </Button>
 
@@ -289,7 +227,7 @@ const Checkbox = styled.div`
 `;
 
 const Spans = styled.div`
-  margin-top: -20px;
+  margin-top: -30px;
   display: flex;
   flex-direction: column;
   align-self: flex-start;
@@ -302,6 +240,5 @@ const Spans = styled.div`
   span {
     font-size: 10px;
     font-family: inherit;
-    color: ${({ theme }) => theme.palette.status.error.color};
   }
 `;
