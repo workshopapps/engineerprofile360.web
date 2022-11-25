@@ -29,6 +29,7 @@ import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import HelpCenter from "../src/main/pages/HelpCenter";
+import { DashboardLayout } from "./main/Layouts/Dashboard/DashboardLayout";
 
 const App = () => {
   return (
@@ -72,6 +73,8 @@ const App = () => {
           />
           <Route path="/verify-email" element={<VerifyEmail />} />
         </Route>
+
+        <Route element={<DashboardLayout />}></Route>
       </Routes>
 
       {/* <UserProfile /> */}
