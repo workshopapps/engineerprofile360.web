@@ -43,7 +43,6 @@ export const Button = styled.button`
   background: #2667ff;
   border-radius: 4px;
   color: #fff;
-
   cursor: pointer;
 
   ${({ secondary }) =>
@@ -94,5 +93,35 @@ export const StatCard = styled.div`
     font-weight: 600;
     font-size: 28px;
     color: #323130;
+  }
+`;
+
+export const AssessmentContainer = styled.div`
+  height: auto;
+  display: flex;
+`;
+
+export const Performance = styled.div`
+  width: 50%;
+  height: 100%;
+  padding: 1rem 0;
+
+  div:first-of-type {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+
+    h4 {
+      font-weight: 400;
+      font-size: 24px;
+      color: #323130;
+    }
+
+    a {
+      font-weight: 600;
+      font-size: 20px;
+      color: #2667ff;
+      text-decoration: underline;
+    }
   }
 `;
