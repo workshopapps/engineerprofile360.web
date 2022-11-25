@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles, theme } from "./styles/globalStyles";
-import MainLayout from "./main/Layouts/Main/MainLayout";
+import MainLayout from "./Layouts/Main/MainLayout";
 
 import Contact from "./main/pages/Contact";
 import { AdminAuthLayout } from "./main/components";
@@ -29,9 +29,10 @@ import Privacy from "./main/pages/Privacy/privacy";
 import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 import Testimonial from "./main/components/Testimonials/Testimonial";
+import PricingPage from "./main/pages/PricingPage";
 import HelpCenter from "../src/main/pages/HelpCenter";
 import { User2FA } from "./ui/pages/userSignUp/User2FA";
-import { DashboardLayout } from "./main/Layouts/Dashboard/DashboardLayout";
+import { DashboardLayout } from "../src/Layouts/Dashboard/DashboardLayout";
 import AdminViewAssessment from "./ui/pages/admin-view-assessment/AdminViewAssessment";
 import Assessment from "./ui/pages/assessment/Assessment.jsx";
 import AdminViewProfile from "./ui/pages/admin-view-profile";
@@ -61,7 +62,8 @@ const App = () => {
             path="/admin-assessment-list"
             element={<AdminAssessmentList />}
           />
-          <Route path="/help-center" element={<HelpCenter />} />
+
+          <Route path="/pricing" element={<PricingPage />} />
           <Route
             path="/take-assessment-list"
             element={<UserTakeAssessment />}
@@ -92,7 +94,6 @@ const App = () => {
           <Route path="/assessment" element={<Assessment />} />
         </Route>
       </Routes>
-      {/* Protected Routes */}
 
       {/* <UserProfile /> */}
       {/* <UiLayout> */}

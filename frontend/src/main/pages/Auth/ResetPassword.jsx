@@ -4,14 +4,21 @@ import styled from "styled-components";
 import { Container, Button } from "../../../styles/reusableElements.styled";
 import { AuthTitle, InputField } from "../../components";
 
+import useInputValidation from "../../../hooks/useInputValidation";
+
 import securityIcon from "../../../assets/icons/security-safe.svg";
 import smsSvg from "../../../assets/icons/smsenvelope.svg";
 
 const ResetPassword = () => {
+  const { formData, changeInputValue, onBlur, errors, touched } =
+    useInputValidation({
+      email: "",
+    });
+  const { email } = formData;
   return (
     <>
       <FormContainer>
-        <img src={securityIcon} alt=" " />
+        <img src={securityIcon} alt="" />
         <AuthTitle
           title="Reset your password"
           text="Enter the email associated with your account"
@@ -19,11 +26,18 @@ const ResetPassword = () => {
         <ResetPasswordForm>
           <InputField
             $size="md"
-            type="text"
-            label="Full Name"
-            id="fname"
-            placeholder="Jane Doe"
+            type="email"
+            label="Email Address"
+            id="email"
+            value={email}
+            handleChange={(e) => changeInputValue(e)}
+            handleBlur={onBlur}
+            error={errors && touched.email && errors.email?.length > 0}
+            placeholder="janedoe@gmail.com"
             endIcon={<img src={smsSvg} alt="" />}
+            helperText={
+              errors && errors.email && touched.email ? errors.email : ""
+            }
           />
 
           <Button $size="md" type="submit">
@@ -39,7 +53,10 @@ export default ResetPassword;
 
 const FormContainer = styled(Container)`
   width: 100%;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  // align-items: center;
+  justify-content: center;
 `;
 
 const ResetPasswordForm = styled.form`
