@@ -71,7 +71,7 @@ Route::prefix("user-assessment")->group(function () {
 //Assessment routes operations
 Route::prefix("assessment")->group(function () {
     Route::post('/create', [AssessmentController::class, 'createAssessment'])->middleware("isloggedin", "isadmin");
-    Route::get('/{assessmentId}/notify/{employeeId}', [AssessmentController::class, 'notifyEmployeeAssessment']);
+    // Route::get('/{assessmentId}/notify/{employeeId}', [AssessmentController::class, 'notifyEmployeeAssessment']); // do not uncomment this route, some adjusments is currently been made
     Route::get('/{organisationId}', [AssessmentController::class, 'getAssByOrgId']);
     Route::put('/{assessmentId}', [AssessmentController::class, 'updateAssessment']);
     Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAssessment']);
