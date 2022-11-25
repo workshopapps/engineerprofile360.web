@@ -10,11 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserScoreController extends Controller
 {
-    public function __construct()
-    {
-        // $this->middleware('auth:api');
-    }
-
     /**
      * Store a newly created user score in database.
      *
@@ -23,9 +18,13 @@ class UserScoreController extends Controller
      */
     public function store(UserScoreStoreRequest $request)
     {
-        if (!UserScoreService::categoryMatchesScores($request->validated())) return $this->errorResponse("The passed questions doesn't match the categories supplied", true, Response::HTTP_UNPROCESSABLE_ENTITY);
-        $userScore = UserScore::create(UserScoreService::prepareRequest($request->validated()));
-        return $this->successResponse(true, "User score was added successfully!", $userScore, Response::HTTP_OK);
+        try {
+            if (!UserScoreService::categoryMatchesScores($request->validated())) return $this->sendResponse(true, "Not Permited", "The passed questions doesn't match the categories supplied", Response::HTTP_UNPROCESSABLE_ENTITY);
+            $userScore = UserScore::create(UserScoreService::prepareRequest($request->validated()));
+            return $this->sendResponse(false, null, "User score was added successfully!", $userScore, Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, "Error storing the userr score", $e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
@@ -37,9 +36,13 @@ class UserScoreController extends Controller
      */
     public function getScores(string $employeeId, string $assessmentId)
     {
-        $userScore = UserScore::where(["employee_id" => $employeeId, "assessment_id" => $assessmentId]);
-        if (!$userScore->first()) return $this->errorResponse("User Score not found", true, Response::HTTP_NOT_FOUND);
-        return $this->successResponse(true, "Successful", $userScore->get(), Response::HTTP_OK);
+        try {
+            $userScore = UserScore::where(["employee_id" => $employeeId, "assessment_id" => $assessmentId]);
+            if (!$userScore->first()) return $this->sendResponse(true, "Not Found", "User Score not found", Response::HTTP_NOT_FOUND);
+            return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, "Error fetching the userscores", $e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
@@ -50,9 +53,13 @@ class UserScoreController extends Controller
      */
     public function getScoresByAssessmentID(string $id)
     {
-        $userScore = UserScore::where("assessment_id", $id);
-        if (!$userScore->first()) return $this->errorResponse("User Score not found", true, Response::HTTP_NOT_FOUND);
-        return $this->successResponse(true, "User Score", $userScore->get(), Response::HTTP_OK);
+        try {
+            $userScore = UserScore::where("assessment_id", $id);
+            if (!$userScore->first()) return $this->sendResponse(true, "Not Found", "User Score not found", Response::HTTP_NOT_FOUND);
+            return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, "Error fetching user scores", $e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
@@ -63,8 +70,12 @@ class UserScoreController extends Controller
      */
     public function getScoresByEmployeeID(string $id)
     {
-        $userScore = UserScore::where("employee_id", $id)->get();
-        if (!$userScore->first()) return $this->errorResponse("User Score not found", true, Response::HTTP_NOT_FOUND);
-        return $this->successResponse(true, "User Score", $userScore->get(), Response::HTTP_OK);
+        try {
+            $userScore = UserScore::where("employee_id", $id)->get();
+            if (!$userScore->first()) return $this->sendResponse(true, "Not Found", "User Score not found", Response::HTTP_NOT_FOUND);
+            return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, "Error fetching user scores", $e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
     }
 }
