@@ -50,4 +50,34 @@ class StackController extends Controller
             return $this->errorResponse('Stack not fetched', $e->getMessage());
         }
     }
+
+     //function that gets all stacks
+     public function getAllStacks(): JsonResponse
+     {
+         try{
+             $stack = Stack::get();
+             if($stack){
+                 return $this->sendResponse(false, "All Stack Fetched", $stack, Response::HTTP_OK);
+             }else{
+                 return $this->sendResponse(true, "Invalid Request", "Stack(s) Not Found",  Response::HTTP_NOT_FOUND); 
+             }
+         } catch(Exception $e){
+             return $this->sendResponse(true, "Error Occured while trying to fetch all stack from DB", $e->getMessage());
+         }
+ 
+     }
+
+     //function that gets Stack by id
+    public function getStackById($id)
+    {
+        try{
+            $stackId = Stack::find($id);
+            if(!$stackId){
+                return $this->sendResponse(true, "Invalid Request", "No Stack with this id in DB", Response::HTTP_NOT_FOUND);   
+            }
+            return $this->sendResponse(false, "Stack Fetched", $stackId, Response::HTTP_OK);
+        } catch(Exception $e){
+                return $this->sendResponse(true, "Error occurred while fetching Stack", $e->getMessage());
+         }
+    }
 }

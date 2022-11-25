@@ -144,7 +144,7 @@ Route::prefix('employee')->group(function () {
 // department route
 Route::prefix("department")->group(function () {
     Route::get('{id}', [DepartmentController::class, 'getDeptByID']);
-    Route::get('company/{id}', [DepartmentController::class, 'getDeptByOrgID']);
+    Route::get('company/{id}', [DepartmentController::class, 'getDeptByOrgID'])->middleware("isloggedin", "isadmin");;
     Route::post('/add', [DepartmentController::class, 'addDepartment']);
     Route::put('update/{departmentId}', [DepartmentController::class, 'updateDepartment']);
     Route::delete('delete/{departmentId}', [DepartmentController::class, 'deleteDepartment']);
@@ -175,6 +175,8 @@ Route::prefix("user-assessment")->group(function () {
 Route::prefix("stack")->group(function () {
     Route::post('add', [StackController::class, 'addStack'])->middleware("isloggedin", "isadmin");
     Route::put('update/{stackId}', [StackController::class, 'updateStack']);
+    Route::get('all', [StackController::class, 'getAllStacks']);
+    Route::get('{id}', [StackController::class, 'getStackById']);
 });
 
 Route::fallback(function () {
