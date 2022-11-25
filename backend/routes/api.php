@@ -144,7 +144,7 @@ Route::prefix('employee')->group(function () {
 // department route
 Route::prefix("department")->group(function () {
     Route::get('{id}', [DepartmentController::class, 'getDeptByID']);
-    Route::get('company/{id}', [DepartmentController::class, 'getDeptByOrgID']);
+    Route::get('company/{id}', [DepartmentController::class, 'getDeptByOrgID'])->middleware("isloggedin", "isadmin");;
     Route::post('/add', [DepartmentController::class, 'addDepartment']);
     Route::put('update/{departmentId}', [DepartmentController::class, 'updateDepartment']);
     Route::delete('delete/{departmentId}', [DepartmentController::class, 'deleteDepartment']);
