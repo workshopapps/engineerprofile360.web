@@ -55,14 +55,18 @@ Route::prefix("user")->group(function () {
 });
 
 
-//userAssessment routes operations
-Route::prefix("userassessment")->group(function () {
-    Route::post('/accept/{assessmentId}/{employmentId}', [UserAssessmentController::class, 'acceptUserAssessment']);
+// User Assessment routes
+// User Assessment routes
+Route::prefix("user-assessment")->group(function () {
+    Route::post('/accept/{assessmentId}/{employmentId}/{orgId}', [UserAssessmentController::class, 'acceptUserAssessment']);
     Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
-    Route::delete('/{id}/delete', [UserAssessmentController::class, 'deleteUserAssessment']);
+    Route::get('/org/{org_id}/org-available', [UserAssessmentController::class, 'getOrgAvailableAssessment']);
+    Route::get('/org/{org_id}/org-completed', [UserAssessmentController::class, 'getOrgCompletedAssessment']);
+    Route::get('/{employee_id}', [UserAssessmentController::class, 'getEmployeeAvailableAssessments'])->middleware("isloggedin");
+    Route::get('/{employee_id}/completed', [UserAssessmentController::class, 'getEmployeeCompletedAssessment'])->middleware("isloggedin");
     Route::put('/{id}/update', [UserAssessmentController::class, 'updateUserAssessment']);
+    Route::delete('/{id}/delete', [UserAssessmentController::class, 'deleteUserAssessment']);
 });
-
 
 //Assessment routes operations
 Route::prefix("assessment")->group(function () {
@@ -151,17 +155,6 @@ Route::prefix('interview')->group(function () {
     Route::get('{id}', [InterviewController::class, 'getInterviewById']);
 });
 
-// User Assessment routes
-Route::prefix("user-assessment")->group(function () {
-    Route::post('/accept/{assessmentId}/{employmentId}/{orgId}', [UserAssessmentController::class, 'acceptUserAssessment']);
-    Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
-    Route::get('/org/{org_id}/org-available', [UserAssessmentController::class, 'getOrgAvailableAssessment']);
-    Route::get('/org/{org_id}/org-completed', [UserAssessmentController::class, 'getOrgCompletedAssessment']);
-    Route::get('/{employee_id}', [UserAssessmentController::class, 'getEmployeeAvailableAssessments'])->middleware("isloggedin");
-    Route::get('/{employee_id}/completed', [UserAssessmentController::class, 'getEmployeeCompletedAssessment'])->middleware("isloggedin");
-    Route::put('/{id}/update', [UserAssessmentController::class, 'updateUserAssessment']);
-    Route::delete('/{id}/delete', [UserAssessmentController::class, 'deleteUserAssessment']);
-});
 
 // Stack route
 Route::prefix("stack")->group(function () {
