@@ -28,22 +28,12 @@ class EmployeeController extends Controller
         try {
             $employees = Employee::where('org_id', $company_id)->paginate(5);
             if( !$employees) {
-                return $this->errorResponse(
-                    'Company Emoyees do not exist',
-                    'Employees not found',
-                    Response::HTTP_NOT_FOUND
-                );}
-
-                return $this->successResponse(
-                    true,
-                    'Employee',
-                    $employees,
-                    Response::HTTP_OK
-                );
-
+                return $this->sendResponse(true, "Company employees do not exist", "Employees not found", null, 400);
+            }
+            return $this->sendResponse(false, null, "Employee Found", $employees, 200);
         }catch (Exception $e) {
             //throw $th;
-            return $this->errorResponse('Employees not found', $e->getMessage());
+            return $this->sendResponse(true, $e->getMessage(), "Employees not found", null, 400);
         }
     }
     
@@ -75,17 +65,25 @@ class EmployeeController extends Controller
 
     public function getById(string $user_id): JsonResponse
     {
-        $employee = Employee::find($user_id);
-        if (!$employee) return $this->errorResponse('Employee does not exist', true, Response::HTTP_NOT_FOUND);
-        return $this->successResponse(true, 'Successful', $employee, Response::HTTP_OK);
+        try {
+            $employee = Employee::find($user_id);
+            if (!$employee) return $this->sendResponse(true, "Employee does not exist", "Employee not found", null, 404);
+            return $this->sendResponse(false, null, "Employee Fetch Successful", $employee, 200);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, $e->getMessage(), "Employee not found", null, 404);
+        }       
     }
 
     public function updateByID(UpdateEmployeeRequest $request,string $employeeId): JsonResponse
     {
-        $employee = Employee::find($employeeId);
-        if (is_null($employee)) return $this->errorResponse('Employee does not exist', true, Response::HTTP_NOT_FOUND);
-        if ($employee->update($request->validated())) return $this->successResponse(true, 'Successful', $employee, Response::HTTP_OK);
-        return $this->errorResponse("Employee info wasn't modified", true, Response::HTTP_NOT_MODIFIED);
+        try{
+            $employee = Employee::find($employeeId);
+            if (is_null($employee)) return $this->sendResponse(true, "Employee does not exist", "Employee not found", null, 404);
+            $employee->update($request->validated());
+            return $this->sendResponse(false, null, "Employee Update Successful", $employee, 200);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, $e->getMessage(), "Employee info wasn't modified", null, 304);
+        }
     }
 
     public function confirmCSV(Request $request)
@@ -110,11 +108,12 @@ class EmployeeController extends Controller
     {
         try {
             $department = Department::find($departmentId);
-
             if( !$department ) {
                 return $this->sendResponse(
+                    true,
                     'Department do not exist',
                     'Department not found',
+                    null,
                     Response::HTTP_NOT_FOUND
                 );
             }
@@ -122,18 +121,18 @@ class EmployeeController extends Controller
 
             if( !$employee ) {
                 return $this->sendResponse(
-                    false,
+                    true,
                     'Empoyee do not exist',
                     'Employees not found',
+                    null,
                     Response::HTTP_NOT_FOUND
                 );
             }
-
             $departmentEmployee = Employee::where('department_id', $departmentId)->where('id', $employee->id)->get();
 
-            return $this->sendResponse(false, 'Employee', $departmentEmployee, Response::HTTP_OK);
+            return $this->sendResponse(false, 'Employee Fetched Successfully', $departmentEmployee, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse('Employee could not be fetched', $e->getMessage());
+            return $this->sendResponse(true, $e->getMessage(), "Employee could not be fetched", null, 400);
         } 
     }
 }
