@@ -4,19 +4,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
-// use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\QuestionsController;
-
 use App\Http\Controllers\UserScoreController;
 use App\Http\Controllers\AssessmentController;
-use App\Http\Controllers\UserAssessmentController;
-
 use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\DepartmentController;
-
+use App\Http\Controllers\UserAssessmentController;
 
 // util functions
 // employee csv file parser.
@@ -141,6 +137,8 @@ Route::prefix("department")->group(function () {
     Route::post('/add', [DepartmentController::class, 'addDepartment']);
 });
 
+
+
 // User Assessment routes
 Route::prefix("user-assessment")->group(function () {
     Route::post('/accept/{assessmentId}/{employmentId}', [UserAssessmentController::class, 'acceptUserAssessment']);
@@ -148,6 +146,8 @@ Route::prefix("user-assessment")->group(function () {
     Route::get('/{employee_id}/completed', [UserAssessmentController::class, 'getEmployeeCompletedAssessment'])->middleware("isloggedin");
     Route::get('{org_id}/org-available', [UserAssessmentController::class, 'GetOrgAvailableAssessment']);
     Route::get('{org_id}/org-completed', [UserAssessmentController::class, 'GetOrgCompletedAssessment']);
+    Route::get('{id}', [UserAssessmentController::class, 'getAssessmentByID']);
+    Route::get('top-performance/{userId}', [UserAssessmentController::class, 'getUserTopPerformance']);
 });
 
 Route::fallback(function () {
