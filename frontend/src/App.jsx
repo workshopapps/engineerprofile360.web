@@ -29,7 +29,7 @@ import Privacy from "./main/pages/Privacy/privacy";
 import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 import Testimonial from "./main/components/Testimonials/Testimonial";
-import PricingPage from "./main/components/pricing/PricingPage";
+import PricingPage from "./main/pages/PricingPage";
 import HelpCenter from "../src/main/pages/HelpCenter";
 import AdminViewAssessment from "./ui/pages/admin-view-assessment/AdminViewAssessment";
 const App = () => {
