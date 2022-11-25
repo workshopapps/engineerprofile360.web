@@ -20,7 +20,7 @@ class Helper extends Controller
 
     public $baseUrl = "http://api.skript.hng.tech";
     // public $baseUrl = "http://localhost:8000";
-    public $clientUrl = "http://api.skript.hng.tech"; // this would be the frontend client url
+    public $clientUrl = "http://skript.hng.tech"; // this would be the frontend client url
 
     public function generateRefreshToken($userId, $user_email)
     {
@@ -113,6 +113,10 @@ class Helper extends Controller
         } catch (\Exception $e) {
             return Log::error("Could not send password reset link".$e->getMessage());
         }
+    }
+
+    public function notifyEmployee($emp_email, $emp_id,){
+        
     }
     
 }
