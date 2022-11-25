@@ -34,6 +34,8 @@ import { User2FA } from "./ui/pages/userSignUp/User2FA";
 import { DashboardLayout } from "./main/Layouts/Dashboard/DashboardLayout";
 import AdminViewAssessment from "./ui/pages/admin-view-assessment/AdminViewAssessment";
 import Assessment from "./ui/pages/assessment/Assessment.jsx";
+import AdminViewProfile from "./ui/pages/admin-view-profile";
+
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
@@ -68,6 +70,7 @@ const App = () => {
             path="/admin-view-assessment"
             element={<AdminViewAssessment />}
           />
+          <Route path="/admin-view-profile" element={<AdminViewProfile />} />
 
           <Route path="/setting" element={<AdminSetting />} />
           <Route path="/privacy-policy" element={<Privacy />} />
