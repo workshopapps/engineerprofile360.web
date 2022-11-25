@@ -85,6 +85,7 @@ const App = () => {
             element={<ResetPasswordSuccess />}
           />
           <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/2fa" element={<User2FA />} />
         </Route>
 
         <Route element={<DashboardLayout />}>
