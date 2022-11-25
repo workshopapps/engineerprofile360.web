@@ -49,6 +49,44 @@ class DepartmentController extends Controller
         }
     }
 
-    
+    public function updateDepartment(AddDepartmentRequest $request, $id)
+    {
+        try{
+            $updateDepartment  = $request->all();
+
+            $department = Department::find($id);
+            $checkDepartment = Department::where('id', $id)->exists();
+
+            if(!$checkDepartment) {
+                $checkDepartment = [];
+                return $this->sendResponse(true, null, 'This department does\'nt exists', $checkDepartment, Response::HTTP_NOT_FOUND);
+            }
+
+            $department->update($updateDepartment);
+
+            return $this->sendResponse(false, null, 'Department Updated Successfully', $department, Response::HTTP_OK);
+        }  catch (Exception $e) {
+            return $this->sendResponse(true, null, 'Something went wrong', Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    public function deleteDepartment($id)
+    {
+        try{
+            $department = Department::find($id);
+            $checkDepartment = Department::where('id', $id)->exists();
+
+            if(!$checkDepartment) {
+                $checkDepartment = [];
+                return $this->sendResponse(true, null, 'This department does\'nt exists', $checkDepartment, Response::HTTP_NOT_FOUND);
+            }
+
+            $department->delete();
+
+            return $this->sendResponse(false, null, 'Department deleted successfully', Response::HTTP_OK);
+        }  catch (Exception $e) {
+            return $this->sendResponse(true, null, 'Something went wrong', Response::HTTP_BAD_REQUEST);
+        }
+    }
 }
 

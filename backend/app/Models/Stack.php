@@ -11,4 +11,5 @@ class Stack extends Model
     use HasFactory, Uuids;
 
     protected $fillable = ["name"];
+
 }
