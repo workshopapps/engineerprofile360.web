@@ -30,6 +30,7 @@ import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import HelpCenter from "../src/main/pages/HelpCenter";
 import AdminCSVUpload from "./ui/pages/AdminUpload/AdminCSVUpload";
+import UserAssessmentListCompleted from "./ui/pages/UserAssestList/UserAssestListCompleted";
 
 const App = () => {
   return (
@@ -61,7 +62,7 @@ const App = () => {
           <Route path="/privacy-policy" element={<Privacy />} />
           <Route path="/employee-profile" element={<EmployeeProfile />} />
           <Route path="/admin-csv-upload" element={<AdminCSVUpload />} />
-          {/* <Route path="/user-assessment-completed" element={<UserAssestListCompleted />} /> */}
+          <Route path="/user-assessment-completed" element={<UserAssessmentListCompleted />} />
         </Route>
 
         {/* Auth routes */}
