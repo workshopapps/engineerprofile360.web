@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\InterviewRequest;
 use Exception;
 use App\Models\Interview;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Symfony\Component\HttpFoundation\Response;
 
 
 class InterviewController extends Controller
 {
-    public function addInterview(InterviewRequest $request): JsonResource
+    public function addInterview(InterviewRequest $request): JsonResponse
     {
         $data = $request->all();
         try {
