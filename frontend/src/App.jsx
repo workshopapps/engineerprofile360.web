@@ -29,6 +29,7 @@ import Privacy from "./main/pages/Privacy/privacy";
 import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 import Testimonial from "./main/components/Testimonials/Testimonial";
+import PricingPage from "./main/pages/PricingPage";
 import HelpCenter from "../src/main/pages/HelpCenter";
 import { User2FA } from "./ui/pages/userSignUp/User2FA";
 import { DashboardLayout } from "../src/Layouts/Dashboard/DashboardLayout";
@@ -59,7 +60,8 @@ const App = () => {
             path="/admin-assessment-list"
             element={<AdminAssessmentList />}
           />
-          <Route path="/help-center" element={<HelpCenter />} />
+
+          <Route path="/pricing" element={<PricingPage />} />
           <Route
             path="/take-assessment-list"
             element={<UserTakeAssessment />}
@@ -89,7 +91,6 @@ const App = () => {
           <Route path="/assessment" element={<Assessment />} />
         </Route>
       </Routes>
-      {/* Protected Routes */}
 
       {/* <UserProfile /> */}
       {/* <UiLayout> */}
