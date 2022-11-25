@@ -89,11 +89,12 @@ Route::prefix("auth")->group(function () {
     Route::get('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
     Route::post('employee/update/', [AuthenticationController::class, 'setEmployeePassword']);
 
-    Route::prefix("password")->group(function () {
-        // forgot password
-        Route::get("/forgot-password/{email}", [AuthenticateController::class, "forgotPassword"]);
-        Route::post("/reset/{id}/{token}", [AuthenticateController::class, "verifyPasswordReset"]);
-    }
+    Route::prefix("password")->group(
+        function () {
+            // forgot password
+            Route::get("/forgot-password/{email}", [AuthenticateController::class, "forgotPassword"]);
+            Route::post("/reset/{id}/{token}", [AuthenticateController::class, "verifyPasswordReset"]);
+        }
 
     );
 });
@@ -156,11 +157,10 @@ Route::prefix("user-assessment")->group(function () {
     Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
     Route::get('/org/{org_id}/org-available', [UserAssessmentController::class, 'getOrgAvailableAssessment']);
     Route::get('/org/{org_id}/org-completed', [UserAssessmentController::class, 'getOrgCompletedAssessment']);
-    Route::get('/{employee_id}', [UserAssessmentController::class, 'getEmployeeAvailableAssessments']);
-    Route::get('/{employee_id}/completed', [UserAssessmentController::class, 'getEmployeeCompletedAssessment']);
+    Route::get('/{employee_id}', [UserAssessmentController::class, 'getEmployeeAvailableAssessments'])->middleware("isloggedin");
+    Route::get('/{employee_id}/completed', [UserAssessmentController::class, 'getEmployeeCompletedAssessment'])->middleware("isloggedin");
     Route::put('/{id}/update', [UserAssessmentController::class, 'updateUserAssessment']);
     Route::delete('/{id}/delete', [UserAssessmentController::class, 'deleteUserAssessment']);
-
 });
 
 // Stack route
