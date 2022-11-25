@@ -23,7 +23,10 @@ const AdminLogin = () => {
   return (
     <>
       <FormContainer>
-        <AuthTitle title="Sign up" text="Let's get started" />
+        <AuthTitle
+          title="Welcome back"
+          text="Please enter your login details"
+        />
         <LoginForm>
           <InputField
             $size="md"
@@ -69,7 +72,7 @@ const AdminLogin = () => {
               <input type="checkbox" /> Remember me
             </label>
 
-            <Link to="/">Forgot password?</Link>
+            <Link to="/reset-password">Forgot password?</Link>
           </Checkbox>
 
           <Button $size="md" type="submit">
