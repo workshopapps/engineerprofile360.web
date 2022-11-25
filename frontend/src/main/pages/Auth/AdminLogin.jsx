@@ -1,18 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import { Container, Button } from "../../../styles/reusableElements.styled";
 import { AuthTitle, InputField } from "../../components";
 
+import useInputValidation from "../../../hooks/useInputValidation";
+
 import eyeSvg from "../../../assets/icons/eye.svg";
 import smsSvg from "../../../assets/icons/smsenvelope.svg";
 
 const AdminLogin = () => {
+  const [showPassword, setShowPassword] = useState(true);
+  const { formData, changeInputValue, onBlur, errors, touched } =
+    useInputValidation({
+      email: "",
+      password: "",
+    });
+
+  const { email, password } = formData;
+
   return (
     <>
       <FormContainer>
-        <AuthTitle title="Sign up" text="Let's get started" />
+        <AuthTitle
+          title="Welcome back"
+          text="Please enter your login details"
+        />
         <LoginForm>
           <InputField
             $size="md"
@@ -20,22 +34,45 @@ const AdminLogin = () => {
             label="Email Address"
             id="email"
             placeholder="janedoe@gmail.com"
+            value={email}
+            handleChange={(e) => changeInputValue(e)}
+            handleBlur={onBlur}
+            error={errors && touched.email && errors.email?.length > 0}
             endIcon={<img src={smsSvg} alt="" />}
+            helperText={
+              errors && errors.email && touched.email ? errors.email : ""
+            }
           />
           <InputField
             $size="md"
-            type="password"
+            type={showPassword ? "password" : "text"}
             label="Password"
             id="password"
             placeholder="enter password"
-            endIcon={<img src={eyeSvg} alt="" />}
+            value={password}
+            handleChange={(e) => changeInputValue(e)}
+            error={errors && touched.password && errors.password?.length > 0}
+            handleBlur={onBlur}
+            endIcon={
+              <img
+                onClick={() => setShowPassword((prevState) => !prevState)}
+                src={eyeSvg}
+                alt=""
+                style={{ cursor: "pointer" }}
+              />
+            }
+            helperText={
+              errors && errors.password && touched.password
+                ? errors.password
+                : ""
+            }
           />
           <Checkbox>
             <label>
               <input type="checkbox" /> Remember me
             </label>
 
-            <Link to="/">Forgot password?</Link>
+            <Link to="/reset-password">Forgot password?</Link>
           </Checkbox>
 
           <Button $size="md" type="submit">
