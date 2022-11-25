@@ -1,9 +1,9 @@
-import React, { Fragment } from "react"
+import React, { Fragment } from "react";
 
-import Header from "../../components/Header"
-import { Main, MainContainer } from "../../../styles/reusableElements.styled"
-import Sidebar from "../../components/Sidebar"
-import UserInfo from "./component/UserInfo"
+import Header from "../../components/Header";
+import { MainContainer } from "../../../styles/reusableElements.styled";
+import Sidebar from "../../components/Sidebar";
+import UserInfo from "./component/UserInfo";
 
 const UserProfile = () => {
   return (
@@ -16,7 +16,7 @@ const UserProfile = () => {
         {/* </Main> */}
       </MainContainer>
     </Fragment>
-  )
-}
+  );
+};
 
-export default UserProfile
+export default UserProfile;

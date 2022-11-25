@@ -2,21 +2,24 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles, theme } from "./styles/globalStyles";
-import MainLayout from "./main/Layouts/MainLayout";
+import MainLayout from "./main/Layouts/Main/MainLayout";
 
 import Contact from "./main/pages/Contact";
-import { About } from "./main/pages";
-import Home from "./main/pages/Home";
+import { AdminAuthLayout } from "./main/components";
+import {
+  Home,
+  About,
+  AdminSignup,
+  AdminLogin,
+  ResetPassword,
+  ResetPasswordSuccess,
+  VerifyEmail,
+} from "./main/pages";
 import Confirmed from "./main/components/demo-pages-components/components/Confirmed";
 import ScheduleDemo from "./main/components/demo-pages-components/components/ScheduleDemo";
-
 import Support from "../src/ui/pages/UserSupport";
 import Terms from "../src/ui/pages/termsAndService/TermsAndService";
-
 import UserProfile from "./ui/pages/user-profile/UserProfile";
-import Register from "../src/main/components/sections/adminSignup/AdminSignup";
-import Login from "../src/main/components/sections/adminLogin/AdminLogin";
-import Forgot from "../src/main/components/sections/adminForgot/AdminForgot";
 import Blog from "../src/main/pages/Blog";
 import AssessmentList from "./main/components/sections/userAssessmentList/AssessmentList";
 import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
@@ -26,25 +29,21 @@ import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import HelpCenter from "../src/main/pages/HelpCenter";
-import AdminViewAssessment from "./ui/pages/admin-view-assessment/AdminViewAssessment";
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
-      <MainLayout>
-        <Routes>
+      <Routes>
+        <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/about-us" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/demo" element={<ScheduleDemo />} />
           <Route path="/confirm-demo" element={<Confirmed />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/support" element={<Support />} />
 
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/forgot" element={<Forgot />} />
+          <Route path="/support" element={<Support />} />
+          <Route path="/termsAndService" element={<Terms />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/assessment-list" element={<AssessmentList />} />
           <Route path="/admin-assessment" element={<AdminAssessmentList />} />
@@ -60,13 +59,20 @@ const App = () => {
           <Route path="/setting" element={<AdminSetting />} />
           <Route path="/privacy-policy" element={<Privacy />} />
           <Route path="/employee-profile" element={<EmployeeProfile />} />
-          <Route path="/testimonial" element={<Testimonial />} />
+        </Route>
+
+        {/* Auth routes */}
+        <Route element={<AdminAuthLayout />}>
+          <Route path="/register" element={<AdminSignup />} />
+          <Route path="/login" element={<AdminLogin />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route
-            path="/admin-view-assessment"
-            element={<AdminViewAssessment />}
+            path="/reset-password-success"
+            element={<ResetPasswordSuccess />}
           />
-        </Routes>
-      </MainLayout>
+          <Route path="/verify-email" element={<VerifyEmail />} />
+        </Route>
+      </Routes>
 
       {/* <UserProfile /> */}
       {/* <UiLayout> */}

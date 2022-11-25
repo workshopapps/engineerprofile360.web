@@ -56,7 +56,7 @@ class AuthenticateController extends Controller {
                 // user record
                 $userResp = [
                     "accessToken"=>$accToken,
-                    "id"=>$users->first()["id"],
+                    "id"=>$users->first()["user_id"],
                     "username"=>$users->first()["username"]
                 ];
 
@@ -89,7 +89,7 @@ class AuthenticateController extends Controller {
                 }
                 
                 
-                return $this->sendResponse(false, null, "User logged in successfully", json_encode($userResp), 200);
+                return $this->sendResponse(false, null, "User logged in successfully", $userResp, 200);
             } catch (\Exception $e) {
                 print_r($e);
                 return $this->sendResponse(true,$e->getMessage(),"Something went wrong loggin in, please try again", null, 500);
@@ -120,7 +120,7 @@ class AuthenticateController extends Controller {
                 // update refToken in database
                 Employee::where('email', '=', $email)->update(array('refToken' => $refToken));
 
-                return $this->sendResponse(false, null, "User logged in successfully", json_encode($userResp), 200);
+                return $this->sendResponse(false, null, "User logged in successfully", $userResp, 200);
             } catch (\Exception $e) {
                 return $this->errorResponse("Something went wrong loggin in, please try again", $e->getMessage(), 500);
             }
@@ -145,7 +145,7 @@ class AuthenticateController extends Controller {
             "full_name"=>$fullname,
             "password"=>$password,
         ],[
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255',
             'full_name' => 'required|string|min:6',
             'username' => 'required|string|min:6',
             'password' => 'required|string|min:4',
@@ -194,7 +194,7 @@ class AuthenticateController extends Controller {
             // send a mail verification code.
             $this->helper->emailVerification($email, $uid);
 
-            return $this->sendResponse(false, null, "User registered successfully", json_encode($clientExtractedData), 200);
+            return $this->sendResponse(false, null, "User registered successfully", $clientExtractedData, 200);
         } catch (\Exception $e) {
             return $this->sendResponse(true,$e->getMessage(), "Something went wrong registering, please try again", 500);
         }
@@ -206,11 +206,11 @@ class AuthenticateController extends Controller {
         $token = Token::where("token", $token);
 
         if($user->count() == 0){
-            return $this->sendResponse(true, 'Invalid verification link or verification expires',"Invalid verification link", null, 400);
+            return $this->sendResponse(true, 'Invalid verification link, no user was found',"Invalid verification link", null, 404);
         }
         
         if($token->count() == 0){
-            return $this->sendResponse(true, 'Invalid verification link or verification expires',"Invalid verification link", null, 400);
+            return $this->sendResponse(true, 'Invalid verification link or verification expires',"Invalid verification link....", null, 400);
         }
 
         // check if user has been verified already
@@ -298,8 +298,8 @@ class AuthenticateController extends Controller {
                     }
 
                     // Updated user password
-                    User::where("id", $id)->update(array("password"=> $newHash));
-    
+                    User::where("user_id", $id)->update(array("password"=> $newHash));
+                    
                     // removed token from database
                     Token::where("user_id", $id)->delete();
     
@@ -359,33 +359,6 @@ class AuthenticateController extends Controller {
             }
         }
     }
-
-    // public function setEmployeePassword(Request $request){
-    //     $request->validate([
-    //         'email' => 'required|email|exists:employees,email',
-    //         'password' => 'required|string|min:6',
-    //     ]);
-
-        
-
-    //     try{
-
-    //         $employee = Employee::whereEmail($request->email)->first();
-    //         if($employee){
-    //             $employee->hash = Hash::make($password);
-    //             $employee->save();
-                
-    //             return $this->successResponse(true, "Employee password set successfully", null, 200);
-    //         }
-            
-    //         return $this->errorResponse("Not found", "Employee id not found", 404);       
-    //     }catch (\Throwable $e) {
-    //         return $this->errorResponse("An error occured", $e->getMessage(), 422);       
-    //     }
-
-    // }
-
-
 }
 
 ?>
