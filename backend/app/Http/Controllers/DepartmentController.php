@@ -48,7 +48,7 @@ class DepartmentController extends Controller
     }
 
     /**
-     * Get all departments created by an Organisation
+     * Get all departments created by an Organization
      *
      * @param  string  $id
      * @return Response
@@ -60,7 +60,7 @@ class DepartmentController extends Controller
             if (!$department->first()) return $this->sendResponse(true, "Not found", "Department not found", Response::HTTP_NOT_FOUND);
             return $this->sendResponse(false, null, "Successful", $department->get(), Response::HTTP_OK);
         } catch (Exception $e) {
-            $this->sendResponse(true, "Error fetching the departments", $e->getMessage(), Response::HTTP_BAD_REQUEST);
+            return $this->sendResponse(true, "Error fetching the departments", $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
 
