@@ -28,12 +28,12 @@ class EmployeeController extends Controller
         try {
             $employees = Employee::where('org_id', $company_id)->paginate(5);
             if( !$employees) {
-                return $this->sendResponse(true, "Company employees do not exist", "Employees not found", null, 400);
+                return $this->sendResponse(true, "Company employees do not exist", "Employees not found", null, Response::HTTP_NOT_FOUND);
             }
-            return $this->sendResponse(false, null, "Employee Found", $employees, 200);
+            return $this->sendResponse(false, null, "Employee Found", $employees, Response::HTTP_OK);
         }catch (Exception $e) {
             //throw $th;
-            return $this->sendResponse(true, $e->getMessage(), "Employees not found", null, 400);
+            return $this->sendResponse(true, $e->getMessage(), "Employees not found", null, Response::HTTP_NOT_FOUND);
         }
     }
     
@@ -47,9 +47,9 @@ class EmployeeController extends Controller
                 $result = $csv->parseEmployeeCsv($file); 
                 if ($result["error"] == false && $result["message"] == "csv parsed") {
                     $data = $result['data'];
-                    return $this->sendResponse(false, null, "CSV Parsed Successfully", $data, 200);
+                    return $this->sendResponse(false, null, "CSV Parsed Successfully", $data, Response::HTTP_OK);
                 }else{
-                    return $this->sendResponse(true, $result["error"], "Invalid File Type", null, 400);
+                    return $this->sendResponse(true, $result["error"], "Invalid File Type", null, Response::HTTP_BAD_REQUEST);
                 }
             }
             else if ($query === "manual"){
@@ -59,7 +59,7 @@ class EmployeeController extends Controller
                 return $this->insertEmployee($data);
             } 
             else {
-                return $this->sendResponse(true, "No add query parameter", "Invalid Request", null, 404);
+                return $this->sendResponse(true, "No add query parameter", "Invalid Request", null, Response::HTTP_NOT_FOUND);
             }
     }
 
@@ -67,10 +67,10 @@ class EmployeeController extends Controller
     {
         try {
             $employee = Employee::find($user_id);
-            if (!$employee) return $this->sendResponse(true, "Employee does not exist", "Employee not found", null, 404);
-            return $this->sendResponse(false, null, "Employee Fetch Successful", $employee, 200);
+            if (!$employee) return $this->sendResponse(true, "Employee does not exist", "Employee not found", null, Response::HTTP_NOT_FOUND);
+            return $this->sendResponse(false, null, "Employee Fetch Successful", $employee, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true, $e->getMessage(), "Employee not found", null, 404);
+            return $this->sendResponse(true, $e->getMessage(), "Employee not found", null, Response::HTTP_NOT_FOUND);
         }       
     }
 
@@ -78,11 +78,11 @@ class EmployeeController extends Controller
     {
         try{
             $employee = Employee::find($employeeId);
-            if (is_null($employee)) return $this->sendResponse(true, "Employee does not exist", "Employee not found", null, 404);
+            if (is_null($employee)) return $this->sendResponse(true, "Employee does not exist", "Employee not found", null, Response::HTTP_NOT_FOUND);
             $employee->update($request->validated());
-            return $this->sendResponse(false, null, "Employee Update Successful", $employee, 200);
+            return $this->sendResponse(false, null, "Employee Update Successful", $employee, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true, $e->getMessage(), "Employee info wasn't modified", null, 304);
+            return $this->sendResponse(true, $e->getMessage(), "Employee info wasn't modified", null, Response::HTTP_NOT_MODIFIED);
         }
     }
 
@@ -98,9 +98,9 @@ class EmployeeController extends Controller
     {
         try {
             $employee = Employee::insert($data);
-            return $this->sendResponse(false, null, "Employee Added Successfully", $employee, 201);
+            return $this->sendResponse(false, null, "Employee Added Successfully", $employee, Response::HTTP_CREATED);
         } catch (Exception $e) {
-            return $this->sendResponse(true, $e->getMessage(), "Employee Action Failed", null, 400);
+            return $this->sendResponse(true, $e->getMessage(), "Employee Action Failed", null, Response::HTTP_NOT_FOUND);
         } 
     }
 
@@ -121,7 +121,7 @@ class EmployeeController extends Controller
 
             return $this->sendResponse(false, 'All Department Employees', $employees, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true, $e->getMessage(), "Employee could not be fetched", null, 400);
+            return $this->sendResponse(true, $e->getMessage(), "Employee could not be fetched", null, Response::HTTP_NOT_FOUND);
         } 
     }
 }
