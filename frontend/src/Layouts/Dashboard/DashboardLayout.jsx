@@ -10,18 +10,18 @@ import {
   NavItems,
   Profile,
 } from "./DashBoard";
-import User from "../../../assets/images/app/User-button.png";
-import Bell from "../../../assets/icons/app/notification.svg";
-import Arrow from "../../../assets/icons/app/arrow-down.svg";
-import Users from "../../../assets/icons/profile.svg";
-import Setting from "../../../assets/icons/setting.svg";
-import Logout from "../../../assets/icons/logout.svg";
-import Logo from "../../../assets/icons/app/logo.svg";
-import Dashboard from "../../../assets/icons/app/dashboard.svg";
-import Assessment from "../../../assets/icons/app/assessment.svg";
-import AssessmentActive from "../../../assets/icons/app/assessment-active.svg";
-import Employee from "../../../assets/icons/app/user.svg";
-import menuIcon from "../../../assets/icons/menu.svg";
+import User from "../../assets/icons/app/user1.svg";
+import Bell from "../../assets/icons/app/notification.svg";
+import Arrow from "../../assets/icons/app/arrow-down.svg";
+import Users from "../../assets/icons/profile.svg";
+import Setting from "../../assets/icons/setting.svg";
+import Logout from "../../assets/icons/logout.svg";
+import Logo from "../../assets/icons/app/logo.svg";
+import Dashboard from "../../assets/icons/app/dashboard.svg";
+import Assessment from "../../assets/icons/app/assessment.svg";
+import AssessmentActive from "../../assets/icons/app/assessment-active.svg";
+import Employee from "../../assets/icons/app/user.svg";
+import menuIcon from "../../assets/icons/menu.svg";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
