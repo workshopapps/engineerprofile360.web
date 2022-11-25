@@ -9,8 +9,7 @@ use Illuminate\Http\JsonResponse;
 use App\Models\Employee;
 use App\Models\Department;
 use Exception;
-
-
+use Illuminate\Support\Str;
 
 class EmployeeController extends Controller
 {
@@ -48,28 +47,29 @@ class EmployeeController extends Controller
         }
     }
     
-    public function addEmpCSV(Request $request)
+    public function addEmployee(Request $request)
     {
-        $query = $request->query('type');
-       
+        $query = $request->query('type');      
             if ($query === "csv") {
                 $csv = new CsvParser();
-                $file = json_decode($request->getContent(), true);
-                $file = $file['csv_file'];
-                $result = $csv->parseEmployeeCsv($file);
+                $payload = json_decode($request->getContent(), true);
+                $file = $payload['csv_file'];
+                $result = $csv->parseEmployeeCsv($file); 
                 if ($result["error"] == false && $result["message"] == "csv parsed") {
                     $data = $result['data'];
-                    return $this->successResponse(true, 'CSV Parsed Successfully', $data, REsponse::HTTP_OK);
+                    return $this->sendResponse(false, null, "CSV Parsed Successfully", $data, 200);
                 }else{
-                    return $this->errorResponse('Invalid File Type', $result["error"]);
+                    return $this->sendResponse(true, $result["error"], "Invalid File Type", null, 400);
                 }
             }
             else if ($query === "manual"){
-                $data = $request->all();
-                $this->addEmployee($data);
+                $payload = $request->getContent(); 
+                $data = json_decode($payload, true);
+                $data['id'] = Str::uuid();
+                return $this->insertEmployee($data);
             } 
             else {
-                return $this->errorResponse('Invalid Request', Response::HTTP_NOT_FOUND);
+                return $this->sendResponse(true, "No add query parameter", "Invalid Request", null, 404);
             }
     }
 
@@ -92,17 +92,17 @@ class EmployeeController extends Controller
     {
         $parser = new CsvParser();
         $file = json_decode($request->getContent(), true);
-        $data = $parser->trimEmployeeCSV($file);
-        $this->addEmployee($data);
+        $data = $parser->trimEmployeeCSV($file['data'], $file['department_id'], $file['org_id']);
+        return $this->insertEmployee($data);
     }
 
-    public function addEmployee($data)
+    public function insertEmployee($data)
     {
         try {
-            $employee = Employee::create($data);
-            return $this->successResponse(true, 'Employee Added Successfully', $employee, Response::HTTP_CREATED);
+            $employee = Employee::insert($data);
+            return $this->sendResponse(false, null, "Employee Added Successfully", $employee, 201);
         } catch (Exception $e) {
-            return $this->errorResponse('Employee Action Failed', $e->getMessage());
+            return $this->sendResponse(true, $e->getMessage(), "Employee Action Failed", null, 400);
         } 
     }
 
