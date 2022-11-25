@@ -1,15 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import { Container, Button } from "../../../styles/reusableElements.styled";
 import { AuthTitle, InputField } from "../../components";
 
+import useInputValidation from "../../../hooks/useInputValidation";
+
 import eyeSvg from "../../../assets/icons/eye.svg";
 import smsSvg from "../../../assets/icons/smsenvelope.svg";
 import editSvg from "../../../assets/icons/edit-2.svg";
 
 const AdminSignup = () => {
+  const { formData, changeInputValue, onBlur, errors, touched } =
+    useInputValidation({
+      fname: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
+
+  const onChange = (e) => {
+    changeInputValue(e);
+  };
+
+  console.log(errors);
+  console.log(touched);
+
+  const { fname, email, password, confirmPassword } = formData;
   return (
     <>
       <FormContainer>
@@ -21,7 +39,13 @@ const AdminSignup = () => {
             label="Full Name"
             id="fname"
             placeholder="Jane Doe"
+            value={fname}
+            handleChange={changeInputValue}
+            handleBlur={onBlur}
             endIcon={<img src={editSvg} alt="" />}
+            helperText={
+              errors && errors.fname && touched.fname ? errors.fname : ""
+            }
           />
           <InputField
             $size="md"
@@ -29,23 +53,51 @@ const AdminSignup = () => {
             label="Email Address"
             id="email"
             placeholder="janedoe@gmail.com"
+            value={email}
+            handleChange={onChange}
+            handleBlur={onBlur}
             endIcon={<img src={smsSvg} alt="" />}
+            helperText={
+              errors && errors.email && touched.email ? errors.email : ""
+            }
           />
           <InputField
             $size="md"
-            type="password"
+            // type={showPassword ? "password" : "text"}
             label="Password"
             id="password"
             placeholder="enter password"
-            endIcon={<img src={eyeSvg} alt="" />}
+            value={password}
+            handleChange={onChange}
+            handleBlur={onBlur}
+            endIcon={
+              <img
+                // onClick={() => setShowPassword((prevState) => !prevState)}
+                src={eyeSvg}
+                alt=""
+              />
+            }
+            helperText={
+              errors && errors.password && touched.password
+                ? errors.password
+                : ""
+            }
           />
           <InputField
             $size="md"
             type="password"
             label="Confirm Password"
-            id="confirm-password"
+            id="confirmPassword"
             placeholder="confirm password"
+            value={confirmPassword}
+            handleChange={onChange}
+            handleBlur={onBlur}
             endIcon={<img src={eyeSvg} alt="" />}
+            helperText={
+              errors && errors.confirmPassword && touched.confirmPassword
+                ? errors.confirmPassword
+                : ""
+            }
           />
           <Checkbox>
             <label>

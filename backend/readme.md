@@ -43,8 +43,4 @@ DB_PORT=3306
 DB_DATABASE=engineering360
 DB_USERNAME=root
 DB_PASSWORD= 
-<<<<<<< HEAD
 ```
-=======
-```
->>>>>>> 23dba6b686bd6cf3a0fb146779fd5f2f272afad2

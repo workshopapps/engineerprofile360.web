@@ -20,6 +20,14 @@ export { default as AboutValues } from "./About/AboutValues";
 export { default as AboutMission } from "./About/AboutMission";
 export { default as AboutVision } from "./About/AboutVision";
 
+// BioMedical exports
+
+export { default as BioMedicalHero } from "./BioMedical/BioMedicalHero";
+export { default as BioMedicalFeatures } from "./BioMedical/BioMedicalFeatures";
+export { default as BioMedicalTestimonials } from "./BioMedical/BioMedicalTestimonials";
+export { default as BioMedicalSteps } from "./BioMedical/BioMedicalSteps";
+export { default as BioMedicalBooking } from "./BioMedical/BioMedicalBooking";
+
 //  Auth Layout export
 
 export { default as AdminAuthLayout } from "./Auth/Layout/AdminAuthLayout";
