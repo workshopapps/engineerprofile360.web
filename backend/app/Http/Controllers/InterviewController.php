@@ -2,14 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\InterviewRequest;
 use Exception;
 use App\Models\Interview;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 
 class InterviewController extends Controller
 {
+    public function addInterview(InterviewRequest $request): JsonResponse
+    {
+        $data = $request->all();
+        try {
+           Interview::create($data);
+            return $this->sendResponse(false, null, 'Interview created', $data, Response::HTTP_CREATED);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, 'Interview not created', $e->getMessage());
+        }
+    }
+
     public function getInterviews()
     {
         try {

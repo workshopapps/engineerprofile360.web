@@ -55,10 +55,10 @@ Route::prefix("user")->group(function () {
 });
 
 
-// User Assessment routes
+
 // User Assessment routes
 Route::prefix("user-assessment")->group(function () {
-    Route::post('/accept/{assessmentId}/{employmentId}/{orgId}', [UserAssessmentController::class, 'acceptUserAssessment']);
+    Route::get('/accept/{assessmentId}/{employeeId}/{orgId}', [UserAssessmentController::class, 'acceptUserAssessment']);
     Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
     Route::get('/org/{org_id}/org-available', [UserAssessmentController::class, 'getOrgAvailableAssessment']);
     Route::get('/org/{org_id}/org-completed', [UserAssessmentController::class, 'getOrgCompletedAssessment']);
@@ -152,9 +152,10 @@ Route::prefix("department")->group(function () {
 
 // Interview routes
 Route::prefix('interview')->group(function () {
+
     Route::get('all', [InterviewController::class, 'getInterviews']);
-    Route::get('{id}', [InterviewController::class, 'getInterviewById']);
-    Route::get('/stack/{stack_id}', [InterviewController::class, 'getInterviewByStack']);
+    Route::post('add', [InterviewController::class, 'addInterview'])->middleware('isloggedin', 'isadmin');
+    Route::get('get/{id}', [InterviewController::class, 'getInterviewById']);
 });
 
 // User Assessment routes
