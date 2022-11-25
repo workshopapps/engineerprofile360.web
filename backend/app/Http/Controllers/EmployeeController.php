@@ -104,7 +104,7 @@ class EmployeeController extends Controller
         } 
     }
 
-    public function getEmplyeeByDepartment($departmentId, $employeeId)
+    public function getEmplyeesByDepartment($departmentId)
     {
         try {
             $department = Department::find($departmentId);
@@ -117,20 +117,9 @@ class EmployeeController extends Controller
                     Response::HTTP_NOT_FOUND
                 );
             }
-            $employee = Employee::find($employeeId);
+            $employees = Employee::where('department_id', $departmentId)->paginate(10);
 
-            if( !$employee ) {
-                return $this->sendResponse(
-                    true,
-                    'Empoyee do not exist',
-                    'Employees not found',
-                    null,
-                    Response::HTTP_NOT_FOUND
-                );
-            }
-            $departmentEmployee = Employee::where('department_id', $departmentId)->where('id', $employee->id)->get();
-
-            return $this->sendResponse(false, 'Employee Fetched Successfully', $departmentEmployee, Response::HTTP_OK);
+            return $this->sendResponse(false, 'All Department Employees', $employees, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, $e->getMessage(), "Employee could not be fetched", null, 400);
         } 
