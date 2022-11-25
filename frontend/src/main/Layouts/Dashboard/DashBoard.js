@@ -30,9 +30,9 @@ export const Navigation = styled.div`
     }
   }
 
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 1250px) {
     position: fixed;
-    z-index: 1000;
+    z-index: 100;
 
     header {
       .logo {
@@ -55,7 +55,9 @@ export const NavItems = styled.div`
       margin-left: 10px;
     }
   }
-
+  .active {
+    color: #2667ff;
+  }
   img {
     height: 30px;
   }
@@ -68,11 +70,11 @@ export const Content = styled.div`
 
   .toggle {
     position: absolute;
-    height: 100px;
+    height: 55px;
     display: flex;
     align-items: center;
     margin-left: 10px;
-    z-index: 100;
+    z-index: 50;
 
     button {
       cursor: pointer;

@@ -1,5 +1,44 @@
 import React from "react";
-import { Button, PageHeader, StatCard, Stats } from "./Assessment";
+import {
+  AssessmentContainer,
+  Button,
+  PageHeader,
+  StatCard,
+  Stats,
+  Performance,
+} from "./Assessment";
+
+import {
+  Chart as ChartJS,
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Radar } from "react-chartjs-2";
+
+ChartJS.register(
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend
+);
+
+export const data = {
+  labels: ["Average", "PHP", "Laravel", "Python", "CSS", "HTML"],
+  datasets: [
+    {
+      data: [9, 9, 9, 9, 9, 9],
+      backgroundColor: "rgba(95, 210, 85, 0.2)",
+      borderColor: "#107C10",
+      borderWidth: 1.5,
+    },
+  ],
+};
 
 export default function Assessment() {
   return (
@@ -25,6 +64,16 @@ export default function Assessment() {
           <h3>60</h3>
         </StatCard>
       </Stats>
+      <AssessmentContainer>
+        <Performance></Performance>
+        <Performance>
+          <div>
+            <h4>Top Performance</h4>
+            <a href="#/">View All</a>
+          </div>
+          <Radar data={data} />
+        </Performance>
+      </AssessmentContainer>
     </>
   );
 }
