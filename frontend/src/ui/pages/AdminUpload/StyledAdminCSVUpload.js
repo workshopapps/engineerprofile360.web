@@ -66,7 +66,7 @@ const Main = styled.main`
   }
 
   button:hover {
-    background: #3F8EFC;
+    background: #3f8efc;
     border: none;
   }
 
@@ -77,12 +77,56 @@ const Main = styled.main`
     column-gap: 20px;
     justify-content: center;
     align-items: center;
+    justify-self: center;
   }
 
   .plus-icon {
     display: inline;
-    justify-content:center;
+    justify-content: center;
   }
-  
+  .spinner {
+    diplay: block;
+    grid-template-columns: 1fr;
+    align-items: center;
+    justify-items: center;
+    justify-self: center;
+    margin: auto auto;
+  }
+  .spinner p {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #000000;
+    text-align: center;
+    margin-top: 10px;
+  }
+  .loader {
+    border: 14px solid #87bfff;
+    border-radius: 50%;
+    border-top: 14px solid #141ae9;
+    width: 140px;
+    height: 140px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+    margin: auto auto;
+  }
+
+  @-webkit-keyframes spin {
+    0% {
+      -webkit-transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 `;
 export default Main;

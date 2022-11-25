@@ -4,15 +4,23 @@ import { MainContainer } from "../../../styles/reusableElements.styled";
 import Main from "./StyledAdminCSVUpload";
 
 import { BsCloudUpload, BsPlusCircle } from "react-icons/bs";
+import { useState } from "react";
 
 const AdminCSVUpload = () => {
+
+  const [isLoading, setIsLoading] = useState(false)
+
+  const browseBtnHandler = () => {
+    setIsLoading(true)
+  }
   return (
     <>
       <Header />
       <MainContainer>
         <Sidebar />
         <Main>
-          <nav>
+          
+          {!isLoading && <><nav>
             <ul>
               <li>Upload CSV File</li>
               <li>Create assessment manually </li>
@@ -25,10 +33,13 @@ const AdminCSVUpload = () => {
             </div>
             <div className="buttons">
               <button>Cancel</button>
-              <button><BsPlusCircle className="plus-icon" /> Browse Computer</button>
+              <button onClick={browseBtnHandler}><BsPlusCircle className="plus-icon" /> Browse Computer</button>
             </div>        
-
-          </section>
+          </section></>}
+          {isLoading && <div className="spinner">
+              <div className="loader"></div>
+              <p>Please wait for your file to upload </p>
+            </div>}
         </Main>
       </MainContainer>
     </>
