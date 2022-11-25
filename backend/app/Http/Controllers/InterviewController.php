@@ -30,4 +30,30 @@ class InterviewController extends Controller
             return $this->sendResponse(true, $e->getMessage(), "Error fetching interview", null, Response::HTTP_BAD_REQUEST);
         }
     }
+
+    public function getInterviewByStack($stackId) {
+        try {
+            $interviews = Interview::where('stack_id', $stackId)->paginate(5);
+         
+            if( !$interviews) {
+                return $this->sendResponse(
+                    true,
+                    'Interviews for this stack do not exist',
+                    'Interviews not found',
+                    null,
+                    Response::HTTP_NOT_FOUND
+                );}
+
+                return $this->sendResponse(
+                    false,
+                    null,
+                    'Interviews',
+                    $interviews,
+                    Response::HTTP_OK
+                );
+        } catch (Exception $e) {
+                //throw $th;
+                return $this->sendResponse(true, $e->getMessage(), "Interviews Not Found", null, Response::HTTP_BAD_REQUEST);
+        }
+    }
 }
