@@ -97,8 +97,7 @@ class InterviewController extends Controller
                         ->whereHas('company', function (Builder $query) {
                             $query->where('name', 'like', '%'.$company.'%');
                         })
-                        ->get()
-            find($company);
+                        ->get();
             if (!$interview) 
                 return $this->sendResponse(true, null, 'Interview not found', null, Response::HTTP_NOT_FOUND);
             return $this->sendResponse(false, null, 'Interview retrieved', $interview, Response::HTTP_OK);
