@@ -18,10 +18,6 @@ const AdminLogin = () => {
       password: "",
     });
 
-  const onChange = (e) => {
-    changeInputValue(e);
-  };
-
   const { email, password } = formData;
 
   return (
@@ -36,8 +32,9 @@ const AdminLogin = () => {
             id="email"
             placeholder="janedoe@gmail.com"
             value={email}
-            handleChange={changeInputValue}
+            handleChange={(e) => changeInputValue(e)}
             handleBlur={onBlur}
+            error={errors && touched.email && errors.email?.length > 0}
             endIcon={<img src={smsSvg} alt="" />}
             helperText={
               errors && errors.email && touched.email ? errors.email : ""
@@ -50,7 +47,8 @@ const AdminLogin = () => {
             id="password"
             placeholder="enter password"
             value={password}
-            handleChange={changeInputValue}
+            handleChange={(e) => changeInputValue(e)}
+            error={errors && touched.password && errors.password?.length > 0}
             handleBlur={onBlur}
             endIcon={
               <img

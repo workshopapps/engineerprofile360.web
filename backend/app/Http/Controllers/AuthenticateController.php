@@ -165,7 +165,7 @@ class AuthenticateController extends Controller {
             if($userExists){
                 return $this->sendResponse(true,"user with this exists already exists","User with this email address already exists.", null, 400);
             }
-            
+
             // user data
             $uid = Str::uuid();
             $hash = Hash::make($password);
@@ -199,7 +199,7 @@ class AuthenticateController extends Controller {
 
             return $this->sendResponse(false, null, "User registered successfully", $clientExtractedData, 200);
         } catch (\Exception $e) {
-            return $this->sendResponse(true,$e->getMessage(), "Something went wrong registering, please try again", 500);
+            return $this->sendResponse(true,$e->getMessage(), "Something went wrong registering, please try again",  null, 500);
         }
     }
 

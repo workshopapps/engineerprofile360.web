@@ -29,8 +29,9 @@ const AdminSignup = () => {
 
   const { fname, email, password, confirmPassword } = formData;
 
-  async function handleSubmit(){
-    const res = await fetch("http://api.skript.hng.tech/api/auth/register", {
+  async function handleSubmit(e){
+    e.preventDefault()
+    const res = await fetch("http://localhost:8000/api/auth/register", {
       method: "POST",
       headers: {
         "content-type": "application/json"

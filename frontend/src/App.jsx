@@ -41,13 +41,13 @@ const App = () => {
       <Route path='/2FA' element={<User2FA />}/>
 
         <Route element={<MainLayout />}>
+          {/* Public routes */}
           <Route path="/" element={<Home />} />
           <Route path="/about-us" element={<About />} />
           <Route path="/biomedical-landing" element={<BioMedical />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/demo" element={<ScheduleDemo />} />
           <Route path="/confirm-demo" element={<Confirmed />} />
-
           <Route path="/support" element={<Support />} />
           <Route path="/termsAndService" element={<Terms />} />
           <Route path="/blog" element={<Blog />} />
@@ -73,7 +73,6 @@ const App = () => {
           <Route path="/employee-profile" element={<EmployeeProfile />} />
         </Route>
 
-        {/* Auth routes */}
         <Route element={<AdminAuthLayout />}>
           <Route path="/register" element={<AdminSignup />} />
           <Route path="/login" element={<AdminLogin />} />
@@ -87,6 +86,7 @@ const App = () => {
 
         <Route element={<DashboardLayout />}></Route>
       </Routes>
+      {/* Protected Routes */}
 
       {/* <UserProfile /> */}
       {/* <UiLayout> */}
