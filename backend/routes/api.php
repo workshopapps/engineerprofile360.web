@@ -149,7 +149,7 @@ Route::prefix("department")->group(function () {
 Route::prefix('interview')->group(function () {
     Route::get('all', [InterviewController::class, 'getInterviews']);
     Route::post('add', [InterviewController::class, 'addInterview']);
-    Route::get('{id}', [InterviewController::class, 'getInterviewById']);
+    Route::get('get/{id}', [InterviewController::class, 'getInterviewById']);
 });
 
 // User Assessment routes
