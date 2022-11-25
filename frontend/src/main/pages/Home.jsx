@@ -9,6 +9,7 @@ import {
   HomeBlog,
   HomeGetStarted,
 } from "../components";
+import ResetSuccessful from "../components/sections/passwordResetSuccessful/ResetSuccessful"
 
 const Home = () => {
   return (
@@ -20,6 +21,7 @@ const Home = () => {
       <HomeTestimonials />
       <HomeBlog />
       <HomeGetStarted />
+      <ResetSuccessful />
     </>
   );
 };

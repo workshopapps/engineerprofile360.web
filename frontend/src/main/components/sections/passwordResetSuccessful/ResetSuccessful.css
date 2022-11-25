@@ -1,0 +1,32 @@
+.reset-successful-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 42px;
+
+}
+
+.successful-body{
+    padding-top: 196px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.successful-title{
+    padding-top: 40px;
+    font-weight: 600;
+    font-size: 42px;
+    line-height: 52px;    
+}
+
+.succeesful-paragraph{
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
+    inline-size: 32rem;
+    text-align: center;
+    padding-bottom: 56px;
+}
