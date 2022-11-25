@@ -1,6 +1,5 @@
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
-import { MainContainer } from "../../../styles/reusableElements.styled";
 import {
   BsChevronRight,
   BsPlusCircle,
@@ -14,9 +13,9 @@ const UserAssessmentListCompleted = () => {
   return (
     <>
       <Header />
-      <MainContainer>
+      <Main>
         <Sidebar />
-        <Main>
+        <Primary>
           <div className="page_heading">
             <h2>
               Assessments <BsChevronRight className="icon" />
@@ -156,17 +155,22 @@ const UserAssessmentListCompleted = () => {
               </tr>
             </tbody>
           </table>
-        </Main>
-      </MainContainer>
+        </Primary>
+      </Main>
     </>
   );
 };
 
-const Main = styled.div`
+const Main = styled.main`
+  display: grid;
+  grid-template-columns: 250px 1fr;
+`;
+
+const Primary = styled.div`
   display: grid;
   height: 100%;
   grid-template-columns: 1fr;
-  grid-template-rows: 0.3fr 0.2fr 0.15fr 1fr;
+  grid-template-rows: 0.2fr 0.2fr 0.15fr 1fr;
 
   .page_heading {
     display: grid;
@@ -218,7 +222,7 @@ const Main = styled.div`
   }
 
   .btn_outlined:hover {
-    background: #FAF9F8;
+    background: #faf9f8;
   }
   .icon {
     display: inline-block;
@@ -314,7 +318,23 @@ const Main = styled.div`
   }
 
   .view_btn:hover {
-    background: #FAF9F8;
+    background: #faf9f8;
+  }
+
+  @media screen and (max-width: 1024px) {
+    grid-template-rows: 0.2fr 0.11fr 0.15fr 1fr;
+
+    .page_heading {
+        grid-template-columns: 1fr;
+    }
+    .btns {
+        justify-self: center;
+        margin: auto auto;
+    }
+    .add_btn {
+        padding: 6px 10px;
+        font-size: 16px;
+    }
   }
 `;
 
