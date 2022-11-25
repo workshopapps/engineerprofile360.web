@@ -6,10 +6,12 @@ const Main = styled.main`
   border: 1px dashed #c7e0f4;
   margin: 12px 132px;
   border-radius: 25px 25px 0 0;
+  height: 100%;
 
   ul {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, auto);
+    grid-template-rows: 1fr;
     justify-content: center;
     ont-weight: 600;
     font-size: 18px;
@@ -72,7 +74,7 @@ const Main = styled.main`
 
   .buttons {
     display: grid;
-    grid-template-columns: repeat(2, auto);
+    grid-template-columns: repeat(2, 1fr);
     margin: auto auto;
     column-gap: 20px;
     justify-content: center;
@@ -84,48 +86,19 @@ const Main = styled.main`
     display: inline;
     justify-content: center;
   }
-  .spinner {
-    diplay: block;
-    grid-template-columns: 1fr;
-    align-items: center;
-    justify-items: center;
-    justify-self: center;
-    margin: auto auto;
-  }
-  .spinner p {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    color: #000000;
-    text-align: center;
-    margin-top: 10px;
-  }
-  .loader {
-    border: 14px solid #87bfff;
-    border-radius: 50%;
-    border-top: 14px solid #141ae9;
-    width: 140px;
-    height: 140px;
-    -webkit-animation: spin 2s linear infinite; /* Safari */
-    animation: spin 2s linear infinite;
-    margin: auto auto;
-  }
 
-  @-webkit-keyframes spin {
-    0% {
-      -webkit-transform: rotate(0deg);
+  @media (max-width: 769px) {
+    .section {
+        grid-template-rows: 1fr 1fr;
     }
-    100% {
-      -webkit-transform: rotate(360deg);
-    }
-  }
-
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
+    ul li {
+        font-size: 14px;
+        padding: 10px 5px !important;
+        width: 200px;
+        height: 80px;
+        text-align: center;
+        justify-items: center;
+        margin: auto auto;
     }
   }
 `;

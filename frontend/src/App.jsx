@@ -60,7 +60,8 @@ const App = () => {
           <Route path="/setting" element={<AdminSetting />} />
           <Route path="/privacy-policy" element={<Privacy />} />
           <Route path="/employee-profile" element={<EmployeeProfile />} />
-          <Route path="/admin_csv" element={<AdminCSVUpload />} />
+          <Route path="/admin-csv-upload" element={<AdminCSVUpload />} />
+          {/* <Route path="/user-assessment-completed" element={<UserAssestListCompleted />} /> */}
         </Route>
 
         {/* Auth routes */}
