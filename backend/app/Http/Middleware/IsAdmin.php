@@ -36,7 +36,7 @@ class IsAdmin extends Controller
             
             // if not user is found
             if($org_user->count() == 0 || $org_user->first()["role"] != 1){
-                return $this->sendResponse(true,"Access Denied ", "Not permitted to perform this action.",null, 403);
+                return $this->sendResponse(true,"Access Denied, user not found.", "Not permitted to perform this action.",null, 403);
             }
             
             return $next($request);

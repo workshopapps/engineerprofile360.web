@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('user_assessments', function (Blueprint $table) {
             $table->uuid('id')->unique();
-            $table->string("completed");
+            $table->boolean("completed")->default(false);
             $table->string("total_questions")->nullable();
             $table->string("correct_questions")->nullable();
             $table->string("result")->nullable();

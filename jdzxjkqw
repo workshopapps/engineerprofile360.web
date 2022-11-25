@@ -1,0 +1,237 @@
+[33mcommit a87329b0b8740539706440a43abd30fb9876c527[m[33m ([m[1;36mHEAD -> [m[1;32mdev[m[33m, [m[1;31morigin/dev[m[33m)[m
+Author: Ojer Isaac <isaacojerumu@gmail.com>
+Date:   Thu Nov 24 21:31:26 2022 +0100
+
+    fixes: changes requested
+
+[33mcommit 6670fcbce8163704fdc546c3765112af3d906bab[m[33m ([m[1;31morigin/company-controller[m[33m, [m[1;32mcompany-controller[m[33m)[m
+Author: Ojer Isaac <isaacojerumu@gmail.com>
+Date:   Thu Nov 24 21:05:46 2022 +0100
+
+    Feat(BAC-7): Refactored and tested all endpoints in CompanyController
+
+[33mcommit 0b0caf08542c01e3acbd3315e4f60b2baf3603a8[m
+Merge: 2e90c5c 27ab2bf
+Author: Elijah Aborisade <50449180+dasaint001@users.noreply.github.com>
+Date:   Thu Nov 24 18:57:28 2022 +0100
+
+    Merge pull request #289 from workshopapps/feature-BAC64
+    
+    feat(BAC-4): added get employee by department
+
+[33mcommit 27ab2bfffe52488978dd89077ee0c62768c12305[m[33m ([m[1;31morigin/feature-BAC64[m[33m)[m
+Author: dasaint001 <elijahbamidele48@yahoo.com>
+Date:   Thu Nov 24 18:55:31 2022 +0100
+
+    feat(BAC-4): added get employee by department
+
+[33mcommit 2e90c5c70fc6a075b57c68baf023f1e1c55c29b2[m
+Author: dasaint001 <elijahbamidele48@yahoo.com>
+Date:   Thu Nov 24 18:05:50 2022 +0100
+
+    fixes
+
+[33mcommit 2273a2a926f36a00d6af1a872b0dfcc2f17865a6[m
+Merge: b99780b 5ad0339
+Author: Elijah Aborisade <50449180+dasaint001@users.noreply.github.com>
+Date:   Thu Nov 24 15:48:17 2022 +0100
+
+    Merge pull request #287 from workshopapps/feat-add_departments_and_get_dept_by_ID
+    
+    Feat (BE) : Add department and get department by id
+
+[33mcommit 5ad0339b3221f804092810a4dee6aae088c36d8a[m[33m ([m[1;31morigin/feat-add_departments_and_get_dept_by_ID[m[33m)[m
+Author: dreywandowski <aduramimo@gmail.com>
+Date:   Thu Nov 24 15:41:09 2022 +0100
+
+    fixed error response message
+
+[33mcommit b99780be33621e4f2e6c0ba4e76a025a635579b0[m
+Author: OsujiPius <piusosuji9@gmail.com>
+Date:   Thu Nov 24 15:37:35 2022 +0100
+
+    fix build
+
+[33mcommit f145fa00ba2dedfd92922fd015cafd6b5461fe3a[m
+Merge: ba2a838 1b94d20
+Author: dreywandowski <aduramimo@gmail.com>
+Date:   Thu Nov 24 15:36:57 2022 +0100
+
+    Merge branch 'dev' of https://github.com/workshopapps/engineerprofile360.web into feat-add_departments_and_get_dept_by_ID
+    I'm trying to get latest updates from dev
+
+[33mcommit 1b94d206006fd05f9983cad9265a0697b0da08f3[m
+Author: Bright Asechemie <61978868+Tamunoseimiebi@users.noreply.github.com>
+Date:   Thu Nov 24 15:35:04 2022 +0100
+
+    Update deploy-frontend.yml
+
+[33mcommit 3cbfdadd3aa8e30be034b6378bdfb1ad48d24874[m
+Author: OsujiPius <piusosuji9@gmail.com>
+Date:   Thu Nov 24 15:26:55 2022 +0100
+
+    fix build
+
+[33mcommit 567e38b3704f9349f0ab6f4654416501cd4e357a[m
+Merge: 526caa0 d667727
+Author: Elijah Aborisade <50449180+dasaint001@users.noreply.github.com>
+Date:   Thu Nov 24 15:24:32 2022 +0100
+
+    Merge pull request #281 from workshopapps/Feat/BAC-27-Questions-Controller-Update
+    
+    Fix(BE) Added getQuestionById feature and updated existing code
+
+[33mcommit 526caa046d96ab118f1472259d4ab8b4c92eeefd[m
+Merge: 6fd599e 6bdb9cd
+Author: OsujiPius <piusosuji9@gmail.com>
+Date:   Thu Nov 24 15:20:12 2022 +0100
+
+    fix error
+
+[33mcommit d6677274bff14eb72546371cdcfd98e32e8421eb[m[33m ([m[1;31morigin/feat/BAC-27-Questions-Controller-Update[m[33m)[m
+Author: boluajileye <boluwatifeajileye@gmail.com>
+Date:   Thu Nov 24 15:17:23 2022 +0100
+
+    Fix(BE) Added getQuestionById feature and updated existing code in questions controller
+
+[33mcommit 92adf2f259d175b60b868a645e47f987978a945b[m
+Merge: f26a487 6bdb9cd
+Author: boluajileye <boluwatifeajileye@gmail.com>
+Date:   Thu Nov 24 15:09:18 2022 +0100
+
+    Merge branch 'dev' of https://github.com/workshopapps/engineerprofile360.web into Feat/BAC-27-Questions-Controller-Update
+
+[33mcommit 6bdb9cdb647cf40a5e3ca642f48bb700e657a1ed[m
+Author: Bright Asechemie <61978868+Tamunoseimiebi@users.noreply.github.com>
+Date:   Thu Nov 24 15:08:36 2022 +0100
+
+    Update readme.md
+
+[33mcommit 526a5d65dcd28192d79e4bf614d95a2c0f2b25a8[m
+Author: Bright Asechemie <61978868+Tamunoseimiebi@users.noreply.github.com>
+Date:   Thu Nov 24 15:07:47 2022 +0100
+
+    Update deploy-frontend.yml
+
+[33mcommit f26a4874c85103c1e3a78c4b563ad55faa2eebb6[m
+Merge: f90d8a3 7a0d684
+Author: boluajileye <boluwatifeajileye@gmail.com>
+Date:   Thu Nov 24 14:51:56 2022 +0100
+
+    Merge branch 'dev' of https://github.com/workshopapps/engineerprofile360.web into Feat/BAC-27-Questions-Controller-Update
+
+[33mcommit ba2a8381870faabe05d59d3443746af8e27efe5f[m
+Author: dreywandowski <aduramimo@gmail.com>
+Date:   Thu Nov 24 14:46:30 2022 +0100
+
+    add department and get departments by id
+
+[33mcommit 7a0d6849a7a1b3232a6815a5499696095d6c3704[m
+Merge: 54c480b 4cefffe
+Author: benrobo <alumonabenaiah71@gmail.com>
+Date:   Thu Nov 24 04:56:53 2022 -0800
+
+    Merge branch 'dev' of https://github.com/workshopapps/engineerprofile360.web into dev
+
+[33mcommit 54c480bc1b0fd63eec2d6b93fec4fb6392b19ef3[m
+Author: benrobo <alumonabenaiah71@gmail.com>
+Date:   Thu Nov 24 04:55:41 2022 -0800
+
+    fix(BE): updated password-reset
+
+[33mcommit 4cefffe52ed11dc258f15103d3c3f5028b22377c[m
+Merge: 0235887 71fbd78
+Author: Elijah Aborisade <50449180+dasaint001@users.noreply.github.com>
+Date:   Thu Nov 24 13:36:17 2022 +0100
+
+    Merge pull request #284 from workshopapps/controllerandmigration
+    
+    corrected
+
+[33mcommit 71fbd7892db0fab9e48dbbcb7b81ef6a525fbf25[m
+Author: princessvincent <priscavincent2018@gmail.com>
+Date:   Thu Nov 24 13:32:15 2022 -0800
+
+    corrected
+
+[33mcommit f49d497372935917e431740343800b6f73d58a13[m
+Author: princessvincent <priscavincent2018@gmail.com>
+Date:   Thu Nov 24 12:43:14 2022 -0800
+
+    corrected
+
+[33mcommit 88cd645fffea25bfb22784c360c68c9ba33c9c12[m
+Author: princessvincent <priscavincent2018@gmail.com>
+Date:   Thu Nov 24 12:26:45 2022 -0800
+
+    corrected
+
+[33mcommit cee0b7d3700b3e51cb0f8081e10323eaaacdfa1a[m
+Author: princessvincent <priscavincent2018@gmail.com>
+Date:   Thu Nov 24 12:09:18 2022 -0800
+
+    created controller and migration
+
+[33mcommit 3a05f75a3307b83ce27ab1a4fa0778e1ee735fee[m
+Merge: 0c5e606 e42eefa
+Author: princessvincent <priscavincent2018@gmail.com>
+Date:   Thu Nov 24 11:16:39 2022 -0800
+
+    Merge branch 'dev' of https://github.com/workshopapps/engineerprofile360.web into dev
+
+[33mcommit 02358874758f8720cea35f45b0205482d7e3854e[m
+Merge: 3c2b554 d0e949a
+Author: benrobo <alumonabenaiah71@gmail.com>
+Date:   Thu Nov 24 04:25:48 2022 -0800
+
+    Merge branch 'dev' of https://github.com/workshopapps/engineerprofile360.web into dev
+
+[33mcommit 3c2b5544f3db893dee41d2813a927b74a50ab75d[m
+Author: benrobo <alumonabenaiah71@gmail.com>
+Date:   Thu Nov 24 04:25:35 2022 -0800
+
+    fix(BE): updated mail verification
+
+[33mcommit d0e949aa593164484f0a667e2861e561fc4656bb[m
+Merge: 36d5352 e0b4a16
+Author: Browyn Louis <browynlouis2@gmail.com>
+Date:   Thu Nov 24 04:22:19 2022 -0800
+
+    Merge pull request #274 from workshopapps/feature/auth
+    
+    Updated auth pages
+
+[33mcommit 36d53522bc1dc0cd98112987ad5cdd7e1ebb1a5f[m
+Merge: 9b4880c 558070c
+Author: benrobo <alumonabenaiah71@gmail.com>
+Date:   Thu Nov 24 04:20:03 2022 -0800
+
+    Merge branch 'dev' of https://github.com/workshopapps/engineerprofile360.web into dev
+
+[33mcommit 9b4880c11d12ca6ce3fbe0b2098129c0e1660799[m
+Author: benrobo <alumonabenaiah71@gmail.com>
+Date:   Thu Nov 24 04:19:46 2022 -0800
+
+    fix(BE): updated mail verification
+
+[33mcommit 558070c3ee1a3e53f5ec54e251d7957301e42815[m
+Author: Oaikhienan Cornelius <37479800+oaikhienancornelius97@users.noreply.github.com>
+Date:   Thu Nov 24 13:18:28 2022 +0100
+
+    Update css
+
+[33mcommit 64abe0681d598833651778a23afb6296352a005a[m
+Merge: 93e30ca 3a73749
+Author: benrobo <alumonabenaiah71@gmail.com>
+Date:   Thu Nov 24 04:17:28 2022 -0800
+
+    Merge branch 'dev' of https://github.com/workshopapps/engineerprofile360.web into dev
+
+[33mcommit 93e30ca8dfd589540f38e53c8776f35c684b349e[m
+Author: benrobo <alumonabenaiah71@gmail.com>
+Date:   Thu Nov 24 04:17:14 2022 -0800
+
+    fix(BE): updated mail verification
+
+[33mcommit 3a737494a85f533020dbd5320898208ceadefe36[m
+Merge

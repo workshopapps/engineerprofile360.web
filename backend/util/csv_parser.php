@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Str;
+
 /**
  * Parse CSV file to JSON.
  * 
@@ -80,12 +82,15 @@ class CsvParser{
         return $this->res;
     }
 
-    public function trimEmployeeCSV($json){
+    public function trimEmployeeCSV($json, $dept, $org){
         foreach($json as $key => $item){
             unset($json[$key]["id"]);
+            $json[$key]['department_id'] = $dept;
+            $json[$key]['org_id'] = $org;
+            $json[$key]['id'] = Str::uuid();
         }
 
-        return json_encode($json);
+        return $json;
     }
 
 }
