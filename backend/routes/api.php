@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\InterviewController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UserScoreController;
 use App\Http\Controllers\AssessmentController;
@@ -137,7 +138,11 @@ Route::prefix("department")->group(function () {
     Route::post('/add', [DepartmentController::class, 'addDepartment']);
 });
 
-
+// Interview routes
+Route::prefix('interview')->group(function () {
+    Route::get('all', [InterviewController::class, 'getInterviews']);
+    Route::get('{id}', [InterviewController::class, 'getInterviewById']);
+});
 
 // User Assessment routes
 Route::prefix("user-assessment")->group(function () {
