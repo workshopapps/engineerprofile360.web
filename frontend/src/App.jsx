@@ -91,7 +91,6 @@ const App = () => {
           <Route path="/assessment" element={<Assessment />} />
         </Route>
       </Routes>
-      {/* Protected Routes */}
 
       {/* <UserProfile /> */}
       {/* <UiLayout> */}
