@@ -42,7 +42,7 @@ Route::prefix("userscore")->group(function () {
     Route::get('/employee/{id}', [UserScoreController::class, 'getScoresByEmployeeID']);
     Route::get('/assessment/{id}', [UserScoreController::class, 'getScoresByAssessmentID']);
     Route::get('/{employeeId}/{assessmentId}', [UserScoreController::class, 'getScores']);
-    Route::post('/create', [UserScoreController::class, 'store']);
+    Route::post('/create', [UserScoreController::class, 'store'])->middleware("cors");
 });
 
 
@@ -91,8 +91,6 @@ Route::prefix("auth")->group(function () {
     Route::post('register', [AuthenticateController::class, "registerUser"]);
     Route::post('login', [AuthenticateController::class, 'UserAndEmployeeLogin']);
     Route::get('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
-    Route::post('employee/update/', [AuthenticationController::class, 'setEmployeePassword']);
-
     Route::prefix("password")->group(
         function () {
             // forgot password
@@ -136,7 +134,7 @@ Route::prefix('employee')->group(function () {
     Route::get('{id}', [EmployeeController::class, 'getById']);
     Route::get('/company/{org_id}', [EmployeeController::class, 'byCompId']);
     Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
-    Route::get('{departmentId}/{employeeId}', [EmployeeController::class, 'getEmplyeeByDepartment']);
+    Route::get('{departmentId}', [EmployeeController::class, 'getEmplyeesByDepartment']);
 
 });
 
@@ -156,6 +154,7 @@ Route::prefix('interview')->group(function () {
     Route::get('all', [InterviewController::class, 'getInterviews']);
     Route::post('add', [InterviewController::class, 'addInterview'])->middleware('isloggedin', 'isadmin');
     Route::get('get/{id}', [InterviewController::class, 'getInterviewById']);
+    Route::put('update/{interviewId}', [InterviewController::class, 'updateInterview']);
 });
 
 // User Assessment routes

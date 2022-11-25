@@ -17,13 +17,13 @@ return [
 
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    'allowed_methods' => ['*'],
+    'allowed_methods' => ["GET", "POST", "PUT", 'DELETE', "PATCH",'*'],
 
-    'allowed_origins' => ['*', "http://skript.hng.tech", "https://skript.hng.tech", "http://localhost:3000", "http://api.skript.hng.tech"],
+    'allowed_origins' => ["http://skript.hng.tech", "https://skript.hng.tech", "http://localhost:3000", "http://localhost:8000", "http://api.skript.hng.tech", '*'],
 
     'allowed_origins_patterns' => [],
 
-    'allowed_headers' => ['*'],
+    'allowed_headers' => ['X-Custom-Header', 'Upgrade-Insecure-Requests','*'],
 
     'exposed_headers' => [],
 
