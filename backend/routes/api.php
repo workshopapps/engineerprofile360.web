@@ -121,9 +121,10 @@ Route::prefix("question")->group(function () {
 
 // Categories routes operation
 Route::prefix("category")->group(function () {
-    Route::put('{categoryId}/update', [CategoryController::class, 'updateCategory']);
-    Route::post('add', [CategoryController::class, 'createCategory'])->middleware("isloggedin", "isadmin");
-    Route::delete('{catId}/delete', [CategoryController::class, 'deleteCategory']);
+    Route::put('/{categoryId}/update', [CategoryController::class, 'updateCategory'])->middleware("isloggedin");
+    Route::post('/add', [CategoryController::class, 'createCategory'])->middleware("isloggedin", "isadmin");
+    Route::delete('{catId}/delete', [CategoryController::class, 'deleteCategory'])->middleware("isloggedin", "isadmin");
+    Route::get("/allCategories", [CategoryController::class, "getCategoriesByOrgId"])->middleware("isloggedin", "isadmin");
     Route::get('/assessment/{id}', [CategoryController::class, 'getByAssessmentId'])->middleware("isloggedin", "isadmin");
 });
 
