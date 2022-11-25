@@ -37,7 +37,7 @@ export default function adminSignup () {
                     I agree to the <a href='terms'>Terms and Conditions</a></label>
             </div>
 
-            <input type="submit" id="Proceed" value="Proceed to Signup"/>
+            <input type="submit" id="Proceed" value="Proceed to Dashboard"/>
         </form>
     </div>
   )

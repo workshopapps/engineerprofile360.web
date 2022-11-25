@@ -19,19 +19,41 @@ class UserController extends Controller
         // $this->middleware('isloggedin');
     }
 
-    public function allUsers(): JsonResponse
+    public function allUsers()
     {
         try{
-            $users = User::paginate(15);
+            $users = User::all();
+            $msg = count($users) < 1 ? "No user found" : "All users";
+            $customUserData = [];
 
-            if( !$users ) {
-               $users = [];
+            if(count($users) == 0){
+                $customUserData = [];
+                return $this->successResponse(
+                    true,
+                    $msg,
+                    $users,
+                    Response::HTTP_OK
+                );
+            }
+
+            foreach ($users as $val) {
+                $stripData = [
+                    "id"=>$val["id"],
+                    "user_id"=>$val["user_id"],
+                    "full_name"=>$val["full_name"],
+                    "username"=>$val["username"],
+                    "email"=>$val["email"],
+                    "role"=>$val["role"],
+                    "isVerified"=>$val["isVerified"]
+                ];
+
+                array_push($customUserData, $stripData);
             }
 
             return $this->successResponse(
                 true,
-                'All users',
-                $users,
+                $msg,
+                $customUserData,
                 Response::HTTP_OK
             );
         }catch (\Exception $e) {

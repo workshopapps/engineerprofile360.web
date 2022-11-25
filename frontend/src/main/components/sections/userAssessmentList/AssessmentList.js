@@ -22,6 +22,7 @@ export default function AssessmentList() {
           </div>
         </div>
       </div>
+      <div className={styles.Table_container}>
       <table>
         <thead>
           <tr>
@@ -80,6 +81,7 @@ export default function AssessmentList() {
           </tr>
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

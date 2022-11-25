@@ -1,9 +1,9 @@
-import React from "react"
-import styled from "styled-components"
+import React from "react";
+import styled from "styled-components";
 
-import dashboard from "../../assets/icons/app/dashboard.svg"
-import assessment from "../../assets/icons/app/assessment.svg"
-import user from "../../assets/icons/app/user.svg"
+import dashboard from "../../assets/icons/app/dashboard.svg";
+import assessment from "../../assets/icons/app/assessment.svg";
+import user from "../../assets/icons/app/user.svg";
 
 const Sidebar = () => {
   return (
@@ -21,10 +21,10 @@ const Sidebar = () => {
         <p>Employees</p>
       </SidebarItem>
     </SidebarContainer>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;
 
 const SidebarContainer = styled.div`
   display: flex;
@@ -42,7 +42,7 @@ const SidebarContainer = styled.div`
       color: #2667ff;
     }
   }
-`
+`;
 
 const SidebarItem = styled.div`
   display: flex;
@@ -55,7 +55,7 @@ const SidebarItem = styled.div`
   }
   p {
     font-family: inherit;
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 400;
   }
-`
+`;

@@ -10,7 +10,6 @@ export default function UserTakeAssessment() {
           <p>
             <span className={styles.Text_muted}>Course :</span>30 Minutes
           </p>
-          <br />
           <p>
             <span className={styles.Text_muted}>Department :</span>Tue 3th, Nov
             22
@@ -22,7 +21,6 @@ export default function UserTakeAssessment() {
             <span className={styles.Text_muted}>Duration :</span>Design thnking
             Process
           </p>
-          <br />
           <p>
             <span className={styles.Text_muted}>Deadline :</span>UX Design
           </p>
@@ -31,7 +29,6 @@ export default function UserTakeAssessment() {
         <div className={styles.Filter_flex}>
           <img src={TimerSvg} alt="Filter" width={40} />
           <div>
-            {" "}
             00:25:30
             <br /> Timer
           </div>

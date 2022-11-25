@@ -49,7 +49,7 @@ Route::prefix("user")->group(function () {
     Route::get('/{id}', [UserController::class, 'getUserById']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
     Route::put('/{userId}/update', [UserController::class, 'updaterUserInfo'])->middleware("isloggedin");
-    Route::get('all', [UserController::class, 'allUsers']);
+    Route::get('/get/all', [UserController::class, 'allUsers']);
 });
 
 
@@ -71,15 +71,10 @@ Route::post("/test_csv", function (Request $req) {
 
 // authentication route
 Route::prefix("auth")->group(function () {
-    // Route::post('register', [AuthenticationController::class, 'register']);
     Route::post('register', [AuthenticateController::class, "registerUser"]);
     Route::post('login', [AuthenticateController::class, 'UserAndEmployeeLogin']);
     Route::get('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
-    Route::post('logout', [AuthenticationController::class, 'logout']);
-    Route::post('refresh', [AuthenticationController::class, 'refresh']);
-
     Route::post('employee/update/', [AuthenticationController::class, 'setEmployeePassword']);
-
     Route::prefix("password")->group(function () {
         // forgot password
         Route::get("/forgot-password/{email}", [AuthenticateController::class, "forgotPassword"]);

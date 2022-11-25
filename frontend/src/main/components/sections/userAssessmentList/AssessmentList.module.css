@@ -38,11 +38,8 @@
   
 
   .Table_container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: start;
-    padding: 40px;
+    width: 100%;
+    overflow-x: auto;
   }
  
   .Assessment_container button {
@@ -57,6 +54,7 @@
     line-height: 20px;
     color: #2667FF;
     cursor: pointer;
+    
   }
 
   .Filter_wrapper {
@@ -81,6 +79,41 @@
     border-radius: 4px!important;
     color: #8A8886!important;
     cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  th,td{
+    white-space: normal;
+  }
+
+  
+  /*scrolling responsive table*/
+  table{
+    border-collapse:collapse;
+    width:100%;
+    }
+    
+  td,th {
+    text-align:left;
+    padding:8px;
+  }
+    
+  th:first-child, td:first-child{
+    background-color:white!important;
+    position:sticky!important;
+    left:0px!important;
+    width: 10px!important;
+    z-index: 1;
+  }
+  
+  th:nth-child(2), td:nth-child(2){
+    min-width: 67px!important;
+  }
+  
+  th:nth-child(3), td:nth-child(3){
+    min-width: 210px!important;
   }
 
   
@@ -90,6 +123,24 @@
       align-items: stretch;
       text-align: center;
     }
+
+    .Filter_wrapper {
+      flex-direction: column;
+      justify-content: space-between;
   
+    }
+
+    .Filter_flex {
+      display: flex;
+      width: 100%!important;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+  }
+
+  @media screen and (max-width:1000px){
+    .Filter_flex {
+      width: 50%;
+    }
   }
   

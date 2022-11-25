@@ -28,6 +28,7 @@ const EmployeeProfile = () => {
                   placeholder="John Doe"
                   type="text"
                   name="name"
+                  required
                 />
               </div>
 
@@ -40,6 +41,7 @@ const EmployeeProfile = () => {
                   placeholder="johndoe45@gmail.com"
                   type="email"
                   name="email"
+                  required
                 />
               </div>
 
@@ -53,6 +55,7 @@ const EmployeeProfile = () => {
                   placeholder="+22 345 678 88345"
                   type="number"
                   name="phoneNumber"
+                  required
                 />
               </div>
 
@@ -79,6 +82,7 @@ const EmployeeProfile = () => {
                   placeholder="CMP professionals"
                   type="text"
                   name="certification"
+                  required
                 />
               </div>
 
@@ -92,6 +96,7 @@ const EmployeeProfile = () => {
                   placeholder="E3450D"
                   type="text"
                   name="employeeID"
+                  required
                 />
               </div>
 
@@ -105,6 +110,7 @@ const EmployeeProfile = () => {
                   placeholder="Single"
                   type="text"
                   name="maritalStatus"
+                  required
                 />
               </div>
 
@@ -118,6 +124,7 @@ const EmployeeProfile = () => {
                   placeholder="Nigeria"
                   type="text"
                   name="location"
+                  required
                 />
               </div>
 
