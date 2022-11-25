@@ -13,7 +13,7 @@ const HomeHero = () => {
   return (
     <HomeHeroContainer>
       <HeroText>
-        <HeroTitle $color="#323130" $weight="900" $size="72px" $lHeight="76px">
+        <HeroTitle $color="#323130" $weight="900" $lHeight="76px">
           Assess Your Engineering Teams’ Strength
         </HeroTitle>
         <p>
@@ -42,6 +42,7 @@ const HomeHeroContainer = styled(Container)`
   align-items: center;
   justify-content: space-between;
   min-height: 750px;
+  gap: ${({ theme }) => theme.spacing(6)};
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
     flex-direction: column;
@@ -53,7 +54,7 @@ const HeroText = styled.div`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(4)};
   justify-content: space-between;
-  // flex: 0 0 50%;
+  flex: 0 0 50%;
 
   p {
     color: #605e5c;
@@ -61,7 +62,8 @@ const HeroText = styled.div`
 `;
 
 const HeroTitle = styled(Title)`
-  ${({ theme }) => theme.breakpoints.down("md")} {
+  font-size: 72px;
+  ${({ theme }) => theme.breakpoints.down("lg")} {
     font-size: 52px;
   }
 
@@ -72,17 +74,23 @@ const HeroTitle = styled(Title)`
 
 const HeroImage = styled.div`
   flex: 0 0 40%;
-  text-align: right;
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
     text-align: center;
+    flex: initial;
+    justify-content: center;
+    align-items: center;
   }
 
   img:nth-of-type(1) {
-    max-width: 90%;
+    max-width: 100%;
 
     ${({ theme }) => theme.breakpoints.down("sm")} {
-      max-width: 90%;
+      max-width: 100%;
     }
+  }
+
+  img:nth-of-type(2) {
+    float: right;
   }
 `;

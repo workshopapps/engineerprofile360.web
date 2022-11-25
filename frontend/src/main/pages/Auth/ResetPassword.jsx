@@ -19,10 +19,10 @@ const ResetPassword = () => {
         <ResetPasswordForm>
           <InputField
             $size="md"
-            type="text"
-            label="Full Name"
+            type="email"
+            label="Email Address"
             id="fname"
-            placeholder="Jane Doe"
+            placeholder="janedoe@gmail.com"
             endIcon={<img src={smsSvg} alt="" />}
           />
 
@@ -39,7 +39,10 @@ export default ResetPassword;
 
 const FormContainer = styled(Container)`
   width: 100%;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  // align-items: center;
+  justify-content: center;
 `;
 
 const ResetPasswordForm = styled.form`
