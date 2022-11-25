@@ -108,7 +108,7 @@ class AssessmentController extends Controller
             }
 
             $employee = Employee::find($employee_id);
-            if (!$employee) {
+            if (!$employee || $employee->org_id != $assessment->org_id) {
                 return $this->sendResponse(
                     true,
                     'Employee does not exist',
@@ -117,6 +117,8 @@ class AssessmentController extends Controller
                     Response::HTTP_NOT_FOUND
                 );
             }
+
+
 
             $assessment_name = $assessment->name;
             $assessment_start_date = $assessment->start_date;
