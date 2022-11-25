@@ -60,8 +60,8 @@ Route::prefix("user")->group(function () {
 Route::prefix("userassessment")->group(function () {
     Route::post('/accept/{assessmentId}/{employmentId}', [UserAssessmentController::class, 'acceptUserAssessment']);
     Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
-    Route::delete('/deleteUserassessment/{id}', [UserAssessmentController::class,'deleteUserAssessment']);
-    Route::put('/updateUserassessment/{id}', [UserAssessmentController::class, 'updateUserAssessment']);
+    Route::delete('/{id}/delete', [UserAssessmentController::class,'deleteUserAssessment']);
+    Route::put('/{id}/update', [UserAssessmentController::class, 'updateUserAssessment']);
 });
 
 

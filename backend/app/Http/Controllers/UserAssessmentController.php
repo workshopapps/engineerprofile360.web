@@ -67,7 +67,7 @@ class UserAssessmentController extends Controller
                     'You are not Authorize to Delete This Assessment',
                     'success',
                     null,
-                    Response::HTTP_NOT_FOUND
+                    Response::HTTP_UNAUTHORIZED
                 );
             } else {
                 // $delete = $checkid->find($id);
@@ -78,7 +78,7 @@ class UserAssessmentController extends Controller
                     'Assessment Deleted Successfully',
                     'success',
                     null,
-                    Response::HTTP_NOT_FOUND
+                    Response::HTTP_OK
                 );
             }
         } catch (\Exception$e) {
@@ -134,7 +134,7 @@ class UserAssessmentController extends Controller
                         'You are not Authorize to Update This Assessment',
                         'success',
                         null,
-                        Response::HTTP_NOT_FOUND
+                        Response::HTTP_UNAUTHORIZED
                     );
                 } else {
                     $update = UserAssessment::where('id', $id)->update($inputs);
@@ -144,7 +144,7 @@ class UserAssessmentController extends Controller
                         'Assessment Updated Successfully',
                         'success',
                         null,
-                        Response::HTTP_NOT_FOUND
+                        Response::HTTP_OK
                     );
                 }
 
