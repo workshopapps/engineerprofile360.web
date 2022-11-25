@@ -11,7 +11,7 @@ use App\Models\User;
 use DateTime;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Hash; 
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Validator;
 use Mailer;

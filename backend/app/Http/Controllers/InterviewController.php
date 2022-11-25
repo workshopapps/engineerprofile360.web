@@ -2,14 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\InterviewRequest;
 use Exception;
 use App\Models\Interview;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 
 class InterviewController extends Controller
 {
+    public function addInterview(InterviewRequest $request): JsonResponse
+    {
+        $data = $request->all();
+        try {
+           Interview::create($data);
+            return $this->sendResponse(false, null, 'Interview created', $data, Response::HTTP_CREATED);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, 'Interview not created', $e->getMessage());
+        }
+    }
+
     public function getInterviews()
     {
         try {
@@ -71,6 +84,26 @@ class InterviewController extends Controller
         } catch (Exception $e) {
             //throw $th;
             return $this->sendResponse(true, null, 'Something went wrong', Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    public function updateInterview(Request $request, $interviewId)
+    {
+        
+        try {
+            $updatedData = $request->all();
+            //Get Interview to be updated
+            $interview = Interview::find($interviewId);
+            $interview = Interview::where('id', $interviewId)->exists();
+            //Return an error if fetching failed
+            if (!$interview) {
+                return $this->sendResponse(true, null, 'Interview not found', null, Response::HTTP_NOT_FOUND);
+            }
+            
+            $interview->update($updatedData);
+            return $this->sendResponse(false, null, 'Interview updated', $updatedData, Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, $e->getMessage(), "Error fetching interview", null, Response::HTTP_BAD_REQUEST);
         }
     }
 }

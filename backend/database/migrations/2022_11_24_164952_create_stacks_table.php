@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('departments', function (Blueprint $table) {
-            $table->uuid('id')->unique();
+        Schema::create('stacks', function (Blueprint $table) {
+            $table->uuid('id');
             $table->string('name');
-            $table->string('org_id');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('department');
+        Schema::dropIfExists('stacks');
     }
 };
