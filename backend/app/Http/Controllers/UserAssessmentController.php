@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employee;
 use App\Models\UserAssessment;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB;
@@ -11,17 +11,17 @@ use App\Http\Requests\UserAssessmentRequest;
 use App\Models\Assessment;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 
 class UserAssessmentController extends Controller
 {
-
-   //Accepts user assessment
-   public function acceptUserAssessment($assessmentId,$employeeId,$orgId)
-   {
-     try {
-      UserAssessment::create(['employee_id'=>$employeeId,'assessment_id'=>$assessmentId,
-     'org_id'=>$org_id,'userscore_id'=>' ','completed'=>0,
-     'total_questions'=>0,'correct_questions'=>0,'result'=>0,]);
+    //Accepts user assessment
+    public function acceptUserAssessment(UserAssessmentRequest $request, $assessmentId, $employeeId)
+    {
+       try {
+            $userAssessment = UserAssessment::create(['employee_id' => $employeeId, 'assessment_id' => $assessmentId,
+                'org_id' => $request->org_id, 'userscore_id' => $request->userscore_id, 'completed' => 0,
+                'total_questions' => 0, 'correct_questions' => 0, 'result' => 0]);
 
             return $this->sendResponse(false, null, 'Accepted user assessment successfully', null, Response::HTTP_CREATED);
         } catch (Exception $e) {
@@ -57,7 +57,7 @@ class UserAssessmentController extends Controller
     //
     public function GetOrgAvailableAssessment($id): JsonResponse
     {
-        try 
+        try
         {
             $userassessment = UserAssessment::where('org_id', $id)->where("completed", false)->get();
             $checkuserassessment = UserAssessment::where('org_id', $id)->where("completed", false)->exists();
@@ -79,7 +79,7 @@ class UserAssessmentController extends Controller
     //
     public function GetOrgCompletedAssessment($id): JsonResponse
     {
-        try 
+        try
         {
             $userassessment = UserAssessment::where('org_id', $id)->where("completed", true)->get();
             $checkuserassessment = UserAssessment::where('org_id', $id)->where("completed", true)->exists();
@@ -91,14 +91,14 @@ class UserAssessmentController extends Controller
             return $this->sendResponse(true, 'Fetch Completed User Assessment By ID Company failed', $e->getMessage());
         }
     }
-    
+
 
 
     /**
      * It gets all assessments completed by an employee where completed = true
-     * 
+     *
      * @param string employee_id The id of the employee whose completed assessments you want to get.
-     * 
+     *
      * @return JsonResponse All the assessments completed by the employee.
      */
     public function getEmployeeCompletedAssessment($employee_id): JsonResponse
@@ -118,7 +118,7 @@ class UserAssessmentController extends Controller
                 );
             }
 
-            
+
 
             // Get all assessments completed by an employee where completed = true
             $completedAssessments = UserAssessment::where('employee_id', $employee_id)->where('completed', true)->get();
@@ -131,7 +131,7 @@ class UserAssessmentController extends Controller
                     $completedAssessments,
                     Response::HTTP_OK
                 );
-            
+
         } catch (\Throwable $th) {
             return $this->sendResponse(
                 true,
@@ -255,5 +255,59 @@ class UserAssessmentController extends Controller
         } catch (\Exception$e) {
             return $this->sendResponse(true, 'Assessment not Updated', $e->getMessage(), null, 500);
         }
+    }
+
+
+    public function getAssessmentByID(Request $request, $id)
+    {
+        try
+        {
+            // check if assessment exists
+            $assessmentexist = UserAssessment::where('id', $id)->exists();
+
+            if($assessmentexist) {
+
+                $useraccessment = UserAssessment::find($id);
+
+                return $this->sendResponse(true, null, 'Assessment Details',$useraccessment,Response::HTTP_OK);
+
+            }
+
+            return $this->sendResponse(true, null, 'No Assessment Exists for the given Id', [], Response::HTTP_NOT_FOUND);
+
+        }catch (Exception $e)
+        {
+            Log::error("UserAssessment Error", array("details" => $e->getMessage()));
+
+            return $this->sendResponse(false, null, "Unable to fetch assessment at this time",Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+
+    }
+
+    public function getUserTopPerformance($userId)
+    {
+        try
+        {
+            $userResults = UserAssessment::where('employee_id',$userId)->get()->pluck('result');
+
+            if(count($userResults) > 0) {
+
+                $max = $userResults->max();
+
+                return $this->sendResponse(true, null, 'User Top Performance',$max,Response::HTTP_OK);
+            }
+
+            return $this->sendResponse(true, null, 'No Score found for the given User Id', [], Response::HTTP_NOT_FOUND);
+
+        }catch (Exception $e)
+        {
+            Log::error("UserScore Error", array("details" => $e->getMessage()));
+
+            return $this->sendResponse(false, null, "Unable to fetch User's Top Performance",Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+
+
     }
 }

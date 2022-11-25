@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string("password");
             $table->string("reftoken")->nullable();
             $table->integer("role")->length(1)->default(1);
-            $table->boolean("isVerified")->nullable();
+            $table->boolean("isVerified")->default(false);
             $table->string("verify_code")->nullable();
             $table->string("verify_code_exp")->nullable();
             $table->timestamps();
