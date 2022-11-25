@@ -16,16 +16,27 @@ use Illuminate\Support\Facades\Log;
 class UserAssessmentController extends Controller
 {
     //Accepts user assessment
-    public function acceptUserAssessment(UserAssessmentRequest $request, $assessmentId, $employeeId)
+    public function acceptUserAssessment( $assessmentId, $employeeId,$orgId)
     {
 
        try {
-            $userAssessment = UserAssessment::create(['employee_id' => $employeeId, 'assessment_id' => $assessmentId,
-                'org_id' => $request->org_id, 'userscore_id' => $request->userscore_id, 'completed' => 0,
+            $assessment_exist = Assessment::find($assessmentId);
+            $employee_exist = Employee::find($employeeId);
+
+            //checks if employee exist
+            if ($assessment_exist&&$employee_exist) {
+                $userAssessment = UserAssessment::create(['employee_id' => $employeeId, 'assessment_id' => $assessmentId,
+                'org_id' => $org_id, 'userscore_id' => '', 'completed' => 0,
                 'total_questions' => 0, 'correct_questions' => 0, 'result' => 0]);
+                return $this->sendResponse(false, null, 'Accepted user assessment successfully', null, Response::HTTP_CREATED);
+            }
+            else{
+                return $this->sendResponse(true, 'Provide a valid assessment Id or employee Id', null, null, Response::HTTP_BAD_REQUEST);
+            }
+          
 
 
-            return $this->sendResponse(false, null, 'Accepted user assessment successfully', null, Response::HTTP_CREATED);
+       
         } catch (Exception $e) {
             return $this->sendResponse(true, $e->getMessage(), 'User assessment was not accepted', null, Response::HTTP_BAD_REQUEST);
         }
