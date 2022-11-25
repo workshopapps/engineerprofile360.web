@@ -28,7 +28,7 @@ const useInputValidation = (initialState = {}) => {
     if (formData && !formData.password) {
       error.password = "Password is required";
     }
-    if (formData.password.length <= 8) {
+    if (formData.password?.length <= 8) {
       error.passwordLength = "Password must be more than 8 characters";
     }
     if (/[A-Z]/.test(formData.password) === false) {
