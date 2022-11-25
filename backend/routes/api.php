@@ -3,6 +3,7 @@
 use App\Http\Controllers\StackController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CategoryController;
@@ -55,14 +56,16 @@ Route::prefix("user")->group(function () {
 
 
 // User Assessment routes
+// User Assessment routes
 Route::prefix("user-assessment")->group(function () {
     Route::post('/accept/{assessmentId}/{employmentId}/{orgId}', [UserAssessmentController::class, 'acceptUserAssessment']);
     Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
+    Route::get('/org/{org_id}/org-available', [UserAssessmentController::class, 'getOrgAvailableAssessment']);
+    Route::get('/org/{org_id}/org-completed', [UserAssessmentController::class, 'getOrgCompletedAssessment']);
+    Route::get('/{employee_id}', [UserAssessmentController::class, 'getEmployeeAvailableAssessments'])->middleware("isloggedin");
     Route::get('/{employee_id}/completed', [UserAssessmentController::class, 'getEmployeeCompletedAssessment'])->middleware("isloggedin");
-    Route::get('{org_id}/org-available', [UserAssessmentController::class, 'GetOrgAvailableAssessment']);
-    Route::get('{org_id}/org-completed', [UserAssessmentController::class, 'GetOrgCompletedAssessment']);
-    Route::get('{id}', [UserAssessmentController::class, 'getAssessmentByID']);
-    Route::get('top-performance/{userId}', [UserAssessmentController::class, 'getUserTopPerformance']);
+    Route::put('/{id}/update', [UserAssessmentController::class, 'updateUserAssessment']);
+    Route::delete('/{id}/delete', [UserAssessmentController::class, 'deleteUserAssessment']);
 });
 
 //Assessment routes operations
@@ -89,11 +92,14 @@ Route::prefix("auth")->group(function () {
     Route::post('login', [AuthenticateController::class, 'UserAndEmployeeLogin']);
     Route::get('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
     Route::post('employee/update/', [AuthenticationController::class, 'setEmployeePassword']);
-    Route::prefix("password")->group(function () {
-        // forgot password
-        Route::get("/forgot-password/{email}", [AuthenticateController::class, "forgotPassword"]);
-        Route::post("/reset/{id}/{token}", [AuthenticateController::class, "verifyPasswordReset"]);
-    }
+
+    Route::prefix("password")->group(
+        function () {
+            // forgot password
+            Route::get("/forgot-password/{email}", [AuthenticateController::class, "forgotPassword"]);
+            Route::post("/reset/{id}/{token}", [AuthenticateController::class, "verifyPasswordReset"]);
+        }
+
     );
 });
 
@@ -148,7 +154,6 @@ Route::prefix('interview')->group(function () {
     Route::get('all', [InterviewController::class, 'getInterviews']);
     Route::get('{id}', [InterviewController::class, 'getInterviewById']);
 });
-
 
 
 // Stack route
