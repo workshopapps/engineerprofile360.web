@@ -52,6 +52,7 @@ const Main = styled.main`
 
   .icon {
     font-size: 120px;
+    margin: auto auto;
   }
 
   button {
