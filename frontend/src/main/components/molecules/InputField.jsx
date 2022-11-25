@@ -18,7 +18,6 @@ const InputField = ({
   $rounded = true,
   $background = false,
   $size,
-  // $borderColor,
   $fullWidth = true,
 
   handleChange,
@@ -33,7 +32,6 @@ const InputField = ({
         $size={$size}
         $fullWidth={$fullWidth}
         error={error}
-        // $borderColor={$borderColor}
       >
         {startIcon && <span>{startIcon}</span>}
         <Input
