@@ -161,6 +161,8 @@ Route::prefix("user-assessment")->group(function () {
 // Stack route
 Route::prefix("stack")->group(function () {
     Route::put('update/{stackId}', [StackController::class, 'updateStack']);
+    Route::get('all', [StackController::class, 'getAllStacks']);
+    Route::get('{id}', [StackController::class, 'getStackById']);
 });
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);
