@@ -1,11 +1,10 @@
 
-.UserTakeAssessment_container {
+.csv_container {
     height: auto;
     width: 80%;
     margin:40px auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     padding-bottom: 40px;
     padding: 40px;
@@ -19,9 +18,8 @@
  
   .Button_next {
     margin: 0 20px;
-    padding: 10px 16px;
-    width: 139px;
-    height: 60px;
+    padding: 12px 32px;
+    height: 48px;
     background-color: #FFFFFF;
     border: 1px solid #2667FF;
     border-radius: 4px;
@@ -33,10 +31,10 @@
   }
 
   .Button_submit {
+    display: flex;
     margin: 0 20px;
-    padding: 10px 16px;
-    width: 139px;
-    height: 60px;
+    padding: 12px 32px;
+    height: 48px;
     background-color: #2667FF;
     border: 1px solid #FFFFFF;
     border-radius: 4px;
@@ -55,7 +53,12 @@
     align-items: center;
     margin-bottom: 50px;
     flex-wrap: wrap;
+    align-items: center;
 
+  }
+
+  .Button_submit img{
+    margin-right: 10px;
   }
 
   .Filter_nav {
@@ -100,20 +103,19 @@
     align-items: center;
   }
 
-  .Questions {
+  .Upload {
     display: flex;
     width: 100%!important;
     flex-direction: column;
-    margin:100px 0;
   }
 
-  .Questions p{
+  .Upload p{
     font-weight: 600;
     font-size: 18px;
     line-height: 24px;
   }
 
-  .Questions label{
+  .Upload label{
     font-weight: 400;
     font-size: 14px;
     line-height: 20px;
@@ -121,11 +123,11 @@
     padding-left: 10px;
   }
 
-  .Questions input[type=radio]{
+  .Upload input[type=radio]{
     margin-left: 10px;
   }
 
-  .Questions div{
+  .Upload div{
     margin-bottom: 40px;
   }
 
@@ -147,10 +149,55 @@
 
   }
 
+  .card_upload{
+    background: #F8FBFD;
+    border: 1px dashed #C7E0F4;
+    border-radius: 16px;
+    min-height: 70vh;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+  .card_upload_header {
+    display: flex;
+    width: 100%;
+  }
+
+  .card_upload_header p{
+    padding: 16px;
+    flex-basis:100%;
+    text-align: center;
+  }
+
+  .card_upload_header p:nth-child(2){
+    color: #323130;
+    background-color: #F8FBFD;
+    border-radius: 0 16px 0 0;
+  }
+
+  .card_upload_header p:nth-child(1){
+    background-color: #2667FF;
+    border: 1px solid #2667FF;
+    border-radius: 16px 0 0 0;
+    color: #FFFFFF;
+  }
+
+  .card_upload_area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+  }
+
+  .text_success {
+    color: #107C10;
+  }
   
   /* Media queries */
   @media screen and (max-width: 767px) {
-    .UserTakeAssessment_container {
+    .csv_container {
       align-items: stretch;
       text-align: center;
       width: 100%;
@@ -162,7 +209,7 @@
       text-align: left;
     }
 
-    .Description,.Questions {
+    .Description,.Upload {
       text-align: left;
     }
   

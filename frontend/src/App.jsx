@@ -34,6 +34,9 @@ import { User2FA } from "./ui/pages/userSignUp/User2FA";
 import { DashboardLayout } from "../src/Layouts/Dashboard/DashboardLayout";
 import AdminViewAssessment from "./ui/pages/admin-view-assessment/AdminViewAssessment";
 import Assessment from "./ui/pages/assessment/Assessment.jsx";
+import CsvUpload from "./ui/pages/csv/CsvUpload";
+import CsvUploading from "./ui/pages/csv/CsvUploading";
+import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
@@ -67,6 +70,20 @@ const App = () => {
           <Route
             path="/admin-view-assessment"
             element={<AdminViewAssessment />}
+          />
+          <Route
+            path="/csv-upload"
+            element={<CsvUpload />}
+          />
+
+          <Route
+            path="/csv-uploading"
+            element={<CsvUploading />}
+          />
+
+          <Route
+            path="/csv-uploading-complete"
+            element={<CsvUploadComplete />}
           />
 
           <Route path="/setting" element={<AdminSetting />} />
