@@ -14,6 +14,7 @@ import editSvg from "../../../assets/icons/edit-2.svg";
 
 const AdminSignup = () => {
   const isFormSubmitted = useRef(false);
+  const [passwordError, setPasswordError] = useState({});
   const {
     formData,
     changeInputValue,
@@ -165,13 +166,58 @@ const AdminSignup = () => {
                 : ""
             }
           />
-          {/* <Spans color={error}>
-            <p>Your Password should have:</p>
-            <span>At least 8 characters</span>
-            <span>At least one capital letter</span>
-            <span>At least one number</span>
-            <span>At least one special character</span>
-          </Spans> */}
+          {errors && touched.password ? (
+            <Spans>
+              <p>Your Password should have:</p>
+
+              <span
+                style={{
+                  color:
+                    errors && errors.passwordLength?.length < 0
+                      ? "green"
+                      : "red",
+                }}
+              >
+                {errors.passwordLength &&
+                  "Password must be more than 8 characters"}
+              </span>
+              <span
+                style={{
+                  color:
+                    errors && errors.passwordUppercase?.length === 0
+                      ? "green"
+                      : "red",
+                }}
+              >
+                {errors.passwordUppercase &&
+                  "Password must have at least one uppercase"}
+              </span>
+              <span
+                style={{
+                  color:
+                    errors && errors.passwordNumber?.length === 0
+                      ? "green"
+                      : "red",
+                }}
+              >
+                {errors.passwordNumber &&
+                  "Password must have at least one number"}
+              </span>
+              <span
+                style={{
+                  color:
+                    errors && errors.passwordCharacter?.length === 0
+                      ? "green"
+                      : "red",
+                }}
+              >
+                {errors.passwordCharacter &&
+                  "Password must have at least one special character"}
+              </span>
+            </Spans>
+          ) : (
+            ""
+          )}
           <InputField
             $size="md"
             type={showPassword ? "text" : "password"}
