@@ -48,7 +48,7 @@ class DepartmentController extends Controller
     }
 
     /**
-     * Get all departments created by an Organisation
+     * Get all departments created by an Organization
      *
      * @param  string  $id
      * @return Response
