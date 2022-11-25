@@ -150,7 +150,6 @@ Route::prefix('interview')->group(function () {
     Route::get('all', [InterviewController::class, 'getInterviews']);
     Route::get('{id}', [InterviewController::class, 'getInterviewById']);
     Route::put('update/{interviewId}', [InterviewController::class, 'updateInterview']);
-    Route::put('update/{interviewId}', [InterviewController::class, 'updateInterview']);
 });
 
 // User Assessment routes
