@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { json, Link } from "react-router-dom";
 
 import { Container, Button } from "../../../styles/reusableElements.styled";
 import { AuthTitle, InputField } from "../../components";
@@ -14,7 +14,6 @@ import editSvg from "../../../assets/icons/edit-2.svg";
 
 const AdminSignup = () => {
   const isFormSubmitted = useRef(false);
-  const [passwordError, setPasswordError] = useState({});
   const {
     formData,
     changeInputValue,
@@ -33,9 +32,22 @@ const AdminSignup = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
 
-  const onChange = (e) => {
-    changeInputValue(e);
-  };
+  // const onChange = (e) => {
+  //   changeInputValue(e);
+  // };
+
+  //TODO: MOVE TO UTILS
+
+  async function Fetch(url, config = {}) {
+    config["headers"] = {
+      "content-type": "application/json",
+    };
+
+    let res = await fetch(url, config);
+    let data = await res.json();
+
+    return { res, data };
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,19 +74,32 @@ const AdminSignup = () => {
         });
 
         const { email, fname: full_name, uname: username, password } = formData;
-        const response = await axios.post(
-          "auth/register",
-          JSON.stringify({ email, full_name, username, password }),
+
+        const { res, data } = await Fetch(
+          "http://api.skript.hng.tech/api/auth/register",
           {
-            headers: {
-              "content-type": "application/json",
-              "Access-Control-Allow-Origin": "*",
-            },
-            withCredentials: true,
+            method: "Post",
+            body: JSON.stringify({ email, full_name, username, password }),
           }
         );
 
-        // Clear input fields
+        console.log(data);
+
+        // const response = await fetch(
+        //   "https://api.skript.hng.tech/api/auth/register",
+        //   {
+        //     method: "POST",
+        //     mode: "no-cors",
+
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify({ email, full_name, username, password }),
+        //   }
+        // );
+        // const data = await response.json();
+        // console.log(data);
+
         setFormData({
           fname: "",
           uname: "",
@@ -82,12 +107,10 @@ const AdminSignup = () => {
           password: "",
           confirmPassword: "",
         });
-      } else if (errors) throw new Error();
-    } catch (err) {
-      isFormSubmitted.current = false;
-
-      if (!err?.response) {
       }
+    } catch (err) {
+      console.error(err);
+      isFormSubmitted.current = false;
     }
   };
 
@@ -168,52 +191,18 @@ const AdminSignup = () => {
           />
           {errors && touched.password ? (
             <Spans>
-              <p>Your Password should have:</p>
-
-              <span
-                style={{
-                  color:
-                    errors && errors.passwordLength?.length < 0
-                      ? "green"
-                      : "red",
-                }}
-              >
-                {errors.passwordLength &&
-                  "Password must be more than 8 characters"}
-              </span>
-              <span
-                style={{
-                  color:
-                    errors && errors.passwordUppercase?.length === 0
-                      ? "green"
-                      : "red",
-                }}
-              >
-                {errors.passwordUppercase &&
-                  "Password must have at least one uppercase"}
-              </span>
-              <span
-                style={{
-                  color:
-                    errors && errors.passwordNumber?.length === 0
-                      ? "green"
-                      : "red",
-                }}
-              >
-                {errors.passwordNumber &&
-                  "Password must have at least one number"}
-              </span>
-              <span
-                style={{
-                  color:
-                    errors && errors.passwordCharacter?.length === 0
-                      ? "green"
-                      : "red",
-                }}
-              >
-                {errors.passwordCharacter &&
-                  "Password must have at least one special character"}
-              </span>
+              {errors.passwordLength ||
+              errors.passwordUppercase ||
+              errors.passwordNumber ||
+              errors.passwordCharacter ? (
+                <p>Your Password should have:</p>
+              ) : (
+                ""
+              )}
+              <span>{errors.passwordLength}</span>
+              <span>{errors.passwordUppercase}</span>
+              <span>{errors.passwordNumber}</span>
+              <span>{errors.passwordCharacter}</span>
             </Spans>
           ) : (
             ""
@@ -300,7 +289,7 @@ const Checkbox = styled.div`
 `;
 
 const Spans = styled.div`
-  margin-top: -30px;
+  margin-top: -20px;
   display: flex;
   flex-direction: column;
   align-self: flex-start;
@@ -313,5 +302,6 @@ const Spans = styled.div`
   span {
     font-size: 10px;
     font-family: inherit;
+    color: ${({ theme }) => theme.palette.status.error.color};
   }
 `;

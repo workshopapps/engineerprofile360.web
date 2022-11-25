@@ -30,11 +30,14 @@ const useInputValidation = (initialState = {}) => {
     }
     if (formData.password.length <= 8) {
       error.passwordLength = "Password must be more than 8 characters";
-    } else if (/[A-Z]/.test(formData.password) === false) {
+    }
+    if (/[A-Z]/.test(formData.password) === false) {
       error.passwordUppercase = "password must have at least one uppercase";
-    } else if (/[0-9]/.test(formData.password) === false) {
+    }
+    if (/[0-9]/.test(formData.password) === false) {
       error.passwordNumber = "Password must have at least 1 number";
-    } else if (/[#?!@$%^&*-]/.test(formData.password) === false) {
+    }
+    if (/[#?!@$%^&*-]/.test(formData.password) === false) {
       error.passwordCharacter =
         "Password must have at least 1 special character";
     }
@@ -46,7 +49,6 @@ const useInputValidation = (initialState = {}) => {
     }
     setErrors(error);
   };
-  console.log(errors);
 
   useEffect(() => {
     validation(formData);
