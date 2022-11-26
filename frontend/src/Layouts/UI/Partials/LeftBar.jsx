@@ -9,7 +9,7 @@ const LeftBar = () => {
   return (
     <LeftBarContainer>
       <List>
-        <Link to="/"></Link>
+        <Link to="/">Dashboard</Link>
       </List>
     </LeftBarContainer>
   );
