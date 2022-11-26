@@ -13,9 +13,10 @@ import {
   AdminSignup,
   AdminLogin,
   ResetPassword,
+  SetPassword,
   ResetPasswordSuccess,
   VerifyEmail,
-  SetPassword,
+  EmailVerificationSucess,
 } from "./main/pages";
 import Confirmed from "./main/components/demo-pages-components/components/Confirmed";
 import ScheduleDemo from "./main/components/demo-pages-components/components/ScheduleDemo";
@@ -106,6 +107,10 @@ const App = () => {
           />
           <Route path="/set-password" element={<SetPassword />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route
+            path="/success-verification"
+            element={<EmailVerificationSucess />}
+          />
           <Route path="/2fa" element={<User2FA />} />
         </Route>
 

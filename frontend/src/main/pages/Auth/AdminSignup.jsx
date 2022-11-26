@@ -38,9 +38,9 @@ const AdminSignup = () => {
 
   const showErrorToast = (error) => {
     toast.error(error, {
-      position: toast.POSITION.TOP_RIGHT
-    })
-  }
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
 
   const navigate = useNavigate();
 
