@@ -14,7 +14,7 @@ import {
   AdminLogin,
   ResetPassword,
   ResetPasswordSuccess,
-  VerifyEmail,
+  VerifyEmail,SetPassword,
 } from "./main/pages";
 import Confirmed from "./main/components/demo-pages-components/components/Confirmed";
 import ScheduleDemo from "./main/components/demo-pages-components/components/ScheduleDemo";
@@ -29,11 +29,18 @@ import Privacy from "./main/pages/Privacy/privacy";
 import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 import Testimonial from "./main/components/Testimonials/Testimonial";
+import PricingPage from "./main/pages/PricingPage";
 import HelpCenter from "../src/main/pages/HelpCenter";
+import AdminCSVUpload from "./ui/pages/AdminUpload/AdminCSVUpload";
+import UserAssessmentListCompleted from "./ui/pages/UserAssestList/UserAssestListCompleted";
+
 import { User2FA } from "./ui/pages/userSignUp/User2FA";
-// import { DashboardLayout } from "./main/Layouts/Dashboard/DashboardLayout";
+import { DashboardLayout } from "../src/Layouts/Dashboard/DashboardLayout";
 import AdminViewAssessment from "./ui/pages/admin-view-assessment/AdminViewAssessment";
 import Assessment from "./ui/pages/assessment/Assessment.jsx";
+import CsvUpload from "./ui/pages/csv/CsvUpload";
+import CsvUploading from "./ui/pages/csv/CsvUploading";
+import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
@@ -59,7 +66,8 @@ const App = () => {
             path="/admin-assessment-list"
             element={<AdminAssessmentList />}
           />
-          <Route path="/help-center" element={<HelpCenter />} />
+
+          <Route path="/pricing" element={<PricingPage />} />
           <Route
             path="/take-assessment-list"
             element={<UserTakeAssessment />}
@@ -68,10 +76,26 @@ const App = () => {
             path="/admin-view-assessment"
             element={<AdminViewAssessment />}
           />
+          <Route
+            path="/csv-upload"
+            element={<CsvUpload />}
+          />
+
+          <Route
+            path="/csv-uploading"
+            element={<CsvUploading />}
+          />
+
+          <Route
+            path="/csv-uploading-complete"
+            element={<CsvUploadComplete />}
+          />
 
           <Route path="/setting" element={<AdminSetting />} />
           <Route path="/privacy-policy" element={<Privacy />} />
           <Route path="/employee-profile" element={<EmployeeProfile />} />
+          <Route path="/admin-csv-upload" element={<AdminCSVUpload />} />
+          <Route path="/user-assessment-completed" element={<UserAssessmentListCompleted />} />
         </Route>
 
         <Route element={<AdminAuthLayout />}>
@@ -82,14 +106,21 @@ const App = () => {
             path="/reset-password-success"
             element={<ResetPasswordSuccess />}
           />
+          <Route
+            path="/set-password"
+            element={<SetPassword />}
+          />
           <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/2fa" element={<User2FA />} />
         </Route>
 
         <Route element={<UiLayout />}>
           <Route path="/assessment" element={1} />
         </Route>
+        <Route element={<DashboardLayout />}>
+          <Route path="/assessment" element={<Assessment />} />
+        </Route>
       </Routes>
-      {/* Protected Routes */}
 
       {/* <UserProfile /> */}
       {/* <UiLayout> */}
