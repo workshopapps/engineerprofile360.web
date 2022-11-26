@@ -12,9 +12,11 @@ import axios from "../../../api/axios";
 
 import eyeSvg from "../../../assets/icons/eye.svg";
 import smsSvg from "../../../assets/icons/smsenvelope.svg";
+import { Loader } from "../../../styles/reusableElements.styled";
 
 const AdminLogin = () => {
   const { setAuth } = useContext(AuthContext);
+  const [isSubmitted, setIsSubmitted] = useState("");
   const [showPassword, setShowPassword] = useState(true);
   const [loginError, setLoginError] = useState();
 
@@ -32,7 +34,6 @@ const AdminLogin = () => {
     password: "",
   });
   const navigate = useNavigate();
-
   const { email, password } = formData;
 
   const handleSubmit = async (e) => {
@@ -53,15 +54,12 @@ const AdminLogin = () => {
           password: false,
         });
 
+        setIsSubmitted(true);
+
         const { email, password } = formData;
         const response = await axios.post(
           "auth/login",
           JSON.stringify({ email, password })
-          // {
-          //   headers: {
-          //     "content-type": "text/plain",
-          //   },
-          // }
         );
 
         console.log(JSON.stringify(response?.data));
@@ -71,7 +69,7 @@ const AdminLogin = () => {
         setAuth({ email, password, accessToken });
 
         if (response.data.errorState === false) {
-          navigate("/verify-email", { state: { email } });
+          // navigate("/verify-email", { state: { email } });
         }
         console.log(response.data);
 
@@ -80,8 +78,12 @@ const AdminLogin = () => {
           email: "",
           confirmPassword: "",
         });
-      } else if (errors) throw new Error();
+      } else if (errors) {
+      }
     } catch (err) {
+      if (err) {
+        setIsSubmitted(false);
+      }
       if (!err?.response) {
         setLoginError("No Server Response");
       } else if (err.response?.status === 400) {
@@ -149,8 +151,12 @@ const AdminLogin = () => {
             <Link to="/reset-password">Forgot password?</Link>
           </Checkbox>
 
-          <Button $size="md" type="submit">
-            Sign In
+          <Button
+            $size="md"
+            type={isSubmitted ? "button" : "submit"}
+            $variant={isSubmitted ? "disabled" : null}
+          >
+            {isSubmitted ? <Loader /> : "Sign In"}
           </Button>
 
           <div>
