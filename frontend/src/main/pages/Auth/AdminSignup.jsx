@@ -177,6 +177,7 @@ const AdminSignup = () => {
               <img
                 onClick={() => setShowPassword((prevState) => !prevState)}
                 src={eyeSvg}
+                style={{ cursor: "pointer" }}
                 alt=""
               />
             }
@@ -225,6 +226,7 @@ const AdminSignup = () => {
               <img
                 onClick={() => setShowPassword((prevState) => !prevState)}
                 src={eyeSvg}
+                style={{ cursor: "pointer" }}
                 alt=""
               />
             }
