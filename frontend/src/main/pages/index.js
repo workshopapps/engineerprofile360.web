@@ -9,3 +9,4 @@ export { default as AdminLogin } from "./Auth/AdminLogin";
 export { default as ResetPassword } from "./Auth/ResetPassword";
 export { default as ResetPasswordSuccess } from "./Auth/ResetPasswordSuccess";
 export { default as VerifyEmail } from "./Auth/VerifyEmail";
+export { default as SetPassword } from "./Auth/SetPassword";
