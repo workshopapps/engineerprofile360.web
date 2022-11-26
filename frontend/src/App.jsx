@@ -60,8 +60,8 @@ const App = () => {
           <Route path="/demo" element={<ScheduleDemo />} />
           <Route path="/confirm-demo" element={<Confirmed />} />
           <Route path="/support" element={<Support />} />
-          <Route path="/termsAndService" element={<HelpCenter />} />
-          <Route path="/help-center" element={<Terms />} />
+          <Route path="/help-center" element={<HelpCenter />} />
+          <Route path="/termsAndService" element={<Terms />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/assessment-list" element={<AssessmentList />} />
           <Route path="/admin-assessment" element={<AdminAssessmentList />} />
