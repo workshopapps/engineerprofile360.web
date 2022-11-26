@@ -35,7 +35,7 @@ class StackController extends Controller
             $stack = Stack::find($stack_id);
 
             if( !$stack ) {
-                return $this->errorResponse(
+                return $this->sendResponse(
                     'Stack does not exist',
                     'Stack not found',
                     Response::HTTP_NOT_FOUND
@@ -45,9 +45,9 @@ class StackController extends Controller
             $stack->update($updatedData);
 
             // success response
-            return $this->successResponse(true, 'Stack updated successfully', Response::HTTP_OK);
+            return $this->sendResponse(true, 'Stack updated successfully', Response::HTTP_OK);
         }  catch (Exception $e) {
-            return $this->errorResponse('Stack not fetched', $e->getMessage());
+            return $this->sendResponse('Stack not fetched', $e->getMessage());
         }
     }
 
