@@ -111,11 +111,10 @@ const App = () => {
             path="/success-verification"
             element={<EmailVerificationSucess />}
           />
-          <Route path="/2fa" element={<User2FA />} />
-        </Route>
-
-        <Route element={<UiLayout />}>
-          <Route path="/assessment" element={1} />
+          <Route
+            path={"/api/auth/verify/:user_id/:token"}
+            element={<User2FA />}
+          />
         </Route>
         <Route element={<DashboardLayout />}>
           <Route path="/assessment" element={<Assessment />} />
