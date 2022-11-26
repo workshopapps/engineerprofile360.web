@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import { Container, Button } from "../../../styles/reusableElements.styled";
 import { AuthTitle } from "../../components";
@@ -13,9 +14,11 @@ const VerifyEmail = () => {
       <VerifyEmailContainer>
         <img src={verifyEmailIcon} alt=" " />
         <AuthTitle title="Verify your email address" text={<Message />} />
-        <Button $size="md" type="submit">
-          Login
-        </Button>
+        <Link to="/login">
+          <Button $size="md" type="submit">
+            Login
+          </Button>
+        </Link>
 
         <span>
           {" "}
@@ -35,7 +38,9 @@ const Message = () => {
         {location.state?.email}
       </Email>{" "}
       as the email for your account. <br />
-      Please verify this email by clicking on the button below
+      Please verify this email by visiting the link sent to your email address.{" "}
+      <br />
+      If you have done so, click the button below to login.
     </>
   );
 };
