@@ -5,6 +5,7 @@ import { Container, Button } from "../../../styles/reusableElements.styled";
 import { AuthTitle } from "../../components";
 
 import verifyEmailIcon from "../../../assets/icons/verify-email.svg";
+import { useLocation } from "react-router-dom";
 
 const VerifyEmail = () => {
   return (
@@ -26,11 +27,12 @@ const VerifyEmail = () => {
 };
 
 const Message = () => {
+  const location = useLocation();
   return (
     <>
       You’ve entered{" "}
       <Email style={{ color: "blue", display: "inline" }}>
-        Janedoe@gmail.com
+        {location.state?.email}
       </Email>{" "}
       as the email for your account. <br />
       Please verify this email by clicking on the button below
