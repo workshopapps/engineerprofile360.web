@@ -86,7 +86,7 @@ class AuthenticateController extends Controller {
                     // check if user is unverified
                     if($users->first()["isVerified"] < 1){
                         $this->helper->emailVerification($email,$user_id);
-                        return $this->sendResponse(false, "account not verfied.. a verification link has been sent to you account.", "failed to login.. verify your account.", null, 200);
+                        return $this->sendResponse(true, "account not verfied.. a verification link has been sent to you account.", "failed to login.. verify your account.", null, 200);
                     }
                     
                     
