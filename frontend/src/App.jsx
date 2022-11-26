@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles, theme } from "./styles/globalStyles";
-import MainLayout from "./Layouts/Main/MainLayout";
+import { MainLayout, UiLayout } from "./Layouts";
 
 import Contact from "./main/pages/Contact";
 import { AdminAuthLayout } from "./main/components";
@@ -114,6 +114,9 @@ const App = () => {
           <Route path="/2fa" element={<User2FA />} />
         </Route>
 
+        <Route element={<UiLayout />}>
+          <Route path="/assessment" element={1} />
+        </Route>
         <Route element={<DashboardLayout />}>
           <Route path="/assessment" element={<Assessment />} />
         </Route>
