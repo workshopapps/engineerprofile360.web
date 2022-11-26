@@ -9,7 +9,7 @@ import useInputValidation from "../../../hooks/useInputValidation";
 
 import eyeSvg from "../../../assets/icons/eye.svg";
 
-const SetPassword = () => {
+const AdminSetPassword = () => {
   const [showPassword, setShowPassword] = useState(true);
   const [showConfirmPassword, setShowConfirmPassword] = useState(true);
   const { formData, changeInputValue, onBlur, errors, touched } =
@@ -88,7 +88,7 @@ const SetPassword = () => {
                 : ""
             }
           />
-          <Button $size="md" type="submit">
+          <Button $size="md" type="button">
             Set Password
           </Button>
         </SetPasswordForm>
@@ -97,13 +97,10 @@ const SetPassword = () => {
   );
 };
 
-export default SetPassword;
+export default AdminSetPassword;
 
 const FormContainer = styled(Container)`
   width: 100%;
-  h1 {
-    /* color: #2667ff; */
-  }
 `;
 
 const SetPasswordForm = styled.form`

@@ -5,28 +5,25 @@ import { Container, Button } from "../../../styles/reusableElements.styled";
 import { AuthTitle } from "../../components";
 
 import unlockIcon from "../../../assets/icons/unlock.svg";
-import { Link } from "react-router-dom";
 
-const EmailVerificationSuccess = () => {
+const AdminPasswordSuccess = () => {
   return (
     <>
       <SuccessContainer>
         <img src={unlockIcon} alt=" " />
         <AuthTitle
-          title="Email Successfully Verified!"
-          text="You can now log in to your account"
+          title="Successful password reset!"
+          text="You can now use your new password to log in to your account"
         />
-        <Link to="/login">
-          <Button $size="md" type="submit">
-            Login
-          </Button>
-        </Link>
+        <Button $size="md" type="button">
+          Login
+        </Button>
       </SuccessContainer>
     </>
   );
 };
 
-export default EmailVerificationSuccess;
+export default AdminPasswordSuccess;
 
 const SuccessContainer = styled(Container)`
   width: 100%;
