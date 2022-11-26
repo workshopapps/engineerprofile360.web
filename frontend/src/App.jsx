@@ -14,7 +14,8 @@ import {
   AdminLogin,
   ResetPassword,
   ResetPasswordSuccess,
-  VerifyEmail,SetPassword,
+  VerifyEmail,
+  SetPassword,
 } from "./main/pages";
 import Confirmed from "./main/components/demo-pages-components/components/Confirmed";
 import ScheduleDemo from "./main/components/demo-pages-components/components/ScheduleDemo";
@@ -76,15 +77,9 @@ const App = () => {
             path="/admin-view-assessment"
             element={<AdminViewAssessment />}
           />
-          <Route
-            path="/csv-upload"
-            element={<CsvUpload />}
-          />
+          <Route path="/csv-upload" element={<CsvUpload />} />
 
-          <Route
-            path="/csv-uploading"
-            element={<CsvUploading />}
-          />
+          <Route path="/csv-uploading" element={<CsvUploading />} />
 
           <Route
             path="/csv-uploading-complete"
@@ -95,7 +90,10 @@ const App = () => {
           <Route path="/privacy-policy" element={<Privacy />} />
           <Route path="/employee-profile" element={<EmployeeProfile />} />
           <Route path="/admin-csv-upload" element={<AdminCSVUpload />} />
-          <Route path="/user-assessment-completed" element={<UserAssessmentListCompleted />} />
+          <Route
+            path="/user-assessment-completed"
+            element={<UserAssessmentListCompleted />}
+          />
         </Route>
 
         <Route element={<AdminAuthLayout />}>
@@ -106,10 +104,7 @@ const App = () => {
             path="/reset-password-success"
             element={<ResetPasswordSuccess />}
           />
-          <Route
-            path="/set-password"
-            element={<SetPassword />}
-          />
+          <Route path="/set-password" element={<SetPassword />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/2fa" element={<User2FA />} />
         </Route>
