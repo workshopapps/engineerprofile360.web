@@ -13,9 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('stacks', function (Blueprint $table) {
+        Schema::create('interviews', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
+            $table->string('times_taken');
+            $table->string('company_name');
+            $table->string('stack_id');
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stacks');
+        Schema::dropIfExists('interviews');
     }
 };
