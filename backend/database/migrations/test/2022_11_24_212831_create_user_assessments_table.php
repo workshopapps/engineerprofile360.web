@@ -13,15 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('questions', function (Blueprint $table) {
+        Schema::create('user_assessments', function (Blueprint $table) {
             $table->uuid('id')->unique();
-            $table->string("question_id");
-            $table->string("options");
-            $table->string("timeframe");
-            $table->string("correct_answers");
-            $table->boolean("is_multiple_answers");
-            $table->string('category_id');
+            $table->boolean("completed")->default(false);
+            $table->string("total_questions")->nullable();
+            $table->string("correct_questions")->nullable();
+            $table->string("result")->nullable();
+            $table->string('employee_id');
             $table->string('assessment_id');
+            $table->string('org_id');
+            $table->string('userscore_id');
             $table->timestamps();
         });
     }
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('questions');
+        Schema::dropIfExists('user_assessments');
     }
 };

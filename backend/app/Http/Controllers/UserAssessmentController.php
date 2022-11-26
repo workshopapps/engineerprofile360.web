@@ -26,7 +26,7 @@ class UserAssessmentController extends Controller
             //checks if employee exist
             if ($assessment_exist&&$employee_exist) {
                 $userAssessment = UserAssessment::create(['employee_id' => $employeeId, 'assessment_id' => $assessmentId,
-                'org_id' => $org_id, 'userscore_id' => '', 'completed' => 0,
+                'org_id' => $orgId, 'userscore_id' => '', 'completed' => 0,
                 'total_questions' => 0, 'correct_questions' => 0, 'result' => 0]);
                 return $this->sendResponse(false, null, 'Accepted user assessment successfully', null, Response::HTTP_CREATED);
             }
