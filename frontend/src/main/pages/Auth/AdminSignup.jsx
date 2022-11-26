@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { json, Link } from "react-router-dom";
+import { json, Link, useNavigate, useNavigation } from "react-router-dom";
 
 import { Container, Button } from "../../../styles/reusableElements.styled";
 import { AuthTitle, InputField } from "../../components";
@@ -14,6 +14,7 @@ import editSvg from "../../../assets/icons/edit-2.svg";
 
 const AdminSignup = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [fetchError, setFetchError] = useState();
   const {
     formData,
     changeInputValue,
@@ -29,6 +30,8 @@ const AdminSignup = () => {
     password: "",
     confirmPassword: "",
   });
+
+  const navigate = useNavigate();
 
   const onChange = (e) => {
     changeInputValue(e);
@@ -64,11 +67,15 @@ const AdminSignup = () => {
           JSON.stringify({ email, full_name, username, password }),
           {
             headers: {
-              "content-type": "application/json",
+              "content-type": "text/plain",
             },
           }
         );
 
+        if (response.data.errorState === false) {
+          navigate("/verify-email", { state: { email } });
+        }
+        console.log(response.data);
         // Clear input fields
         setFormData({
           fname: "",
@@ -79,9 +86,12 @@ const AdminSignup = () => {
         });
       } else if (errors) throw new Error();
     } catch (err) {
-      // isFormSubmitted.current = false;
-
       if (!err?.response) {
+        setFetchError("No Server Response");
+      } else if (err.response?.status === 409) {
+        setFetchError("Email Taken");
+      } else {
+        setFetchError("Registration Failed");
       }
     }
   };
@@ -92,7 +102,7 @@ const AdminSignup = () => {
     <>
       <FormContainer>
         <AuthTitle title="Sign up" text="Let's get started" />
-        <SignupForm>
+        <SignupForm onSubmit={handleSubmit}>
           <InputField
             $size="md"
             type="text"
@@ -164,9 +174,9 @@ const AdminSignup = () => {
           <Spans>
             {errors && touched.password ? (
               <>
-                {errors.passwordLength &&
-                errors.passwordUppercase &&
-                errors.passwordNumber &&
+                {errors.passwordLength ||
+                errors.passwordUppercase ||
+                errors.passwordNumber ||
                 errors.passwordCharacter ? (
                   <p>Your Password should have:</p>
                 ) : (
@@ -210,7 +220,7 @@ const AdminSignup = () => {
             </label>
           </Checkbox>
 
-          <Button $size="md" type="submit" onClick={handleSubmit}>
+          <Button $size="md" type="submit">
             Proceed to Signup
           </Button>
 
