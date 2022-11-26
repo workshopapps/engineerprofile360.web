@@ -1,3 +1,4 @@
+/database/database.sqlite
 /node_modules
 /public/build
 /public/hot
@@ -16,3 +17,7 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+composer.lock
+server.php
+# ignore .http file
+/.http

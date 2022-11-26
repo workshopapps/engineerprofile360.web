@@ -17,61 +17,31 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     
+    /** Please do not touch this code here, I spent time refactoring it **/
+
     /**
-     * @param bool $status = true
-     * @param null $data
-     * @param string $message
-     * @param int $code
-     *
-     * @return JsonResponse
-     */
-    public function successResponse(
-        bool $status = true,
+     * General response code
+     * @param bool $errorState = true (This would be used later on in the client to check if an eror occured or not)
+     * @param string $error = null (This would contain more error information the developer would need)
+     * @param string $message = "" (This would contain the actual message that would get displayed in any ui component)
+     * @param int $statusCode = 200 (This is simply the status code)
+     * @param  $data = null (This would contain information the clients needs)
+     * 
+    */
+
+    public function sendResponse(
+        bool $errorState = true,
+        string $error = null,
         string $message = 'OK',
         $data = null,
         int $code = 200
-    ) : JsonResponse
+    ): JsonResponse 
     {
         return response()->json([
-            'status' => $status,
-            'message' => $message,
+            'errorState' => $errorState,
+            'error' => ucfirst($error),
+            'message' => ucfirst($message),
             'data' => $data,
-        ], $code);
-    }
-
-    /**
-     * Empty response without data
-     * @param $status
-     * @param int $code
-     *
-     * @return JsonResponse
-     */
-    public function emptySuccessResponse($status, int $code = 201): JsonResponse
-    {
-        return response()->json([
-            'status' => $code,
-            'data' => $status,
-        ], $code);
-    }
-
-    /**
-     * Error response. It uses code 200 because "API client can't parse the error"
-     * @param string $message
-     * @param null $errors
-     * @param int $code
-     * @return JsonResponse
-    */
-    public function errorResponse(
-        string $message = 'Error message',
-        $errors = null,
-        int $code = 400
-    ) : JsonResponse
-    {
-        Log::error($errors);
-        return response()->json([
-            'status' => 'error',
-            'message' => $message,
-            'errors' => $errors,
         ], $code);
     }
 }
