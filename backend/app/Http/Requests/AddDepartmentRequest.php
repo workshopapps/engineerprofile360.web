@@ -25,9 +25,7 @@ class AddDepartmentRequest extends BaseRequest
     {
         return [
             "name" => 'required',
-           /* "employee_id" => 'required|exists:employees,id',
-            "categories" => 'required|array',
-            "passed_questions" => 'required|array'*/
+            "org_id" => 'required',
         ];
     }
 }

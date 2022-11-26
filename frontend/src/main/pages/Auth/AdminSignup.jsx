@@ -76,12 +76,7 @@ const AdminSignup = () => {
         setIsSubmitted(true);
         const response = await axios.post(
           "auth/register",
-          JSON.stringify({ email, full_name, username, password }),
-          {
-            headers: {
-              "content-type": "text/plain",
-            },
-          }
+          JSON.stringify({ email, full_name, username, password })
         );
 
         if (response.data.errorState === false) {

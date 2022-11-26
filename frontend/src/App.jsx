@@ -60,6 +60,7 @@ const App = () => {
           <Route path="/demo" element={<ScheduleDemo />} />
           <Route path="/confirm-demo" element={<Confirmed />} />
           <Route path="/support" element={<Support />} />
+          <Route path="/help-center" element={<HelpCenter />} />
           <Route path="/termsAndService" element={<Terms />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/assessment-list" element={<AssessmentList />} />
@@ -117,12 +118,12 @@ const App = () => {
             path="/success-verification"
             element={<EmailVerificationSucess />}
           />
-          <Route path="/2fa" element={<User2FA />} />
+          <Route
+            path={"/api/auth/verify/:user_id/:token"}
+            element={<User2FA />}
+          />
         </Route>
 
-        {/* <Route element={<UiLayout />}>
-          <Route path="/assessment" element={1} />
-        </Route> */}
         <Route element={<DashboardLayout />}>
           <Route path="/assessment" element={<Assessment />} />
         </Route>

@@ -158,19 +158,6 @@ Route::prefix('interview')->group(function () {
     Route::put('update/{interviewId}', [InterviewController::class, 'updateInterview']);
 });
 
-// User Assessment routes
-Route::prefix("user-assessment")->group(function () {
-    Route::post('/accept/{assessmentId}/{employmentId}/{orgId}', [UserAssessmentController::class, 'acceptUserAssessment']);
-    Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
-    Route::get('/org/{org_id}/org-available', [UserAssessmentController::class, 'getOrgAvailableAssessment']);
-    Route::get('/org/{org_id}/org-completed', [UserAssessmentController::class, 'getOrgCompletedAssessment']);
-    Route::get('/{employee_id}', [UserAssessmentController::class, 'getEmployeeAvailableAssessments'])->middleware("isloggedin");
-    Route::get('/{employee_id}/completed', [UserAssessmentController::class, 'getEmployeeCompletedAssessment'])->middleware("isloggedin");
-    Route::put('/{id}/update', [UserAssessmentController::class, 'updateUserAssessment']);
-    Route::delete('/{id}/delete', [UserAssessmentController::class, 'deleteUserAssessment']);
-
-});
-
 // Stack route
 Route::prefix("stack")->group(function () {
     Route::post('add', [StackController::class, 'addStack'])->middleware("isloggedin", "isadmin");
