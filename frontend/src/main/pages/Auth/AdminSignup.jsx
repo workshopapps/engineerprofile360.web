@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { json, Link, useNavigate, useNavigation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Loader } from "../../../styles/reusableElements.styled";
 
 import { Container, Button } from "../../../styles/reusableElements.styled";
 import { AuthTitle, InputField } from "../../components";
@@ -13,6 +16,7 @@ import smsSvg from "../../../assets/icons/smsenvelope.svg";
 import editSvg from "../../../assets/icons/edit-2.svg";
 
 const AdminSignup = () => {
+  const [isSubmitted, setIsSubmitted] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [fetchError, setFetchError] = useState();
   const {
@@ -31,6 +35,12 @@ const AdminSignup = () => {
     password: "",
     confirmPassword: "",
   });
+
+  const showErrorToast = (error) => {
+    toast.error(error, {
+      position: toast.POSITION.TOP_RIGHT
+    })
+  }
 
   const navigate = useNavigate();
 
@@ -63,6 +73,7 @@ const AdminSignup = () => {
         });
 
         const { email, fname: full_name, uname: username, password } = formData;
+        setIsSubmitted(true);
         const response = await axios.post(
           "auth/register",
           JSON.stringify({ email, full_name, username, password }),
@@ -85,15 +96,22 @@ const AdminSignup = () => {
           password: "",
           confirmPassword: "",
         });
-      } else if (errors) throw new Error();
+      } else {
+        if (errors) {
+          setIsSubmitted(false);
+          throw new Error();
+        }
+      }
     } catch (err) {
       if (!err?.response) {
         setFetchError("No Server Response");
       } else if (err.response?.status === 409) {
         setFetchError("Email Taken");
       } else {
-        setFetchError("Registration Failed");
+        setFetchError("Unable to process request");
       }
+      showErrorToast(fetchError);
+      setIsSubmitted(false);
     }
   };
 
@@ -102,6 +120,7 @@ const AdminSignup = () => {
   return (
     <>
       <FormContainer>
+        <ToastContainer />
         <AuthTitle title="Sign up" text="Let's get started" />
         <SignupForm onSubmit={handleSubmit}>
           <InputField
@@ -207,7 +226,13 @@ const AdminSignup = () => {
               touched.confirmPassword &&
               errors.confirmPassword?.length > 0
             }
-            endIcon={<img src={eyeSvg} alt="" />}
+            endIcon={
+              <img
+                onClick={() => setShowPassword((prevState) => !prevState)}
+                src={eyeSvg}
+                alt=""
+              />
+            }
             helperText={
               errors && errors.confirmPassword && touched.confirmPassword
                 ? errors.confirmPassword
@@ -221,8 +246,12 @@ const AdminSignup = () => {
             </label>
           </Checkbox>
 
-          <Button $size="md" type="submit">
-            Proceed to Signup
+          <Button
+            $size="md"
+            type={isSubmitted ? "button" : "submit"}
+            $variant={isSubmitted ? "disabled" : null}
+          >
+            {isSubmitted ? <Loader /> : "Proceed to Signup"}
           </Button>
 
           <div>

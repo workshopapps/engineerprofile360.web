@@ -58,8 +58,38 @@
 
   }
 
+  .Filter_nav {
+    display: flex;
+    width: 100%!important;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .Filter_nav_text {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .Filter_nav_text img{
+    height: 11px;
+    margin: 7px;
+  }
+
+  .Filter_nav_text h4{
+    font-weight: 600;
+    color:#201F1E;
+  }
+
   .Filter_wrapper p{
     margin-bottom: 20px;
+    font-size: 16px;
+    color: #323130;
+  }
+
+  .Filter_wrapper span{
+    font-size: 16px;
   }
 
   .Filter_Next_Submit {
