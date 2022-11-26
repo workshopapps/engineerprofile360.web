@@ -9,7 +9,7 @@ import useInputValidation from "../../../hooks/useInputValidation";
 import securityIcon from "../../../assets/icons/security-safe.svg";
 import smsSvg from "../../../assets/icons/smsenvelope.svg";
 
-const ResetPassword = () => {
+const AdminResetPassword = () => {
   const { formData, changeInputValue, onBlur, errors, touched } =
     useInputValidation({
       email: "",
@@ -51,7 +51,7 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default AdminResetPassword;
 
 const FormContainer = styled(Container)`
   width: 100%;

@@ -12,11 +12,11 @@ import {
   BioMedical,
   AdminSignup,
   AdminLogin,
-  ResetPassword,
-  SetPassword,
-  ResetPasswordSuccess,
-  VerifyEmail,
-  EmailVerificationSucess,
+  AdminResetPassword,
+  AdminSetPassword,
+  AdminPasswordSuccess,
+  AdminVerifyEmail,
+  AdminEmailVerified,
 } from "./main/pages";
 import Confirmed from "./main/components/demo-pages-components/components/Confirmed";
 import ScheduleDemo from "./main/components/demo-pages-components/components/ScheduleDemo";
@@ -107,21 +107,18 @@ const App = () => {
         <Route element={<AdminAuthLayout />}>
           <Route path="/register" element={<AdminSignup />} />
           <Route path="/login" element={<AdminLogin />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/reset-password" element={<AdminResetPassword />} />
           <Route
             path="/reset-password-success"
-            element={<ResetPasswordSuccess />}
+            element={<AdminPasswordSuccess />}
           />
-          <Route path="/set-password" element={<SetPassword />} />
-          <Route path="/verify-email" element={<VerifyEmail />} />
-          <Route
-            path="/success-verification"
-            element={<EmailVerificationSucess />}
-          />
+          <Route path="/set-password" element={<AdminSetPassword />} />
+          <Route path="/verify-email" element={<AdminVerifyEmail />} />
           <Route
             path={"/api/auth/verify/:user_id/:token"}
-            element={<User2FA />}
+            element={<AdminEmailVerified />}
           />
+
         </Route>
 
         <Route element={<DashboardLayout />}>
