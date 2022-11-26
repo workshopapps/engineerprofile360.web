@@ -13,8 +13,10 @@ import {
   AdminSignup,
   AdminLogin,
   ResetPassword,
+  SetPassword,
   ResetPasswordSuccess,
-  VerifyEmail,SetPassword,
+  VerifyEmail,
+  EmailVerificationSucess,
 } from "./main/pages";
 import Confirmed from "./main/components/demo-pages-components/components/Confirmed";
 import ScheduleDemo from "./main/components/demo-pages-components/components/ScheduleDemo";
@@ -38,6 +40,7 @@ import { User2FA } from "./ui/pages/userSignUp/User2FA";
 import { DashboardLayout } from "../src/Layouts/Dashboard/DashboardLayout";
 import AdminViewAssessment from "./ui/pages/admin-view-assessment/AdminViewAssessment";
 import Assessment from "./ui/pages/assessment/Assessment.jsx";
+import UserAssessmentResult from "./ui/pages/user-assessment-result/UserAssessmentResult";
 import CsvUpload from "./ui/pages/csv/CsvUpload";
 import CsvUploading from "./ui/pages/csv/CsvUploading";
 import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
@@ -72,19 +75,18 @@ const App = () => {
             path="/take-assessment-list"
             element={<UserTakeAssessment />}
           />
+
+          <Route
+            path="/user-assessment-result"
+            element={<UserAssessmentResult />}
+          />
           <Route
             path="/admin-view-assessment"
             element={<AdminViewAssessment />}
           />
-          <Route
-            path="/csv-upload"
-            element={<CsvUpload />}
-          />
+          <Route path="/csv-upload" element={<CsvUpload />} />
 
-          <Route
-            path="/csv-uploading"
-            element={<CsvUploading />}
-          />
+          <Route path="/csv-uploading" element={<CsvUploading />} />
 
           <Route
             path="/csv-uploading-complete"
@@ -95,7 +97,10 @@ const App = () => {
           <Route path="/privacy-policy" element={<Privacy />} />
           <Route path="/employee-profile" element={<EmployeeProfile />} />
           <Route path="/admin-csv-upload" element={<AdminCSVUpload />} />
-          <Route path="/user-assessment-completed" element={<UserAssessmentListCompleted />} />
+          <Route
+            path="/user-assessment-completed"
+            element={<UserAssessmentListCompleted />}
+          />
         </Route>
 
         <Route element={<AdminAuthLayout />}>
@@ -106,11 +111,12 @@ const App = () => {
             path="/reset-password-success"
             element={<ResetPasswordSuccess />}
           />
-          <Route
-            path="/set-password"
-            element={<SetPassword />}
-          />
+          <Route path="/set-password" element={<SetPassword />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route
+            path="/success-verification"
+            element={<EmailVerificationSucess />}
+          />
           <Route path="/2fa" element={<User2FA />} />
         </Route>
 
