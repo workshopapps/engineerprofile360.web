@@ -1,4 +1,3 @@
-
 openapi: 3.0.0
 servers:
   # Added by API Auto Mocking Plugin
@@ -1457,6 +1456,249 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CreateInterview'
+  "/user-assessment/accept/{assessment_id}/{employee_id}/{organisation_id}":
+    get:
+      tags:
+        - User Assessment
+      description: 'Accept to take an assessment'
+      operationId: acceptassessment
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: assessment_id
+          in: path
+          required: true
+          type: assessment_id
+          format: assessment_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+        - name: employee_id
+          in: path
+          required: true
+          type: employee_id
+          format: employee_id
+          example: "4ea09b93-6682-11ed-9941-3863bbb7c6d"
+        - name: organisation_id
+          in: path
+          required: true
+          type: organisation_id
+          format: organisation_id
+          example: "3ea09b93-6682-11ed-9941-3863bbb7c6d"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
+  "/user-assessment/org/{organisation_id}":
+    get:
+      tags:
+        - User Assessment
+      description: 'Fetch all employee assessment ordered by performance'
+      operationId: getalluserassessment
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: organisation_id
+          in: path
+          required: true
+          type: organisation_id
+          format: organisation_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'     
+  "/user-assessment/org/{organisation_id}/org-available":
+    get:
+      tags:
+        - User Assessment
+      description: 'Fetch all organisation accepted assessment'
+      operationId: getallorgavailableassessment
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: organisation_id
+          in: path
+          required: true
+          type: organisation_id
+          format: organisation_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'     
+  "/user-assessment/org/{organisation_id}/org-completed":
+    get:
+      tags:
+        - User Assessment
+      description: 'Fetch all organisation completed assessment'
+      operationId: getallorgcompletedassessment
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: organisation_id
+          in: path
+          required: true
+          type: organisation_id
+          format: organisation_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'  
+  "/user-assessment/{employee_id}":
+    get:
+      tags:
+        - User Assessment
+      description: 'Fetch all employee available assessments'
+      operationId: getEmployeeAvailableAssessment
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: employee_id
+          in: path
+          required: true
+          type: employee_id
+          format: employee_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
+  "/user-assessment/{employee_id}/completed":
+    get:
+      tags:
+        - User Assessment
+      description: 'Fetch all employee completed assessments'
+      operationId: getEmployeeCompletedAssessment
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: employee_id
+          in: path
+          required: true
+          type: employee_id
+          format: employee_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401' 
+    # update assessment
+  "/user-assessment/{user_assessment_id}/update":
+    put:
+      tags:
+        - User Assessment
+      description: 'Update user assessment'
+      operationId: updateuserassessment
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: user_assessment_id
+          in: path
+          required: true
+          type: user_assessment_id
+          format: user_assessment_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserAssessment'
+    # create assessment
+  "/user-assessment/{user_assessment_id}/delete":
+    delete:
+      tags:
+        - User Assessment
+      description: 'Delete User Assessment'
+      operationId: deleteuserassessment
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: user_assessment_id
+          in: path
+          required: true
+          type: user_assessment_id
+          format: user_assessment_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
 components:
   schemas:
     ResetPassword:
@@ -1781,3 +2023,22 @@ components:
           type: boolean
           format: is_multiple_answers
           example: false
+    UpdateUserAssessment:
+      type: object
+      properties:
+        completed:
+          type: boolean
+          format: completed
+          example: true
+        total_questions:
+          type: integer
+          format: total_questions
+          example: 20
+        correct_questions:
+          type: integer
+          format: correct_questions
+          example: 7
+        result:
+          type: integer
+          format: result
+          example: 50
