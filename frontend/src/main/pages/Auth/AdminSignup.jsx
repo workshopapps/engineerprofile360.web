@@ -26,6 +26,7 @@ const AdminSignup = () => {
     setFormData,
   } = useInputValidation({
     fname: "",
+    uname: "",
     email: "",
     password: "",
     confirmPassword: "",
