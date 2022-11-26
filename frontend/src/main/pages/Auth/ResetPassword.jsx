@@ -18,7 +18,9 @@ const ResetPassword = () => {
   return (
     <>
       <FormContainer>
-        <img src={securityIcon} alt="" />
+        <div>
+          <img src={securityIcon} alt="" />
+        </div>
         <AuthTitle
           title="Reset your password"
           text="Enter the email associated with your account"
@@ -57,6 +59,16 @@ const FormContainer = styled(Container)`
   flex-direction: column;
   // align-items: center;
   justify-content: center;
+
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    img {
+      max-width: 200px;
+    }
+  }
 `;
 
 const ResetPasswordForm = styled.form`
