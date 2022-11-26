@@ -7,6 +7,7 @@ export { default as BioMedical } from "./BioMedical";
 export { default as AdminSignup } from "./Auth/AdminSignup";
 export { default as AdminLogin } from "./Auth/AdminLogin";
 export { default as ResetPassword } from "./Auth/ResetPassword";
+export { default as SetPassword } from "./Auth/SetPassword";
 export { default as ResetPasswordSuccess } from "./Auth/ResetPasswordSuccess";
 export { default as VerifyEmail } from "./Auth/VerifyEmail";
-export { default as SetPassword } from "./Auth/SetPassword";
+export { default as EmailVerificationSucess } from "./Auth/EmailVerificationSuccess";

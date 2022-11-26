@@ -5,6 +5,7 @@ import { Container, Button } from "../../../styles/reusableElements.styled";
 import { AuthTitle } from "../../components";
 
 import unlockIcon from "../../../assets/icons/unlock.svg";
+import { Link } from "react-router-dom";
 
 const EmailVerificationSuccess = () => {
   return (
@@ -15,9 +16,11 @@ const EmailVerificationSuccess = () => {
           title="Email Successfully Verified!"
           text="You can now log in to your account"
         />
-        <Button $size="md" type="submit">
-          Login
-        </Button>
+        <Link to="/login">
+          <Button $size="md" type="submit">
+            Login
+          </Button>
+        </Link>
       </SuccessContainer>
     </>
   );

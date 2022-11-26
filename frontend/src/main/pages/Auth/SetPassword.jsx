@@ -10,9 +10,9 @@ import useInputValidation from "../../../hooks/useInputValidation";
 import eyeSvg from "../../../assets/icons/eye.svg";
 
 const SetPassword = () => {
-    const [showPassword, setShowPassword] = useState(true);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(true);
-    const { formData, changeInputValue, onBlur, errors, touched } =
+  const [showPassword, setShowPassword] = useState(true);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(true);
+  const { formData, changeInputValue, onBlur, errors, touched } =
     useInputValidation({
       password: "",
       confirmPassword: "",
@@ -25,15 +25,13 @@ const SetPassword = () => {
   // console.log(errors);
   // console.log(touched);
 
-  const {password, confirmPassword } = formData;
+  const { password, confirmPassword } = formData;
 
   return (
     <>
       <FormContainer>
         <AuthTitle title="Password" text="Set up a password for your account" />
-        <LoginForm>
-          
-       
+        <SetPasswordForm>
           <InputField
             $size="md"
             type={showPassword ? "password" : "text"}
@@ -43,9 +41,14 @@ const SetPassword = () => {
             value={password}
             handleChange={onChange}
             handleBlur={onBlur}
+            error={
+              errors &&
+              touched.confirmPassword &&
+              errors.confirmPassword?.length > 0
+            }
             endIcon={
               <img
-                 onClick={() => setShowPassword((prevState) => !prevState)}
+                onClick={() => setShowPassword((prevState) => !prevState)}
                 src={eyeSvg}
                 alt=""
               />
@@ -70,7 +73,15 @@ const SetPassword = () => {
               touched.confirmPassword &&
               errors.confirmPassword?.length > 0
             }
-            endIcon={<img src={eyeSvg}  onClick={() => setShowConfirmPassword((prevState) => !prevState)} alt="" />}
+            endIcon={
+              <img
+                src={eyeSvg}
+                onClick={() =>
+                  setShowConfirmPassword((prevState) => !prevState)
+                }
+                alt=""
+              />
+            }
             helperText={
               errors && errors.confirmPassword && touched.confirmPassword
                 ? errors.confirmPassword
@@ -78,11 +89,9 @@ const SetPassword = () => {
             }
           />
           <Button $size="md" type="submit">
-          Set Password
+            Set Password
           </Button>
-
-          
-        </LoginForm>
+        </SetPasswordForm>
       </FormContainer>
     </>
   );
@@ -93,20 +102,14 @@ export default SetPassword;
 const FormContainer = styled(Container)`
   width: 100%;
   h1 {
-    color: #2667ff;
+    /* color: #2667ff; */
   }
 `;
 
-const LoginForm = styled.form`
+const SetPasswordForm = styled.form`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(3)};
-
-  div:last-of-type {
-    span {
-      font-size: 14px;
-    }
-  }
 `;
