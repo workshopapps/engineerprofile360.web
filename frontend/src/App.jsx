@@ -60,7 +60,7 @@ const App = () => {
           <Route path="/setting" element={<AdminSetting />} />
           <Route path="/privacy-policy" element={<Privacy />} />
           <Route path="/employee-profile" element={<EmployeeProfile />} />
-          <Route path="/Marketing-Comparison" element={<Market />} />
+          <Route path="/Marketing-Comparison-2" element={<Market />} />
         </Route>
 
         {/* Auth routes */}
