@@ -19,7 +19,7 @@ import Confirmed from "./main/components/demo-pages-components/components/Confir
 import ScheduleDemo from "./main/components/demo-pages-components/components/ScheduleDemo";
 import Support from "../src/ui/pages/UserSupport";
 import Terms from "../src/ui/pages/termsAndService/TermsAndService";
-import UserProfile from "./ui/pages/user-profile/UserProfile";
+// import UserProfile from "./ui/pages/user-profile/UserProfile";
 import Blog from "../src/main/pages/Blog";
 import AssessmentList from "./main/components/sections/userAssessmentList/AssessmentList";
 import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
@@ -27,7 +27,7 @@ import UserTakeAssessment from "./main/components/sections/userTakeAssessment/Us
 import Privacy from "./main/pages/Privacy/privacy";
 import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
-import Testimonial from "./main/components/Testimonials/Testimonial";
+// import Testimonial from "./main/components/Testimonials/Testimonial";
 import HelpCenter from "../src/main/pages/HelpCenter";
 
 const App = () => {
