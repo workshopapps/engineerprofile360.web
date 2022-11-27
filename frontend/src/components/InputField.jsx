@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import useInputValidation from "../../../hooks/useInputValidation";
+import useInputValidation from "../hooks/useInputValidation";
 
 const InputField = ({
   id,
@@ -19,18 +19,21 @@ const InputField = ({
   $background = false,
   $size,
   $fullWidth = true,
+  $height,
 
   handleChange,
   handleBlur,
+  className
 }) => {
   return (
-    <InputGroup>
+    <InputGroup className={className}>
       {label && <label htmlFor={id}>{label}</label>}
       <InputContainer
         $rounded={$rounded}
         $background={$background}
         $size={$size}
         $fullWidth={$fullWidth}
+        $height={$height}
         error={error}
       >
         {startIcon && <span>{startIcon}</span>}
@@ -89,7 +92,7 @@ const InputContainer = styled.div`
   gap: ${({ theme }) => theme.spacing(2)};
   padding: ${({ theme }) => theme.spacing(2)};
   height: ${(props) =>
-    props.$size === "md" ? "56px" : props.$size === "lg" ? "80px" : "32px"};
+    props.$size === "md" ? "56px" : props.$size === "lg" ? "80px" : props.$height};
   width: ${(props) => (props.$fullWidth ? "100%" : "auto")};
   border: 1px solid
     ${({ theme, error }) =>
