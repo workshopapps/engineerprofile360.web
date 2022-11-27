@@ -25,14 +25,20 @@ const UiLayout = () => {
 export default UiLayout;
 
 const Main = styled(Container)`
-    margin-top: 96px;
+  margin-top: 80px;
+  display: flex;
+  padding: 0 ${({ theme }) => theme.spacing(3)};
+  padding-top: ${({ theme }) => theme.spacing(4)};
 `;
 
 const NavBar = styled.div`
-    width: 240px;
-    height: 100vh;
-    position: fixed;
-    top: 96px;
-    background: blue;
+  width: 240px;
+  height: 80vh;
+  background: #ffffff;
+  position: sticky;
+  top: calc(80px + ${({ theme }) => theme.spacing(4)});
 `;
-const MainContent = styled.div``;
+
+const MainContent = styled.div`
+  height: 200vh;
+`;

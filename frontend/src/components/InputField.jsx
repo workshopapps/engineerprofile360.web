@@ -32,6 +32,7 @@ const InputField = ({
         $background={$background}
         $size={$size}
         $fullWidth={$fullWidth}
+        $height={$height}
         error={error}
       >
         {startIcon && <span>{startIcon}</span>}

@@ -114,9 +114,10 @@ const App = () => {
           <Route path="/2fa" element={<User2FA />} />
         </Route>
 
-        <Route element={<UiLayout />}>
-          <Route path="/assessment" element={1} />
-        </Route>
+        {/* <Route element={<UiLayout />}>
+          {/* <Route path="/assessment" element={<Assessment />} /> 
+          <Route path="/assessment" element={200} />
+        </Route> */}
         <Route element={<DashboardLayout />}>
           <Route path="/assessment" element={<Assessment />} />
         </Route>
