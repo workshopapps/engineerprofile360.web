@@ -121,7 +121,6 @@ const App = () => {
         </Route>
 
         <Route element={<UiLayout />}>
-          <Route path="/assessment" element={<Assessment />} /> 
           <Route path="/ui" element={200} />
         </Route>
         <Route element={<DashboardLayout />}>
