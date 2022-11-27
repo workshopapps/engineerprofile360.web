@@ -44,6 +44,8 @@ import UserAssessmentResult from "./ui/pages/user-assessment-result/UserAssessme
 import CsvUpload from "./ui/pages/csv/CsvUpload";
 import CsvUploading from "./ui/pages/csv/CsvUploading";
 import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
+import {ComparisonPage} from './ui/pages/ComparisonPage/ComparisonPage';
+
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
@@ -66,6 +68,7 @@ const App = () => {
           <Route path="/comparison" element={<ComparisonPage />} />
           <Route path="/assessment-list" element={<AssessmentList />} />
           <Route path="/admin-assessment" element={<AdminAssessmentList />} />
+
 
           <Route
             path="/admin-assessment-list"
