@@ -75,7 +75,7 @@ const Sort = () => {
         jc="space-between"
         ai="center"
         style={{
-          width: "250px",
+          width: "200px",
           padding: "8px 16px 8px 8px",
           border: "1px solid #8A8886",
           borderRadius: "4px",
