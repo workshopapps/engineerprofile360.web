@@ -30,6 +30,7 @@ const AdminSignup = () => {
     setFormData,
   } = useInputValidation({
     fname: "",
+    uname: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -37,9 +38,9 @@ const AdminSignup = () => {
 
   const showErrorToast = (error) => {
     toast.error(error, {
-      position: toast.POSITION.TOP_RIGHT
-    })
-  }
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
 
   const navigate = useNavigate();
 
@@ -75,12 +76,7 @@ const AdminSignup = () => {
         setIsSubmitted(true);
         const response = await axios.post(
           "auth/register",
-          JSON.stringify({ email, full_name, username, password }),
-          {
-            headers: {
-              "content-type": "text/plain",
-            },
-          }
+          JSON.stringify({ email, full_name, username, password })
         );
 
         if (response.data.errorState === false) {
@@ -181,6 +177,7 @@ const AdminSignup = () => {
               <img
                 onClick={() => setShowPassword((prevState) => !prevState)}
                 src={eyeSvg}
+                style={{ cursor: "pointer" }}
                 alt=""
               />
             }
@@ -229,6 +226,7 @@ const AdminSignup = () => {
               <img
                 onClick={() => setShowPassword((prevState) => !prevState)}
                 src={eyeSvg}
+                style={{ cursor: "pointer" }}
                 alt=""
               />
             }

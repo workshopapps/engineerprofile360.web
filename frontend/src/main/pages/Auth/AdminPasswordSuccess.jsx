@@ -6,7 +6,7 @@ import { AuthTitle } from "../../components";
 
 import unlockIcon from "../../../assets/icons/unlock.svg";
 
-const ResetPasswordSuccess = () => {
+const AdminPasswordSuccess = () => {
   return (
     <>
       <SuccessContainer>
@@ -15,7 +15,7 @@ const ResetPasswordSuccess = () => {
           title="Successful password reset!"
           text="You can now use your new password to log in to your account"
         />
-        <Button $size="md" type="submit">
+        <Button $size="md" type="button">
           Login
         </Button>
       </SuccessContainer>
@@ -23,7 +23,7 @@ const ResetPasswordSuccess = () => {
   );
 };
 
-export default ResetPasswordSuccess;
+export default AdminPasswordSuccess;
 
 const SuccessContainer = styled(Container)`
   width: 100%;

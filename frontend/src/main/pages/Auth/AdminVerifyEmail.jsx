@@ -8,14 +8,14 @@ import { AuthTitle } from "../../components";
 import verifyEmailIcon from "../../../assets/icons/verify-email.svg";
 import { useLocation } from "react-router-dom";
 
-const VerifyEmail = () => {
+const AdminVerifyEmail = () => {
   return (
     <>
       <VerifyEmailContainer>
         <img src={verifyEmailIcon} alt=" " />
         <AuthTitle title="Verify your email address" text={<Message />} />
         <Link to="/login">
-          <Button $size="md" type="submit">
+          <Button $size="md" type="button">
             Login
           </Button>
         </Link>
@@ -45,7 +45,7 @@ const Message = () => {
   );
 };
 
-export default VerifyEmail;
+export default AdminVerifyEmail;
 
 const VerifyEmailContainer = styled(Container)`
   min-width: 960px;

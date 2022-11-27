@@ -10,14 +10,15 @@ const Main = styled.main`
 
   ul {
     display: grid;
-    grid-template-columns: repeat(2, auto);
+    grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1fr;
     justify-content: center;
-    ont-weight: 600;
+    font-weight: 600;
     font-size: 18px;
     line-height: 24px;
     cursor: pointer;
   }
+
 
   ul li:first-child {
     background: #2667ff;
