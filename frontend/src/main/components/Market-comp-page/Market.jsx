@@ -36,9 +36,22 @@ import {
   TestimonyHead,
   TestimonyContent,
   TestText,
-  Quote,
+  QuoteImg,
   TC,
   PicTest,
+  TestimonyName,
+  NameTest,
+  FagText,
+  FagComP1,
+  FCompText,
+  FC1,
+  FCText,
+  FagComp2,
+  FcTriangle,
+  LastSection,
+  LastTes1,
+  LastTes2,
+  LastBotton,
 } from "./Market.styled";
 import HowFrag from "./HowFrag";
 import WhichFrag from "./WhichFrag";
@@ -48,8 +61,9 @@ import UpperS from "../../../assets/images/markt3.svg";
 import UpperL from "../../../assets/images/mrket4.svg";
 import How1 from "../../../assets/images/how1.svg";
 import How2 from "../../../assets/images/how2.svg";
-import Quote1 from "../../../assets/images/quote.svg";
-import Pic1 from "../../../assets/images/pic21.png";
+import Quote from "./images/quote.svg";
+import Testimony from "./images/testimony.svg";
+import Triangle from "./images/triangle.svg";
 
 const Market = () => {
   console.log(MarketImg);
@@ -291,10 +305,10 @@ const Market = () => {
                 <TestText>
                   What They Say <br /> About us against our competitors.
                 </TestText>
-                <Quote src={Quote1} alt="/" />
+                <QuoteImg src={Quote} alt="/" />
               </TestimonyHead>
               <TestimonyContent>
-                <PicTest scr={Pic1} alt="/" />
+                <PicTest src={Testimony} alt="/" />
                 <TC>
                   “ With Skript, we’ve been able to optimize the performance of
                   our engineering team significantly. Engineers are given tasks
@@ -304,12 +318,48 @@ const Market = () => {
                   which they apply to their work everyday. It has definitely
                   also made my work easier! “
                 </TC>
+                <TestimonyName>
+                  <NameTest>Peter O. Project manager U.S</NameTest>
+                </TestimonyName>
               </TestimonyContent>
             </What>
-            <Fag></Fag>
+
+            <Fag>
+              <FagText>FAQs</FagText>
+              <FagComP1>
+                <FCompText>Can Skript be used in startup companies?</FCompText>
+                <FcTriangle src={Triangle} />
+                <FC1>
+                  <FCText>
+                    Skript caters to all companies regardless of size.
+                  </FCText>
+                </FC1>
+              </FagComP1>
+              <FagComp2>
+                <FCompText>What is your response time to queries?</FCompText>
+                <FcTriangle src={Triangle} />
+                <FC1>
+                  <FCText>
+                    It differs depending on the channel used to ask the query.
+                    Calls are attended to immediately, chats and emails are
+                    responded to within 24 hours. We are always at your service.
+                  </FCText>
+                </FC1>
+              </FagComp2>
+            </Fag>
           </Container>
         </ThirdPage>
       </Main>
+      <LastSection>
+        <Container>
+          <LastTes1>Ready to get started?</LastTes1>
+          <LastTes2>
+            Start your journey to increased engineer productivity and widespread
+            organizational growth today.
+          </LastTes2>
+          <LastBotton>Request A Demo</LastBotton>
+        </Container>
+      </LastSection>
     </>
   );
 };

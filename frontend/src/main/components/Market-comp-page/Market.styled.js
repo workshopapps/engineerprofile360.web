@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Main = styled.div`
-  height: 620rem;
+  height: 720rem;
   width: 100vw;
   overflow: hidden;
 
@@ -201,7 +201,7 @@ export const SecondPage = styled.div`
 
   @media screen and (max-width: 768px) {
     height: 320px;
-    margin-top: -19rem;
+    margin-top: -20rem;
   }
 `;
 export const SPtext = styled.h4`
@@ -252,6 +252,10 @@ export const LowerSvg = styled.img`
 
 export const ThirdPage = styled.div`
   margin: 10rem 0;
+
+  @media screen and (max-width: 768px) {
+    margin: 3rem 0;
+  }
 `;
 export const ScriptText = styled.h1`
   width: 381px;
@@ -265,9 +269,10 @@ export const ScriptText = styled.h1`
 
   @media screen and (max-width: 768px) {
     font-style: Bolder;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 50px;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 50px;
+  }
 `;
 
 export const How = styled.div`
@@ -439,6 +444,10 @@ export const T3 = styled.h1`
 
 export const Which = styled.div`
   margin: 20rem 0;
+
+  @media screen and (max-width: 768px) {
+    margin: 5rem 0;
+  }
 `;
 export const WhichText = styled.h1`
   width: 40%;
@@ -451,11 +460,14 @@ export const WhichText = styled.h1`
   color: #323130;
 
   @media screen and (max-width: 768px) {
-    width: 50%;
+    width: 100%;
     height: 100%;
+    padding: 0 50px;
+    text-align: center;
     font-weight: 200;
     font-size: 20px;
     line-height: 30px;
+    font-style: Bolder;
   }
 `;
 export const BoxWhich = styled.div`
@@ -557,12 +569,20 @@ export const What = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10rem;
+
+  @media screen and (max-width: 768px) {
+    gap: 1rem;
+  }
 `;
 export const TestimonyHead = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
   align-items: center;
+
+  @media screen and (max-width: 768px) {
+    gap: 10rem;
+  }
 `;
 export const TestText = styled.h1`
   width: 906px;
@@ -573,40 +593,237 @@ export const TestText = styled.h1`
   font-size: 48px;
   line-height: 50px;
   color: #323130;
+
+  @media screen and (max-width: 768px) {
+    font-style: normal;
+    font-weight: 200;
+    font-size: 20px;
+    line-height: 30px;
+  }
 `;
-export const Quote = styled.img`
-  width: 167.16px;
-  height: 124.75px;
-  background: #f3f2f1;
-  transform: matrix(-1, 0, 0, 1, 0, 0);
+export const QuoteImg = styled.img`
+  width: 177.16px;
+  height: 134.75px;
+  color: black;
+
+  @media screen and (max-width: 768px) {
+    width: 77.16px;
+    height: 34.75px;
+  }
 `;
 export const TestimonyContent = styled.div`
   width: 90%;
-  height: 233px;
+  height: 300px;
   background: #201f1e;
   border-radius: 10px;
   margin: 0 6rem;
   padding: 25px;
+
+  @media screen and (max-width: 768px) {
+    width: 95%;
+    height: 233px;
+    background: #201f1e;
+    border-radius: 10px;
+    margin: 0 6px;
+    padding: 25px;
+  }
 `;
 export const TC = styled.p`
-  width: 899px;
-  height: 128px;
+  width: 90%;
+  height: 100%;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 200%;
+  text-align: center;
+  letter-spacing: 0.015em;
+  text-transform: lowercase;
+  color: #ffffff;
+  margin: 3rem 4rem;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: 100%;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 200%;
+    background: #201f1e;
+    border-radius: 10px;
+    margin: 0 2px;
+    padding: 10px;
+  }
+`;
+export const PicTest = styled.img`
+  position: absolute;
+  width: 138px;
+  height: 138px;
+  left: 1162px;
+  top: -70px;
+
+  @media screen and (max-width: 768px) {
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    left: 300px;
+    top: -20px;
+  }
+`;
+
+export const TestimonyName = styled.div`
+  width: 218px;
+  height: 39px;
+  background: #ffffff;
+  border: 1px solid #edebe9;
+  border-radius: 10px;
+  padding: 5px;
+`;
+export const NameTest = styled.div`
+  width: 195px;
+  height: 20px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  color: #323130;
+`;
+export const Fag = styled.div`
+  width: 100%;
+  margin: 23rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10rem;
+
+  @media screen and (max-width: 768px) {
+    align-items: center;
+    gap: 5rem;
+    margin-top: 10rem;
+  }
+`;
+export const FagText = styled.h1`
+  width: 121px;
+  height: 50px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 48px;
+  line-height: 50px;
+  color: #323130;
+
+  /* @media screen and (max-width: 768px) {
+    align-items: center;
+    gap: 5rem;
+  } */
+`;
+export const FagComP1 = styled.div`
+  width: 100%;
+  margin-left: 20rem;
+
+  @media screen and (max-width: 768px) {
+    margin-left: 2rem;
+  }
+`;
+export const FCompText = styled.h2`
+  width: 100%;
+  height: 100%;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 50px;
+  letter-spacing: 0.015em;
+  text-transform: capitalize;
+  color: #605e5c;
+
+  @media screen and (max-width: 768px) {
+    font-size: 15px;
+  }
+`;
+export const FC1 = styled.div`
+  width: 540px;
+  height: 100%;
+  background: #201f1e;
+  border-radius: 10px;
+  padding: 3rem 0;
+
+  @media screen and (max-width: 768px) {
+    width: 90%;
+    height: 100%;
+  }
+`;
+export const FCText = styled.h1`
+  width: 100%;
+  height: 100%;
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 200%;
   text-align: center;
+  color: #ffffff;
+
+  @media screen and (max-width: 768px) {
+    font-size: 10px;
+  }
+`;
+export const FcTriangle = styled.img`
+  position: absolute;
+  width: 64.87px;
+  height: 83px;
+  left: 476px;
+  top: 0px;
+`;
+export const FagComp2 = styled.div`
+  margin-left: 70rem;
+
+  @media screen and (max-width: 768px) {
+    margin-left: 2rem;
+  }
+`;
+export const LastSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  width: 100vw;
+  height: 30rem;
+  background: black;
+  justify-content: center;
+  align-item: center;
+`;
+export const LastTes1 = styled.h1`
+  width: 360px;
+  height: 50px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 50px;
   letter-spacing: 0.015em;
+  text-transform: capitalize;
+  color: #faf9f8;
+  text-align: center;
+`;
+export const LastTes2 = styled.h1`
+  width: 1200px;
+  height: 48px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 200%;
+  text-align: center;
+  letter-spacing: 0.03em;
   text-transform: lowercase;
   color: #ffffff;
-  margin: 3rem 15rem;
 `;
-export const PicTest = styled.img`
+export const LastBotton = styled.button`
+  justify-content: center;
+  align-items: center;
+  padding: 12px 20px;
   position: absolute;
-  width: 108px;
-  height: 108px;
-  left: 1062px;
-  top: 253px;
+  width: 288px;
+  height: 80px;
+  background: #141ae9;
+  border-radius: 4px;
 `;
-export const Fag = styled.div``;
