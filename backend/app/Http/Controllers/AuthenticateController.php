@@ -163,7 +163,7 @@ class AuthenticateController extends Controller {
             // check if a user already has an account
             $userExists = User::where('email', '=', $email)->count() > 0;
             if($userExists){
-                return $this->sendResponse(true,"user with this exists already exists","User with this email address already exists.", null, 400);
+                return $this->sendResponse(true,"user with this email already exists","User with this email address already exists.", null, 400);
             }
 
             // user data
@@ -246,7 +246,7 @@ class AuthenticateController extends Controller {
         $users = User::where('email', '=', $email);
 
         if($users->count() == 0){
-            return $this->sendResponse(true, "email address already exists", "User with this email address doesnt exists.", null, 404);
+            return $this->sendResponse(true, "email address doesnt exists", "User with this email address doesnt exists.", null, 404);
         }
 
         // generate and send a password reset link

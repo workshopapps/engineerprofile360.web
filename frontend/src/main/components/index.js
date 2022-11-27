@@ -1,6 +1,6 @@
 //  General exports
 
-export { default as InputField } from "./molecules/InputField";
+export { default as InputField } from "../../components/InputField";
 
 // Home exports
 

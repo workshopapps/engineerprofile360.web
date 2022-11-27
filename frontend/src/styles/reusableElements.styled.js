@@ -43,6 +43,7 @@ export const Button = styled.button`
   padding: ${({ theme }) => theme.spacing(1.2)}
     ${({ theme }) => theme.spacing(2.5)};
   cursor: pointer;
+  outline: none;
 
   ${(props) => {
     switch (props.$variant) {

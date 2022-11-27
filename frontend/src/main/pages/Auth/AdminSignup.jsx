@@ -85,6 +85,11 @@ const AdminSignup = () => {
           password: "",
           confirmPassword: "",
         });
+      } else {
+        if (errors) {
+          setIsSubmitted(false);
+          throw new Error();
+        }
       }
     } catch (err) {
       if (!err?.response) {

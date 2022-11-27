@@ -47,6 +47,8 @@ import UserAssessmentResult from "./ui/pages/user-assessment-result/UserAssessme
 import CsvUpload from "./ui/pages/csv/CsvUpload";
 import CsvUploading from "./ui/pages/csv/CsvUploading";
 import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
+import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
+
 const App = () => {
   return (
     <>
@@ -67,6 +69,7 @@ const App = () => {
             <Route path="/help-center" element={<HelpCenter />} />
             <Route path="/termsAndService" element={<Terms />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/comparison" element={<ComparisonPage />} />
             <Route path="/assessment-list" element={<AssessmentList />} />
             <Route path="/admin-assessment" element={<AdminAssessmentList />} />
 
@@ -124,6 +127,11 @@ const App = () => {
             />
           </Route>
 
+          <Route element={<UiLayout />}>
+            {/* <Route path="/assessment" element={<Assessment />} />  */}
+            <Route path="/ui" element={200} />
+          </Route>
+
           <Route element={<DashboardLayout />}>
             <Route path="/assessment" element={<Assessment />} />
           </Route>
@@ -146,10 +154,6 @@ const StyledToastContainer = styled(ToastContainer).attrs({
   bodyClassName: "body",
   progressClassName: "progress",
 })`
-  .toast {
-    /* background-color: #8080c0; */
-  }
-
   button[aria-label="close"] {
     display: none;
   }
