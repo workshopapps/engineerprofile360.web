@@ -8,6 +8,11 @@ import dots from "../../../assets/icons/app/dots.svg";
 import "./overallperformance.css";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
+import {
+  Button,
+  Container,
+  Title,
+} from "../../../styles/reusableElements.styled";
 
 const Nav = () => {
   return (
@@ -165,17 +170,9 @@ const List = (props) => {
             <p className="depttext">85.9%</p>
           </Flex>
           <Flex style={{ flexBasis: "15%" }} className="" jc="space-between">
-            <button
-              style={{
-                padding: "12px",
-                background: "transparent",
-                border: "2px solid #2667FF",
-                borderRadius: "5px",
-              }}
-            >
-              <p className="primary buttontxt hide">View Results</p>
-              <p className="primary buttontxt show">View </p>
-            </button>
+            <Button $variant="outlined" $color="#2667FF">
+              View Result
+            </Button>
             <img src={dots} alt="" />
           </Flex>
         </Flex>
@@ -194,17 +191,9 @@ const List = (props) => {
               </p>
             </Flex>
 
-            <button
-              style={{
-                padding: "12px",
-                background: "transparent",
-                border: "2px solid #2667FF",
-                borderRadius: "5px",
-              }}
-            >
-              <p className="primary buttontxt hide">View Results</p>
-              <p className="primary buttontxt show">View </p>
-            </button>
+            <Button $variant="outlined" $color="#2667FF">
+              View
+            </Button>
           </Flex>
         </Flex>
       </div>
@@ -214,29 +203,26 @@ const List = (props) => {
 
 const PerformancePage = () => {
   return (
-    <Flex
-      stack
-      style={{ padding: "120px 24px 24px 24px", width: "100%" }}
-      className=""
-      spacing={24}
-    >
-      <Nav />
-      <Summary />
-      <p className="overalltext">Overall Performance</p>
-      <Sort />
-      <Heading />
-      <Flex stack spacing={8}>
-        <List num={"1."} />
-        <List num={"2."} />
-        <List num={"3."} />
-        <List num={"4."} />
-        <List num={"5."} />
-        <List num={"6."} />
-        <List num={"7."} />
-        <List num={"8."} />
-        <List num={"9."} />
+    <Container>
+      <Flex stack style={{ paddingTop: "80px" }} spacing={24}>
+        <Nav />
+        <Summary />
+        <p className="overalltext">Overall Performance</p>
+        <Sort />
+        <Heading />
+        <Flex stack spacing={8}>
+          <List num={"1."} />
+          <List num={"2."} />
+          <List num={"3."} />
+          <List num={"4."} />
+          <List num={"5."} />
+          <List num={"6."} />
+          <List num={"7."} />
+          <List num={"8."} />
+          <List num={"9."} />
+        </Flex>
       </Flex>
-    </Flex>
+    </Container>
   );
 };
 
