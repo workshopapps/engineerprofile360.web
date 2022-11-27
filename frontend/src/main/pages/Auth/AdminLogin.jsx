@@ -84,8 +84,10 @@ const AdminLogin = () => {
         // Clear input fields
         setFormData({
           email: "",
-          confirmPassword: "",
+          password: "",
         });
+
+        setIsSubmitted("");
       } else if (errors) {
         setIsSubmitted(false);
       }
