@@ -105,9 +105,9 @@ class UserController extends Controller
         try {
             $user = User::where('user_id', $userId)->first();
             if (!$user) return $this->sendResponse(true, 'User does not exist', 'User not found', Response::HTTP_NOT_FOUND);
-            if ($user->isAdmin) return $this->sendResponse(true, 'User is already verified', 'Verified User', Response::HTTP_BAD_REQUEST);
+            if ($user->isAdmin) return $this->sendResponse(true, 'User is already an admin', 'Admin User', Response::HTTP_BAD_REQUEST);
             $user->update(["isAdmin" => true]);
-            return $this->sendResponse(false, null, 'User verified successfully', Response::HTTP_OK);
+            return $this->sendResponse(false, null, 'User is successfully an admin', Response::HTTP_OK);
         } catch (\Exception $e) {
             return $this->sendResponse(true, 'Not Successful', $e->getMessage());
         }
