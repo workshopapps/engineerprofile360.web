@@ -156,6 +156,7 @@ Route::prefix('interview')->group(function () {
     Route::post('add', [InterviewController::class, 'addInterview'])->middleware('isloggedin', 'isadmin');
     Route::get('get/{id}', [InterviewController::class, 'getInterviewById']);
     Route::put('update/{interviewId}', [InterviewController::class, 'updateInterview']);
+    Route::get('/stack/{stack_id}', [InterviewController::class, 'getInterviewByStack'])->middleware("isloggedin", "isadmin");
 });
 
 // Stack route
