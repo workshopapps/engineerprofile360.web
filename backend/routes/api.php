@@ -51,6 +51,8 @@ Route::prefix("user")->group(function () {
     Route::get('/get/all', [UserController::class, 'getUsers']);
     Route::get('/{userId}', [UserController::class, 'getUser']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
+    Route::get('make-admin/{userId}', [UserController::class, 'makeUserAnAdmin']);
+    Route::get('block-user/{userId}', [UserController::class, 'blockUser']);
     Route::put('/{userId}/update', [UserController::class, 'updaterUserInfo'])->middleware("isloggedin");
 });
 
@@ -156,6 +158,7 @@ Route::prefix('interview')->group(function () {
     Route::post('add', [InterviewController::class, 'addInterview'])->middleware('isloggedin', 'isadmin');
     Route::get('get/{id}', [InterviewController::class, 'getInterviewById']);
     Route::put('update/{interviewId}', [InterviewController::class, 'updateInterview']);
+    Route::get('/stack/{stack_id}', [InterviewController::class, 'getInterviewByStack'])->middleware("isloggedin", "isadmin");
 });
 
 // Stack route

@@ -91,6 +91,7 @@ const AdminSignup = () => {
           password: "",
           confirmPassword: "",
         });
+        setIsSubmitted("");
       } else {
         if (errors) {
           setIsSubmitted(false);
@@ -177,6 +178,7 @@ const AdminSignup = () => {
               <img
                 onClick={() => setShowPassword((prevState) => !prevState)}
                 src={eyeSvg}
+                style={{ cursor: "pointer" }}
                 alt=""
               />
             }
@@ -225,6 +227,7 @@ const AdminSignup = () => {
               <img
                 onClick={() => setShowPassword((prevState) => !prevState)}
                 src={eyeSvg}
+                style={{ cursor: "pointer" }}
                 alt=""
               />
             }

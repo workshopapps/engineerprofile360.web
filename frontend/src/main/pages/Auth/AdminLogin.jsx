@@ -1,7 +1,8 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import AuthContext from "../../../context/authProvider";
 
 import { Container, Button } from "../../../styles/reusableElements.styled";
@@ -12,9 +13,11 @@ import axios from "../../../api/axios";
 
 import eyeSvg from "../../../assets/icons/eye.svg";
 import smsSvg from "../../../assets/icons/smsenvelope.svg";
+import { Loader } from "../../../styles/reusableElements.styled";
 
 const AdminLogin = () => {
   const { setAuth } = useContext(AuthContext);
+  const [isSubmitted, setIsSubmitted] = useState("");
   const [showPassword, setShowPassword] = useState(true);
   const [loginError, setLoginError] = useState();
 
@@ -31,8 +34,14 @@ const AdminLogin = () => {
     email: "",
     password: "",
   });
-  const navigate = useNavigate();
 
+  const showErrorToast = (error) => {
+    toast.error(error, {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
+
+  const navigate = useNavigate();
   const { email, password } = formData;
 
   const handleSubmit = async (e) => {
@@ -53,15 +62,12 @@ const AdminLogin = () => {
           password: false,
         });
 
+        setIsSubmitted(true);
+
         const { email, password } = formData;
         const response = await axios.post(
           "auth/login",
           JSON.stringify({ email, password })
-          // {
-          //   headers: {
-          //     "content-type": "text/plain",
-          //   },
-          // }
         );
 
         console.log(JSON.stringify(response?.data));
@@ -71,17 +77,23 @@ const AdminLogin = () => {
         setAuth({ email, password, accessToken });
 
         if (response.data.errorState === false) {
-          navigate("/verify-email", { state: { email } });
+          // navigate("/verify-email", { state: { email } });
         }
         console.log(response.data);
 
         // Clear input fields
         setFormData({
           email: "",
-          confirmPassword: "",
+          password: "",
         });
-      } else if (errors) throw new Error();
+
+        setIsSubmitted("");
+      } else if (errors) {
+        setIsSubmitted(false);
+      }
     } catch (err) {
+      showErrorToast(err);
+      setIsSubmitted(false);
       if (!err?.response) {
         setLoginError("No Server Response");
       } else if (err.response?.status === 400) {
@@ -91,12 +103,16 @@ const AdminLogin = () => {
       } else {
         setLoginError("Login Failed");
       }
+
+      showErrorToast(loginError);
+      setIsSubmitted(false);
     }
   };
 
   return (
     <>
       <FormContainer>
+        <ToastContainer />
         <AuthTitle
           title="Welcome back"
           text="Please enter your login details"
@@ -149,8 +165,12 @@ const AdminLogin = () => {
             <Link to="/reset-password">Forgot password?</Link>
           </Checkbox>
 
-          <Button $size="md" type="submit">
-            Sign In
+          <Button
+            $size="md"
+            type={isSubmitted ? "button" : "submit"}
+            $variant={isSubmitted ? "disabled" : null}
+          >
+            {isSubmitted ? <Loader /> : "Sign In"}
           </Button>
 
           <div>
