@@ -141,60 +141,145 @@ const Heading = () => {
   );
 };
 
-const List = (props) => {
+const staff = [
+  {
+    num: "1",
+    image: sophie,
+    name: "Sophie Dane",
+    department: "Software Engineer",
+    assessment: "Intro to Software",
+    percentage: "85.9% ",
+  },
+  {
+    num: "2",
+    image: sophie,
+    name: "Sophie Dane",
+    department: "Software Engineer",
+    assessment: "Intro to Software",
+    percentage: "85.9% ",
+  },
+  {
+    num: "3",
+    image: sophie,
+    name: "Sophie Dane",
+    department: "Software Engineer",
+    assessment: "Intro to Software",
+    percentage: "85.9% ",
+  },
+  {
+    num: "4",
+    image: sophie,
+    name: "Sophie Dane",
+    department: "Software Engineer",
+    assessment: "Intro to Software",
+    percentage: "85.9% ",
+  },
+  {
+    num: "5",
+    image: sophie,
+    name: "Sophie Dane",
+    department: "Software Engineer",
+    assessment: "Intro to Software",
+    percentage: "85.9% ",
+  },
+  {
+    num: "6",
+    image: sophie,
+    name: "Sophie Dane",
+    department: "Software Engineer",
+    assessment: "Intro to Software",
+    percentage: "85.9% ",
+  },
+  {
+    num: "7",
+    image: sophie,
+    name: "Sophie Dane",
+    department: "Software Engineer",
+    assessment: "Intro to Software",
+    percentage: "85.9% ",
+  },
+  {
+    num: "8",
+    image: sophie,
+    name: "Sophie Dane",
+    department: "Software Engineer",
+    assessment: "Intro to Software",
+    percentage: "85.9% ",
+  },
+  {
+    num: "9",
+    image: sophie,
+    name: "Sophie Dane",
+    department: "Software Engineer",
+    assessment: "Intro to Software",
+    percentage: "85.9% ",
+  },
+];
+
+const List = () => {
   return (
     <div>
-      <div className="hide">
-        <Flex className="" style={{ padding: "8px 9px" }}>
-          <Flex style={{ flexBasis: "10%" }} className="" ai="center">
-            <p className="depttext">{props.num}</p>
-          </Flex>
-          <Flex
-            style={{ flexBasis: "25%" }}
-            className=""
-            ai="center"
-            spacing={10}
-          >
-            <img src={sophie} alt=" " />
-            <p className="stafftext">Sophie Dane</p>
-          </Flex>
-          <Flex style={{ flexBasis: "20%" }} className="" ai="center">
-            <p className="depttext">Software Engineer</p>
-          </Flex>
-          <Flex style={{ flexBasis: "25%" }} className="" ai="center">
-            <p className="depttext">Intro to Software</p>
-          </Flex>
-          <Flex style={{ flexBasis: "15%" }} className="" ai="center">
-            <p className="depttext">85.9%</p>
-          </Flex>
-          <Flex style={{ flexBasis: "15%" }} className="" jc="space-between">
-            <Button $variant="outlined" $color="#2667FF">
-              View Result
-            </Button>
-            <img src={dots} alt="" />
-          </Flex>
-        </Flex>
-      </div>
-      <div className="show">
-        <Flex className="" spacing={20}>
-          <Flex ai="center">
-            <p className="depttext">{props.num}</p>
-          </Flex>
+      {staff.map((staff, index) => {
+        return (
+          <div>
+            <div className="hide">
+              <Flex className="" style={{ padding: "8px 9px" }}>
+                <Flex style={{ flexBasis: "10%" }} className="" ai="center">
+                  <p className="depttext">{staff.num}</p>
+                </Flex>
+                <Flex
+                  style={{ flexBasis: "25%" }}
+                  className=""
+                  ai="center"
+                  spacing={10}
+                >
+                  <img src={sophie} alt=" " />
+                  <p className="stafftext">{staff.name}</p>
+                </Flex>
+                <Flex style={{ flexBasis: "20%" }} className="" ai="center">
+                  <p className="depttext">{staff.department}</p>
+                </Flex>
+                <Flex style={{ flexBasis: "25%" }} className="" ai="center">
+                  <p className="depttext">{staff.assessment}</p>
+                </Flex>
+                <Flex style={{ flexBasis: "15%" }} className="" ai="center">
+                  <p className="depttext">{staff.percentage}</p>
+                </Flex>
+                <Flex
+                  style={{ flexBasis: "15%" }}
+                  className=""
+                  jc="space-between"
+                >
+                  <Button $variant="outlined" $color="#2667FF">
+                    View Result
+                  </Button>
+                  <img src={dots} alt="" />
+                </Flex>
+              </Flex>
+            </div>
+            <div className="show">
+              <Flex className="" spacing={20} style={{ paddingBottom: "8px" }}>
+                <Flex ai="center">
+                  <p className="depttext">{staff.num}</p>
+                </Flex>
 
-          <Flex jc="space-between" style={{ width: "100%" }}>
-            <Flex spacing={20} ai="center">
-              <img src={sophie} />
-              <p style={{ whiteSpace: "nowrap" }} className="stafftext">
-                Sophie ...
-              </p>
-            </Flex>
+                <Flex jc="space-between" style={{ width: "100%" }}>
+                  <Flex spacing={20} ai="center">
+                    <img src={sophie} />
+                    <p style={{ whiteSpace: "nowrap" }} className="stafftext">
+                      {staff.name}
+                    </p>
+                  </Flex>
 
-            <Button $variant="outlined" $color="#2667FF">
-              View
-            </Button>
-          </Flex>
-        </Flex>
-      </div>
+                  <Button $variant="outlined" $color="#2667FF">
+                    View
+                  </Button>
+                </Flex>
+              </Flex>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };
@@ -209,15 +294,7 @@ const PerformancePage = () => {
         <Sort />
         <Heading />
         <Flex stack spacing={8}>
-          <List num={"1."} />
-          <List num={"2."} />
-          <List num={"3."} />
-          <List num={"4."} />
-          <List num={"5."} />
-          <List num={"6."} />
-          <List num={"7."} />
-          <List num={"8."} />
-          <List num={"9."} />
+          <List />
         </Flex>
       </Flex>
     </Container>
