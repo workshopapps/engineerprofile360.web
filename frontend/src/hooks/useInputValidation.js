@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { removeSpaces } from "../helpers/helper";
 
@@ -6,13 +6,19 @@ const useInputValidation = (initialState = {}) => {
   const [formData, setFormData] = useState(initialState);
   const [errors, setErrors] = useState();
   const [touched, setTouched] = useState(initialState);
-
   const validation = (formData) => {
     const error = {};
-    if (formData && !formData.fname) {
+    // if (formData && !formData.fname) {
+    //   error.fname = "Name is required";
+    // }
+
+    if (formData.fname?.length <= 0) {
       error.fname = "Name is required";
     }
 
+    if (formData.uname?.length <= 0) {
+      error.uname = "Username is required";
+    }
     if (formData && !formData.email) {
       error.email = "Email is required";
     } else if (
@@ -23,19 +29,30 @@ const useInputValidation = (initialState = {}) => {
 
     if (formData && !formData.password) {
       error.password = "Password is required";
-    } else if (formData.password.search(/[A-Z]/) < 0) {
-      error.passwordUppercase = "Must have at least one uppercase";
-    } else if (formData.password.search(/[a-z]/) < 0) {
-      error.passwordLowercase = "Must have at least one lowercase";
-    } else if (formData.password.search(/[0-9]/) < 0) {
-      error.passwordNumber = "Must have at least 1 number";
-    } else if (formData.password.search(/[#?!@$%^&*-]/) < 0) {
-      error.passwordCharacter = "Must have at least 1 special character";
+    }
+    if (formData.confirmPassword && formData.password?.length <= 8) {
+      error.passwordLength = "Password must be more than 8 characters";
+    }
+    if (formData.confirmPassword && /[A-Z]/.test(formData.password) === false) {
+      error.passwordUppercase = "password must have at least one uppercase";
+    }
+    if (formData.confirmPassword && /[0-9]/.test(formData.password) === false) {
+      error.passwordNumber = "Password must have at least 1 number";
+    }
+    if (
+      formData.confirmPassword &&
+      /[#?!@$%^&*-]/.test(formData.password) === false
+    ) {
+      error.passwordCharacter =
+        "Password must have at least 1 special character";
     }
 
-    if (formData && !formData.confirmPassword) {
+    if (formData.confirmPassword?.length <= 0) {
       error.confirmPassword = "Confirm password is required";
-    } else if (formData.confirm !== formData.password) {
+    } else if (
+      formData.confirmPassword &&
+      formData.confirmPassword !== formData.password
+    ) {
       error.confirmPassword = "Password does not match";
     }
     setErrors(error);
@@ -53,10 +70,7 @@ const useInputValidation = (initialState = {}) => {
   const onBlur = (e) => {
     setFormData((prevState) => ({
       ...prevState,
-      [e.target.id]:
-        e.target.getAttribute("id") !== "fname"
-          ? removeSpaces(e.target.value)
-          : e.target.value,
+      [e.target.id]: e.target.value.trim(),
     }));
 
     setTouched((prevState) => ({
@@ -64,7 +78,17 @@ const useInputValidation = (initialState = {}) => {
       [e.target.id]: true,
     }));
   };
-  return { formData, changeInputValue, errors, onBlur, touched };
+
+  return {
+    formData,
+    changeInputValue,
+    errors,
+    onBlur,
+    touched,
+    validation,
+    setTouched,
+    setFormData,
+  };
 };
 
 export default useInputValidation;

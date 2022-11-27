@@ -58,7 +58,6 @@ const HeroText = styled.div`
   padding-bottom: 219px;
   p {
     color: #605e5c;
-    font-size: 24px;
     line-height: 34.57px;
     letter-spacing: 3%;
     margin-bottom: 48px;
