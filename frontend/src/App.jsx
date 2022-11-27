@@ -115,10 +115,9 @@ const App = () => {
           <Route path="/set-password" element={<AdminSetPassword />} />
           <Route path="/verify-email" element={<AdminVerifyEmail />} />
           <Route
-            path={"/api/auth/verify/:user_id/:token"}
+            path={"/auth/verify/:user_id/:token"}
             element={<AdminEmailVerified />}
           />
-
         </Route>
 
         <Route element={<DashboardLayout />}>

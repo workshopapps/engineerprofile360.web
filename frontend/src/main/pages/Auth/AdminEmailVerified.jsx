@@ -16,7 +16,7 @@ const AdminEmailVerified = () => {
   useEffect(() => {
     const verifyEmail = async () => {
       try {
-        const response = await axios.get(`auth/register/${user_id}/${token}`);
+        const response = await axios.get(`auth/verify/${user_id}/${token}`);
         if (response?.errorState === false) isErrorFree.current = true;
         else isErrorFree.current = false;
       } catch (err) {
