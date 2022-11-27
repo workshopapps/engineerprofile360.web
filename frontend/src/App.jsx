@@ -115,12 +115,15 @@ const App = () => {
           <Route path="/set-password" element={<AdminSetPassword />} />
           <Route path="/verify-email" element={<AdminVerifyEmail />} />
           <Route
-            path={"/api/auth/verify/:user_id/:token"}
+            path={"/auth/verify/:user_id/:token"}
             element={<AdminEmailVerified />}
           />
-
         </Route>
 
+        <Route element={<UiLayout />}>
+          <Route path="/assessment" element={<Assessment />} /> 
+          <Route path="/ui" element={200} />
+        </Route>
         <Route element={<DashboardLayout />}>
           <Route path="/assessment" element={<Assessment />} />
         </Route>
