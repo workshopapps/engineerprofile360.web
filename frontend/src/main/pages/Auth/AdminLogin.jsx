@@ -36,7 +36,7 @@ const AdminLogin = () => {
   const navigate = useNavigate();
   const { email, password } = formData;
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, formData) => {
     e.preventDefault();
 
     try {
@@ -76,9 +76,8 @@ const AdminLogin = () => {
         // Clear input fields
         setFormData({
           email: "",
-          confirmPassword: "",
+          password: "",
         });
-      } else if (errors) {
       }
     } catch (err) {
       if (err) {
@@ -86,9 +85,9 @@ const AdminLogin = () => {
       }
       if (!err?.response) {
         setLoginError("No Server Response");
-      } else if (err.response?.status === 400) {
-        setLoginError("Missing Username or Password");
-      } else if (err.response?.status === 401) {
+      } else if (err.response?.errorState === true) {
+        setLoginError(err.response.error);
+      } else if (err.response?.errorState === 401) {
         setLoginError("Unathorized");
       } else {
         setLoginError("Login Failed");
@@ -103,7 +102,7 @@ const AdminLogin = () => {
           title="Welcome back"
           text="Please enter your login details"
         />
-        <LoginForm onSubmit={handleSubmit}>
+        <LoginForm onSubmit={(e) => handleSubmit(e, formData)}>
           <InputField
             $size="md"
             type="email"

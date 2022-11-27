@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 
 import { removeSpaces } from "../helpers/helper";
 
-const useInputValidation = (initialState = {}) => {
+const useInputValidation = (initialState = {}, type = null) => {
   const [formData, setFormData] = useState(initialState);
   const [errors, setErrors] = useState();
   const [touched, setTouched] = useState(initialState);
@@ -27,7 +27,7 @@ const useInputValidation = (initialState = {}) => {
       error.email = "Invalid email address";
     }
 
-    if (formData && !formData.password) {
+    if (Object.keys(formData).length > 1 && !formData.password) {
       error.password = "Password is required";
     }
     if (formData.confirmPassword && formData.password?.length <= 8) {
@@ -60,6 +60,7 @@ const useInputValidation = (initialState = {}) => {
 
   useEffect(() => {
     validation(formData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData, touched]);
 
   const changeInputValue = (event) => {

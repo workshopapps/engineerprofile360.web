@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { showErrorToast } from "../../../helpers/helper";
+// import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../../../styles/reusableElements.styled";
 
 import { Container, Button } from "../../../styles/reusableElements.styled";
@@ -35,12 +35,6 @@ const AdminSignup = () => {
     password: "",
     confirmPassword: "",
   });
-
-  const showErrorToast = (error) => {
-    toast.error(error, {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  };
 
   const navigate = useNavigate();
 
@@ -91,11 +85,6 @@ const AdminSignup = () => {
           password: "",
           confirmPassword: "",
         });
-      } else {
-        if (errors) {
-          setIsSubmitted(false);
-          throw new Error();
-        }
       }
     } catch (err) {
       if (!err?.response) {
@@ -115,7 +104,7 @@ const AdminSignup = () => {
   return (
     <>
       <FormContainer>
-        <ToastContainer />
+        {/* <ToastContainer /> */}
         <AuthTitle title="Sign up" text="Let's get started" />
         <SignupForm onSubmit={handleSubmit}>
           <InputField
