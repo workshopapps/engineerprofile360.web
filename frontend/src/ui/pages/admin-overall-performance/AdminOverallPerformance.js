@@ -1,18 +1,14 @@
 import React from "react";
 import Flex from "../../components/layout/Flex";
 import Grid, { GridItem } from "../../components/layout/Grid";
+import Sidebar from "../../components/Sidebar";
+import Header from "../../components/Header";
+import { Button, Container } from "../../../styles/reusableElements.styled";
 import down_alt from "../../../assets/icons/app/down.svg";
 import right from "../../../assets/icons/app/arrow-right.svg";
 import sophie from "../../../assets/images/sophie.svg";
 import dots from "../../../assets/icons/app/dots.svg";
 import "./overallperformance.css";
-import Sidebar from "../../components/Sidebar";
-import Header from "../../components/Header";
-import {
-  Button,
-  Container,
-  Title,
-} from "../../../styles/reusableElements.styled";
 
 const Nav = () => {
   return (
@@ -94,7 +90,9 @@ const Sort = () => {
           borderRadius: "4px",
         }}
       >
-        <p className="sorttext">Sort By Date</p>
+        <p className="sorttext" style={{ whiteSpace: "nowrap" }}>
+          Sort By Date
+        </p>
         <img src={down_alt} alt="" />
       </Flex>
     </Flex>
