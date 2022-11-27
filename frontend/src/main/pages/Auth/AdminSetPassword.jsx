@@ -59,9 +59,9 @@ const AdminSetPassword = () => {
         const { password: new_password } = formData;
         const type = "Organization";
         const response = await axios.post(
-          `/auth/password/reset/${queryParameters.get(
-            "uid"
-          )}/${queryParameters.get("token")}`,
+          `/password/reset/${queryParameters.get("uid")}/${queryParameters.get(
+            "token"
+          )}`,
           JSON.stringify({
             new_password,
             type,
