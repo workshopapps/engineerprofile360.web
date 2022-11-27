@@ -29,7 +29,7 @@ import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 // import Testimonial from "./main/components/Testimonials/Testimonial";
 import HelpCenter from "../src/main/pages/HelpCenter";
-import Market from "./main/components/Market-comp-page/Market";
+import Market from "./main/components/Market-comp-page-2/Market";
 
 const App = () => {
   return (

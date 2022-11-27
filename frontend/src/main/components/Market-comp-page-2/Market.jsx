@@ -52,6 +52,7 @@ import {
   LastTes1,
   LastTes2,
   LastBotton,
+  LastContent,
 } from "./Market.styled";
 import HowFrag from "./HowFrag";
 import WhichFrag from "./WhichFrag";
@@ -352,12 +353,14 @@ const Market = () => {
       </Main>
       <LastSection>
         <Container>
-          <LastTes1>Ready to get started?</LastTes1>
-          <LastTes2>
-            Start your journey to increased engineer productivity and widespread
-            organizational growth today.
-          </LastTes2>
-          <LastBotton>Request A Demo</LastBotton>
+          <LastContent>
+            <LastTes1>Ready to get started?</LastTes1>
+            <LastTes2>
+              Start your journey to increased engineer productivity and
+              widespread organizational growth today.
+            </LastTes2>
+            <LastBotton>Request A Demo</LastBotton>
+          </LastContent>
         </Container>
       </LastSection>
     </>

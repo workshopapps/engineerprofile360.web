@@ -788,11 +788,25 @@ export const LastSection = styled.div`
   width: 100vw;
   height: 30rem;
   background: black;
-  justify-content: center;
-  align-item: center;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+
+  @media screen and (max-width: 768px) {
+    height: 18rem;
+    gap: 2rem;
+  }
+  /* justify-content: center;
+  align-item: center; */
+`;
+
+export const LastContent = styled.div`
+  width: 100%;
+  height: 100%;
+  text-align: center;
 `;
 export const LastTes1 = styled.h1`
-  width: 360px;
+  width: 100%;
   height: 50px;
   font-family: "Inter";
   font-style: normal;
@@ -803,9 +817,15 @@ export const LastTes1 = styled.h1`
   text-transform: capitalize;
   color: #faf9f8;
   text-align: center;
+
+  @media screen and (max-width: 768px) {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+  }
 `;
 export const LastTes2 = styled.h1`
-  width: 1200px;
+  width: 100%
   height: 48px;
   font-family: "Inter";
   font-style: normal;
@@ -816,14 +836,26 @@ export const LastTes2 = styled.h1`
   letter-spacing: 0.03em;
   text-transform: lowercase;
   color: #ffffff;
+
+    @media screen and (max-width: 768px) {
+    font-weight: 300;
+  font-size: 15px;
+  line-height: 200%;
+  }
 `;
 export const LastBotton = styled.button`
   justify-content: center;
   align-items: center;
   padding: 12px 20px;
-  position: absolute;
   width: 288px;
   height: 80px;
   background: #141ae9;
   border-radius: 4px;
+  color: white;
+
+  @media screen and (max-width: 768px) {
+    padding: 12px 20px;
+    width: 150px;
+    height: 60px;
+  }
 `;
