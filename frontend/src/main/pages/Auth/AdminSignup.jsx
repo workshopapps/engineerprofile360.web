@@ -91,6 +91,7 @@ const AdminSignup = () => {
           password: "",
           confirmPassword: "",
         });
+        setIsSubmitted("");
       } else {
         if (errors) {
           setIsSubmitted(false);
