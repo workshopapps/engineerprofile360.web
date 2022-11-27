@@ -52,4 +52,10 @@ $app->singleton(
 |
 */
 
+$headers = [
+    'Access-Control-Allow-Methods'=>"*",
+    'Access-Control-Allow-Headers'=>'X-Requested-With,Content-Type,X-Token-Auth,Authorization',
+    'Access-Control-Allow-Origin'=>'http://localhost:3000'
+];
+
 return $app;

@@ -1,0 +1,81 @@
+import React from "react";
+import styled from "styled-components";
+
+import { Container, Button } from "../../../styles/reusableElements.styled";
+import { AuthTitle, InputField } from "../../components";
+
+import useInputValidation from "../../../hooks/useInputValidation";
+
+import securityIcon from "../../../assets/icons/security-safe.svg";
+import smsSvg from "../../../assets/icons/smsenvelope.svg";
+
+const AdminResetPassword = () => {
+  const { formData, changeInputValue, onBlur, errors, touched } =
+    useInputValidation({
+      email: "",
+    });
+  const { email } = formData;
+  return (
+    <>
+      <FormContainer>
+        <div>
+          <img src={securityIcon} alt="" />
+        </div>
+        <AuthTitle
+          title="Reset your password"
+          text="Enter the email associated with your account"
+        />
+        <ResetPasswordForm>
+          <InputField
+            $size="md"
+            type="email"
+            label="Email Address"
+            id="email"
+            value={email}
+            handleChange={(e) => changeInputValue(e)}
+            handleBlur={onBlur}
+            error={errors && touched.email && errors.email?.length > 0}
+            placeholder="janedoe@gmail.com"
+            endIcon={<img src={smsSvg} alt="" />}
+            helperText={
+              errors && errors.email && touched.email ? errors.email : ""
+            }
+          />
+
+          <Button $size="md" type="submit">
+            Reset my password
+          </Button>
+        </ResetPasswordForm>
+      </FormContainer>
+    </>
+  );
+};
+
+export default AdminResetPassword;
+
+const FormContainer = styled(Container)`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  // align-items: center;
+  justify-content: center;
+
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    img {
+      max-width: 200px;
+    }
+  }
+`;
+
+const ResetPasswordForm = styled.form`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing(3)};
+  text-align: left;
+`;

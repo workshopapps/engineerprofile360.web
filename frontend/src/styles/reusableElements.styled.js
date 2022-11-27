@@ -29,9 +29,12 @@ export const Button = styled.button`
   min-width: 77px;
   min-height: 44px;
   max-width: 288px;
-  height: ${(props) => (props.$size === "md" ? "48px" : props.$size === "lg" ? "80px" : "auto")};
-  width: ${(props) => (props.$size === "md" ? "201px" : props.$size === "lg" ? "280px" : "auto")};
-  font-size: ${(props) => (props.$size === "md" ? "14px" : props.$size === "lg" ? "20px" : "auto")};
+  height: ${(props) =>
+    props.$size === "md" ? "48px" : props.$size === "lg" ? "80px" : "auto"};
+  width: ${(props) =>
+    props.$size === "md" ? "201px" : props.$size === "lg" ? "280px" : "auto"};
+  font-size: ${(props) =>
+    props.$size === "md" ? "14px" : props.$size === "lg" ? "20px" : "auto"};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,6 +43,7 @@ export const Button = styled.button`
   padding: ${({ theme }) => theme.spacing(1.2)}
     ${({ theme }) => theme.spacing(2.5)};
   cursor: pointer;
+  outline: none;
 
   ${(props) => {
     switch (props.$variant) {
@@ -55,6 +59,14 @@ export const Button = styled.button`
           background: none;
           border: none;
         `;
+      case "loader":
+        return css`
+          opacity: 0.7;
+          border: none;
+          background: #106ebe;
+          color: #ffffff;
+          font-weight: 700;
+        `;
       default:
         return css`
           border: none;
@@ -65,7 +77,59 @@ export const Button = styled.button`
     }
   }}
 
-  color: ${({$color}) => ($color ? $color : null)};
+  color: ${({ $color }) => ($color ? $color : null)};
+`;
+
+export const Loader = styled.div`
+  border: 10px solid #106ebe;
+  border-top: 10px solid lightblue;
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+  animation: spin 2s linear infinite;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
+export const OverlayLoader = styled.div`
+  width: 100%;
+  height: 100vh;
+  background: rgba(255,255,255,0.5);
+  position: fixed;
+  top: 0;
+  bottom:: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  div {
+    border: 10px solid #106ebe;
+    border-top: 10px solid lightblue;
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    animation: spin 2s linear infinite;
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  }
 `;
 
 // THE STYLES HERE ARE GOING TO BE USED FOR LAYOUTS AND EVERY OTHER REUSABLE CONTAINERS
