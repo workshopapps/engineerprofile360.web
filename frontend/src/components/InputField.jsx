@@ -23,9 +23,10 @@ const InputField = ({
 
   handleChange,
   handleBlur,
+  className
 }) => {
   return (
-    <InputGroup>
+    <InputGroup className={className}>
       {label && <label htmlFor={id}>{label}</label>}
       <InputContainer
         $rounded={$rounded}

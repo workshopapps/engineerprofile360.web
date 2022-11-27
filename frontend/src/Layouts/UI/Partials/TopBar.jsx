@@ -6,6 +6,7 @@ import searchIcon from "../../../assets/icons/search.svg";
 import user from "../../../assets/icons/app/user1.svg";
 import bell from "../../../assets/icons/app/notification.svg";
 import arrowDown from "../../../assets/icons/app/arrow-down.svg";
+import menuIcon from "../../../assets/icons/menu.svg";
 import { InputField } from "../../../main/components";
 import { Container } from "../../../styles/reusableElements.styled";
 
@@ -17,7 +18,7 @@ const TopBar = () => {
           <img src={logo} alt="Logo of Skript" />
         </LogoContainer>
         <Navigation>
-          <InputField
+          <SearchInputField
             $height="52px"
             startIcon={<img src={searchIcon} />}
             type="text"
@@ -26,11 +27,12 @@ const TopBar = () => {
           <Options>
             <User>
               <img src={user} alt="" />
-              Mark Jilaga
+              <span>Mark Jilaga</span>
             </User>
             <Icons>
               <img src={bell} alt="" />
               <img src={arrowDown} alt="" />
+              <img src={menuIcon} alt="" />
             </Icons>
           </Options>
         </Navigation>
@@ -51,9 +53,7 @@ const TopBarContainer = styled.header`
   z-index: 1;
   width: 100%;
 
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    height: 60px;
-  }
+  border-bottom : 1px solid ${({theme}) => theme.palette.border.default};
 `;
 
 const TopBarContent = styled(Container)`
@@ -63,7 +63,12 @@ const TopBarContent = styled(Container)`
   justify-content: center;
   width: 100%;
   height: 100%;
-  padding: 0 ${({theme}) =>  theme.spacing(3)};
+  padding: 0 ${({ theme }) => theme.spacing(3)};
+
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    grid-template-columns: auto 1fr;
+    gap: ${({ theme }) => theme.spacing(6)};
+  }
 `;
 
 const LogoContainer = styled.div``;
@@ -75,25 +80,55 @@ const Navigation = styled.div`
   justify-content: center;
 `;
 
+const SearchInputField = styled(InputField)`
+  ${({ theme }) => theme.breakpoints.down("xs")} {
+    display: none;
+  }
+`;
+
 const Options = styled.div`
   display: flex;
-  align-items: flex-start;
-  margin-left: auto;
+  align-items: center;
+justify-content: flex-end;
   gap: ${({ theme }) => theme.spacing(3)};
 `;
 
 const User = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: ${({ theme }) => theme.spacing(2)};
 
-  font-size: 14px;
-  color: #323130;
-  font-weight: 600;
+  span {
+    font-size: 14px;
+    color: #323130;
+    font-weight: 600;
+
+    ${({ theme }) => theme.breakpoints.down("sm")} {
+      display: none;
+    }
+  }
 `;
 
 const Icons = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end;
   gap: ${({ theme }) => theme.spacing(2)};
+
+  img:nth-of-type(1) {
+    ${({ theme }) => theme.breakpoints.down("xs")} {
+      display: none;
+    }
+  }
+
+  img:nth-of-type(2) {
+    ${({ theme }) => theme.breakpoints.down("xs")} {
+      display: none;
+    }
+  }
+
+  img:nth-of-type(3) {
+    ${({ theme }) => theme.breakpoints.up("xs")} {
+      display: none;
+    }
+  }
 `;

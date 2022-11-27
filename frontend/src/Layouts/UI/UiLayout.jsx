@@ -37,6 +37,10 @@ const NavBar = styled.div`
   background: #ffffff;
   position: sticky;
   top: calc(80px + ${({ theme }) => theme.spacing(4)});
+
+  ${({theme}) => theme.breakpoints.down("md")} {
+    display: none;
+  }
 `;
 
 const MainContent = styled.div`
