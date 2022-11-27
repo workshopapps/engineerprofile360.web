@@ -113,6 +113,20 @@ class UserController extends Controller
         }
     }
 
+
+    public function blockUser(string $userId): JsonResponse
+    {
+        try {
+            $user = User::where('user_id', $userId)->first();
+            if (!$user) return $this->sendResponse(true, 'User does not exist', 'User not found', Response::HTTP_NOT_FOUND);
+            if ($user->isBlocked) return $this->sendResponse(true, 'User is already blocked', 'Blocked User', Response::HTTP_BAD_REQUEST);
+            $user->update(["isBlocked" => true]);
+            return $this->sendResponse(false, null, 'User blocked successfully', Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return $this->sendResponse(true, 'Not Successful', $e->getMessage());
+        }
+    }
+
     public function updaterUserInfo(UpdateUserRequest $request, $userId)
     {
         try {
