@@ -30,12 +30,8 @@ import UserTakeAssessment from "./main/components/sections/userTakeAssessment/Us
 import Privacy from "./main/pages/Privacy/privacy";
 import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
-<<<<<<< HEAD
-// import Testimonial from "./main/components/Testimonials/Testimonial";
-=======
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import PricingPage from "./main/pages/PricingPage";
->>>>>>> 9fc30bbca145c12f8dca2443fb0fe1ceacf3feed
 import HelpCenter from "../src/main/pages/HelpCenter";
 import AdminCSVUpload from "./ui/pages/AdminUpload/AdminCSVUpload";
 import UserAssessmentListCompleted from "./ui/pages/UserAssestList/UserAssestListCompleted";
@@ -48,7 +44,7 @@ import UserAssessmentResult from "./ui/pages/user-assessment-result/UserAssessme
 import CsvUpload from "./ui/pages/csv/CsvUpload";
 import CsvUploading from "./ui/pages/csv/CsvUploading";
 import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
-import {ComparisonPage} from './ui/pages/ComparisonPage/ComparisonPage';
+import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
 
 const App = () => {
   return (
@@ -72,7 +68,6 @@ const App = () => {
           <Route path="/comparison" element={<ComparisonPage />} />
           <Route path="/assessment-list" element={<AssessmentList />} />
           <Route path="/admin-assessment" element={<AdminAssessmentList />} />
-
 
           <Route
             path="/admin-assessment-list"
