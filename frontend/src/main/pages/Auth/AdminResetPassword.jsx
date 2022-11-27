@@ -1,20 +1,84 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import axios from "../../../api/axios";
 
 import { Container, Button } from "../../../styles/reusableElements.styled";
 import { AuthTitle, InputField } from "../../components";
 
 import useInputValidation from "../../../hooks/useInputValidation";
+import { showErrorToast, showSuccessToast } from "../../../helpers/helper";
 
 import securityIcon from "../../../assets/icons/security-safe.svg";
 import smsSvg from "../../../assets/icons/smsenvelope.svg";
+import { Loader } from "../../../styles/reusableElements.styled";
 
 const AdminResetPassword = () => {
-  const { formData, changeInputValue, onBlur, errors, touched } =
-    useInputValidation({
-      email: "",
-    });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [resetPasswordError, setResetPasswordError] = useState("");
+  const {
+    formData,
+    changeInputValue,
+    onBlur,
+    setFormData,
+    errors,
+    touched,
+    setTouched,
+    validation,
+  } = useInputValidation({
+    email: "",
+  });
   const { email } = formData;
+
+  const handleSubmit = async (e, formData) => {
+    e.preventDefault();
+
+    try {
+      validation(formData);
+      if (Object.keys(errors).length > 0) {
+        setTouched({
+          email: true,
+        });
+      }
+      console.log(errors);
+
+      if (Object.keys(errors).length === 0) {
+        setTouched({
+          email: false,
+        });
+
+        setIsSubmitted(true);
+
+        const { email } = formData;
+        const response = await axios.get(
+          `auth/password/forgot-password/${email}`
+        );
+
+        if (response.data.errorState === false) {
+          console.log(response.data);
+          showSuccessToast(`A reset link has been sent to you @${email}`);
+
+          // Clear input fields
+          setFormData({
+            email: "",
+          });
+        } else if (response.data.errorState === true) {
+          throw new Error();
+        }
+      }
+    } catch (err) {
+      console.log(err);
+      if (err) {
+        setIsSubmitted(false);
+      }
+      if (err === "404") {
+        setResetPasswordError(err.response?.data.message);
+      }
+      if (err.response?.data.errorState === true) {
+        showErrorToast("Email is not recognized");
+      }
+    }
+  };
+
   return (
     <>
       <FormContainer>
@@ -25,7 +89,7 @@ const AdminResetPassword = () => {
           title="Reset your password"
           text="Enter the email associated with your account"
         />
-        <ResetPasswordForm>
+        <ResetPasswordForm onSubmit={(e) => handleSubmit(e, formData)}>
           <InputField
             $size="md"
             type="email"
@@ -42,8 +106,12 @@ const AdminResetPassword = () => {
             }
           />
 
-          <Button $size="md" type="submit">
-            Reset my password
+          <Button
+            $size="md"
+            type={isSubmitted ? "button" : "submit"}
+            $variant={isSubmitted ? "disabled" : null}
+          >
+            {isSubmitted ? <Loader /> : " Reset my password"}
           </Button>
         </ResetPasswordForm>
       </FormContainer>
