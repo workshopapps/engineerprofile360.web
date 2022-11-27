@@ -30,16 +30,15 @@ const AdminSetPassword = () => {
     confirmPassword: "",
   });
 
-  const { id, token } = useParams();
+  const queryParameters = new URLSearchParams(window.location.search);
   const navigate = useNavigate();
 
   const onChange = (e) => {
     changeInputValue(e);
   };
 
-  const handleSubmit = async (e, formData, id, token) => {
+  const handleSubmit = async (e, formData) => {
     e.preventDefault();
-    console.log("fuck");
     try {
       validation(formData);
       if (Object.keys(errors).length > 0) {
@@ -55,15 +54,17 @@ const AdminSetPassword = () => {
           confirmPassword: false,
         });
 
-        console.log("fuck5");
         setIsSubmitted(true);
 
-        const { password } = formData;
+        const { password: new_password } = formData;
+        const type = "Organization";
         const response = await axios.post(
-          `/auth/password/reset/${id}/${token}`,
+          `/auth/password/reset/${queryParameters.get(
+            "uid"
+          )}/${queryParameters.get("token")}`,
           JSON.stringify({
-            new_password: password,
-            type: "Organization",
+            new_password,
+            type,
           }) /* Second Parameter is the type param: Organization | employee  */
         );
 
@@ -79,10 +80,10 @@ const AdminSetPassword = () => {
         });
       }
     } catch (err) {
+      setIsSubmitted(false);
       if (!err?.response) {
         setPasswordError("No Server Response");
       } else if (err.response?.errorState === true) {
-        setIsSubmitted(false);
         setPasswordError(err.response.error);
         showErrorToast(passwordError);
       }
@@ -95,7 +96,7 @@ const AdminSetPassword = () => {
     <>
       <FormContainer>
         <AuthTitle title="Password" text="Set up a password for your account" />
-        <SetPasswordForm onSubmit={(e) => handleSubmit(e, formData, id, token)}>
+        <SetPasswordForm onSubmit={(e) => handleSubmit(e, formData)}>
           <InputField
             $size="md"
             type={showPassword ? "password" : "text"}
@@ -150,8 +151,12 @@ const AdminSetPassword = () => {
                 : ""
             }
           />
-          <Button $size="md" type="submit">
-            Set Password
+          <Button
+            $size="md"
+            type={isSubmitted ? "button" : "submit"}
+            $variant={isSubmitted ? "disabled" : null}
+          >
+            {isSubmitted ? <Loader /> : "Sign In"}
           </Button>
         </SetPasswordForm>
       </FormContainer>
