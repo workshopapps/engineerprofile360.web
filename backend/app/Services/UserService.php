@@ -15,4 +15,10 @@ class UserService
         $user = User::where('user_id',"=", $userId)->first();
         return $user;
     }
+
+    public static function getUserById($userId)
+    {        
+        $user = User::where('user_id', $userId)->first();
+        return $user;
+    }
 }

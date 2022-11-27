@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 import { Container } from "../../../../styles/reusableElements.styled";
 import logo from "../../../../assets/images/logo.svg";
@@ -9,7 +9,9 @@ const AdminAuthLayout = () => {
   return (
     <>
       <Header as="header">
-        <img src={logo} alt="" />
+        <Link to="/">
+          <img src={logo} alt="" />
+        </Link>
       </Header>
       <AuthLayoutCon>
         <Outlet />
