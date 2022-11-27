@@ -31,7 +31,7 @@ class Mailer{
         try {
             Mail::to($to)->send(new Verification($mailData));
         } catch (\Exception $e) {
-            echo("Something went wrong sending mail".$e->getMessage());
+            echo("Something went wrong sending mail ".$e->getMessage());
         }
     }
 
@@ -45,7 +45,22 @@ class Mailer{
         try {
             Mail::to($to)->send(new PasswordReset($mailData));
         } catch (\Exception $e) {
-            echo("Something went wrong sending mail".$e->getMessage());
+            echo("Something went wrong sending mail ".$e->getMessage());
+        }
+    }
+
+    public function notifyEmployeeAssessment($from, $to, $org_name, $assessment_category, $data=""){
+        $mailData = [
+            "employee_name"=>$from,
+            "data"=>$data,
+            "assessment_category"=>$assessment_category,
+            "org_name"=>$org_name
+        ];
+
+        try {
+            Mail::to($to)->send(new PasswordReset($mailData));
+        } catch (\Exception $e) {
+            echo("Something went wrong sending mail ".$e->getMessage());
         }
     }
 }

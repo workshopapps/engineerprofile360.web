@@ -105,28 +105,22 @@ function TermsAndService() {
       <div className=" d-flex">
         <div className="col-sm-12 col-md-8">
           <div className="first">
-            <p>
-              Skript is a tool that provides a subscription service for
-              companies that want to know how good their engineers are. It is a
-              software where engineers register and get various multi-choice
-              questions on different topics. The tool builds a profile of each
-              engineer in the form of a spider-web chart so the company knows
-              where its engineers need to improve. To provide our Services (as
-              defined below) through our software, or website, we need to obtain
-              your agreement to our Terms of Service. These Terms of Service
-              govern your use of our software. As used in these Terms of
-              Service; "Skript service", "our service" "the service", means the
-              personalized service provided by Skript for discovering and
-              assessing Skript content, including all features and
-              functionalities, recommendations and reviews, our websites, and
-              user interfaces, as well as all content and software associated
-              with our service. Skript Evaluator (Skript, ``our``, ``we,`` or
-              ``us ``) provides the services described below to you ("Services")
-              unless you live in a country or territory where it is not
-              eligible. Registration and Account. Your Company/team must create
-              a Business account by providing accurate, current, and complete
-              infor
-            </p>
+            Skript is a tool that provides a subscription service for companies
+            that want to know how good their engineers are. It is a questions on
+            different topics. The tool builds a profile of each engineer in the
+            form of a spider-web chart so the company knows defined below)
+            through our software, or website, we need to obtain your agreement
+            to our Terms of Service. These Terms of Service Service; "Skript
+            service", "our service" "the service", means the personalized
+            service provided by Skript for discovering and assessing Skript
+            content, including all features and functionalities, recommendations
+            and reviews, our websites, and user interfaces, as well as all
+            content and software associated with our service. Skript Evaluator
+            (Skript, ``our``, ``we,`` or ``us ``) provides the services
+            described below to you ("Services") unless you live in a country or
+            territory where it is not eligible. Registration and Account. Your
+            Company/team must create a Business account by providing accurate,
+            current, and complete infor
           </div>
 
           <div className="second">

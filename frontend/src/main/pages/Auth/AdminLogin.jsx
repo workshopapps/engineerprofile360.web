@@ -1,45 +1,176 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import AuthContext from "../../../context/authProvider";
 
 import { Container, Button } from "../../../styles/reusableElements.styled";
 import { AuthTitle, InputField } from "../../components";
 
+import useInputValidation from "../../../hooks/useInputValidation";
+import axios from "../../../api/axios";
+
 import eyeSvg from "../../../assets/icons/eye.svg";
 import smsSvg from "../../../assets/icons/smsenvelope.svg";
+import { Loader } from "../../../styles/reusableElements.styled";
 
 const AdminLogin = () => {
+  const { setAuth } = useContext(AuthContext);
+  const [isSubmitted, setIsSubmitted] = useState("");
+  const [showPassword, setShowPassword] = useState(true);
+  const [loginError, setLoginError] = useState();
+
+  const {
+    formData,
+    changeInputValue,
+    onBlur,
+    setFormData,
+    errors,
+    touched,
+    setTouched,
+    validation,
+  } = useInputValidation({
+    email: "",
+    password: "",
+  });
+
+  const showErrorToast = (error) => {
+    toast.error(error, {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
+
+  const navigate = useNavigate();
+  const { email, password } = formData;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      validation(formData);
+      if (Object.keys(errors).length > 0) {
+        setTouched({
+          email: true,
+          password: true,
+        });
+      }
+
+      if (Object.keys(errors).length === 0) {
+        setTouched({
+          email: false,
+          password: false,
+        });
+
+        setIsSubmitted(true);
+
+        const { email, password } = formData;
+        const response = await axios.post(
+          "auth/login",
+          JSON.stringify({ email, password })
+        );
+
+        console.log(JSON.stringify(response?.data));
+
+        const accessToken = response?.data?.accessToken;
+
+        setAuth({ email, password, accessToken });
+
+        if (response.data.errorState === false) {
+          // navigate("/verify-email", { state: { email } });
+        }
+        console.log(response.data);
+
+        // Clear input fields
+        setFormData({
+          email: "",
+          password: "",
+        });
+
+        setIsSubmitted("");
+      } else if (errors) {
+        setIsSubmitted(false);
+      }
+    } catch (err) {
+      showErrorToast(err);
+      setIsSubmitted(false);
+      if (!err?.response) {
+        setLoginError("No Server Response");
+      } else if (err.response?.status === 400) {
+        setLoginError("Missing Username or Password");
+      } else if (err.response?.status === 401) {
+        setLoginError("Unathorized");
+      } else {
+        setLoginError("Login Failed");
+      }
+
+      showErrorToast(loginError);
+      setIsSubmitted(false);
+    }
+  };
+
   return (
     <>
       <FormContainer>
-        <AuthTitle title="Sign up" text="Let's get started" />
-        <LoginForm>
+        <ToastContainer />
+        <AuthTitle
+          title="Welcome back"
+          text="Please enter your login details"
+        />
+        <LoginForm onSubmit={handleSubmit}>
           <InputField
             $size="md"
             type="email"
             label="Email Address"
             id="email"
             placeholder="janedoe@gmail.com"
+            value={email}
+            handleChange={(e) => changeInputValue(e)}
+            handleBlur={onBlur}
+            error={errors && touched.email && errors.email?.length > 0}
             endIcon={<img src={smsSvg} alt="" />}
+            helperText={
+              errors && errors.email && touched.email ? errors.email : ""
+            }
           />
           <InputField
             $size="md"
-            type="password"
+            type={showPassword ? "password" : "text"}
             label="Password"
             id="password"
             placeholder="enter password"
-            endIcon={<img src={eyeSvg} alt="" />}
+            value={password}
+            handleChange={(e) => changeInputValue(e)}
+            error={errors && touched.password && errors.password?.length > 0}
+            handleBlur={onBlur}
+            endIcon={
+              <img
+                onClick={() => setShowPassword((prevState) => !prevState)}
+                src={eyeSvg}
+                alt=""
+                style={{ cursor: "pointer" }}
+              />
+            }
+            helperText={
+              errors && errors.password && touched.password
+                ? errors.password
+                : ""
+            }
           />
           <Checkbox>
             <label>
               <input type="checkbox" /> Remember me
             </label>
 
-            <Link to="/">Forgot password?</Link>
+            <Link to="/reset-password">Forgot password?</Link>
           </Checkbox>
 
-          <Button $size="md" type="submit">
-            Sign In
+          <Button
+            $size="md"
+            type={isSubmitted ? "button" : "submit"}
+            $variant={isSubmitted ? "disabled" : null}
+          >
+            {isSubmitted ? <Loader /> : "Sign In"}
           </Button>
 
           <div>
