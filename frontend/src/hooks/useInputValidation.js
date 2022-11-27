@@ -19,9 +19,11 @@ const useInputValidation = (initialState = {}, type = null) => {
     if (formData.uname?.length <= 0) {
       error.uname = "Username is required";
     }
-    if (formData && !formData.email) {
+    // if (formData && !formData.email) {
+    if (formData.email?.length <= 0) {
       error.email = "Email is required";
     } else if (
+      formData.email?.length > 0 &&
       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formData.email)
     ) {
       error.email = "Invalid email address";

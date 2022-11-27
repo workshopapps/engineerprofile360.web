@@ -1,29 +1,93 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import axios from "../../../api/axios";
 
 import { Container, Button } from "../../../styles/reusableElements.styled";
 import { AuthTitle, InputField } from "../../components";
 
 import useInputValidation from "../../../hooks/useInputValidation";
+import { showErrorToast } from "../../../helpers/helper";
 
 import eyeSvg from "../../../assets/icons/eye.svg";
+import { Loader } from "../../../styles/reusableElements.styled";
 
 const AdminSetPassword = () => {
   const [showPassword, setShowPassword] = useState(true);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(true);
-  const { formData, changeInputValue, onBlur, errors, touched } =
-    useInputValidation({
-      password: "",
-      confirmPassword: "",
-    });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [passwordError, setPasswordError] = useState("");
+  const {
+    formData,
+    changeInputValue,
+    onBlur,
+    setFormData,
+    errors,
+    touched,
+    setTouched,
+    validation,
+  } = useInputValidation({
+    password: "",
+    confirmPassword: "",
+  });
+
+  const { id, token } = useParams();
+  const navigate = useNavigate();
 
   const onChange = (e) => {
     changeInputValue(e);
   };
 
-  // console.log(errors);
-  // console.log(touched);
+  const handleSubmit = async (e, formData, id, token) => {
+    e.preventDefault();
+    console.log("fuck");
+    try {
+      validation(formData);
+      if (Object.keys(errors).length > 0) {
+        setTouched({
+          password: true,
+          confirmPassword: true,
+        });
+      }
+
+      if (Object.keys(errors).length === 0) {
+        setTouched({
+          password: false,
+          confirmPassword: false,
+        });
+
+        console.log("fuck5");
+        setIsSubmitted(true);
+
+        const { password } = formData;
+        const response = await axios.post(
+          `/auth/password/reset/${id}/${token}`,
+          JSON.stringify({
+            new_password: password,
+            type: "Organization",
+          }) /* Second Parameter is the type param: Organization | employee  */
+        );
+
+        if (response.data.errorState === false) {
+          navigate("/reset-password-success");
+        }
+        console.log(response.data);
+
+        // Clear input fields
+        setFormData({
+          password: "",
+          confirmPassword: "",
+        });
+      }
+    } catch (err) {
+      if (!err?.response) {
+        setPasswordError("No Server Response");
+      } else if (err.response?.errorState === true) {
+        setIsSubmitted(false);
+        setPasswordError(err.response.error);
+        showErrorToast(passwordError);
+      }
+    }
+  };
 
   const { password, confirmPassword } = formData;
 
@@ -31,7 +95,7 @@ const AdminSetPassword = () => {
     <>
       <FormContainer>
         <AuthTitle title="Password" text="Set up a password for your account" />
-        <SetPasswordForm>
+        <SetPasswordForm onSubmit={(e) => handleSubmit(e, formData, id, token)}>
           <InputField
             $size="md"
             type={showPassword ? "password" : "text"}
@@ -61,7 +125,7 @@ const AdminSetPassword = () => {
           />
           <InputField
             $size="md"
-            type={showConfirmPassword ? "password" : "text"}
+            type={showPassword ? "password" : "text"}
             label="Re-Enter Password"
             id="confirmPassword"
             placeholder="Confirm password"
@@ -76,9 +140,7 @@ const AdminSetPassword = () => {
             endIcon={
               <img
                 src={eyeSvg}
-                onClick={() =>
-                  setShowConfirmPassword((prevState) => !prevState)
-                }
+                onClick={() => setShowPassword((prevState) => !prevState)}
                 alt=""
               />
             }
@@ -88,7 +150,7 @@ const AdminSetPassword = () => {
                 : ""
             }
           />
-          <Button $size="md" type="button">
+          <Button $size="md" type="submit">
             Set Password
           </Button>
         </SetPasswordForm>
