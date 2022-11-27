@@ -1,7 +1,8 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import AuthContext from "../../../context/authProvider";
 
 import { Container, Button } from "../../../styles/reusableElements.styled";
@@ -12,6 +13,7 @@ import axios from "../../../api/axios";
 
 import eyeSvg from "../../../assets/icons/eye.svg";
 import smsSvg from "../../../assets/icons/smsenvelope.svg";
+import { Loader } from "../../../styles/reusableElements.styled";
 import { Loader } from "../../../styles/reusableElements.styled";
 
 const AdminLogin = () => {
@@ -33,6 +35,13 @@ const AdminLogin = () => {
     email: "",
     password: "",
   });
+
+  const showErrorToast = (error) => {
+    toast.error(error, {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
+
   const navigate = useNavigate();
   const { email, password } = formData;
 
@@ -79,11 +88,11 @@ const AdminLogin = () => {
           confirmPassword: "",
         });
       } else if (errors) {
-      }
-    } catch (err) {
-      if (err) {
         setIsSubmitted(false);
       }
+    } catch (err) {
+      showErrorToast(err);
+      setIsSubmitted(false);
       if (!err?.response) {
         setLoginError("No Server Response");
       } else if (err.response?.status === 400) {
@@ -93,12 +102,16 @@ const AdminLogin = () => {
       } else {
         setLoginError("Login Failed");
       }
+
+      showErrorToast(loginError);
+      setIsSubmitted(false);
     }
   };
 
   return (
     <>
       <FormContainer>
+        <ToastContainer />
         <AuthTitle
           title="Welcome back"
           text="Please enter your login details"
