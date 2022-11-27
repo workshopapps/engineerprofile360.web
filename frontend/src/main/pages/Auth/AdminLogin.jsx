@@ -14,7 +14,6 @@ import axios from "../../../api/axios";
 import eyeSvg from "../../../assets/icons/eye.svg";
 import smsSvg from "../../../assets/icons/smsenvelope.svg";
 import { Loader } from "../../../styles/reusableElements.styled";
-import { Loader } from "../../../styles/reusableElements.styled";
 
 const AdminLogin = () => {
   const { setAuth } = useContext(AuthContext);
