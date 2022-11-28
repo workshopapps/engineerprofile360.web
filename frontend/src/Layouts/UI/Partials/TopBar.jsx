@@ -14,7 +14,7 @@ import logoutIcon from "../../../assets/icons/logout.svg";
 import { InputField } from "../../../main/components";
 import { Container } from "../../../styles/reusableElements.styled";
 
-const TopBar = ({ handleLeftBarToggle }) => {
+const TopBar = ({ handleLeftBarToggle, leftBar }) => {
   const [dropDown, setDropDown] = useState(false);
   const handleDropDownToggle = () => {
     setDropDown(!dropDown);
@@ -59,7 +59,15 @@ const TopBar = ({ handleLeftBarToggle }) => {
                   </li>
                 </List>
               </DropDown>
-              <img src={dropDown ? closeIcon : menuIcon} alt="" onClick={handleLeftBarToggle} />
+              <img
+                src={
+                  leftBar && document.body.clientWidth <= 960
+                    ? closeIcon
+                    : menuIcon
+                }
+                alt=""
+                onClick={handleLeftBarToggle}
+              />
             </Icons>
           </Options>
         </Navigation>
@@ -133,7 +141,7 @@ const DropDown = styled.div`
   right: ${({ theme }) => theme.spacing(0.1)};
   z-index: 10;
   min-width: 115px;
-  display: ${(props) => props.$open === "open" ? "initial" : "none"};
+  display: ${(props) => (props.$open === "open" ? "initial" : "none")};
   overflow: hidden;
 `;
 
@@ -149,7 +157,7 @@ const List = styled.ul`
     font-size: 14px;
     color: #323130;
 
-    img:nth-of-type(1) {
+    img:first-of-type {
       ${({ theme }) => theme.breakpoints.down("xs")} {
         display: initial;
       }
@@ -172,7 +180,7 @@ const User = styled.div`
     }
   }
 
-  img:nth-of-type(1) {
+  img:first-of-type {
     ${({ theme }) => theme.breakpoints.down("xs")} {
       display: none;
     }
@@ -184,7 +192,7 @@ const Icons = styled.div`
   align-items: flex-end;
   gap: ${({ theme }) => theme.spacing(2)};
 
-  img:nth-of-type(1) {
+  img:first-of-type {
     ${({ theme }) => theme.breakpoints.down("sm")} {
       display: none;
     }
@@ -192,6 +200,13 @@ const Icons = styled.div`
 
   img:nth-of-type(2) {
     ${({ theme }) => theme.breakpoints.up("sm")} {
+      display: none;
+    }
+  }
+
+  img:last-of-type {
+    width: 24px;
+    ${({ theme }) => theme.breakpoints.up("md")} {
       display: none;
     }
   }
