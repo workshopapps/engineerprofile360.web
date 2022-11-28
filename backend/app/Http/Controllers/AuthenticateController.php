@@ -261,7 +261,7 @@ class AuthenticateController extends Controller {
 
             // create a new record in database.
             User::create($userResp);
-            
+
             return $this->sendResponse(false, null, "User registered successfully", $clientExtractedData, 200);
 
         } catch (\Exception $e) {
@@ -341,7 +341,7 @@ class AuthenticateController extends Controller {
         $payload = json_decode($req->getContent(), true);
         $verify = false;
 
-        if(isset($payload["verify"]) == false){
+        if(!isset($payload["verify"])){
             $this->sendResponse(true, "Expected a verify param in paylaod, but got none", "Verify parameter not found.",null, 404);
         }
 
