@@ -48,6 +48,7 @@ import CsvUpload from "./ui/pages/csv/CsvUpload";
 import CsvUploading from "./ui/pages/csv/CsvUploading";
 import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
 import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
+import AcceptReject from "./ui/pages/Accept Reject Profile/AcceptReject";
 
 const App = () => {
   return (
@@ -125,6 +126,7 @@ const App = () => {
               path={"/auth/verify/:user_id/:token"}
               element={<AdminEmailVerified />}
             />
+            <Route path="/accept-reject-profile" element={<AcceptReject />} />
           </Route>
 
           <Route element={<UiLayout />}>
