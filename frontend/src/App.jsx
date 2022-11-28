@@ -22,8 +22,6 @@ import {
   AdminVerifyEmail,
   AdminEmailVerified,
 } from "./main/pages";
-// import Confirmed from "./main/components/demo-pages-components/components/Confirmed";
-// import ScheduleDemo from "./main/components/demo-pages-components/components/ScheduleDemo";
 import Support from "../src/ui/pages/UserSupport";
 import Terms from "../src/ui/pages/termsAndService/TermsAndService";
 import UserProfile from "./ui/pages/user-profile/UserProfile";
@@ -65,7 +63,6 @@ const App = () => {
             <Route path="/biomedical-landing" element={<BioMedical />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/demo" element={<DemoSchedule />} />
-            {/* <Route path="/confirm-demo" element={<Confirmed />} /> */}
             <Route path="/support" element={<Support />} />
             <Route path="/help-center" element={<HelpCenter />} />
             <Route path="/termsAndService" element={<Terms />} />
