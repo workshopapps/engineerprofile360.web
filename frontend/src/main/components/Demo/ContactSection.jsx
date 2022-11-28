@@ -108,6 +108,7 @@ const ContactSection = () => {
               //   }
             />
           </InputContainer>
+          <Button type="submit">Submit</Button>
         </Form>
       </ContactContainer>
     </Container>
@@ -121,6 +122,17 @@ const ContactContainer = styled.div`
   margin: 70px auto;
   display: flex;
   justify-content: space-between;
+  gap: 10px;
+
+  @media (max-width: 898px) {
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 40px;
+  }
+
+  @media (max-width: 415px) {
+    margin-top: 0px;
+  }
 `;
 
 const DemoList = styled.div`
@@ -148,6 +160,37 @@ const DemoList = styled.div`
       list-style: inside;
     }
   }
+
+  @media (max-width: 1325px) {
+    width: 58%;
+  }
+
+  @media (max-width: 1029px) {
+    p {
+      font-size: 24px;
+    }
+
+    ul {
+      font-size: 12px;
+    }
+  }
+
+  @media (max-width: 898px) {
+    width: 100%;
+
+    p {
+      font-size: 28px;
+    }
+
+    ul {
+      gap: 4px;
+    }
+  }
+  @media (max-width: 504px) {
+    p {
+      font-size: 24px;
+    }
+  }
 `;
 
 const Form = styled.form`
@@ -165,6 +208,15 @@ const Form = styled.form`
 
   border: 1px solid #0e0e52;
   border-radius: 16px;
+
+  @media (max-width: 898px) {
+    margin-top: 0;
+    width: 100%;
+  }
+
+  @media (max-width: 396px) {
+    height: 850px;
+  }
 `;
 
 const Heading = styled.div`
@@ -180,6 +232,32 @@ const Heading = styled.div`
     line-height: 22px;
     color: #605e5c;
   }
+
+  @media (max-width: 898px) {
+    margin-top: 30px;
+  }
+
+  @media (max-width: 541px) {
+    margin-top: 15px;
+
+    h2 {
+      font-size: 24px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 396px) {
+    h2 {
+      font-size: 22px;
+    }
+
+    p {
+      font-size: 12px;
+    }
+  }
 `;
 
 const InputContainer = styled.div`
@@ -187,4 +265,27 @@ const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
+
+  @media (max-width: 396px) {
+    width: 95%;
+  }
+`;
+
+const Button = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 75%;
+  height: 80px;
+  background: #141ae9;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 20px;
+  color: #fff;
+  margin-bottom: 35px;
+
+  @media (max-width: 682px) {
+    height: 50px;
+  }
 `;
