@@ -108,7 +108,7 @@ class AuthenticateController extends Controller {
     
     
                     // update refToken in database
-                    Employee::where('email', '=', $email)->update(array('refToken' => $refToken));
+                    Employee::where('email', '=', $email)->update(array('refToken' => $refToken, "hasloggedin"=>true));
                     
                     
                     return $this->sendResponse(false, null, "User logged in successfully", $userResp, 200);
@@ -196,7 +196,7 @@ class AuthenticateController extends Controller {
                         return $this->sendResponse(true, "account not verfied.. a verification link has been sent to you account.", "failed to login.. verify your account.", null, 200);
                     }
                     
-                    
+
                     return $this->sendResponse(false, null, "organization logged in successfully", $userResp, 200);
                 } catch (\Exception $e) {
                     print_r($e);
@@ -261,6 +261,10 @@ class AuthenticateController extends Controller {
 
             // create a new record in database.
             User::create($userResp);
+
+
+            // send organization email
+            $this->helper->emailVerification($email,$uid);
 
             return $this->sendResponse(false, null, "User registered successfully", $clientExtractedData, 200);
 
