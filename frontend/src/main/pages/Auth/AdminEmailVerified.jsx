@@ -7,21 +7,27 @@ import { AuthTitle } from "../../components";
 import success from "../../../assets/images/img_done.png";
 import { Link, useParams } from "react-router-dom";
 import axios from "../../../api/axios";
+import { showErrorToast } from "../../../helpers/helper";
 
 const AdminEmailVerified = () => {
-  const [fetchError, setFetchError] = useState("");
-  const isErrorFree = useRef();
-  const { user_id, token } = useParams;
+  const [isErrorFree, setIsErrorFree] = useState(false);
+  const { user_id, token } = useParams();
 
   useEffect(() => {
     const verifyEmail = async () => {
       try {
+        console.log(user_id, token);
         const response = await axios.get(`auth/verify/${user_id}/${token}`);
-        if (response?.errorState === false) isErrorFree.current = true;
-        else isErrorFree.current = false;
+        if (response?.data.errorState === false) {
+          setIsErrorFree(true);
+        }
       } catch (err) {
         if (!err?.response) {
-          setFetchError("No Server Response");
+          showErrorToast("No Response Error");
+        }
+        if (err?.response.data.errorState === true) {
+          setIsErrorFree(false);
+          showErrorToast(err.response.data.message);
         }
       }
     };
@@ -32,22 +38,27 @@ const AdminEmailVerified = () => {
   return (
     <>
       <ResponseContainer>
-        {isErrorFree ? (
-          <>
-            <img src={success} alt=" " />
-            <AuthTitle
-              title="Success"
-              text="Your account has been verified succesfully"
-            />
-            <Link to="/login">
-              <Button $size="md" type="button">
-                Continue
-              </Button>
-            </Link>
-          </>
-        ) : (
-          ""
-        )}
+        {
+          isErrorFree ? (
+            <>
+              <img src={success} alt=" " />
+              <AuthTitle
+                title="Success"
+                text="Your account has been verified succesfully"
+              />
+              <Link to="/login">
+                <Button $size="md" type="button">
+                  Continue
+                </Button>
+              </Link>
+            </>
+          ) : (
+            "Error"
+          )
+          // (
+          // { fetchError }
+          // )
+        }
       </ResponseContainer>
     </>
   );

@@ -1,13 +1,19 @@
 import React from "react";
-import ScheduleDemo from "../components/demo-pages-components/components/ScheduleDemo";
-import "./Demo.css";
 
-function Demo() {
+import HeroSection from "../components/Demo/HeroSection";
+import ContactSection from "../components/Demo/ContactSection";
+
+function DemoSchedule() {
   return (
     <>
-      <ScheduleDemo />
+      <HeroSection />
+      <ContactSection />
     </>
   );
 }
 
+<<<<<<< HEAD
 export default Demo;
+=======
+export default DemoSchedule;
+>>>>>>> dev
