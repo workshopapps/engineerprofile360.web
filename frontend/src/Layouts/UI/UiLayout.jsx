@@ -32,8 +32,7 @@ export default UiLayout;
 const Main = styled(Container)`
   margin-top: 80px;
   display: flex;
-  padding: 0 ${({ theme }) => theme.spacing(3)};
-  padding-top: ${({ theme }) => theme.spacing(4)};
+  padding: ${({ theme }) => theme.spacing(4)} 0;
 `;
 
 const NavBar = styled.div`
@@ -45,12 +44,15 @@ const NavBar = styled.div`
   transition: ease 0.5s;
 
   ${({ theme }) => theme.breakpoints.down("md")} {
-    width: ${(props) => props.$open === "open" ? "200px" : "0px" };
-    overflow: hidden;
+    width: ${(props) => props.$open === "open" ? "240px" : "0px" };
+    overflow: auto;
+    overflow-y: hidden;
     border-right: ${(props) => props.$open === "open" ? "1px solid #edebe9" : "none" };
   }
 `;
 
 const MainContent = styled.div`
   height: 200vh;
+  padding: 0 ${({ theme }) => theme.spacing(3)};
+
 `;
