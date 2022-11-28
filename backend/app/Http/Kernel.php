@@ -62,6 +62,7 @@ class Kernel extends HttpKernel
         'cors' => \Fruitcake\Cors\HandleCors::class,
         'isloggedin' => \App\Http\Middleware\IsLoggedIn::class,
         'isadmin' => \App\Http\Middleware\IsAdmin::class,
+        'isoveralladmin' => \App\Http\Middleware\isOverAllAdmin::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
