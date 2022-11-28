@@ -53,7 +53,7 @@ const TopBarContainer = styled.header`
   z-index: 1;
   width: 100%;
 
-  border-bottom : 1px solid ${({theme}) => theme.palette.border.default};
+  border-bottom: 1px solid ${({ theme }) => theme.palette.border.default};
 `;
 
 const TopBarContent = styled(Container)`
@@ -89,7 +89,7 @@ const SearchInputField = styled(InputField)`
 const Options = styled.div`
   display: flex;
   align-items: center;
-justify-content: flex-end;
+  text-align: right;
   gap: ${({ theme }) => theme.spacing(3)};
 `;
 
