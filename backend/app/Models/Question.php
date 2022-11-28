@@ -8,14 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
-    use HasFactory, Uuids;
+    use Uuids;
+    use HasFactory;
     protected $guarded = [];
-
     /**
      * @var $fillable
     */
     protected $fillable = [
-        'questiion_id', 'assessment_id', 'category_id', 'is_multiple_answers',
-        'correct_answers', 'timeframe', 'options'
+        'options',
+        'timeframe',
+        'correct_answers', 
+        'is_multiple_answers',
+        'category_id', 
+        'assessment_id', 
+        'company_id',
+    ];
+
+    protected $casts = [
+        'options' => 'array',
+        'correct_answers' => 'array',
     ];
 }

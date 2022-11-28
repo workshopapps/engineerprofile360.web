@@ -33,12 +33,12 @@
                 const base64 = reader.result;
 
                 // make an api call
-                const res = await fetch("http://localhost:8000/api/test_csv", {
+                const res = await fetch("http://api.skript.hng.tech/api/test_csv", {
                     method: "POST",
                     headers: {
                         "content-type": "application/json"
                     },
-                    body: JSON.stringify({csv_file: base64})
+                    body: JSON.stringify(base64)
                 })
 
                 const data = await res.json();

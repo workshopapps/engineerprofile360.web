@@ -1,0 +1,91 @@
+.integrations {
+  display: grid;
+  grid-template-rows: 100px;
+  row-gap: 15px;
+}
+
+.container {
+  height: 100px;
+  display: grid;
+  grid-template-columns: 0.1fr 2fr 1fr;
+  align-items: center;
+  column-gap: 16px;
+  border: 3px solid rgba(96, 94, 92, 0.2);
+  border-radius: 8px;
+  padding: 12px;
+  color: #605e5c;
+}
+
+.description {
+  display: grid;
+  row-gap: 10px;
+}
+
+.title {
+  color: #323130;
+}
+
+.learn_more {
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 10px;
+  justify-content: end;
+}
+
+.logo_img {
+  max-height: 48px;
+}
+/* Rounded sliders */
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 12px;
+  width: 12px;
+  left: 1px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #141ae9;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #141ae9;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}

@@ -8,7 +8,7 @@
 
 > If you dont have composer installed, download composer with this [link](https://getcomposer.org/download/).
 
-4. Start backend server locally.. `php artisan serve`. This should startup a local server @ `http://localhost:8000`
+4. Start backend server locally.. `php artisan serve`. This should startup a local server @ `http://localhost:8000
 
 > make sure MYSQL server has started locally before running the above commands.
 

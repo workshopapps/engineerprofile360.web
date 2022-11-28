@@ -3,116 +3,150 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use function response;
+// use function response;
 use Illuminate\Http\Request;
 use App\Services\UserService;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\JsonResponse;
 // use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-
+use App\Models\UserScore;
 
 class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        // $this->middleware('isloggedin');
     }
 
-    public function allUsers(): JsonResponse
+    public function getUsers()
     {
-        try{
-            $users = User::paginate(15);
+        try {
+            $users = User::paginate(10);
 
-            if( !$users ) {
-               $users = [];
-            }
-
-            return $this->successResponse(
-                true,
+            return $this->sendResponse(
+                false,
+                null,
                 'All users',
                 $users,
                 Response::HTTP_OK
             );
-        }catch (Exception $e) {
-            return $this->errorResponse('Records', $e->getMessage());
+        } catch (\Exception $e) {
+            return $this->sendResponse(true, 'Users not fetched', $e->getMessage(), null);
         }
     }
-    
-    public function getUserById($user_id): JsonResponse
-    {
-        try{
-            $user = User::find($user_id);
 
-            if( !$user) {
-                return $this->errorResponse(
+    public function getUser($userId): JsonResponse
+    {
+        try {
+            $user = UserService::getUserByID($userId);
+
+            if (!$user) {
+                return $this->sendResponse(
+                    true,
                     'User does not exist',
                     'User not found',
+                    null,
                     Response::HTTP_NOT_FOUND
                 );
             }
 
-            return $this->successResponse(
-                true,
-                'User',
+            return $this->sendResponse(
+                false,
+                null,
+                "User",
                 $user,
                 Response::HTTP_OK
             );
-        }catch (Exception $e) {
-            return $this->errorResponse('User not fetched', $e->getMessage());
+        } catch (\Exception $e) {
+            return $this->sendResponse(false, 'User not fetched', $e->getMessage());
         }
-
     }
 
-    public function getVerifiedUserById(string $userId): JsonResponse
+    public function verifyUserById(string $userId)
     {
-        try{
-            $verified_user = UserService::getVerifiedUser($userId);
+        try {
 
-            if( !$verified_user) {
-                return $this->errorResponse(
-                    'User does not exist or is not a verified user',
-                    'User not found',
-                    Response::HTTP_NOT_FOUND
-                );
-            }
+            $user = User::where('user_id', $userId)->first();
 
-            return $this->successResponse(
-                true,
-                'Verified user',
-                $verified_user,
-                Response::HTTP_OK
-            );
-        }catch (Exception $e) {
-            return $this->errorResponse('Verified user not fetched', $e->getMessage());
-        }
-            
-    }
-
-    public function updaterUserInfo(Request $request , $user_id): JsonResponse
-    {
-        try{
-            $data = [
-                'username' => $request->username,
-                'email' => $request->email
-            ];
-
-            $user =  User::where('id', $user_id)->find($user_id);
-
-            if( !$user ) {
-                return $this->errorResponse(
+            if (!$user) {
+                return $this->sendResponse(
+                    true,
                     'User does not exist',
                     'User not found',
                     Response::HTTP_NOT_FOUND
                 );
             }
 
-            $user->update($data);
+            if ($user->isVerified === true) {
+                return $this->sendResponse(
+                    true,
+                    'User is already verified',
+                    'Verified User',
+                    Response::HTTP_BAD_REQUEST
+                );
+            }
 
-            return $this->successResponse(true, 'User info updated successfully', Response::HTTP_OK);
+            $user->isVerified = true;
+            $user->save();
 
-        }catch (Exception $e) {
-            return $this->errorResponse('User info not updated', $e->getMessage());
+            return $this->sendResponse(
+                true,
+                'User verified successfully',
+                Response::HTTP_OK
+            );
+        } catch (\Exception $e) {
+            return $this->errorResponse('User not verified', $e->getMessage());
+        }
+    }
+
+    public function makeUserAnAdmin(string $userId): JsonResponse
+    {
+        try {
+            $user = User::where('user_id', $userId)->first();
+            if (!$user) return $this->sendResponse(true, 'User does not exist', 'User not found', Response::HTTP_NOT_FOUND);
+            if ($user->isAdmin) return $this->sendResponse(true, 'User is already an admin', 'Admin User', Response::HTTP_BAD_REQUEST);
+            $user->update(["isAdmin" => true]);
+            return $this->sendResponse(false, null, 'User is successfully an admin', Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return $this->sendResponse(true, 'Not Successful', $e->getMessage());
+        }
+    }
+
+
+    public function blockUser(string $userId): JsonResponse
+    {
+        try {
+            $user = User::where('user_id', $userId)->first();
+            if (!$user) return $this->sendResponse(true, 'User does not exist', 'User not found', Response::HTTP_NOT_FOUND);
+            if ($user->isBlocked) return $this->sendResponse(true, 'User is already blocked', 'Blocked User', Response::HTTP_BAD_REQUEST);
+            $user->update(["isBlocked" => true]);
+            return $this->sendResponse(false, null, 'User blocked successfully', Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return $this->sendResponse(true, 'Not Successful', $e->getMessage());
+        }
+    }
+
+    public function updaterUserInfo(UpdateUserRequest $request, $userId)
+    {
+        try {
+            $updatedData = $request->all();
+            $user = User::find($userId);
+
+            if (!$user) {
+                return $this->sendResponse(
+                    true,
+                    'User does not exist',
+                    'User not found',
+                    Response::HTTP_NOT_FOUND
+                );
+            }
+
+            $user->update($updatedData);
+
+            return $this->sendResponse(false, null, 'User info updated successfully', Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return $this->sendResponse(true, 'User info not updated', $e->getMessage());
         }
     }
 }

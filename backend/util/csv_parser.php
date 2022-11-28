@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Str;
+
 /**
  * Parse CSV file to JSON.
  * 
@@ -24,21 +26,28 @@ class CsvParser{
     ];
 
     private function parseBase64($b64){
-        // extract file type from base64 url
-        $data = explode(",",  $b64);
-        $type = $data[0];
+        try {
+                
+            // extract file type from base64 url
+            $data = explode(",",  $b64);
+            $type = $data[0];
 
-        if(!str_contains($type, "text/csv")){
+            if(!str_contains($type, "text/csv")){
+                $this->res["error"] = true;
+                $this->res["message"] = "Invalid file type";
+                return $this->res;
+            }
+
+            // extract base64 part of the string
+            $csvData = $data[1];
+            $this->res["error"] = false;
+            $this->res["data"] = base64_decode($csvData);
+            return $this->res;
+        } catch (\Exception $e) {
             $this->res["error"] = true;
-            $this->res["message"] = "Invalid file type";
+            $this->res["message"] = "Invalid file";
             return $this->res;
         }
-
-        // extract base64 part of the string
-        $csvData = $data[1];
-        $this->res["error"] = false;
-        $this->res["data"] = base64_decode($csvData);
-        return $this->res;
     }
     
     public function parseEmployeeCsv($b64){
@@ -51,17 +60,19 @@ class CsvParser{
         $csvData = $oup["data"];
         $splitData = explode("\n", $csvData);
         $slicedData = array_slice(array_chunk($splitData, 4)[0], 1);
-        $finalJsonData = [];
+        $finalJsonData = []; $i=1;
 
         foreach($slicedData as $val){
             $ext = explode(",", str_replace("\r", "", $val));
             $item = array_slice($ext, 1);
             $arr = [
+                "id"=> $i,
                 "fullname"=> $item[0],
                 "username"=> $item[1],
                 "email"=> $item[2]
             ];
             array_push($finalJsonData, $arr);
+            $i++;
         }
         
         $this->res["error"] = false;
@@ -69,6 +80,17 @@ class CsvParser{
         $this->res["data"] = $finalJsonData;
 
         return $this->res;
+    }
+
+    public function trimEmployeeCSV($json, $dept, $org){
+        foreach($json as $key => $item){
+            unset($json[$key]["id"]);
+            $json[$key]['department_id'] = $dept;
+            $json[$key]['org_id'] = $org;
+            $json[$key]['id'] = Str::uuid();
+        }
+
+        return $json;
     }
 
 }

@@ -1,20 +1,13 @@
-import React from "react"
-import HomeBlog from "../compnents/sections/homeBlog/HomeBlog"
-import Homedecision from "../compnents/sections/homeDecision/HomeDecision"
-import HomeHero from "../compnents/sections/homeHero/HomeHero"
-import HomeProduct from "../compnents/sections/homeProducts/HomeProduct"
-import HomeStarted from "../compnents/sections/homeStarted/HomeStarted"
-import HomeStats from "../compnents/sections/homeStats/HomeStats"
+export { default as Home } from "./Home";
+export { default as About } from "./About";
+export { default as BioMedical } from "./BioMedical";
 
-export default function Home() {
-  return (
-    <div>
-      <HomeHero />
-      <HomeStats />
-      <Homedecision />
-      <HomeProduct />
-      <HomeBlog />
-      <HomeStarted />
-    </div>
-  )
-}
+//  Auth exports
+
+export { default as AdminSignup } from "./Auth/AdminSignup";
+export { default as AdminLogin } from "./Auth/AdminLogin";
+export { default as AdminResetPassword } from "./Auth/AdminResetPassword";
+export { default as AdminSetPassword } from "./Auth/AdminSetPassword";
+export { default as AdminPasswordSuccess } from "./Auth/AdminPasswordSuccess";
+export { default as AdminVerifyEmail } from "./Auth/AdminVerifyEmail";
+export { default as AdminEmailVerified } from "./Auth/AdminEmailVerified";
