@@ -1,21 +1,25 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Helper\Helper;
 use CsvParser;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateEmployeeRequest;
+use App\Models\Company;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\JsonResponse;
 use App\Models\Employee;
 use App\Models\Department;
 use Exception;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class EmployeeController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('isloggedin');
+        $this->helper = new Helper();
     }
 
     /**
@@ -36,12 +40,24 @@ class EmployeeController extends Controller
             return $this->sendResponse(true, $e->getMessage(), "Employees not found", null, Response::HTTP_NOT_FOUND);
         }
     }
+
+    public function generateRandomPwd($salt=6){
+        $alpnum = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        $splited = str_split($alpnum);
+        $pwd = [];
+        for ($i=0; $i < $salt; $i++) { 
+            $rand = rand(0, strlen($alpnum));
+            array_push($pwd, $splited[$rand]);
+        }
+        return $pwd;
+    }
     
     public function addEmployee(Request $request)
     {
         try {
             $query = $request->query('type'); 
             $uid = $request->user["id"];  
+            $defaultPwd = implode("",$this->generateRandomPwd(10));
 
             if ($query === "csv") {
                 $csv = new CsvParser();
@@ -74,15 +90,17 @@ class EmployeeController extends Controller
                     return $this->sendResponse(true, "employee already exists", "employee with this email already exists", null, Response::HTTP_BAD_REQUEST);
                 }
 
+                $hash = Hash::make($defaultPwd);
                 $empData = [
                     "id"=> Str::uuid(),
                     "username"=>$payload["username"],
                     "fullname"=>$payload["fullname"],
                     "email"=>$payload["email"],
-                    "org_id"=> $uid
+                    "org_id"=> $uid,
+                    "hash"=> $hash
                 ];
-    
-                return $this->insertEmployee($empData);
+                
+                return $this->insertEmployee($empData, $defaultPwd);
             } 
             else {
                 return $this->sendResponse(true, "query parameter not found", "Invalid query parameter", null, Response::HTTP_NOT_FOUND);
@@ -123,12 +141,25 @@ class EmployeeController extends Controller
         return $this->insertEmployee($data);
     }
 
-    public function insertEmployee($data)
+    public function insertEmployee($data, $empPassword)
     {
         try {
             $employee = Employee::insert($data);
+
+            $fullname = $data["fullname"];
+            $username = $data["username"];
+            $email = $data["email"];
+            $org_id = $data["org_id"];
+            
+            // fetch organization info
+            $orgData = Company::where("user_id", $org_id)->first();
+            $org_name = ucfirst($orgData["name"]);
+            
+            // send employee email
+            $this->helper->sendOnboardMail($fullname, $username, $empPassword, $email, $org_name);
+
             return $this->sendResponse(false, null, "Employee Added Successfully", $employee, Response::HTTP_CREATED);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return $this->sendResponse(true, $e->getMessage(), "Employee Action Failed", null, 500);
         } 
     }

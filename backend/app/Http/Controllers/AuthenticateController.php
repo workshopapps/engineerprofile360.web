@@ -101,7 +101,7 @@ class AuthenticateController extends Controller {
                     // user record
                     $userResp = [
                         "accessToken"=>$accToken,
-                        "id"=>$employees->first()["user_id"],
+                        "id"=>$employees->first()["id"],
                         "role"=>$employees->first()["role"],
                         "username"=>$employees->first()["username"]
                     ];
@@ -172,7 +172,7 @@ class AuthenticateController extends Controller {
                     // company data
                     $companyData = [
                         "id"=> $uid,
-                        "user_id"=>$users->first()["id"],
+                        "user_id"=>$users->first()["user_id"],
                         "name"=> $users->first()["username"],
                         "org_mail"=> $users->first()["email"]
                     ];

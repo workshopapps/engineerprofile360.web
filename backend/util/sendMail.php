@@ -1,5 +1,6 @@
 <?php
 
+use App\Mail\Onboarding;
 use App\Mail\PasswordReset;
 use App\Mail\Signup;
 use App\Mail\Verification;
@@ -44,6 +45,23 @@ class Mailer{
 
         try {
             Mail::to($to)->send(new PasswordReset($mailData));
+        } catch (\Exception $e) {
+            echo("Something went wrong sending mail ".$e->getMessage());
+        }
+    }
+
+    public function sendEmployeeOnboardingMail($emp_fullname,$emp_username,$emp_password,$login_link, $to, $org_name){
+        $mailData = [
+            "emp_fullname"=>$emp_fullname,
+            "emp_username"=>$emp_username,
+            "emp_password"=>$emp_password,
+            "login_link"=>$login_link,
+            "org_name"=>$org_name,
+            "emp_email"=> $to
+        ];
+
+        try {
+            Mail::to($to)->send(new Onboarding($mailData));
         } catch (\Exception $e) {
             echo("Something went wrong sending mail ".$e->getMessage());
         }

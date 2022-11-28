@@ -123,6 +123,17 @@ class Helper extends Controller
         }
     }
 
+    public function sendOnboardMail($emp_fullname,$emp_username,$emp_password, $to, $org_name){
+        try {
+            $loginLink = "{$this->clientUrl}/login";
+
+            $mail = new Mailer();
+            $mail->sendEmployeeOnboardingMail($emp_fullname, $emp_username, $emp_password, $loginLink, $to, $org_name);
+        } catch (\Exception $e) {
+            return Log::error("Could not send employe onboarding invite".$e->getMessage());
+        }
+    }
+
     public function notifyEmployee($emp_email, $emp_id){
         return "hey";
     }

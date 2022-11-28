@@ -18,6 +18,8 @@ class Onboarding extends Mailable
      *
      * @return void
      */
+    public $mailData;
+
     public function __construct($mailData)
     {
         $this->mailData = $mailData;
@@ -35,16 +37,9 @@ class Onboarding extends Mailable
         );
     }
 
-    public function content()
-    {
-        return new Content(
-            view: 'emails.onboarding',
-        );
-    }
-
     public function build()
     {
-        return $this->subject('Eval350 Onboarding')->view('onboarding');
+        return $this->subject('Evzal350 Onboarding')->view('emails.onboarding');
     }
 
     /**
