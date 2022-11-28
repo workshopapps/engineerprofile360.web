@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles, theme } from "./styles/globalStyles";
 import { MainLayout, UiLayout } from "./Layouts";
-
 import Contact from "./main/pages/Contact";
 import { AdminAuthLayout } from "./main/components";
 import {
@@ -80,12 +79,17 @@ const App = () => {
         <Route element={<AdminAuthLayout />}>
           <Route path="/register" element={<AdminSignup />} />
           <Route path="/login" element={<AdminLogin />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/reset-password" element={<AdminResetPassword />} />
           <Route
             path="/reset-password-success"
-            element={<ResetPasswordSuccess />}
+            element={<AdminPasswordSuccess />}
           />
-          <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/password/reset" element={<AdminSetPassword />} />
+          <Route path="/verify-email" element={<AdminVerifyEmail />} />
+          <Route
+            path={"/auth/verify/:user_id/:token"}
+            element={<AdminEmailVerified />}
+          />
         </Route>
         <Route
           path="/overallperformance"
