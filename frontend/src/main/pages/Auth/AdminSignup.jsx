@@ -1,6 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { showErrorToast } from "../../../helpers/helper";
+// import "react-toastify/dist/ReactToastify.css";
+import { Loader } from "../../../styles/reusableElements.styled";
 
 import { Container, Button } from "../../../styles/reusableElements.styled";
 import { AuthTitle, InputField } from "../../components";
@@ -13,16 +16,18 @@ import smsSvg from "../../../assets/icons/smsenvelope.svg";
 import editSvg from "../../../assets/icons/edit-2.svg";
 
 const AdminSignup = () => {
-  const isFormSubmitted = useRef(false);
+  const [isSubmitted, setIsSubmitted] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [fetchError, setFetchError] = useState();
   const {
     formData,
     changeInputValue,
     onBlur,
-    validation,
     errors,
-    setTouched,
-    setFormData,
     touched,
+    setTouched,
+    validation,
+    setFormData,
   } = useInputValidation({
     fname: "",
     uname: "",
@@ -30,7 +35,8 @@ const AdminSignup = () => {
     password: "",
     confirmPassword: "",
   });
-  const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
 
   const onChange = (e) => {
     changeInputValue(e);
@@ -61,18 +67,16 @@ const AdminSignup = () => {
         });
 
         const { email, fname: full_name, uname: username, password } = formData;
+        setIsSubmitted(true);
         const response = await axios.post(
           "auth/register",
-          JSON.stringify({ email, full_name, username, password }),
-          {
-            headers: {
-              "content-type": "application/json",
-              "Access-Control-Allow-Origin": "*",
-            },
-            withCredentials: true,
-          }
+          JSON.stringify({ email, full_name, username, password })
         );
 
+        if (response.data.errorState === false) {
+          navigate("/verify-email", { state: { email } });
+        }
+        console.log(response.data);
         // Clear input fields
         setFormData({
           fname: "",
@@ -81,12 +85,22 @@ const AdminSignup = () => {
           password: "",
           confirmPassword: "",
         });
-      } else if (errors) throw new Error();
-    } catch (err) {
-      isFormSubmitted.current = false;
-
-      if (!err?.response) {
+      } else {
+        if (errors) {
+          setIsSubmitted(false);
+          throw new Error();
+        }
       }
+    } catch (err) {
+      if (!err?.response) {
+        setFetchError("No Server Response");
+      } else if (err.response?.status === 409) {
+        setFetchError("Email Taken");
+      } else {
+        setFetchError("Unable to process request");
+      }
+      showErrorToast(fetchError);
+      setIsSubmitted(false);
     }
   };
 
@@ -95,6 +109,7 @@ const AdminSignup = () => {
   return (
     <>
       <FormContainer>
+        {/* <ToastContainer /> */}
         <AuthTitle title="Sign up" text="Let's get started" />
         <SignupForm onSubmit={handleSubmit}>
           <InputField
@@ -104,7 +119,7 @@ const AdminSignup = () => {
             id="fname"
             placeholder="Jane Doe"
             value={fname}
-            handleChange={(e) => changeInputValue(e)}
+            handleChange={changeInputValue}
             handleBlur={onBlur}
             error={errors && touched.fname && errors.fname?.length > 0}
             endIcon={<img src={editSvg} alt="" />}
@@ -117,9 +132,9 @@ const AdminSignup = () => {
             type="text"
             label="User Name"
             id="uname"
-            placeholder="@Jane_Doe"
+            placeholder="Jane Doe"
             value={uname}
-            handleChange={(e) => changeInputValue(e)}
+            handleChange={changeInputValue}
             handleBlur={onBlur}
             error={errors && touched.uname && errors.uname?.length > 0}
             endIcon={<img src={editSvg} alt="" />}
@@ -134,7 +149,7 @@ const AdminSignup = () => {
             id="email"
             placeholder="janedoe@gmail.com"
             value={email}
-            handleChange={(e) => changeInputValue(e)}
+            handleChange={onChange}
             handleBlur={onBlur}
             error={errors && touched.email && errors.email?.length > 0}
             endIcon={<img src={smsSvg} alt="" />}
@@ -149,13 +164,14 @@ const AdminSignup = () => {
             id="password"
             placeholder="enter password"
             value={password}
-            handleChange={(e) => changeInputValue(e)}
+            handleChange={onChange}
             handleBlur={onBlur}
             error={errors && touched.password && errors.password?.length > 0}
             endIcon={
               <img
                 onClick={() => setShowPassword((prevState) => !prevState)}
                 src={eyeSvg}
+                style={{ cursor: "pointer" }}
                 alt=""
               />
             }
@@ -165,13 +181,27 @@ const AdminSignup = () => {
                 : ""
             }
           />
-          {/* <Spans color={error}>
-            <p>Your Password should have:</p>
-            <span>At least 8 characters</span>
-            <span>At least one capital letter</span>
-            <span>At least one number</span>
-            <span>At least one special character</span>
-          </Spans> */}
+          <Spans>
+            {errors && touched.password ? (
+              <>
+                {errors.passwordLength ||
+                errors.passwordUppercase ||
+                errors.passwordNumber ||
+                errors.passwordCharacter ? (
+                  <p>Your Password should have:</p>
+                ) : (
+                  ""
+                )}
+
+                <span>{errors.passwordLength}</span>
+                <span>{errors.passwordUppercase}</span>
+                <span>{errors.passwordNumber}</span>
+                <span>{errors.passwordCharacter}</span>
+              </>
+            ) : (
+              ""
+            )}
+          </Spans>
           <InputField
             $size="md"
             type={showPassword ? "text" : "password"}
@@ -179,14 +209,21 @@ const AdminSignup = () => {
             id="confirmPassword"
             placeholder="confirm password"
             value={confirmPassword}
-            handleChange={(e) => changeInputValue(e)}
+            handleChange={onChange}
             handleBlur={onBlur}
             error={
               errors &&
               touched.confirmPassword &&
               errors.confirmPassword?.length > 0
             }
-            endIcon={<img src={eyeSvg} alt="" />}
+            endIcon={
+              <img
+                onClick={() => setShowPassword((prevState) => !prevState)}
+                src={eyeSvg}
+                style={{ cursor: "pointer" }}
+                alt=""
+              />
+            }
             helperText={
               errors && errors.confirmPassword && touched.confirmPassword
                 ? errors.confirmPassword
@@ -201,11 +238,11 @@ const AdminSignup = () => {
           </Checkbox>
 
           <Button
-            // disabled={errors && Object.keys(errors).length > 0 ? true : false}
             $size="md"
-            type="submit"
+            type={isSubmitted ? "button" : "submit"}
+            $variant={isSubmitted ? "disabled" : null}
           >
-            Proceed to Signup
+            {isSubmitted ? <Loader /> : "Proceed to Signup"}
           </Button>
 
           <div>
@@ -254,7 +291,7 @@ const Checkbox = styled.div`
 `;
 
 const Spans = styled.div`
-  margin-top: -30px;
+  margin-top: -20px;
   display: flex;
   flex-direction: column;
   align-self: flex-start;
@@ -267,5 +304,6 @@ const Spans = styled.div`
   span {
     font-size: 10px;
     font-family: inherit;
+    color: ${({ theme }) => theme.palette.status.error.color};
   }
 `;
