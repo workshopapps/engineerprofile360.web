@@ -7,10 +7,13 @@ import user from "../../../assets/icons/app/user1.svg";
 import bell from "../../../assets/icons/app/notification.svg";
 import arrowDown from "../../../assets/icons/app/arrow-down.svg";
 import menuIcon from "../../../assets/icons/menu.svg";
+import userIcon from "../../../assets/icons/profile.svg";
+import settingIcon from "../../../assets/icons/setting.svg";
+import logoutIcon from "../../../assets/icons/logout.svg";
 import { InputField } from "../../../main/components";
 import { Container } from "../../../styles/reusableElements.styled";
 
-const TopBar = () => {
+const TopBar = ({ handleLeftBarToggle }) => {
   return (
     <TopBarContainer>
       <TopBarContent>
@@ -32,7 +35,24 @@ const TopBar = () => {
             <Icons>
               <img src={bell} alt="" />
               <img src={arrowDown} alt="" />
-              <img src={menuIcon} alt="" />
+              <DropDown>
+                <List>
+                  <li>
+                    <img src={userIcon} alt="" /> Profile
+                  </li>
+                </List>
+                <List>
+                  <li>
+                    <img src={settingIcon} alt="" /> Settings
+                  </li>
+                </List>
+                <List>
+                  <li>
+                    <img src={logoutIcon} alt="" /> Logout
+                  </li>
+                </List>
+              </DropDown>
+              <img src={menuIcon} alt="" onClick={handleLeftBarToggle} />
             </Icons>
           </Options>
         </Navigation>
@@ -53,7 +73,7 @@ const TopBarContainer = styled.header`
   z-index: 1;
   width: 100%;
 
-  border-bottom: 1px solid ${({ theme }) => theme.palette.border.default};
+  border-bottom: 1px solid #edebe9;
 `;
 
 const TopBarContent = styled(Container)`
@@ -78,6 +98,10 @@ const Navigation = styled.div`
   grid-template-columns: 1fr 1fr;
   align-items: center;
   justify-content: center;
+
+  ${({ theme }) => theme.breakpoints.down("xs")} {
+    display: initial;
+  }
 `;
 
 const SearchInputField = styled(InputField)`
@@ -89,8 +113,39 @@ const SearchInputField = styled(InputField)`
 const Options = styled.div`
   display: flex;
   align-items: center;
-  text-align: right;
+  justify-content: flex-end;
   gap: ${({ theme }) => theme.spacing(3)};
+`;
+
+const DropDown = styled.div`
+  position: absolute;
+  padding: ${({ theme }) => theme.spacing(2)};
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: ${({ theme }) => theme.spacing(0.5)};
+  top: 28px;
+  right: ${({ theme }) => theme.spacing(0.1)};
+  z-index: 10;
+  min-width: 115px;
+`;
+
+const List = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing(2)};
+
+  li {
+    display: flex;
+    gap: ${({ theme }) => theme.spacing(1)};
+    align-items: center;
+    font-size: 14px;
+    color: #323130;
+
+    img:nth-of-type(1) {
+      ${({ theme }) => theme.breakpoints.down("xs")} {
+        display: initial;
+      }
+    }
+  }
 `;
 
 const User = styled.div`
