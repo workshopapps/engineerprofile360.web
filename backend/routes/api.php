@@ -90,9 +90,19 @@ Route::post("/test_csv", function (Request $req) {
 
 // authentication route
 Route::prefix("auth")->group(function () {
-    Route::post('register', [AuthenticateController::class, "registerUser"]);
-    Route::post('login', [AuthenticateController::class, 'UserAndEmployeeLogin']);
+    // organization register & login
+    Route::prefix("organization")->group(function(){
+        Route::post('register', [AuthenticateController::class, "OrganizationRegister"]);
+        Route::post('/login', [AuthenticateController::class, "OrganizationLogin"]);
+    });
+
+    // employee login 
+    Route::post('/employee/login', [AuthenticateController::class, "EmployeeLogin"]);
+    // overall admin login
+    Route::post('/skript/admin/login', [AuthenticateController::class, 'OverallAdminLogin']);
+
     Route::get('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
+    
     Route::prefix("password")->group(
         function () {
             // forgot password

@@ -22,6 +22,12 @@ class Helper extends Controller
     // public $baseUrl = "http://localhost:8000";
     public $clientUrl = "http://skript.hng.tech"; // this would be the frontend client url
 
+    public function returnExpireTime(){
+        $startdate = date("Y-m-d H:i:s");
+        $expire = strtotime($startdate. ' + 10 minutes');
+        return $expire;
+    }
+
     public function generateRefreshToken($userId, $user_email)
     {
         $issuedAt = new DateTimeImmutable();
@@ -78,7 +84,7 @@ class Helper extends Controller
             $tokenData = [
                 "user_id"=>$user_id,
                 "token"=>$token,
-                "exp"=> false
+                "exp"=> $this->returnExpireTime()
             ];
 
             Token::create($tokenData);
@@ -102,7 +108,7 @@ class Helper extends Controller
             $tokenData = [
                 "user_id"=>$user_id,
                 "token"=>$token,
-                "exp"=> false
+                "exp"=> $this->returnExpireTime()
             ];
     
             Token::create($tokenData);
@@ -117,8 +123,8 @@ class Helper extends Controller
         }
     }
 
-    public function notifyEmployee($emp_email, $emp_id,){
-        
+    public function notifyEmployee($emp_email, $emp_id){
+        return "hey";
     }
     
 }
