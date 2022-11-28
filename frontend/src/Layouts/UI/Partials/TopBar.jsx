@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import logo from "../../../assets/images/logo.svg";
@@ -6,6 +6,7 @@ import searchIcon from "../../../assets/icons/search.svg";
 import user from "../../../assets/icons/app/user1.svg";
 import bell from "../../../assets/icons/app/notification.svg";
 import arrowDown from "../../../assets/icons/app/arrow-down.svg";
+import closeIcon from "../../../assets/icons/close.svg";
 import menuIcon from "../../../assets/icons/menu.svg";
 import userIcon from "../../../assets/icons/profile.svg";
 import settingIcon from "../../../assets/icons/setting.svg";
@@ -14,6 +15,11 @@ import { InputField } from "../../../main/components";
 import { Container } from "../../../styles/reusableElements.styled";
 
 const TopBar = ({ handleLeftBarToggle }) => {
+  const [dropDown, setDropDown] = useState(false);
+  const handleDropDownToggle = () => {
+    setDropDown(!dropDown);
+  };
+
   return (
     <TopBarContainer>
       <TopBarContent>
@@ -34,8 +40,9 @@ const TopBar = ({ handleLeftBarToggle }) => {
             </User>
             <Icons>
               <img src={bell} alt="" />
-              <img src={arrowDown} alt="" />
-              <DropDown>
+              <img src={searchIcon} alt="" />
+              <img src={arrowDown} alt="" onClick={handleDropDownToggle} />
+              <DropDown $open={dropDown ? "open" : "close"}>
                 <List>
                   <li>
                     <img src={userIcon} alt="" /> Profile
@@ -52,7 +59,7 @@ const TopBar = ({ handleLeftBarToggle }) => {
                   </li>
                 </List>
               </DropDown>
-              <img src={menuIcon} alt="" onClick={handleLeftBarToggle} />
+              <img src={dropDown ? closeIcon : menuIcon} alt="" onClick={handleLeftBarToggle} />
             </Icons>
           </Options>
         </Navigation>
@@ -99,13 +106,13 @@ const Navigation = styled.div`
   align-items: center;
   justify-content: center;
 
-  ${({ theme }) => theme.breakpoints.down("xs")} {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     display: initial;
   }
 `;
 
 const SearchInputField = styled(InputField)`
-  ${({ theme }) => theme.breakpoints.down("xs")} {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     display: none;
   }
 `;
@@ -126,6 +133,8 @@ const DropDown = styled.div`
   right: ${({ theme }) => theme.spacing(0.1)};
   z-index: 10;
   min-width: 115px;
+  display: ${(props) => props.$open === "open" ? "initial" : "none"};
+  overflow: hidden;
 `;
 
 const List = styled.ul`
@@ -162,6 +171,12 @@ const User = styled.div`
       display: none;
     }
   }
+
+  img:nth-of-type(1) {
+    ${({ theme }) => theme.breakpoints.down("xs")} {
+      display: none;
+    }
+  }
 `;
 
 const Icons = styled.div`
@@ -170,19 +185,13 @@ const Icons = styled.div`
   gap: ${({ theme }) => theme.spacing(2)};
 
   img:nth-of-type(1) {
-    ${({ theme }) => theme.breakpoints.down("xs")} {
+    ${({ theme }) => theme.breakpoints.down("sm")} {
       display: none;
     }
   }
 
   img:nth-of-type(2) {
-    ${({ theme }) => theme.breakpoints.down("xs")} {
-      display: none;
-    }
-  }
-
-  img:nth-of-type(3) {
-    ${({ theme }) => theme.breakpoints.up("xs")} {
+    ${({ theme }) => theme.breakpoints.up("sm")} {
       display: none;
     }
   }
