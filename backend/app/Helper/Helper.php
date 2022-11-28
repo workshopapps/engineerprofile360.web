@@ -24,7 +24,7 @@ class Helper extends Controller
 
     public function returnExpireTime(){
         $startdate = date("Y-m-d H:i:s");
-        $expire = strtotime($startdate. ' + 2 minutes');
+        $expire = strtotime($startdate. ' + 10 minutes');
         return $expire;
     }
 
