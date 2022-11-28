@@ -2,7 +2,8 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles, theme } from "./styles/globalStyles";
-import MainLayout from "./main/Layouts/Main/MainLayout";
+// import MainLayout from "./main/Layouts/Main/MainLayout";
+import { MainLayout, UiLayout } from "./Layouts";
 
 import Contact from "./main/pages/Contact";
 import { AdminAuthLayout } from "./main/components";
