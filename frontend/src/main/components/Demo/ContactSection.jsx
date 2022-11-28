@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import { Container } from "../../../styles/reusableElements.styled";
@@ -6,6 +6,14 @@ import { Title } from "../../../styles/reusableElements.styled";
 import { InputField } from "../../components";
 
 const ContactSection = () => {
+  const [formData, setFormData] = useState({});
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  const { name, cname, cemail, phonenumber } = formData;
+
   return (
     <Container>
       <ContactContainer>
@@ -18,7 +26,7 @@ const ContactSection = () => {
             <li>Increases company yield</li>
           </ul>
         </DemoList>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Heading>
             <Title
               as={"h2"}
@@ -92,21 +100,22 @@ const ContactSection = () => {
               //     errors && errors.email && touched.email ? errors.email : ""
               //   }
             />
-            <InputField
+            {/* <InputField
               $size="md"
               type="tel"
               label="Company Phone"
               id="comapany_phone"
               placeholder="Enter Your Company Email"
-              // value={email}
-              //   handleChange={(e) => changeInputValue(e)}
+              value={phone}
+              handleChange={(e) => changeInputValue(e)} 
               //   handleBlur={onBlur}
               //   error={errors && touched.email && errors.email?.length > 0}
               //   endIcon={<img src={smsSvg} alt="" />}
               //   helperText={
-              //     errors && errors.email && touched.email ? errors.email : ""
+                  //     errors && errors.email && touched.email ? errors.email : ""
               //   }
-            />
+            // />
+            */}
           </InputContainer>
           <Button type="submit">Submit</Button>
         </Form>
@@ -202,7 +211,7 @@ const Form = styled.form`
   gap: 24px;
   margin-top: -300px;
   width: 752px;
-  height: 925px;
+  height: 860px;
 
   background: #ffffff;
 
@@ -214,8 +223,12 @@ const Form = styled.form`
     width: 100%;
   }
 
+  @media (max-width: 750px) {
+    height: 800px;
+  }
+
   @media (max-width: 396px) {
-    height: 850px;
+    height: 750px;
   }
 `;
 
