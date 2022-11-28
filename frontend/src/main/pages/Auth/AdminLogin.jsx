@@ -66,7 +66,7 @@ const AdminLogin = () => {
 
         const { email, password } = formData;
         const response = await axios.post(
-          "auth/login",
+          "auth/organization/login",
           JSON.stringify({ email, password })
         );
 
