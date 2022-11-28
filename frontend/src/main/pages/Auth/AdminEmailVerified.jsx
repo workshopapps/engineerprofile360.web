@@ -17,7 +17,7 @@ const AdminEmailVerified = () => {
     const verifyEmail = async () => {
       try {
         const response = await axios.get(`auth/verify/${user_id}/${token}`);
-        if (response?.errorState === false) isErrorFree.current = true;
+        if (response?.errorState === true) isErrorFree.current = true;
         else isErrorFree.current = false;
       } catch (err) {
         if (!err?.response) {
@@ -46,7 +46,7 @@ const AdminEmailVerified = () => {
             </Link>
           </>
         ) : (
-          ""
+          { fetchError }
         )}
       </ResponseContainer>
     </>
