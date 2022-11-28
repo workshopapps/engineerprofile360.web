@@ -69,14 +69,14 @@ const AdminSignup = () => {
         const { email, fname: full_name, uname: username, password } = formData;
         setIsSubmitted(true);
         const response = await axios.post(
-          "auth/register",
+          "auth/organization/register",
           JSON.stringify({ email, full_name, username, password })
         );
 
         if (response.data.errorState === false) {
           navigate("/verify-email", { state: { email } });
         }
-        console.log(response.data);
+
         // Clear input fields
         setFormData({
           fname: "",
