@@ -5,6 +5,7 @@ import { Container, Button } from "../../../styles/reusableElements.styled";
 import { AuthTitle } from "../../components";
 
 import unlockIcon from "../../../assets/icons/unlock.svg";
+import { Link } from "react-router-dom";
 
 const AdminPasswordSuccess = () => {
   return (
@@ -15,9 +16,11 @@ const AdminPasswordSuccess = () => {
           title="Successful password reset!"
           text="You can now use your new password to log in to your account"
         />
-        <Button $size="md" type="button">
-          Login
-        </Button>
+        <Link to="/login">
+          <Button $size="md" type="button">
+            Login
+          </Button>
+        </Link>
       </SuccessContainer>
     </>
   );
