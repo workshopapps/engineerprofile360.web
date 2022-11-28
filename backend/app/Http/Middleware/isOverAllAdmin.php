@@ -7,7 +7,7 @@ use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 
-class IsAdmin extends Controller
+class isOverAllAdmin extends Controller
 {
     /**
      * Handle an incoming request.
@@ -16,21 +16,13 @@ class IsAdmin extends Controller
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-
-    /*
-     * EMPLOYEE - 1
-     * ORGANIZATION - 2
-     * OVERALL ADMIN - 3
-     *
-     * 
-     * This middleware should be used along with the <isloggedin> middleware.
-     * 
-     * It must be used only for authenticated users and can be called this way.
-     * 
-     * ->middleware("isloggedin", "isadmin")
-     */
     public function handle(Request $request, Closure $next)
     {
+        /**
+         * EMPLOYEE - 1
+         * ORGANIZATION - 2
+         * OVERALL ADMIN - 3
+         */
         try {
             $user = $request->user;
             $uid = $user["id"];
@@ -43,8 +35,8 @@ class IsAdmin extends Controller
                 return $this->sendResponse(true,"Access Denied, user not found.", "Not permitted to perform this action.",null, 403);
             }
 
-            // if the user doesnt have the organization level privilege
-            if($org_user->first()["role"] != 2){
+            // if the user doesnt have the overall admin level privilege
+            if($org_user->first()["role"] != 3){
                 return $this->sendResponse(true,"Access Denied.", "Not permitted to perform this action.",null, 403);
             }
             
@@ -53,6 +45,5 @@ class IsAdmin extends Controller
         } catch (\Exception $e) {
             return $this->sendResponse(true,"Something went wrong, please try again later/.", $e->getMessage(),null, 500);
         }
-
     }
 }
