@@ -4,12 +4,16 @@ import styled from "styled-components";
 import { Container } from "../../../styles/reusableElements.styled";
 import { Title } from "../../../styles/reusableElements.styled";
 import { InputField } from "../../components";
+import Modal from "./Modal";
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSubmit = (e) => {
+    console.log("is this working");
     e.preventDefault();
+    setIsModalOpen(true);
   };
 
   const { name, cname, cemail, phonenumber } = formData;
@@ -117,9 +121,10 @@ const ContactSection = () => {
             // />
             */}
           </InputContainer>
-          <Button type="submit">Submit</Button>
+          <button type="submit">Submit</button>
         </Form>
       </ContactContainer>
+      {isModalOpen ? <Modal setIsModalOpen={setIsModalOpen} /> : ""}
     </Container>
   );
 };
@@ -218,6 +223,26 @@ const Form = styled.form`
   border: 1px solid #0e0e52;
   border-radius: 16px;
 
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 75%;
+    height: 80px;
+    background: #141ae9;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 20px;
+    color: #fff;
+    margin-bottom: 35px;
+    cursor: pointer;
+
+    @media (max-width: 682px) {
+      height: 50px;
+    }
+  }
+
   @media (max-width: 898px) {
     margin-top: 0;
     width: 100%;
@@ -281,24 +306,5 @@ const InputContainer = styled.div`
 
   @media (max-width: 396px) {
     width: 95%;
-  }
-`;
-
-const Button = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 75%;
-  height: 80px;
-  background: #141ae9;
-  border-radius: 4px;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 20px;
-  color: #fff;
-  margin-bottom: 35px;
-
-  @media (max-width: 682px) {
-    height: 50px;
   }
 `;
