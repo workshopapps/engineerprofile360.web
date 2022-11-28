@@ -32,7 +32,8 @@ import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import HelpCenter from "../src/main/pages/HelpCenter";
 import { User2FA } from "./ui/pages/userSignUp/User2FA";
-import { DashboardLayout } from "./main/Layouts/Dashboard/DashboardLayout";
+// import { DashboardLayout } from "./main/Layouts/Dashboard/DashboardLayout";
+import { DashboardLayout } from "../src/Layouts/Dashboard/DashboardLayout";
 import AdminViewAssessment from "./ui/pages/admin-view-assessment/AdminViewAssessment";
 import AdminOverallPerformance from "./ui/pages/admin-overall-performance/AdminOverallPerformance";
 
