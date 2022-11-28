@@ -46,7 +46,8 @@ const NavBar = styled.div`
 
   ${({ theme }) => theme.breakpoints.down("md")} {
     width: ${(props) => props.$open === "open" ? "200px" : "0px" };
-    overflow: hidden;
+    overflow: auto;
+    overflow-y: hidden;
     border-right: ${(props) => props.$open === "open" ? "1px solid #edebe9" : "none" };
   }
 `;
