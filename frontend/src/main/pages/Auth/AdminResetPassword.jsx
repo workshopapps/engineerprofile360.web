@@ -55,8 +55,8 @@ const AdminResetPassword = () => {
 
         if (response.data.errorState === false) {
           console.log(response.data);
-          showSuccessToast(`A reset link has been sent to you @${email}`);
-
+          showSuccessToast(`A reset link has been sent to you at ${email}`);
+          setIsSubmitted(false);
           // Clear input fields
           setFormData({
             email: "",

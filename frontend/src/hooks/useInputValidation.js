@@ -1,6 +1,4 @@
-import { useState, useEffect, useRef } from "react";
-
-import { removeSpaces } from "../helpers/helper";
+import { useState, useEffect } from "react";
 
 const useInputValidation = (initialState = {}, type = null) => {
   const [formData, setFormData] = useState(initialState);
@@ -8,10 +6,6 @@ const useInputValidation = (initialState = {}, type = null) => {
   const [touched, setTouched] = useState(initialState);
   const validation = (formData) => {
     const error = {};
-    // if (formData && !formData.fname) {
-    //   error.fname = "Name is required";
-    // }
-
     if (formData.fname?.length <= 0) {
       error.fname = "Name is required";
     }
@@ -32,17 +26,23 @@ const useInputValidation = (initialState = {}, type = null) => {
     if (Object.keys(formData).length > 1 && !formData.password) {
       error.password = "Password is required";
     }
-    if (formData.confirmPassword && formData.password?.length <= 8) {
+    if (Object.keys(formData).length > 1 && formData.password?.length <= 8) {
       error.passwordLength = "Password must be more than 8 characters";
     }
-    if (formData.confirmPassword && /[A-Z]/.test(formData.password) === false) {
+    if (
+      Object.keys(formData).length > 1 &&
+      /[A-Z]/.test(formData.password) === false
+    ) {
       error.passwordUppercase = "password must have at least one uppercase";
     }
-    if (formData.confirmPassword && /[0-9]/.test(formData.password) === false) {
+    if (
+      Object.keys(formData).length > 1 &&
+      /[0-9]/.test(formData.password) === false
+    ) {
       error.passwordNumber = "Password must have at least 1 number";
     }
     if (
-      formData.confirmPassword &&
+      Object.keys(formData).length > 1 &&
       /[#?!@$%^&*-]/.test(formData.password) === false
     ) {
       error.passwordCharacter =
