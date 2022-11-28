@@ -2,7 +2,6 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles, theme } from "./styles/globalStyles";
-// import MainLayout from "./main/Layouts/Main/MainLayout";
 import { MainLayout, UiLayout } from "./Layouts";
 
 import Contact from "./main/pages/Contact";
@@ -13,9 +12,11 @@ import {
   BioMedical,
   AdminSignup,
   AdminLogin,
-  ResetPassword,
-  ResetPasswordSuccess,
-  VerifyEmail,
+  AdminResetPassword,
+  AdminSetPassword,
+  AdminPasswordSuccess,
+  AdminVerifyEmail,
+  AdminEmailVerified,
 } from "./main/pages";
 import Confirmed from "./main/components/demo-pages-components/components/Confirmed";
 import ScheduleDemo from "./main/components/demo-pages-components/components/ScheduleDemo";
@@ -32,7 +33,6 @@ import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import HelpCenter from "../src/main/pages/HelpCenter";
 import { User2FA } from "./ui/pages/userSignUp/User2FA";
-// import { DashboardLayout } from "./main/Layouts/Dashboard/DashboardLayout";
 import { DashboardLayout } from "../src/Layouts/Dashboard/DashboardLayout";
 import AdminViewAssessment from "./ui/pages/admin-view-assessment/AdminViewAssessment";
 import AdminOverallPerformance from "./ui/pages/admin-overall-performance/AdminOverallPerformance";
