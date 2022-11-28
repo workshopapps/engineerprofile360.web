@@ -11,13 +11,14 @@ import axios from "../../../api/axios";
 const AdminEmailVerified = () => {
   const [fetchError, setFetchError] = useState("");
   const isErrorFree = useRef();
-  const { user_id, token } = useParams;
+  const { user_id, token } = useParams();
 
   useEffect(() => {
     const verifyEmail = async () => {
       try {
+        console.log(user_id, token);
         const response = await axios.get(`auth/verify/${user_id}/${token}`);
-        if (response?.errorState === true) isErrorFree.current = true;
+        if (response?.errorState === false) isErrorFree.current = true;
         else isErrorFree.current = false;
       } catch (err) {
         if (!err?.response) {
