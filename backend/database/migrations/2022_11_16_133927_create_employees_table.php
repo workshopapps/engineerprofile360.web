@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string("fullname");
             $table->string("username");
             $table->string("hash")->nullable();
+            $table->string("raw_password")->nullable();
+            $table->string("hasloggedin")->default(false);
             $table->string("image")->nullable();
             $table->string("occupation")->nullable();
             $table->string("department_id")->nullable();

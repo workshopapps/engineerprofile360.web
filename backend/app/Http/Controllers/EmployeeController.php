@@ -97,7 +97,8 @@ class EmployeeController extends Controller
                     "fullname"=>$payload["fullname"],
                     "email"=>$payload["email"],
                     "org_id"=> $uid,
-                    "hash"=> $hash
+                    "hash"=> $hash,
+                    "raw_password"=>$defaultPwd
                 ];
                 
                 return $this->insertEmployee($empData, $defaultPwd);
