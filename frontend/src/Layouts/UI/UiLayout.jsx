@@ -14,11 +14,11 @@ const UiLayout = () => {
 
   return (
     <>
-      <TopBar handleLeftBarToggle={handleLeftBarToggle} />
+      <TopBar handleLeftBarToggle={handleLeftBarToggle} leftBar={leftBar} />
       <Main as="main">
-          <NavBar $open={leftBar ? "open" : "close"}>
-            <LeftBar />
-          </NavBar>
+        <NavBar $open={leftBar && document.body.clientWidth <= 960 ? "open" : "close"}>
+          <LeftBar />
+        </NavBar>
         <MainContent>
           <Outlet />
         </MainContent>
@@ -44,15 +44,15 @@ const NavBar = styled.div`
   transition: ease 0.5s;
 
   ${({ theme }) => theme.breakpoints.down("md")} {
-    width: ${(props) => props.$open === "open" ? "240px" : "0px" };
+    width: ${(props) => (props.$open === "open" ? "240px" : "0px")};
     overflow: auto;
-    overflow-y: hidden;
-    border-right: ${(props) => props.$open === "open" ? "1px solid #edebe9" : "none" };
+    // overflow: hidden;
+    border-right: ${(props) =>
+      props.$open === "open" ? "1px solid #edebe9" : "none"};
   }
 `;
 
 const MainContent = styled.div`
   height: 200vh;
   padding: 0 ${({ theme }) => theme.spacing(3)};
-
 `;
