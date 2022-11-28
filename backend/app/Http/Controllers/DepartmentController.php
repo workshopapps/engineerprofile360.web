@@ -18,6 +18,7 @@ class DepartmentController extends Controller
 
         try {
             $department = Department::create($data);
+            
 
             return $this->sendResponse(false, null, 'Department created successfully', $department, Response::HTTP_CREATED);
         } catch (Exception $e) {
