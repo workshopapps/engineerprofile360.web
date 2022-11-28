@@ -78,6 +78,7 @@ const AdminLogin = () => {
 
         if (response.data.errorState === false) {
           // navigate("/verify-email", { state: { email } });
+          setIsSubmitted(false);
         }
         console.log(response.data);
 
@@ -94,13 +95,8 @@ const AdminLogin = () => {
       if (!err?.response) {
         setLoginError("No Server Response");
       } else if (err.response?.errorState === true) {
-        setLoginError(err.response.error);
-      } else if (err.response?.errorState === 401) {
-        setLoginError("Unathorized");
-      } else {
-        setLoginError("Login Failed");
+        setLoginError(err.response.message);
       }
-
       showErrorToast(loginError);
       setIsSubmitted(false);
     }
