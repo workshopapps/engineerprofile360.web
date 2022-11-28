@@ -22,6 +22,12 @@ class Helper extends Controller
     // public $baseUrl = "http://localhost:8000";
     public $clientUrl = "http://skript.hng.tech"; // this would be the frontend client url
 
+    public function returnExpireTime(){
+        $startdate = date("Y-m-d H:i:s");
+        $expire = strtotime($startdate. ' + 10 minutes');
+        return $expire;
+    }
+
     public function generateRefreshToken($userId, $user_email)
     {
         $issuedAt = new DateTimeImmutable();
@@ -71,19 +77,21 @@ class Helper extends Controller
 
     public function emailVerification($email, $user_id){
         $apiUrl = $this->baseUrl;
+        $client = $this->clientUrl;
+
         try {
             $token = substr(md5(openssl_random_pseudo_bytes(20)),-20);
             $tokenData = [
                 "user_id"=>$user_id,
                 "token"=>$token,
-                "exp"=> false
+                "exp"=> $this->returnExpireTime()
             ];
 
             Token::create($tokenData);
 
             $mail = new Mailer();
             $mailMsg = "Verify your email using the link above";
-            $mailData = "{$apiUrl}/api/auth/verify/${user_id}/${token}";
+            $mailData = "{$client}/auth/verify/${user_id}/${token}";
             $mail->verifyEmail("mail@dicodetech.com", $email, $mailMsg, $mailData);
         } catch (\Exception $e) {
             return Log::info("Something went wrong sending email verification code.. ".$e->getMessage());
@@ -100,7 +108,7 @@ class Helper extends Controller
             $tokenData = [
                 "user_id"=>$user_id,
                 "token"=>$token,
-                "exp"=> false
+                "exp"=> $this->returnExpireTime()
             ];
     
             Token::create($tokenData);
@@ -115,8 +123,19 @@ class Helper extends Controller
         }
     }
 
-    public function notifyEmployee($emp_email, $emp_id,){
-        
+    public function sendOnboardMail($emp_fullname,$emp_username,$emp_password, $to, $org_name){
+        try {
+            $loginLink = "{$this->clientUrl}/login";
+
+            $mail = new Mailer();
+            $mail->sendEmployeeOnboardingMail($emp_fullname, $emp_username, $emp_password, $loginLink, $to, $org_name);
+        } catch (\Exception $e) {
+            return Log::error("Could not send employe onboarding invite".$e->getMessage());
+        }
+    }
+
+    public function notifyEmployee($emp_email, $emp_id){
+        return "hey";
     }
     
 }

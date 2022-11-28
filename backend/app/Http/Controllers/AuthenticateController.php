@@ -16,127 +16,31 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Validator;
 use Mailer;
 
+/**
+ * @User-Roles
+ * 
+ * 1 - EMPLOYEE
+ * 2 - ORGANIZATION
+ * 3 - ADMIN
+ */
+
 class AuthenticateController extends Controller {
+
+    protected $EMP_ROLE = 1;
+    protected $ORG_ROLE = 2;
+    protected $ADMIN_ROLE = 3;
 
     public function __construct()
     {
         $this->helper = new Helper();
     }
 
-    public function UserAndEmployeeLogin(Request $request){
-
-        $payload = json_decode($request->getContent(), true);
-        $email = $payload["email"];
-        $password = $payload["password"];
-
-        // validate credentials
-        if(!isset($email) || !isset($password)){
-            return $this->sendResponse(true,'Invalid Credentials',"Expected valid email and password", null, 422);
-        }
-
-        // fetch users by email
-        $users = User::where('email', $email);
-        // fetch employee by email
-        $employee = Employee::where('email', $email);
-
-        if ($users->count() > 0) {
-            
-            $checkPassword = Hash::check($password, $users->first()["password"]);
-
-            if(!$checkPassword){
-                return $this->sendResponse(true,"Invalid credentials supplied.", "password given do not match our record.", null, 400);
-            }
-
-            try {
-            
-                // generate access and refresh token
-                $refToken = $this->helper->generateRefreshToken($users->first()["user_id"], $email);
-                $accToken = $this->helper->generateAccessTokrn($users->first()["user_id"], $email);
-                $uid = Str::uuid();
-                // user record
-                $userResp = [
-                    "accessToken"=>$accToken,
-                    "id"=>$users->first()["user_id"],
-                    "username"=>$users->first()["username"]
-                ];
-
-                // company data
-                $companyData = [
-                    "id"=> $uid,
-                    "user_id"=>$users->first()["id"],
-                    "name"=> "",
-                    "org_mail"=> $users->first()["email"]
-                ];
-
-
-                // update refToken in database
-                User::where('email', '=', $email)->update(array('refToken' => $refToken));
-
-                // check if user has a company created
-                $user_id = $users->first()["user_id"];
-                $comp = Company::where("user_id", $user_id);
-
-                if($comp->count() == 0){
-                    // save data in company table
-                    Company::create($companyData);
-                }
-
-                
-                // check if user is unverified
-                if($users->first()["isVerified"] < 1){
-                    $this->helper->emailVerification($email,$user_id);
-                    return $this->sendResponse(false, "account not verfied.. a verification link has been sent to you account.", "failed to login.. verify your account.", null, 200);
-                }
-                
-                
-                return $this->sendResponse(false, null, "User logged in successfully", $userResp, 200);
-            } catch (\Exception $e) {
-                print_r($e);
-                return $this->sendResponse(true,$e->getMessage(),"Something went wrong loggin in, please try again", null, 500);
-            }
-        }
-        else if ($employee->count() > 0) {
-            
-            $checkPassword = Hash::check($password, $employee->first()["hash"]);
-
-            if(!$checkPassword){
-                return $this->sendResponse(true,"Invalid credentials supplied.", true, 400);
-            }
-
-            try {
-            
-                // generate access and refresh token
-                $refToken = $this->helper->generateRefreshToken($employee->first()["id"], $email);
-                $accToken = $this->helper->generateAccessTokrn($employee->first()["id"], $email);
-                $uid = Str::uuid();
-                // user record
-                $userResp = [
-                    "accessToken"=>$accToken,
-                    "id"=>$users->first()["id"],
-                    "username"=>$users->first()["username"]
-                ];
-                // update refToken in database
-                Employee::where('email', '=', $email)->update(array('refToken' => $refToken));
-
-                return $this->sendResponse(false, null, "User logged in successfully", $userResp, 200);
-            } catch (\Exception $e) {
-                return $this->errorResponse("Something went wrong loggin in, please try again", $e->getMessage(), 500);
-            }
-        }
-        else{
-            return $this->sendResponse(true,"No user found with this email", "user not found", null, 404);
-        }
+    protected function isExpired($expireTime){
+        $now = time();
+        return $now > intval($expireTime) ? true : false;
     }
 
-    public function registerUser(Request $request){
-        // validate
-        $payload = json_decode($request->getContent(), true);
-        $email = $payload["email"];
-        $username = $payload["username"];
-        $fullname = $payload["full_name"];
-        $password = $payload["password"];
-
-        // validate credentials
+    protected function validateRegisteration($email="", $username="", $fullname="", $password=""){
         $validator = Validator::make([
             "email"=>$email,
             "username"=>$username,
@@ -146,21 +50,191 @@ class AuthenticateController extends Controller {
             'email' => 'required|string|email|max:255',
             'full_name' => 'required|string|min:6',
             'username' => 'required|string|min:6',
-            'password' => 'required|string|min:4',
+            'password' => 'required|string|min:6',
         ]);
 
-        if($validator->fails()){
-            return $this->sendResponse(true,$validator->errors(), 'invalid credentials supplied', null, 422);
-        }
+        return $validator;
+    }
 
+    protected function validateLogin($email="", $password=""){
+        $validator = Validator::make([
+            "email"=>$email,
+            "password"=>$password,
+        ],[
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string|min:6',
+        ]);
 
-        // check if a user already has an account
-        $userExists = User::where('email', '=', $email)->count() > 0;
-        if($userExists){
-            return $this->sendResponse(true,"user with this exists already exists","User with this email address already exists.", null, 400);
-        }
+        return $validator;
+    }
 
+    // handle employee login
+    public function EmployeeLogin(Request $request){
         try {
+            
+            $payload = json_decode($request->getContent(), true);
+            $email = $payload["email"];
+            $password = $payload["password"];
+
+            $validator = $this->validateLogin($email, $password);
+
+            if($validator->fails()){
+                return $this->sendResponse(true,$validator->errors(), 'invalid credentials supplied', null, 422);
+            }
+
+            $employees = Employee::where('email', $email);
+
+            if ($employees->count() > 0) {
+                
+                $checkPassword = Hash::check($password, $employees->first()["hash"]);
+    
+                if(!$checkPassword){
+                    return $this->sendResponse(true,"Invalid credentials supplied.", "password given do not match our record.", null, 400);
+                }
+    
+                try {
+                
+                    // generate access and refresh token
+                    $refToken = $this->helper->generateRefreshToken($employees->first()["id"], $email);
+                    $accToken = $this->helper->generateAccessTokrn($employees->first()["id"], $email);
+                    $uid = Str::uuid();
+                    // user record
+                    $userResp = [
+                        "accessToken"=>$accToken,
+                        "id"=>$employees->first()["id"],
+                        "role"=>$employees->first()["role"],
+                        "username"=>$employees->first()["username"]
+                    ];
+    
+    
+                    // update refToken in database
+                    Employee::where('email', '=', $email)->update(array('refToken' => $refToken));
+                    
+                    
+                    return $this->sendResponse(false, null, "User logged in successfully", $userResp, 200);
+                } catch (\Exception $e) {
+                    // print_r($e);
+                    return $this->sendResponse(true,$e->getMessage(),"Something went wrong loggin in, please try again", null, 500);
+                }
+            }
+            else{
+                return $this->sendResponse(true,"No employee found with this email", "user not found", null, 404);
+            }
+
+        } catch (\Exception $e) {
+            return $this->sendResponse(true,"Something went wrong login in ".$e->getMessage(), "employee not found", null, 500);
+        }
+    }
+    
+    // handle overall skript admin login
+    public function OverallAdminLogin(Request $request){
+
+    }
+
+    // handle organization login
+    public function OrganizationLogin(Request $request){
+        try {
+            
+            $payload = json_decode($request->getContent(), true);
+            $email = $payload["email"];
+            $password = $payload["password"];
+
+            $validator = $this->validateLogin($email, $password);
+
+            if($validator->fails()){
+                return $this->sendResponse(true,$validator->errors(), 'invalid credentials supplied', null, 422);
+            }
+
+            $users = User::where('email', $email);
+
+            if ($users->count() > 0) {
+                
+                $checkPassword = Hash::check($password, $users->first()["password"]);
+    
+                if(!$checkPassword){
+                    return $this->sendResponse(true,"Invalid credentials supplied.", "password given do not match our record.", null, 400);
+                }
+    
+                try {
+                
+                    // generate access and refresh token
+                    $refToken = $this->helper->generateRefreshToken($users->first()["user_id"], $email);
+                    $accToken = $this->helper->generateAccessTokrn($users->first()["user_id"], $email);
+                    $uid = Str::uuid();
+                    // user record
+                    $userResp = [
+                        "accessToken"=>$accToken,
+                        "id"=>$users->first()["user_id"],
+                        "role"=>$users->first()["role"],
+                        "username"=>$users->first()["username"]
+                    ];
+    
+                    // company data
+                    $companyData = [
+                        "id"=> $uid,
+                        "user_id"=>$users->first()["user_id"],
+                        "name"=> $users->first()["username"],
+                        "org_mail"=> $users->first()["email"]
+                    ];
+    
+    
+                    // update refToken in database
+                    User::where('email', '=', $email)->update(array('refToken' => $refToken));
+    
+                    // check if user has a company created
+                    $user_id = $users->first()["user_id"];
+                    $comp = Company::where("user_id", $user_id);
+    
+                    if($comp->count() == 0){
+                        Company::create($companyData);
+                    }
+    
+                    
+                    // check if user is unverified
+                    if($users->first()["isVerified"] < 1){
+                        $this->helper->emailVerification($email,$user_id);
+                        return $this->sendResponse(true, "account not verfied.. a verification link has been sent to you account.", "failed to login.. verify your account.", null, 200);
+                    }
+                    
+                    
+                    return $this->sendResponse(false, null, "organization logged in successfully", $userResp, 200);
+                } catch (\Exception $e) {
+                    print_r($e);
+                    return $this->sendResponse(true,$e->getMessage(),"Something went wrong loggin in, please try again", null, 500);
+                }
+            }
+            else{
+                return $this->sendResponse(true,"No organization found with this email", "organization not found", null, 404);
+            }
+
+        } catch (\Exception $e) {
+            return $this->sendResponse(true,"Something went wrong login in ".$e->getMessage(), "organization not found", null, 500);
+        }
+    }
+
+    // handle organization registering
+    public function OrganizationRegister(Request $request){
+        try {
+            // validate
+            $payload = json_decode($request->getContent(), true);
+            $email = $payload["email"];
+            $username = $payload["username"];
+            $fullname = $payload["full_name"];
+            $password = $payload["password"];
+
+            // validate credentials
+            $validator = $this->validateRegisteration($email, $username, $fullname, $password);
+
+            if($validator->fails()){
+                return $this->sendResponse(true,$validator->errors(), 'invalid credentials supplied', null, 422);
+            }
+
+            // check if a organization already has an account
+            $userExists = User::where('email', '=', $email)->count() > 0;
+            if($userExists){
+                return $this->sendResponse(true,"user with this email already exists","User with this email address already exists.", null, 400);
+            }
+
             // user data
             $uid = Str::uuid();
             $hash = Hash::make($password);
@@ -172,7 +246,7 @@ class AuthenticateController extends Controller {
                 "isVerified"=> false,
                 "refToken"=> "",
                 "password"=> $hash,
-                "role"=>1
+                "role"=>$this->ORG_ROLE
             ];
 
             // client data
@@ -182,32 +256,31 @@ class AuthenticateController extends Controller {
                 "email"=> $email,
                 "username"=> $username,
                 "isVerified"=> false,
-                "role"=>1
+                "role"=>$this->ORG_ROLE
             ];
-
 
             // create a new record in database.
             User::create($userResp);
 
-            // send a mail verification code.
-            $this->helper->emailVerification($email, $uid);
-
             return $this->sendResponse(false, null, "User registered successfully", $clientExtractedData, 200);
+
         } catch (\Exception $e) {
-            return $this->sendResponse(true,$e->getMessage(), "Something went wrong registering, please try again", 500);
+            return $this->sendResponse(true,$e->getMessage(), "Something went wrong registering, please try again",  null, 500);
         }
     }
 
+    // verify organization email
     public function verifyEmail(Request $request, $id, $token){
         // verify if that user exists
         $user = User::where("user_id", $id);
-        $token = Token::where("token", $token);
+        $verifyToken = Token::where("token","=", $token);
 
+    
         if($user->count() == 0){
             return $this->sendResponse(true, 'Invalid verification link, no user was found',"Invalid verification link", null, 404);
         }
         
-        if($token->count() == 0){
+        if($verifyToken->count() == 0){
             return $this->sendResponse(true, 'Invalid verification link or verification expires',"Invalid verification link....", null, 400);
         }
 
@@ -218,8 +291,20 @@ class AuthenticateController extends Controller {
             return $this->sendResponse(true, "user email has been verified", "Email has been verified already", null, 200);
         }
 
+        $exp = $verifyToken->first()["exp"];
+        $isExpired = $this->isExpired($exp);
+        
+        if($isExpired){
+            // remove expired link from db
+            Token::where("user_id", $id)->delete();
+            return $this->sendResponse(true, "verification link expired", "link already expired", null, 400);
+        }
+
         // update verified user status
         User::where("user_id", $id)->update(array("isVerified"=>true));
+
+        // delte token from db
+        Token::where("user_id", $id)->delete();
 
         return $this->sendResponse(false, null, "Email verified successfully", null, 200);
     }
@@ -241,7 +326,7 @@ class AuthenticateController extends Controller {
         $users = User::where('email', '=', $email);
 
         if($users->count() == 0){
-            return $this->sendResponse(true, "email address already exists", "User with this email address doesnt exists.", null, 404);
+            return $this->sendResponse(true, "email address doesnt exists", "User with this email address doesnt exists.", null, 404);
         }
 
         // generate and send a password reset link
@@ -256,7 +341,7 @@ class AuthenticateController extends Controller {
         $payload = json_decode($req->getContent(), true);
         $verify = false;
 
-        if(isset($payload["verify"]) == false){
+        if(!isset($payload["verify"])){
             $this->sendResponse(true, "Expected a verify param in paylaod, but got none", "Verify parameter not found.",null, 404);
         }
 
@@ -344,9 +429,11 @@ class AuthenticateController extends Controller {
                 }
 
                 // check if token has expired or not
-                $hasExpired = $userTokenExists->first()["exp"];
-                if ($hasExpired > 0) {
-                    return $this->sendResponse(true, "reset link expired", "invalid Password Reset Link", null, 400);
+                $expireTime = $userTokenExists->first()["exp"];
+                $hasExpired = $this->isExpired($expireTime);
+
+                if ($hasExpired) {
+                    return $this->sendResponse(true, "reset link expired", "invalid Password Reset link", null, 400);
                 }
 
                 // send result back to client.
