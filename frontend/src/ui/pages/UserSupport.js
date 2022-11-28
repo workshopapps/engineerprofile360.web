@@ -1,144 +1,184 @@
-import React from "react"
-import Flex from "../components/layout/Flex"
-import bg from "../../assets/images/usersupport-bg.png"
-import demo from "../../assets/images/demo.svg"
-import privacy from "../../assets/images/privacy.svg"
-import terms from "../../assets/images/terms.svg"
-import faq from "../../assets/images/faq.svg"
-import icon from "../../assets/icons/search.svg"
-import "../../styles/usersupportpage.css"
-import Grid, { GridItem } from "../components/layout/Grid"
-import { StyledComponent } from "styled-components"
+import React from "react";
+import Flex from "../components/layout/Flex";
+import demo from "../../assets/images/demo.svg";
+import privacy from "../../assets/images/privacy.svg";
+import terms from "../../assets/images/terms.svg";
+import faq from "../../assets/images/faq.svg";
+import icon from "../../assets/icons/search.svg";
+import Grid, { GridItem } from "../components/layout/Grid";
+import { Container } from "../../styles/reusableElements.styled";
+import styled from "styled-components";
 
-// const
+const CardContainer = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 16px;
+  background: #ffffff;
+  border-radius: 4px;
+  height: 400px;
+`;
 
-// const Card = (props) => {
-//   return (
-//     <Flex
-//       stack
-//       style={{
-//         padding: "24px 44px",
-//         background: "white",
-//         height: "350px",
-//         borderRadius: "4px",
-//       }}
-//       ai="center"
-//       spacing={16}
-//     >
-//       <img src={props.img} alt="" />
-//       <p className="regular medium" style={{ textAlign: "center" }}>
-//         {props.title}
-//       </p>
-//       <p style={{ textAlign: "center" }} className="regular small">
-//         {props.description}
-//       </p>
-//     </Flex>
-//   )
-// }
+const SearchArea = styled.div`
+  height: 40vh;
+  background: rgba(38, 103, 255, 0.3);
+  margin-left: auto;
+  margin-right: auto;
+`;
 
-// const UserSupport = () => {
-//   return (
-//     <Flex stack>
-//       <Flex
-//         style={{
-//           height: "40vh",
-//           background: `linear-gradient(0deg, rgba(20, 26, 233, 0.15), rgba(20, 26, 233, 0.15)), url(${bg})`,
-//           backgroundSize: "cover",
-//           backgroundRepeat: "no-repeat",
-//           position: "relative",
-//         }}
-//         jc="center"
-//       >
-//         <Flex stack spacing={24} className="search-container" ai="center">
-//           <p
-//             style={{ fontSize: "42px", color: "white", textAlign: "center" }}
-//             className="semibold"
-//           >
-//             How Can We Help You?
-//           </p>
-//           <Flex style={{ background: "white", borderRadius: "7px" }}>
-//             <Flex>
-//               <Flex className="form-group has-search">
-//                 <span className="form-control-feedback">
-//                   <img src={icon} alt="" />
-//                 </span>
-//                 <input
-//                   type="text"
-//                   className="form-control input-style"
-//                   placeholder="Find something here"
-//                 />
-//               </Flex>
-//             </Flex>
-//             <button
-//               style={{
-//                 padding: "16px 20px",
-//                 borderRadius: "5px",
-//                 border: "none",
-//                 background: "#141AE9",
-//               }}
-//             >
-//               <p style={{ color: "white", fontSize: "18px" }}>Search</p>
-//             </button>
-//           </Flex>
-//         </Flex>
-//       </Flex>
-//       <Flex className="enquiries" stack style={{ background: "#FBFBFB" }}>
-//         <Grid span={12}>
-//           <GridItem span={4} md={12}>
-//             <Card
-//               img={demo}
-//               title={"Demo"}
-//               description={
-//                 "Watch a Tutorial video explaining how engineer 360 works"
-//               }
-//             />
-//           </GridItem>
-//           <GridItem span={4} md={12}>
-//             <Card
-//               img={privacy}
-//               title={"Privacy Policies"}
-//               description={"Privacy,Legal Information, Service agreements"}
-//             />
-//           </GridItem>
-//           <GridItem span={4} md={12}>
-//             <Card
-//               img={terms}
-//               title={"Terms of Services"}
-//               description={
-//                 "Get information relating to using  Engineer 360 as a Company Administrator, User or third party"
-//               }
-//             />
-//           </GridItem>
-//           <GridItem span={2} />
-//           <GridItem span={4} md={12}>
-//             <Card
-//               img={faq}
-//               title={"FAQ’s"}
-//               description={
-//                 "Subscription plans, Survey templates, Setting up my profile and much more."
-//               }
-//             />
-//           </GridItem>
-//           <GridItem span={4} md={12}>
-//             <Card
-//               img={faq}
-//               title={"FAQ’s"}
-//               description={
-//                 "Subscription plans, Survey templates, Setting up my profile and much more."
-//               }
-//             />
-//           </GridItem>
-//           <GridItem span={2} />
-//         </Grid>
-//       </Flex>
-//     </Flex>
-//   )
-// }
+const CardTitle = styled.p`
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 40px;
+  text-align: center;
+`;
 
-// export default UserSupport
+const CardDesc = styled.p`
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 28px;
+  text-align: center;
+`;
+
+const Heading = styled.p`
+  font-weight: 600;
+  font-size: 42px;
+  line-height: 52px;
+  color: #ffffff;
+  text-align: center;
+`;
+
+const SearchBox = styled.div`
+  display: flex;
+  min-width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  background: #f0f0f0;
+  border-radius: 5px;
+  position: relative;
+`;
+
+const SearchIcon = styled.img`
+  position: absolute;
+  z-index: 2;
+  bottom: 20px;
+  left: 20px;
+`;
+
+const Card = () => {
+  return (
+    <Grid span={12}>
+      <GridItem span={4} md={6} sm={12}>
+        <CardContainer>
+          <Flex ai="center" jc="center" stack spacing={16}>
+            <img src={demo} />
+            <CardTitle>Demo</CardTitle>
+            <CardDesc>
+              Watch a Tutorial video explaining how engineer 360 works
+            </CardDesc>
+          </Flex>
+        </CardContainer>
+      </GridItem>
+      <GridItem span={4} md={6} sm={12}>
+        <CardContainer>
+          <Flex ai="center" jc="center" stack spacing={16}>
+            <img src={privacy} />
+            <CardTitle>Privacy Policies</CardTitle>
+            <CardDesc>Privacy,Legal Information, Service agreements</CardDesc>
+          </Flex>
+        </CardContainer>
+      </GridItem>
+      <GridItem span={4} md={6} sm={12}>
+        <CardContainer>
+          <Flex ai="center" jc="center" stack spacing={16}>
+            <img src={terms} />
+            <CardTitle>Terms of Services</CardTitle>
+            <CardDesc>
+              Get information relating to using Engineer 360 as a Company
+              Administrator, User or third party
+            </CardDesc>
+          </Flex>
+        </CardContainer>
+      </GridItem>
+      <GridItem span={2} md={0} sm={0} />
+      <GridItem span={4} md={6} sm={12}>
+        <CardContainer>
+          <Flex ai="center" jc="center" stack spacing={16}>
+            <img src={faq} />
+            <CardTitle>FAQ’s</CardTitle>
+            <CardDesc>
+              Subscription plans, Survey templates, Setting up my profile and
+              much more.
+            </CardDesc>
+          </Flex>
+        </CardContainer>
+      </GridItem>
+      <GridItem span={4} md={6} sm={12}>
+        <CardContainer>
+          <Flex ai="center" jc="center" stack spacing={16}>
+            <img src={faq} />
+            <CardTitle>FAQ’s</CardTitle>
+            <CardDesc>
+              Subscription plans, Survey templates, Setting up my profile and
+              much more.
+            </CardDesc>
+          </Flex>
+        </CardContainer>
+      </GridItem>
+      <GridItem span={2} md={0} sm={0} />
+    </Grid>
+  );
+};
+
+const SearchContainer = () => {
+  return (
+    <SearchArea>
+      <Flex
+        jc="center"
+        ai="center"
+        style={{ height: "100%" }}
+        stack
+        spacing={30}
+      >
+        <Heading>How Can We Help You?</Heading>
+        <SearchBox>
+          <SearchIcon src={icon} alt="" />
+          <input
+            style={{
+              width: "100%",
+              height: "56px",
+              background: "#F0F0F0",
+              border: "none",
+              borderRadius: "4px",
+              paddingLeft: "52px",
+            }}
+            placeholder="Find terms of service, privacy policies and more..."
+          />
+          <button
+            style={{
+              padding: "16px 29px",
+              borderRadius: "4px",
+              border: "none",
+              background: "#2667FF",
+              color: "white",
+            }}
+          >
+            Search
+          </button>
+        </SearchBox>
+      </Flex>
+    </SearchArea>
+  );
+};
 
 const UserSupport = () => {
-  return <div>UserSupport</div>
-}
+  return (
+    <div>
+      <SearchContainer />
+      <Container style={{ background: "#FBFBFB" }}>
+        <Card />
+      </Container>
+    </div>
+  );
+};
 
-export default UserSupport
+export default UserSupport;
