@@ -99,6 +99,10 @@ export const StatCard = styled.div`
 export const AssessmentContainer = styled.div`
   height: auto;
   display: flex;
+
+  @media screen and (max-width: 767px) {
+    flex-direction: column;
+  }
 `;
 
 export const Performance = styled.div`
@@ -123,5 +127,9 @@ export const Performance = styled.div`
       color: #2667ff;
       text-decoration: underline;
     }
+  }
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
   }
 `;

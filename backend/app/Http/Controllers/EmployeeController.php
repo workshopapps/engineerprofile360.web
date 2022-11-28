@@ -39,7 +39,10 @@ class EmployeeController extends Controller
     
     public function addEmployee(Request $request)
     {
-        $query = $request->query('type');      
+        try {
+            $query = $request->query('type'); 
+            $uid = $request->user["id"];  
+
             if ($query === "csv") {
                 $csv = new CsvParser();
                 $payload = json_decode($request->getContent(), true);
@@ -53,14 +56,40 @@ class EmployeeController extends Controller
                 }
             }
             else if ($query === "manual"){
-                $payload = $request->getContent(); 
-                $data = json_decode($payload, true);
-                $data['id'] = Str::uuid();
-                return $this->insertEmployee($data);
+                $payload = json_decode($request->getContent(), true);
+    
+                // validate payload
+                if(!isset($payload["email"]) || !isset($payload["fullname"]) || !isset($payload["username"])){
+                    return $this->sendResponse(true, "expected a valid employee 'username,fullname,email'  but got none", "missing employee data.", null, 400);
+                }
+    
+                if(empty($payload["email"]) || empty($payload["fullname"]) || empty($payload["username"])){
+                    return $this->sendResponse(true, "expected a valid employee 'username,fullname,email'  but got none", "missing employee data values.", null, 400);
+                }
+
+                // check if employe exists
+                $empExists = Employee::where("email", $payload["email"]);
+
+                if($empExists->count() > 0){
+                    return $this->sendResponse(true, "employee already exists", "employee with this email already exists", null, Response::HTTP_BAD_REQUEST);
+                }
+
+                $empData = [
+                    "id"=> Str::uuid(),
+                    "username"=>$payload["username"],
+                    "fullname"=>$payload["fullname"],
+                    "email"=>$payload["email"],
+                    "org_id"=> $uid
+                ];
+    
+                return $this->insertEmployee($empData);
             } 
             else {
-                return $this->sendResponse(true, "No add query parameter", "Invalid Request", null, Response::HTTP_NOT_FOUND);
+                return $this->sendResponse(true, "query parameter not found", "Invalid query parameter", null, Response::HTTP_NOT_FOUND);
             }
+        } catch (\Exception $e) {
+            return $this->sendResponse(true, "something went wrong adding employee ".$e->getMessage(), "Employee Action Failed", null, 500);
+        }
     }
 
     public function getById(string $user_id): JsonResponse
@@ -100,7 +129,7 @@ class EmployeeController extends Controller
             $employee = Employee::insert($data);
             return $this->sendResponse(false, null, "Employee Added Successfully", $employee, Response::HTTP_CREATED);
         } catch (Exception $e) {
-            return $this->sendResponse(true, $e->getMessage(), "Employee Action Failed", null, Response::HTTP_NOT_FOUND);
+            return $this->sendResponse(true, $e->getMessage(), "Employee Action Failed", null, 500);
         } 
     }
 

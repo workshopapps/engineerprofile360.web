@@ -1,20 +1,24 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import { Container, Button } from "../../../styles/reusableElements.styled";
 import { AuthTitle } from "../../components";
 
 import verifyEmailIcon from "../../../assets/icons/verify-email.svg";
+import { useLocation } from "react-router-dom";
 
-const VerifyEmail = () => {
+const AdminVerifyEmail = () => {
   return (
     <>
       <VerifyEmailContainer>
         <img src={verifyEmailIcon} alt=" " />
         <AuthTitle title="Verify your email address" text={<Message />} />
-        <Button $size="md" type="submit">
-          Login
-        </Button>
+        <Link to="/login">
+          <Button $size="md" type="button">
+            Login
+          </Button>
+        </Link>
 
         <span>
           {" "}
@@ -26,19 +30,22 @@ const VerifyEmail = () => {
 };
 
 const Message = () => {
+  const location = useLocation();
   return (
     <>
       You’ve entered{" "}
       <Email style={{ color: "blue", display: "inline" }}>
-        Janedoe@gmail.com
+        {location.state?.email}
       </Email>{" "}
       as the email for your account. <br />
-      Please verify this email by clicking on the button below
+      Please verify this email by visiting the link sent to your email address.{" "}
+      <br />
+      If you have done so, click the button below to login.
     </>
   );
 };
 
-export default VerifyEmail;
+export default AdminVerifyEmail;
 
 const VerifyEmailContainer = styled(Container)`
   min-width: 960px;
