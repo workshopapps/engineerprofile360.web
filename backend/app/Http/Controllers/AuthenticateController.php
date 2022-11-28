@@ -261,10 +261,7 @@ class AuthenticateController extends Controller {
 
             // create a new record in database.
             User::create($userResp);
-
-            // send a mail verification code.
-            $this->helper->emailVerification($email, $uid);
-
+            
             return $this->sendResponse(false, null, "User registered successfully", $clientExtractedData, 200);
 
         } catch (\Exception $e) {
