@@ -33,6 +33,7 @@ import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import PricingPage from "./main/pages/PricingPage";
+import Payment from "./main/pages/Payment";
 import HelpCenter from "../src/main/pages/HelpCenter";
 import Market from "./main/components/Market-comp-page-2/Market";
 import AdminCSVUpload from "./ui/pages/AdminUpload/AdminCSVUpload";
@@ -47,6 +48,7 @@ import CsvUpload from "./ui/pages/csv/CsvUpload";
 import CsvUploading from "./ui/pages/csv/CsvUploading";
 import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
 import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
+import Dashboard from "./ui/pages/Dashboard";
 
 const App = () => {
   return (
@@ -78,6 +80,7 @@ const App = () => {
             />
 
             <Route path="/pricing" element={<PricingPage />} />
+            <Route path="/payment" element={<Payment />} />
             <Route
               path="/take-assessment-list"
               element={<UserTakeAssessment />}
@@ -128,7 +131,7 @@ const App = () => {
 
           <Route element={<UiLayout />}>
             {/* <Route path="/assessment" element={<Assessment />} />  */}
-            <Route path="/ui" element={200} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Route>
 
           <Route element={<DashboardLayout />}>
