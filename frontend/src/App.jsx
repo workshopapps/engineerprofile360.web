@@ -6,7 +6,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GlobalStyles, theme } from "./styles/globalStyles";
 import { MainLayout, UiLayout } from "./Layouts";
-
 import Contact from "./main/pages/Contact";
 import DemoSchedule from "./main/pages/Demo";
 import { AdminAuthLayout } from "./main/components";

@@ -2,10 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-li{
+.bordered {
+  border: 1px dotted;
+}
+
+li {
   list-style-type: none;
   margin-bottom: 10px;
-}.mainDiv {
+}
+.mainDiv {
   padding-top: 4rem;
   padding-bottom: 4rem;
 }
@@ -47,7 +52,7 @@ li{
   font-size: 1.25rem;
   line-height: 1.75rem;
 }
-.aside{
+.aside {
   background-color: #ffff;
 }
 .mainDiv .button {
@@ -65,11 +70,11 @@ li{
 .mainDiv .button .wrapper img {
   padding-right: 0.5rem;
 }
-.aside ul{
-  background-color: #EFF6FC;
+.aside ul {
+  background-color: #eff6fc;
   padding: 1rem 1.5rem;
 }
-h6{
+h6 {
   text-align: center;
   margin-bottom: 5px;
 }
