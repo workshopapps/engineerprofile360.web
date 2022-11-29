@@ -90,7 +90,7 @@ class InterviewController extends Controller
         }
     }
 
-    public function getinterviewByCompanyName($company)
+    public function getInterviewByCompanyName ($company)
     {
         try {
             $interview = Interview::with('company')
