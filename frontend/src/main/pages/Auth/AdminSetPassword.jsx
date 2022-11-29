@@ -49,7 +49,6 @@ const AdminSetPassword = () => {
             verify: true,
           })
         );
-        console.log(response.data);
       } catch (err) {
         console.error(err);
         if (!err.response) {

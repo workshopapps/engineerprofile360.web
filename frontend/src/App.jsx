@@ -8,6 +8,7 @@ import { GlobalStyles, theme } from "./styles/globalStyles";
 import { MainLayout, UiLayout } from "./Layouts";
 
 import Contact from "./main/pages/Contact";
+import DemoSchedule from "./main/pages/Demo";
 import { AdminAuthLayout } from "./main/components";
 import {
   Home,
@@ -21,8 +22,6 @@ import {
   AdminVerifyEmail,
   AdminEmailVerified,
 } from "./main/pages";
-import Confirmed from "./main/components/demo-pages-components/components/Confirmed";
-import ScheduleDemo from "./main/components/demo-pages-components/components/ScheduleDemo";
 import Support from "../src/ui/pages/UserSupport";
 import Terms from "../src/ui/pages/termsAndService/TermsAndService";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
@@ -35,7 +34,9 @@ import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 // import Testimonial from "./main/components/Testimonials/Testimonial";
 import PricingPage from "./main/pages/PricingPage";
+import Payment from "./main/pages/Payment";
 import HelpCenter from "../src/main/pages/HelpCenter";
+import Market from "./main/components/Market-comp-page-2/Market";
 import AdminCSVUpload from "./ui/pages/AdminUpload/AdminCSVUpload";
 import UserAssessmentListCompleted from "./ui/pages/UserAssestList/UserAssestListCompleted";
 
@@ -48,6 +49,7 @@ import CsvUpload from "./ui/pages/csv/CsvUpload";
 import CsvUploading from "./ui/pages/csv/CsvUploading";
 import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
 import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
+import Dashboard from "./ui/pages/Dashboard";
 
 const App = () => {
   return (
@@ -63,8 +65,7 @@ const App = () => {
             <Route path="/about-us" element={<About />} />
             <Route path="/biomedical-landing" element={<BioMedical />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/demo" element={<ScheduleDemo />} />
-            <Route path="/confirm-demo" element={<Confirmed />} />
+            <Route path="/demo" element={<DemoSchedule />} />
             <Route path="/support" element={<Support />} />
             <Route path="/help-center" element={<HelpCenter />} />
             <Route path="/termsAndService" element={<Terms />} />
@@ -72,6 +73,7 @@ const App = () => {
             <Route path="/comparison" element={<ComparisonPage />} />
             <Route path="/assessment-list" element={<AssessmentList />} />
             <Route path="/admin-assessment" element={<AdminAssessmentList />} />
+            <Route path="/market-comparison" element={<Market />} />
 
             <Route
               path="/admin-assessment-list"
@@ -79,6 +81,7 @@ const App = () => {
             />
 
             <Route path="/pricing" element={<PricingPage />} />
+            <Route path="/payment" element={<Payment />} />
             <Route
               path="/take-assessment-list"
               element={<UserTakeAssessment />}
@@ -129,7 +132,7 @@ const App = () => {
 
           <Route element={<UiLayout />}>
             {/* <Route path="/assessment" element={<Assessment />} />  */}
-            <Route path="/ui" element={200} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Route>
 
           <Route element={<DashboardLayout />}>

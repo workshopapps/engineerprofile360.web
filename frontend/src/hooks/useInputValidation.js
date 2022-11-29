@@ -26,23 +26,23 @@ const useInputValidation = (initialState = {}, type = null) => {
     if (Object.keys(formData).length > 1 && !formData.password) {
       error.password = "Password is required";
     }
-    if (Object.keys(formData).length > 1 && formData.password?.length <= 8) {
+    if (Object.keys(formData).length > 2 && formData.password?.length <= 8) {
       error.passwordLength = "Password must be more than 8 characters";
     }
     if (
-      Object.keys(formData).length > 1 &&
+      Object.keys(formData).length > 2 &&
       /[A-Z]/.test(formData.password) === false
     ) {
       error.passwordUppercase = "password must have at least one uppercase";
     }
     if (
-      Object.keys(formData).length > 1 &&
+      Object.keys(formData).length > 2 &&
       /[0-9]/.test(formData.password) === false
     ) {
       error.passwordNumber = "Password must have at least 1 number";
     }
     if (
-      Object.keys(formData).length > 1 &&
+      Object.keys(formData).length > 2 &&
       /[#?!@$%^&*-]/.test(formData.password) === false
     ) {
       error.passwordCharacter =
