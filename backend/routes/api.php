@@ -152,13 +152,13 @@ Route::prefix('employee')->group(function () {
 });
 
 
-// department route
+// department routes
 Route::prefix("department")->group(function () {
-    Route::get('{id}', [DepartmentController::class, 'getDeptByID']);
-    Route::get('company/{id}', [DepartmentController::class, 'getDeptByOrgID'])->middleware("isloggedin", "isadmin");;
-    Route::post('/add', [DepartmentController::class, 'addDepartment']);
-    Route::put('update/{departmentId}', [DepartmentController::class, 'updateDepartment']);
-    Route::delete('delete/{departmentId}', [DepartmentController::class, 'deleteDepartment']);
+    Route::get('{id}', [DepartmentController::class, 'getDeptByID'])->middleware("isloggedin", "isadmin");
+    Route::get('company/{id}', [DepartmentController::class, 'getDeptByOrgID'])->middleware("isloggedin", "isadmin");
+    Route::post('/add', [DepartmentController::class, 'addDepartment'])->middleware("isloggedin", "isadmin");
+    Route::put('update/{departmentId}', [DepartmentController::class, 'updateDepartment'])->middleware("isloggedin", "isadmin");
+    Route::delete('delete/{departmentId}', [DepartmentController::class, 'deleteDepartment'])->middleware("isloggedin", "isadmin");
 });
 
 // Interview routes
