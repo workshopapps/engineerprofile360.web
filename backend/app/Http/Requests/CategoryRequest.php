@@ -24,8 +24,8 @@ class CategoryRequest extends BaseRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'assessment_id' => 'required'
+            'name' => 'required'
+            // we dont need assessment_id when creating categories.. categories would be created first before assessment.
         ];
     }
 }

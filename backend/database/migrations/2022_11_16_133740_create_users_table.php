@@ -15,14 +15,16 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id');
-            $table->string('user_id')->unique()->primary();
+            $table->string("user_id")->primary();
             $table->string("full_name");
             $table->string("username");
             $table->string("email");
             $table->string("password");
             $table->string("reftoken")->nullable();
             $table->integer("role")->length(1)->default(1);
-            $table->boolean("isVerified")->nullable();
+            $table->boolean("isVerified")->default(false);
+            $table->boolean("isAdmin")->default(false);
+            $table->boolean("isBlocked")->default(false);
             $table->string("verify_code")->nullable();
             $table->string("verify_code_exp")->nullable();
             $table->timestamps();

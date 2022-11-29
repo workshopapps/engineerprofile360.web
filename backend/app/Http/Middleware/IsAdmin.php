@@ -17,7 +17,11 @@ class IsAdmin extends Controller
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
 
-    /**
+    /*
+     * EMPLOYEE - 1
+     * ORGANIZATION - 2
+     * OVERALL ADMIN - 3
+     *
      * 
      * This middleware should be used along with the <isloggedin> middleware.
      * 
@@ -35,14 +39,19 @@ class IsAdmin extends Controller
             $org_user = User::where("user_id", $uid);
             
             // if not user is found
-            if($org_user->count() == 0 || $org_user->first()["role"] != 1){
-                return $this->errorResponse("Access Denied ", "Not permitted to perform this action.", 403);
+            if($org_user->count() == 0){
+                return $this->sendResponse(true,"Access Denied, user not found.", "Not permitted to perform this action.",null, 403);
+            }
+
+            // if the user doesnt have the organization level privilege
+            if($org_user->first()["role"] != 2){
+                return $this->sendResponse(true,"Access Denied.", "Not permitted to perform this action.",null, 403);
             }
             
             return $next($request);
 
         } catch (\Exception $e) {
-            return $this->errorResponse("Something went wrong, please try again later/.", $e->getMessage(), 500);
+            return $this->sendResponse(true,"Something went wrong, please try again later/.", $e->getMessage(),null, 500);
         }
 
     }

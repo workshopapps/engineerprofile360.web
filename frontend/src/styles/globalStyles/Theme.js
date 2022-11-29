@@ -1,4 +1,5 @@
 const theme = {
+  // Every color used within the project lives here
   palette: {
     divider: "#EDEBE9",
     border: {
@@ -11,7 +12,6 @@ const theme = {
         lighterAlt: "#EFF6FC",
         lighter: "#DEECF9",
         light: "#C7E0F4",
-        // contact: "#2667FF",
       },
       tertiary: {
         tertiary: "#3D94DF",
@@ -33,7 +33,7 @@ const theme = {
         background: "#FFF4CE",
         color: "#797775",
       },
-      severeWorking: {
+      severeWarning: {
         background: "#FED9CC",
         color: "#D83B01",
       },
@@ -50,17 +50,58 @@ const theme = {
         thirty: "#EDEBE9",
         sixty: "#C8C6C4",
         nintey: "#A19F9D",
-        oneThrity: "#605E5C",
+        oneThirty: "#605E5C",
         oneSixty: "#323130",
         oneNinty: "#201F1E",
       },
     },
   },
 
-  spacing: (num) => {
-    return `${8 * num}px`
+  // Function for spacing, default spacing is 8px
+  spacing: (num = 1) => {
+    return `${8 * num}px`;
   },
-  
-}
 
-export default theme
+  // Breakpoints for responsiveness lives right here
+  breakpoints: {
+    xs: 480,
+    sm: 767,
+    md: 959,
+    lg: 1023,
+    xl: 1439,
+    up: function (screen) {
+      switch (screen) {
+        case "xs":
+          return `@media (min-width: ${this.xs + 1}px)`;
+        case "sm":
+          return `@media (min-width: ${this.sm + 1}px)`;
+        case "md":
+          return `@media (min-width: ${this.md + 1}px)`;
+        case "lg":
+          return `@media (min-width: ${this.lg + 1}px)`;
+        case "xl":
+          return `@media (min-width: ${this.xl + 1}px)`;
+        default:
+          return ``;
+      }
+    },
+    down: function (screen) {
+      switch (screen) {
+        case "xs":
+          return `@media (max-width: ${this.xs}px)`;
+        case "sm":
+          return `@media (max-width: ${this.sm}px)`;
+        case "md":
+          return `@media (max-width: ${this.md}px)`;
+        case "lg":
+          return `@media (max-width: ${this.lg}px)`;
+        case "xl":
+          return `@media (max-width: ${this.xl}px)`;
+        default:
+          return ``;
+      }
+    },
+  },
+};
+
+export default theme;

@@ -5,8 +5,10 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^8.0.2",
+        "php": "^8.0.2|^8.1",
+        "doctrine/dbal": "^3.5",
         "firebase/php-jwt": "^6.3",
+        "fruitcake/laravel-cors": "^3.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
