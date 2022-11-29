@@ -143,6 +143,7 @@ const DropDown = styled.div`
   min-width: 115px;
   display: ${(props) => (props.$open === "open" ? "initial" : "none")};
   overflow: hidden;
+
 `;
 
 const List = styled.ul`
@@ -158,6 +159,7 @@ const List = styled.ul`
     color: #323130;
 
     img:first-of-type {
+      display: initial;
       ${({ theme }) => theme.breakpoints.down("xs")} {
         display: initial;
       }
