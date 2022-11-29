@@ -85,7 +85,7 @@ const TopBarContainer = styled.header`
   display: flex;
   align-items: center;
   background: #ffffff;
-  z-index: 1;
+  z-index: 5;
   width: 100%;
 
   border-bottom: 1px solid #edebe9;

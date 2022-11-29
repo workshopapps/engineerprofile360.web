@@ -58,8 +58,7 @@ const NavBar = styled.div`
 `;
 
 const MainContent = styled.div`
-  height: 200vh;
   padding: 0 ${({ theme }) => theme.spacing(3)};
   width: 100%;
-  overflow: hidden;
+  overflow: auto;
 `;

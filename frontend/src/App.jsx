@@ -49,6 +49,7 @@ import CsvUpload from "./ui/pages/csv/CsvUpload";
 import CsvUploading from "./ui/pages/csv/CsvUploading";
 import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
 import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
+import Dashboard from "./ui/pages/Dashboard";
 
 const App = () => {
   return (
@@ -131,7 +132,7 @@ const App = () => {
 
           <Route element={<UiLayout />}>
             {/* <Route path="/assessment" element={<Assessment />} />  */}
-            <Route path="/ui" element={200} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Route>
 
           <Route element={<DashboardLayout />}>
