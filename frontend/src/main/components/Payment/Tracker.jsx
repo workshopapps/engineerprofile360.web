@@ -156,7 +156,6 @@ const Circle = styled.div`
         content: "Make payment";
         left: -15px;
         width: 70px;
-        /* width: 100px; */
       }
     }
     &:nth-child(3) {
@@ -164,7 +163,6 @@ const Circle = styled.div`
         content: "Review order";
         left: -39px;
         width: 65px;
-        /* width: 100px; */
       }
     }
   }
