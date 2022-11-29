@@ -9,5 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 class Interview extends Model
 {
     use HasFactory, Uuids;
-    protected $guarded = [];
+    protected $guarded = ['id'];
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id');
+    }
+
 }

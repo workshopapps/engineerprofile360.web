@@ -106,4 +106,20 @@ class InterviewController extends Controller
             return $this->sendResponse(true, $e->getMessage(), "Error fetching interview", null, Response::HTTP_BAD_REQUEST);
         }
     }
+
+    public function getInterviewByCompanyName ($company)
+    {
+        try {
+            $interview = Interview::with('company')
+                        ->whereHas('company', function (Builder $query) {
+                            $query->where('name', 'like', '%'.$company.'%');
+                        })
+                        ->get();
+            if (!$interview) 
+                return $this->sendResponse(true, null, 'Interview not found', null, Response::HTTP_NOT_FOUND);
+            return $this->sendResponse(false, null, 'Interview retrieved', $interview, Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, $e->getMessage(), "Error fetching interview", null, Response::HTTP_BAD_REQUEST);
+        }        
+    }
 }
