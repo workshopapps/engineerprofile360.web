@@ -13,9 +13,6 @@ class Category extends Model
     /**
      * @var $fillable
     */
-    protected $fillable = [
-        'name',
-        'assessment_id'
-    ];
+    protected $fillable = ["id", "name", "org_id"];
 
 }
