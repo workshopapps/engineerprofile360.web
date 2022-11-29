@@ -24,7 +24,7 @@ import {
 } from "./main/pages";
 import Support from "../src/ui/pages/UserSupport";
 import Terms from "../src/ui/pages/termsAndService/TermsAndService";
-import UserProfile from "./ui/pages/user-profile/UserProfile";
+// import UserProfile from "./ui/pages/user-profile/UserProfile";
 import Blog from "../src/main/pages/Blog";
 import AssessmentList from "./main/components/sections/userAssessmentList/AssessmentList";
 import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
@@ -36,6 +36,7 @@ import Testimonial from "./main/components/Testimonials/Testimonial";
 import PricingPage from "./main/pages/PricingPage";
 import Payment from "./main/pages/Payment";
 import HelpCenter from "../src/main/pages/HelpCenter";
+import Market from "./main/components/Market-comp-page-2/Market";
 import AdminCSVUpload from "./ui/pages/AdminUpload/AdminCSVUpload";
 import UserAssessmentListCompleted from "./ui/pages/UserAssestList/UserAssestListCompleted";
 
@@ -71,6 +72,7 @@ const App = () => {
             <Route path="/comparison" element={<ComparisonPage />} />
             <Route path="/assessment-list" element={<AssessmentList />} />
             <Route path="/admin-assessment" element={<AdminAssessmentList />} />
+            <Route path="/market-comparison" element={<Market />} />
 
             <Route
               path="/admin-assessment-list"
