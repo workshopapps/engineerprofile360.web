@@ -12,8 +12,4 @@ function DemoSchedule() {
   );
 }
 
-<<<<<<< HEAD
-export default Demo;
-=======
 export default DemoSchedule;
->>>>>>> dev
