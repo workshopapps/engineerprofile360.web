@@ -8,6 +8,8 @@ import Grid, { GridItem } from "../../components/layout/Grid";
 const Page = styled.div`
   padding: 70px 48px;
   background: #fff;
+  margin: auto;
+  max-width: 1440px;
 
   @media screen and (max-width: 1023px) {
     padding: 16px;
