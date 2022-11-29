@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import RequireAuth from "./components/requireAuth";
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
 import { ToastContainer } from "react-toastify";
@@ -58,8 +59,8 @@ const App = () => {
         <Routes>
           <Route path="/2FA" element={<User2FA />} />
 
+          {/* Public routes */}
           <Route element={<MainLayout />}>
-            {/* Public routes */}
             <Route path="/" element={<Home />} />
             <Route path="/about-us" element={<About />} />
             <Route path="/biomedical-landing" element={<BioMedical />} />
@@ -139,10 +140,16 @@ const App = () => {
           </Route>
         </Routes>
 
-        {/* <UserProfile /> */}
-        {/* <UiLayout> */}
-        {/* ALL APP PAGES SHOULD BE ROUTED WITH THIS LAYOUT COMPONENET */}
-        {/* </UiLayout> */}
+        {/* Private Route */}
+        <Routes>
+          <Route element={<RequireAuth allowedRole="2" />}>
+            {/* Put in Protected pages in here */}
+          </Route>
+
+          {/* Catch All 404 page */}
+
+          <Route path="*" element={1} />
+        </Routes>
       </ThemeProvider>
       <StyledToastContainer />
     </>

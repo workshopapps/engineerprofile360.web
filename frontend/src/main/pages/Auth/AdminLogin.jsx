@@ -1,6 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthContext from "../../../context/authProvider";
@@ -9,6 +9,7 @@ import { Container, Button } from "../../../styles/reusableElements.styled";
 import { AuthTitle, InputField } from "../../components";
 
 import useInputValidation from "../../../hooks/useInputValidation";
+import useAuth from "../../../hooks/useAuth";
 import axios from "../../../api/axios";
 
 import eyeSvg from "../../../assets/icons/eye.svg";
@@ -16,7 +17,11 @@ import smsSvg from "../../../assets/icons/smsenvelope.svg";
 import { Loader } from "../../../styles/reusableElements.styled";
 
 const AdminLogin = () => {
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const [isSubmitted, setIsSubmitted] = useState("");
   const [showPassword, setShowPassword] = useState(true);
   const [loginError, setLoginError] = useState();
@@ -41,7 +46,6 @@ const AdminLogin = () => {
     });
   };
 
-  const navigate = useNavigate();
   const { email, password } = formData;
 
   const handleSubmit = async (e, formData) => {
@@ -70,32 +74,34 @@ const AdminLogin = () => {
           JSON.stringify({ email, password })
         );
 
-        const accessToken = response?.data?.accessToken;
+        console.log(response.data);
 
-        setAuth({ email, password, accessToken });
+        const accessToken = response?.data?.accessToken;
+        const roles = response?.data?.role;
+
+        setAuth({ email, password, accessToken, roles });
 
         if (response.data.errorState === false) {
+          // Clear input fields
+          setFormData({
+            email: "",
+            password: "",
+          });
+
           // navigate("/verify-email", { state: { email } });
+          navigate(from, { replace: true });
           setIsSubmitted(false);
         }
-
-        // Clear input fields
-        setFormData({
-          email: "",
-          password: "",
-        });
       } else if (errors) {
       }
     } catch (err) {
-      showErrorToast(err);
       setIsSubmitted(false);
       if (!err?.response) {
         setLoginError("No Server Response");
-      } else if (err.response?.errorState === true) {
-        setLoginError(err.response.message);
+      } else if (err.response?.data.errorState === true) {
+        setIsSubmitted(false);
+        showErrorToast(err.response?.data.message);
       }
-      showErrorToast(loginError);
-      setIsSubmitted(false);
     }
   };
 
