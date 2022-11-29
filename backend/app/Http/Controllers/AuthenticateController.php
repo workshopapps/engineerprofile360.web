@@ -96,7 +96,7 @@ class AuthenticateController extends Controller {
                 
                     // generate access and refresh token
                     $refToken = $this->helper->generateRefreshToken($employees->first()["id"], $email);
-                    $accToken = $this->helper->generateAccessTokrn($employees->first()["id"], $email);
+                    $accToken = $this->helper->generateAccessToken($employees->first()["id"], $email);
                     $uid = Str::uuid();
                     // user record
                     $userResp = [
@@ -159,7 +159,7 @@ class AuthenticateController extends Controller {
                 
                     // generate access and refresh token
                     $refToken = $this->helper->generateRefreshToken($users->first()["user_id"], $email);
-                    $accToken = $this->helper->generateAccessTokrn($users->first()["user_id"], $email);
+                    $accToken = $this->helper->generateAccessToken($users->first()["user_id"], $email);
                     $uid = Str::uuid();
                     // user record
                     $userResp = [
@@ -446,6 +446,32 @@ class AuthenticateController extends Controller {
             } catch (\Exception $e) {
                 return $this->sendResponse(true, "Couldnt Verify Password Reset Link ".$e->getMessage() , "Something went wrong verifying password reset link, please try again", null, 500);
             }
+        }
+    }
+
+    // refresh expire jwt-token
+    public function refreshJwtToken(Request $req){
+        try {
+            $payload = json_decode($req->getContent(), true);
+
+            if(!isset($payload["token"])){
+                return $this->sendResponse(true, "jwt token not found", "Unauthorised.",null, 401);
+            }
+
+            // decode jwt
+            $token = $payload["token"];
+            $decoded = $this->helper->decodeJwt($token);
+            $email = $decoded->email;
+            $id = $decoded->id;
+
+            // generate accesstoken
+            $newToken = $this->helper->generateAccessToken($id, $email);
+
+            // send newly generated token
+            return $this->sendResponse(false, null, "refresh token.",array("token"=>$newToken), 200);
+
+        } catch (\Exception $e) {
+            return $this->sendResponse(true, "something went wrong refreshing token: ".$e->getMessage(), "Unauthorised.",null, 401);
         }
     }
 }
