@@ -167,7 +167,7 @@ Route::prefix('interview')->group(function () {
     Route::get('all', [InterviewController::class, 'getInterviews']);
     Route::post('add', [InterviewController::class, 'addInterview'])->middleware('isloggedin', 'isadmin');
     Route::get('get/{id}', [InterviewController::class, 'getInterviewById']);
-    Route::get('get/{company}', [InterviewController::class, 'getinterviewByCompanyName']);
+    Route::get('get/{company}', [InterviewController::class, 'getInterviewByCompanyName']);
     Route::put('update/{interviewId}', [InterviewController::class, 'updateInterview']);
     Route::get('/stack/{stack_id}', [InterviewController::class, 'getInterviewByStack'])->middleware("isloggedin", "isadmin");
 });
