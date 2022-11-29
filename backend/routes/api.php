@@ -165,10 +165,27 @@ Route::prefix("department")->group(function () {
 Route::prefix('interview')->group(function () {
 
     Route::get('all', [InterviewController::class, 'getInterviews']);
+    Route::get('{id}', [InterviewController::class, 'getInterviewById']);
+    Route::get('/stack/{stack_id}', [InterviewController::class, 'getInterviewByStack']);
+    Route::delete('delete/{id}', [InterviewController::class, 'deleteInterview'])->middleware("isloggedin", "isadmin");
     Route::post('add', [InterviewController::class, 'addInterview'])->middleware('isloggedin', 'isadmin');
     Route::get('get/{id}', [InterviewController::class, 'getInterviewById']);
     Route::put('update/{interviewId}', [InterviewController::class, 'updateInterview']);
-    Route::get('/stack/{stack_id}', [InterviewController::class, 'getInterviewByStack'])->middleware("isloggedin", "isadmin");
+
+
+});
+
+// User Assessment routes
+Route::prefix("user-assessment")->group(function () {
+    Route::post('/accept/{assessmentId}/{employmentId}/{orgId}', [UserAssessmentController::class, 'acceptUserAssessment']);
+    Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
+    Route::get('/org/{org_id}/org-available', [UserAssessmentController::class, 'getOrgAvailableAssessment']);
+    Route::get('/org/{org_id}/org-completed', [UserAssessmentController::class, 'getOrgCompletedAssessment']);
+    Route::get('/{employee_id}', [UserAssessmentController::class, 'getEmployeeAvailableAssessments'])->middleware("isloggedin");
+    Route::get('/{employee_id}/completed', [UserAssessmentController::class, 'getEmployeeCompletedAssessment'])->middleware("isloggedin");
+    Route::put('/{id}/update', [UserAssessmentController::class, 'updateUserAssessment']);
+    Route::delete('/{id}/delete', [UserAssessmentController::class, 'deleteUserAssessment']);
+
 });
 
 // Stack route
