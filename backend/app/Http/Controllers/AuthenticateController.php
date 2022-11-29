@@ -10,6 +10,7 @@ use App\Models\Token;
 use App\Models\User;
 use DateTime;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash; 
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -33,6 +34,8 @@ class AuthenticateController extends Controller {
     public function __construct()
     {
         $this->helper = new Helper();
+        $this->CookieName = "eval360-token";
+        $this->CookieExp = time()+(3600*24*2); // expire in 2 days
     }
 
     protected function isExpired($expireTime){
@@ -110,8 +113,11 @@ class AuthenticateController extends Controller {
                     // update refToken in database
                     Employee::where('email', '=', $email)->update(array('refToken' => $refToken, "hasloggedin"=>true));
                     
-                    
-                    return $this->sendResponse(false, null, "User logged in successfully", $userResp, 200);
+                    // set http-only cookie
+                    $cookieVal = $accToken;
+
+                    // send newly generated token
+                    return $this->sendResponseWithCookie(false, null, "employee logged in successfully", $userResp, 200, $this->CookieName, $cookieVal, $this->CookieExp);
                 } catch (\Exception $e) {
                     // print_r($e);
                     return $this->sendResponse(true,$e->getMessage(),"Something went wrong loggin in, please try again", null, 500);
@@ -196,8 +202,11 @@ class AuthenticateController extends Controller {
                         return $this->sendResponse(true, "account not verfied.. a verification link has been sent to you account.", "failed to login.. verify your account.", null, 200);
                     }
                     
+                    // set http-only cookie
+                    $cookieVal = $accToken;
 
-                    return $this->sendResponse(false, null, "organization logged in successfully", $userResp, 200);
+                    // send newly generated token
+                    return $this->sendResponseWithCookie(false, null, "organization logged in successfully", $userResp, 200, $this->CookieName, $cookieVal, $this->CookieExp);
                 } catch (\Exception $e) {
                     print_r($e);
                     return $this->sendResponse(true,$e->getMessage(),"Something went wrong loggin in, please try again", null, 500);
@@ -467,11 +476,14 @@ class AuthenticateController extends Controller {
             // generate accesstoken
             $newToken = $this->helper->generateAccessToken($id, $email);
 
+            // set http-only cookie
+            $cookieVal = $newToken;
+
             // send newly generated token
-            return $this->sendResponse(false, null, "refresh token.",array("token"=>$newToken), 200);
+            return $this->sendResponseWithCookie(false, null, "refresh token", array("token"=>$newToken), 200, $this->CookieName, $cookieVal, $this->CookieExp);
 
         } catch (\Exception $e) {
-            return $this->sendResponse(true, "something went wrong refreshing token: ".$e->getMessage(), "Unauthorised.",null, 401);
+            return $this->sendResponse(true, "something went wrong refreshing token: ".$e->getMessage(), "Unauthorised.",null, 500);
         }
     }
 }
