@@ -7,7 +7,7 @@ import PageInfo from "../components/molecules/PageInfo";
 const Dashboard = () => {
   return (
     <>
-      <PageInfo breadcrumb={["Dashboard", "Index"]} pageTitle="Welcome Mr Mark" />
+      <PageInfo pageTitle="Welcome Mr Mark" />
       <Stats />
       <TopEmployees />
     </>
