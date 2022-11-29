@@ -52,6 +52,12 @@ import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
 import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
 import Dashboard from "./ui/pages/Dashboard";
 
+const ROLES = {
+  Employees: 1,
+  Organization: 2,
+  Admin: 3,
+};
+
 const App = () => {
   return (
     <>
@@ -131,25 +137,27 @@ const App = () => {
             />
           </Route>
 
+          {/* Private Route */}
           <Route element={<UiLayout />}>
-            {/* <Route path="/assessment" element={<Assessment />} />  */}
-            <Route path="/dashboard" element={<Dashboard />} />
+            {/* Employee Route */}
+            <Route element={<RequireAuth allowedRole={[ROLES.Employees]} />}>
+              {/* Put in Protected pages in here */}
+            </Route>
+
+            {/* Organization Route */}
+            <Route element={<RequireAuth allowedRole={[ROLES.Organization]} />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Route>
+
+            {/* Overall Admin Route */}
+            <Route element={<RequireAuth allowedRole={[ROLES.Admin]} />}>
+              {/* Put in Protected pages in here */}
+            </Route>
+
+            <Route element={<DashboardLayout />}>
+              <Route path="/assessment" element={<Assessment />} />
+            </Route>
           </Route>
-
-          <Route element={<DashboardLayout />}>
-            <Route path="/assessment" element={<Assessment />} />
-          </Route>
-        </Routes>
-
-        {/* Private Route */}
-        <Routes>
-          <Route element={<RequireAuth allowedRole="2" />}>
-            {/* Put in Protected pages in here */}
-          </Route>
-
-          {/* Catch All 404 page */}
-
-          <Route path="*" element={1} />
         </Routes>
       </ThemeProvider>
       <StyledToastContainer />

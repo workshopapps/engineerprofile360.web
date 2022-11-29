@@ -105,13 +105,14 @@ const AdminSetPassword = () => {
         });
       }
     } catch (err) {
-      setIsSubmitted(false);
       if (!err?.response) {
         setPasswordError("No Server Response");
       } else if (err.response?.errorState === true) {
         setPasswordError(err.response.error);
         showErrorToast(passwordError);
       }
+    } finally {
+      setIsSubmitted(false);
     }
   };
 

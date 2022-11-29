@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "https://api.skript.hng.tech/api/",
+  baseURL: "http://api.eval360.hng.tech/api/",
   headers: {
     "content-type": "application/json",
   },

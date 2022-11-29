@@ -88,20 +88,18 @@ const AdminLogin = () => {
             password: "",
           });
 
-          // navigate("/verify-email", { state: { email } });
           navigate(from, { replace: true });
-          setIsSubmitted(false);
         }
-      } else if (errors) {
       }
     } catch (err) {
       setIsSubmitted(false);
       if (!err?.response) {
-        setLoginError("No Server Response");
+        showErrorToast("No Server Response");
       } else if (err.response?.data.errorState === true) {
-        setIsSubmitted(false);
         showErrorToast(err.response?.data.message);
       }
+    } finally {
+      setIsSubmitted(false);
     }
   };
 
