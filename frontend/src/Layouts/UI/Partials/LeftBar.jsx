@@ -31,8 +31,14 @@ export default LeftBar;
 const LeftBarContainer = styled.nav`
   width: 100%;
   height: 100%;
-  padding-left: ${({ theme }) => theme.spacing(3)}
+  padding-left: ${({ theme }) => theme.spacing(3)};
+  box-sizing: initial;
 
+  ${({ theme }) => theme.breakpoints.down("md")} { 
+    width: 240px;
+    background: #FFFFFF;
+    padding-top: ${({ theme }) => theme.spacing(4)};
+  }
 `;
 
 const List = styled.ul`
