@@ -48,11 +48,6 @@ import {
   FCText,
   FagComp2,
   FcTriangle,
-  LastSection,
-  LastTes1,
-  LastTes2,
-  LastBotton,
-  LastContent,
 } from "./Market.styled";
 import HowFrag from "./HowFrag";
 import WhichFrag from "./WhichFrag";
@@ -65,9 +60,9 @@ import How2 from "../../../assets/images/how2.svg";
 import Quote from "./images/quote.svg";
 import Testimony from "./images/testimony.svg";
 import Triangle from "./images/triangle.svg";
+import Ready from "../Home/HomeGetStarted.jsx";
 
 const Market = () => {
-  console.log(MarketImg);
   return (
     <>
       <Main>
@@ -351,18 +346,7 @@ const Market = () => {
           </Container>
         </ThirdPage>
       </Main>
-      <LastSection>
-        <Container>
-          <LastContent>
-            <LastTes1>Ready to get started?</LastTes1>
-            <LastTes2>
-              Start your journey to increased engineer productivity and
-              widespread organizational growth today.
-            </LastTes2>
-            <LastBotton>Request A Demo</LastBotton>
-          </LastContent>
-        </Container>
-      </LastSection>
+      <Ready />
     </>
   );
 };

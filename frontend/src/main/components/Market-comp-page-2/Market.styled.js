@@ -22,18 +22,10 @@ export const Container = styled.div`
     padding: 0;
     text-align: center;
   }
-  /* @media (min-width: 768px) and (max-width: 1024px) {
-    margin-top: -100px;
-  } */
 `;
 
 export const FirstPage = styled.div`
   width: 100%;
-  /* height: 600px; */
-
-  /* @media screen and (max-width: 768px) {
-    height: 100%;
-  } */
 `;
 export const Upper = styled.div`
   width: 100%;
@@ -63,9 +55,6 @@ export const Left = styled.div`
     padding: 0;
     gap: 2rem;
   }
-  /* @media (min-width: 768px) and (max-width: 1024px) {
-    margin-top: -100px;
-  } */
 `;
 export const Down = styled.div`
   width: 100%;
@@ -97,9 +86,6 @@ export const Text1 = styled.h1`
     letter-spacing: 0.01em;
     text-align: center;
   }
-  /* @media (min-width: 768px) and (max-width: 1024px) {
-    margin-top: -100px;
-  } */
 `;
 export const Textvs = styled.h2`
   width: 82px;
@@ -710,11 +696,6 @@ export const FagText = styled.h1`
   font-size: 48px;
   line-height: 50px;
   color: #323130;
-
-  /* @media screen and (max-width: 768px) {
-    align-items: center;
-    gap: 5rem;
-  } */
 `;
 export const FagComP1 = styled.div`
   width: 100%;
@@ -779,83 +760,5 @@ export const FagComp2 = styled.div`
 
   @media screen and (max-width: 768px) {
     margin-left: 2rem;
-  }
-`;
-export const LastSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-  width: 100vw;
-  height: 30rem;
-  background: black;
-  display: flex;
-  flex-direction: column;
-  gap: 5rem;
-
-  @media screen and (max-width: 768px) {
-    height: 18rem;
-    gap: 2rem;
-  }
-  /* justify-content: center;
-  align-item: center; */
-`;
-
-export const LastContent = styled.div`
-  width: 100%;
-  height: 100%;
-  text-align: center;
-`;
-export const LastTes1 = styled.h1`
-  width: 100%;
-  height: 50px;
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 32px;
-  line-height: 50px;
-  letter-spacing: 0.015em;
-  text-transform: capitalize;
-  color: #faf9f8;
-  text-align: center;
-
-  @media screen and (max-width: 768px) {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-  }
-`;
-export const LastTes2 = styled.h1`
-  width: 100%
-  height: 48px;
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 200%;
-  text-align: center;
-  letter-spacing: 0.03em;
-  text-transform: lowercase;
-  color: #ffffff;
-
-    @media screen and (max-width: 768px) {
-    font-weight: 300;
-  font-size: 15px;
-  line-height: 200%;
-  }
-`;
-export const LastBotton = styled.button`
-  justify-content: center;
-  align-items: center;
-  padding: 12px 20px;
-  width: 288px;
-  height: 80px;
-  background: #141ae9;
-  border-radius: 4px;
-  color: white;
-
-  @media screen and (max-width: 768px) {
-    padding: 12px 20px;
-    width: 150px;
-    height: 60px;
   }
 `;
