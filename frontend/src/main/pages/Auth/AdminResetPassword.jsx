@@ -39,7 +39,6 @@ const AdminResetPassword = () => {
           email: true,
         });
       }
-      console.log(errors);
 
       if (Object.keys(errors).length === 0) {
         setTouched({
@@ -54,7 +53,6 @@ const AdminResetPassword = () => {
         );
 
         if (response.data.errorState === false) {
-          console.log(response.data);
           showSuccessToast(`A reset link has been sent to you at ${email}`);
           setIsSubmitted(false);
           // Clear input fields
@@ -66,7 +64,6 @@ const AdminResetPassword = () => {
         }
       }
     } catch (err) {
-      console.log(err);
       if (err) {
         setIsSubmitted(false);
       }

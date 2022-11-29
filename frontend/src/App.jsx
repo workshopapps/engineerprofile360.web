@@ -34,6 +34,7 @@ import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import PricingPage from "./main/pages/PricingPage";
+import Payment from "./main/pages/Payment";
 import HelpCenter from "../src/main/pages/HelpCenter";
 import Market from "./main/components/Market-comp-page-2/Market";
 import AdminCSVUpload from "./ui/pages/AdminUpload/AdminCSVUpload";
@@ -79,6 +80,7 @@ const App = () => {
             />
 
             <Route path="/pricing" element={<PricingPage />} />
+            <Route path="/payment" element={<Payment />} />
             <Route
               path="/take-assessment-list"
               element={<UserTakeAssessment />}

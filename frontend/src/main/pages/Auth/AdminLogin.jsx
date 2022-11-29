@@ -70,8 +70,6 @@ const AdminLogin = () => {
           JSON.stringify({ email, password })
         );
 
-        console.log(JSON.stringify(response?.data));
-
         const accessToken = response?.data?.accessToken;
 
         setAuth({ email, password, accessToken });
@@ -80,7 +78,6 @@ const AdminLogin = () => {
           // navigate("/verify-email", { state: { email } });
           setIsSubmitted(false);
         }
-        console.log(response.data);
 
         // Clear input fields
         setFormData({
