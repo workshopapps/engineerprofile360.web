@@ -3,7 +3,7 @@ import { Button, Title } from "../../../styles/reusableElements.styled";
 import styled from "styled-components";
 import { ReactComponent as UserPhoto } from "./assets/user-photo.svg";
 import { ReactComponent as ChartData } from "./assets/chart.svg";
-import Breadcrumb from "../../components/Breadcrumb";
+import PageInfo from "../../components/molecules/PageInfo";
 
 const UserProfileData = [
   { title: "Name", value: "Sir Seyi Alameen" },
@@ -17,6 +17,12 @@ const ResultStats = [
   { title: "Prototyping And Flow 205", status: "Completed" },
   { title: "User experience on WebApp", status: "Completed" },
   { title: "User experience on Mobile", status: "Completed" },
+];
+
+const BreadCrumbList = [
+  { name: "Employees" },
+  { name: "Profiles" },
+  { name: "Sir Seyi Alameen" },
 ];
 
 const ResultStatCard = ({ name, status, bgColor }) => {
@@ -48,7 +54,12 @@ const UserCard = ({ name, value, color }) => {
 const UserAssessmentResult = () => {
   return (
     <>
-      <Breadcrumb />
+      <PageInfo
+        pageTitle="User Assessment Result"
+        breadcrumb={BreadCrumbList.map((item, key) => (
+          <React.Fragment key={key}>{item.name}</React.Fragment>
+        ))}
+      />
       <UserAssessmentContainer>
         <ProfileStatsCard>
           <UserPhotoContainer>
