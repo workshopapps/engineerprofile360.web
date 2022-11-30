@@ -11,7 +11,11 @@ const Dashboard = () => {
 
   return (
     <>
-      <PageInfo pageTitle={`Welcome ${auth.fullName ? auth.fullName.split(" ")[0] : ""} `} />
+      <PageInfo
+        pageTitle={`Welcome ${
+          auth.fullName ? auth.fullName.split(" ")[0] : ""
+        } `}
+      />
       <Stats />
       <TopEmployees />
     </>
