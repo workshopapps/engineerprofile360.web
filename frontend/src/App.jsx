@@ -95,10 +95,6 @@ const App = () => {
             />
 
             <Route
-              path="/user-assessment-result"
-              element={<UserAssessmentResult />}
-            />
-            <Route
               path="/admin-view-assessment"
               element={<AdminViewAssessment />}
             />
@@ -142,6 +138,10 @@ const App = () => {
             {/* Employee Route */}
             <Route element={<RequireAuth allowedRole={ROLES.Employees} />}>
               {/* Put in Protected pages in here */}
+              <Route
+                path="/user-assessment-result"
+                element={<UserAssessmentResult />}
+              />
             </Route>
 
             {/* Organization Route */}
