@@ -1,24 +1,30 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-import dashboard from "../../../assets/icons/app/dashboard.svg";
-import assessment from "../../../assets/icons/app/assessment.svg";
+import { Menu, TaskSquare, Profile2User } from "iconsax-react";
 
 const LeftBar = () => {
+  const { pathname } = useLocation();
+
   return (
     <LeftBarContainer>
       <List>
-        <li>
-          <Link to="/">
-            <img src={dashboard} alt="" /> Dashboard
+        <ListItem $active={pathname === "/dashboard" ? "active" : ""}>
+          <Link to="/dashboard">
+            <Menu /> Dashboard
           </Link>
-        </li>
-        <li>
-          <Link to="/">
-            <img src={assessment} alt="" /> Assessment
+        </ListItem>
+        <ListItem $active={pathname === "/assessment" ? "active" : ""}>
+          <Link to="/assessment">
+            <TaskSquare /> Assessment
           </Link>
-        </li>
+        </ListItem>
+        <ListItem $active={pathname === "/employees" ? "active" : ""}>
+          <Link to="/employees">
+            <Profile2User /> Employees
+          </Link>
+        </ListItem>
       </List>
     </LeftBarContainer>
   );
@@ -32,9 +38,9 @@ const LeftBarContainer = styled.nav`
   padding-left: ${({ theme }) => theme.spacing(3)};
   box-sizing: initial;
 
-  ${({ theme }) => theme.breakpoints.down("md")} { 
+  ${({ theme }) => theme.breakpoints.down("md")} {
     width: 240px;
-    background: #FFFFFF;
+    background: #ffffff;
     padding-top: ${({ theme }) => theme.spacing(4)};
   }
 `;
@@ -45,22 +51,23 @@ const List = styled.ul`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(1)};
+  }
+`;
 
-  li {
-    a {
-      display: flex;
-      align-items: center;
-      gap: ${({ theme }) => theme.spacing(3)};
-      font-size: 18px;
-      line-height: 24px;
-      color: #323130;
-      font-weight: 600;
-      padding: ${({ theme }) => theme.spacing(2)};
-      border-radius: ${({ theme }) => theme.spacing(1)};
+const ListItem = styled.li`
+  a {
+    display: flex;
+    align-items: center;
+    gap: ${({ theme }) => theme.spacing(3)};
+    font-size: 18px;
+    line-height: 24px;
+    color: ${(props) => (props.$active === "active" ? "#141ae9" : "#323130")};
+    font-weight: 600;
+    padding: ${({ theme }) => theme.spacing(2)};
+    border-radius: ${({ theme }) => theme.spacing(1)};
 
-      &:hover {
-        color: #141ae9;
-      }
+    &:hover {
+      color: ${(props) => (props.$active === "active" ? "#141ae9" : "#323130")};
     }
   }
 `;
