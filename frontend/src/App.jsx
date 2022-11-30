@@ -52,6 +52,7 @@ import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
 import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
 import Dashboard from "./ui/pages/Dashboard";
 import AssessmentFirstPage from "./ui/pages/AssessmentFirstPage";
+import CreateAssessment from "./ui/pages/CreateAssessment";
 
 const ROLES = {
   Employees: 1,
@@ -149,6 +150,7 @@ const App = () => {
             <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/assessment" element={<AssessmentFirstPage />} />
+              <Route path="/create-assessment" element={<CreateAssessment />} />
             </Route>
 
             {/* Overall Admin Route */}

@@ -9,9 +9,6 @@ import useAuth from "../../hooks/useAuth";
 const Dashboard = () => {
   const { auth } = useAuth();
 
-  console.log(auth);
-
-  console.log(auth);
   return (
     <>
       <PageInfo pageTitle={`Welcome ${auth.user_name}`} />

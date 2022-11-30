@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+
+import { Link } from "react-router-dom";
+
 import Flex from "../components/layout/Flex";
 import Grid, { GridItem } from "../components/layout/Grid";
 import sophie from "../../assets/images/sophie.svg";
@@ -13,15 +16,16 @@ const Heading = () => {
     <Flex jc="space-between" className="" ai="center">
       <h2 className="headingtext">Assessments</h2>
       <div className="button-container">
-        <button className="bg-primary create-button">
+        <Link to="/create-assessment" className="bg-primary create-button">
           <Flex spacing={10} ai="center">
             <img src={plus} alt="" />
             <div className="hide">
               <p className="white">Create New Assessment</p>
             </div>
           </Flex>
-        </button>
-        <button
+        </Link>
+        <Link
+          to="/view-assessment"
           style={{
             border: "2px solid #2667FF",
           }}
@@ -29,7 +33,7 @@ const Heading = () => {
         >
           <p className="primary semibold-alt hide">View Assessments</p>
           <p className="primary semibold-alt show">View </p>
-        </button>
+        </Link>
       </div>
     </Flex>
   );
