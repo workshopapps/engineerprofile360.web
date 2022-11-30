@@ -81,8 +81,8 @@ export const Button = styled.button`
 `;
 
 export const Loader = styled.div`
-  border: 10px solid #106ebe;
-  border-top: 10px solid lightblue;
+  border: 8px solid #106ebe;
+  border-top: 8px solid lightblue;
   border-radius: 50%;
   height: 60px;
   width: 60px;
