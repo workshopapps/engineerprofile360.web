@@ -82,11 +82,6 @@ const App = () => {
             <Route path="/admin-assessment" element={<AdminAssessmentList />} />
             <Route path="/market-comparison" element={<Market />} />
 
-            <Route
-              path="/admin-assessment-list"
-              element={<AdminAssessmentList />}
-            />
-
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/payment" element={<Payment />} />
             <Route
@@ -146,8 +141,12 @@ const App = () => {
 
             {/* Organization Route */}
             <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
-            <Route path="/ui" element={"my guy"} />
+              <Route path="/ui" element={"my guy"} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route
+                path="/admin-assessment-list"
+                element={<AdminAssessmentList />}
+              />
             </Route>
 
             {/* Overall Admin Route */}
