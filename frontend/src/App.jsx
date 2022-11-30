@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import RequireAuth from "./components/requireAuth";
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
 import { ToastContainer } from "react-toastify";
@@ -51,6 +52,12 @@ import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
 import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
 import Dashboard from "./ui/pages/Dashboard";
 
+const ROLES = {
+  Employees: 1,
+  Organization: 2,
+  Admin: 3,
+};
+
 const App = () => {
   return (
     <>
@@ -59,8 +66,8 @@ const App = () => {
         <Routes>
           <Route path="/2FA" element={<User2FA />} />
 
+          {/* Public routes */}
           <Route element={<MainLayout />}>
-            {/* Public routes */}
             <Route path="/" element={<Home />} />
             <Route path="/about-us" element={<About />} />
             <Route path="/biomedical-landing" element={<BioMedical />} />
@@ -130,20 +137,28 @@ const App = () => {
             />
           </Route>
 
+          {/* Private Route */}
           <Route element={<UiLayout />}>
-            {/* <Route path="/assessment" element={<Assessment />} />  */}
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Route>
+            {/* Employee Route */}
+            <Route element={<RequireAuth allowedRole={ROLES.Employees} />}>
+              {/* Put in Protected pages in here */}
+            </Route>
 
-          <Route element={<DashboardLayout />}>
-            <Route path="/assessment" element={<Assessment />} />
+            {/* Organization Route */}
+            <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Route>
+
+            {/* Overall Admin Route */}
+            <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
+              {/* Put in Protected pages in here */}
+            </Route>
+
+            <Route element={<DashboardLayout />}>
+              <Route path="/assessment" element={<Assessment />} />
+            </Route>
           </Route>
         </Routes>
-
-        {/* <UserProfile /> */}
-        {/* <UiLayout> */}
-        {/* ALL APP PAGES SHOULD BE ROUTED WITH THIS LAYOUT COMPONENET */}
-        {/* </UiLayout> */}
       </ThemeProvider>
       <StyledToastContainer />
     </>
