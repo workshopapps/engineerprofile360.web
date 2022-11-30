@@ -70,16 +70,14 @@ const AdminLogin = () => {
           JSON.stringify({ email, password })
         );
 
-        console.log(JSON.stringify(response?.data));
-
         const accessToken = response?.data?.accessToken;
 
         setAuth({ email, password, accessToken });
 
         if (response.data.errorState === false) {
           // navigate("/verify-email", { state: { email } });
+          setIsSubmitted(false);
         }
-        console.log(response.data);
 
         // Clear input fields
         setFormData({
@@ -94,13 +92,8 @@ const AdminLogin = () => {
       if (!err?.response) {
         setLoginError("No Server Response");
       } else if (err.response?.errorState === true) {
-        setLoginError(err.response.error);
-      } else if (err.response?.errorState === 401) {
-        setLoginError("Unathorized");
-      } else {
-        setLoginError("Login Failed");
+        setLoginError(err.response.message);
       }
-
       showErrorToast(loginError);
       setIsSubmitted(false);
     }

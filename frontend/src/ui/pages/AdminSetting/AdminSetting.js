@@ -1,5 +1,4 @@
 import MyDetails from "./components/MyDetails";
-import classes from "./AdminSetting.module.css";
 import { useState } from "react";
 import Password from "./components/Password";
 import Notifications from "./components/Notifcations";
@@ -9,6 +8,7 @@ import API from "./components/API";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import { MainContainer } from "../../../styles/reusableElements.styled";
+import styled from "styled-components";
 
 const AdminSetting = () => {
   const [activeNav, setActiveNav] = useState("My Details");
@@ -31,17 +31,15 @@ const AdminSetting = () => {
       <MainContainer>
         <Sidebar />
 
-        <main className={classes.main}>
-          <h1 className={classes.main_heading}>Settings</h1>
-          <nav className={classes.nav}>
-            <ul className={classes.nav_list}>
+        <Main>
+          <h1 className="main_heading">Settings</h1>
+          <nav className="nav">
+            <ul className="nav_list">
               {nav_heading.map((item) => (
                 <li
                   onClick={navClickHandler}
                   key={item}
-                  className={`${classes.nav_item} ${
-                    activeNav === item ? classes.nav_active : ""
-                  }`}
+                  className={`nav_item ${activeNav === item ? "nav_active" : ""}`}
                 >
                   {item}
                 </li>
@@ -54,10 +52,75 @@ const AdminSetting = () => {
           {activeNav === "Teams" && <Teams />}
           {activeNav === "Integrations" && <Integrations />}
           {activeNav === "API" && <API />}
-        </main>
+        </Main>
       </MainContainer>
     </>
   );
 };
+
+const Main = styled.main`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 40px 40px 1fr;
+  row-gap: 24px;
+  padding: 50px 24px;
+
+  .main_heading {
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 37px;
+    color: #323130;
+  }
+
+  .nav_list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+  }
+
+  .nav_item {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    color: #a19f9d;
+    width: fit-content;
+    cursor: pointer;
+    transition: ease-in-out;
+  }
+
+  @keyframes animate {
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  .nav_active {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
+    padding-bottom: 3px;
+    border-bottom: 5px solid #141ae9;
+    color: #323130;
+    align-self: center;
+    animation: animate 1s;
+    transition: ease-in-out;
+  }
+
+  @media screen and (max-width: 769px) {
+    .nav_list {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .nav_item {
+      font-size: 14px;
+    }
+    .nav_active {
+      font-size: 16px;
+    }
+
+  }
+`;
 
 export default AdminSetting;
