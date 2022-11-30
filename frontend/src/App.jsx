@@ -98,10 +98,6 @@ const App = () => {
             />
 
             <Route
-              path="/user-assessment-result"
-              element={<UserAssessmentResult />}
-            />
-            <Route
               path="/admin-view-assessment"
               element={<AdminViewAssessment />}
             />
@@ -116,7 +112,6 @@ const App = () => {
 
             <Route path="/setting" element={<AdminSetting />} />
             <Route path="/privacy-policy" element={<Privacy />} />
-            <Route path="/employee-profile" element={<EmployeeProfile />} />
             <Route path="/admin-csv-upload" element={<AdminCSVUpload />} />
             <Route
               path="/user-assessment-completed"
@@ -145,10 +140,18 @@ const App = () => {
             {/* Employee Route */}
             <Route element={<RequireAuth allowedRole={ROLES.Employees} />}>
               {/* Put in Protected pages in here */}
+              <Route
+                path="/user-assessment-result"
+                element={<UserAssessmentResult />}
+              />
+              <Route path="/employee-profile" element={<EmployeeProfile />} />
             </Route>
 
             {/* Organization Route */}
             <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
+
+              <Route path="/ui" element={"my guy"} />
+
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/employees" element={<Employees />}>
               <Route path="/employees" element={<EmployeesListing />} />

@@ -233,7 +233,7 @@ const AdminSignup = () => {
           </Checkbox>
 
           <Button
-            $size="md"
+            $size="xl"
             type={isSubmitted ? "button" : "submit"}
             $variant={isSubmitted ? "disabled" : null}
           >
