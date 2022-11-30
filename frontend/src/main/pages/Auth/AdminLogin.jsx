@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AuthContext from "../../../context/authProvider";
 
 import { Container, Button } from "../../../styles/reusableElements.styled";
 import { AuthTitle, InputField } from "../../components";
@@ -17,10 +16,10 @@ import smsSvg from "../../../assets/icons/smsenvelope.svg";
 import { Loader } from "../../../styles/reusableElements.styled";
 
 const AdminLogin = () => {
-  const { setAuth } = useAuth();
+  const { setAuth, persist, setPersist } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || "/dashboard";
 
   const [isSubmitted, setIsSubmitted] = useState("");
   const [showPassword, setShowPassword] = useState(true);
@@ -45,6 +44,14 @@ const AdminLogin = () => {
       position: toast.POSITION.TOP_RIGHT,
     });
   };
+
+  const togglePersist = () => {
+    setPersist((prev) => !prev);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("persist", persist);
+  }, [persist]);
 
   const { email, password } = formData;
 
@@ -74,12 +81,11 @@ const AdminLogin = () => {
           JSON.stringify({ email, password })
         );
 
-        console.log(response.data);
+        const accessToken = response?.data?.data.accessToken;
+        const roles = response?.data?.data.role;
+        const id = response?.data?.data.id;
 
-        const accessToken = response?.data?.accessToken;
-        const roles = response?.data?.role;
-
-        setAuth({ email, password, accessToken, roles });
+        setAuth({ email, password, accessToken, roles, id });
 
         if (response.data.errorState === false) {
           // Clear input fields
@@ -153,7 +159,13 @@ const AdminLogin = () => {
           />
           <Checkbox>
             <label>
-              <input type="checkbox" /> Remember me
+              <input
+                type="checkbox"
+                id="persist"
+                onChange={togglePersist}
+                checked={persist}
+              />{" "}
+              Remember me
             </label>
 
             <Link to="/reset-password">Forgot password?</Link>

@@ -140,17 +140,17 @@ const App = () => {
           {/* Private Route */}
           <Route element={<UiLayout />}>
             {/* Employee Route */}
-            <Route element={<RequireAuth allowedRole={[ROLES.Employees]} />}>
+            <Route element={<RequireAuth allowedRole={ROLES.Employees} />}>
               {/* Put in Protected pages in here */}
             </Route>
 
             {/* Organization Route */}
-            <Route element={<RequireAuth allowedRole={[ROLES.Organization]} />}>
+            <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
               <Route path="/dashboard" element={<Dashboard />} />
             </Route>
 
             {/* Overall Admin Route */}
-            <Route element={<RequireAuth allowedRole={[ROLES.Admin]} />}>
+            <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
               {/* Put in Protected pages in here */}
             </Route>
 
