@@ -462,7 +462,6 @@ class AuthenticateController extends Controller {
     public function refreshJwtToken(Request $req){
         try {
             $jwtToken = $req->cookie($this->CookieName);
-            $payload = json_decode($req->getContent(), true);
 
             if(!isset($jwtToken) || empty($jwtToken)){
                 return $this->sendResponse(true, "jwt token not found", "Unauthorised.",null, 401);
