@@ -20,7 +20,7 @@ const LeftBar = () => {
           </Link>
         </li>
         <li>
-          <Link to="/assessment">
+          <Link to="/employees">
             <img src={assessment} alt="" /> Employees
           </Link>
         </li>

@@ -7,7 +7,7 @@ import PageInfo from "../components/molecules/PageInfo";
 import useAuth from "../../hooks/useAuth";
 
 const Dashboard = () => {
-  const { auth, persist } = useAuth();
+  const { auth } = useAuth();
 
   console.log(auth);
 
