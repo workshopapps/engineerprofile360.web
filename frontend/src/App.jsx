@@ -54,12 +54,14 @@ import Dashboard from "./ui/pages/Dashboard";
 import Employees from "./ui/pages/Employees";
 import EmployeesListing from "./ui/components/Employees/EmployeesListing";
 import EmployeeProfile from "./ui/components/Employees/EmployeeProfile";
+import AcceptReject from "./ui/pages/Accept Reject Profile/AcceptReject";
 
 const ROLES = {
   Employees: 1,
   Organization: 2,
   Admin: 3,
 };
+
 
 const App = () => {
   return (
@@ -133,6 +135,7 @@ const App = () => {
               path={"/auth/verify/:user_id/:token"}
               element={<AdminEmailVerified />}
             />
+            <Route path="/accept-reject-profile" element={<AcceptReject />} />
           </Route>
 
           {/* Private Route */}
