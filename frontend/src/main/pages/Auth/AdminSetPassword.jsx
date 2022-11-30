@@ -195,7 +195,7 @@ const AdminSetPassword = () => {
             }
           />
           <Button
-            $size="md"
+            $size="lg"
             type={isSubmitted ? "button" : "submit"}
             $variant={isSubmitted ? "disabled" : null}
           >

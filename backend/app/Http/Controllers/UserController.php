@@ -22,7 +22,7 @@ class UserController extends Controller
     public function getUsers()
     {
         try {
-            $users = User::paginate(10);
+            $users = User::select("id","user_id","full_name","email","role","isVerified","isAdmin","isBlocked","refToken")->paginate(10);
 
             return $this->sendResponse(
                 false,
@@ -127,13 +127,13 @@ class UserController extends Controller
         }
     }
 
-    public function updaterUserInfo(UpdateUserRequest $request, $userId)
+    public function updaterUserInfo(Request $request, $userId)
     {
         try {
-            $updatedData = $request->all();
-            $user = User::find($userId);
+            $payload = json_decode($request->getContent(), true);
+            $user = User::where("user_id",$userId);
 
-            if (!$user) {
+            if ($user->count() === 0) {
                 return $this->sendResponse(
                     true,
                     'User does not exist',
@@ -141,6 +141,26 @@ class UserController extends Controller
                     Response::HTTP_NOT_FOUND
                 );
             }
+
+            // check if actually the user updating the record is exactly the one who added it in first place.
+
+            $uid = $request->user["id"];
+
+            if($userId !== $uid){
+                return $this->sendResponse(
+                    true,
+                    'unauthorised to update user info',
+                    'unauthorised',
+                    null,
+                    403
+                );
+            }
+
+            $updatedData = [
+                "username"=> $payload["username"],
+                "email"=>$payload["email"],
+                "full_name"=> $payload["full_name"]
+            ];
 
             $user->update($updatedData);
 

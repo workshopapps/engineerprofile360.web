@@ -26,7 +26,7 @@ export const Title = styled.h1`
 `;
 
 export const Button = styled.button`
-  min-width: 77px;
+  min-width: ${(props) => (props.$size === "xl" ? "100%" : "77px")};
   min-height: 44px;
   max-width: ${(props) => props.$maxWidth ? props.$maxWidth : "288px"};
   height: ${(props) =>
