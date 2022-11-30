@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import RequireAuth from "./components/requireAuth";
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
 import { ToastContainer } from "react-toastify";
@@ -8,6 +9,7 @@ import { GlobalStyles, theme } from "./styles/globalStyles";
 import { MainLayout, UiLayout } from "./Layouts";
 
 import Contact from "./main/pages/Contact";
+import DemoSchedule from "./main/pages/Demo";
 import { AdminAuthLayout } from "./main/components";
 import {
   Home,
@@ -21,21 +23,21 @@ import {
   AdminVerifyEmail,
   AdminEmailVerified,
 } from "./main/pages";
-import Confirmed from "./main/components/demo-pages-components/components/Confirmed";
-import ScheduleDemo from "./main/components/demo-pages-components/components/ScheduleDemo";
 import Support from "../src/ui/pages/UserSupport";
 import Terms from "../src/ui/pages/termsAndService/TermsAndService";
-import UserProfile from "./ui/pages/user-profile/UserProfile";
+// import UserProfile from "./ui/pages/user-profile/UserProfile";
 import Blog from "../src/main/pages/Blog";
 import AssessmentList from "./main/components/sections/userAssessmentList/AssessmentList";
 import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
 import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
 import Privacy from "./main/pages/Privacy/privacy";
-import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
+// import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
-import Testimonial from "./main/components/Testimonials/Testimonial";
+// import Testimonial from "./main/components/Testimonials/Testimonial";
 import PricingPage from "./main/pages/PricingPage";
+import Payment from "./main/pages/Payment";
 import HelpCenter from "../src/main/pages/HelpCenter";
+import Market from "./main/components/Market-comp-page-2/Market";
 import AdminCSVUpload from "./ui/pages/AdminUpload/AdminCSVUpload";
 import UserAssessmentListCompleted from "./ui/pages/UserAssestList/UserAssestListCompleted";
 
@@ -48,7 +50,18 @@ import CsvUpload from "./ui/pages/csv/CsvUpload";
 import CsvUploading from "./ui/pages/csv/CsvUploading";
 import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
 import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
+import Dashboard from "./ui/pages/Dashboard";
+import Employees from "./ui/pages/Employees";
+import EmployeesListing from "./ui/components/Employees/EmployeesListing";
+import EmployeeProfile from "./ui/components/Employees/EmployeeProfile";
 import AcceptReject from "./ui/pages/Accept Reject Profile/AcceptReject";
+
+const ROLES = {
+  Employees: 1,
+  Organization: 2,
+  Admin: 3,
+};
+
 
 const App = () => {
   return (
@@ -58,14 +71,13 @@ const App = () => {
         <Routes>
           <Route path="/2FA" element={<User2FA />} />
 
+          {/* Public routes */}
           <Route element={<MainLayout />}>
-            {/* Public routes */}
             <Route path="/" element={<Home />} />
             <Route path="/about-us" element={<About />} />
             <Route path="/biomedical-landing" element={<BioMedical />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/demo" element={<ScheduleDemo />} />
-            <Route path="/confirm-demo" element={<Confirmed />} />
+            <Route path="/demo" element={<DemoSchedule />} />
             <Route path="/support" element={<Support />} />
             <Route path="/help-center" element={<HelpCenter />} />
             <Route path="/termsAndService" element={<Terms />} />
@@ -73,6 +85,7 @@ const App = () => {
             <Route path="/comparison" element={<ComparisonPage />} />
             <Route path="/assessment-list" element={<AssessmentList />} />
             <Route path="/admin-assessment" element={<AdminAssessmentList />} />
+            <Route path="/market-comparison" element={<Market />} />
 
             <Route
               path="/admin-assessment-list"
@@ -80,15 +93,12 @@ const App = () => {
             />
 
             <Route path="/pricing" element={<PricingPage />} />
+            <Route path="/payment" element={<Payment />} />
             <Route
               path="/take-assessment-list"
               element={<UserTakeAssessment />}
             />
 
-            <Route
-              path="/user-assessment-result"
-              element={<UserAssessmentResult />}
-            />
             <Route
               path="/admin-view-assessment"
               element={<AdminViewAssessment />}
@@ -104,7 +114,6 @@ const App = () => {
 
             <Route path="/setting" element={<AdminSetting />} />
             <Route path="/privacy-policy" element={<Privacy />} />
-            <Route path="/employee-profile" element={<EmployeeProfile />} />
             <Route path="/admin-csv-upload" element={<AdminCSVUpload />} />
             <Route
               path="/user-assessment-completed"
@@ -129,20 +138,39 @@ const App = () => {
             <Route path="/accept-reject-profile" element={<AcceptReject />} />
           </Route>
 
+          {/* Private Route */}
           <Route element={<UiLayout />}>
-            {/* <Route path="/assessment" element={<Assessment />} />  */}
-            <Route path="/ui" element={200} />
-          </Route>
+            {/* Employee Route */}
+            <Route element={<RequireAuth allowedRole={ROLES.Employees} />}>
+              {/* Put in Protected pages in here */}
+              <Route
+                path="/user-assessment-result"
+                element={<UserAssessmentResult />}
+              />
+              <Route path="/employee-profile" element={<EmployeeProfile />} />
+            </Route>
 
-          <Route element={<DashboardLayout />}>
-            <Route path="/assessment" element={<Assessment />} />
+            {/* Organization Route */}
+            <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
+              <Route path="/ui" element={"my guy"} />
+
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/employees" element={<Employees />}>
+                <Route path="" element={<EmployeesListing />} />
+                <Route path="profile" element={<EmployeeProfile />} />
+              </Route>
+            </Route>
+
+            {/* Overall Admin Route */}
+            <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
+              {/* Put in Protected pages in here */}
+            </Route>
+
+            <Route element={<DashboardLayout />}>
+              <Route path="/assessment" element={<Assessment />} />
+            </Route>
           </Route>
         </Routes>
-
-        {/* <UserProfile /> */}
-        {/* <UiLayout> */}
-        {/* ALL APP PAGES SHOULD BE ROUTED WITH THIS LAYOUT COMPONENET */}
-        {/* </UiLayout> */}
       </ThemeProvider>
       <StyledToastContainer />
     </>

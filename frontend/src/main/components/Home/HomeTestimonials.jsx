@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Container, Title } from "../../../styles/reusableElements.styled";
-
 import testimony from "./assets/images/testimony.svg";
 import quotes from "./assets/icons/quotes.svg";
 
@@ -101,8 +100,9 @@ const ClientsName = styled.div`
   bottom: -15px;
   border-radius: ${({ theme }) => theme.spacing(1.2)};
   background: white;
-  padding: ${({ theme }) => theme.spacing(0.5)} ${({ theme }) => theme.spacing(1.5)};
-  border: 1px solid #EDEBE9;
+  padding: ${({ theme }) => theme.spacing(0.5)}
+    ${({ theme }) => theme.spacing(1.5)};
+  border: 1px solid #edebe9;
 
   span {
     font-weight: 600;

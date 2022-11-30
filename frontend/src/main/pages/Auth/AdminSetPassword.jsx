@@ -49,7 +49,6 @@ const AdminSetPassword = () => {
             verify: true,
           })
         );
-        console.log(response.data);
       } catch (err) {
         console.error(err);
         if (!err.response) {
@@ -106,13 +105,14 @@ const AdminSetPassword = () => {
         });
       }
     } catch (err) {
-      setIsSubmitted(false);
       if (!err?.response) {
         setPasswordError("No Server Response");
       } else if (err.response?.errorState === true) {
         setPasswordError(err.response.error);
         showErrorToast(passwordError);
       }
+    } finally {
+      setIsSubmitted(false);
     }
   };
 
@@ -195,7 +195,7 @@ const AdminSetPassword = () => {
             }
           />
           <Button
-            $size="md"
+            $size="lg"
             type={isSubmitted ? "button" : "submit"}
             $variant={isSubmitted ? "disabled" : null}
           >

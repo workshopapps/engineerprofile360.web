@@ -18,17 +18,14 @@ const AdminEmailVerified = () => {
       try {
         console.log(user_id, token);
         const response = await axios.get(`auth/verify/${user_id}/${token}`);
-        if (response?.data.errorState === false) {
-          setIsErrorFree(true);
-        }
       } catch (err) {
         if (!err?.response) {
-          showErrorToast("No Response Error");
-        }
-        if (err?.response.data.errorState === true) {
-          setIsErrorFree(false);
+          showErrorToast("No Server Response");
+        } else if (err?.response.data.errorState === true) {
           showErrorToast(err.response.data.message);
         }
+      } finally {
+        setIsErrorFree(false);
       }
     };
 

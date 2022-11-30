@@ -2,19 +2,27 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import logo from "../../../assets/images/logo.svg";
-import searchIcon from "../../../assets/icons/search.svg";
 import user from "../../../assets/icons/app/user1.svg";
-import bell from "../../../assets/icons/app/notification.svg";
-import arrowDown from "../../../assets/icons/app/arrow-down.svg";
 import closeIcon from "../../../assets/icons/close.svg";
 import menuIcon from "../../../assets/icons/menu.svg";
-import userIcon from "../../../assets/icons/profile.svg";
-import settingIcon from "../../../assets/icons/setting.svg";
-import logoutIcon from "../../../assets/icons/logout.svg";
+
+import {
+  SearchNormal1,
+  Notification,
+  ArrowDown2,
+  HambergerMenu,
+  Setting2,
+  LogoutCurve,
+  User,
+} from "iconsax-react";
+
 import { InputField } from "../../../main/components";
 import { Container } from "../../../styles/reusableElements.styled";
 
+import useAuth from "../../../hooks/useAuth";
+
 const TopBar = ({ handleLeftBarToggle, leftBar }) => {
+  const { auth } = useAuth();
   const [dropDown, setDropDown] = useState(false);
   const handleDropDownToggle = () => {
     setDropDown(!dropDown);
@@ -29,33 +37,29 @@ const TopBar = ({ handleLeftBarToggle, leftBar }) => {
         <Navigation>
           <SearchInputField
             $height="52px"
-            startIcon={<img src={searchIcon} />}
+            startIcon={<SearchNormal1 color="#323130" />}
             type="text"
             placeholder="Search"
           />
           <Options>
-            <User>
+            <UserCon>
               <img src={user} alt="" />
-              <span>Mark Jilaga</span>
-            </User>
+              <span>{auth.fullName ? auth.fullName.split(" ")[0] : ""}</span>
+            </UserCon>
             <Icons>
-              <img src={bell} alt="" />
-              <img src={searchIcon} alt="" />
-              <img src={arrowDown} alt="" onClick={handleDropDownToggle} />
+              <Notification color="#323130" />
+              <SearchNormal1 color="#323130" />
+              <ArrowDown2 onClick={handleDropDownToggle} />
               <DropDown $open={dropDown ? "open" : "close"}>
                 <List>
                   <li>
-                    <img src={userIcon} alt="" /> Profile
+                    <User color="#323130" /> Profile
                   </li>
-                </List>
-                <List>
                   <li>
-                    <img src={settingIcon} alt="" /> Settings
+                    <Setting2 color="#323130" /> Settings
                   </li>
-                </List>
-                <List>
                   <li>
-                    <img src={logoutIcon} alt="" /> Logout
+                    <LogoutCurve color="#323130" /> Logout
                   </li>
                 </List>
               </DropDown>
@@ -85,7 +89,7 @@ const TopBarContainer = styled.header`
   display: flex;
   align-items: center;
   background: #ffffff;
-  z-index: 1;
+  z-index: 5;
   width: 100%;
 
   border-bottom: 1px solid #edebe9;
@@ -148,16 +152,17 @@ const DropDown = styled.div`
 const List = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(2)};
+  gap: ${({ theme }) => theme.spacing(1.5)};
 
   li {
     display: flex;
-    gap: ${({ theme }) => theme.spacing(1)};
+    gap: ${({ theme }) => theme.spacing(2)};
     align-items: center;
     font-size: 14px;
     color: #323130;
 
     img:first-of-type {
+      display: initial;
       ${({ theme }) => theme.breakpoints.down("xs")} {
         display: initial;
       }
@@ -165,7 +170,7 @@ const List = styled.ul`
   }
 `;
 
-const User = styled.div`
+const UserCon = styled.div`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing(2)};

@@ -34,6 +34,14 @@ const HeroContainer = styled.div`
     line-height: 36px;
     color: #f3f2f1;
   }
+
+  @media (max-width: 897px) {
+    height: 500px;
+
+    p {
+      font-size: 20px;
+    }
+  }
 `;
 
 const ContentContainer = styled.div`
@@ -45,4 +53,12 @@ const ContentContainer = styled.div`
   gap: 10px;
   text-align: center;
   margin: 60px auto;
+
+  @media (max-width: 897px) {
+    width: 90%;
+
+    h1 {
+      font-size: 52px;
+    }
+  }
 `;

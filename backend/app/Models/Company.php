@@ -10,11 +10,16 @@ class Company extends Model
 {
     use HasFactory, Uuids;
 
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     /**
      * @var $fillable
     */
     protected $fillable = [];
+
+    public function interviews()
+    {
+        return $this->belongsTo(Interview::class, 'company_id');
+    }    
    
 }
