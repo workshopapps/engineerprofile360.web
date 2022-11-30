@@ -26,7 +26,7 @@ export const Title = styled.h1`
 `;
 
 export const Button = styled.button`
-  min-width: 77px;
+  min-width: ${(props) => (props.$size === "xl" ? "100%" : "77px")};
   min-height: 44px;
   max-width: 288px;
   height: ${(props) =>
@@ -102,7 +102,7 @@ export const Loader = styled.div`
 export const OverlayLoader = styled.div`
   width: 100%;
   height: 100vh;
-  background: rgba(255,255,255,0.5);
+  background: rgb(255,255,255);
   position: fixed;
   top: 0;
   bottom:: 0;
@@ -111,10 +111,13 @@ export const OverlayLoader = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 10;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing(2)};
   
   div {
-    border: 10px solid #106ebe;
-    border-top: 10px solid lightblue;
+    border: 8px solid #106ebe;
+    border-top: 8px solid lightblue;
     border-radius: 50%;
     height: 60px;
     width: 60px;

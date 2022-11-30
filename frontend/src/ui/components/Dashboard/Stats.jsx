@@ -1,10 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import assessment from "../assets/icons/task-square.svg";
-import star from "../assets/icons/star.svg";
-import tickCircle from "../assets/icons/tick-circle.svg";
-import feedback from "../assets/icons/feedback.svg";
+import { TaskSquare, TickCircle, Star, Messages3 } from "iconsax-react";
 import { Title } from "../../../styles/reusableElements.styled";
 
 const Stats = () => {
@@ -12,22 +9,22 @@ const Stats = () => {
     <StatsContainer>
       <IndividualStats>
         <Assessment>
-          <img src={assessment} alt="" />
+          <TaskSquare color="#141ae9" />
           <Type>Assessments</Type>
           <Number>102</Number>
         </Assessment>
         <Rate>
-          <img src={star} alt="" />
+          <Star color="#107c10" />
           <Type>Success Rate</Type>
           <Number>102</Number>
         </Rate>
         <VerifiedUsers>
-          <img src={tickCircle} alt="" />
-          <Type>Verified Users</Type>
+          <TickCircle color="#141ae9" />
+          <Type>Verified Staffs</Type>
           <Number>102</Number>
         </VerifiedUsers>
         <Feedbacks>
-          <img src={feedback} alt="" />
+          <Messages3 color="#141ae9" />
           <Type>Feedbacks</Type>
           <Number>102</Number>
         </Feedbacks>
