@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 
@@ -6,11 +6,48 @@ import { Container } from "../../styles/reusableElements.styled";
 import TopBar from "./Partials/TopBar";
 import LeftBar from "./Partials/LeftBar";
 
+import useAuth from "../../hooks/useAuth";
+import axios from "../../api/axios";
+import { showErrorToast } from "../../helpers/helper";
+import { OverlayLoader } from "../../styles/reusableElements.styled";
+
 const UiLayout = () => {
+  const { auth, setAuth, persist } = useAuth();
   const [leftBar, setLeftBar] = useState(false);
   const handleLeftBarToggle = () => {
     setLeftBar(!leftBar);
   };
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [fetchError, setFetchError] = useState("");
+
+  useEffect(() => {
+    const getDetails = async () => {
+      try {
+        // console.log(auth.id);
+        const response = await axios.get(`user/${auth.id}`);
+        setIsLoading(false);
+        // console.log(response);
+
+        const username = response?.data?.data.username;
+        const fullName = response?.data?.data.full_name;
+
+        setAuth({
+          ...auth, username, fullName
+        })
+        console.log(auth);
+      } catch (err) {
+        if (!err?.response) {
+          showErrorToast("No Server Response");
+        } else if (err?.response.data.errorState === true) {
+          showErrorToast(err.response.data.message);
+          setFetchError(err.response.data.message);
+        }
+      }
+    };
+
+    getDetails();
+  }, []);
 
   return (
     <>
@@ -25,6 +62,18 @@ const UiLayout = () => {
           <Outlet />
         </MainContent>
       </Main>
+      {isLoading ? (
+        <OverlayLoader>
+          <div></div>
+          <span>
+            {fetchError != ""
+              ? `${fetchError} - Please try again`
+              : "Just a moment..."}
+          </span>
+        </OverlayLoader>
+      ) : (
+        ""
+      )}
     </>
   );
 };
