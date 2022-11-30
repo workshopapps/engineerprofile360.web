@@ -149,12 +149,11 @@ const App = () => {
 
             {/* Organization Route */}
             <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
-
               <Route path="/ui" element={"my guy"} />
 
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/employees" element={<Employees />}>
-              <Route path="/employees" element={<EmployeesListing />} />
+                <Route path="" element={<EmployeesListing />} />
                 <Route path="profile" element={<EmployeeProfile />} />
               </Route>
             </Route>
