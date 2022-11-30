@@ -31,9 +31,9 @@ import AssessmentList from "./main/components/sections/userAssessmentList/Assess
 import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
 import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
 import Privacy from "./main/pages/Privacy/privacy";
-import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
+// import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
-import Testimonial from "./main/components/Testimonials/Testimonial";
+// import Testimonial from "./main/components/Testimonials/Testimonial";
 import PricingPage from "./main/pages/PricingPage";
 import Payment from "./main/pages/Payment";
 import HelpCenter from "../src/main/pages/HelpCenter";
@@ -52,6 +52,8 @@ import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
 import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
 import Dashboard from "./ui/pages/Dashboard";
 import Employees from "./ui/pages/Employees";
+import EmployeesListing from "./ui/components/Employees/EmployeesListing";
+import EmployeeProfile from "./ui/components/Employees/EmployeeProfile";
 
 const ROLES = {
   Employees: 1,
@@ -147,11 +149,13 @@ const App = () => {
 
             {/* Organization Route */}
             <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
-
               <Route path="/ui" element={"my guy"} />
 
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/employees" element={<Employees />} />
+              <Route path="/employees" element={<Employees />}>
+                <Route path="" element={<EmployeesListing />} />
+                <Route path="profile" element={<EmployeeProfile />} />
+              </Route>
             </Route>
 
             {/* Overall Admin Route */}

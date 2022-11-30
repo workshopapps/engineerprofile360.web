@@ -8,9 +8,19 @@ const EmployeesListing = () => {
   return (
     <EmployeesList>
       <EmployeesTab>
-        <Button $variant="text">Admin</Button>
-        <Button $variant="text">Staffs</Button>
+        <TabButton $variant="disabled">Admins</TabButton>
+        <TabButton $variant="disabled">Staffs</TabButton>
+        <TabButton $variant="disabled">Top Perfomance</TabButton>
       </EmployeesTab>
+      <Filter>
+        <select>
+          <option>Department</option>
+        </select>
+        <select>
+          <option>Sort By Date</option>
+        </select>
+        <DeleteButton $variant="outlined">Delete</DeleteButton>
+      </Filter>
       <EmployeesTable>
         <table>
           <tbody>
@@ -51,9 +61,38 @@ const EmployeesList = styled.div`
 
 const EmployeesTab = styled.div`
   display: flex;
+  // gap: ${({ theme }) => theme.spacing(0)};
+`;
+
+const Filter = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing(3)};
+  flex-wrap: wrap;
+  width: 100%;
+
+  select {
+    border: 1px solid ${({ theme }) => theme.palette.border.default};
+    padding: ${({ theme }) => theme.spacing(1)};
+    border-radius: ${({ theme }) => theme.spacing(0.5)};
+    font-size: 14px;
+    color: #323130;
+    background: #ffffff;
+    outline: none;
+  }
+
+  select:first-of-type {
+    width: 179Spx;
+  }
+
+  select:last-of-type {
+    width: 130px;
+  }
 `;
 
 const EmployeesTable = styled.div`
+  width: 100%;
+  overflow: auto;
   table {
     table-layout: fixed;
     width: 100%;
@@ -85,6 +124,7 @@ const EmployeesTable = styled.div`
       td:last-of-type {
         display: flex;
         gap: ${({ theme }) => theme.spacing(4)};
+        justify-content: space-between;
         align-items: center;
 
         svg {
@@ -96,8 +136,30 @@ const EmployeesTable = styled.div`
 `;
 
 const AddButton = styled(Button)`
-  min-width: 280px;
+  min-width: 250px;
   justify-self: flex-end;
   font-weight: 400;
   align-self: flex-end;
+`;
+
+const TabButton = styled(Button)`
+  color: #323130;
+  font-weight: 400;
+  background: none;
+  justify-content: initial;
+  padding-left: 0px;
+  display: initial;
+  border-radius: 0px;
+  font-size: 13px;
+  text-align: left;
+  // border-bottom: 5px solid #2667ff;
+`;
+
+const DeleteButton = styled(Button)`
+  border-color: red;
+  color: red;
+
+  margin-left: auto;
+  height: 28px;
+  width: 150px;
 `;
