@@ -73,7 +73,7 @@ const IndividualStats = styled.div`
     );
   gap: ${({ theme }) => theme.spacing(2)};
   flex-wrap: wrap;
-  padding: ${({ theme }) => theme.spacing(2)};
+  padding: ${({ theme }) => theme.spacing(2)} ${({ theme }) => theme.spacing(2)};
   border-radius: ${({ theme }) => theme.spacing(2)};
   flex: 0 0 50%;
   border: 1px solid #f8fbfd;

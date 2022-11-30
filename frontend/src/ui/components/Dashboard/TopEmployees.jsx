@@ -82,18 +82,20 @@ const Filter = styled.div`
 
   select {
     border: 1px solid ${({ theme }) => theme.palette.border.default};
-    padding: ${({ theme }) => theme.spacing(0.5)};
+    padding: ${({ theme }) => theme.spacing(1)};
     border-radius: ${({ theme }) => theme.spacing(0.5)};
     font-size: 14px;
     color: #323130;
+    background: #FFFFFF;
+    outline: none;
   }
 
   select:first-of-type {
-    width: 170px;
+    width: 150px;
   }
 
   select:last-of-type {
-    width: 150px;
+    width: 130px;
   }
 `;
 
@@ -120,6 +122,12 @@ const TopEmployeesList = styled.div`
         font-weight: 600;
         color: #605e5c;
       }
+    }
+
+    td {
+      color: #605e5c;
+      font-size: 16px;
+      font-weight: 600;
     }
   }
 `;
