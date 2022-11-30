@@ -305,6 +305,58 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponse401'
+  "/user/make-admin/{user_id}":
+    get:
+      tags:
+        - Users
+      description: 'Make a user an admin'
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          type: user_id
+          format: user_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      operationId: makeuseradmin
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
+  "/user/block-user/{user_id}":
+    get:
+      tags:
+        - Users
+      description: 'Block a user'
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          type: user_id
+          format: user_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      operationId: blockuser
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
     # fetch verified user
   "/user/verified/{user_id}":
     get:
@@ -1216,6 +1268,8 @@ paths:
         - Department
       description: 'Delete department'
       operationId: deletedepartment
+      security:
+        - bearerAuth: []
       parameters:
         - name: department_id
           in: path
@@ -1360,6 +1414,34 @@ paths:
           required: true
           type: interview_id
           format: interview_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
+  "/interview/stack/{stack_id}":
+    get:
+      tags:
+        - Interview
+      description: 'Fetch all interviews for a partcular stack'
+      operationId: getinterviewnystack
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: stack_id
+          in: path
+          required: true
+          type: stack_id
+          format: stack_id
           example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
       responses:
         '200':

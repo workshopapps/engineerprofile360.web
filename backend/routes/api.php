@@ -51,6 +51,8 @@ Route::prefix("user")->group(function () {
     Route::get('/get/all', [UserController::class, 'getUsers']);
     Route::get('/{userId}', [UserController::class, 'getUser']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
+    Route::get('make-admin/{userId}', [UserController::class, 'makeUserAnAdmin']);
+    Route::get('block-user/{userId}', [UserController::class, 'blockUser']);
     Route::put('/{userId}/update', [UserController::class, 'updaterUserInfo'])->middleware("isloggedin");
 });
 
@@ -88,9 +90,19 @@ Route::post("/test_csv", function (Request $req) {
 
 // authentication route
 Route::prefix("auth")->group(function () {
-    Route::post('register', [AuthenticateController::class, "registerUser"]);
-    Route::post('login', [AuthenticateController::class, 'UserAndEmployeeLogin']);
+    // organization register & login
+    Route::prefix("organization")->group(function(){
+        Route::post('register', [AuthenticateController::class, "OrganizationRegister"]);
+        Route::post('/login', [AuthenticateController::class, "OrganizationLogin"]);
+    });
+
+    // employee login 
+    Route::post('/employee/login', [AuthenticateController::class, "EmployeeLogin"]);
+    // overall admin login
+    Route::post('/skript/admin/login', [AuthenticateController::class, 'OverallAdminLogin']);
+
     Route::get('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
+    
     Route::prefix("password")->group(
         function () {
             // forgot password
@@ -156,6 +168,7 @@ Route::prefix('interview')->group(function () {
     Route::post('add', [InterviewController::class, 'addInterview'])->middleware('isloggedin', 'isadmin');
     Route::get('get/{id}', [InterviewController::class, 'getInterviewById']);
     Route::put('update/{interviewId}', [InterviewController::class, 'updateInterview']);
+    Route::get('/stack/{stack_id}', [InterviewController::class, 'getInterviewByStack'])->middleware("isloggedin", "isadmin");
 });
 
 // Stack route

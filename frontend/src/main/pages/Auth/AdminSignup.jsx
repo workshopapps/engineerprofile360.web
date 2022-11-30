@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { showErrorToast } from "../../../helpers/helper";
+// import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../../../styles/reusableElements.styled";
 
 import { Container, Button } from "../../../styles/reusableElements.styled";
@@ -35,12 +35,6 @@ const AdminSignup = () => {
     password: "",
     confirmPassword: "",
   });
-
-  const showErrorToast = (error) => {
-    toast.error(error, {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  };
 
   const navigate = useNavigate();
 
@@ -75,14 +69,14 @@ const AdminSignup = () => {
         const { email, fname: full_name, uname: username, password } = formData;
         setIsSubmitted(true);
         const response = await axios.post(
-          "auth/register",
+          "auth/organization/register",
           JSON.stringify({ email, full_name, username, password })
         );
 
         if (response.data.errorState === false) {
           navigate("/verify-email", { state: { email } });
         }
-        console.log(response.data);
+
         // Clear input fields
         setFormData({
           fname: "",
@@ -115,7 +109,7 @@ const AdminSignup = () => {
   return (
     <>
       <FormContainer>
-        <ToastContainer />
+        {/* <ToastContainer /> */}
         <AuthTitle title="Sign up" text="Let's get started" />
         <SignupForm onSubmit={handleSubmit}>
           <InputField
