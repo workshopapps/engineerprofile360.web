@@ -4,10 +4,17 @@ import TopEmployees from "../components/Dashboard/TopEmployees";
 
 import PageInfo from "../components/molecules/PageInfo";
 
+import useAuth from "../../hooks/useAuth";
+
 const Dashboard = () => {
+  const { auth, persist } = useAuth();
+
+  console.log(auth);
+
+  console.log(auth);
   return (
     <>
-      <PageInfo pageTitle="Welcome Mr Mark" />
+      <PageInfo pageTitle={`Welcome ${auth.user_name}`} />
       <Stats />
       <TopEmployees />
     </>

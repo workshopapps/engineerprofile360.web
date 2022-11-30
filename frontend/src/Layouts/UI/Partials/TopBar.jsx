@@ -29,7 +29,7 @@ const TopBar = ({ handleLeftBarToggle, leftBar }) => {
         <Navigation>
           <SearchInputField
             $height="52px"
-            startIcon={<img src={searchIcon} />}
+            startIcon={<img src={searchIcon} alt="" />}
             type="text"
             placeholder="Search"
           />
@@ -47,13 +47,9 @@ const TopBar = ({ handleLeftBarToggle, leftBar }) => {
                   <li>
                     <img src={userIcon} alt="" /> Profile
                   </li>
-                </List>
-                <List>
                   <li>
                     <img src={settingIcon} alt="" /> Settings
                   </li>
-                </List>
-                <List>
                   <li>
                     <img src={logoutIcon} alt="" /> Logout
                   </li>
@@ -149,11 +145,11 @@ const DropDown = styled.div`
 const List = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(2)};
+  gap: ${({ theme }) => theme.spacing(1.5)};
 
   li {
     display: flex;
-    gap: ${({ theme }) => theme.spacing(1)};
+    gap: ${({ theme }) => theme.spacing(2)};
     align-items: center;
     font-size: 14px;
     color: #323130;
