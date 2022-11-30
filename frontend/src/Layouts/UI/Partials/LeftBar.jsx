@@ -10,13 +10,18 @@ const LeftBar = () => {
     <LeftBarContainer>
       <List>
         <li>
-          <Link to="/">
+          <Link to="/dashboard">
             <img src={dashboard} alt="" /> Dashboard
           </Link>
         </li>
         <li>
-          <Link to="/">
+          <Link to="/assessment">
             <img src={assessment} alt="" /> Assessment
+          </Link>
+        </li>
+        <li>
+          <Link to="/assessment">
+            <img src={assessment} alt="" /> Employees
           </Link>
         </li>
       </List>
@@ -32,9 +37,9 @@ const LeftBarContainer = styled.nav`
   padding-left: ${({ theme }) => theme.spacing(3)};
   box-sizing: initial;
 
-  ${({ theme }) => theme.breakpoints.down("md")} { 
+  ${({ theme }) => theme.breakpoints.down("md")} {
     width: 240px;
-    background: #FFFFFF;
+    background: #ffffff;
     padding-top: ${({ theme }) => theme.spacing(4)};
   }
 `;
