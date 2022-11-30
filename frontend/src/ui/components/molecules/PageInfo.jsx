@@ -5,7 +5,7 @@ import arrowRight from "../../../assets/icons/app/arrow-right.svg";
 import { Title } from "../../../styles/reusableElements.styled";
 
 const PageInfo = ({ breadcrumb, pageTitle }) => {
-  const arrayLength = breadcrumb.length - 1;
+  const arrayLength = breadcrumb?.length - 1;
   return (
     <PageInfoContainer>
       {breadcrumb && (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -6,6 +6,13 @@ import Dropdown from "../../../main/components/Payment/Dropdown";
 import Options from "../../../main/components/Payment/Options";
 
 const SelectType = () => {
+  const [isSelected, setIsSelected] = useState({});
+
+  const handleChange = (e) => {
+    console.log(e.target.id);
+    setIsSelected({ ...isSelected, [e.target.id]: e.target.value });
+  };
+
   return (
     <SelectContainer>
       <p>Select the target staffs for the assessment</p>
@@ -13,7 +20,11 @@ const SelectType = () => {
       <SelectItemContainer>
         <SelectItem>
           <label>Select Department</label>
-          <Dropdown>
+          <Dropdown
+            id={"department"}
+            value={isSelected["department"]}
+            onChange={(e) => handleChange(e)}
+          >
             <Options selected value="Front-End Development" />
             <Options value="Back-End Development" />
             <Options value="Project Management" />
@@ -24,7 +35,11 @@ const SelectType = () => {
         </SelectItem>
         <SelectItem>
           <label>Select Skill Level</label>
-          <Dropdown>
+          <Dropdown
+            id={"level"}
+            value={isSelected["level"]}
+            onChange={(e) => handleChange(e)}
+          >
             <Options selected value="Senior Level" />
             <Options value="Middle Level" />
             <Options value="Junior Level" />
@@ -37,7 +52,7 @@ const SelectType = () => {
       </SelectItemContainer>
       <Buttons>
         <Link to={-1}>Cancel</Link>
-        <Link to="/csv-upload">Proceed</Link>
+        <Link to="/admin-csv-upload">Proceed</Link>
       </Buttons>
     </SelectContainer>
   );
@@ -63,6 +78,16 @@ const SelectContainer = styled.div`
     color: ${({ theme }) => theme.palette.border.hover};
     opacity: 0.6;
     text-align: center;
+  }
+
+  @media (max-width: 1133px) {
+    width: 80%;
+  }
+
+  @media (max-width: 669px) {
+    width: 95%;
+
+    padding: 22px 32px;
   }
 `;
 
@@ -90,6 +115,7 @@ const Buttons = styled.div`
   gap: 10px;
   width: 50%;
   align-items: center;
+  justify-content: center;
   margin: auto;
 
   a {
@@ -97,18 +123,29 @@ const Buttons = styled.div`
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
+    padding: 12px 32px;
     cursor: pointer;
   }
 
   a:first-child {
-    padding: 12px 32px;
     border: 1px solid #2667ff;
     color: #2667ff;
   }
 
   a:last-child {
-    padding: 12px 32px;
     background: #2667ff;
     color: #ebf4f9;
+  }
+
+  @media (max-width: 802px) {
+    width: 100%;
+    margin: auto;
+  }
+
+  @media (max-width: 669px) {
+    a {
+      font-size: 14px;
+      padding: 10px 18px;
+    }
   }
 `;
