@@ -146,7 +146,7 @@ const App = () => {
 
             {/* Organization Route */}
             <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
-            <Route path="/ui" element={"my guy"} />
+              <Route path="/ui" element={"my guy"} />
               <Route path="/dashboard" element={<Dashboard />} />
             </Route>
 

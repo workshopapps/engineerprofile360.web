@@ -26,7 +26,7 @@ export const Title = styled.h1`
 `;
 
 export const Button = styled.button`
-  min-width: 77px;
+  min-width: ${(props) => (props.$size === "xl" ? "100%" : "77px")};
   min-height: 44px;
   max-width: 288px;
   height: ${(props) =>
@@ -113,7 +113,7 @@ export const OverlayLoader = styled.div`
   justify-content: center;
   z-index: 10;
   flex-direction: column;
-  gap: ${({theme}) => theme.spacing(2)};
+  gap: ${({ theme }) => theme.spacing(2)};
   
   div {
     border: 8px solid #106ebe;
