@@ -14,7 +14,10 @@ import logoutIcon from "../../../assets/icons/logout.svg";
 import { InputField } from "../../../main/components";
 import { Container } from "../../../styles/reusableElements.styled";
 
+import useAuth from "../../../hooks/useAuth";
+
 const TopBar = ({ handleLeftBarToggle, leftBar }) => {
+  const { auth } = useAuth();
   const [dropDown, setDropDown] = useState(false);
   const handleDropDownToggle = () => {
     setDropDown(!dropDown);
@@ -36,7 +39,7 @@ const TopBar = ({ handleLeftBarToggle, leftBar }) => {
           <Options>
             <User>
               <img src={user} alt="" />
-              <span>Mark Jilaga</span>
+              <span>{auth.fullName ? auth.fullName.split(" ")[0] : ""}</span>
             </User>
             <Icons>
               <img src={bell} alt="" />
@@ -139,7 +142,6 @@ const DropDown = styled.div`
   min-width: 115px;
   display: ${(props) => (props.$open === "open" ? "initial" : "none")};
   overflow: hidden;
-
 `;
 
 const List = styled.ul`
