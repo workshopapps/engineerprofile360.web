@@ -294,7 +294,16 @@ class AuthenticateController extends Controller {
         }
         
         if($verifyToken->count() == 0){
-            return $this->sendResponse(true, 'Invalid verification link or verification expires',"Invalid verification link....", null, 400);
+            return $this->sendResponse(true, 'Invalid verification link: token not found',"Invalid verification token", null, 400);
+        }
+        
+        $exp = $verifyToken->first()["exp"];
+        $isExpired = $this->isExpired($exp);
+        
+        if($isExpired){
+            // remove expired link from db
+            Token::where("user_id", $id)->delete();
+            return $this->sendResponse(true, "verification link expired", "link already expired", null, 400);
         }
 
         // check if user has been verified already
@@ -304,14 +313,6 @@ class AuthenticateController extends Controller {
             return $this->sendResponse(true, "user email has been verified", "Email has been verified already", null, 200);
         }
 
-        $exp = $verifyToken->first()["exp"];
-        $isExpired = $this->isExpired($exp);
-        
-        if($isExpired){
-            // remove expired link from db
-            Token::where("user_id", $id)->delete();
-            return $this->sendResponse(true, "verification link expired", "link already expired", null, 400);
-        }
 
         // update verified user status
         User::where("user_id", $id)->update(array("isVerified"=>true));
