@@ -59,20 +59,17 @@ const AdminResetPassword = () => {
           setFormData({
             email: "",
           });
-        } else if (response.data.errorState === true) {
-          throw new Error();
         }
       }
     } catch (err) {
-      if (err) {
-        setIsSubmitted(false);
-      }
-      if (err === "404") {
-        setResetPasswordError(err.response?.data.message);
+      if (!err.response) {
+        setResetPasswordError("No Server Response");
       }
       if (err.response?.data.errorState === true) {
-        showErrorToast("Email is not recognized");
+        showErrorToast(err.response.data.message);
       }
+    } finally {
+      setIsSubmitted(false);
     }
   };
 

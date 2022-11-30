@@ -85,21 +85,13 @@ const AdminSignup = () => {
           password: "",
           confirmPassword: "",
         });
-      } else {
-        if (errors) {
-          setIsSubmitted(false);
-          throw new Error();
-        }
       }
     } catch (err) {
       if (!err?.response) {
         setFetchError("No Server Response");
-      } else if (err.response?.status === 409) {
-        setFetchError("Email Taken");
-      } else {
-        setFetchError("Unable to process request");
-      }
-      showErrorToast(fetchError);
+      } else if (err.response?.data.errorState === true)
+        showErrorToast(err.response.data.message);
+    } finally {
       setIsSubmitted(false);
     }
   };

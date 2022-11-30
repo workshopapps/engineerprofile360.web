@@ -47,7 +47,7 @@ class Helper extends Controller
         );
     }
 
-    public function generateAccessTokrn($userId, $user_email)
+    public function generateAccessToken($userId, $user_email)
     {
         $issuedAt = new DateTimeImmutable();
         $exp = $issuedAt->modify("+1 month")->getTimestamp();

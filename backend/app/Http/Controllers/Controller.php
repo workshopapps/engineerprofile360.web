@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Log;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-    
+
     /** Please do not touch this code here, I spent time refactoring it **/
 
     /**
@@ -27,7 +27,25 @@ class Controller extends BaseController
      * @param int $statusCode = 200 (This is simply the status code)
      * @param  $data = null (This would contain information the clients needs)
      * 
-    */
+     */
+
+    public function sendResponseWithCookie(
+        bool $errorState = true,
+        string $error = null,
+        string $message = 'OK',
+        $data = null,
+        int $code = 200,
+        string $cookieName = "",
+        string $cookieVal = "",
+        int $cookieExp = 60
+    ) {
+        return response()->json([
+            'errorState' => $errorState,
+            'error' => ucfirst($error),
+            'message' => ucfirst($message),
+            'data' => $data,
+        ], $code)->withCookie(cookie($cookieName, $cookieVal, $cookieExp, "/", null, false, true));
+    }
 
     public function sendResponse(
         bool $errorState = true,
@@ -35,8 +53,7 @@ class Controller extends BaseController
         string $message = 'OK',
         $data = null,
         int $code = 200
-    ): JsonResponse 
-    {
+    ): JsonResponse {
         return response()->json([
             'errorState' => $errorState,
             'error' => ucfirst($error),
