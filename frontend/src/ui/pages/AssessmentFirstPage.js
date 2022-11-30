@@ -1,78 +1,17 @@
 import React, { useState } from "react";
 import Flex from "../components/layout/Flex";
 import Grid, { GridItem } from "../components/layout/Grid";
-import logo from "../../assets/icons/app/logo.svg";
-import notif from "../../assets/icons/app/notification.svg";
-import down from "../../assets/icons/arrow-down.svg";
-import down_alt from "../../assets/icons/app/down.svg";
-import right from "../../assets/icons/app/arrow-right.svg";
-import icon from "../../assets/icons/app/search-alt.svg";
 import sophie from "../../assets/images/sophie.svg";
 import chart from "../../assets/images/app/chart.svg";
 import dots from "../../assets/icons/app/dots-alt.svg";
-import dashboard from "../../assets/icons/app/dashboard.svg";
-import assessment from "../../assets/icons/app/assessment-active.svg";
-import user from "../../assets/icons/app/user-alt.svg";
-import profile from "../../assets/icons/app/profile.svg";
-import settings from "../../assets/icons/app/settings.svg";
-import logout from "../../assets/icons/app/logout.svg";
-import avatar from "../../assets/icons/app/avatar.svg";
 import plus from "../../assets/icons/app/plus.svg";
 import "../../styles/assessmentfirstpage.css";
 import PageInfo from "../components/molecules/PageInfo";
 
-const DropdownItem = (props) => {
-  return (
-    <li className="dropdownItem">
-      <Flex spacing={20}>
-        <img src={props.img} alt="" />
-        <p className="regular ">{props.text}</p>
-      </Flex>
-    </li>
-  );
-};
-
-const DropDown = (props) => {
-  const [open, setOpen] = useState(false);
-
-  const handleDropdown = () => {
-    return setOpen(!open);
-  };
-
-  return (
-    <div>
-      <div className="menu container">
-        <div className="menu-trigger" onClick={handleDropdown}>
-          <img src={down} />
-        </div>
-        {open && (
-          <div
-            className=""
-            style={{
-              position: "absolute",
-              right: "15px",
-              top: "40px",
-              background: "#FAF9F8",
-              borderRadius: "8px",
-              zIndex: "2",
-            }}
-          >
-            <ul>
-              <DropdownItem text={"Profile"} img={profile} />
-              <DropdownItem text={"Settings"} img={settings} />
-              <DropdownItem text={"Logout"} img={logout} />
-            </ul>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
 const Heading = () => {
   return (
     <Flex jc="space-between" className="" ai="center">
-      <h2>Assessments</h2>
+      <h2 className="headingtext">Assessments</h2>
       <div className="button-container">
         <button className="bg-primary create-button">
           <Flex spacing={10} ai="center">
@@ -99,14 +38,23 @@ const Heading = () => {
 const Card = (props) => {
   return (
     <Flex
-      style={{ padding: "70px", zIndex: "1" }}
+      style={{
+        padding: "70px",
+        height: "160px",
+        border: "1px solid #C7E0F4",
+        borderRadius: "5px",
+      }}
       jc="center"
       ai="center"
-      className="bg-primary-tint"
+      className="bg-primary-tint bordered"
     >
       <Flex stack spacing={16} style={{ textAlign: "center" }}>
-        <p>{props.text}</p>
-        <h1 style={{ color: "#323130" }}>{props.num}</h1>
+        <p style={{ whiteSpace: "nowrap" }} className="cardtext">
+          {props.text}
+        </p>
+        <h1 style={{ color: "#323130" }} className="numtext">
+          {props.num}
+        </h1>
       </Flex>
     </Flex>
   );
@@ -212,7 +160,7 @@ const TopPerformance = () => {
 
 const Assessments = () => {
   return (
-    <Flex stack style={{ width: "100%" }} spacing={58} className="page-padding">
+    <Flex stack style={{ width: "100%" }} spacing={58}>
       <Heading />
       <Grid span={12} className>
         <GridItem span={4} md={12}>
@@ -247,7 +195,6 @@ const AssessmentFirstPage = () => {
     <div>
       <PageInfo breadcrumb={["Dashboard", "Performance"]} />
       <Assessments />
-      {/* </Flex> */}
     </div>
   );
 };
