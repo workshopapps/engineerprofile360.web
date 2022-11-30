@@ -224,13 +224,16 @@ const AdminSignup = () => {
           />
           <Checkbox>
             <label>
-              <input required type="checkbox" /> I agree to the{" "}
-              <a href="/terms"> Terms and Conditions</a>
+              <input required type="checkbox" />
+              <span>
+                I agree to the
+                <a href="/terms"> Terms and Conditions</a>
+              </span>
             </label>
           </Checkbox>
 
           <Button
-            $size="md"
+            $size="xl"
             type={isSubmitted ? "button" : "submit"}
             $variant={isSubmitted ? "disabled" : null}
           >
