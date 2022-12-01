@@ -6,7 +6,7 @@ export default function SelectDepartment() {
   return (
     <Container>
       <div>
-        <Title $color="#323130" $size="20px" $weight="400">
+        <Title $color="#323130" $size="16px" $weight="400">
           Select the target department to add employee:
         </Title>
         <div
@@ -17,7 +17,7 @@ export default function SelectDepartment() {
             padding: "0 3rem",
           }}
         >
-          <Title $color="#605E5C" $size="18px" $weight="400">
+          <Title $color="#605E5C" $size="16px" $weight="400">
             Select Department
           </Title>
           <select name="" id="">
@@ -41,12 +41,13 @@ export default function SelectDepartment() {
 const Container = styled.div`
   height: 475px;
   width: 686px;
-  max-width: 95%;
+  max-width: 100%;
   background: #f8fbfd;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 0 5px;
 
   div:first-of-type {
     width: 100%;
