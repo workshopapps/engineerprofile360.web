@@ -166,17 +166,17 @@ const App = () => {
                 <Route path="" element={<EmployeesListing />} />
                 <Route path="profile" element={<EmployeeProfile />} />
                 <Route path="user-profile" element={<UserProfile />} />
+                <Route path="add-employee" element={<AdminCSVUpload />} />{" "}
+                <Route
+                  path="employee-department"
+                  element={<EmployeeDeparment />}
+                />
               </Route>
               <Route path="/assessment" element={<MainAssessment />}>
                 <Route path="" element={<AssessmentFirstPage />} />
                 <Route
                   path="create-assessment"
                   element={<CreateAssessment />}
-                />
-                <Route path="add-employee" element={<AdminCSVUpload />} />
-                <Route
-                  path="/employee-department"
-                  element={<EmployeeDeparment />}
                 />
               </Route>
             </Route>
