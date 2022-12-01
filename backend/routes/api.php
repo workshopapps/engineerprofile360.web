@@ -50,11 +50,12 @@ Route::prefix("userscore")->group(function () {
 
 //Users operation routes
 Route::prefix("user")->group(function () {
-    Route::get('/get/all', [UserController::class, 'getUsers']);
+    Route::get('all', [UserController::class, 'getCompanies']);
     Route::get('/{userId}', [UserController::class, 'getUser']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
     Route::get('make-admin/{userId}', [UserController::class, 'makeUserAnAdmin']);
     Route::get('block-user/{userId}', [UserController::class, 'blockUser']);
+    Route::post('{userId}/deactivate', [UserController::class, 'deactivateCompany']);
     Route::put('/{userId}/update', [UserController::class, 'updaterUserInfo'])->middleware("isloggedin");
 
     Route::put('verify-user/{userId}', [UserController::class, 'getVerifyUserById']);
@@ -153,8 +154,9 @@ Route::prefix('employee')->group(function () {
     Route::get('/company/{org_id}', [EmployeeController::class, 'byCompId']);
     Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
     Route::get('{departmentId}', [EmployeeController::class, 'getEmplyeesByDepartment']);
-
 });
+Route::get('employees', [EmployeeController::class, 'getAllEmployees'])->middleware("isloggedin", "isadmin");
+
 
 
 // department routes
