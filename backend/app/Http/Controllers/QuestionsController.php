@@ -116,4 +116,28 @@ class QuestionsController extends Controller
             return $this->sendResponse(true, "Fetch Question By Assessment ID failed", $e->getMessage());
         }
     }
+
+    public function deleteQuestion($question_id)
+    {
+        try {
+
+            // Get question by id
+            $question = Question::find($question_id);
+            if (!$question) {
+                return $this->sendResponse(
+                    true,
+                    'Fetch Question By ID failed',
+                    'Question does not exist',
+                    null,
+                    Response::HTTP_NOT_FOUND
+                );
+            }
+            $question->delete();
+
+            // send response
+            return $this->sendResponse(false, null, 'Question Deleted', [], Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, 'Question not fetched', $e->getMessage());
+        }
+    }
 }
