@@ -97,6 +97,7 @@ class UserScoreController extends Controller
     {
         try {
             $userScore = UserScore::select('*')
+                ->join('employees', 'employees.id', '=', 'user_scores.employee_id')
                 ->join('user_assessments', 'user_assessments.userscore_id', '=', 'user_scores.id')
                 ->where('user_assessments.org_id', $id)->orderBy('user_assessments.result', 'asc');
             if (!$userScore->count()) return $this->sendResponse(true, "Not Found", "User Score not found", Response::HTTP_NOT_FOUND);
