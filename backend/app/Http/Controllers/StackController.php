@@ -4,28 +4,49 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\Stack;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\StackRequest;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 class StackController extends Controller
 {
-    public function addStack(StackRequest $request): JsonResponse
+
+    public function addStack(Request $request)
     {
-        $data = $request->all();
-        try {
-            if($data){
-                Stack::create($data);
-                return $this->sendResponse(false, null, 'Stack created', $data, Response::HTTP_CREATED);
-            }else {
-                return $this->sendResponse(true, 'Stack failed', Response::HTTP_BAD_REQUEST);
+        try{
+            $payload = json_decode($request->getContent(), true);
+    
+            
+            if(!isset($payload["name"])){
+                return $this->sendResponse(true, "expected a valid payload", "invalid payload given.", null, Response::HTTP_BAD_REQUEST);
+            }
+            
+            $id = Str::uuid();
+            $name = $payload["name"];
+            
+            $restStack = Stack::where("name", $name);
+
+            if($restStack->count() > 0){
+                return $this->sendResponse(true, "Stack name already exists", "name already exists.", null, Response::HTTP_BAD_REQUEST);
             }
 
-        } catch (\Exception $e) {
-            return $this->sendResponse(true, 'Stack not created', $e->getMessage());
+            // stack data
+            $data = [
+                "id"=> $id,
+                "name"=>$name,
+            ];
+
+            Stack::create($data);
+
+            return $this->sendResponse(false,null, "Stack created.", $data, Response::HTTP_CREATED);
+        }  catch (\Exception $e) {
+            return $this->sendResponse(true,'something went wrong creating stack', $e->getMessage(), null, Response::HTTP_INTERNAL_SERVER_ERROR );
         }
     }
-    
+
+  
     public function updateStack(StackRequest $request, $stack_id): JsonResponse
     {
         try{
