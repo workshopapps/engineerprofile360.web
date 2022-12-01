@@ -58,7 +58,7 @@ class QuestionsController extends Controller
             $questions = Question::find($id);
             $checkQuestions = Question::where('id', $id)->exists();
             if (!$checkQuestions) {
-                return $this->sendResponse(true, 'Fetch Question By ID failed', 'No questions exist for this ID', null, Response::HTTP_NOT_FOUND);
+                return $this->sendResponse(true, 'Fetch Question By ID failed', 'No questions exist for this company ID', null, Response::HTTP_NOT_FOUND);
             }
             return $this->sendResponse(false, null, 'OK', $questions, Response::HTTP_OK);
         } catch (Exception $e) {
