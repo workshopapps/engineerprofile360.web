@@ -122,7 +122,6 @@ export default UserAssessmentResult;
 
 const UserAssessmentContainer = styled.div`
   padding: 0px 9px;
-  margin-top: 70px;
 `;
 
 const ProfileStatsCard = styled.div`

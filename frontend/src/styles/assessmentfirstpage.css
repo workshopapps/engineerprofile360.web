@@ -28,10 +28,6 @@ li {
   border: 1px dotted;
 }
 
-.page-padding {
-  padding: 28px 22px;
-}
-
 .chart-padding {
   padding: 60px 49px 56px 91px;
 }
@@ -88,6 +84,25 @@ li {
   font-weight: 400;
   font-size: 24px;
   line-height: 36px;
+}
+
+.numtext {
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 36px;
+}
+
+.cardtext {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.headingtext {
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 37px;
+  color: #6e6e6e;
 }
 
 @media screen and (max-width: 1023px) {

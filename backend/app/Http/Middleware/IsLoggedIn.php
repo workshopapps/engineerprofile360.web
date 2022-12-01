@@ -21,22 +21,26 @@ class IsLoggedIn extends Controller
     public function __construct()
     {
         $this->helper = new Helper();
+        $this->CookieName = "eval360-token";
     }
 
     public function handle(Request $request, Closure $next)
     {        
         try {
-            // get token from request
-            $header = $request->header('Authorization');
+            // get token from cookies
+            $jwtToken = $request->cookie($this->CookieName);
+            
+            // we were originally requesting token from the headers, but later change to using the cookie sent along thr browser for security reasons.
+            
+            // $header = $request->header('Authorization');
     
             // check if authorization header has been passed
-            if(!isset($header)){
-                return $this->sendResponse(true,"Authorization header is missing", "Authorizaion is missing", null, 403);
+            if(!isset($jwtToken) || empty($jwtToken)){
+                return $this->sendResponse(true,"JWT token is missing", "Invalid Jwt token", null, 403);
             }
     
-            // split header and extract the jwt token
-            $token = explode(" ", $header)[1];
-            $jwt = $this->helper->decodeJwt($token);
+            // decode the jwt token
+            $jwt = $this->helper->decodeJwt($jwtToken);
             
             $user = [
                 "id"=>$jwt->id,

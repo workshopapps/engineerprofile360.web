@@ -93,7 +93,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'mail@dicodetech.com'),
-        'name' => env('MAIL_FROM_NAME', 'Skript'),
+        'name' => env('MAIL_FROM_NAME', 'Eval360'),
     ],
 
     /*

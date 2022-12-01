@@ -51,9 +51,14 @@ import CsvUploading from "./ui/pages/csv/CsvUploading";
 import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
 import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
 import Dashboard from "./ui/pages/Dashboard";
+import AssessmentFirstPage from "./ui/pages/AssessmentFirstPage";
+import CreateAssessment from "./ui/pages/CreateAssessment";
 import Employees from "./ui/pages/Employees";
+import UserProfile from "./ui/pages/UserProfile";
 import EmployeesListing from "./ui/components/Employees/EmployeesListing";
 import EmployeeProfile from "./ui/components/Employees/EmployeeProfile";
+import AcceptReject from "./ui/pages/Accept Reject Profile/AcceptReject";
+import MainAssessment from "./ui/pages/Assessment";
 
 const ROLES = {
   Employees: 1,
@@ -101,7 +106,6 @@ const App = () => {
               path="/admin-view-assessment"
               element={<AdminViewAssessment />}
             />
-            <Route path="/csv-upload" element={<CsvUpload />} />
 
             <Route path="/csv-uploading" element={<CsvUploading />} />
 
@@ -112,7 +116,8 @@ const App = () => {
 
             <Route path="/setting" element={<AdminSetting />} />
             <Route path="/privacy-policy" element={<Privacy />} />
-            <Route path="/admin-csv-upload" element={<AdminCSVUpload />} />
+            <Route path="/employee-profile" element={<EmployeeProfile />} />
+            {/* <Route path="/admin-csv-upload" element={<AdminCSVUpload />} /> */}
             <Route
               path="/user-assessment-completed"
               element={<UserAssessmentListCompleted />}
@@ -133,6 +138,7 @@ const App = () => {
               path={"/auth/verify/:user_id/:token"}
               element={<AdminEmailVerified />}
             />
+            <Route path="/accept-reject-profile" element={<AcceptReject />} />
           </Route>
 
           {/* Private Route */}
@@ -155,6 +161,15 @@ const App = () => {
               <Route path="/employees" element={<Employees />}>
                 <Route path="" element={<EmployeesListing />} />
                 <Route path="profile" element={<EmployeeProfile />} />
+                <Route path="user-profile" element={<UserProfile />} />
+              </Route>
+              <Route path="/assessment" element={<MainAssessment />}>
+                <Route path="" element={<AssessmentFirstPage />} />
+                <Route
+                  path="create-assessment"
+                  element={<CreateAssessment />}
+                />
+                <Route path="admin-csv-upload" element={<AdminCSVUpload />} />
               </Route>
             </Route>
 
