@@ -26,8 +26,11 @@ class UserScoreStoreRequest extends BaseRequest
         return [
             "assessment_id" => 'required|exists:assessments,id',
             "employee_id" => 'required|exists:employees,id',
+            "org_id" => 'required|exists:users,user_id',
             "categories" => 'required|array',
-            "passed_questions" => 'required|array'
+            "passed_questions" => 'required|array',
+            "total_questions" => 'required|integer',
+            "correct_questions" => 'required|integer'
         ];
     }
 }
