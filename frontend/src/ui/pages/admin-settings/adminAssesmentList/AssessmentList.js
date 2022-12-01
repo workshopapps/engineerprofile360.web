@@ -237,7 +237,7 @@ const Assessment = () => {
       <Flex
         style={{
           paddingBottom: "10px",
-          paddingTop: "10px",
+          paddingTop: "20px",
           borderBottom: "1px solid #8A8886",
         }}
         jc="space-between"
