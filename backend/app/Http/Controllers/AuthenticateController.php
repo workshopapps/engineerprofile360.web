@@ -10,6 +10,7 @@ use App\Models\Token;
 use App\Models\User;
 use DateTime;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash; 
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -33,6 +34,8 @@ class AuthenticateController extends Controller {
     public function __construct()
     {
         $this->helper = new Helper();
+        $this->CookieName = "eval360-token";
+        $this->CookieExp = 20; // expire in 20 minutes
     }
 
     protected function isExpired($expireTime){
@@ -96,7 +99,7 @@ class AuthenticateController extends Controller {
                 
                     // generate access and refresh token
                     $refToken = $this->helper->generateRefreshToken($employees->first()["id"], $email);
-                    $accToken = $this->helper->generateAccessTokrn($employees->first()["id"], $email);
+                    $accToken = $this->helper->generateAccessToken($employees->first()["id"], $email);
                     $uid = Str::uuid();
                     // user record
                     $userResp = [
@@ -110,8 +113,11 @@ class AuthenticateController extends Controller {
                     // update refToken in database
                     Employee::where('email', '=', $email)->update(array('refToken' => $refToken, "hasloggedin"=>true));
                     
-                    
-                    return $this->sendResponse(false, null, "User logged in successfully", $userResp, 200);
+                    // set http-only cookie
+                    $cookieVal = $accToken;
+
+                    // send newly generated token
+                    return $this->sendResponseWithCookie(false, null, "employee logged in successfully", $userResp, 200, $this->CookieName, $cookieVal, $this->CookieExp);
                 } catch (\Exception $e) {
                     // print_r($e);
                     return $this->sendResponse(true,$e->getMessage(),"Something went wrong loggin in, please try again", null, 500);
@@ -126,7 +132,7 @@ class AuthenticateController extends Controller {
         }
     }
     
-    // handle overall skript admin login
+    // handle overall Eval360 admin login
     public function OverallAdminLogin(Request $request){
 
     }
@@ -159,7 +165,7 @@ class AuthenticateController extends Controller {
                 
                     // generate access and refresh token
                     $refToken = $this->helper->generateRefreshToken($users->first()["user_id"], $email);
-                    $accToken = $this->helper->generateAccessTokrn($users->first()["user_id"], $email);
+                    $accToken = $this->helper->generateAccessToken($users->first()["user_id"], $email);
                     $uid = Str::uuid();
                     // user record
                     $userResp = [
@@ -196,8 +202,11 @@ class AuthenticateController extends Controller {
                         return $this->sendResponse(true, "account not verfied.. a verification link has been sent to you account.", "failed to login.. verify your account.", null, 200);
                     }
                     
+                    // set http-only cookie
+                    $cookieVal = $accToken;
 
-                    return $this->sendResponse(false, null, "organization logged in successfully", $userResp, 200);
+                    // send newly generated token
+                    return $this->sendResponseWithCookie(false, null, "organization logged in successfully", $userResp, 200, $this->CookieName, $cookieVal, $this->CookieExp);
                 } catch (\Exception $e) {
                     print_r($e);
                     return $this->sendResponse(true,$e->getMessage(),"Something went wrong loggin in, please try again", null, 500);
@@ -243,7 +252,7 @@ class AuthenticateController extends Controller {
                 "full_name"=>$fullname,
                 "email"=> $email,
                 "username"=> $username,
-                "isVerified"=> false,
+                "isVerified"=> 0,
                 "refToken"=> "",
                 "password"=> $hash,
                 "role"=>$this->ORG_ROLE
@@ -255,7 +264,7 @@ class AuthenticateController extends Controller {
                 "full_name"=>$fullname,
                 "email"=> $email,
                 "username"=> $username,
-                "isVerified"=> false,
+                "isVerified"=> 0,
                 "role"=>$this->ORG_ROLE
             ];
 
@@ -277,7 +286,7 @@ class AuthenticateController extends Controller {
     public function verifyEmail(Request $request, $id, $token){
         // verify if that user exists
         $user = User::where("user_id", $id);
-        $verifyToken = Token::where("token","=", $token);
+        $verifyToken = Token::where("token", $token);
 
     
         if($user->count() == 0){
@@ -285,7 +294,16 @@ class AuthenticateController extends Controller {
         }
         
         if($verifyToken->count() == 0){
-            return $this->sendResponse(true, 'Invalid verification link or verification expires',"Invalid verification link....", null, 400);
+            return $this->sendResponse(true, 'Invalid verification link: token not found',"Invalid verification token", null, 400);
+        }
+        
+        $exp = $verifyToken->first()["exp"];
+        $isExpired = $this->isExpired($exp);
+        
+        if($isExpired){
+            // remove expired link from db
+            Token::where("user_id", $id)->delete();
+            return $this->sendResponse(true, "verification link expired", "link already expired", null, 400);
         }
 
         // check if user has been verified already
@@ -295,14 +313,6 @@ class AuthenticateController extends Controller {
             return $this->sendResponse(true, "user email has been verified", "Email has been verified already", null, 200);
         }
 
-        $exp = $verifyToken->first()["exp"];
-        $isExpired = $this->isExpired($exp);
-        
-        if($isExpired){
-            // remove expired link from db
-            Token::where("user_id", $id)->delete();
-            return $this->sendResponse(true, "verification link expired", "link already expired", null, 400);
-        }
 
         // update verified user status
         User::where("user_id", $id)->update(array("isVerified"=>true));
@@ -446,6 +456,36 @@ class AuthenticateController extends Controller {
             } catch (\Exception $e) {
                 return $this->sendResponse(true, "Couldnt Verify Password Reset Link ".$e->getMessage() , "Something went wrong verifying password reset link, please try again", null, 500);
             }
+        }
+    }
+
+    // refresh expire jwt-token
+    public function refreshJwtToken(Request $req){
+        try {
+            $jwtToken = $req->cookie($this->CookieName);
+
+            if(!isset($jwtToken) || empty($jwtToken)){
+                return $this->sendResponse(true, "jwt token not found", "Unauthorised.",null, 401);
+            }
+
+            // decode jwt
+            $decoded = $this->helper->decodeJwt($jwtToken);
+            $email = $decoded->email;
+            $id = $decoded->id;
+
+            // generate accesstoken
+            $newToken = $this->helper->generateAccessToken($id, $email);
+            
+            // set http-only cookie
+            $data = [
+                "accessToken"=>$newToken,
+            ];
+
+            // send newly generated token
+            return $this->sendResponseWithCookie(false, null, "refresh token", $data, 200, $this->CookieName, $newToken, $this->CookieExp);
+
+        } catch (\Exception $e) {
+            return $this->sendResponse(true, "something went wrong refreshing token: ".$e->getMessage(), "Unauthorised.",null, 500);
         }
     }
 }

@@ -8,9 +8,11 @@ import success from "../../../assets/images/img_done.png";
 import { Link, useParams } from "react-router-dom";
 import axios from "../../../api/axios";
 import { showErrorToast } from "../../../helpers/helper";
+import { TruckRemove } from "iconsax-react";
+import { BsFileEasel } from "react-icons/bs";
 
 const AdminEmailVerified = () => {
-  const [isErrorFree, setIsErrorFree] = useState(false);
+  const [isError, setIsError] = useState(false);
   const { user_id, token } = useParams();
 
   useEffect(() => {
@@ -18,15 +20,15 @@ const AdminEmailVerified = () => {
       try {
         console.log(user_id, token);
         const response = await axios.get(`auth/verify/${user_id}/${token}`);
-        if (response?.data.errorState === false) {
-          setIsErrorFree(true);
+
+        if (response.data.errorState === true) {
+          throw new Error();
         }
       } catch (err) {
         if (!err?.response) {
-          showErrorToast("No Response Error");
-        }
-        if (err?.response.data.errorState === true) {
-          setIsErrorFree(false);
+          showErrorToast("No Server Response");
+        } else {
+          setIsError(true);
           showErrorToast(err.response.data.message);
         }
       }
@@ -39,7 +41,7 @@ const AdminEmailVerified = () => {
     <>
       <ResponseContainer>
         {
-          isErrorFree ? (
+          isError ? (
             <>
               <img src={success} alt=" " />
               <AuthTitle

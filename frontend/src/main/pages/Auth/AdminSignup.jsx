@@ -85,21 +85,13 @@ const AdminSignup = () => {
           password: "",
           confirmPassword: "",
         });
-      } else {
-        if (errors) {
-          setIsSubmitted(false);
-          throw new Error();
-        }
       }
     } catch (err) {
       if (!err?.response) {
         setFetchError("No Server Response");
-      } else if (err.response?.status === 409) {
-        setFetchError("Email Taken");
-      } else {
-        setFetchError("Unable to process request");
-      }
-      showErrorToast(fetchError);
+      } else if (err.response?.data.errorState === true)
+        showErrorToast(err.response.data.message);
+    } finally {
       setIsSubmitted(false);
     }
   };
@@ -232,13 +224,16 @@ const AdminSignup = () => {
           />
           <Checkbox>
             <label>
-              <input required type="checkbox" /> I agree to the{" "}
-              <a href="/terms"> Terms and Conditions</a>
+              <input required type="checkbox" />
+              <span>
+                I agree to the
+                <a href="/terms"> Terms and Conditions</a>
+              </span>
             </label>
           </Checkbox>
 
           <Button
-            $size="md"
+            $size="xl"
             type={isSubmitted ? "button" : "submit"}
             $variant={isSubmitted ? "disabled" : null}
           >

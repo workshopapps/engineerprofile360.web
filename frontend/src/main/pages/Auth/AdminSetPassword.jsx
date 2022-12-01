@@ -14,7 +14,7 @@ import { Loader } from "../../../styles/reusableElements.styled";
 
 const AdminSetPassword = () => {
   const [showPassword, setShowPassword] = useState(true);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(null);
   const [passwordError, setPasswordError] = useState("");
   const {
     formData,
@@ -29,6 +29,7 @@ const AdminSetPassword = () => {
     password: "",
     confirmPassword: "",
   });
+  const [isError, setIsError] = useState(false);
 
   const queryParameters = new URLSearchParams(window.location.search);
   const uid = queryParameters.get("uid");
@@ -43,20 +44,23 @@ const AdminSetPassword = () => {
   useEffect(() => {
     const verifyLink = async () => {
       try {
-        const response = axios.post(
+        const response = await axios.post(
           `auth/password/reset/${uid}/${token}`,
           JSON.stringify({
             verify: true,
           })
         );
+        console.log(uid);
+        console.log(response.data);
+        if (response?.data?.errorState === true) {
+          throw new Error();
+        }
       } catch (err) {
-        console.error(err);
         if (!err.response) {
           setPasswordError("No server response");
-        } else if (err.response.data?.errorState === true) {
-          showErrorToast(
-            "Link not verified, you will be redirected in a few seconds"
-          );
+        } else {
+          setIsError(true);
+          showErrorToast(err.response.data.message);
         }
       }
     };
@@ -105,13 +109,14 @@ const AdminSetPassword = () => {
         });
       }
     } catch (err) {
-      setIsSubmitted(false);
       if (!err?.response) {
         setPasswordError("No Server Response");
       } else if (err.response?.errorState === true) {
         setPasswordError(err.response.error);
         showErrorToast(passwordError);
       }
+    } finally {
+      setIsSubmitted(false);
     }
   };
 
@@ -120,87 +125,98 @@ const AdminSetPassword = () => {
   return (
     <>
       <FormContainer>
-        <AuthTitle title="Password" text="Set up a password for your account" />
-        <SetPasswordForm onSubmit={(e) => handleSubmit(e, formData)}>
-          <InputField
-            $size="md"
-            type={showPassword ? "password" : "text"}
-            label="Password"
-            id="password"
-            placeholder="Enter password"
-            value={password}
-            handleChange={onChange}
-            handleBlur={onBlur}
-            error={errors && touched.password && errors.password?.length > 0}
-            endIcon={
-              <img
-                onClick={() => setShowPassword((prevState) => !prevState)}
-                src={eyeSvg}
-                alt=""
+        {isError === false ? (
+          <>
+            <AuthTitle
+              title="Password"
+              text="Set up a password for your account"
+            />
+            <SetPasswordForm onSubmit={(e) => handleSubmit(e, formData)}>
+              <InputField
+                $size="md"
+                type={showPassword ? "password" : "text"}
+                label="Password"
+                id="password"
+                placeholder="Enter password"
+                value={password}
+                handleChange={onChange}
+                handleBlur={onBlur}
+                error={
+                  errors && touched.password && errors.password?.length > 0
+                }
+                endIcon={
+                  <img
+                    onClick={() => setShowPassword((prevState) => !prevState)}
+                    src={eyeSvg}
+                    alt=""
+                  />
+                }
+                helperText={
+                  errors && errors.password && touched.password
+                    ? errors.password
+                    : ""
+                }
               />
-            }
-            helperText={
-              errors && errors.password && touched.password
-                ? errors.password
-                : ""
-            }
-          />
-          <Spans>
-            {errors && touched.password ? (
-              <>
-                {errors.passwordLength ||
-                errors.passwordUppercase ||
-                errors.passwordNumber ||
-                errors.passwordCharacter ? (
-                  <p>Your Password should have:</p>
+              <Spans>
+                {errors && touched.password ? (
+                  <>
+                    {errors.passwordLength ||
+                    errors.passwordUppercase ||
+                    errors.passwordNumber ||
+                    errors.passwordCharacter ? (
+                      <p>Your Password should have:</p>
+                    ) : (
+                      ""
+                    )}
+
+                    <span>{errors.passwordLength}</span>
+                    <span>{errors.passwordUppercase}</span>
+                    <span>{errors.passwordNumber}</span>
+                    <span>{errors.passwordCharacter}</span>
+                  </>
                 ) : (
                   ""
                 )}
-
-                <span>{errors.passwordLength}</span>
-                <span>{errors.passwordUppercase}</span>
-                <span>{errors.passwordNumber}</span>
-                <span>{errors.passwordCharacter}</span>
-              </>
-            ) : (
-              ""
-            )}
-          </Spans>
-          <InputField
-            $size="md"
-            type={showPassword ? "password" : "text"}
-            label="Re-Enter Password"
-            id="confirmPassword"
-            placeholder="Confirm password"
-            value={confirmPassword}
-            handleChange={onChange}
-            handleBlur={onBlur}
-            error={
-              errors &&
-              touched.confirmPassword &&
-              errors.confirmPassword?.length > 0
-            }
-            endIcon={
-              <img
-                src={eyeSvg}
-                onClick={() => setShowPassword((prevState) => !prevState)}
-                alt=""
+              </Spans>
+              <InputField
+                $size="md"
+                type={showPassword ? "password" : "text"}
+                label="Re-Enter Password"
+                id="confirmPassword"
+                placeholder="Confirm password"
+                value={confirmPassword}
+                handleChange={onChange}
+                handleBlur={onBlur}
+                error={
+                  errors &&
+                  touched.confirmPassword &&
+                  errors.confirmPassword?.length > 0
+                }
+                endIcon={
+                  <img
+                    src={eyeSvg}
+                    onClick={() => setShowPassword((prevState) => !prevState)}
+                    alt=""
+                  />
+                }
+                helperText={
+                  errors && errors.confirmPassword && touched.confirmPassword
+                    ? errors.confirmPassword
+                    : ""
+                }
               />
-            }
-            helperText={
-              errors && errors.confirmPassword && touched.confirmPassword
-                ? errors.confirmPassword
-                : ""
-            }
-          />
-          <Button
-            $size="md"
-            type={isSubmitted ? "button" : "submit"}
-            $variant={isSubmitted ? "disabled" : null}
-          >
-            {isSubmitted ? <Loader /> : "Sign In"}
-          </Button>
-        </SetPasswordForm>
+              <Button
+                $size="lg"
+                type={isSubmitted ? "button" : "submit"}
+                $variant={isSubmitted ? "disabled" : null}
+              >
+                {isSubmitted ? <Loader /> : "Sign In"}
+              </Button>
+            </SetPasswordForm>
+          </>
+        ) : (
+          <>Error verifying your link</>
+        )}
       </FormContainer>
     </>
   );

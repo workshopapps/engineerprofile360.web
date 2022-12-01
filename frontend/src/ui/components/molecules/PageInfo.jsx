@@ -5,21 +5,25 @@ import arrowRight from "../../../assets/icons/app/arrow-right.svg";
 import { Title } from "../../../styles/reusableElements.styled";
 
 const PageInfo = ({ breadcrumb, pageTitle }) => {
+  const arrayLength = breadcrumb?.length - 1;
   return (
     <PageInfoContainer>
       {breadcrumb && (
         <BreadCrumb>
-          {breadcrumb.map((item, index) => (
+          {breadcrumb.map((item, index, array) => (
             <Item key={index}>
               <span>{item}</span>
-              <img src={arrowRight} alt="" />
+
+              {index !== arrayLength ? <img src={arrowRight} alt="" /> : ""}
             </Item>
           ))}
         </BreadCrumb>
       )}
-      <Title $color="#6E6E6E" $size="32px" $weight="400">
-        {pageTitle}
-      </Title>
+      {pageTitle && (
+        <Title $color="#6E6E6E" $size="32px" $weight="400">
+          {pageTitle}
+        </Title>
+      )}
     </PageInfoContainer>
   );
 };
@@ -36,6 +40,10 @@ const PageInfoContainer = styled.div`
   span {
     color: #6e6e6e;
     text-transform: capitalize;
+
+    &:last-child {
+      font-weight: 600;
+    }
   }
 `;
 
