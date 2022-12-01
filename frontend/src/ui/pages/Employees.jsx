@@ -1,13 +1,14 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 
 import PageInfo from "../components/molecules/PageInfo";
-import EmployeesListing from "../components/Employees/EmployeesListing";
+
 
 const Employees = () => {
   return (
     <>
       <PageInfo breadcrumb={["dashboard", "employees", "admin"]} />
-      <EmployeesListing />
+      <Outlet />
     </>
   );
 };
