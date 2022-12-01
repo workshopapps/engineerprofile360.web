@@ -102,7 +102,7 @@ const AdminLogin = () => {
       if (!err?.response) {
         showErrorToast("No Server Response");
       } else if (err.response?.data.errorState === true) {
-        showErrorToast(err.response?.data.message);
+        showErrorToast(err.response.data.message);
       }
     } finally {
       setIsSubmitted(false);
