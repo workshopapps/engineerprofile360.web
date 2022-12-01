@@ -16,4 +16,6 @@ class UserScore extends Model
      * @var array<int, string>
      */
     protected $fillable = ["assessment_id", "employee_id", "passed_questions", "categories"];
+    
+    protected $hidden = ['hash', 'raw_password', 'reftoken']; 
 }
