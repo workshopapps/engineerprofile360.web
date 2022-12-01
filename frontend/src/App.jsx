@@ -60,6 +60,7 @@ import EmployeeProfile from "./ui/components/Employees/EmployeeProfile";
 import AcceptReject from "./ui/pages/Accept Reject Profile/AcceptReject";
 import MainAssessment from "./ui/pages/Assessment";
 import Error from "./ui/pages/404";
+import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
 
 const ROLES = {
   Employees: 1,
@@ -173,6 +174,10 @@ const App = () => {
                   element={<CreateAssessment />}
                 />
                 <Route path="add-employee" element={<AdminCSVUpload />} />
+                <Route
+                  path="/employee-department"
+                  element={<EmployeeDeparment />}
+                />
               </Route>
             </Route>
 
