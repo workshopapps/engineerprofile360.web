@@ -61,6 +61,9 @@ import AcceptReject from "./ui/pages/Accept Reject Profile/AcceptReject";
 import MainAssessment from "./ui/pages/Assessment";
 import AdminAssessmentListOutlet from "./ui/pages/admin-settings/adminAssesmentList/AdminAssessmentListOutlet";
 import AdminAssessmentListAvailable from "./ui/pages/admin-settings/adminAssesmentList/AdminAssessmentListAvailable";
+import UserAssessmentListOutlet from "./ui/pages/user-assessment-list/UserAssessmentListOutlet";
+import UserAssessmentListAvailable from "./ui/pages/user-assessment-list/UserAssessmentListAvailable";
+import UserAssessmentCompleted from "./ui/pages/user-assessment-list/UserAssessmentListCompleted";
 
 const ROLES = {
   Employees: 1,
@@ -175,6 +178,16 @@ const App = () => {
                 path="/user-assessment-result"
                 element={<UserAssessmentResult />}
               />
+              <Route
+                path="/user-assessment-list"
+                element={<UserAssessmentListOutlet />}
+              >
+                <Route path="" element={<UserAssessmentListAvailable />} />
+                <Route
+                  path="completed"
+                  element={<UserAssessmentListCompleted />}
+                />
+              </Route>
             </Route>
 
             {/* Overall Admin Route */}
