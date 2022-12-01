@@ -198,7 +198,7 @@ const Icons = styled.div`
   gap: ${({ theme }) => theme.spacing(2)};
 
 
-  img:nth-of-type(2) {
+  svg:nth-of-type(2) {
     ${({ theme }) => theme.breakpoints.up("sm")} {
       display: none;
     }
