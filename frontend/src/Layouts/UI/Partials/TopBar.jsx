@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import logo from "../../../assets/images/logo.svg";
 import user from "../../../assets/icons/app/user1.svg";
 import closeIcon from "../../../assets/icons/close.svg";
 import menuIcon from "../../../assets/icons/menu.svg";
@@ -20,6 +19,7 @@ import { InputField } from "../../../main/components";
 import { Container } from "../../../styles/reusableElements.styled";
 
 import useAuth from "../../../hooks/useAuth";
+import Logo from "../../../components/Logo";
 
 const TopBar = ({ handleLeftBarToggle, leftBar }) => {
   const { auth } = useAuth();
@@ -32,7 +32,7 @@ const TopBar = ({ handleLeftBarToggle, leftBar }) => {
     <TopBarContainer>
       <TopBarContent>
         <LogoContainer>
-          <img src={logo} alt="Logo of Skript" />
+          <Logo size="sm"/>
         </LogoContainer>
         <Navigation>
           <SearchInputField

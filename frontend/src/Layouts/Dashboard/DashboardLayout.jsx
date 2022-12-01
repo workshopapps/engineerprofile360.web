@@ -16,7 +16,6 @@ import Arrow from "../../assets/icons/app/arrow-down.svg";
 import Users from "../../assets/icons/profile.svg";
 import Setting from "../../assets/icons/setting.svg";
 import Logout from "../../assets/icons/logout.svg";
-import Logo from "../../assets/icons/app/logo.svg";
 import Dashboard from "../../assets/icons/app/dashboard.svg";
 import Assessment from "../../assets/icons/app/assessment.svg";
 import AssessmentActive from "../../assets/icons/app/assessment-active.svg";
@@ -24,6 +23,7 @@ import Employee from "../../assets/icons/app/user.svg";
 import menuIcon from "../../assets/icons/menu.svg";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import Logo from "../../components/Logo";
 
 export function DashboardLayout() {
   const [dropdown, setDropdown] = useState(false);
@@ -39,7 +39,7 @@ export function DashboardLayout() {
       {open && (
         <Navigation>
           <header>
-            <img src={Logo} alt="" className="logo" />
+          <Logo size="sm"/>
             <div className="toggle">
               <button onClick={handleToggle} className="header-toggle">
                 <img src={menuIcon} alt="" />
