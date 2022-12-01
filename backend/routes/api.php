@@ -41,6 +41,8 @@ Route::get("/test", function () {
 Route::prefix("userscore")->group(function () {
     Route::get('/employee/{id}', [UserScoreController::class, 'getScoresByEmployeeID']);
     Route::get('/assessment/{id}', [UserScoreController::class, 'getScoresByAssessmentID']);
+    Route::get('/company/{id}/max', [UserScoreController::class, 'getCompanyTopPerformance']);
+    Route::get('/company/{id}', [UserScoreController::class, 'getCompanyTopPerformances']);
     Route::get('/{employeeId}/{assessmentId}', [UserScoreController::class, 'getScores']);
     Route::post('/create', [UserScoreController::class, 'store']);
 });
