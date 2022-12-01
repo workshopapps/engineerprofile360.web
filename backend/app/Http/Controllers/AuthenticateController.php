@@ -132,7 +132,7 @@ class AuthenticateController extends Controller {
         }
     }
     
-    // handle overall skript admin login
+    // handle overall Eval360 admin login
     public function OverallAdminLogin(Request $request){
 
     }
