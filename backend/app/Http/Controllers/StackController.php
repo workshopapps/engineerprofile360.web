@@ -83,7 +83,7 @@ class StackController extends Controller
 
     
     // delete stack
-    public function updateStack(StackRequest $request, $stack_id): JsonResponse
+    public function deleteStack($stack_id): JsonResponse
     {
         try{
 
