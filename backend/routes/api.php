@@ -132,6 +132,7 @@ Route::prefix("question")->group(function () {
     Route::get('company/{id}', [QuestionsController::class, 'getQuestByComId']);
     Route::get('category/{id}', [QuestionsController::class, 'getQuestByCatId']);
     Route::put('update/{questionId}', [QuestionsController::class, 'updateQuestion']);
+    Route::delete('delete/{questionId}', [QuestionsController::class, 'deleteQuestion']);
     Route::get('/assessment/{id}', [QuestionsController::class, 'getQuestByAssId']);
 });
 
