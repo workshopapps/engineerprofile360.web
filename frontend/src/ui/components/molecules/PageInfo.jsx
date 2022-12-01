@@ -17,9 +17,11 @@ const PageInfo = ({ breadcrumb, pageTitle }) => {
           ))}
         </BreadCrumb>
       )}
-      <Title $color="#6E6E6E" $size="32px" $weight="400">
-        {pageTitle}
-      </Title>
+      {pageTitle && (
+        <Title $color="#6E6E6E" $size="32px" $weight="400">
+          {pageTitle}
+        </Title>
+      )}
     </PageInfoContainer>
   );
 };
