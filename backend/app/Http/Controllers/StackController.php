@@ -18,7 +18,6 @@ class StackController extends Controller
         try{
             $payload = json_decode($request->getContent(), true);
     
-            
             if(!isset($payload["name"])){
                 return $this->sendResponse(true, "expected a valid payload", "invalid payload given.", null, Response::HTTP_BAD_REQUEST);
             }
