@@ -101,7 +101,7 @@ class StackController extends Controller
             $stack->delete();
 
             // success response
-            return $this->sendResponse(true, 'Stack deleted successfully', Response::HTTP_NO_CONTENT);
+            return $this->sendResponse(true, 'Stack deleted successfully',[], Response::HTTP_OK);
         }  catch (Exception $e) {
             return $this->sendResponse('Stack not fetched', $e->getMessage());
         }
