@@ -18,7 +18,7 @@ class QuestionsController extends Controller
                 Question::create($data);
                 return $this->sendResponse(false, null, 'Question created', $data, Response::HTTP_CREATED);
             } else {
-                return $this->sendResponse(true, 'Query failed', Response::HTTP_FAILED);
+                return $this->sendResponse(true, 'Query failed', Response::HTTP_NOT_IMPLEMENTED);
             }
         } catch (Exception $e) {
             return $this->sendResponse(true, 'Question not created', $e->getMessage());
