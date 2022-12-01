@@ -71,42 +71,51 @@ const info = [
 ];
 
 const Buttons = () => {
+  const Mailto = ({ email, subject = "", body = "", children }) => {
+    let params = subject || body ? "?" : "";
+    if (subject) params += `subject=${encodeURIComponent(subject)}`;
+    if (body) params += `${subject ? "&" : ""}body=${encodeURIComponent(body)}`;
+
+    return <a href={`mailto:${email}${params}`}>{children}</a>;
+  };
+
   return (
     <div>
       <Hide>
-        <Flex
-          spacing={30}
-          style={{ position: "absolute", top: "20px", right: "10px" }}
-        >
-          <Button>
-            <Flex spacing={10} ai="center">
-              <img src={addCircle} alt="" />
-              <Text $color="white">Create New Assessment</Text>
-            </Flex>
-          </Button>
-
-          <Button $variant="outlined" $color="#2667FF">
-            <Text $color="#2667FF" $weight="600">
-              Send to employee
-            </Text>
-          </Button>
+        <Flex jc="flex-end" spacing={10}>
+          <Link to="/assessment/create-assessment">
+            <Button>
+              <Flex spacing={10} ai="center">
+                <img src={addCircle} alt="" />
+                <Text $color="white">Create New Assessment</Text>
+              </Flex>
+            </Button>
+          </Link>
+          <Mailto email="employee@email.com" subject="ASSESSMENTS">
+            <Button $variant="outlined">
+              <Text $color="#2667FF" $weight="600">
+                Send to employee
+              </Text>
+            </Button>
+          </Mailto>
         </Flex>
       </Hide>
       <Show>
-        <Flex
-          spacing={10}
-          style={{ position: "absolute", top: "20px", right: "10px" }}
-        >
-          <Button>
-            <Flex spacing={10} ai="center">
-              <img src={addCircle} alt="" />
-            </Flex>
-          </Button>
-          <Button $variant="outlined" $color="#2667FF">
-            <Text $color="#2667FF" $weight="600">
-              Send
-            </Text>
-          </Button>
+        <Flex style={{ border: "1px dotted" }} jc="flex-end" spacing={10}>
+          <Link to="/assessment/create-assessment">
+            <Button>
+              <Flex spacing={10} ai="center">
+                <img src={addCircle} alt="" />
+              </Flex>
+            </Button>
+          </Link>
+          <Mailto email="employee@email.com" subject="ASSESSMENTS">
+            <Button $variant="outlined">
+              <Text $color="#2667FF" $weight="600">
+                Send to employee
+              </Text>
+            </Button>
+          </Mailto>
         </Flex>
       </Show>
     </div>
@@ -262,8 +271,8 @@ const AssessmentList = () => {
   return (
     <div>
       <DataContext.Provider value={{ data, setData, order, setOrder }}>
-        <Buttons />
         <PageInfo breadcrumb={["Dashboard", "Performance"]} />
+        <Buttons />
         <Assessment />
       </DataContext.Provider>
     </div>
