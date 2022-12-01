@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 
 import close from "../../../assets/icons/close.svg";
 
+import CreateManual from "../../components/CreateAssessment/CreateManual";
+
 const AdminCSVUpload = () => {
   const [tab, setTab] = useState("upload");
   const [files, setFiles] = useState(null);
@@ -75,7 +77,11 @@ const AdminCSVUpload = () => {
             )}
           </UploadCSVContent>
         )}
-        {tab === "manual" && <ManualUpload></ManualUpload>}
+        {tab === "manual" && (
+          <ManualUpload>
+            <CreateManual />
+          </ManualUpload>
+        )}
       </Main>
     </>
   );
@@ -124,6 +130,7 @@ const Upload = styled.div`
   align-items: center;
   justify-content: center;
   border-top-left-radius: 16px;
+  border: 1px solid #c7e0f4;
   cursor: pointer;
 `;
 
