@@ -55,12 +55,12 @@ class QuestionsController extends Controller
 
     public function getQuestById($id): JsonResponse
     {
-        try 
+        try
         {
             $questions = Question::find($id);
             $checkQuestions = Question::where('id', $id)->exists();
             if (!$checkQuestions) {
-                return $this->sendResponse(true, 'Fetch Question By ID failed', 'No questions exist for this ID', null, Response::HTTP_NOT_FOUND);
+                return $this->sendResponse(true, 'Fetch Question By ID failed', 'No questions exist for this company ID', null, Response::HTTP_NOT_FOUND);
             }
             return $this->sendResponse(false, null, 'OK', $questions, Response::HTTP_OK);
         } catch (Exception $e) {
@@ -70,7 +70,7 @@ class QuestionsController extends Controller
 
     public function getQuestByComId($id): JsonResponse
     {
-        try 
+        try
         {
             $questions = Question::where('company_id', $id)->get();
             $checkQuestions = Question::where('company_id', $id)->exists();
