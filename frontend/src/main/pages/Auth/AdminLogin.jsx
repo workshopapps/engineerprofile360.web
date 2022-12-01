@@ -25,7 +25,6 @@ const AdminLogin = () => {
   const [showPassword, setShowPassword] = useState(true);
   const [loginError, setLoginError] = useState();
 
-
   const {
     formData,
     changeInputValue,
@@ -165,15 +164,15 @@ const AdminLogin = () => {
                 id="persist"
                 onChange={togglePersist}
                 checked={persist}
-              />{" "}
-              Remember me
+              />
+              <span>Remember me</span>
             </label>
 
             <Link to="/reset-password">Forgot password?</Link>
           </Checkbox>
 
           <Button
-            $size="md"
+            $size="xl"
             type={isSubmitted ? "button" : "submit"}
             $variant={isSubmitted ? "disabled" : null}
           >
