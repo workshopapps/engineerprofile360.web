@@ -16,4 +16,5 @@ class UserAssessment extends Model
         'completed','total_questions',
         'correct_questions','result'
     ];
+
 }
