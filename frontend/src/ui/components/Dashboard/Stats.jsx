@@ -1,36 +1,49 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-import { TaskSquare, TickCircle, Star, Messages3 } from "iconsax-react";
+import { TaskSquare, TickCircle, Note, Profile2User } from "iconsax-react";
 import { Title } from "../../../styles/reusableElements.styled";
 
-const Stats = () => {
+const Stats = ({ stats }) => {
   return (
-    <StatsContainer>
-      <IndividualStats>
-        <Assessment>
-          <TaskSquare color="#141ae9" />
-          <Type>Assessments</Type>
-          <Number>102</Number>
-        </Assessment>
-        <Rate>
-          <Star color="#107c10" />
-          <Type>Success Rate</Type>
-          <Number>102</Number>
-        </Rate>
-        <VerifiedUsers>
-          <TickCircle color="#141ae9" />
-          <Type>Verified Staffs</Type>
-          <Number>102</Number>
-        </VerifiedUsers>
-        <Feedbacks>
-          <Messages3 color="#141ae9" />
-          <Type>Feedbacks</Type>
-          <Number>102</Number>
-        </Feedbacks>
-      </IndividualStats>
-      <Chart />
-    </StatsContainer>
+    <>
+      <StatsContainer>
+        <IndividualStats>
+          <Stat>
+            <Profile2User color="#141ae9" />
+            <Type>
+              Total No. of <br /> Employees
+            </Type>
+            <Number>{stats.employees}</Number>
+          </Stat>
+          <Stat>
+            <Note color="#141ae9" />
+            <Type>
+              Total <br />
+              Assessments
+            </Type>
+            <Number>{stats.assessments}</Number>
+          </Stat>
+          <Stat>
+            <TickCircle color="#141ae9" />
+            <Type>
+              Approved <br />
+              Assessments
+            </Type>
+            <Number>102</Number>
+          </Stat>
+          <Stat>
+            <TaskSquare color="#141ae9" />
+            <Type>
+              Completed
+              <br /> Assessments
+            </Type>
+            <Number>102</Number>
+          </Stat>
+        </IndividualStats>
+        <Chart />
+      </StatsContainer>
+    </>
   );
 };
 
@@ -99,6 +112,7 @@ const Stat = styled.div`
 
 const Type = styled.div`
   font-size: 16px;
+  color: #141ae9;
 `;
 
 const Number = styled.div`
@@ -130,40 +144,4 @@ const PerformancesChart = styled.div`
   width: 100%;
   height: 85%;
   min-height: 300px;
-`;
-
-const Assessment = styled(Stat)`
-  ${Type} {
-    color: #141ae9;
-  }
-`;
-
-const Rate = styled(Stat)`
-  ${Type} {
-    color: #107c10;
-  }
-
-  ${Number} {
-    color: #1e1e1e1;
-  }
-`;
-
-const VerifiedUsers = styled(Stat)`
-  ${Type} {
-    color: #141ae9;
-  }
-
-  ${Number} {
-    color: #1e1e1e1;
-  }
-`;
-
-const Feedbacks = styled(Stat)`
-  ${Type} {
-    color: #141ae9;
-  }
-
-  ${Number} {
-    color: #1e1e1e1;
-  }
 `;
