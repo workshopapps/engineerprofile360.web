@@ -51,7 +51,8 @@ import CsvUploading from "./ui/pages/csv/CsvUploading";
 import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
 import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
 import Dashboard from "./ui/pages/Dashboard";
-import ResetPassword from "./ui/pages/user-password/ResetPassword";
+import UserResetPassword from "./ui/pages/user-password/UserResetPassword";
+import UserLogin from "./ui/pages/user-password/UserLogin";
 
 const ROLES = {
   Employees: 1,
@@ -68,7 +69,8 @@ const App = () => {
           <Route path="/2FA" element={<User2FA />} />
 
           <Route path="/user" element={<UserAuthLayout />}>
-            <Route path="reset-password" element={<ResetPassword />} />
+            <Route path="reset-password" element={<UserResetPassword />} />
+            <Route path="login" element={<UserLogin />} />
           </Route>
 
           {/* Public routes */}

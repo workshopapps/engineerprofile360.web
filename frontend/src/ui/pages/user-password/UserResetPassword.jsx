@@ -15,7 +15,7 @@ import eyeSvg from "../../../assets/icons/eye.svg";
 import smsSvg from "../../../assets/icons/smsenvelope.svg";
 import { Loader } from "../../../styles/reusableElements.styled";
 
-const ResetPassword = () => {
+const UserResetPassword = () => {
   const [isSubmitted, setIsSubmitted] = useState("");
   const [showPassword, setShowPassword] = useState(true);
 
@@ -78,7 +78,7 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default UserResetPassword;
 
 const FormContainer = styled(Container)`
   width: 100%;
