@@ -53,6 +53,7 @@ import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
 import Dashboard from "./ui/pages/Dashboard";
 import UserResetPassword from "./ui/pages/user-password/UserResetPassword";
 import UserLogin from "./ui/pages/user-password/UserLogin";
+import UserForgotPassword from "./ui/pages/user-password/UserForgotPassword";
 
 const ROLES = {
   Employees: 1,
@@ -71,6 +72,7 @@ const App = () => {
           <Route path="/user" element={<UserAuthLayout />}>
             <Route path="reset-password" element={<UserResetPassword />} />
             <Route path="login" element={<UserLogin />} />
+            <Route path="forgot-password" element={<UserForgotPassword />} />
           </Route>
 
           {/* Public routes */}
