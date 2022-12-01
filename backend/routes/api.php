@@ -41,6 +41,8 @@ Route::get("/test", function () {
 Route::prefix("userscore")->group(function () {
     Route::get('/employee/{id}', [UserScoreController::class, 'getScoresByEmployeeID']);
     Route::get('/assessment/{id}', [UserScoreController::class, 'getScoresByAssessmentID']);
+    Route::get('/company/{id}/max', [UserScoreController::class, 'getCompanyTopPerformance']);
+    Route::get('/company/{id}', [UserScoreController::class, 'getCompanyTopPerformances']);
     Route::get('/{employeeId}/{assessmentId}', [UserScoreController::class, 'getScores']);
     Route::post('/create', [UserScoreController::class, 'store']);
 });
@@ -132,6 +134,7 @@ Route::prefix("question")->group(function () {
     Route::get('company/{id}', [QuestionsController::class, 'getQuestByComId']);
     Route::get('category/{id}', [QuestionsController::class, 'getQuestByCatId']);
     Route::put('update/{questionId}', [QuestionsController::class, 'updateQuestion']);
+    Route::delete('delete/{questionId}', [QuestionsController::class, 'deleteQuestion']);
     Route::get('/assessment/{id}', [QuestionsController::class, 'getQuestByAssId']);
 });
 
@@ -197,6 +200,7 @@ Route::prefix("user-assessment")->group(function () {
 Route::prefix("stack")->group(function () {
     Route::post('add', [StackController::class, 'addStack'])->middleware("isloggedin", "isadmin");
     Route::put('update/{stackId}', [StackController::class, 'updateStack']);
+    Route::put('delete/{stackId}', [StackController::class, 'deleteStack']);
     Route::get('all', [StackController::class, 'getAllStacks']);
     Route::get('{id}', [StackController::class, 'getStackById']);
 });
