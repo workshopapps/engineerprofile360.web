@@ -132,7 +132,7 @@ class AuthenticateController extends Controller {
         }
     }
     
-    // handle overall skript admin login
+    // handle overall Eval360 admin login
     public function OverallAdminLogin(Request $request){
 
     }
@@ -252,7 +252,7 @@ class AuthenticateController extends Controller {
                 "full_name"=>$fullname,
                 "email"=> $email,
                 "username"=> $username,
-                "isVerified"=> false,
+                "isVerified"=> 0,
                 "refToken"=> "",
                 "password"=> $hash,
                 "role"=>$this->ORG_ROLE
@@ -264,7 +264,7 @@ class AuthenticateController extends Controller {
                 "full_name"=>$fullname,
                 "email"=> $email,
                 "username"=> $username,
-                "isVerified"=> false,
+                "isVerified"=> 0,
                 "role"=>$this->ORG_ROLE
             ];
 
@@ -286,7 +286,7 @@ class AuthenticateController extends Controller {
     public function verifyEmail(Request $request, $id, $token){
         // verify if that user exists
         $user = User::where("user_id", $id);
-        $verifyToken = Token::where("token","=", $token);
+        $verifyToken = Token::where("token", $token);
 
     
         if($user->count() == 0){
