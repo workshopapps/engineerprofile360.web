@@ -3,14 +3,14 @@ import styled from "styled-components";
 import { Link, Outlet } from "react-router-dom";
 
 import { Container } from "../../../../styles/reusableElements.styled";
-import Logo from "../../../../components/Logo";
+import logo from "../../../../assets/images/logo.svg";
 
 const AdminAuthLayout = () => {
   return (
     <>
       <Header as="header">
         <Link to="/">
-          <Logo size="sm" />
+          <img src={logo} alt="" />
         </Link>
       </Header>
       <AuthLayoutCon>
