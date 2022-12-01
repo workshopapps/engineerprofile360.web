@@ -135,7 +135,7 @@ class QuestionsController extends Controller
             $question->delete();
 
             // send response
-            return $this->sendResponse(false, null, 'Question Deleted', $question, Response::HTTP_NO_CONTENT);
+            return $this->sendResponse(false, null, 'Question Deleted', $question, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, 'Question not fetched', $e->getMessage());
         }
