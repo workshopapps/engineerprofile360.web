@@ -33,7 +33,7 @@
                 const base64 = reader.result;
 
                 // make an api call
-                const res = await fetch("http://api.skript.hng.tech/api/test_csv", {
+                const res = await fetch("https://api.eval360.hng.tech/api/test_csv", {
                     method: "POST",
                     headers: {
                         "content-type": "application/json"
