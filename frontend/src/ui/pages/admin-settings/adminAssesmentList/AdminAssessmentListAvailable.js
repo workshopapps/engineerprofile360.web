@@ -14,8 +14,8 @@ const DataContext = createContext(null);
 const info = [
   {
     id: "1",
-    dept: "Introduction to Software Engineering",
-    course: "Python 101",
+    dept: "HNG Tutorials",
+    course: "Zuri 101",
     duration: "30 mins",
     date: "25 Apr 2020",
   },
@@ -70,7 +70,7 @@ const info = [
   },
 ];
 
-export const Buttons = () => {
+const Buttons = () => {
   const Mailto = ({ email, subject = "", body = "", children }) => {
     let params = subject || body ? "?" : "";
     if (subject) params += `subject=${encodeURIComponent(subject)}`;
@@ -121,7 +121,7 @@ export const Buttons = () => {
     </div>
   );
 };
-export const Sort = () => {
+const Sort = () => {
   const { data, setData, order, setOrder } = useContext(DataContext);
   const sorting = () => {
     if (order === "asc") {
@@ -197,7 +197,7 @@ export const Sort = () => {
   );
 };
 
-export const List = () => {
+const List = () => {
   const { data } = useContext(DataContext);
   return (
     <AssessmentListings>
@@ -233,7 +233,7 @@ export const List = () => {
   );
 };
 
-export const TableSection = () => {
+const TableSection = () => {
   return (
     <Flex stack spacing={16}>
       <Sort />
@@ -242,7 +242,7 @@ export const TableSection = () => {
   );
 };
 
-export const Assessment = () => {
+const Assessment = () => {
   return (
     <Flex stack spacing={70}>
       <Flex
@@ -255,11 +255,13 @@ export const Assessment = () => {
       >
         <Flex spacing={24} ai="flex-end">
           <Link to="/admin-assessment-list">
-            <Text>Available (60)</Text>
+            <Text $color="#2667FF" $weight="600">
+              Available (60)
+            </Text>
           </Link>
-          <Text $color="#2667FF" $weight="600">
-            Completed (47)
-          </Text>
+          <Link to="/admin-assessment-list/completed">
+            <Text>Completed (47)</Text>
+          </Link>
         </Flex>
       </Flex>
       <TableSection />
@@ -267,7 +269,7 @@ export const Assessment = () => {
   );
 };
 
-export const AssessmentList = () => {
+const AssessmentList = () => {
   const [data, setData] = useState(info);
   const [order, setOrder] = useState("asc");
   return (
@@ -283,7 +285,7 @@ export const AssessmentList = () => {
 
 export default AssessmentList;
 
-export const AssessmentListings = styled.div`
+const AssessmentListings = styled.div`
   padding-top: ${({ theme }) => theme.spacing(3)};
   width: 100%;
   overflow: auto;
@@ -318,7 +320,7 @@ export const AssessmentListings = styled.div`
   }
 `;
 
-export const Text = styled.p`
+const Text = styled.p`
   white-space: nowrap;
   color: ${({ $color }) => ($color ? $color : "initial")};
   font-size: ${({ $size }) => ($size ? $size : "14px")};
@@ -326,14 +328,14 @@ export const Text = styled.p`
   line-height: ${({ $lHeight }) => ($lHeight ? $lHeight : "20px")};
 `;
 
-export const Hide = styled.div`
+const Hide = styled.div`
   display: block;
 
   @media screen and (max-width: 768px) {
     display: none;
   } ;
 `;
-export const Show = styled.div`
+const Show = styled.div`
   display: none;
 
   @media screen and (max-width: 768px) {
@@ -341,7 +343,7 @@ export const Show = styled.div`
   } ;
 `;
 
-export const SortContainer = styled.div`
+const SortContainer = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0 10px;

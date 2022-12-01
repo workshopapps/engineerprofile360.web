@@ -59,6 +59,8 @@ import EmployeesListing from "./ui/components/Employees/EmployeesListing";
 import EmployeeProfile from "./ui/components/Employees/EmployeeProfile";
 import AcceptReject from "./ui/pages/Accept Reject Profile/AcceptReject";
 import MainAssessment from "./ui/pages/Assessment";
+import AdminAssessmentListOutlet from "./ui/pages/admin-settings/adminAssesmentList/AdminAssessmentListOutlet";
+import AdminAssessmentListAvailable from "./ui/pages/admin-settings/adminAssesmentList/AdminAssessmentListAvailable";
 
 const ROLES = {
   Employees: 1,
@@ -150,8 +152,11 @@ const App = () => {
               <Route path="/ui" element={"my guy"} />
               <Route
                 path="/admin-assessment-list"
-                element={<AdminAssessmentList />}
-              />
+                element={<AdminAssessmentListOutlet />}
+              >
+                <Route path="" element={<AdminAssessmentListAvailable />} />
+                <Route path="completed" element={<AdminAssessmentList />} />
+              </Route>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/employees" element={<Employees />}>
                 <Route path="" element={<EmployeesListing />} />
