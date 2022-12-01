@@ -10,10 +10,11 @@ class UserAssessment extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
      'employee_id','assessment_id',
      'org_id','userscore_id',
      'completed','total_questions',
      'correct_questions','result'
     ];
-    
+
 }
