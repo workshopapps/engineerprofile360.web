@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import logo from "../../../assets/icons/app/logo.svg";
 import success from "../../../assets/images/img_done.png";
 import "./User2FA.css";
 import { Link, useParams } from "react-router-dom";
 import axios from "../../../api/axios";
+import Logo from "../../../components/Logo";
 
 export const User2FA = () => {
   const [fetchError, setFetchError] = useState("");
@@ -28,7 +28,7 @@ export const User2FA = () => {
   return (
     <div id="userBody">
       <div id="logodiv">
-        <img src={logo} alt="logo" className="userlogo" />
+        <Logo size="sm" />
       </div>
 
       {isErrorFree ? (
