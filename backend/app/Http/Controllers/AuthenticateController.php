@@ -35,7 +35,7 @@ class AuthenticateController extends Controller {
     {
         $this->helper = new Helper();
         $this->CookieName = "eval360-token";
-        $this->CookieExp = time()+(3600*24*2); // expire in 2 days
+        $this->CookieExp = 20; // expire in 20 minutes
     }
 
     protected function isExpired($expireTime){
@@ -294,7 +294,16 @@ class AuthenticateController extends Controller {
         }
         
         if($verifyToken->count() == 0){
-            return $this->sendResponse(true, 'Invalid verification link or verification expires',"Invalid verification link....", null, 400);
+            return $this->sendResponse(true, 'Invalid verification link: token not found',"Invalid verification token", null, 400);
+        }
+        
+        $exp = $verifyToken->first()["exp"];
+        $isExpired = $this->isExpired($exp);
+        
+        if($isExpired){
+            // remove expired link from db
+            Token::where("user_id", $id)->delete();
+            return $this->sendResponse(true, "verification link expired", "link already expired", null, 400);
         }
 
         // check if user has been verified already
@@ -304,14 +313,6 @@ class AuthenticateController extends Controller {
             return $this->sendResponse(true, "user email has been verified", "Email has been verified already", null, 200);
         }
 
-        $exp = $verifyToken->first()["exp"];
-        $isExpired = $this->isExpired($exp);
-        
-        if($isExpired){
-            // remove expired link from db
-            Token::where("user_id", $id)->delete();
-            return $this->sendResponse(true, "verification link expired", "link already expired", null, 400);
-        }
 
         // update verified user status
         User::where("user_id", $id)->update(array("isVerified"=>true));
@@ -461,26 +462,27 @@ class AuthenticateController extends Controller {
     // refresh expire jwt-token
     public function refreshJwtToken(Request $req){
         try {
-            $payload = json_decode($req->getContent(), true);
+            $jwtToken = $req->cookie($this->CookieName);
 
-            if(!isset($payload["token"])){
+            if(!isset($jwtToken) || empty($jwtToken)){
                 return $this->sendResponse(true, "jwt token not found", "Unauthorised.",null, 401);
             }
 
             // decode jwt
-            $token = $payload["token"];
-            $decoded = $this->helper->decodeJwt($token);
+            $decoded = $this->helper->decodeJwt($jwtToken);
             $email = $decoded->email;
             $id = $decoded->id;
 
             // generate accesstoken
             $newToken = $this->helper->generateAccessToken($id, $email);
-
+            
             // set http-only cookie
-            $cookieVal = $newToken;
+            $data = [
+                "accessToken"=>$newToken,
+            ];
 
             // send newly generated token
-            return $this->sendResponseWithCookie(false, null, "refresh token", array("token"=>$newToken), 200, $this->CookieName, $cookieVal, $this->CookieExp);
+            return $this->sendResponseWithCookie(false, null, "refresh token", $data, 200, $this->CookieName, $newToken, $this->CookieExp);
 
         } catch (\Exception $e) {
             return $this->sendResponse(true, "something went wrong refreshing token: ".$e->getMessage(), "Unauthorised.",null, 500);

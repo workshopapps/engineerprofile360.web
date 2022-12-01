@@ -52,7 +52,7 @@ const SelectType = () => {
       </SelectItemContainer>
       <Buttons>
         <Link to={-1}>Cancel</Link>
-        <Link to="/admin-csv-upload">Proceed</Link>
+        <Link to="/assessment/admin-csv-upload">Proceed</Link>
       </Buttons>
     </SelectContainer>
   );

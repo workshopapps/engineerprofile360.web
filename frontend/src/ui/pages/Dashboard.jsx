@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Stats from "../components/Dashboard/Stats";
 import TopEmployees from "../components/Dashboard/TopEmployees";
 
@@ -11,7 +11,11 @@ const Dashboard = () => {
 
   return (
     <>
-      <PageInfo pageTitle={`Welcome ${auth.user_name}`} />
+      <PageInfo
+        pageTitle={`Welcome ${
+          auth.fullName ? auth.fullName.split(" ")[0] : ""
+        } `}
+      />
       <Stats />
       <TopEmployees />
     </>

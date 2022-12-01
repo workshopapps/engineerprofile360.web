@@ -16,7 +16,10 @@ const Heading = () => {
     <Flex jc="space-between" className="" ai="center">
       <h2 className="headingtext">Assessments</h2>
       <div className="button-container">
-        <Link to="/create-assessment" className="bg-primary create-button">
+        <Link
+          to="/assessment/create-assessment"
+          className="bg-primary create-button"
+        >
           <Flex spacing={10} ai="center">
             <img src={plus} alt="" />
             <div className="hide">
