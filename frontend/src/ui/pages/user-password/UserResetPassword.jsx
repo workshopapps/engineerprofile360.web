@@ -82,6 +82,10 @@ export default UserResetPassword;
 
 const FormContainer = styled(Container)`
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 3rem;
 `;
 const FormButton = styled(Button)`
   min-width: 100%;
