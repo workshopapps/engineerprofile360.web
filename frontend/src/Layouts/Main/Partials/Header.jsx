@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 
+import logo from "../../../assets/images/logo.svg";
 import menuIcon from "../../../assets/icons/menu.svg";
 import { Container, Button } from "../../../styles/reusableElements.styled";
 import NavBar from "./NavBar";
 import { Link } from "react-router-dom";
 import MobileNav from "./MobileNav";
-import Logo from "../../../components/Logo";
 
 const Header = () => {
   const { pathname } = useLocation();
@@ -21,7 +21,7 @@ const Header = () => {
     <HeaderTag>
       <HeaderContainer>
         <Link to="/">
-          <Logo size="sm" />
+          <img src={logo} alt="Logo of Skript" />
         </Link>
 
         <NavBar />
@@ -71,11 +71,10 @@ const HeaderContainer = styled(Container)`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 ${({ theme }) => theme.spacing(6)};
+  padding: 0 ${({theme}) => theme.spacing(6)};
 
-  ${({ theme }) => theme.breakpoints.down("xs")} {
-    padding: ${({ theme }) => theme.spacing(6)}
-      ${({ theme }) => theme.spacing(2)};
+  ${({theme}) => theme.breakpoints.down("xs")} {
+    padding: ${({theme}) => theme.spacing(6)} ${({theme}) => theme.spacing(2)};
   }
 
   div:last-of-type {
