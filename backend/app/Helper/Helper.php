@@ -18,9 +18,9 @@ use Mailer;
 class Helper extends Controller
 {
 
-    public $baseUrl = "http://api.skript.hng.tech";
-    // public $baseUrl = "http://localhost:8000";
-    public $clientUrl = "http://skript.hng.tech"; // this would be the frontend client url
+    public $baseUrl = "https://api.eval360.hng.tech";
+    // public $baseUrl = "https://localhost:8000";
+    public $clientUrl = "https://eval360.hng.tech"; // this would be the frontend client url
 
     public function returnExpireTime(){
         $startdate = date("Y-m-d H:i:s");

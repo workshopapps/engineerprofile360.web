@@ -102,7 +102,7 @@ const AdminLogin = () => {
       if (!err?.response) {
         showErrorToast("No Server Response");
       } else if (err.response?.data.errorState === true) {
-        showErrorToast(err.response?.data.message);
+        showErrorToast(err.response.data.message);
       }
     } finally {
       setIsSubmitted(false);
@@ -164,15 +164,15 @@ const AdminLogin = () => {
                 id="persist"
                 onChange={togglePersist}
                 checked={persist}
-              />{" "}
-              Remember me
+              />
+              <span>Remember me</span>
             </label>
 
             <Link to="/reset-password">Forgot password?</Link>
           </Checkbox>
 
           <Button
-            $size="md"
+            $size="xl"
             type={isSubmitted ? "button" : "submit"}
             $variant={isSubmitted ? "disabled" : null}
           >
