@@ -31,10 +31,10 @@ class UserAssessmentController extends Controller
                 return $this->sendResponse(false, null, 'Accepted user assessment successfully', null, Response::HTTP_CREATED);
             }
             else{
-                return $this->sendResponse(true, 'Provide a valid assessment Id or employee Id', null, null, Response::HTTP_BAD_REQUEST);
+                return $this->sendResponse(true, 'Provide a valid assessment Id or employee Id', '', null, Response::HTTP_BAD_REQUEST);
             }
 
-       
+
         } catch (Exception $e) {
             return $this->sendResponse(true, $e->getMessage(), 'User assessment was not accepted', null, Response::HTTP_BAD_REQUEST);
         }
@@ -63,9 +63,9 @@ class UserAssessmentController extends Controller
 
     /**
      * It gets all the assessments for a given employee
-     * 
+     *
      * @param string employee_id The id of the employee whose assessments you want to get.
-     * 
+     *
      * @return JsonResponse All the assessments for the given employee.
      */
     public function getEmployeeAvailableAssessments($employee_id): JsonResponse
