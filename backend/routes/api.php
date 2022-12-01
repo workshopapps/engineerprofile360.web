@@ -56,6 +56,8 @@ Route::prefix("user")->group(function () {
     Route::get('make-admin/{userId}', [UserController::class, 'makeUserAnAdmin']);
     Route::get('block-user/{userId}', [UserController::class, 'blockUser']);
     Route::put('/{userId}/update', [UserController::class, 'updaterUserInfo'])->middleware("isloggedin");
+
+    Route::put('verify-user/{userId}', [UserController::class, 'getVerifyUserById']);
 });
 
 
