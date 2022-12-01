@@ -384,6 +384,32 @@ paths:
           type: user_id
           format: user_id
           example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+    "/user/{user_id}/deactivate":
+    post:
+      tags:
+        - Users
+      description: 'Deactivate a user'
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          type: user_id
+          format: user_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      operationId: deactivateuser
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
     # update user
   "/user/{userId}/update":
     put:
@@ -514,6 +540,40 @@ paths:
           required: true
           type: org_id
           format: org_id
+          example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse200'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse401'
+    "employee/department/{department_id}":
+    get:
+      tags:
+        - Employee
+      security:
+        - bearerAuth: []
+      description: 'Fetch all Employees'
+      operationId: getallemployees
+      parameters:
+        - name: 
+          in: path
+          required: true
+          type: employees
+          format: employees
           example: "9ea09b93-6682-11ed-9941-3863bbb7c6d"
       responses:
         '200':

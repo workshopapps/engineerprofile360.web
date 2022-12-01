@@ -188,4 +188,22 @@ class EmployeeController extends Controller
             return $this->sendResponse(true, $e->getMessage(), "Employee could not be fetched", null, Response::HTTP_NOT_FOUND);
         }
     }
+
+    //this will fetch all employees for admin
+    public function getAllEmployees()
+    {
+        try {
+            $companies = Employee::paginate(10);
+
+            return $this->sendResponse(
+                false,
+                null,
+                'All employees',
+                $companies,
+                Response::HTTP_OK
+            );
+        } catch (\Exception $e) {
+            return $this->sendResponse(true, 'Employees not fetched', $e->getMessage());
+        }
+    }
 }
