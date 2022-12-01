@@ -59,6 +59,7 @@ import EmployeesListing from "./ui/components/Employees/EmployeesListing";
 import EmployeeProfile from "./ui/components/Employees/EmployeeProfile";
 import AcceptReject from "./ui/pages/Accept Reject Profile/AcceptReject";
 import MainAssessment from "./ui/pages/Assessment";
+import EmployeeUserDashboard from "./ui/pages/EmployeeUserDashboard";
 
 const ROLES = {
   Employees: 1,
@@ -163,6 +164,10 @@ const App = () => {
                 <Route path="profile" element={<EmployeeProfile />} />
                 <Route path="user-profile" element={<UserProfile />} />
               </Route>
+              <Route
+                path="employee-user-dashboard"
+                element={<EmployeeUserDashboard />}
+              />
               <Route path="/assessment" element={<MainAssessment />}>
                 <Route path="" element={<AssessmentFirstPage />} />
                 <Route
