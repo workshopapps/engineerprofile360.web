@@ -13,6 +13,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Validator;
 use Mailer;
@@ -289,7 +290,6 @@ class AuthenticateController extends Controller {
         // verify if that user exists
         $user = User::where("user_id", $id);
         $verifyToken = Token::where("token", $token);
-
 
         if($user->count() == 0){
             return $this->sendResponse(true, 'Invalid verification link, no user was found',"Invalid verification link", null, 404);
