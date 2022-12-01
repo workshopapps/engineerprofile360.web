@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { showErrorToast } from "../../../helpers/helper";
+// import "react-toastify/dist/ReactToastify.css";
 import { Loader } from "../../../styles/reusableElements.styled";
 
 import { Container, Button } from "../../../styles/reusableElements.styled";
@@ -35,12 +35,6 @@ const AdminSignup = () => {
     password: "",
     confirmPassword: "",
   });
-
-  const showErrorToast = (error) => {
-    toast.error(error, {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  };
 
   const navigate = useNavigate();
 
@@ -75,14 +69,14 @@ const AdminSignup = () => {
         const { email, fname: full_name, uname: username, password } = formData;
         setIsSubmitted(true);
         const response = await axios.post(
-          "auth/register",
+          "auth/organization/register",
           JSON.stringify({ email, full_name, username, password })
         );
 
         if (response.data.errorState === false) {
           navigate("/verify-email", { state: { email } });
         }
-        console.log(response.data);
+
         // Clear input fields
         setFormData({
           fname: "",
@@ -91,22 +85,13 @@ const AdminSignup = () => {
           password: "",
           confirmPassword: "",
         });
-        setIsSubmitted("");
-      } else {
-        if (errors) {
-          setIsSubmitted(false);
-          throw new Error();
-        }
       }
     } catch (err) {
       if (!err?.response) {
         setFetchError("No Server Response");
-      } else if (err.response?.status === 409) {
-        setFetchError("Email Taken");
-      } else {
-        setFetchError("Unable to process request");
-      }
-      showErrorToast(fetchError);
+      } else if (err.response?.data.errorState === true)
+        showErrorToast(err.response.data.message);
+    } finally {
       setIsSubmitted(false);
     }
   };
@@ -116,7 +101,7 @@ const AdminSignup = () => {
   return (
     <>
       <FormContainer>
-        <ToastContainer />
+        {/* <ToastContainer /> */}
         <AuthTitle title="Sign up" text="Let's get started" />
         <SignupForm onSubmit={handleSubmit}>
           <InputField
@@ -239,13 +224,16 @@ const AdminSignup = () => {
           />
           <Checkbox>
             <label>
-              <input required type="checkbox" /> I agree to the{" "}
-              <a href="/terms"> Terms and Conditions</a>
+              <input required type="checkbox" />
+              <span>
+                I agree to the
+                <a href="/terms"> Terms and Conditions</a>
+              </span>
             </label>
           </Checkbox>
 
           <Button
-            $size="md"
+            $size="xl"
             type={isSubmitted ? "button" : "submit"}
             $variant={isSubmitted ? "disabled" : null}
           >

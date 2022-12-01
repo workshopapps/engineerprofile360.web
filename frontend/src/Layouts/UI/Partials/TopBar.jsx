@@ -1,16 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import logo from "../../../assets/images/logo.svg";
-import searchIcon from "../../../assets/icons/search.svg";
 import user from "../../../assets/icons/app/user1.svg";
-import bell from "../../../assets/icons/app/notification.svg";
-import arrowDown from "../../../assets/icons/app/arrow-down.svg";
+import closeIcon from "../../../assets/icons/close.svg";
 import menuIcon from "../../../assets/icons/menu.svg";
+
+import {
+  SearchNormal1,
+  Notification,
+  ArrowDown2,
+  HambergerMenu,
+  Setting2,
+  LogoutCurve,
+  User,
+} from "iconsax-react";
+
 import { InputField } from "../../../main/components";
 import { Container } from "../../../styles/reusableElements.styled";
 
-const TopBar = () => {
+import useAuth from "../../../hooks/useAuth";
+
+const TopBar = ({ handleLeftBarToggle, leftBar }) => {
+  const { auth } = useAuth();
+  const [dropDown, setDropDown] = useState(false);
+  const handleDropDownToggle = () => {
+    setDropDown(!dropDown);
+  };
+
   return (
     <TopBarContainer>
       <TopBarContent>
@@ -20,19 +37,41 @@ const TopBar = () => {
         <Navigation>
           <SearchInputField
             $height="52px"
-            startIcon={<img src={searchIcon} />}
+            startIcon={<SearchNormal1 color="#323130" />}
             type="text"
             placeholder="Search"
           />
           <Options>
-            <User>
+            <UserCon>
               <img src={user} alt="" />
-              <span>Mark Jilaga</span>
-            </User>
+              <span>{auth.fullName ? auth.fullName.split(" ")[0] : ""}</span>
+            </UserCon>
             <Icons>
-              <img src={bell} alt="" />
-              <img src={arrowDown} alt="" />
-              <img src={menuIcon} alt="" />
+              <Notification color="#323130" />
+              <SearchNormal1 color="#323130" />
+              <ArrowDown2 onClick={handleDropDownToggle} />
+              <DropDown $open={dropDown ? "open" : "close"}>
+                <List>
+                  <li>
+                    <User color="#323130" /> Profile
+                  </li>
+                  <li>
+                    <Setting2 color="#323130" /> Settings
+                  </li>
+                  <li>
+                    <LogoutCurve color="#323130" /> Logout
+                  </li>
+                </List>
+              </DropDown>
+              <img
+                src={
+                  leftBar && document.body.clientWidth <= 960
+                    ? closeIcon
+                    : menuIcon
+                }
+                alt=""
+                onClick={handleLeftBarToggle}
+              />
             </Icons>
           </Options>
         </Navigation>
@@ -50,10 +89,10 @@ const TopBarContainer = styled.header`
   display: flex;
   align-items: center;
   background: #ffffff;
-  z-index: 1;
+  z-index: 5;
   width: 100%;
 
-  border-bottom : 1px solid ${({theme}) => theme.palette.border.default};
+  border-bottom: 1px solid #edebe9;
 `;
 
 const TopBarContent = styled(Container)`
@@ -78,10 +117,14 @@ const Navigation = styled.div`
   grid-template-columns: 1fr 1fr;
   align-items: center;
   justify-content: center;
+
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    display: initial;
+  }
 `;
 
 const SearchInputField = styled(InputField)`
-  ${({ theme }) => theme.breakpoints.down("xs")} {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     display: none;
   }
 `;
@@ -89,11 +132,45 @@ const SearchInputField = styled(InputField)`
 const Options = styled.div`
   display: flex;
   align-items: center;
-justify-content: flex-end;
+  justify-content: flex-end;
   gap: ${({ theme }) => theme.spacing(3)};
 `;
 
-const User = styled.div`
+const DropDown = styled.div`
+  position: absolute;
+  padding: ${({ theme }) => theme.spacing(2)};
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: ${({ theme }) => theme.spacing(0.5)};
+  top: 28px;
+  right: ${({ theme }) => theme.spacing(0.1)};
+  z-index: 10;
+  min-width: 115px;
+  display: ${(props) => (props.$open === "open" ? "initial" : "none")};
+  overflow: hidden;
+`;
+
+const List = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing(1.5)};
+
+  li {
+    display: flex;
+    gap: ${({ theme }) => theme.spacing(2)};
+    align-items: center;
+    font-size: 14px;
+    color: #323130;
+
+    img:first-of-type {
+      display: initial;
+      ${({ theme }) => theme.breakpoints.down("xs")} {
+        display: initial;
+      }
+    }
+  }
+`;
+
+const UserCon = styled.div`
   display: flex;
   align-items: center;
   gap: ${({ theme }) => theme.spacing(2)};
@@ -107,6 +184,12 @@ const User = styled.div`
       display: none;
     }
   }
+
+  img:first-of-type {
+    ${({ theme }) => theme.breakpoints.down("xs")} {
+      display: none;
+    }
+  }
 `;
 
 const Icons = styled.div`
@@ -114,20 +197,21 @@ const Icons = styled.div`
   align-items: flex-end;
   gap: ${({ theme }) => theme.spacing(2)};
 
-  img:nth-of-type(1) {
-    ${({ theme }) => theme.breakpoints.down("xs")} {
+  img:first-of-type {
+    ${({ theme }) => theme.breakpoints.down("sm")} {
       display: none;
     }
   }
 
   img:nth-of-type(2) {
-    ${({ theme }) => theme.breakpoints.down("xs")} {
+    ${({ theme }) => theme.breakpoints.up("sm")} {
       display: none;
     }
   }
 
-  img:nth-of-type(3) {
-    ${({ theme }) => theme.breakpoints.up("xs")} {
+  img:last-of-type {
+    width: 24px;
+    ${({ theme }) => theme.breakpoints.up("md")} {
       display: none;
     }
   }

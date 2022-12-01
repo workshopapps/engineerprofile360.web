@@ -1,14 +1,14 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AuthContext from "../../../context/authProvider";
 
 import { Container, Button } from "../../../styles/reusableElements.styled";
 import { AuthTitle, InputField } from "../../components";
 
 import useInputValidation from "../../../hooks/useInputValidation";
+import useAuth from "../../../hooks/useAuth";
 import axios from "../../../api/axios";
 
 import eyeSvg from "../../../assets/icons/eye.svg";
@@ -16,7 +16,11 @@ import smsSvg from "../../../assets/icons/smsenvelope.svg";
 import { Loader } from "../../../styles/reusableElements.styled";
 
 const AdminLogin = () => {
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth, persist, setPersist } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/dashboard";
+
   const [isSubmitted, setIsSubmitted] = useState("");
   const [showPassword, setShowPassword] = useState(true);
   const [loginError, setLoginError] = useState();
@@ -41,10 +45,17 @@ const AdminLogin = () => {
     });
   };
 
-  const navigate = useNavigate();
+  const togglePersist = () => {
+    setPersist((prev) => !prev);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("persist", persist);
+  }, [persist]);
+
   const { email, password } = formData;
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, formData) => {
     e.preventDefault();
 
     try {
@@ -66,45 +77,34 @@ const AdminLogin = () => {
 
         const { email, password } = formData;
         const response = await axios.post(
-          "auth/login",
+          "auth/organization/login",
           JSON.stringify({ email, password })
         );
 
-        console.log(JSON.stringify(response?.data));
+        const accessToken = response?.data?.data.accessToken;
+        const roles = response?.data?.data.role;
+        const id = response?.data?.data.id;
 
-        const accessToken = response?.data?.accessToken;
-
-        setAuth({ email, password, accessToken });
+        setAuth({ email, password, accessToken, roles, id });
 
         if (response.data.errorState === false) {
-          // navigate("/verify-email", { state: { email } });
+          // Clear input fields
+          setFormData({
+            email: "",
+            password: "",
+          });
+
+          navigate(from, { replace: true });
         }
-        console.log(response.data);
-
-        // Clear input fields
-        setFormData({
-          email: "",
-          password: "",
-        });
-
-        setIsSubmitted("");
-      } else if (errors) {
-        setIsSubmitted(false);
       }
     } catch (err) {
-      showErrorToast(err);
       setIsSubmitted(false);
       if (!err?.response) {
-        setLoginError("No Server Response");
-      } else if (err.response?.status === 400) {
-        setLoginError("Missing Username or Password");
-      } else if (err.response?.status === 401) {
-        setLoginError("Unathorized");
-      } else {
-        setLoginError("Login Failed");
+        showErrorToast("No Server Response");
+      } else if (err.response?.data.errorState === true) {
+        showErrorToast(err.response?.data.message);
       }
-
-      showErrorToast(loginError);
+    } finally {
       setIsSubmitted(false);
     }
   };
@@ -117,7 +117,7 @@ const AdminLogin = () => {
           title="Welcome back"
           text="Please enter your login details"
         />
-        <LoginForm onSubmit={handleSubmit}>
+        <LoginForm onSubmit={(e) => handleSubmit(e, formData)}>
           <InputField
             $size="md"
             type="email"
@@ -159,14 +159,20 @@ const AdminLogin = () => {
           />
           <Checkbox>
             <label>
-              <input type="checkbox" /> Remember me
+              <input
+                type="checkbox"
+                id="persist"
+                onChange={togglePersist}
+                checked={persist}
+              />
+              <span>Remember me</span>
             </label>
 
             <Link to="/reset-password">Forgot password?</Link>
           </Checkbox>
 
           <Button
-            $size="md"
+            $size="xl"
             type={isSubmitted ? "button" : "submit"}
             $variant={isSubmitted ? "disabled" : null}
           >
