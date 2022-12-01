@@ -5,21 +5,51 @@ namespace App\Http\Controllers;
 use App\Models\Question;
 use Exception;
 use App\Http\Requests\CreateQuestionRequest;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class QuestionsController extends Controller
 {
-    public function addManually(CreateQuestionRequest $request): JsonResponse
+    public function addManually(Request $request): JsonResponse
     {
-        $data = $request->all();
+
+
         try {
-            if($data){
+            $payload = json_decode($request->getContent(), true);
+
+            for($i = 0 ; $i < count($payload); $i++){
+                if(!isset($payload[$i]["category_id"]) || !isset($payload[$i]["assessment_id"]) || !isset($payload[$i]["company_id"]) || !isset($payload[$i]["correct_answers"]) || !isset($payload[$i]["options"]) || !isset($payload[$i]["timeframe"]) || !isset($payload[$i]["is_multiple_answers"])){
+                    return $this->sendResponse(true, "expected a valid payload", "invalid payload given.", $payload[$i]["correct_answers"], 400);
+                }
+
+
+                $category_id = $payload[$i]["category_id"];
+                $company_id = $payload[$i]["company_id"];
+                $assessment_id = $payload[$i]["assessment_id"];
+                $correct_answers = $payload[$i]["correct_answers"];
+                $options = $payload[$i]["options"];
+                $timeframe = $payload[$i]["timeframe"];
+                $is_multiple_answers = $payload[$i]["is_multiple_answers"];
+
+
+
+                $data = [
+                    'category_id' => $category_id,
+                    'assessment_id' => $assessment_id,
+                    'company_id' => $company_id,
+                    'correct_answers' => $correct_answers,
+                    'options' => $options,
+                    'timeframe' => $timeframe,
+                    'is_multiple_answers' => $is_multiple_answers
+                ];
+
                 Question::create($data);
-                return $this->sendResponse(false, null, 'Question created', $data, Response::HTTP_CREATED);
-            }else {
-                return $this->sendResponse(true, 'Query failed', Response::HTTP_FAILED);
+
             }
+
+            return $this->sendResponse(false, null, 'Question created', $payload, Response::HTTP_CREATED);
+
 
         } catch (Exception $e) {
             return $this->sendResponse(true, 'Question not created', $e->getMessage());
@@ -55,7 +85,7 @@ class QuestionsController extends Controller
 
     public function getQuestById($id): JsonResponse
     {
-        try 
+        try
         {
             $questions = Question::find($id);
             $checkQuestions = Question::where('id', $id)->exists();
@@ -70,7 +100,7 @@ class QuestionsController extends Controller
 
     public function getQuestByComId($id): JsonResponse
     {
-        try 
+        try
         {
             $questions = Question::where('company_id', $id)->get();
             $checkQuestions = Question::where('company_id', $id)->exists();
