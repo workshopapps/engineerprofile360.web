@@ -52,6 +52,7 @@ import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
 import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
 import Dashboard from "./ui/pages/Dashboard";
 import Employees from "./ui/pages/Employees";
+import UserProfile from "./ui/pages/UserProfile";
 import EmployeesListing from "./ui/components/Employees/EmployeesListing";
 import EmployeeProfile from "./ui/components/Employees/EmployeeProfile";
 import AcceptReject from "./ui/pages/Accept Reject Profile/AcceptReject";
@@ -61,7 +62,6 @@ const ROLES = {
   Organization: 2,
   Admin: 3,
 };
-
 
 const App = () => {
   return (
@@ -155,9 +155,12 @@ const App = () => {
               <Route path="/ui" element={"my guy"} />
 
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/employees" element={<Employees />} />
+
               <Route path="/employees" element={<Employees />}>
                 <Route path="" element={<EmployeesListing />} />
                 <Route path="profile" element={<EmployeeProfile />} />
+                <Route path="user-profile" element={<UserProfile />} />
               </Route>
             </Route>
 
