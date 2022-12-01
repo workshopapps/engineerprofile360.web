@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\StackController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\UserController;
+
+use App\Http\Controllers\StackController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
@@ -12,9 +12,9 @@ use App\Http\Controllers\InterviewController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UserScoreController;
 use App\Http\Controllers\AssessmentController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\AuthenticationController;
-use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\UserAssessmentController;
 
 // util functions
@@ -98,16 +98,12 @@ Route::prefix("auth")->group(function () {
         Route::post('/login', [AuthenticateController::class, "OrganizationLogin"]);
     });
 
-    // employee login 
+    // employee login
     Route::post('/employee/login', [AuthenticateController::class, "EmployeeLogin"]);
     // overall admin login
     Route::post('/eval360/admin/login', [AuthenticateController::class, 'OverallAdminLogin']);
 
     Route::get('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
-
-    // refresh token
-    Route::post('/refresh', [AuthenticateController::class, 'refreshJwtToken']);
-
 
     Route::prefix("password")->group(
         function () {
