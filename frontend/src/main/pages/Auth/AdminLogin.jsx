@@ -103,9 +103,8 @@ const AdminLogin = () => {
         showErrorToast("No Server Response");
       } else if (err.response?.data.errorState === true) {
         showErrorToast(err.response.data.message);
+        setIsSubmitted(false);
       }
-    } finally {
-      setIsSubmitted(false);
     }
   };
 
@@ -174,7 +173,7 @@ const AdminLogin = () => {
           <Button
             $size="xl"
             type={isSubmitted ? "button" : "submit"}
-            $variant={isSubmitted ? "disabled" : null}
+            $variant={isSubmitted || errors ? "disabled" : null}
           >
             {isSubmitted ? <Loader /> : "Sign In"}
           </Button>
