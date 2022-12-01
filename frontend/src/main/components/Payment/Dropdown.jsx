@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-const Dropdown = ({ onChange, children }) => {
+const Dropdown = ({ onChange, value, id, children }) => {
   return (
     <DropDownContainer onChange={onChange}>
-      <Select>{children}</Select>
+      <Select value={value} id={id}>
+        {children}
+      </Select>
     </DropDownContainer>
   );
 };
