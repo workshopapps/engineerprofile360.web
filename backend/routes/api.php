@@ -99,7 +99,7 @@ Route::prefix("auth")->group(function () {
     // employee login 
     Route::post('/employee/login', [AuthenticateController::class, "EmployeeLogin"]);
     // overall admin login
-    Route::post('/skript/admin/login', [AuthenticateController::class, 'OverallAdminLogin']);
+    Route::post('/eval360/admin/login', [AuthenticateController::class, 'OverallAdminLogin']);
 
     Route::get('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
 
