@@ -141,10 +141,7 @@ const App = () => {
             {/* Employee Route */}
             <Route element={<RequireAuth allowedRole={ROLES.Employees} />}>
               {/* Put in Protected pages in here */}
-              <Route
-                path="/user-assessment-result"
-                element={<UserAssessmentResult />}
-              />
+
               <Route path="/employee-profile" element={<EmployeeProfile />} />
             </Route>
 
@@ -169,6 +166,10 @@ const App = () => {
                 />
                 <Route path="admin-csv-upload" element={<AdminCSVUpload />} />
               </Route>
+              <Route
+                path="/user-assessment-result"
+                element={<UserAssessmentResult />}
+              />
             </Route>
 
             {/* Overall Admin Route */}
