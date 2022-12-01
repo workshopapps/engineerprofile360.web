@@ -25,7 +25,6 @@ const AdminLogin = () => {
   const [showPassword, setShowPassword] = useState(true);
   const [loginError, setLoginError] = useState();
 
-
   const {
     formData,
     changeInputValue,

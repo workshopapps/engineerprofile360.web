@@ -10,7 +10,7 @@ import { MainLayout, UiLayout } from "./Layouts";
 
 import Contact from "./main/pages/Contact";
 import DemoSchedule from "./main/pages/Demo";
-import { AdminAuthLayout } from "./main/components";
+import { AdminAuthLayout, UserAuthLayout } from "./main/components";
 import {
   Home,
   About,
@@ -51,6 +51,7 @@ import CsvUploading from "./ui/pages/csv/CsvUploading";
 import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
 import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
 import Dashboard from "./ui/pages/Dashboard";
+import ResetPassword from "./ui/pages/user-password/ResetPassword";
 
 const ROLES = {
   Employees: 1,
@@ -65,6 +66,10 @@ const App = () => {
         <GlobalStyles />
         <Routes>
           <Route path="/2FA" element={<User2FA />} />
+
+          <Route path="/user" element={<UserAuthLayout />}>
+            <Route path="reset-password" element={<ResetPassword />} />
+          </Route>
 
           {/* Public routes */}
           <Route element={<MainLayout />}>
@@ -146,7 +151,7 @@ const App = () => {
 
             {/* Organization Route */}
             <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
-            <Route path="/ui" element={"my guy"} />
+              <Route path="/ui" element={"my guy"} />
               <Route path="/dashboard" element={<Dashboard />} />
             </Route>
 
