@@ -80,4 +80,30 @@ class StackController extends Controller
                 return $this->sendResponse(true, "Error occurred while fetching Stack", $e->getMessage());
          }
     }
+
+    
+    // delete stack
+    public function deleteStack($stack_id): JsonResponse
+    {
+        try{
+
+            // Get stack by id
+            $stack = Stack::find($stack_id);
+
+            if( !$stack ) {
+                return $this->sendResponse(
+                    'Stack does not exist',
+                    'Stack not found',
+                    Response::HTTP_NOT_FOUND
+                );
+            }
+
+            $stack->delete();
+
+            // success response
+            return $this->sendResponse(true, 'Stack deleted successfully',[], Response::HTTP_OK);
+        }  catch (Exception $e) {
+            return $this->sendResponse('Stack not fetched', $e->getMessage());
+        }
+    }    
 }
