@@ -111,8 +111,9 @@ class UserScoreController extends Controller
      */
     public function getCompanyTopPerformances(string $id)
     {
+        
         try {
-            $userScore = UserAssessment::select('departments.name as department, employees.fullname as employee_name, sum(user_assessments.correct_questions) as points')
+            $userScore = UserAssessment::select('departments.name as department', 'employees.fullname as employee_name', 'sum(user_assessments.correct_questions) as points')
                 ->join('employees', function ($join) use ($id) {
                     $join->on('employees.id', '=', 'user_assessments.employee_id')
                         ->where(['employees.org_id' => $id]);
