@@ -2,27 +2,44 @@ import React from "react";
 import styles from "./UserTakeAssessment.module.css";
 import UserTakeAssessmentHeader from "./UserTakeAssessmentResultHeader";
 import { QuestionData } from "./QuestionData";
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import axios from "../../../../api/axios";
+import { Link } from "react-router-dom";
 
 export default function UserTakeAssessmentResult() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [questionsPerPage] = useState(5);
-  const [inputValue, setInputValue] = useState([
-    {
-      //answer: "",
-    },
-  ]);
-  const answer = inputValue;
+    const [correctAnswers,setCorrectAnswers] = useState(0);
+     const [totalQuestions, setTotalQuestions]=useState(0)
+     const [selectedOption, setSelectedOption]=useState({});
+     const [currentPost, setCurrentPost] = useState([]);
+     const [currentPage, setCurrentPage] = useState(1);
+    const [questionsPerPage] = useState(5);
+  
+    useEffect(() => {
+        const fetchQuestion = async () => {
+           let res = await axios.get("question/assessment/2ea09b93-6682-11ed-9941-3863bbb7c6d/");
+           setTotalQuestions(Object.keys(res.data.data).length);
+           setCurrentPost(res.data.data);
+           let localOption = localStorage?.getItem("evalAssessment");
+           if(localOption){
+            let localData =JSON.parse(localOption);
+            setSelectedOption(localData);
+           }
+        };
+        fetchQuestion();
+     }, []);
 
-  const handleChange = (e) => {
-    setInputValue(e.target.value);
-  };
+     useEffect (() => {
+        let correctData = 0;
+        currentPost.map((assessment, i) => {
+         const { question_id, options, correct_answers,id } = assessment;
+          if(correct_answers.includes(selectedOption[`${id}`])){
+             correctData +=1;
+                 setCorrectAnswers(correctData);
+          }
+         })
+        
+     },[currentPost,selectedOption]);
 
-  const indexOfLastPost = currentPage * questionsPerPage;
-  const indexOfFirstPost = indexOfLastPost - questionsPerPage;
-  const currentPost = QuestionData.slice(indexOfFirstPost, indexOfLastPost);
-
-  //const paginate = (pageNums) => setCurrentPage(pageNums);
   const Prev = () => {
     if(currentPage  > 1 ){
       return <input type="button" 
@@ -34,39 +51,36 @@ export default function UserTakeAssessmentResult() {
     }
 
     const Next = () => {
-      if(currentPage  < Math.ceil(QuestionData.length / questionsPerPage)){
+      if(currentPage  < Math.ceil(currentPost.length / questionsPerPage)){
         return <input type="button" 
         className={styles.Button_next} 
         onClick={(e) => {setCurrentPage(currentPage+1)}} 
-        Value="Next" />
+        value="Next" />
+        }
     }
-  }
   
   return (
     <>
       <div className={styles.UserTakeAssessment_container}>
-        <UserTakeAssessmentHeader />
+        <UserTakeAssessmentHeader correctA={correctAnswers} totalQ={totalQuestions}/>
        
         <div className={styles.Questions_Score}>
           <form>
           {currentPost.map((assessment, i) => {
-            const { question, options } = assessment;
+            const { question_id, options, correct_answers,id } = assessment;
             return (
               <div className={styles.QuestionsWrapper} key={i}>
-                <p>{question}</p>
+                <p>{question_id}</p>
                   {options.map((query, i) => {
-                    const { option } = query;
                     return (
                       <div key={i}>
-                        <input
+                        <input checked={(selectedOption[`${id}`] >= 0 ) ? ( (selectedOption[`${id}`]== i ) ? true : false) : false}
                           type="radio"
-                          value={answer}
-                          name={question}
-                          onChange={(e) => {
-                            handleChange(e);
-                          }}
+                          value={i}
+                          name={question_id}
+                          readOnly
                         />
-                        <label htmlFor={question}>{ option }</label>
+                        <label htmlFor={question_id}>{ query }</label>
             
                       </div>
                     );
@@ -80,6 +94,12 @@ export default function UserTakeAssessmentResult() {
             <div className={styles.Filter_Next_Submit}>
              {<Prev />}
               {<Next />}
+              <Link to="/assessment">
+              <button type="button"
+                className={styles.Button_submit} >
+                     Done 
+                     </button>
+                </Link>
             </div>
           </form>
         </div>

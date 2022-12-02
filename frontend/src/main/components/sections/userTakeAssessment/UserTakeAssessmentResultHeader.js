@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./UserTakeAssessment.module.css";
 import PageInfo from "../../../../ui/components/molecules/PageInfo";
 
-function UserTakeAssessmentResultHeader() {
+function UserTakeAssessmentResultHeader({correctA='' ,totalQ=''}) {
   return (
     <>
       <div className={styles.Filter_wrapper}>
@@ -20,7 +20,7 @@ function UserTakeAssessmentResultHeader() {
 
           <div className={styles.Filter_flex_score}>
             <div>
-            <h1>8 / 10</h1>
+            <h1>{`${correctA} / ${totalQ}`}</h1>
             Total Score
             </div>
           </div>

@@ -114,6 +114,7 @@
     width: 100%!important;
     flex-direction: column;
     margin:100px 0;
+    text-align: left;
   }
 
   .Questions p{

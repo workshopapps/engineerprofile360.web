@@ -1,47 +1,49 @@
 import React from "react";
 import styles from "./UserTakeAssessment.module.css";
 import UserTakeAssessmentHeader from "./UserTakeAssessmentHeader";
-import { QuestionData } from "./QuestionData";
-import { useState } from "react";
-import { Link } from 'react-router-dom';
+import { useState,useEffect } from "react";
+import axios from "../../../../api/axios";
+import { useNavigate } from "react-router-dom";
 
-export default function UserTakeAssessment() {
+export default  function UserTakeAssessment() {
+    useEffect(() => {
+        const fetchQuestion = async () => {
+           let res = await axios.get("question/assessment/2ea09b93-6682-11ed-9941-3863bbb7c6d/");
+           setCurrentPost(res.data.data);
+        };
+        fetchQuestion();
+     }, []);
+   
+     const [currentPost, setCurrentPost] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [questionsPerPage] = useState(5);
-  const [inputValue, setInputValue] = useState([
-    {
-      //answer: "",
-    },
-  ]);
-  const answer = inputValue;
+  
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setInputValue(e.target.value);
+  let useAnswers = {};
+
+  const handleChange = (id,option) => {
+    useAnswers[`${id}`]=option;
   };
-
-  const indexOfLastPost = currentPage * questionsPerPage;
-  const indexOfFirstPost = indexOfLastPost - questionsPerPage;
-  const currentPost = QuestionData.slice(indexOfFirstPost, indexOfLastPost);
-
   
     const Prev = () => {
-      if(currentPage  > 1 ){
-        return <input type="button" 
-        className={styles.Button_next} 
-        onClick={(e) => {
-          setCurrentPage(currentPage-1)
-        }}
-        value="Previous" />}
-      }
-
-      const Next = () => {
-        if(currentPage  < Math.ceil(QuestionData.length / questionsPerPage)){
+        if(currentPage  > 1 ){
           return <input type="button" 
           className={styles.Button_next} 
-          onClick={(e) => {setCurrentPage(currentPage+1)}} 
-          Value="Next" />
-      }
-    }
+          onClick={(e) => {
+            setCurrentPage(currentPage-1)
+          }}
+          value="Previous" />}
+        }
+    
+        const Next = () => {
+          if(currentPage  < Math.ceil(currentPost.length / questionsPerPage)){
+            return <input type="button" 
+            className={styles.Button_next} 
+            onClick={(e) => {setCurrentPage(currentPage+1)}} 
+            value="Next" />
+            }
+        }
   
   return (
     <>
@@ -51,23 +53,22 @@ export default function UserTakeAssessment() {
         <div className={styles.Questions}>
           <form>
           {currentPost.map((assessment, i) => {
-            const { question, options } = assessment;
+            const { question_id, options, correct_answers,id } = assessment;
             return (
               <div className={styles.QuestionsWrapper} key={i}>
-                <p>{question}</p>
+                <p>{question_id}</p>
                   {options.map((query, i) => {
-                    const { option } = query;
                     return (
                       <div key={i}>
                         <input
                           type="radio"
-                          value={answer}
-                          name={question}
-                          onChange={(e) => {
-                            handleChange(e);
+                          value={i}
+                          name={question_id}
+                          onChange={() => {
+                            handleChange(id,i);
                           }}
                         />
-                        <label htmlFor={question}>{ option }</label>
+                        <label htmlFor={question_id}>{ query }</label>
             
                       </div>
                     );
@@ -81,10 +82,16 @@ export default function UserTakeAssessment() {
             <div className={styles.Filter_Next_Submit}>
              {<Prev />}
              {<Next />}
-
-              <Link to="/take-assessment-result">
+             
                 <button type="button"
-                className={styles.Button_submit}> Submit </button></Link>
+                className={styles.Button_submit} 
+                onClick={()=>{
+                    localStorage.setItem("evalAssessment",JSON.stringify(useAnswers)) ;
+                    navigate("/take-assessment-result");
+                }}>
+                     Submit 
+                     </button>
+                
             </div>
           </form>
         </div>

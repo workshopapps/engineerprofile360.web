@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./GuestTakeAssessment.module.css";
 import GuestTakeAssessmentHeader from "./GuestTakeAssessmentHeader";
-import { QuestionData } from "./QuestionData";
 import { useState,useEffect } from "react";
 import axios from "../../../../api/axios";
 import { useNavigate } from "react-router-dom";
@@ -20,40 +19,33 @@ export default  function GuestTakeAssessment() {
      const [currentPost, setCurrentPost] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [questionsPerPage] = useState(5);
-  const [inputValue, setInputValue] = useState([
-    {
-      //answer: "",
-    },
-  ]);
+  
   const navigate = useNavigate();
 
   let useAnswers = {};
 
   const handleChange = (id,option) => {
-    /*setInputValue(e.target.value);*/
     useAnswers[`${id}`]=option;
   };
   
-
-  const indexOfLastPost = currentPage * questionsPerPage;
-  const indexOfFirstPost = indexOfLastPost - questionsPerPage;
-  
-  //const currentPost = QuestionData.slice(indexOfFirstPost, indexOfLastPost);
-
-  const next = () => {
-    if(currentPage  < Math.ceil(QuestionData.length / questionsPerPage)){
-      setCurrentPage(currentPage+1)
-    }};
-
     const Prev = () => {
-      if(currentPage  > 1 ){
-        return <input type="button" 
-        className={styles.Button_next} 
-        onClick={(e) => {
-          setCurrentPage(currentPage-1)
-        }}
-        value="Previous" />}
-      }
+        if(currentPage  > 1 ){
+          return <input type="button" 
+          className={styles.Button_next} 
+          onClick={(e) => {
+            setCurrentPage(currentPage-1)
+          }}
+          value="Previous" />}
+        }
+    
+        const Next = () => {
+          if(currentPage  < Math.ceil(currentPost.length / questionsPerPage)){
+            return <input type="button" 
+            className={styles.Button_next} 
+            onClick={(e) => {setCurrentPage(currentPage+1)}} 
+            value="Next" />
+            }
+        }
   
   return (
     <>
@@ -91,13 +83,8 @@ export default  function GuestTakeAssessment() {
 
             <div className={styles.Filter_Next_Submit}>
              {<Prev />}
-              <input type="button" 
-              className={styles.Button_next} 
-              onClick={(e) => {
-                next()}} 
-                value="Next" />
-
-              {/* <Link to="/guest-take-assessment-result"> */}
+             {<Next />}
+             
                 <button type="button"
                 className={styles.Button_submit} 
                 onClick={()=>{
@@ -106,7 +93,7 @@ export default  function GuestTakeAssessment() {
                 }}>
                      Submit 
                      </button>
-                {/* </Link> */}
+                
             </div>
           </form>
         </div>
