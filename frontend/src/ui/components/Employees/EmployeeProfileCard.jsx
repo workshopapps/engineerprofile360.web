@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { Button, Title } from "../../../styles/reusableElements.styled";
-import { ReactComponent as UserProfilePhoto } from "../../components/assets/user-photo.svg";
+import { ReactComponent as EmployeeProfilePhoto } from "../../components/assets/user-photo.svg";
 import { ReactComponent as OverallChart } from "../../components/assets/overall-chart.svg";
 
-const UserProfileData = [
+const EmployeeProfileData = [
   {
     name: "Emmanuella Bella",
     department: "Electrical Engineering",
@@ -12,7 +12,7 @@ const UserProfileData = [
   },
 ];
 
-const UserProfileStats = [
+const EmployeeProfileStats = [
   {
     total: 77,
     category: "Assessment",
@@ -45,9 +45,9 @@ const EmployeeStatsData = [
   { title: "Soft Skills", value: "70%" },
   { title: "Experience Skills", value: "60%" },
 ];
-const UserProfileDetailsCard = ({ name, department, level }) => {
+const EmployeeProfileDetailsCard = ({ name, department, level }) => {
   return (
-    <UserProfileInfoDetails>
+    <EmployeeProfileInfoDetails>
       <Title
         as="h5"
         $size="18px"
@@ -59,21 +59,21 @@ const UserProfileDetailsCard = ({ name, department, level }) => {
       </Title>
       <p style={{ fontSize: "16px", color: "#201F1E" }}>{department}</p>
       <p style={{ fontSize: "12px", color: "#A19F9D" }}>{level}</p>
-    </UserProfileInfoDetails>
+    </EmployeeProfileInfoDetails>
   );
 };
 
-const UserProfileCard = () => {
+const EmployeeProfileCard = () => {
   return (
     <>
-      <UserProfileContainer>
-        <UserProfileStatsCard>
-          <UserProfileInfoCard>
-            <UserProfileInfo>
-              <UserProfilePhoto />
-              {UserProfileData
-                ? UserProfileData.map((item, key) => (
-                    <UserProfileDetailsCard
+      <EmployeeProfileContainer>
+        <EmployeeProfileStatsCard>
+          <EmployeeProfileInfoCard>
+            <EmployeeProfileInfo>
+              <EmployeeProfilePhoto />
+              {EmployeeProfileData
+                ? EmployeeProfileData.map((item, key) => (
+                    <EmployeeProfileDetailsCard
                       key={key}
                       name={item.name}
                       department={item.department}
@@ -81,10 +81,10 @@ const UserProfileCard = () => {
                     />
                   ))
                 : ""}
-            </UserProfileInfo>
-            {UserProfileStats
-              ? UserProfileStats.map((item, key) => (
-                  <UserProfileDataCard key={key}>
+            </EmployeeProfileInfo>
+            {EmployeeProfileStats
+              ? EmployeeProfileStats.map((item, key) => (
+                  <EmployeeProfileDataCard key={key}>
                     <Title
                       as="h5"
                       $size="40px"
@@ -95,12 +95,12 @@ const UserProfileCard = () => {
                       {item.total}
                     </Title>
                     <p>{item.category}</p>
-                  </UserProfileDataCard>
+                  </EmployeeProfileDataCard>
                 ))
               : ""}
-          </UserProfileInfoCard>
-        </UserProfileStatsCard>
-        <UserProfileInnerContainer>
+          </EmployeeProfileInfoCard>
+        </EmployeeProfileStatsCard>
+        <EmployeeProfileInnerContainer>
           <EmployeeDataContainer>
             <Title as="h5" $size="14px" $lHeight="40px" $weight="500">
               Employee Data
@@ -144,19 +144,19 @@ const UserProfileCard = () => {
               <p style={{ fontSize: "16px" }}>Software Vendor</p>
             </ChartCard>
           </OverallContainer>
-        </UserProfileInnerContainer>
-      </UserProfileContainer>
+        </EmployeeProfileInnerContainer>
+      </EmployeeProfileContainer>
     </>
   );
 };
 
-export default UserProfileCard;
-const UserProfileContainer = styled.div`
+export default EmployeeProfileCard;
+const EmployeeProfileContainer = styled.div`
   padding: 0px 9px;
   padding-bottom: 100px;
 `;
 
-const UserProfileStatsCard = styled.div`
+const EmployeeProfileStatsCard = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -173,7 +173,7 @@ const UserProfileStatsCard = styled.div`
   }
 `;
 
-const UserProfileInfoCard = styled.div`
+const EmployeeProfileInfoCard = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -191,7 +191,7 @@ const UserProfileInfoCard = styled.div`
   }
 `;
 
-const UserProfileInfo = styled.div`
+const EmployeeProfileInfo = styled.div`
   display: flex;
   gap: 40px;
   align-items: center;
@@ -203,7 +203,7 @@ const UserProfileInfo = styled.div`
   }
 `;
 
-const UserProfileInfoDetails = styled.div`
+const EmployeeProfileInfoDetails = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -215,7 +215,7 @@ const UserProfileInfoDetails = styled.div`
   }
 `;
 
-const UserProfileDataCard = styled.div`
+const EmployeeProfileDataCard = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -226,7 +226,7 @@ const UserProfileDataCard = styled.div`
   padding: 24px 20px;
 `;
 
-const UserProfileInnerContainer = styled.div`
+const EmployeeProfileInnerContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
