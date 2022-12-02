@@ -2,11 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Button, Title } from "../../../styles/reusableElements.styled";
-import { ReactComponent as Chart } from "../assets/chart.svg";
 import { ReactComponent as ArrowDropdown } from "../assets/dropdown-arrow.svg";
 import { ReactComponent as GridSort } from "../assets/gridsort.svg";
 import { ReactComponent as ListSort } from "../assets/listsort.svg";
 import { ReactComponent as ThreeDots } from "../assets/three-dots.svg";
+import useAuth from "../../../hooks/useAuth";
+import axios from "../../../api/axios";
+import { showErrorToast } from "../../../helpers/helper";
+import { Radar } from "react-chartjs-2";
 
 const SkillRatingsList = [
   { title: "Communication", rating: "80" },
@@ -23,35 +26,35 @@ const AssessmentList = [
     department: "UX Engineer",
     course: "Design Thinking 101",
     grade: "83.9%",
-    result: "#",
+    result: "/user-assessment-result",
   },
   {
     id: 2,
     department: "UX Engineer",
     course: "Design Thinking 101",
     grade: "83.9%",
-    result: "#",
+    result: "/user-assessment-result",
   },
   {
     id: 3,
     department: "UX Engineer",
     course: "Design Thinking 101",
     grade: "83.9%",
-    result: "#",
+    result: "/user-assessment-result",
   },
   {
     id: 4,
     department: "UX Engineer",
     course: "Design Thinking 101",
     grade: "83.9%",
-    result: "#",
+    result: "/user-assessment-result",
   },
   {
     id: 5,
     department: "UX Engineer",
     course: "Design Thinking 101",
     grade: "83.9%",
-    result: "#",
+    result: "/user-assessment-result",
   },
 ];
 
@@ -73,28 +76,17 @@ const DateDropdownItems = [
   { date: "Last Year" },
   { date: "Custom" },
 ];
-const SKilRatingSectionContainer = ({ title, rating }) => {
+const SKillRating = ({ title }) => {
   return (
-    <SkillRatingSection>
-      <Title
-        as="h5"
-        $size="16px"
-        $weight="normal"
-        $lHeight="22px"
-        $color="#142245"
-      >
-        {title}
-      </Title>
-      <Title
-        as="h5"
-        $size="16px"
-        $weight="normal"
-        $lHeight="22px"
-        $color="#142245"
-      >
-        {rating}
-      </Title>
-    </SkillRatingSection>
+    <Title
+      as="h5"
+      $size="16px"
+      $weight="normal"
+      $lHeight="22px"
+      $color="#142245"
+    >
+      {title}
+    </Title>
   );
 };
 
@@ -117,6 +109,79 @@ const EmployeeUserDashboardLayout = () => {
     setSortByDateDropdown(!sortByDateDropdown);
   };
 
+  const { auth } = useAuth();
+  const [availableAssessment, setAvailableAssessment] = React.useState(null);
+  const [chartDetails, setChartDetails] = React.useState(null);
+
+  const [isAvailableAssessmentLoading, setIsAvailableAssessmentLoading] =
+    React.useState(true);
+  const [isChartLoading, setIsChartLoading] = React.useState(true);
+  // const [fetchError, setFetchError] = React.useState("");
+
+  //Get Chart Details
+  React.useEffect(() => {
+    const getChartDetails = async () => {
+      try {
+        const response = await axios.get(
+          `userscore/employee/aab92dfa-336d-4d63-8c43-7a9826529988`
+        );
+        setChartDetails(response.data);
+        setIsChartLoading(false);
+      } catch (err) {
+        if (!err?.response) {
+          showErrorToast("No Server Response");
+        } else if (err?.response.data.errorState === true) {
+          showErrorToast(err.response.data.message);
+          // setFetchError(err.response.data.message);
+        }
+      }
+    };
+    getChartDetails();
+  }, [auth, chartDetails]);
+
+  //Chart Data Schema
+  const data = {
+    labels: chartDetails
+      ? JSON.parse(chartDetails?.data[0]?.categories?.split("/").join(""))
+      : [],
+    datasets: [
+      {
+        label: "Dataset",
+        data: chartDetails
+          ? JSON.parse(chartDetails?.data[0]?.passed_questions)
+          : [],
+        fill: true,
+        backgroundColor: "rgba(255, 99, 132, 0.2)",
+        borderColor: "rgb(255, 99, 132)",
+        pointBackgroundColor: "rgb(255, 99, 132)",
+        pointBorderColor: "#2667FF",
+        pointHoverBackgroundColor: "#2667FF",
+        pointHoverBorderColor: "rgb(255, 99, 132)",
+      },
+    ],
+  };
+
+  console.log("schemaData", data);
+
+  //Get Available Assessment Details
+  React.useEffect(() => {
+    const getAvailableAssessment = async () => {
+      try {
+        const response = await axios.get(`assessment/${auth.id}`);
+        setAvailableAssessment(response.data);
+        setIsAvailableAssessmentLoading(false);
+      } catch (err) {
+        if (!err?.response) {
+          showErrorToast("No Server Response");
+        } else if (err?.response.data.errorState === true) {
+          showErrorToast(err.response.data.message);
+          // setFetchError(err.response.data.message);
+        }
+      }
+    };
+    getAvailableAssessment();
+  }, [auth, availableAssessment]);
+
   return (
     <>
       <StatsContainer>
@@ -131,18 +196,25 @@ const EmployeeUserDashboardLayout = () => {
           >
             Your Skill Rating
           </Title>
-          {SkillRatingsList
-            ? SkillRatingsList.map((item, key) => (
-                <SKilRatingSectionContainer
-                  key={key}
-                  title={item.title}
-                  rating={item.rating}
-                />
-              ))
-            : ""}
+          <SkillRatingSection>
+            <div>
+              {chartDetails
+                ? JSON.parse(
+                    chartDetails?.data[0]?.categories?.split("/").join("")
+                  ).map((item, key) => <SKillRating key={key} title={item} />)
+                : ""}
+            </div>
+            <div>
+              {chartDetails
+                ? JSON.parse(chartDetails?.data[0]?.passed_questions).map(
+                    (item, key) => <SKillRating key={key} title={item} />
+                  )
+                : ""}
+            </div>
+          </SkillRatingSection>
         </SkillSection>
         <ChartSection>
-          <Chart />
+          {isChartLoading ? "Loading" : <Radar data={data} />}
         </ChartSection>
       </StatsContainer>
       <AssessmentContainer>
@@ -235,7 +307,9 @@ const EmployeeUserDashboardLayout = () => {
             <th>Grade</th>
             <th>Actions</th>
           </tr>
-          {AssessmentList
+          {isAvailableAssessmentLoading
+            ? "Loading"
+            : AssessmentList
             ? AssessmentList.map((item, key) => (
                 <tr key={key}>
                   <td>{item.id}</td>
@@ -301,7 +375,11 @@ const SkillRatingSection = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+
+  div {
+    text-align: left;
+  }
 `;
 const ChartSection = styled.div`
   display: flex;

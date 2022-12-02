@@ -149,10 +149,10 @@ const App = () => {
             {/* Employee Route */}
             <Route element={<RequireAuth allowedRole={ROLES.Employees} />}>
               {/* Put in Protected pages in here */}
-              <Route
+              {/* <Route
                 path="/user-assessment-result"
                 element={<UserAssessmentResult />}
-              />
+              /> */}
               <Route path="/employee-profile" element={<EmployeeProfile />} />
               <Route path="/404" element={<Error />} />
             </Route>
@@ -176,6 +176,10 @@ const App = () => {
               <Route
                 path="employee-user-dashboard"
                 element={<EmployeeUserDashboard />}
+              />
+              <Route
+                path="/user-assessment-result"
+                element={<UserAssessmentResult />}
               />
               <Route path="/assessment" element={<MainAssessment />}>
                 <Route path="" element={<AssessmentFirstPage />} />
