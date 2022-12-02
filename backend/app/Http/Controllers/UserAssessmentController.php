@@ -54,9 +54,7 @@ class UserAssessmentController extends Controller
 
             if ($orgUserAssessments) {
                 return $this->sendResponse(false, null, 'Organisation assessment sent successfully', $orgUserAssessments, Response::HTTP_OK);
-            } else {
-                return $this->sendResponse(true, 'no record was found', null, null, Response::HTTP_BAD_REQUEST);
-            }
+            } 
         } catch (Exception $e) {
             return $this->sendResponse(true, $e->getMessage(), 'Organisation assessment could not be sent ', null, Response::HTTP_BAD_REQUEST);
         }
@@ -101,12 +99,7 @@ class UserAssessmentController extends Controller
     {
 
         try {
-            $userAssessment = UserAssessment::where('org_id', $id)->where("completed", false)->get();
-            $checkUserAssessment = UserAssessment::where('org_id', $id)->where("completed", false)->exists();
-            if (!$checkUserAssessment) {
-
-                return $this->sendResponse(true, 'Fetch Available User Assessment By Company ID failed', 'No Available User Assessment exist for this Company ID', null, Response::HTTP_NOT_FOUND);
-            }
+            $userAssessment = UserAssessment::where('org_id', $id)->get();
             return $this->sendResponse(false, null, 'OK', $userAssessment, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, 'Fetch Available User Assessment By Company ID failed', $e->getMessage());
@@ -125,11 +118,7 @@ class UserAssessmentController extends Controller
 
         try {
             $userAssessment = UserAssessment::where('org_id', $id)->where("completed", true)->get();
-            $checkUserAssessment = UserAssessment::where('org_id', $id)->where("completed", true)->exists();
-            if (!$checkUserAssessment) {
-
-                return $this->sendResponse(true, 'Fetch Completed User Assessment By Company ID failed', 'No User Assessment exist for this company ID', null, Response::HTTP_NOT_FOUND);
-            }
+        
             return $this->sendResponse(false, null, 'OK', $userAssessment, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, 'Fetch Completed User Assessment By ID Company failed', $e->getMessage());
@@ -342,4 +331,3 @@ class UserAssessmentController extends Controller
 
     }
 }
-
