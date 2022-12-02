@@ -42,7 +42,6 @@ class UserScoreController extends Controller
             $userScore = $userScore = UserScore::select('*')
                 ->join('user_assessments', 'user_assessments.userscore_id', '=', 'user_scores.id')
                 ->where(["user_scores.employee_id" => $employeeId, "user_scores.assessment_id" => $assessmentId]);
-            if (!$userScore->count()) return $this->sendResponse(true, "Not Found", "User Score not found", Response::HTTP_NOT_FOUND);
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Error fetching the userscores", $e->getMessage(), Response::HTTP_BAD_REQUEST);
@@ -61,7 +60,6 @@ class UserScoreController extends Controller
             $userScore = UserScore::select('*')
                 ->join('user_assessments', 'user_assessments.userscore_id', '=', 'user_scores.id')
                 ->where('user_scores.assessment_id', $id);
-            if (!$userScore->count()) return $this->sendResponse(true, "Not Found", "User Score not found", Response::HTTP_NOT_FOUND);
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Error fetching user scores", $e->getMessage(), Response::HTTP_BAD_REQUEST);
@@ -80,13 +78,11 @@ class UserScoreController extends Controller
             $userScore = UserScore::select('*')
                 ->join('user_assessments', 'user_assessments.userscore_id', '=', 'user_scores.id')
                 ->where("user_scores.employee_id", $id);
-            if (!$userScore->count()) return $this->sendResponse(true, "Not Found", "User Score not found", Response::HTTP_NOT_FOUND);
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Error fetching user scores", $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
-
 
     /**
      * Get company top employee performance
@@ -116,10 +112,9 @@ class UserScoreController extends Controller
     public function getCompanyTopPerformances(string $id)
     {
         try {
-            $userScore = UserScore::select('*')
-                ->join('user_assessments', 'user_assessments.userscore_id', '=', 'user_scores.id')
-                ->where('user_assessments.org_id', $id)->orderBy('user_assessments.result', 'asc');
-            if (!$userScore->count()) return $this->sendResponse(true, "Not Found", "User Score not found", Response::HTTP_NOT_FOUND);
+            $userScore = UserAssessment::select('*')
+                ->rightJoin('employees', 'employees.id', '=', 'user_assessments.employee_id')
+                ->where('employees.org_id', $id)->orderBy('user_assessments.result', 'asc');
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Error fetching user scores", $e->getMessage(), Response::HTTP_BAD_REQUEST);
