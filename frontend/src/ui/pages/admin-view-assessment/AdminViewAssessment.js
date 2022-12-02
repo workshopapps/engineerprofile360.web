@@ -7,8 +7,6 @@ import AssessmentContent from "./components/AssessmentContent";
 function AdminViewAssessment() {
   return (
     <>
-      <Header />
-
       <ViewAssessmentHeader />
       <AssessmentContent />
     </>

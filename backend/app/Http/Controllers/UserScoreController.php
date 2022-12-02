@@ -22,7 +22,7 @@ class UserScoreController extends Controller
         try {
             if (!UserScoreService::categoryMatchesScores($request->validated())) return $this->sendResponse(true, "Not Permited", "The passed questions doesn't match the categories supplied", Response::HTTP_UNPROCESSABLE_ENTITY);
             $userScore = UserScore::create(UserScoreService::prepareRequest($request->validated()));
-            UserAssessment::create(["userscore_id" => $userScore->id, "completed" => 1, "result" => ($request->validated()["correct_questions"] / $request->validated()["total_questions"]) * 100, ...$request->validated()]);
+            UserAssessment::where(["assessment_id" => $userScore->assessment_id])->update(["completed" => 1, "result" => ($request->validated()["correct_questions"] / $request->validated()["total_questions"]) * 100, ...$request->validated()]);
             return $this->sendResponse(false, null, "User score was added successfully!", $userScore, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Error storing the userr score", $e->getMessage(), Response::HTTP_BAD_REQUEST);
@@ -111,10 +111,13 @@ class UserScoreController extends Controller
      */
     public function getCompanyTopPerformances(string $id)
     {
+
         try {
-            $userScore = UserAssessment::select('*')
+            $userScore = UserAssessment::select('employees.id as employee_id', 'departments.name as department', 'employees.fullname as employee_name', 'user_assessments.correct_questions as points', 'user_assessments.created_at as created_at', 'user_assessments.updated_at as updated_at')
                 ->rightJoin('employees', 'employees.id', '=', 'user_assessments.employee_id')
-                ->where('employees.org_id', $id)->orderBy('user_assessments.result', 'asc');
+                ->join('departments', 'departments.id', '=', 'employees.department_id')
+                ->where('employees.org_id', $id)
+                ->orderBy('user_assessments.result', 'desc');
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Error fetching user scores", $e->getMessage(), Response::HTTP_BAD_REQUEST);
