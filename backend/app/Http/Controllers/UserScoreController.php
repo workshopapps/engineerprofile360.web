@@ -112,7 +112,7 @@ class UserScoreController extends Controller
     public function getCompanyTopPerformances(string $id)
     {
         try {
-            $userScore = UserScore::select('*')
+            $userScore = UserAssessment::select('*')
                 ->rightJoin('employees', 'employees.id', '=', 'user_assessments.employee_id')
                 ->where('user_assessments.org_id', $id)->orderBy('user_assessments.result', 'asc');
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
