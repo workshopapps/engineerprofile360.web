@@ -10,20 +10,23 @@ import { showErrorToast } from "../../helpers/helper";
 import { OverlayLoader } from "../../styles/reusableElements.styled";
 
 const Dashboard = () => {
-
-  const [stats, setStats] = useState({});
   const { auth, setAuth } = useAuth();
+  const [stats, setStats] = useState({});
+  const [topPerformance, setTopPerformance] = useState({});
+  const [topPerformances, setTopPerformances] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [fetchError, setFetchError] = useState("");
 
-
   useEffect(() => {
     const getDetails = async () => {
-
       const ENDPOINTS = [
         axios.get(`user/${auth.id}`),
         axios.get(`employee/company/${auth.id}`),
         axios.get(`assessment/${auth.id}`),
+        axios.get(`user-assessment/org/${auth.id}/org-available`),
+        axios.get(`user-assessment/org/${auth.id}/org-completed`),
+        axios.get(`userscore/company/${auth.id}/max`),
+        axios.get(`userscore/company/${auth.id}`),
       ];
 
       try {
@@ -37,17 +40,26 @@ const Dashboard = () => {
         const fullName = response[0]?.data?.data.full_name;
         const employees = response[1]?.data.data.data.length;
         const assessments = response[2]?.data.data.length;
+        const availableAssessments = response[3]?.data.data.length;
+        const completedAssessments = response[4]?.data.data.length;
+        const topEmployee = response[5]?.data.data;
+        const topEmployees = response[6]?.data;
 
         setAuth({
-          ...auth, username, fullName
-        })
+          ...auth,
+          username,
+          fullName,
+        });
         setStats({
           employees,
           assessments,
+          availableAssessments,
+          completedAssessments
         });
+        setTopPerformance(topEmployee);
+        setTopPerformances(topEmployees);
 
-        console.log(response);
-
+        // console.log(response);
       } catch (err) {
         if (!err?.response) {
           showErrorToast("No Server Response");
@@ -59,15 +71,13 @@ const Dashboard = () => {
     };
 
     getDetails();
-  }, [auth.id]);
+  }, []);
 
   return (
     <>
-      <PageInfo
-        pageTitle="Company's Dashboard"
-      />
-      <Stats stats={stats} />
-      <TopEmployees />
+      <PageInfo pageTitle="Company's Dashboard" />
+      <Stats stats={stats} topPerformance={topPerformance} />
+      <TopEmployees topPerformances={topPerformances} setIsLoading={setIsLoading} />
 
       {isLoading ? (
         <OverlayLoader>

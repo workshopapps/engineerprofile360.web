@@ -52,9 +52,9 @@ import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
 import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
 import Dashboard from "./ui/pages/Dashboard";
 import Employees from "./ui/pages/Employees";
-import UserProfile from "./ui/pages/UserProfile";
 import EmployeesListing from "./ui/components/Employees/EmployeesListing";
 import EmployeeProfile from "./ui/components/Employees/EmployeeProfile";
+import EmployeeProfileCard from "./ui/components/Employees/EmployeeProfileCard";
 import AcceptReject from "./ui/pages/Accept Reject Profile/AcceptReject";
 
 const ROLES = {
@@ -152,15 +152,11 @@ const App = () => {
 
             {/* Organization Route */}
             <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
-              <Route path="/ui" element={"my guy"} />
-
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/employees" element={<Employees />} />
-
               <Route path="/employees" element={<Employees />}>
                 <Route path="" element={<EmployeesListing />} />
                 <Route path="profile" element={<EmployeeProfile />} />
-                <Route path="user-profile" element={<UserProfile />} />
+                <Route path="full-profile" element={<EmployeeProfileCard />} />
               </Route>
             </Route>
 

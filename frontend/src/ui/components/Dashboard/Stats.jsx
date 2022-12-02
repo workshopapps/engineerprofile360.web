@@ -1,10 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import { TaskSquare, TickCircle, Note, Profile2User } from "iconsax-react";
 import { Title } from "../../../styles/reusableElements.styled";
 
-const Stats = ({ stats }) => {
+import {
+  Chart as ChartJS,
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Radar } from "react-chartjs-2";
+
+ChartJS.register(
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend
+);
+
+const Stats = ({ stats, topPerformance }) => {
   return (
     <>
       <StatsContainer>
@@ -30,7 +50,7 @@ const Stats = ({ stats }) => {
               Approved <br />
               Assessments
             </Type>
-            <Number>102</Number>
+            <Number>{stats.availableAssessments}</Number>
           </Stat>
           <Stat>
             <TaskSquare color="#141ae9" />
@@ -38,16 +58,31 @@ const Stats = ({ stats }) => {
               Completed
               <br /> Assessments
             </Type>
-            <Number>102</Number>
+            <Number>{stats.completedAssessments}</Number>
           </Stat>
         </IndividualStats>
-        <Chart />
+        <Chart topPerformance={topPerformance} />
       </StatsContainer>
     </>
   );
 };
 
-const Chart = () => {
+const Chart = ({ topPerformance }) => {
+  const data = {
+    labels: topPerformance?.categories
+      ? JSON.parse(topPerformance?.categories)
+      : [],
+    datasets: [
+      {
+        label: "Categories",
+        data: topPerformance?.passed_questions,
+        backgroundColor: "rgba(95, 210, 85, 0.2)",
+        borderColor: "#107C10",
+        borderWidth: 2,
+      },
+    ],
+  };
+
   return (
     <Performances>
       <Header>
@@ -56,7 +91,9 @@ const Chart = () => {
         </Title>
         <span>View all</span>
       </Header>
-      <PerformancesChart></PerformancesChart>
+      <PerformancesChart>
+        <Radar data={data} />
+      </PerformancesChart>
     </Performances>
   );
 };
@@ -120,10 +157,12 @@ const Number = styled.div`
 `;
 
 const Performances = styled.div`
-  flex: 0 0 40%;
+  flex: 0 0 45%;
+  padding-right: 2.5%;
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
     width: 100%;
+    padding-right: 0;
   }
 `;
 const Header = styled.div`
@@ -143,5 +182,8 @@ const PerformancesChart = styled.div`
   background: #f8fbfd;
   width: 100%;
   height: 85%;
+  display: flex;
+  align-tems: center;
+  justify-content: center;
   min-height: 300px;
 `;

@@ -23,7 +23,6 @@ const AdminLogin = () => {
 
   const [isSubmitted, setIsSubmitted] = useState("");
   const [showPassword, setShowPassword] = useState(true);
-  const [loginError, setLoginError] = useState();
 
   const {
     formData,
@@ -84,6 +83,8 @@ const AdminLogin = () => {
         const accessToken = response?.data?.data.accessToken;
         const roles = response?.data?.data.role;
         const id = response?.data?.data.id;
+
+        // console.log(response);
 
         setAuth({ email, password, accessToken, roles, id });
 
