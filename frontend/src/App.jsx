@@ -65,6 +65,7 @@ import UserAssessmentListOutlet from "./ui/pages/user-assessment-list/UserAssess
 import EmployeeUserDashboard from "./ui/pages/EmployeeUserDashboard";
 import Error from "./ui/pages/404";
 import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
+import GuestLogin from "./main/pages/Auth/GuestLogin";
 import DepartmentSection from "./ui/pages/DepartmentSection/DepartmentSection";
 
 const ROLES = {
@@ -136,6 +137,7 @@ const App = () => {
               element={<AdminEmailVerified />}
             />
             <Route path="/accept-reject-profile" element={<AcceptReject />} />
+            <Route path="/guest-login" element={<GuestLogin />} />
           </Route>
 
           {/* Private Route */}
