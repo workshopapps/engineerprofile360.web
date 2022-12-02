@@ -19,8 +19,10 @@ const AdminEmailVerified = () => {
     const verifyEmail = async () => {
       try {
         console.log(user_id, token);
-        const response = await axios.post(`auth/verify/${user_id}/${token}`);
-        console.log(response);
+        if (user_id && token) {
+          const response = await axios.post(`auth/verify/${user_id}/${token}`);
+          console.log(response);
+        }
       } catch (err) {
         if (!err?.response) {
           showErrorToast("No Server Response");
@@ -32,7 +34,7 @@ const AdminEmailVerified = () => {
     };
 
     verifyEmail();
-  }, [token, user_id]);
+  }, []);
 
   return (
     <>
