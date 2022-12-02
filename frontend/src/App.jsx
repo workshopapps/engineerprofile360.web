@@ -63,7 +63,7 @@ import AdminAssessmentListOutlet from "./ui/pages/admin-settings/adminAssesmentL
 import AdminAssessmentListAvailable from "./ui/pages/admin-settings/adminAssesmentList/AdminAssessmentListAvailable";
 import UserAssessmentListOutlet from "./ui/pages/user-assessment-list/UserAssessmentListOutlet";
 import UserAssessmentListAvailable from "./ui/pages/user-assessment-list/UserAssessmentListAvailable";
-import UserAssessmentCompleted from "./ui/pages/user-assessment-list/UserAssessmentListCompleted";
+import CompletedUserAssessments from "./ui/pages/user-assessment-list/UserAssessmentListCompleted";
 
 const ROLES = {
   Employees: 1,
@@ -118,10 +118,10 @@ const App = () => {
             <Route path="/privacy-policy" element={<Privacy />} />
             <Route path="/employee-profile" element={<EmployeeProfile />} />
             {/* <Route path="/admin-csv-upload" element={<AdminCSVUpload />} /> */}
-            <Route
+            {/* <Route
               path="/user-assessment-completed"
               element={<UserAssessmentListCompleted />}
-            />
+            /> */}
           </Route>
 
           <Route element={<AdminAuthLayout />}>
@@ -185,7 +185,7 @@ const App = () => {
                 <Route path="" element={<UserAssessmentListAvailable />} />
                 <Route
                   path="completed"
-                  element={<UserAssessmentListCompleted />}
+                  element={<CompletedUserAssessments />}
                 />
               </Route>
             </Route>

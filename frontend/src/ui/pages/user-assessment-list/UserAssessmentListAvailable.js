@@ -1,15 +1,21 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { Button } from "../../../../styles/reusableElements.styled";
-import addCircle from "../../../../assets/icons/app/add-circle.svg";
-import down from "../../../../assets/icons/app/arrow-down-alt.svg";
-import dashboard from "../../../../assets/icons/app/dashboard.svg";
+import addCircle from "../../../assets/icons/app/add-circle.svg";
+import down from "../../../assets/icons/app/arrow-down.svg";
+import dashboard from "../../../assets/icons/app/dashboard.svg";
 import hamburger from "../../../assets/icons/app/hamburger.svg";
-import PageInfo from "../../../components/molecules/PageInfo";
-import Flex from "../../../components/layout/Flex";
 import { Link } from "react-router-dom";
+import PageInfo from "../../components/molecules/PageInfo";
+import Flex from "../../components/layout/Flex";
+import { Button } from "../../../styles/reusableElements.styled";
+import axios from "../../../api/axios";
+import useAuth from "../../../hooks/useAuth";
 
 const DataContext = createContext(null);
+
+const fetchAvailable = () => {
+  return axios("/user-assessment/org/{organisation_id}/org-available");
+};
 
 const info = [
   {
@@ -70,59 +76,8 @@ const info = [
   },
 ];
 
-const Buttons = () => {
-  const Mailto = ({ email, subject = "", body = "", children }) => {
-    let params = subject || body ? "?" : "";
-    if (subject) params += `subject=${encodeURIComponent(subject)}`;
-    if (body) params += `${subject ? "&" : ""}body=${encodeURIComponent(body)}`;
-
-    return <a href={`mailto:${email}${params}`}>{children}</a>;
-  };
-
-  return (
-    <div>
-      <Hide>
-        <Flex jc="flex-end" spacing={10}>
-          <Link to="/assessment/create-assessment">
-            <Button>
-              <Flex spacing={10} ai="center">
-                <img src={addCircle} alt="" />
-                <Text $color="white">Create New Assessment</Text>
-              </Flex>
-            </Button>
-          </Link>
-          <Mailto email="employee@email.com" subject="ASSESSMENTS">
-            <Button $variant="outlined">
-              <Text $color="#2667FF" $weight="600">
-                Send to employee
-              </Text>
-            </Button>
-          </Mailto>
-        </Flex>
-      </Hide>
-      <Show>
-        <Flex jc="flex-end" spacing={10}>
-          <Link to="/assessment/create-assessment">
-            <Button>
-              <Flex spacing={10} ai="center">
-                <img src={addCircle} alt="" />
-              </Flex>
-            </Button>
-          </Link>
-          <Mailto email="employee@email.com" subject="ASSESSMENTS">
-            <Button $variant="outlined">
-              <Text $color="#2667FF" $weight="600">
-                Send to employee
-              </Text>
-            </Button>
-          </Mailto>
-        </Flex>
-      </Show>
-    </div>
-  );
-};
 const Sort = () => {
-  const { data, setData, order, setOrder } = useContext(DataContext);
+  const { data, setData, order, setOrder, auth } = useContext(DataContext);
   const sorting = () => {
     if (order === "asc") {
       const sorted = [...data].sort((a, b) =>
@@ -137,6 +92,7 @@ const Sort = () => {
       );
       setData(sorted);
       setOrder("asc");
+      console.log(useAuth);
     }
   };
 
@@ -198,7 +154,20 @@ const Sort = () => {
 };
 
 const List = () => {
-  const { data } = useContext(DataContext);
+  const { data, available, setAvailable, setIsLoading } =
+    useContext(DataContext);
+  useEffect(() => {
+    fetchAvailable()
+      .then(({ data }) => {
+        setAvailable(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
   return (
     <AssessmentListings>
       <table>
@@ -221,7 +190,7 @@ const List = () => {
                 <td>{d.date}</td>
                 <td>
                   <Button $variant="outlined" $color="#2667ff">
-                    View Assessment
+                    Take Test
                   </Button>
                 </td>
               </tr>
@@ -254,30 +223,59 @@ const Assessment = () => {
         jc="space-between"
       >
         <Flex spacing={24} ai="flex-end">
-          <Link to="/admin-assessment-list">
+          <Link to="/user-assessment-list">
             <Text $color="#2667FF" $weight="600">
               Available (60)
             </Text>
           </Link>
-          <Link to="/admin-assessment-list/completed">
+          <Link to="/user-assessment-list/completed">
             <Text>Completed (47)</Text>
           </Link>
         </Flex>
       </Flex>
+
       <TableSection />
     </Flex>
   );
 };
 
 const UserAssessmentListAvailable = () => {
+  const auth = useAuth(useAuth);
   const [data, setData] = useState(info);
   const [order, setOrder] = useState("asc");
+  const [available, setAvailable] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetchAvailable()
+      .then(({ data }) => {
+        setAvailable(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
+
   return (
     <div>
-      <DataContext.Provider value={{ data, setData, order, setOrder }}>
-        <PageInfo breadcrumb={["Dashboard", "Performance"]} />
-        <Buttons />
+      <DataContext.Provider
+        value={{
+          data,
+          setData,
+          order,
+          setOrder,
+          isLoading,
+          setIsLoading,
+          available,
+          setAvailable,
+        }}
+      >
+        <PageInfo breadcrumb={["Assessments", "Assessment List"]} />
         <Assessment />
+        {/* {auth} */}
       </DataContext.Provider>
     </div>
   );
