@@ -62,6 +62,7 @@ import MainAssessment from "./ui/pages/Assessment";
 import EmployeeUserDashboard from "./ui/pages/EmployeeUserDashboard";
 import Error from "./ui/pages/404";
 import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
+import PersistLogin from "./components/PersistLogin";
 
 const ROLES = {
   Employees: 1,
@@ -147,56 +148,62 @@ const App = () => {
           {/* Private Route */}
           <Route element={<UiLayout />}>
             {/* Employee Route */}
-            <Route element={<RequireAuth allowedRole={ROLES.Employees} />}>
-              {/* Put in Protected pages in here */}
-              <Route
-                path="/user-assessment-result"
-                element={<UserAssessmentResult />}
-              />
-              <Route path="/employee-profile" element={<EmployeeProfile />} />
-              <Route path="/404" element={<Error />} />
-            </Route>
-
-            {/* Organization Route */}
-            <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
-              <Route path="/ui" element={"my guy"} />
-              <Route path="/404" element={<Error />} />
-
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/employees" element={<Employees />}>
-                <Route path="" element={<EmployeesListing />} />
-                <Route path="profile" element={<EmployeeProfile />} />
-                <Route path="user-profile" element={<UserProfile />} />
-                <Route path="add-employee" element={<AdminCSVUpload />} />{" "}
+            <Route element={<PersistLogin />}>
+              <Route element={<RequireAuth allowedRole={ROLES.Employees} />}>
+                {/* Put in Protected pages in here */}
                 <Route
-                  path="employee-department"
-                  element={<EmployeeDeparment />}
+                  path="/user-assessment-result"
+                  element={<UserAssessmentResult />}
                 />
+                <Route path="/employee-profile" element={<EmployeeProfile />} />
+                <Route path="/404" element={<Error />} />
               </Route>
-              <Route
-                path="employee-user-dashboard"
-                element={<EmployeeUserDashboard />}
-              />
-              <Route path="/assessment" element={<MainAssessment />}>
-                <Route path="" element={<AssessmentFirstPage />} />
+
+              {/* Organization Route */}
+              <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
+                <Route path="/ui" element={"my guy"} />
+                <Route path="/404" element={<Error />} />
+
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/employees" element={<Employees />}>
+                  <Route path="" element={<EmployeesListing />} />
+                  <Route path="profile" element={<EmployeeProfile />} />
+                  <Route path="user-profile" element={<UserProfile />} />
+                  <Route
+                    path="add-employee"
+                    element={<AdminCSVUpload />}
+                  />{" "}
+                  <Route
+                    path="employee-department"
+                    element={<EmployeeDeparment />}
+                  />
+                </Route>
                 <Route
-                  path="create-assessment"
-                  element={<CreateAssessment />}
+                  path="employee-user-dashboard"
+                  element={<EmployeeUserDashboard />}
                 />
-                <Route path="admin-csv-upload" element={<AdminCSVUpload />} />
+                <Route path="/assessment" element={<MainAssessment />}>
+                  <Route path="" element={<AssessmentFirstPage />} />
+                  <Route
+                    path="create-assessment"
+                    element={<CreateAssessment />}
+                  />
+                  <Route path="admin-csv-upload" element={<AdminCSVUpload />} />
+                </Route>
               </Route>
-            </Route>
 
-            {/* Overall Admin Route */}
-            <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
-              {/* Put in Protected pages in here */}
-            </Route>
+              {/* Overall Admin Route */}
+              <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
+                {/* Put in Protected pages in here */}
+              </Route>
 
-            <Route element={<DashboardLayout />}>
-              <Route path="/assessment" element={<Assessment />} />
+              <Route element={<DashboardLayout />}>
+                <Route path="/assessment" element={<Assessment />} />
+              </Route>
             </Route>
           </Route>
         </Routes>
+        {/* </Route> */}
       </ThemeProvider>
       <StyledToastContainer />
     </>
