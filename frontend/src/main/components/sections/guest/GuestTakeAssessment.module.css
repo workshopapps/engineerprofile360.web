@@ -1,5 +1,5 @@
 
-.UserTakeAssessment_container {
+.GuestTakeAssessment_container {
     height: auto;
     margin:auto;
     display: flex;
@@ -51,7 +51,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 50px;
     flex-wrap: wrap;
 
   }
@@ -62,17 +62,6 @@
     flex-direction: column;
     justify-content: space-between;
     flex-wrap: wrap;
-  }
-
-  .Filter_wrapper {
-    display: flex;
-    width: 100%!important;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    flex-wrap: wrap;
-
   }
 
   .Filter_nav_text {
@@ -160,30 +149,10 @@
 
   }
 
-  .Filter_flex_score {
-    display: flex;
-    padding: 20px;
-    border: 1px solid;
-    justify-content: center;
-    text-align: center;
-
-  }
-
-  .Questions_Score {
-    display: flex;
-    width: 100%!important;
-    flex-direction: column;
-    margin:10px 0;
-  }
-
-  .Filter_nav h1 {
-    font-size: 24px;
-  }
-
   
   /* Media queries */
   @media screen and (max-width: 767px) {
-    .UserTakeAssessment_container {
+    .GuestTakeAssessment_container {
       align-items: stretch;
       text-align: center;
       width: 100%;
