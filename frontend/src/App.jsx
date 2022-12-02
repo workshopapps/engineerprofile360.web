@@ -54,9 +54,9 @@ import Dashboard from "./ui/pages/Dashboard";
 import AssessmentFirstPage from "./ui/pages/AssessmentFirstPage";
 import CreateAssessment from "./ui/pages/CreateAssessment";
 import Employees from "./ui/pages/Employees";
-import UserProfile from "./ui/pages/UserProfile";
 import EmployeesListing from "./ui/components/Employees/EmployeesListing";
 import EmployeeProfile from "./ui/components/Employees/EmployeeProfile";
+import EmployeeProfileCard from "./ui/components/Employees/EmployeeProfileCard";
 import AcceptReject from "./ui/pages/Accept Reject Profile/AcceptReject";
 import MainAssessment from "./ui/pages/Assessment";
 import UserAssessmentListAvailable from "./ui/pages/user-assessment-list/UserAssessmentListAvailable";
@@ -162,8 +162,8 @@ const App = () => {
               <Route path="/employees" element={<Employees />}>
                 <Route path="" element={<EmployeesListing />} />
                 <Route path="profile" element={<EmployeeProfile />} />
-                <Route path="user-profile" element={<UserProfile />} />
-                <Route path="add-employee" element={<AdminCSVUpload />} />{" "}
+                <Route path="full-profile" element={<EmployeeProfileCard />} />
+                <Route path="add-employee" element={<AdminCSVUpload />} />
                 <Route
                   path="employee-department"
                   element={<EmployeeDeparment />}
