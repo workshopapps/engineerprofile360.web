@@ -65,6 +65,7 @@ import UserAssessmentListOutlet from "./ui/pages/user-assessment-list/UserAssess
 import EmployeeUserDashboard from "./ui/pages/EmployeeUserDashboard";
 import Error from "./ui/pages/404";
 import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
+import DepartmentSection from "./ui/pages/DepartmentSection/DepartmentSection";
 
 const ROLES = {
   Employees: 1,
@@ -156,7 +157,7 @@ const App = () => {
             <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
               <Route path="/ui" element={"my guy"} />
               <Route path="/404" element={<Error />} />
-
+              <Route path="/departments" element={<DepartmentSection />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/employees" element={<Employees />}>
                 <Route path="" element={<EmployeesListing />} />
