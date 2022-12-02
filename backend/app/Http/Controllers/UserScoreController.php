@@ -113,7 +113,7 @@ class UserScoreController extends Controller
     {
         try {
             $userScore = UserAssessment::select('*')
-                ->rightJoin('employees', 'employees.id', '=', 'user_assessments.employee_id')
+                ->join('employees', 'employees.id', '=', 'user_assessments.employee_id')
                 ->where('employees.org_id', $id)->orderBy('user_assessments.result', 'asc');
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
         } catch (Exception $e) {
