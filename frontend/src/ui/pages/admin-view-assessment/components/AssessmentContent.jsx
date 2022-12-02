@@ -68,7 +68,7 @@ function AssessmentContent() {
           <ButtonWrapper>
             <ButtonClearNext
               onClick={() => {
-                navigate("/assessment-first-page");
+                navigate("/assessment");
               }}
             >
               Next
@@ -94,15 +94,6 @@ export const QuestionContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   margin: 15px 0;
-  @media (min-width: 748px) {
-    transform: translateY(-130px);
-  }
-  @media (min-width: 1200px) {
-    transform: translateY(-180px);
-  }
-  @media (min-width: 1300px) {
-    transform: translateY(-270px);
-  }
 `;
 
 export const Question = styled.h4`
@@ -139,9 +130,7 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  @media (min-width: 748px) {
-    transform: translateY(-130px);
-  }
+
 `;
 export const ButtonClear = styled.button`
   color: #323130;
@@ -156,8 +145,7 @@ export const ButtonClear = styled.button`
   justify-content: center;
   align-items: center;
   transition: all 0.3s ease-in;
-  @media (min-width: 748px) {
-  }
+ 
 
   &:hover {
     color: #fff;
