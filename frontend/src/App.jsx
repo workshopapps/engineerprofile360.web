@@ -41,12 +41,14 @@ import Market from "./main/components/Market-comp-page-2/Market";
 import AdminCSVUpload from "./ui/pages/AdminUpload/AdminCSVUpload";
 import UserAssessmentListCompleted from "./ui/pages/UserAssestList/UserAssestListCompleted";
 
+import GuestEmail from "./main/pages/GuestEmail";
+
 import { User2FA } from "./ui/pages/userSignUp/User2FA";
 import { DashboardLayout } from "../src/Layouts/Dashboard/DashboardLayout";
 import AdminViewAssessment from "./ui/pages/admin-view-assessment/AdminViewAssessment";
 import Assessment from "./ui/pages/assessment/Assessment.jsx";
 import UserAssessmentResult from "./ui/pages/user-assessment-result/UserAssessmentResult";
-import CsvUpload from "./ui/pages/csv/CsvUpload";
+// import CsvUpload from "./ui/pages/csv/CsvUpload";
 import CsvUploading from "./ui/pages/csv/CsvUploading";
 import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
 import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
@@ -65,6 +67,7 @@ import UserAssessmentListOutlet from "./ui/pages/user-assessment-list/UserAssess
 import EmployeeUserDashboard from "./ui/pages/EmployeeUserDashboard";
 import Error from "./ui/pages/404";
 import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
+import GuestLogin from "./main/pages/Auth/GuestLogin";
 import DepartmentSection from "./ui/pages/DepartmentSection/DepartmentSection";
 
 const ROLES = {
@@ -121,6 +124,8 @@ const App = () => {
             /> */}
           </Route>
 
+          <Route path="/guest-email" element={<GuestEmail />} />
+
           <Route element={<AdminAuthLayout />}>
             <Route path="/register" element={<AdminSignup />} />
             <Route path="/login" element={<AdminLogin />} />
@@ -136,6 +141,7 @@ const App = () => {
               element={<AdminEmailVerified />}
             />
             <Route path="/accept-reject-profile" element={<AcceptReject />} />
+            <Route path="/guest-login" element={<GuestLogin />} />
           </Route>
 
           {/* Private Route */}
