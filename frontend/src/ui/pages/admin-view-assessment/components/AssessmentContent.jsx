@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { AssessmentData } from "./AssessmentData";
@@ -16,6 +17,7 @@ function AssessmentContent() {
     },
   ]);
   const answer = inputValue;
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setInputValue(e.target.value);
@@ -64,12 +66,19 @@ function AssessmentContent() {
           />
 
           <ButtonWrapper>
-            <ButtonShade
+            <ButtonClearNext
               onClick={() => {
-                setIsEditing(!isEditing);
+                navigate("/assessment-first-page");
               }}
             >
-              {isEditing ? "Apply Change" : "Edit"}
+              Next
+            </ButtonClearNext>
+            <ButtonShade
+              onClick={() => {
+                navigate("/fill-assessment");
+              }}
+            >
+              Edit
             </ButtonShade>
           </ButtonWrapper>
         </WrapperDiv>
@@ -142,6 +151,29 @@ export const ButtonClear = styled.button`
   width: 75px;
   height: 60px;
   margin: 0 15px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-in;
+  @media (min-width: 748px) {
+  }
+
+  &:hover {
+    color: #fff;
+    background-color: #2667ff;
+    border: none;
+    border: none;
+  }
+`;
+export const ButtonClearNext = styled.button`
+  color: #323130;
+  background-color: white;
+  border: 1px solid #2667ff;
+  cursor: pointer;
+  width: 139px;
+  height: 60px;
+
   border-radius: 4px;
   display: flex;
   justify-content: center;
