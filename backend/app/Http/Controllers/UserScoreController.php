@@ -112,9 +112,13 @@ class UserScoreController extends Controller
     public function getCompanyTopPerformances(string $id)
     {
         try {
-            $userScore = UserAssessment::select('*')
-                ->join('employees', 'employees.id', '=', 'user_assessments.employee_id')
-                ->where('employees.org_id', $id)->orderBy('user_assessments.result', 'asc');
+            $userScore = UserAssessment::select('departments.name as department, employees.fullname as employee_name, sum(user_assessments.correct_questions) as points')
+                ->leftJoin('employees', function ($join) use ($id) {
+                    $join->on('employees.id', '=', 'user_assessments.employee_id')
+                        ->where(['employees.org_id' => $id]);
+                })
+                ->join('departments', 'departments.id', '=', 'employees.department_id')
+                ->orderBy('user_assessments.result', 'asc');
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Error fetching user scores", $e->getMessage(), Response::HTTP_BAD_REQUEST);
