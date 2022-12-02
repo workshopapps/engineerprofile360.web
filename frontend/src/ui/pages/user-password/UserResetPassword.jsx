@@ -85,7 +85,7 @@ const FormContainer = styled(Container)`
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 3rem;
+  gap: 2rem;
 `;
 const FormButton = styled(Button)`
   min-width: 100%;

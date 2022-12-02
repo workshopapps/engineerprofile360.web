@@ -62,7 +62,7 @@ const FormContainer = styled(Container)`
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 4rem;
+  gap: 2rem;
 `;
 
 const Checkbox = styled.div`
