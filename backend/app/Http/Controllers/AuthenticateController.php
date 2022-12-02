@@ -399,7 +399,7 @@ class AuthenticateController extends Controller {
         User::where("user_id", $id)->update(array("isVerified"=>true));
 
         // delte token from db
-        Token::where("user_id", $id)->delete();
+        // Token::where("user_id", $id)->delete();
 
         return $this->sendResponse(false, null, "Email verified successfully", null, 200);
     }
