@@ -102,14 +102,7 @@ const App = () => {
 
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/payment" element={<Payment />} />
-            <Route
-              path="/take-assessment"
-              element={<UserTakeAssessment />}
-            />
-            <Route
-              path="/take-assessment-result"
-              element={<UserTakeAssessmentResult />}
-            />
+            
 
             <Route
               path="/guest-take-assessment"
@@ -212,6 +205,14 @@ const App = () => {
                   element={<CompletedUserAssessments />}
                 />
               </Route>
+              <Route
+              path="/take-assessment"
+              element={<UserTakeAssessment />}
+            />
+            <Route
+              path="/take-assessment-result"
+              element={<UserTakeAssessmentResult />}
+            />
             </Route>
 
             {/* Overall Admin Route */}
