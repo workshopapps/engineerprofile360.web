@@ -3,8 +3,8 @@ import React from "react";
 const Logo = ({ size }) => {
   return (
     <svg
-      width={size === "lg" ? "200" : size === "sm" ? "148" : ""}
-      height={size === "lg" ? "48" : size === "sm" ? "34" : ""}
+      width={size === "lg" ? "200" : size === "sm" ? "110" : ""}
+      // height={size === "lg" ? "48" : size === "sm" ? "34" : ""}
       viewBox="0 0 148 34"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -14,14 +14,14 @@ const Logo = ({ size }) => {
         fill="#1A1A1A"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M21.0407 12.4961L21.0156 22.1866C21.0001 27.6792 15.2383 32.0428 5.31641 32.0659V18.2738C14.0905 17.5976 20.6388 15.2818 21.0407 12.4941V12.4961Z"
         fill="#C7E0F4"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M21.061 12.2252C21.061 15.1324 14.3717 17.5752 5.31549 18.2746V24.2468C2.51186 22.2567 0 21.1663 0 17.9393V1.93555C9.52383 5.82331 21.061 3.19551 21.061 12.2252Z"
         fill="#141AE9"
       />
