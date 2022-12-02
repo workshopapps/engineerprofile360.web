@@ -32,7 +32,8 @@ export const data = {
   labels: ["Average", "PHP", "Laravel", "Python", "CSS", "HTML"],
   datasets: [
     {
-      data: [9, 9, 9, 9, 9, 9],
+      label: "Categories",
+      data: [9, 19, 35, 9, 79, 9],
       backgroundColor: "rgba(95, 210, 85, 0.2)",
       borderColor: "#107C10",
       borderWidth: 1.5,
