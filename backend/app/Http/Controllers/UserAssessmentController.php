@@ -99,8 +99,7 @@ class UserAssessmentController extends Controller
     {
 
         try {
-            $userAssessment = UserAssessment::where('org_id', $id)->where("completed", false)->get();
-
+            $userAssessment = UserAssessment::where('org_id', $id)->get();
             return $this->sendResponse(false, null, 'OK', $userAssessment, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, 'Fetch Available User Assessment By Company ID failed', $e->getMessage());
@@ -332,4 +331,3 @@ class UserAssessmentController extends Controller
 
     }
 }
-
