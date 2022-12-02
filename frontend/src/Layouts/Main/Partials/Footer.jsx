@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-import logo from "../../../assets/images/logo.svg";
 import facebook from "../../../assets/icons/facebook.svg";
 import instagram from "../../../assets/icons/instagram.svg";
 import twitter from "../../../assets/icons/twitter.svg";
@@ -12,13 +11,14 @@ import {
   Title,
 } from "../../../styles/reusableElements.styled";
 import { Link } from "react-router-dom";
+import Logo from "../../../components/Logo";
 
 const Footer = () => {
   return (
     <FooterTag>
       <FooterContainer>
         <SkriptContact>
-          <img src={logo} alt="Logo of Skript" />
+        <Logo size="lg" />
           <Newsletter>
             <p>
               Join our newsletter to stay up to date on features and releases.
