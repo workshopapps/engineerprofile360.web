@@ -59,6 +59,7 @@ import EmployeesListing from "./ui/components/Employees/EmployeesListing";
 import EmployeeProfile from "./ui/components/Employees/EmployeeProfile";
 import AcceptReject from "./ui/pages/Accept Reject Profile/AcceptReject";
 import MainAssessment from "./ui/pages/Assessment";
+import {Category} from "./ui/pages/category/Category";
 
 const ROLES = {
   Employees: 1,
@@ -73,6 +74,8 @@ const App = () => {
         <GlobalStyles />
         <Routes>
           <Route path="/2FA" element={<User2FA />} />
+          <Route path="/category" element={<Category />} />
+
 
           {/* Public routes */}
           <Route element={<MainLayout />}>
@@ -169,6 +172,7 @@ const App = () => {
                   path="create-assessment"
                   element={<CreateAssessment />}
                 />
+                
                 <Route path="admin-csv-upload" element={<AdminCSVUpload />} />
               </Route>
             </Route>
