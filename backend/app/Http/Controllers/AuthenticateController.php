@@ -12,14 +12,14 @@ use DateTime;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash; 
+use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Validator;
 use Mailer;
 
 /**
  * @User-Roles
- * 
+ *
  * 1 - EMPLOYEE
  * 2 - ORGANIZATION
  * 3 - ADMIN
@@ -74,7 +74,7 @@ class AuthenticateController extends Controller {
     // handle employee login
     public function EmployeeLogin(Request $request){
         try {
-            
+
             $payload = json_decode($request->getContent(), true);
             $email = $payload["email"];
             $password = $payload["password"];
@@ -88,15 +88,15 @@ class AuthenticateController extends Controller {
             $employees = Employee::where('email', $email);
 
             if ($employees->count() > 0) {
-                
+
                 $checkPassword = Hash::check($password, $employees->first()["hash"]);
-    
+
                 if(!$checkPassword){
                     return $this->sendResponse(true,"Invalid credentials supplied.", "password given do not match our record.", null, 400);
                 }
-    
+
                 try {
-                
+
                     // generate access and refresh token
                     $refToken = $this->helper->generateRefreshToken($employees->first()["id"], $email);
                     $accToken = $this->helper->generateAccessToken($employees->first()["id"], $email);
@@ -108,11 +108,11 @@ class AuthenticateController extends Controller {
                         "role"=>$employees->first()["role"],
                         "username"=>$employees->first()["username"]
                     ];
-    
-    
+
+
                     // update refToken in database
                     Employee::where('email', '=', $email)->update(array('refToken' => $refToken, "hasloggedin"=>true));
-                    
+
                     // set http-only cookie
                     $cookieVal = $accToken;
 
@@ -131,7 +131,9 @@ class AuthenticateController extends Controller {
             return $this->sendResponse(true,"Something went wrong login in ".$e->getMessage(), "employee not found", null, 500);
         }
     }
-    
+
+    // handle overall skript admin login
+
     // handle overall Eval360 admin login
     public function OverallAdminLogin(Request $request){
 
@@ -140,7 +142,7 @@ class AuthenticateController extends Controller {
     // handle organization login
     public function OrganizationLogin(Request $request){
         try {
-            
+
             $payload = json_decode($request->getContent(), true);
             $email = $payload["email"];
             $password = $payload["password"];
@@ -154,15 +156,15 @@ class AuthenticateController extends Controller {
             $users = User::where('email', $email);
 
             if ($users->count() > 0) {
-                
+
                 $checkPassword = Hash::check($password, $users->first()["password"]);
-    
+
                 if(!$checkPassword){
                     return $this->sendResponse(true,"Invalid credentials supplied.", "password given do not match our record.", null, 400);
                 }
-    
+
                 try {
-                
+
                     // generate access and refresh token
                     $refToken = $this->helper->generateRefreshToken($users->first()["user_id"], $email);
                     $accToken = $this->helper->generateAccessToken($users->first()["user_id"], $email);
@@ -174,7 +176,7 @@ class AuthenticateController extends Controller {
                         "role"=>$users->first()["role"],
                         "username"=>$users->first()["username"]
                     ];
-    
+
                     // company data
                     $companyData = [
                         "id"=> $uid,
@@ -182,26 +184,26 @@ class AuthenticateController extends Controller {
                         "name"=> $users->first()["username"],
                         "org_mail"=> $users->first()["email"]
                     ];
-    
-    
+
+
                     // update refToken in database
                     User::where('email', '=', $email)->update(array('refToken' => $refToken));
-    
+
                     // check if user has a company created
                     $user_id = $users->first()["user_id"];
                     $comp = Company::where("user_id", $user_id);
-    
+
                     if($comp->count() == 0){
                         Company::create($companyData);
                     }
-    
-                    
+
+
                     // check if user is unverified
                     if($users->first()["isVerified"] < 1){
                         $this->helper->emailVerification($email,$user_id);
                         return $this->sendResponse(true, "account not verfied.. a verification link has been sent to you account.", "failed to login.. verify your account.", null, 200);
                     }
-                    
+
                     // set http-only cookie
                     $cookieVal = $accToken;
 
@@ -252,7 +254,7 @@ class AuthenticateController extends Controller {
                 "full_name"=>$fullname,
                 "email"=> $email,
                 "username"=> $username,
-                "isVerified"=> false,
+                "isVerified"=> 0,
                 "refToken"=> "",
                 "password"=> $hash,
                 "role"=>$this->ORG_ROLE
@@ -264,7 +266,7 @@ class AuthenticateController extends Controller {
                 "full_name"=>$fullname,
                 "email"=> $email,
                 "username"=> $username,
-                "isVerified"=> false,
+                "isVerified"=> 0,
                 "role"=>$this->ORG_ROLE
             ];
 
@@ -286,20 +288,20 @@ class AuthenticateController extends Controller {
     public function verifyEmail(Request $request, $id, $token){
         // verify if that user exists
         $user = User::where("user_id", $id);
-        $verifyToken = Token::where("token","=", $token);
+        $verifyToken = Token::where("token", $token);
 
-    
+
         if($user->count() == 0){
             return $this->sendResponse(true, 'Invalid verification link, no user was found',"Invalid verification link", null, 404);
         }
-        
+
         if($verifyToken->count() == 0){
             return $this->sendResponse(true, 'Invalid verification link: token not found',"Invalid verification token", null, 400);
         }
-        
+
         $exp = $verifyToken->first()["exp"];
         $isExpired = $this->isExpired($exp);
-        
+
         if($isExpired){
             // remove expired link from db
             Token::where("user_id", $id)->delete();
@@ -359,7 +361,7 @@ class AuthenticateController extends Controller {
             $this->sendResponse(true, "Expected a verify param in paylaod, but got none", "Verify parameter not found.",null, 404);
         }
 
-        // update variable 
+        // update variable
         $verify = $payload["verify"];
 
         if(!$verify){
@@ -368,25 +370,25 @@ class AuthenticateController extends Controller {
             try {
                 // generate new hash password
                 $pwd = $payload;
-    
+
                 // verify payload
                 if(!isset($payload["new_password"])){
                     return $this->sendResponse(true, "new_password parameter is missing", "Expected a valid new_password field but got none.", null, 400);
                 }
-    
+
                 // check if user and employee exists.
                 $user = User::where("user_id", $id);
                 $employee = Employee::where("id", $id);
-                
+
                 // generate new hash password
                 $newHash = Hash::make($pwd["new_password"]);
-                
+
                 // check if token exists
                 $userTokenExists = Token::where([
                     "token"=>$token,
                     "user_id"=> $id
                 ])->get();
-    
+
                 // run password update on either the organization or employee
                 if($user->count() > 0){
                     // if no token available
@@ -396,12 +398,12 @@ class AuthenticateController extends Controller {
 
                     // Updated user password
                     User::where("user_id", $id)->update(array("password"=> $newHash));
-                    
+
                     // removed token from database
                     Token::where("user_id", $id)->delete();
-    
+
                     return $this->sendResponse(false, null, "Password updated", null, 200);
-    
+
                 }
                 else if($employee->count() > 0){
                     // if no token available
@@ -411,10 +413,10 @@ class AuthenticateController extends Controller {
 
                     // Updated user password
                     Employee::where("id", $id)->update(array("hash"=> $newHash));
-    
+
                     // removed token from database
                     Token::where("user_id", $id)->delete();
-    
+
                     return $this->sendResponse(false, null, "Password updated", null, 200);
                 }
                 else{
@@ -430,7 +432,7 @@ class AuthenticateController extends Controller {
                 // check if user and employee exists.
                 $user = User::where("user_id", $id);
                 $employee = Employee::where("id", $id);
-                
+
                 // check if token exists
                 $userTokenExists = Token::where([
                     "token"=>$token,
@@ -475,7 +477,7 @@ class AuthenticateController extends Controller {
 
             // generate accesstoken
             $newToken = $this->helper->generateAccessToken($id, $email);
-            
+
             // set http-only cookie
             $data = [
                 "accessToken"=>$newToken,
