@@ -1,21 +1,26 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { Button } from "../../../../styles/reusableElements.styled";
-import addCircle from "../../../../assets/icons/app/add-circle.svg";
-import down from "../../../../assets/icons/app/arrow-down-alt.svg";
-import dashboard from "../../../../assets/icons/app/dashboard.svg";
-import hamburger from "../../../../assets/icons/app/hamburger.svg";
-import PageInfo from "../../../components/molecules/PageInfo";
-import Flex from "../../../components/layout/Flex";
+import addCircle from "../../../assets/icons/app/add-circle.svg";
+import down from "../../../assets/icons/app/arrow-down.svg";
+import dashboard from "../../../assets/icons/app/dashboard.svg";
+import hamburger from "../../../assets/icons/app/hamburger.svg";
 import { Link } from "react-router-dom";
+import PageInfo from "../../components/molecules/PageInfo";
+import Flex from "../../components/layout/Flex";
+import { Button, Loader } from "../../../styles/reusableElements.styled";
+import axios from "../../../api/axios";
 
 const DataContext = createContext(null);
+
+const fetchCompleted = () => {
+  return axios("/user-assessment/org/org-completed");
+};
 
 const info = [
   {
     id: "1",
-    dept: "Introduction to Software Engineering",
-    course: "Python 101",
+    dept: "HNG Tutorials",
+    course: "Zuri 101",
     duration: "30 mins",
     date: "25 Apr 2020",
   },
@@ -70,89 +75,39 @@ const info = [
   },
 ];
 
-export const Buttons = () => {
-  const Mailto = ({ email, subject = "", body = "", children }) => {
-    let params = subject || body ? "?" : "";
-    if (subject) params += `subject=${encodeURIComponent(subject)}`;
-    if (body) params += `${subject ? "&" : ""}body=${encodeURIComponent(body)}`;
-
-    return <a href={`mailto:${email}${params}`}>{children}</a>;
-  };
-
-  return (
-    <div>
-      <Hide>
-        <Flex jc="flex-end" spacing={10}>
-          <Link to="/assessment/create-assessment">
-            <Button>
-              <Flex spacing={10} ai="center">
-                <img src={addCircle} alt="" />
-                <Text $color="white">Create New Assessment</Text>
-              </Flex>
-            </Button>
-          </Link>
-          <Mailto email="employee@email.com" subject="ASSESSMENTS">
-            <Button $variant="outlined">
-              <Text $color="#2667FF" $weight="600">
-                Send to employee
-              </Text>
-            </Button>
-          </Mailto>
-        </Flex>
-      </Hide>
-      <Show>
-        <Flex jc="flex-end" spacing={10}>
-          <Link to="/assessment/create-assessment">
-            <Button>
-              <Flex spacing={10} ai="center">
-                <img src={addCircle} alt="" />
-              </Flex>
-            </Button>
-          </Link>
-          <Mailto email="employee@email.com" subject="ASSESSMENTS">
-            <Button $variant="outlined">
-              <Text $color="#2667FF" $weight="600">
-                Send to employee
-              </Text>
-            </Button>
-          </Mailto>
-        </Flex>
-      </Show>
-    </div>
-  );
-};
-export const Sort = () => {
-  const { data, setData, order, setOrder } = useContext(DataContext);
+const Sort = () => {
+  const { assessmentInfo, setAssessmentInfo, order, setOrder } =
+    useContext(DataContext);
   const sorting = () => {
     if (order === "asc") {
-      const sorted = [...data].sort((a, b) =>
+      const sorted = [...assessmentInfo].sort((a, b) =>
         a.dept.toLowerCase() > b.dept.toLowerCase() ? 1 : -1
       );
-      setData(sorted);
+      setAssessmentInfo(sorted);
       setOrder("dsc");
     }
     if (order === "dsc") {
-      const sorted = [...data].sort((a, b) =>
+      const sorted = [...assessmentInfo].sort((a, b) =>
         a.dept.toLowerCase() < b.dept.toLowerCase() ? 1 : -1
       );
-      setData(sorted);
+      setAssessmentInfo(sorted);
       setOrder("asc");
     }
   };
 
   const dateSort = () => {
     if (order === "asc") {
-      const sortedDate = [...data].sort((a, b) =>
+      const sortedDate = [...assessmentInfo].sort((a, b) =>
         new Date(b.date) > new Date(a.date) ? 1 : -1
       );
-      setData(sortedDate);
+      setAssessmentInfo(sortedDate);
       setOrder("dsc");
     }
     if (order === "dsc") {
-      const sortedDate = [...data].sort((a, b) =>
+      const sortedDate = [...assessmentInfo].sort((a, b) =>
         new Date(b.date) < new Date(a.date) ? 1 : -1
       );
-      setData(sortedDate);
+      setAssessmentInfo(sortedDate);
       setOrder("asc");
     }
   };
@@ -197,10 +152,38 @@ export const Sort = () => {
   );
 };
 
-export const List = () => {
-  const { data } = useContext(DataContext);
-  return (
-    <AssessmentListings>
+const List = () => {
+  const { completed, setCompleted, isLoading, setIsLoading } =
+    useContext(DataContext);
+  useEffect(() => {
+    fetchCompleted()
+      .then(({ data }) => {
+        setCompleted(data);
+        // console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+        console.log();
+      });
+  }, []);
+  const renderContent = () => {
+    if (isLoading) {
+      return (
+        <Flex jc="center">
+          <Loader />
+        </Flex>
+      );
+    } else if (completed.data.length === 0) {
+      return (
+        <Text>
+          Oops this user has no completed assessments, come back later
+        </Text>
+      );
+    }
+    return (
       <table>
         <tbody>
           <tr>
@@ -211,7 +194,7 @@ export const List = () => {
             <th>Deadline</th>
             <th>{""}</th>
           </tr>
-          {data.map((d, idx) => {
+          {[completed.data].map((d, idx) => {
             return (
               <tr key={idx}>
                 <td>{idx + 1}</td>
@@ -221,7 +204,7 @@ export const List = () => {
                 <td>{d.date}</td>
                 <td>
                   <Button $variant="outlined" $color="#2667ff">
-                    View Assessment
+                    Take Test
                   </Button>
                 </td>
               </tr>
@@ -229,11 +212,13 @@ export const List = () => {
           })}
         </tbody>
       </table>
-    </AssessmentListings>
-  );
+    );
+  };
+
+  return <AssessmentListings>{renderContent()}</AssessmentListings>;
 };
 
-export const TableSection = () => {
+const TableSection = () => {
   return (
     <Flex stack spacing={16}>
       <Sort />
@@ -242,7 +227,7 @@ export const TableSection = () => {
   );
 };
 
-export const Assessment = () => {
+const Assessment = () => {
   return (
     <Flex stack spacing={70}>
       <Flex
@@ -254,36 +239,51 @@ export const Assessment = () => {
         jc="space-between"
       >
         <Flex spacing={24} ai="flex-end">
-          <Link to="/admin-assessment-list">
-            <Text>Available (60)</Text>
+          <Link to="/user-assessment-list">
+            <Text>Available (0)</Text>
           </Link>
-          <Text $color="#2667FF" $weight="600">
-            Completed (47)
-          </Text>
+          <Link to="/user-assessment-list/completed">
+            <Text $color="#2667FF" $weight="600">
+              Completed (0)
+            </Text>
+          </Link>
         </Flex>
       </Flex>
+
       <TableSection />
     </Flex>
   );
 };
 
-export const AssessmentList = () => {
-  const [data, setData] = useState(info);
+const CompletedUserAssessments = () => {
+  const [assessmentInfo, setAssessmentInfo] = useState(info);
   const [order, setOrder] = useState("asc");
+  const [completed, setCompleted] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   return (
     <div>
-      <DataContext.Provider value={{ data, setData, order, setOrder }}>
-        <PageInfo breadcrumb={["Dashboard", "Performance"]} />
-        <Buttons />
+      <DataContext.Provider
+        value={{
+          assessmentInfo,
+          setAssessmentInfo,
+          order,
+          setOrder,
+          completed,
+          setCompleted,
+          isLoading,
+          setIsLoading,
+        }}
+      >
+        <PageInfo breadcrumb={["Assessments", "Assessment List"]} />
         <Assessment />
       </DataContext.Provider>
     </div>
   );
 };
 
-export default AssessmentList;
+export default CompletedUserAssessments;
 
-export const AssessmentListings = styled.div`
+const AssessmentListings = styled.div`
   padding-top: ${({ theme }) => theme.spacing(3)};
   width: 100%;
   overflow: auto;
@@ -318,7 +318,7 @@ export const AssessmentListings = styled.div`
   }
 `;
 
-export const Text = styled.p`
+const Text = styled.p`
   white-space: nowrap;
   color: ${({ $color }) => ($color ? $color : "initial")};
   font-size: ${({ $size }) => ($size ? $size : "14px")};
@@ -326,14 +326,14 @@ export const Text = styled.p`
   line-height: ${({ $lHeight }) => ($lHeight ? $lHeight : "20px")};
 `;
 
-export const Hide = styled.div`
+const Hide = styled.div`
   display: block;
 
   @media screen and (max-width: 768px) {
     display: none;
   } ;
 `;
-export const Show = styled.div`
+const Show = styled.div`
   display: none;
 
   @media screen and (max-width: 768px) {
@@ -341,7 +341,7 @@ export const Show = styled.div`
   } ;
 `;
 
-export const SortContainer = styled.div`
+const SortContainer = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0 10px;

@@ -19,12 +19,24 @@ const AdminEmailVerified = () => {
     const verifyEmail = async () => {
       try {
         console.log(user_id, token);
-        const response = await axios.get(`auth/verify/${user_id}/${token}`);
-        console.log(response);
+        if (user_id && token) {
+          const response = await axios.post(`auth/verify/${user_id}/${token}`);
+          console.log(response);
+        }
       } catch (err) {
+        console.log(err);
         if (!err?.response) {
           showErrorToast("No Server Response");
-        } else {
+        }
+        if (err.response.data.message === "verify email") {
+          setIsError(true);
+          showErrorToast("A verification link has been sent to your account");
+        }
+        if (err.response.data.message === "Invalid verification link") {
+          setIsError(true);
+          showErrorToast(err.response.data.message);
+        }
+        if (err.response.data.message === "Verification Link expired") {
           setIsError(true);
           showErrorToast(err.response.data.message);
         }
@@ -32,7 +44,7 @@ const AdminEmailVerified = () => {
     };
 
     verifyEmail();
-  }, [token, user_id]);
+  }, []);
 
   return (
     <>
