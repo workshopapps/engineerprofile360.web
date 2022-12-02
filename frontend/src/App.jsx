@@ -59,6 +59,9 @@ import EmployeesListing from "./ui/components/Employees/EmployeesListing";
 import EmployeeProfile from "./ui/components/Employees/EmployeeProfile";
 import AcceptReject from "./ui/pages/Accept Reject Profile/AcceptReject";
 import MainAssessment from "./ui/pages/Assessment";
+import UserAssessmentListAvailable from "./ui/pages/user-assessment-list/UserAssessmentListAvailable";
+import CompletedUserAssessments from "./ui/pages/user-assessment-list/UserAssessmentListCompleted";
+import UserAssessmentListOutlet from "./ui/pages/user-assessment-list/UserAssessmentListOutlet";
 import EmployeeUserDashboard from "./ui/pages/EmployeeUserDashboard";
 import Error from "./ui/pages/404";
 import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
@@ -93,11 +96,6 @@ const App = () => {
             <Route path="/admin-assessment" element={<AdminAssessmentList />} />
             <Route path="/market-comparison" element={<Market />} />
 
-            <Route
-              path="/admin-assessment-list"
-              element={<AdminAssessmentList />}
-            />
-
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/payment" element={<Payment />} />
             <Route
@@ -121,10 +119,10 @@ const App = () => {
             <Route path="/privacy-policy" element={<Privacy />} />
             <Route path="/employee-profile" element={<EmployeeProfile />} />
             {/* <Route path="/admin-csv-upload" element={<AdminCSVUpload />} /> */}
-            <Route
+            {/* <Route
               path="/user-assessment-completed"
               element={<UserAssessmentListCompleted />}
-            />
+            /> */}
           </Route>
 
           <Route element={<AdminAuthLayout />}>
@@ -149,10 +147,7 @@ const App = () => {
             {/* Employee Route */}
             <Route element={<RequireAuth allowedRole={ROLES.Employees} />}>
               {/* Put in Protected pages in here */}
-              <Route
-                path="/user-assessment-result"
-                element={<UserAssessmentResult />}
-              />
+
               <Route path="/employee-profile" element={<EmployeeProfile />} />
               <Route path="/404" element={<Error />} />
             </Route>
@@ -184,6 +179,20 @@ const App = () => {
                   element={<CreateAssessment />}
                 />
                 <Route path="admin-csv-upload" element={<AdminCSVUpload />} />
+              </Route>
+              <Route
+                path="/user-assessment-result"
+                element={<UserAssessmentResult />}
+              />
+              <Route
+                path="/user-assessment-list"
+                element={<UserAssessmentListOutlet />}
+              >
+                <Route path="" element={<UserAssessmentListAvailable />} />
+                <Route
+                  path="completed"
+                  element={<CompletedUserAssessments />}
+                />
               </Route>
             </Route>
 
