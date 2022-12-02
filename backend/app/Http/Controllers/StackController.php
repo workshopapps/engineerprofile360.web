@@ -53,12 +53,7 @@ class StackController extends Controller
             // Get current user
             $uid = $request->user["id"];
             $updated_name = ["name" => $request->name];
-            $stack = Stack::where('id', $stack_id)->where("user_id", $uid);
-
-            if ($stack->count() == 0) {
-                return $this->sendResponse(true, "Stack doesn't exists", "Stack not found.",
-                    null, 404);
-            }
+            $stack = Stack::where('id', $stack_id);
 
             // check if it same user who's trying to update category
             $user_id = $stack->first()["user_id"];
@@ -68,7 +63,12 @@ class StackController extends Controller
                     "Unauthorised.", null, 404);
             }
 
-            Stack::where('id', $stack_id)->update($updated_name);
+            if ($stack->count() == 0) {
+                return $this->sendResponse(true, "Stack doesn't exists", "Stack not found.",
+                    null, 404);
+            }
+
+            $stack->where("user_id", $uid)->update($updated_name);
 
             return $this->sendResponse(false, null, 'Stack updated successfully',
                 $updated_name, Response::HTTP_OK);
