@@ -61,6 +61,8 @@ import AcceptReject from "./ui/pages/Accept Reject Profile/AcceptReject";
 import MainAssessment from "./ui/pages/Assessment";
 import AdminAssessmentListOutlet from "./ui/pages/admin-settings/adminAssesmentList/AdminAssessmentListOutlet";
 import AdminAssessmentListAvailable from "./ui/pages/admin-settings/adminAssesmentList/AdminAssessmentListAvailable";
+import Error from "./ui/pages/404";
+import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
 
 const ROLES = {
   Employees: 1,
@@ -145,6 +147,7 @@ const App = () => {
               {/* Put in Protected pages in here */}
 
               <Route path="/employee-profile" element={<EmployeeProfile />} />
+              <Route path="/404" element={<Error />} />
             </Route>
 
             {/* Organization Route */}
@@ -157,11 +160,18 @@ const App = () => {
                 <Route path="" element={<AdminAssessmentListAvailable />} />
                 <Route path="completed" element={<AdminAssessmentList />} />
               </Route>
+              <Route path="/404" element={<Error />} />
+
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/employees" element={<Employees />}>
                 <Route path="" element={<EmployeesListing />} />
                 <Route path="profile" element={<EmployeeProfile />} />
                 <Route path="user-profile" element={<UserProfile />} />
+                <Route path="add-employee" element={<AdminCSVUpload />} />{" "}
+                <Route
+                  path="employee-department"
+                  element={<EmployeeDeparment />}
+                />
               </Route>
               <Route path="/assessment" element={<MainAssessment />}>
                 <Route path="" element={<AssessmentFirstPage />} />
@@ -169,7 +179,6 @@ const App = () => {
                   path="create-assessment"
                   element={<CreateAssessment />}
                 />
-                <Route path="admin-csv-upload" element={<AdminCSVUpload />} />
               </Route>
               <Route
                 path="/user-assessment-result"
