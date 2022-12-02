@@ -38,7 +38,7 @@ const QuestionTemplate = ({ questionNumber }) => {
         question: "",
         option_input: "",
         language: "",
-        question_type: "checkbox",
+        question_type: "multichoice",
         list: [],
       },
     ]);
@@ -124,7 +124,7 @@ const QuestionTemplate = ({ questionNumber }) => {
                             //   onBlur={(e) => handleAddOptionFields(index)}
                           />
                           <img src={Frame} alt="" />
-                          <div>Delete</div>
+                          {/* <div>Delete</div> */}
                         </Fragment>
                       </Fragment>
                       {/* ))} */}
@@ -144,7 +144,7 @@ const QuestionTemplate = ({ questionNumber }) => {
                         }
                       />
                       <img src={Frame} alt="" />
-                      <div>Delete</div>
+                      {/* <div>Delete</div> */}
                     </>
                   )}
                 </div>
@@ -170,7 +170,6 @@ const QuestionTemplate = ({ questionNumber }) => {
           </Option>
         </QuestionContainer>
       ))}
-      <button type="button">Add Option</button>
       <Button type="button" onClick={() => handleAddFields()}>
         Add Question
       </Button>

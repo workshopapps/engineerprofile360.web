@@ -173,7 +173,7 @@ const AdminLogin = () => {
           <Button
             $size="xl"
             type={isSubmitted ? "button" : "submit"}
-            $variant={isSubmitted || errors ? "disabled" : null}
+            $variant={isSubmitted ? "disabled" : null}
           >
             {isSubmitted ? <Loader /> : "Sign In"}
           </Button>
