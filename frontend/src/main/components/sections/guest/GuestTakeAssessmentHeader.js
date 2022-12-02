@@ -38,21 +38,21 @@ function GuestTakeAssessmentHeader() {
         </div>
           <div>
             <p>
-              <span className={styles.Text_muted}>Course :</span>30 Minutes
+              <span className={styles.Text_muted}>Course :</span>Design thnking
+              Process
             </p>
             <p>
-              <span className={styles.Text_muted}>Department :</span>Tue 3th, Nov
-              22
+              <span className={styles.Text_muted}>Department :</span>UX Design 
             </p>
           </div>
 
           <div>
             <p>
-              <span className={styles.Text_muted}>Duration :</span>Design thnking
-              Process
+              <span className={styles.Text_muted}>Duration :</span> 30 Minutes
             </p>
             <p>
-              <span className={styles.Text_muted}>Deadline :</span>UX Design
+              <span className={styles.Text_muted}>Deadline :</span> Tue 3th, Nov
+              22
             </p>
           </div>
 
