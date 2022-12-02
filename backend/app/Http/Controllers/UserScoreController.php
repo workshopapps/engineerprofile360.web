@@ -114,7 +114,7 @@ class UserScoreController extends Controller
         try {
             $userScore = UserAssessment::select('*')
                 ->rightJoin('employees', 'employees.id', '=', 'user_assessments.employee_id')
-                ->where('user_assessments.org_id', $id)->orderBy('user_assessments.result', 'asc');
+                ->where('employees.org_id', $id)->orderBy('user_assessments.result', 'asc');
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Error fetching user scores", $e->getMessage(), Response::HTTP_BAD_REQUEST);

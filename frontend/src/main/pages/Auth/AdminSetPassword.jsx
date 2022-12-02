@@ -52,12 +52,9 @@ const AdminSetPassword = () => {
         );
         console.log(uid);
         console.log(response.data);
-        if (response?.data?.errorState === true) {
-          throw new Error();
-        }
       } catch (err) {
         if (!err.response) {
-          setPasswordError("No server response");
+          showErrorToast("No server response");
         } else {
           setIsError(true);
           showErrorToast(err.response.data.message);
