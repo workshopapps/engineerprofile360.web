@@ -106,7 +106,7 @@ Route::prefix("auth")->group(function () {
     // overall admin login
     Route::post('/eval360/admin/login', [AuthenticateController::class, 'OverallAdminLogin']);
 
-    Route::get('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
+    Route::post('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
 
     Route::prefix("password")->group(
         function () {
