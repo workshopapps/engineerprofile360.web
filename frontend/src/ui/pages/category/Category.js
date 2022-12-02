@@ -2,9 +2,12 @@ import React from 'react';
 import {Button} from '../../../styles/reusableElements.styled';
 import {Title} from '../../../styles/reusableElements.styled';
 import styled, {css} from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CreateCategory } from './CreateCategory';
 import {CategoryItems} from './CategoryItems';
+import axios from "../../../api/axios";
+
+
 
 const Edit=styled.div`
     display:flex;
@@ -50,6 +53,33 @@ const Categoryrows = CategoryTable.map((CategoryTable=>{
 
 
 export const Category = () => {
+    const [categoryList,setCategoryList]=useState([]);
+
+    useEffect(() => {
+        const category = async () => {
+          try {
+            const response = await axios.get(`/category/{category_id}`);
+            setCategoryList(response.data)
+} 
+          catch (err) {
+          }
+        };
+    
+        category();
+      }, []);
+
+
+        const categoryDelete = async (category_id) => {
+          try {
+            const response = await axios.delete(`/category/${category_id}/delete`);
+            setCategoryList(response.data)
+} 
+          catch (err) {
+          }
+        };
+    
+
+
     const [isOpen,setIsOpen]=useState(false);
     const toggleCreateCategory=()=>{
         setIsOpen(!isOpen);
@@ -63,7 +93,7 @@ export const Category = () => {
         </div>
         <div>
             <Button $variant='outlined' onClick={toggleCreateCategory} >Edit</Button>
-            <Button>Delete</Button>
+            <Button onClick={categoryDelete}>Delete</Button>
         </div>
     </Edit>
     {isOpen &&

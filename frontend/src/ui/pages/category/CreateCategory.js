@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, {css} from 'styled-components';
 import {Button} from '../../../styles/reusableElements.styled';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CategoryItems } from './CategoryItems';
 import axios from "../../../api/axios";
 
@@ -50,28 +50,56 @@ const Input = styled.div`
 
 export const CreateCategory = (props) => {
     const [category, setCategory]= useState('');
+    const [categoryName, setCategoryName]= useState('');
+    // const [assessmentId, setAssessmentId]= useState('');
 
-    function changeHandler(e){
-        setCategory(e.target.value)
-    }
+
+    
+    
+    
     function submitHandler(e){
         e.preventDefault();
         setCategory('');
+        // console.log(categoryName)
+        const CreateCategories = async () => {
+            try {
+              const response = await axios.post(
+                  "/category/add",
+                  JSON.stringify({ categoryName })
+                );
+                console.log(response)
+            } catch (err) {
+              
+            }
+          }
+       CreateCategories();
+          
+
     }
+    // useEffect(() => {
+
+    //     CreateCategories();
+    //   }, [categoryName , assessmentId]);
   return (
 
     <>
         <Wrapper>
             <Card>
                 <h2>Create new category</h2>
-                <form >
+                <form onSubmit={submitHandler}>
                     <Input>
                         <label htmlFor="text">Title</label>
-                        <input type="text" name="text" id="" value={category} onChange={changeHandler}/>
+                        <input type="text" name="text" id="" value={categoryName} onChange={(e) => setCategoryName(e.target.value)}/>
+                        {/* <input type="text" name="text" id="" value={assessmentId} onChange={(e)=>setAssessmentId(e.target.value)}/>
+                        <select value={assessmentId} onChange={(e)=>setAssessmentId(e.target.value)}>
+                            <option value="1">PHP</option>
+                            <option value="2" >Laravel</option>
+                            <option value="3">React</option>
+                            </select> */}
                     </Input>
                     < Buttons>
                         <Button onClick={props.cancel} variant >Cancel</Button>
-                        <Button onSubmit={submitHandler} onClick={props.cancel}>Proceed</Button>
+                        <Button type='submit' >Proceed</Button>
                     </Buttons>
                 </form>
             </Card>
