@@ -62,6 +62,9 @@ import MainAssessment from "./ui/pages/Assessment";
 import UserAssessmentListAvailable from "./ui/pages/user-assessment-list/UserAssessmentListAvailable";
 import CompletedUserAssessments from "./ui/pages/user-assessment-list/UserAssessmentListCompleted";
 import UserAssessmentListOutlet from "./ui/pages/user-assessment-list/UserAssessmentListOutlet";
+import EmployeeUserDashboard from "./ui/pages/EmployeeUserDashboard";
+import Error from "./ui/pages/404";
+import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
 
 const ROLES = {
   Employees: 1,
@@ -146,17 +149,29 @@ const App = () => {
               {/* Put in Protected pages in here */}
 
               <Route path="/employee-profile" element={<EmployeeProfile />} />
+              <Route path="/404" element={<Error />} />
             </Route>
 
             {/* Organization Route */}
             <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
               <Route path="/ui" element={"my guy"} />
+              <Route path="/404" element={<Error />} />
+
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/employees" element={<Employees />}>
                 <Route path="" element={<EmployeesListing />} />
                 <Route path="profile" element={<EmployeeProfile />} />
                 <Route path="user-profile" element={<UserProfile />} />
+                <Route path="add-employee" element={<AdminCSVUpload />} />{" "}
+                <Route
+                  path="employee-department"
+                  element={<EmployeeDeparment />}
+                />
               </Route>
+              <Route
+                path="employee-user-dashboard"
+                element={<EmployeeUserDashboard />}
+              />
               <Route path="/assessment" element={<MainAssessment />}>
                 <Route path="" element={<AssessmentFirstPage />} />
                 <Route
