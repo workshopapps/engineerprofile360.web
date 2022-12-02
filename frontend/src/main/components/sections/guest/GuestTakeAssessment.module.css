@@ -163,9 +163,8 @@
     width: 100%!important;
     flex-direction: column;
     margin:10px 0;
+    text-align: left;
   }
-
-
   
   /* Media queries */
   @media screen and (max-width: 767px) {
