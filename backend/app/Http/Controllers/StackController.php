@@ -29,7 +29,7 @@ class StackController extends Controller
                     null, 404);
             }
                 Stack::create($data);
-                return $this->sendResponse(false, 'Stack created', $data['user_id'], Response::HTTP_CREATED);
+                return $this->sendResponse(false, 'Stack created', $data['name'], Response::HTTP_CREATED);
 
 
         } catch (\Exception $e) {
