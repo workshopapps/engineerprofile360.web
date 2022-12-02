@@ -29,13 +29,9 @@ class StackController extends Controller
                 return $this->sendResponse(true, "This stack already exists", "Duplicate stack name.",
                     Response::HTTP_BAD_REQUEST);
             }
-<<<<<<< HEAD
-                Stack::create($data);
-                return $this->sendResponse(false, null, $data['user_id'], Response::HTTP_CREATED);
-=======
             $return_message = Stack::create($data);
                 return $this->sendResponse(false, null, $return_message, Response::HTTP_CREATED);
->>>>>>> 61982f151de54da55b2bc77b1143baf7aec851f6
+
 
 
         } catch (\Exception $e) {
@@ -50,11 +46,11 @@ class StackController extends Controller
 
             if (empty($stack_id)) {
                 return $this->sendResponse(true, "Expected id of an existing stack. None given",
-                    "stack id is missing.", null, 400);
+                    "stack id is missing.", Response::HTTP_BAD_REQUEST);
             }
             if (empty($request->name)) {
                 return $this->sendResponse(true, "Expected a valid stack 'name'. None give",
-                    "stack name is missing.", null, 400);
+                    "stack name is missing.", Response::HTTP_BAD_REQUEST);
             }
 
             // Get current user
@@ -67,12 +63,12 @@ class StackController extends Controller
 
             if ($user_id !== $uid) {
                 return $this->sendResponse(true, "Not authorised to update this stack",
-                    "Unauthorised.", null, 404);
+                    "Unauthorised.", Response::HTTP_BAD_REQUEST);
             }
 
             if ($stack->count() == 0) {
                 return $this->sendResponse(true, "Stack doesn't exists", "Stack not found.",
-                    null, 404);
+                    Response::HTTP_BAD_REQUEST);
             }
 
             $stack->where("user_id", $uid)->update($updated_name);
@@ -82,7 +78,7 @@ class StackController extends Controller
         } catch (Exception $e) {
 
             return $this->sendResponse(true, "Something went wrong updating stack " . $e->getMessage(),
-                'Failed updating stack.', null, 500);
+                'Failed updating stack.', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
     }
