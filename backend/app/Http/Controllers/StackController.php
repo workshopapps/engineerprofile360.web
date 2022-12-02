@@ -22,6 +22,7 @@ class StackController extends Controller
                 return $this->sendResponse(true, "expected a valid payload", "invalid payload given.", null, Response::HTTP_BAD_REQUEST);
             }
             
+            $uid = $request->user["id"];
             $id = Str::uuid();
             $name = $payload["name"];
             
@@ -35,6 +36,7 @@ class StackController extends Controller
             $data = [
                 "id"=> $id,
                 "name"=>$name,
+                "user_id" => $uid
             ];
 
             Stack::create($data);
