@@ -20,20 +20,22 @@ class StackController extends Controller
         ];
         try {
             if(empty($name)){
-                return $this->sendResponse(true, 'stack name is required', 'missing stack name',Response::HTTP_BAD_REQUEST );
+                return $this->sendResponse(true, 'stack name is required', 'missing stack name',
+                    Response::HTTP_BAD_REQUEST );
             }
             $stack = Stack::where('name', $name);
 
             if ($stack->count() > 0) {
                 return $this->sendResponse(true, "This stack already exists", "Duplicate stack name.",
-                    null, 404);
+                    Response::HTTP_BAD_REQUEST);
             }
             $return_message = Stack::create($data);
                 return $this->sendResponse(false, null, $return_message, Response::HTTP_CREATED);
 
 
         } catch (\Exception $e) {
-            return $this->sendResponse(true, 'Error occurred while creating Stack', $e->getMessage());
+            return $this->sendResponse(true, 'Error occurred while creating Stack', $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
