@@ -5,10 +5,13 @@ import PageInfo from "../components/molecules/PageInfo";
 
 const EmployeeUserDashboard = () => {
   const { auth } = useAuth();
+  console.log("auth", auth);
   return (
     <>
       <PageInfo
-        pageTitle={`Welcome Back ${auth.fullName}`}
+        pageTitle={`Welcome Back ${
+          auth.fullName ? auth.fullName.split(" ")[0] : ""
+        }`}
         breadcrumb={["Dashboard", ""]}
       />
       <EmployeeUserDashboardLayout />

@@ -11,15 +11,6 @@ import axios from "../../../api/axios";
 import { showErrorToast } from "../../../helpers/helper";
 import { Radar } from "react-chartjs-2";
 
-const SkillRatingsList = [
-  { title: "Communication", rating: "80" },
-  { title: "Problem solving", rating: "70" },
-  { title: "Adaptability", rating: "60" },
-  { title: "Leadership skill", rating: "60" },
-  { title: "General knowledge", rating: "70" },
-  { title: "Overall knowledge", rating: "70" },
-];
-
 const AssessmentList = [
   {
     id: 1,
@@ -161,8 +152,6 @@ const EmployeeUserDashboardLayout = () => {
     ],
   };
 
-  console.log("schemaData", data);
-
   //Get Available Assessment Details
   React.useEffect(() => {
     const getAvailableAssessment = async () => {
@@ -196,22 +185,27 @@ const EmployeeUserDashboardLayout = () => {
           >
             Your Skill Rating
           </Title>
-          <SkillRatingSection>
-            <div>
-              {chartDetails
-                ? JSON.parse(
-                    chartDetails?.data[0]?.categories?.split("/").join("")
-                  ).map((item, key) => <SKillRating key={key} title={item} />)
-                : ""}
-            </div>
-            <div>
-              {chartDetails
-                ? JSON.parse(chartDetails?.data[0]?.passed_questions).map(
-                    (item, key) => <SKillRating key={key} title={item} />
-                  )
-                : ""}
-            </div>
-          </SkillRatingSection>
+
+          {isChartLoading ? (
+            "Loading"
+          ) : (
+            <SkillRatingSection>
+              <div>
+                {chartDetails
+                  ? JSON.parse(
+                      chartDetails?.data[0]?.categories?.split("/").join("")
+                    ).map((item, key) => <SKillRating key={key} title={item} />)
+                  : ""}
+              </div>
+              <div>
+                {chartDetails
+                  ? JSON.parse(chartDetails?.data[0]?.passed_questions).map(
+                      (item, key) => <SKillRating key={key} title={item} />
+                    )
+                  : ""}
+              </div>
+            </SkillRatingSection>
+          )}
         </SkillSection>
         <ChartSection>
           {isChartLoading ? "Loading" : <Radar data={data} />}
@@ -300,38 +294,42 @@ const EmployeeUserDashboardLayout = () => {
       </AssessmentContainer>
       <TableContainer>
         <table>
-          <tr>
-            <th>#</th>
-            <th>Department</th>
-            <th>Course</th>
-            <th>Grade</th>
-            <th>Actions</th>
-          </tr>
-          {isAvailableAssessmentLoading
-            ? "Loading"
-            : AssessmentList
-            ? AssessmentList.map((item, key) => (
-                <tr key={key}>
-                  <td>{item.id}</td>
-                  <td>{item.department}</td>
-                  <td>{item.course}</td>
-                  <td>{item.grade}</td>
-                  <td
-                    style={{
-                      display: "flex",
-                      gap: "20px",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Link to={item.result}>
-                      <Button $color="#2667FF">View Result</Button>
-                    </Link>
-                    <ThreeDots />
-                  </td>
-                </tr>
-              ))
-            : ""}
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Department</th>
+              <th>Course</th>
+              <th>Grade</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {isAvailableAssessmentLoading
+              ? "Loading"
+              : AssessmentList
+              ? AssessmentList.map((item, key) => (
+                  <tr key={key}>
+                    <td>{item.id}</td>
+                    <td>{item.department}</td>
+                    <td>{item.course}</td>
+                    <td>{item.grade}</td>
+                    <td
+                      style={{
+                        display: "flex",
+                        gap: "20px",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Link to={item.result}>
+                        <Button $color="#2667FF">View Result</Button>
+                      </Link>
+                      <ThreeDots />
+                    </td>
+                  </tr>
+                ))
+              : ""}
+          </tbody>
         </table>
       </TableContainer>
     </>
@@ -376,6 +374,7 @@ const SkillRatingSection = styled.div`
   width: 100%;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 50px;
 
   div {
     text-align: left;
@@ -466,7 +465,7 @@ const TableContainer = styled.div`
   table {
     width: 100%;
   }
-  tr:first-child {
+  thead {
     background-color: #f8fbfd;
     padding: 9px 0px;
     width: 100%;
