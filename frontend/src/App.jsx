@@ -59,6 +59,7 @@ import EmployeesListing from "./ui/components/Employees/EmployeesListing";
 import EmployeeProfile from "./ui/components/Employees/EmployeeProfile";
 import AcceptReject from "./ui/pages/Accept Reject Profile/AcceptReject";
 import MainAssessment from "./ui/pages/Assessment";
+import EmployeeUserDashboard from "./ui/pages/EmployeeUserDashboard";
 import Error from "./ui/pages/404";
 import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
 
@@ -172,6 +173,10 @@ const App = () => {
                   element={<EmployeeDeparment />}
                 />
               </Route>
+              <Route
+                path="employee-user-dashboard"
+                element={<EmployeeUserDashboard />}
+              />
               <Route path="/assessment" element={<MainAssessment />}>
                 <Route path="" element={<AssessmentFirstPage />} />
                 <Route
