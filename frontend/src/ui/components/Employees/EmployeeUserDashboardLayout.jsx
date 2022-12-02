@@ -283,6 +283,10 @@ const StatsContainer = styled.div`
     text-align: center;
     gap: 30px;
   }
+
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    padding: 10px 20px;
+  }
 `;
 
 const SkillSection = styled.div`
