@@ -187,7 +187,7 @@ const List = () => {
     } else if (available.data.length === 0) {
       return (
         <Text>
-          Oops this user has no assessments available, come back later
+          Oops this user has no available assessments, come back later
         </Text>
       );
     }
@@ -253,7 +253,7 @@ const Assessment = () => {
             </Text>
           </Link>
           <Link to="/user-assessment-list/completed">
-            <Text>Completed (47)</Text>
+            <Text>Completed (0)</Text>
           </Link>
         </Flex>
       </Flex>
