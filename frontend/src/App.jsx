@@ -59,11 +59,9 @@ import EmployeesListing from "./ui/components/Employees/EmployeesListing";
 import EmployeeProfile from "./ui/components/Employees/EmployeeProfile";
 import AcceptReject from "./ui/pages/Accept Reject Profile/AcceptReject";
 import MainAssessment from "./ui/pages/Assessment";
-import AdminAssessmentListOutlet from "./ui/pages/admin-settings/adminAssesmentList/AdminAssessmentListOutlet";
-import AdminAssessmentListAvailable from "./ui/pages/admin-settings/adminAssesmentList/AdminAssessmentListAvailable";
-import UserAssessmentListOutlet from "./ui/pages/user-assessment-list/UserAssessmentListOutlet";
 import UserAssessmentListAvailable from "./ui/pages/user-assessment-list/UserAssessmentListAvailable";
 import CompletedUserAssessments from "./ui/pages/user-assessment-list/UserAssessmentListCompleted";
+import UserAssessmentListOutlet from "./ui/pages/user-assessment-list/UserAssessmentListOutlet";
 
 const ROLES = {
   Employees: 1,
@@ -153,13 +151,6 @@ const App = () => {
             {/* Organization Route */}
             <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
               <Route path="/ui" element={"my guy"} />
-              <Route
-                path="/admin-assessment-list"
-                element={<AdminAssessmentListOutlet />}
-              >
-                <Route path="" element={<AdminAssessmentListAvailable />} />
-                <Route path="completed" element={<AdminAssessmentList />} />
-              </Route>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/employees" element={<Employees />}>
                 <Route path="" element={<EmployeesListing />} />
