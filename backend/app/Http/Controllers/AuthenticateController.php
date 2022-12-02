@@ -136,7 +136,86 @@ class AuthenticateController extends Controller {
 
     // handle overall Eval360 admin login
     public function OverallAdminLogin(Request $request){
+        try {
+            
+            $payload = json_decode($request->getContent(), true);
+            $email = $payload["email"];
+            $password = $payload["password"];
 
+            $validator = $this->validateLogin($email, $password);
+
+            if($validator->fails()){
+                return $this->sendResponse(true,$validator->errors(), 'invalid credentials supplied', null, 422);
+            }
+
+            $users = User::where('email', $email)->where("role", 3);
+
+            if ($users->count() > 0) {
+                
+                $checkPassword = Hash::check($password, $users->first()["password"]);
+    
+                if(!$checkPassword){
+                    return $this->sendResponse(true,"Invalid credentials supplied.", "password given do not match our record.", null, 400);
+                }
+    
+                try {
+                
+                    // generate access and refresh token
+                    $refToken = $this->helper->generateRefreshToken($users->first()["user_id"], $email);
+                    $accToken = $this->helper->generateAccessToken($users->first()["user_id"], $email);
+                    $uid = Str::uuid();
+                    // user record
+                    $userResp = [
+                        "accessToken"=>$accToken,
+                        "id"=>$users->first()["user_id"],
+                        "role"=>$users->first()["role"],
+                        "username"=>$users->first()["username"]
+                    ];
+    
+                    // company data
+                    $companyData = [
+                        "id"=> $uid,
+                        "user_id"=>$users->first()["user_id"],
+                        "name"=> $users->first()["username"],
+                        "org_mail"=> $users->first()["email"]
+                    ];
+    
+    
+                    // update refToken in database
+                    User::where('email', '=', $email)->update(array('refToken' => $refToken));
+    
+                    // check if user has a company created
+                    $user_id = $users->first()["user_id"];
+                    $comp = Company::where("user_id", $user_id);
+    
+                    if($comp->count() == 0){
+                        Company::create($companyData);
+                    }
+    
+                    
+                    // // check if user is unverified
+                    // if($users->first()["isVerified"] < 1){
+                    //     $this->helper->emailVerification($email,$user_id);
+                    //     return $this->sendResponse(true, "account not verfied.. a verification link has been sent to you account.", "failed to login.. verify your account.", null, 200);
+                    // }
+                    
+                    // set http-only cookie
+                    $cookieVal = $accToken;
+
+                    // send newly generated token
+                    return $this->sendResponseWithCookie(false, null, "admin logged in successfully", $userResp, 200, $this->CookieName, $cookieVal, $this->CookieExp);
+                } catch (\Exception $e) {
+                    print_r($e);
+                    return $this->sendResponse(true,$e->getMessage(),"Something went wrong loggin in, please try again", null, 500);
+                }
+            }
+            else{
+                return $this->sendResponse(true,"No admin found with this email", "admin not found", null, 404);
+            }
+
+        } catch (\Exception $e) {
+            return $this->sendResponse(true,"Something went wrong login in ".$e->getMessage(), "organization not found", null, 500);
+        }
     }
 
     // handle organization login
