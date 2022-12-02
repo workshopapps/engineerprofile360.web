@@ -3,6 +3,7 @@ import styles from "./UserTakeAssessment.module.css";
 import UserTakeAssessmentHeader from "./UserTakeAssessmentHeader";
 import { QuestionData } from "./QuestionData";
 import { useState } from "react";
+import { Link } from 'react-router-dom';
 
 export default function UserTakeAssessment() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,12 +23,7 @@ export default function UserTakeAssessment() {
   const indexOfFirstPost = indexOfLastPost - questionsPerPage;
   const currentPost = QuestionData.slice(indexOfFirstPost, indexOfLastPost);
 
-  //const paginate = (pageNums) => setCurrentPage(pageNums);
-  const next = () => {
-    if(currentPage  < Math.ceil(QuestionData.length / questionsPerPage)){
-      setCurrentPage(currentPage+1)
-    }};
-
+  
     const Prev = () => {
       if(currentPage  > 1 ){
         return <input type="button" 
@@ -37,6 +33,15 @@ export default function UserTakeAssessment() {
         }}
         value="Previous" />}
       }
+
+      const Next = () => {
+        if(currentPage  < Math.ceil(QuestionData.length / questionsPerPage)){
+          return <input type="button" 
+          className={styles.Button_next} 
+          onClick={(e) => {setCurrentPage(currentPage+1)}} 
+          Value="Next" />
+      }
+    }
   
   return (
     <>
@@ -75,15 +80,11 @@ export default function UserTakeAssessment() {
 
             <div className={styles.Filter_Next_Submit}>
              {<Prev />}
-              <input type="button" 
-              className={styles.Button_next} 
-              onClick={(e) => {
-                next()}} 
-                value="Next" />
-              <input
-                type="button"
-                className={styles.Button_submit}
-                value="Submit" />
+             {<Next />}
+
+              <Link to="/take-assessment-result">
+                <button type="button"
+                className={styles.Button_submit}> Submit </button></Link>
             </div>
           </form>
         </div>

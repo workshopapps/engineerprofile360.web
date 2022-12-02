@@ -23,20 +23,24 @@ export default function UserTakeAssessmentResult() {
   const currentPost = QuestionData.slice(indexOfFirstPost, indexOfLastPost);
 
   //const paginate = (pageNums) => setCurrentPage(pageNums);
-  const next = () => {
-    if(currentPage  < Math.ceil(QuestionData.length / questionsPerPage)){
-      setCurrentPage(currentPage+1)
-    }};
+  const Prev = () => {
+    if(currentPage  > 1 ){
+      return <input type="button" 
+      className={styles.Button_next} 
+      onClick={(e) => {
+        setCurrentPage(currentPage-1)
+      }}
+      value="Previous" />}
+    }
 
-    const Prev = () => {
-      if(currentPage  > 1 ){
+    const Next = () => {
+      if(currentPage  < Math.ceil(QuestionData.length / questionsPerPage)){
         return <input type="button" 
         className={styles.Button_next} 
-        onClick={(e) => {
-          setCurrentPage(currentPage-1)
-        }}
-        value="Previous" />}
-      }
+        onClick={(e) => {setCurrentPage(currentPage+1)}} 
+        Value="Next" />
+    }
+  }
   
   return (
     <>
@@ -75,15 +79,7 @@ export default function UserTakeAssessmentResult() {
 
             <div className={styles.Filter_Next_Submit}>
              {<Prev />}
-              <input type="button" 
-              className={styles.Button_next} 
-              onClick={(e) => {
-                next()}} 
-                value="Next" />
-              <input
-                type="button"
-                className={styles.Button_submit}
-                value="Done" />
+              {<Next />}
             </div>
           </form>
         </div>
