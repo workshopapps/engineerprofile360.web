@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Stats from "../components/Dashboard/Stats";
 import TopEmployees from "../components/Dashboard/TopEmployees";
-
 import PageInfo from "../components/molecules/PageInfo";
-
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
 import { showErrorToast } from "../../helpers/helper";

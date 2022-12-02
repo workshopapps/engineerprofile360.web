@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\StackController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\UserController;
+
+use App\Http\Controllers\StackController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
@@ -12,9 +12,9 @@ use App\Http\Controllers\InterviewController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\UserScoreController;
 use App\Http\Controllers\AssessmentController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\AuthenticationController;
-use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\UserAssessmentController;
 
 // util functions
@@ -41,6 +41,8 @@ Route::get("/test", function () {
 Route::prefix("userscore")->group(function () {
     Route::get('/employee/{id}', [UserScoreController::class, 'getScoresByEmployeeID']);
     Route::get('/assessment/{id}', [UserScoreController::class, 'getScoresByAssessmentID']);
+    Route::get('/company/{id}/max', [UserScoreController::class, 'getCompanyTopPerformance']);
+    Route::get('/company/{id}', [UserScoreController::class, 'getCompanyTopPerformances']);
     Route::get('/{employeeId}/{assessmentId}', [UserScoreController::class, 'getScores']);
     Route::post('/create', [UserScoreController::class, 'store']);
 });
@@ -48,12 +50,15 @@ Route::prefix("userscore")->group(function () {
 
 //Users operation routes
 Route::prefix("user")->group(function () {
-    Route::get('/get/all', [UserController::class, 'getUsers']);
+    Route::get('all', [UserController::class, 'getCompanies']);
     Route::get('/{userId}', [UserController::class, 'getUser']);
     Route::get('verified/{userId}', [UserController::class, 'getVerifiedUserById']);
     Route::get('make-admin/{userId}', [UserController::class, 'makeUserAnAdmin']);
     Route::get('block-user/{userId}', [UserController::class, 'blockUser']);
+    Route::post('{userId}/deactivate', [UserController::class, 'deactivateCompany']);
     Route::put('/{userId}/update', [UserController::class, 'updaterUserInfo'])->middleware("isloggedin");
+
+    Route::put('verify-user/{userId}', [UserController::class, 'getVerifyUserById']);
 });
 
 
@@ -74,7 +79,7 @@ Route::prefix("user-assessment")->group(function () {
 Route::prefix("assessment")->group(function () {
     Route::post('/create', [AssessmentController::class, 'createAssessment'])->middleware("isloggedin", "isadmin");
     // Route::get('/{assessmentId}/notify/{employeeId}', [AssessmentController::class, 'notifyEmployeeAssessment']); // do not uncomment this route, some adjusments is currently been made
-    Route::get('/{organisationId}', [AssessmentController::class, 'getAssByOrgId']);
+    Route::get('/{organization_id}', [AssessmentController::class, 'getAssByOrgId']);
     Route::put('/{assessmentId}', [AssessmentController::class, 'updateAssessment'])->middleware("isloggedin", "isadmin");
     Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAssessment'])->middleware("isloggedin", "isadmin");
 
@@ -85,7 +90,7 @@ Route::prefix("assessment")->group(function () {
 Route::post("/test_csv", function (Request $req) {
     $csv = new CsvParser();
     $payload = json_decode($req->getContent(), true);
-    return $csv->parseEmployeeCsv($payload);
+    return $csv->parseEmployeeCsv($payload, '');
 });
 
 // authentication route
@@ -96,16 +101,12 @@ Route::prefix("auth")->group(function () {
         Route::post('/login', [AuthenticateController::class, "OrganizationLogin"]);
     });
 
-    // employee login 
+    // employee login
     Route::post('/employee/login', [AuthenticateController::class, "EmployeeLogin"]);
     // overall admin login
-    Route::post('/skript/admin/login', [AuthenticateController::class, 'OverallAdminLogin']);
+    Route::post('/eval360/admin/login', [AuthenticateController::class, 'OverallAdminLogin']);
 
-    Route::get('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
-
-    // refresh token
-    Route::post('/refresh', [AuthenticateController::class, 'refreshJwtToken']);
-
+    Route::post('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
 
     Route::prefix("password")->group(
         function () {
@@ -132,6 +133,7 @@ Route::prefix("question")->group(function () {
     Route::get('company/{id}', [QuestionsController::class, 'getQuestByComId']);
     Route::get('category/{id}', [QuestionsController::class, 'getQuestByCatId']);
     Route::put('update/{questionId}', [QuestionsController::class, 'updateQuestion']);
+    Route::delete('delete/{questionId}', [QuestionsController::class, 'deleteQuestion']);
     Route::get('/assessment/{id}', [QuestionsController::class, 'getQuestByAssId']);
 });
 
@@ -152,8 +154,9 @@ Route::prefix('employee')->group(function () {
     Route::get('/company/{org_id}', [EmployeeController::class, 'byCompId']);
     Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
     Route::get('{departmentId}', [EmployeeController::class, 'getEmplyeesByDepartment']);
-
 });
+Route::get('employees', [EmployeeController::class, 'getAllEmployees'])->middleware("isloggedin", "isadmin");
+
 
 
 // department routes
@@ -197,6 +200,7 @@ Route::prefix("user-assessment")->group(function () {
 Route::prefix("stack")->group(function () {
     Route::post('add', [StackController::class, 'addStack'])->middleware("isloggedin", "isadmin");
     Route::put('update/{stackId}', [StackController::class, 'updateStack']);
+    Route::put('delete/{stackId}', [StackController::class, 'deleteStack']);
     Route::get('all', [StackController::class, 'getAllStacks']);
     Route::get('{id}', [StackController::class, 'getStackById']);
 });

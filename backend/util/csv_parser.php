@@ -50,7 +50,7 @@ class CsvParser{
         }
     }
     
-    public function parseEmployeeCsv($b64){
+    public function parseEmployeeCsv($b64, $org){
         
         $oup = $this->parseBase64($b64);
         
@@ -69,7 +69,8 @@ class CsvParser{
                 "id"=> $i,
                 "fullname"=> $item[0],
                 "username"=> $item[1],
-                "email"=> $item[2]
+                "email"=> $item[2],
+                "org_id" => $org
             ];
             array_push($finalJsonData, $arr);
             $i++;
@@ -80,17 +81,6 @@ class CsvParser{
         $this->res["data"] = $finalJsonData;
 
         return $this->res;
-    }
-
-    public function trimEmployeeCSV($json, $dept, $org){
-        foreach($json as $key => $item){
-            unset($json[$key]["id"]);
-            $json[$key]['department_id'] = $dept;
-            $json[$key]['org_id'] = $org;
-            $json[$key]['id'] = Str::uuid();
-        }
-
-        return $json;
     }
 
 }
