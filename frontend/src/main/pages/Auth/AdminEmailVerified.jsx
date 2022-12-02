@@ -24,9 +24,19 @@ const AdminEmailVerified = () => {
           console.log(response);
         }
       } catch (err) {
+        console.log(err);
         if (!err?.response) {
           showErrorToast("No Server Response");
-        } else {
+        }
+        if (err.response.data.message === "verify email") {
+          setIsError(true);
+          showErrorToast("A verification link has been sent to your account");
+        }
+        if (err.response.data.message === "Invalid verification link") {
+          setIsError(true);
+          showErrorToast(err.response.data.message);
+        }
+        if (err.response.data.message === "Verification Link expired") {
           setIsError(true);
           showErrorToast(err.response.data.message);
         }
