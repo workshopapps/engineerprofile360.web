@@ -31,6 +31,8 @@ import AssessmentList from "./main/components/sections/userAssessmentList/Assess
 import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
 import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
 import UserTakeAssessmentResult from "./main/components/sections/userTakeAssessment/UserTakeAssessmentResult";
+import GuestTakeAssessment from "./main/components/sections/guest/GuestTakeAssessment";
+import GuestTakeAssessmentResult from "./main/components/sections/guest/GuestTakeAssessmentResult";
 import Privacy from "./main/pages/Privacy/privacy";
 // import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
@@ -101,12 +103,22 @@ const App = () => {
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/payment" element={<Payment />} />
             <Route
-              path="/take-assessment-list"
+              path="/take-assessment"
               element={<UserTakeAssessment />}
             />
             <Route
               path="/take-assessment-result"
               element={<UserTakeAssessmentResult />}
+            />
+
+            <Route
+              path="/guest-take-assessment"
+              element={<GuestTakeAssessment />}
+            />
+
+          <Route
+              path="/guest-take-assessment-result"
+              element={<GuestTakeAssessmentResult />}
             />
 
             <Route
