@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('stacks', function (Blueprint $table) {
             $table->uuid('id')->unique();
             $table->string('name');
+            $table->uuid('user_id')->unique();
             $table->timestamps();
         });
     }
