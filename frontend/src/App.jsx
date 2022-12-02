@@ -27,12 +27,11 @@ import Support from "../src/ui/pages/UserSupport";
 import Terms from "../src/ui/pages/termsAndService/TermsAndService";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
 import Blog from "../src/main/pages/Blog";
-import AssessmentList from "./main/components/sections/userAssessmentList/AssessmentList";
 import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
-import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
-import UserTakeAssessmentResult from "./main/components/sections/userTakeAssessment/UserTakeAssessmentResult";
-import GuestTakeAssessment from "./main/components/sections/guest/GuestTakeAssessment";
-import GuestTakeAssessmentResult from "./main/components/sections/guest/GuestTakeAssessmentResult";
+import UserTakeAssessment from "./ui/pages/userTakeAssessment/UserTakeAssessment";
+import UserTakeAssessmentResult from "./ui/pages/userTakeAssessment/UserTakeAssessmentResult";
+import GuestTakeAssessment from "./ui/pages/guest/GuestTakeAssessment";
+import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
 import Privacy from "./main/pages/Privacy/privacy";
 // import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
@@ -49,9 +48,6 @@ import { DashboardLayout } from "../src/Layouts/Dashboard/DashboardLayout";
 import AdminViewAssessment from "./ui/pages/admin-view-assessment/AdminViewAssessment";
 import Assessment from "./ui/pages/assessment/Assessment.jsx";
 import UserAssessmentResult from "./ui/pages/user-assessment-result/UserAssessmentResult";
-import CsvUpload from "./ui/pages/csv/CsvUpload";
-import CsvUploading from "./ui/pages/csv/CsvUploading";
-import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
 import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
 import Dashboard from "./ui/pages/Dashboard";
 import AssessmentFirstPage from "./ui/pages/AssessmentFirstPage";
@@ -96,7 +92,6 @@ const App = () => {
             <Route path="/termsAndService" element={<Terms />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/comparison" element={<ComparisonPage />} />
-            <Route path="/assessment-list" element={<AssessmentList />} />
             <Route path="/admin-assessment" element={<AdminAssessmentList />} />
             <Route path="/market-comparison" element={<Market />} />
 
@@ -114,21 +109,10 @@ const App = () => {
               element={<GuestTakeAssessmentResult />}
             />
 
-            <Route path="/csv-uploading" element={<CsvUploading />} />
-
-            <Route
-              path="/csv-uploading-complete"
-              element={<CsvUploadComplete />}
-            />
-
             <Route path="/setting" element={<AdminSetting />} />
             <Route path="/privacy-policy" element={<Privacy />} />
             <Route path="/employee-profile" element={<EmployeeProfile />} />
-            {/* <Route path="/admin-csv-upload" element={<AdminCSVUpload />} /> */}
-            {/* <Route
-              path="/user-assessment-completed"
-              element={<UserAssessmentListCompleted />}
-            /> */}
+
           </Route>
 
           <Route element={<AdminAuthLayout />}>
@@ -188,7 +172,6 @@ const App = () => {
                   path="create-assessment"
                   element={<CreateAssessment />}
                 />
-                <Route path="admin-csv-upload" element={<AdminCSVUpload />} />
               </Route>
               <Route
                 path="/user-assessment-result"
