@@ -20,10 +20,6 @@ const AdminEmailVerified = () => {
       try {
         console.log(user_id, token);
         const response = await axios.get(`auth/verify/${user_id}/${token}`);
-
-        if (response.data.errorState === true) {
-          throw new Error();
-        }
       } catch (err) {
         if (!err?.response) {
           showErrorToast("No Server Response");
@@ -41,7 +37,7 @@ const AdminEmailVerified = () => {
     <>
       <ResponseContainer>
         {
-          isError ? (
+          isError === false ? (
             <>
               <img src={success} alt=" " />
               <AuthTitle
