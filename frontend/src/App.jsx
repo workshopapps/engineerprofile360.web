@@ -114,11 +114,6 @@ const App = () => {
               element={<GuestTakeAssessmentResult />}
             />
 
-            <Route
-              path="/admin-view-assessment"
-              element={<AdminViewAssessment />}
-            />
-
             <Route path="/csv-uploading" element={<CsvUploading />} />
 
             <Route
@@ -167,6 +162,10 @@ const App = () => {
             <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
               <Route path="/ui" element={"my guy"} />
               <Route path="/404" element={<Error />} />
+              <Route
+                path="/assessment/view-assessment"
+                element={<AdminViewAssessment />}
+              />
               <Route path="/departments" element={<DepartmentSection />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/employees" element={<Employees />}>
