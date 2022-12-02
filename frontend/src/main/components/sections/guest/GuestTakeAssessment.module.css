@@ -149,6 +149,23 @@
 
   }
 
+  .Filter_flex_score {
+    display: flex;
+    padding: 20px;
+    border: 1px solid;
+    justify-content: center;
+    text-align: center;
+
+  }
+
+  .Questions_Score {
+    display: flex;
+    width: 100%!important;
+    flex-direction: column;
+    margin:10px 0;
+  }
+
+
   
   /* Media queries */
   @media screen and (max-width: 767px) {

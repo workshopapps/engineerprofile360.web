@@ -2,9 +2,22 @@ import React from "react";
 import styles from "./GuestTakeAssessment.module.css";
 import GuestTakeAssessmentHeader from "./GuestTakeAssessmentHeader";
 import { QuestionData } from "./QuestionData";
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import axios from "../../../../api/axios";
+import { useNavigate } from "react-router-dom";
 
-export default function GuestTakeAssessment() {
+export default  function GuestTakeAssessment() {
+    useEffect(() => {
+        const fetchQuestion = async () => {
+           let res = await axios.get("question/assessment/2ea09b93-6682-11ed-9941-3863bbb7c6d/");
+           console.log(Object.keys(res.data.data).length);
+           console.log(res);
+           setCurrentPost(res.data.data);
+        };
+        fetchQuestion();
+     }, []);
+   
+     const [currentPost, setCurrentPost] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [questionsPerPage] = useState(5);
   const [inputValue, setInputValue] = useState([
@@ -12,17 +25,21 @@ export default function GuestTakeAssessment() {
       //answer: "",
     },
   ]);
-  const answer = inputValue;
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setInputValue(e.target.value);
+  let useAnswers = {};
+
+  const handleChange = (id,option) => {
+    /*setInputValue(e.target.value);*/
+    useAnswers[`${id}`]=option;
   };
+  
 
   const indexOfLastPost = currentPage * questionsPerPage;
   const indexOfFirstPost = indexOfLastPost - questionsPerPage;
-  const currentPost = QuestionData.slice(indexOfFirstPost, indexOfLastPost);
+  
+  //const currentPost = QuestionData.slice(indexOfFirstPost, indexOfLastPost);
 
-  //const paginate = (pageNums) => setCurrentPage(pageNums);
   const next = () => {
     if(currentPage  < Math.ceil(QuestionData.length / questionsPerPage)){
       setCurrentPage(currentPage+1)
@@ -46,23 +63,22 @@ export default function GuestTakeAssessment() {
         <div className={styles.Questions}>
           <form>
           {currentPost.map((assessment, i) => {
-            const { question, options } = assessment;
+            const { question_id, options, correct_answers,id } = assessment;
             return (
               <div className={styles.QuestionsWrapper} key={i}>
-                <p>{question}</p>
+                <p>{question_id}</p>
                   {options.map((query, i) => {
-                    const { option } = query;
                     return (
                       <div key={i}>
                         <input
                           type="radio"
-                          value={answer}
-                          name={question}
-                          onChange={(e) => {
-                            handleChange(e);
+                          value={i}
+                          name={question_id}
+                          onChange={() => {
+                            handleChange(id,i);
                           }}
                         />
-                        <label htmlFor={question}>{ option }</label>
+                        <label htmlFor={question_id}>{ query }</label>
             
                       </div>
                     );
@@ -80,10 +96,17 @@ export default function GuestTakeAssessment() {
               onClick={(e) => {
                 next()}} 
                 value="Next" />
-              <input
-                type="button"
-                className={styles.Button_submit}
-                value="Submit" />
+
+              {/* <Link to="/guest-take-assessment-result"> */}
+                <button type="button"
+                className={styles.Button_submit} 
+                onClick={()=>{
+                    localStorage.setItem("evalAssessment",JSON.stringify(useAnswers)) ;
+                    navigate("/guest-take-assessment-result");
+                }}>
+                     Submit 
+                     </button>
+                {/* </Link> */}
             </div>
           </form>
         </div>
