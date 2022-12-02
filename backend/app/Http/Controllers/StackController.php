@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 class StackController extends Controller
 {
 
-    public function addStack(StackRequest $request)
+    public function addStack(StackRequest $request): JsonResponse
     {
         try{
             $payload = json_decode($request->getContent(), true);
