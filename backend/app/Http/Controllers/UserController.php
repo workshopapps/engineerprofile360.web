@@ -19,20 +19,20 @@ class UserController extends Controller
         // $this->middleware('isloggedin');
     }
 
-    public function getUsers()
+    public function getCompanies()
     {
         try {
-            $users = User::select("id","user_id","full_name","email","role","isVerified","isAdmin","isBlocked","refToken")->paginate(10);
+            $companies = User::paginate(10);
 
             return $this->sendResponse(
                 false,
                 null,
-                'All users',
-                $users,
+                'All companies',
+                $companies,
                 Response::HTTP_OK
             );
         } catch (\Exception $e) {
-            return $this->sendResponse(true, 'Users not fetched', $e->getMessage(), null);
+            return $this->sendResponse(true, 'Companies not fetched', $e->getMessage());
         }
     }
 
@@ -113,17 +113,35 @@ class UserController extends Controller
         }
     }
 
-
-    public function blockUser(string $userId): JsonResponse
+    //Deactivate/block user(company)
+    public function deactivateCompany(string $userId): JsonResponse
     {
-        try {
-            $user = User::where('user_id', $userId)->first();
-            if (!$user) return $this->sendResponse(true, 'User does not exist', 'User not found', Response::HTTP_NOT_FOUND);
-            if ($user->isBlocked) return $this->sendResponse(true, 'User is already blocked', 'Blocked User', Response::HTTP_BAD_REQUEST);
-            $user->update(["isBlocked" => true]);
-            return $this->sendResponse(false, null, 'User blocked successfully', Response::HTTP_OK);
-        } catch (\Exception $e) {
-            return $this->sendResponse(true, 'Not Successful', $e->getMessage());
+        try{
+            $company = User::find($userId);
+
+            if (!$company) {
+                return $this->sendResponse(
+                    true, 
+                    'Company does not exist', 
+                    'Company not found', 
+                    Response::HTTP_NOT_FOUND);
+            }
+
+            if($company->isBlocked === true) {
+                return $this->sendResponse(
+                    true, 
+                    'Company is not activated', 
+                    'Company can not be activated', 
+                    Response::HTTP_NOT_FOUND);
+            }
+
+            $company->isBlocked = true;
+            $company->save();
+
+            return $this->sendResponse(false, null, 'Company deactivated successfully', Response::HTTP_OK);
+
+        }catch (\Exception $e) {
+            return $this->sendResponse(true, 'Company not deactivated successfully', $e->getMessage());
         }
     }
 
@@ -168,5 +186,17 @@ class UserController extends Controller
         } catch (\Exception $e) {
             return $this->sendResponse(true, 'User info not updated', $e->getMessage());
         }
+    }
+
+    public function getVerifiedUsers()
+    {
+        $verified_companies = UserService::allVerifiedUsers();
+        $verified_companies = $verified_companies->paginate(10);
+        return $this->sendResponse(
+            false, null, 
+            'Verified Companies',
+            $verified_companies, 
+            Response::HTTP_OK
+        );
     }
 }

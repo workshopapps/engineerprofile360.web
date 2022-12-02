@@ -70,7 +70,6 @@ function Hero() {
         <CRUDContainer>
           <Button
             onClick={() => {
-              console.log("love");
               setAddDept(true);
             }}
             w={"197px"}

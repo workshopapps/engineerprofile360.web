@@ -1,11 +1,9 @@
 import React from "react";
 import { Button, Title } from "../../../styles/reusableElements.styled";
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
 import styled from "styled-components";
-import { ReactComponent as Next } from "./assets/next.svg";
 import { ReactComponent as UserPhoto } from "./assets/user-photo.svg";
 import { ReactComponent as ChartData } from "./assets/chart.svg";
+import PageInfo from "../../components/molecules/PageInfo";
 
 const UserProfileData = [
   { title: "Name", value: "Sir Seyi Alameen" },
@@ -19,6 +17,12 @@ const ResultStats = [
   { title: "Prototyping And Flow 205", status: "Completed" },
   { title: "User experience on WebApp", status: "Completed" },
   { title: "User experience on Mobile", status: "Completed" },
+];
+
+const BreadCrumbList = [
+  { name: "Employees" },
+  { name: "Profiles" },
+  { name: "Sir Seyi Alameen" },
 ];
 
 const ResultStatCard = ({ name, status, bgColor }) => {
@@ -50,114 +54,71 @@ const UserCard = ({ name, value, color }) => {
 const UserAssessmentResult = () => {
   return (
     <>
-      <Header />
-      <MainContainer>
-        <SideBarContainer>
-          <Sidebar />
-        </SideBarContainer>
-        <UserAssessmentContainer>
-          <BreadCrumb>
-            <BreadCrumbPrevious>Employees</BreadCrumbPrevious>
-            <Next />
-            <BreadCrumbPrevious>Profile</BreadCrumbPrevious>
-            <Next />
-            <BreadCrumbActive>Sir Seyi Alameen</BreadCrumbActive>
-          </BreadCrumb>
-          <ProfileStatsCard>
-            <UserPhotoContainer>
-              <UserPhoto />
-            </UserPhotoContainer>
-            {UserProfileData
-              ? UserProfileData.map((item, key) => (
-                  <UserCard
-                    key={key}
-                    name={item.title}
-                    value={item.value}
-                    color={item.color}
-                  />
-                ))
-              : ""}
-          </ProfileStatsCard>
-          <ChartContainer>
-            <Chart>
-              <ChartData />
-            </Chart>
-            <Result>
-              <Title
-                as="h5"
-                $weight="600"
-                $lHeight="28px"
-                $color="#605e5c"
-                $size="20px"
-              >
-                Assessment Result
-              </Title>
-              <ResultStatsContainer>
-                {ResultStats
-                  ? ResultStats.map((item, key) => (
-                      <ResultStatCard
-                        key={key}
-                        name={item.title}
-                        status={item.status}
-                        bgColor={item.bgColor}
-                      />
-                    ))
-                  : ""}
-              </ResultStatsContainer>
-            </Result>
-          </ChartContainer>
-          <ButtonContainer>
-            <Button
-              style={{ backgroundColor: "#fff", border: "1px solid #2667FF" }}
-              $color="#2667FF"
+      <PageInfo
+        pageTitle="User Assessment Result"
+        breadcrumb={BreadCrumbList.map((item, key) => (
+          <React.Fragment key={key}>{item.name}</React.Fragment>
+        ))}
+      />
+      <UserAssessmentContainer>
+        <ProfileStatsCard>
+          <UserPhotoContainer>
+            <UserPhoto />
+          </UserPhotoContainer>
+          {UserProfileData
+            ? UserProfileData.map((item, key) => (
+                <UserCard
+                  key={key}
+                  name={item.title}
+                  value={item.value}
+                  color={item.color}
+                />
+              ))
+            : ""}
+        </ProfileStatsCard>
+        <ChartContainer>
+          <Chart>
+            <ChartData />
+          </Chart>
+          <Result>
+            <Title
+              as="h5"
+              $weight="600"
+              $lHeight="28px"
+              $color="#605e5c"
+              $size="20px"
             >
-              Recommend Staff for Promotion
-            </Button>
-            <Button>View Full Profile</Button>
-          </ButtonContainer>
-        </UserAssessmentContainer>
-      </MainContainer>
+              Assessment Result
+            </Title>
+            <ResultStatsContainer>
+              {ResultStats
+                ? ResultStats.map((item, key) => (
+                    <ResultStatCard
+                      key={key}
+                      name={item.title}
+                      status={item.status}
+                      bgColor={item.bgColor}
+                    />
+                  ))
+                : ""}
+            </ResultStatsContainer>
+          </Result>
+        </ChartContainer>
+        <ButtonContainer>
+          <Button
+            style={{ backgroundColor: "#fff", border: "1px solid #2667FF" }}
+            $color="#2667FF"
+          >
+            Recommend Staff for Promotion
+          </Button>
+          <Button>View Full Profile</Button>
+        </ButtonContainer>
+      </UserAssessmentContainer>
     </>
   );
 };
 
 export default UserAssessmentResult;
-
-const MainContainer = styled.div`
-  display: grid;
-  grid-template-columns: 220px auto;
-
-  ${({ theme }) => theme.breakpoints.down("md")} {
-    grid-template-columns: auto;
-  }
-`;
-
-const SideBarContainer = styled.div`
-  display: block;
-  margin-top: -85px;
-  ${({ theme }) => theme.breakpoints.down("md")} {
-    display: none;
-  }
-`;
-
-const BreadCrumb = styled.section`
-  display: flex;
-  gap: 13px;
-  margin-top: 40px;
-  font-size: 18px;
-  line-height: 24px;
-  align-items: center;
-  justify-items: center;
-`;
-
-const BreadCrumbPrevious = styled.h5`
-  color: #605e5c;
-`;
-
-const BreadCrumbActive = styled.h5`
-  font-weight: 600;
-  color: #323130;
-`;
 
 const UserAssessmentContainer = styled.div`
   padding: 0px 9px;
@@ -170,8 +131,8 @@ const ProfileStatsCard = styled.div`
   border: 2px solid #edebe9;
   border-radius: 8px;
   padding: 19px 20px;
-  margin-top: 38px;
   gap: 30px;
+
   ${({ theme }) => theme.breakpoints.down("md")} {
     flex-direction: column;
     justify-content: center;

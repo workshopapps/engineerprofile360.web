@@ -27,14 +27,17 @@ const UiLayout = () => {
         // console.log(auth.id);
         const response = await axios.get(`user/${auth.id}`);
         setIsLoading(false);
+
         // console.log(response);
 
         const username = response?.data?.data.username;
         const fullName = response?.data?.data.full_name;
 
         setAuth({
-          ...auth, username, fullName
-        })
+          ...auth,
+          username,
+          fullName,
+        });
         console.log(auth);
       } catch (err) {
         if (!err?.response) {

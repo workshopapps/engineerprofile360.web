@@ -28,11 +28,17 @@ export const Title = styled.h1`
 export const Button = styled.button`
   min-width: ${(props) => (props.$size === "xl" ? "100%" : "77px")};
   min-height: 44px;
-  max-width: 288px;
+  max-width: ${(props) => props.$maxWidth ? props.$maxWidth : "288px"};
   height: ${(props) =>
     props.$size === "md" ? "48px" : props.$size === "lg" ? "80px" : "auto"};
   width: ${(props) =>
-    props.$size === "md" ? "201px" : props.$size === "lg" ? "280px" : "auto"};
+    props.$size === "md"
+      ? "201px"
+      : props.$size === "lg"
+      ? "280px"
+      : props.fullWidth
+      ? "100%"
+      : "auto"};
   font-size: ${(props) =>
     props.$size === "md" ? "14px" : props.$size === "lg" ? "20px" : "auto"};
   display: flex;
@@ -44,6 +50,7 @@ export const Button = styled.button`
     ${({ theme }) => theme.spacing(2.5)};
   cursor: pointer;
   outline: none;
+  font-weight: ${(props) => (props.$weight ? props.$weight : "")};
 
   ${(props) => {
     switch (props.$variant) {
@@ -81,8 +88,8 @@ export const Button = styled.button`
 `;
 
 export const Loader = styled.div`
-  border: 10px solid #106ebe;
-  border-top: 10px solid lightblue;
+  border: 8px solid #106ebe;
+  border-top: 8px solid lightblue;
   border-radius: 50%;
   height: 60px;
   width: 60px;

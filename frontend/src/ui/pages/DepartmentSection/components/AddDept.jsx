@@ -19,8 +19,10 @@ function AddDept({ formData, setFormData, setAddDept }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    // Axios.post(`http://104.225.216.199:8000/api/department/add`, formData)
+    // console.log(departmentName);
+    // Axios.post(`http://104.225.216.199:8000/api/department/add`, {
+    //   name: departmentName,
+    // })
     //   .then((res) => {
     //     console.log(res);
     //   })

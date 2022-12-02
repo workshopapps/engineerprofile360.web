@@ -1,212 +1,34 @@
 import React, { useState } from "react";
+
+import { Link } from "react-router-dom";
+
 import Flex from "../components/layout/Flex";
 import Grid, { GridItem } from "../components/layout/Grid";
-import logo from "../../assets/icons/app/logo.svg";
-import notif from "../../assets/icons/app/notification.svg";
-import down from "../../assets/icons/arrow-down.svg";
-import down_alt from "../../assets/icons/app/down.svg";
-import right from "../../assets/icons/app/arrow-right.svg";
-import icon from "../../assets/icons/app/search-alt.svg";
 import sophie from "../../assets/images/sophie.svg";
 import chart from "../../assets/images/app/chart.svg";
 import dots from "../../assets/icons/app/dots-alt.svg";
-import dashboard from "../../assets/icons/app/dashboard.svg";
-import assessment from "../../assets/icons/app/assessment-active.svg";
-import user from "../../assets/icons/app/user-alt.svg";
-import profile from "../../assets/icons/app/profile.svg";
-import settings from "../../assets/icons/app/settings.svg";
-import logout from "../../assets/icons/app/logout.svg";
-import avatar from "../../assets/icons/app/avatar.svg";
 import plus from "../../assets/icons/app/plus.svg";
 import "../../styles/assessmentfirstpage.css";
-
-const DropdownItem = (props) => {
-  return (
-    <li className="dropdownItem">
-      <Flex spacing={20}>
-        <img src={props.img} alt="" />
-        <p className="regular ">{props.text}</p>
-      </Flex>
-    </li>
-  );
-};
-
-const DropDown = (props) => {
-  const [open, setOpen] = useState(false);
-
-  const handleDropdown = () => {
-    return setOpen(!open);
-  };
-
-  return (
-    <div>
-      <div className="menu container">
-        <div className="menu-trigger" onClick={handleDropdown}>
-          <img src={down} />
-        </div>
-        {open && (
-          <div
-            className=""
-            style={{
-              position: "absolute",
-              right: "15px",
-              top: "40px",
-              background: "#FAF9F8",
-              borderRadius: "8px",
-              zIndex: "2",
-            }}
-          >
-            <ul>
-              <DropdownItem text={"Profile"} img={profile} />
-              <DropdownItem text={"Settings"} img={settings} />
-              <DropdownItem text={"Logout"} img={logout} />
-            </ul>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-const Header = () => {
-  return (
-    <div className="hide">
-      <Flex
-        style={{
-          padding: "24px 24px 24px 56px",
-          borderBottom: "2px solid #EDEBE9",
-        }}
-        spacing={84}
-      >
-        <Grid
-          span={12}
-          style={{ width: "100%", alignItems: "center" }}
-          className=""
-        >
-          <GridItem span={2}>
-            <Flex ai="center" className="" style={{ height: "100%" }}>
-              <img src={logo} alt="" />
-            </Flex>
-          </GridItem>
-          <GridItem span={7}>
-            <Flex
-              style={{ flexBasis: "60%", position: "relative" }}
-              className=""
-            >
-              <span
-                style={{
-                  position: "absolute",
-                  bottom: "15px",
-                  left: "15px",
-                  zIndex: "2",
-                }}
-              >
-                <img src={icon} alt="" />
-              </span>
-              <input
-                style={{
-                  padding: "18px 18px 18px 50px",
-                  width: "100%",
-                  height: "auto",
-                  border: "2px solid #8A8886",
-                  borderRadius: "8px",
-                }}
-                placeholder="Search"
-              />
-            </Flex>
-          </GridItem>
-          <GridItem span={1} />
-          <GridItem
-            span={2}
-            className=""
-            style={{
-              padding: "10px 26px",
-              background: "#FAF9F8",
-              opacity: "0.8",
-              borderRadius: "8px",
-              flexBasis: "30%",
-            }}
-          >
-            <Flex spacing={12} ai="center">
-              <div style={{ flexBasis: "10%" }}>
-                <img src={avatar} />
-              </div>
-              <Flex style={{ flexBasis: "70%" }} jc="center">
-                <p className="semibold-alt">Mark Jilaga</p>
-              </Flex>
-
-              <div
-                style={{
-                  width: "2px",
-                  height: "24px",
-                  borderRadius: "2px",
-                  background: "#EDEBE9",
-                }}
-              ></div>
-              <Flex spacing={10} style={{ width: "100%" }}>
-                <img src={notif} />
-                <DropDown />
-              </Flex>
-            </Flex>
-          </GridItem>
-        </Grid>
-      </Flex>
-    </div>
-  );
-};
-
-const HeaderMobile = () => {
-  return (
-    <div className="show">
-      <Flex jc="space-between" style={{ padding: "16px" }}>
-        <img src={logo} alt="" />
-        <img src={dots} />
-      </Flex>
-    </div>
-  );
-};
-
-const Sidebar = () => {
-  return (
-    <div style={{ flexBasis: "10%", padding: "29px 24px" }} className="hide">
-      <Flex stack spacing={24}>
-        <Flex spacing={18} ai="center" style={{ padding: "16px 20px" }}>
-          <img src={dashboard} />
-          <p className="semibold-alt">Dashboard</p>
-        </Flex>
-        <Flex
-          spacing={18}
-          ai="center"
-          className="bg-primary-tint"
-          style={{ padding: "16px 20px", borderRadius: "4px" }}
-        >
-          <img src={assessment} />
-          <p className=" primary semibold-alt">Assessment</p>
-        </Flex>
-
-        <Flex spacing={18} ai="center" style={{ padding: "16px 20px" }}>
-          <img src={user} />
-          <p className="semibold-alt">Employees</p>
-        </Flex>
-      </Flex>
-    </div>
-  );
-};
+import PageInfo from "../components/molecules/PageInfo";
 
 const Heading = () => {
   return (
     <Flex jc="space-between" className="" ai="center">
-      <h2>Assessments</h2>
+      <h2 className="headingtext">Assessments</h2>
       <div className="button-container">
-        <button className="bg-primary create-button">
+        <Link
+          to="/assessment/create-assessment"
+          className="bg-primary create-button"
+        >
           <Flex spacing={10} ai="center">
             <img src={plus} alt="" />
             <div className="hide">
               <p className="white">Create New Assessment</p>
             </div>
           </Flex>
-        </button>
-        <button
+        </Link>
+        <Link
+          to="/assessment/view-assessment"
           style={{
             border: "2px solid #2667FF",
           }}
@@ -214,7 +36,7 @@ const Heading = () => {
         >
           <p className="primary semibold-alt hide">View Assessments</p>
           <p className="primary semibold-alt show">View </p>
-        </button>
+        </Link>
       </div>
     </Flex>
   );
@@ -223,14 +45,23 @@ const Heading = () => {
 const Card = (props) => {
   return (
     <Flex
-      style={{ padding: "70px", zIndex: "1" }}
+      style={{
+        padding: "70px",
+        height: "160px",
+        border: "1px solid #C7E0F4",
+        borderRadius: "5px",
+      }}
       jc="center"
       ai="center"
-      className="bg-primary-tint"
+      className="bg-primary-tint bordered"
     >
       <Flex stack spacing={16} style={{ textAlign: "center" }}>
-        <p>{props.text}</p>
-        <h1 style={{ color: "#323130" }}>{props.num}</h1>
+        <p style={{ whiteSpace: "nowrap" }} className="cardtext">
+          {props.text}
+        </p>
+        <h1 style={{ color: "#323130" }} className="numtext">
+          {props.num}
+        </h1>
       </Flex>
     </Flex>
   );
@@ -336,7 +167,7 @@ const TopPerformance = () => {
 
 const Assessments = () => {
   return (
-    <Flex stack style={{ width: "100%" }} spacing={58} className="page-padding">
+    <Flex stack style={{ width: "100%" }} spacing={58}>
       <Heading />
       <Grid span={12} className>
         <GridItem span={4} md={12}>
@@ -369,12 +200,8 @@ const Assessments = () => {
 const AssessmentFirstPage = () => {
   return (
     <div>
-      <HeaderMobile />
-      <Header />
-      <Flex>
-        <Sidebar />
-        <Assessments />
-      </Flex>
+      <PageInfo breadcrumb={["Dashboard", "Performance"]} />
+      <Assessments />
     </div>
   );
 };
