@@ -7,14 +7,14 @@ import hamburger from "../../../assets/icons/app/hamburger.svg";
 import { Link } from "react-router-dom";
 import PageInfo from "../../components/molecules/PageInfo";
 import Flex from "../../components/layout/Flex";
-import { Button } from "../../../styles/reusableElements.styled";
+import { Button, Loader } from "../../../styles/reusableElements.styled";
 import axios from "../../../api/axios";
 import useAuth from "../../../hooks/useAuth";
 
 const DataContext = createContext(null);
 
 const fetchAvailable = () => {
-  return axios("/user-assessment/org/{organisation_id}/org-available");
+  return axios("/user-assessment/org/org-available");
 };
 
 const info = [
@@ -77,38 +77,45 @@ const info = [
 ];
 
 const Sort = () => {
-  const { data, setData, order, setOrder, auth } = useContext(DataContext);
+  const {
+    assessmentInfo,
+    setAssessmentInfo,
+    available,
+    setAvailable,
+    order,
+    setOrder,
+    auth,
+  } = useContext(DataContext);
   const sorting = () => {
     if (order === "asc") {
-      const sorted = [...data].sort((a, b) =>
+      const sorted = [...available.data].sort((a, b) =>
         a.dept.toLowerCase() > b.dept.toLowerCase() ? 1 : -1
       );
-      setData(sorted);
+      setAssessmentInfo(sorted);
       setOrder("dsc");
     }
     if (order === "dsc") {
-      const sorted = [...data].sort((a, b) =>
+      const sorted = [...available.data].sort((a, b) =>
         a.dept.toLowerCase() < b.dept.toLowerCase() ? 1 : -1
       );
-      setData(sorted);
+      setAssessmentInfo(sorted);
       setOrder("asc");
-      console.log(useAuth);
     }
   };
 
   const dateSort = () => {
     if (order === "asc") {
-      const sortedDate = [...data].sort((a, b) =>
+      const sortedDate = [...available.data].sort((a, b) =>
         new Date(b.date) > new Date(a.date) ? 1 : -1
       );
-      setData(sortedDate);
+      setAssessmentInfo(sortedDate);
       setOrder("dsc");
     }
     if (order === "dsc") {
-      const sortedDate = [...data].sort((a, b) =>
+      const sortedDate = [...available.data].sort((a, b) =>
         new Date(b.date) < new Date(a.date) ? 1 : -1
       );
-      setData(sortedDate);
+      setAssessmentInfo(sortedDate);
       setOrder("asc");
     }
   };
@@ -154,22 +161,37 @@ const Sort = () => {
 };
 
 const List = () => {
-  const { data, available, setAvailable, setIsLoading } =
+  const { available, setAvailable, isLoading, setIsLoading } =
     useContext(DataContext);
   useEffect(() => {
     fetchAvailable()
       .then(({ data }) => {
         setAvailable(data);
+        // console.log(data);
       })
       .catch((error) => {
         console.log(error);
       })
       .finally(() => {
         setIsLoading(false);
+        console.log();
       });
   }, []);
-  return (
-    <AssessmentListings>
+  const renderContent = () => {
+    if (isLoading) {
+      return (
+        <Flex jc="center">
+          <Loader />
+        </Flex>
+      );
+    } else if (available.data.length === 0) {
+      return (
+        <Text>
+          Oops this user has no assessments available, come back later
+        </Text>
+      );
+    }
+    return (
       <table>
         <tbody>
           <tr>
@@ -180,7 +202,7 @@ const List = () => {
             <th>Deadline</th>
             <th>{""}</th>
           </tr>
-          {data.map((d, idx) => {
+          {[available.data].map((d, idx) => {
             return (
               <tr key={idx}>
                 <td>{idx + 1}</td>
@@ -198,8 +220,10 @@ const List = () => {
           })}
         </tbody>
       </table>
-    </AssessmentListings>
-  );
+    );
+  };
+
+  return <AssessmentListings>{renderContent()}</AssessmentListings>;
 };
 
 const TableSection = () => {
@@ -225,7 +249,7 @@ const Assessment = () => {
         <Flex spacing={24} ai="flex-end">
           <Link to="/user-assessment-list">
             <Text $color="#2667FF" $weight="600">
-              Available (60)
+              {`Available (${"0"})`}
             </Text>
           </Link>
           <Link to="/user-assessment-list/completed">
@@ -241,7 +265,7 @@ const Assessment = () => {
 
 const UserAssessmentListAvailable = () => {
   const auth = useAuth(useAuth);
-  const [data, setData] = useState(info);
+  const [assessmentInfo, setAssessmentInfo] = useState(info);
   const [order, setOrder] = useState("asc");
   const [available, setAvailable] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -263,8 +287,8 @@ const UserAssessmentListAvailable = () => {
     <div>
       <DataContext.Provider
         value={{
-          data,
-          setData,
+          assessmentInfo,
+          setAssessmentInfo,
           order,
           setOrder,
           isLoading,
