@@ -28,8 +28,8 @@ class StackController extends Controller
                 return $this->sendResponse(true, "This stack already exists", "Duplicate stack name.",
                     null, 404);
             }
-                Stack::create($data);
-                return $this->sendResponse(false, null, $data['name'], Response::HTTP_CREATED);
+            $return_message = Stack::create($data);
+                return $this->sendResponse(false, null, $return_message, Response::HTTP_CREATED);
 
 
         } catch (\Exception $e) {
