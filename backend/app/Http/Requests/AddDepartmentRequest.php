@@ -24,8 +24,7 @@ class AddDepartmentRequest extends BaseRequest
     public function rules()
     {
         return [
-            "name" => 'required',
-            "org_id" => 'required',
+            "name" => 'required'
         ];
     }
 }
