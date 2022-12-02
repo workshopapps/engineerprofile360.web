@@ -222,4 +222,126 @@ class AssessmentController extends Controller
 
         }
     }
+
+
+    public function adminCreateAssessment(Request $request)
+    {
+        try{
+            $payload = json_decode($request->getContent(), true);
+    
+            
+            if(!isset($payload["name"]) || !isset($payload["start_date"]) || !isset($payload["start_time"])){
+                return $this->sendResponse(true, "expected a valid payload", "invalid payload given.", null, 400);
+            }
+            
+            $uid = $request->user["id"];
+            $id = Str::uuid();
+            $name = $payload["name"];
+            $start_date = $payload["start_date"];
+            $start_time = $payload["start_time"];
+            
+            $restAssessment = Assessment::where("name", $name);
+
+            if($restAssessment->count() > 0){
+                return $this->sendResponse(true, "assessment name already exists", "name already exists.", null, 400);
+            }
+
+            // category data
+            $data = [
+                "id"=> $id,
+                "name"=>$name,
+                "start_date"=> $start_date,
+                "start_time"=> $start_time,
+                "org_id"=> $uid
+            ];
+
+            Assessment::create($data);
+
+            return $this->sendResponse(false,null, "assessment created.", $data, 200);
+        }  catch (\Exception $e) {
+            return $this->sendResponse(true,'something went wrong creating assessment', $e->getMessage(), null, 500);
+        }
+    }
+
+    public function adminUpdateAssessment(Request $request, $assessmentId)
+    {
+        try{
+            $payload = json_decode($request->getContent(), true);
+
+            if(!isset($payload["name"]) || !isset($payload["start_date"]) || !isset($payload["start_time"])){
+                return $this->sendResponse(true, "expected a valid payload", "invalid payload given.", null, 400);
+            }
+
+            if(!isset($assessmentId) || empty($assessmentId)){
+                return $this->sendResponse(true, "expected a valid category 'id'  but got none", "category id is missing.", null, 400);
+            }
+
+
+            $uid = $request->user["id"];
+            $updatedName = $payload["name"];
+            $startDate = $payload["start_date"];
+            $startTime = $payload["start_time"];
+            $assessment = Assessment::where('id',$assessmentId)->where("org_id", $uid);
+
+            if($assessment->count() == 0 ) {
+                return $this->sendResponse(true, "assessment doesnt exists", "assessment not found.", null, 404);
+            }
+
+            // check if it same user who's trying to update assessment
+            $org_id = $assessment->first()["org_id"];
+
+            if($org_id !== $uid){
+                return $this->sendResponse(true, "not authorised to update assessment", "unauthorised.", null, 401);
+            }
+
+            $newName = $updatedName == "" ? $assessment->first()["name"] : $updatedName;
+            $newDate = $startDate == "" ? $assessment->first()["start_date"] : $startDate;
+            $newTime = $startTime == "" ? $assessment->first()["start_time"] : $startTime;
+
+            $updatedData = [
+                "name"=>$newName,
+                "start_date"=>$newDate,
+                "start_time"=>$newTime,
+            ];
+
+            $assessment->update($updatedData);
+
+            return $this->sendResponse(false, null, 'assessment updated successfully', $updatedName, Response::HTTP_OK);
+        }  catch (Exception $e) {
+            return $this->sendResponse(true,"something went wrong updating assessment ".$e->getMessage(),'failed updating assessment.',null,500);
+        }
+
+    }
+
+    public function adminDeleteAssessment(Request $request, $assessmentId): JsonResponse
+    {
+        try{
+            if(!isset($assessmentId) || empty($assessmentId)){
+                return $this->sendResponse(true, "expected a valid assessment 'id'  but got none", "assessment id is missing.", null, 400);
+            }
+
+
+            $uid = $request->user["id"];
+            $assessment = Assessment::where('id',$assessmentId)->where("org_id", $uid);
+
+            if($assessment->count() == 0 ) {
+                return $this->sendResponse(true, "assessment doesnt exists", "assessment not found.", null, 404);
+            }
+
+            // check if it same user who's trying to delete assessment
+            $org_id = $assessment->first()["org_id"];
+
+            if($org_id !== $uid){
+                return $this->sendResponse(true, "not authorised to delete assessment", "unauthorised.", null, 401);
+            }
+
+
+            $assessment->delete();
+
+            return $this->sendResponse(false, null, 'assessment deleted successfully', null, Response::HTTP_OK);
+        }  catch (Exception $e) {
+            return $this->sendResponse(true,"something went wrong deleting assessment ".$e->getMessage(),'failed deleting assessment.',null,500);
+        }
+
+    }
 }
