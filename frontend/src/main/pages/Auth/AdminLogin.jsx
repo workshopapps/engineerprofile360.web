@@ -87,6 +87,10 @@ const AdminLogin = () => {
         // console.log(response);
 
         setAuth({ email, password, accessToken, roles, id });
+        localStorage.setItem(
+          "EvalOrg",
+          JSON.stringify({ email, password, accessToken, roles, id })
+        );
         console.log(response.data);
         if (response.data.errorState === false) {
           // Clear input fields
