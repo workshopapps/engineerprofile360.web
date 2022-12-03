@@ -33,6 +33,7 @@ const Dashboard = () => {
         });
 
         setIsLoading(false);
+        
 
         const employees = response[1]?.data.data.data.length;
         const assessments = response[2]?.data.data.length;

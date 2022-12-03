@@ -66,7 +66,7 @@ import MainAssessment from "./ui/pages/Assessment";
 import UserAssessmentListAvailable from "./ui/pages/user-assessment-list/UserAssessmentListAvailable";
 import CompletedUserAssessments from "./ui/pages/user-assessment-list/UserAssessmentListCompleted";
 import UserAssessmentListOutlet from "./ui/pages/user-assessment-list/UserAssessmentListOutlet";
-import EmployeeUserDashboard from "./ui/pages/Employee/EmployeeUserDashboard";
+import EmployeeUserDashboard from "./ui/pages/Employee/EmployeeDashboard";
 import Error from "./ui/pages/404";
 import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
 import GuestEmail from "./main/pages/GuestEmail";
