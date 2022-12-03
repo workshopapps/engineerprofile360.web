@@ -95,7 +95,7 @@ export default function GuestTakeAssessmentResult() {
             <div className={styles.Filter_Next_Submit}>
              {<Prev />}
               {<Next />}
-              <Link to="/guest-take-assessment-complete">
+              <Link to="/guest-email">
               <button type="button"
                 className={styles.Button_submit} >
                      Done 

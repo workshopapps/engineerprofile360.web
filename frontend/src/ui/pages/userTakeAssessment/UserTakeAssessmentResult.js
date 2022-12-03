@@ -93,7 +93,7 @@ export default function UserTakeAssessmentResult() {
             <div className={styles.Filter_Next_Submit}>
              {<Prev />}
               {<Next />}
-              <Link to="/assessment">
+              <Link to="/user-assessment-result">
               <button type="button"
                 className={styles.Button_submit} >
                      Done 
