@@ -156,8 +156,9 @@ const EmployeeUserDashboardLayout = () => {
   React.useEffect(() => {
     const getAvailableAssessment = async () => {
       try {
-        const response = await axios.get(`assessment/${auth.id}`);
+        const response = await axios.get(`user-assessment/${auth.id}`);
         setAvailableAssessment(response.data);
+        console.log("====>Assessment", availableAssessment);
         setIsAvailableAssessmentLoading(false);
       } catch (err) {
         if (!err?.response) {
@@ -172,7 +173,7 @@ const EmployeeUserDashboardLayout = () => {
   }, [auth, availableAssessment]);
 
   return (
-    <>
+    <MainSection>
       <StatsContainer>
         <SkillSection>
           <Title
@@ -304,39 +305,46 @@ const EmployeeUserDashboardLayout = () => {
             </tr>
           </thead>
           <tbody>
-            {isAvailableAssessmentLoading
-              ? "Loading"
-              : AssessmentList
-              ? AssessmentList.map((item, key) => (
-                  <tr key={key}>
-                    <td>{item.id}</td>
-                    <td>{item.department}</td>
-                    <td>{item.course}</td>
-                    <td>{item.grade}</td>
-                    <td
-                      style={{
-                        display: "flex",
-                        gap: "20px",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Link to={item.result}>
-                        <Button $color="#2667FF">View Result</Button>
-                      </Link>
-                      <ThreeDots />
-                    </td>
-                  </tr>
-                ))
-              : ""}
+            {
+              // isAvailableAssessmentLoading
+              //   ? []
+              //   :
+              AssessmentList
+                ? AssessmentList.map((item, key) => (
+                    <tr key={key}>
+                      <td>{item.id}</td>
+                      <td>{item.department}</td>
+                      <td>{item.course}</td>
+                      <td>{item.grade}</td>
+                      <td
+                        style={{
+                          display: "flex",
+                          gap: "20px",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Link to={item.result}>
+                          <Button $color="#2667FF">View Result</Button>
+                        </Link>
+                        <ThreeDots />
+                      </td>
+                    </tr>
+                  ))
+                : []
+            }
           </tbody>
         </table>
       </TableContainer>
-    </>
+    </MainSection>
   );
 };
 
 export default EmployeeUserDashboardLayout;
+
+const MainSection = styled.div`
+  overflow: hidden;
+`;
 
 const StatsContainer = styled.div`
   display: flex;
@@ -457,6 +465,7 @@ const SortFilter = styled.div`
 
 const TableContainer = styled.div`
   width: 100%;
+  min-height: 200px;
   margin-top: 24px;
   ${({ theme }) => theme.breakpoints.down("md")} {
     overflow-x: auto;
