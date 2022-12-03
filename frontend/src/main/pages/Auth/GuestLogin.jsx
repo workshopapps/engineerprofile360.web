@@ -11,6 +11,8 @@ import useInputValidation from "../../../hooks/useInputValidation";
 import useAuth from "../../../hooks/useAuth";
 import axios from "../../../api/axios";
 
+// import axios from "axios";
+
 import editSvg from "../../../assets/icons/edit-2.svg";
 import arrowDown from "../../../assets/icons/arrow-down-filled.svg";
 import smsSvg from "../../../assets/icons/smsenvelope.svg";
@@ -18,12 +20,18 @@ import { Loader } from "../../../styles/reusableElements.styled";
 
 const GuestLogin = () => {
   const { setAuth, persist, setPersist } = useAuth();
-  const selectField = useRef()
+  const selectField = useRef();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/dashboard";
 
   const [isSubmitted, setIsSubmitted] = useState("");
+
+  const [errorMessage, setErrorMessage] = useState("Please fill all fields correctly")
+
+  let [stacks, setStacks] = useState([]);
+
+  const errorField = useRef()
 
   const {
     formData,
@@ -50,75 +58,71 @@ const GuestLogin = () => {
     setPersist((prev) => !prev);
   };
 
+  const handleStacks = (items) => {
+    setStacks(items)
+  }
   useEffect(() => {
-    localStorage.setItem("persist", persist);
-  }, [persist]);
+    // localStorage.setItem("persist", persist);
+    const guest = JSON.parse(localStorage.getItem("guest"))
+    if (guest) {
+      navigate("/guest-assessment-list")
+    }
+      axios
+      .get("https://api.eval360.hng.tech/api/stack/all")
+      .then((response) => {
+        handleStacks(JSON.parse(response.data.message))
+      })
+      .catch((error) => console.log(error));
+    
+  });
 
   const { fname, email, stack } = formData;
 
   const handleSubmit = async (e, formData) => {
     e.preventDefault();
-    console.log(formData)
+    const { fname, email, stack } = formData;
+    const nameIsValid = fname.length !== 0
+    const emailIsValid = email.length !== 0
+    const stackIsValid = stack.length!== 0
 
-    try {
-      validation(formData);
-      if (Object.keys(errors).length > 0) {
-        setTouched({
-          fname: true,
-          email: true,
-          stack: true,
-        });
+    validation(formData);
+
+    const formIsValid = nameIsValid && emailIsValid && stackIsValid && persist
+    if (!formIsValid) {
+      errorField.current.classList.add("show")
+      setTimeout(() => {
+        errorField.current.classList.remove("show")
+      }, 3000)
+
+      if(!stackIsValid && nameIsValid && emailIsValid) {
+        setErrorMessage("You must select a stack to continue")
+        selectField.current.classList.add("error")
+        setTimeout(() => {
+          selectField.current.classList.remove("error")
+        }, 3000)
       }
 
-      if (Object.keys(errors).length === 0) {
-        setTouched({
-          fname: false,
-          email: false,
-          stack: false,
-        });
-
-        setIsSubmitted(true);
-
-        const { fname, email, stack } = formData;
-        const response = await axios.post(
-          "auth/organization/login",
-          JSON.stringify({ fname, email, stack })
-        );
-
-        const accessToken = response?.data?.data.accessToken;
-        const roles = response?.data?.data.role;
-        const id = response?.data?.data.id;
-
-        setAuth({ fname, email, stack, accessToken, roles, id });
-
-        if (response.data.errorState === false) {
-          // Clear input fields
-          setFormData({
-            fname: "",
-            email: "",
-            stack: "",
-          });
-
-          navigate(from, { replace: true });
-        }
+      else if(!persist && nameIsValid && emailIsValid && stackIsValid) {
+        setErrorMessage("You must agree to the terms and conditions to continue")
       }
-    } catch (err) {
-      setIsSubmitted(false);
-      if (!err?.response) {
-        showErrorToast("No Server Response");
-      } else if (err.response?.data.errorState === true) {
-        showErrorToast(err.response.data.message);
-        setIsSubmitted(false);
+
+      else {
+
       }
+      
+    } 
+    else {
+      localStorage.setItem("guest", JSON.stringify({fullName: fname, email, stack}))
+      navigate("/guest-assessment-list")
     }
   };
-
 
   return (
     <>
       <FormContainer>
         <ToastContainer />
         <AuthTitle title="Get Started" text="Let's get you started" />
+        <FormError ref={errorField}>{errorMessage}</FormError>
         <LoginForm onSubmit={(e) => handleSubmit(e, formData)}>
           <InputField
             $size="md"
@@ -152,10 +156,10 @@ const GuestLogin = () => {
           />
           <SelectField
             endIcon={arrowDown}
-            options={["Full Stack Developer", "Designer"]}
+            options={stacks}
             stack={stack}
             selectField={selectField}
-            selectChanged = {changeInputValue}
+            selectChanged={changeInputValue}
             error={errors && errors.stack?.length > 0}
           />
           <Checkbox>
@@ -185,22 +189,49 @@ const GuestLogin = () => {
 
 export default GuestLogin;
 
-
-
-const SelectField = ({ options, endIcon, selectField, selectChanged, error }) => {
+const SelectField = ({
+  options,
+  endIcon,
+  selectField,
+  selectChanged,
+  error,
+}) => {
   return (
     <SelectDiv>
       <label>Select Stack</label>
       <img src={endIcon} />
-      <Select error={error} id="stack" ref={selectField} onChange={(e) => selectChanged(e)}>
-        <option value="" selected disabled hidden>------- Choose A Stack -------</option>
+      <Select
+        error={error}
+        id="stack"
+        ref={selectField}
+        onChange={(e) => selectChanged(e)}
+        defaultValue={'DEFAULT'} 
+      >
+        <option value="DEFAULT" disabled hidden>
+          ------- Choose A Stack -------
+        </option>
         {options &&
-          options.map((option, index) => <option value={option} key={index}>{option}</option>)}
-        <img src={endIcon} />
+          options.map((option, index) => (
+            <option value={option.id} key={index}>
+              {option.name}
+            </option>
+          ))}
       </Select>
     </SelectDiv>
   );
 };
+
+const FormError = styled.p`
+margin-bottom: 10px;
+color: #A80000;
+display: none;
+
+&.show {
+  display: block;
+}
+
+`
+
 
 
 const Select = styled.select`
@@ -212,18 +243,16 @@ const Select = styled.select`
   padding: 16px;
   background: ${(props) =>
     props.$background === true ? "rgba(255, 255, 255, 0.0001)" : "none"};
-  border: 1px solid
-  ${({ error }) =>
-      error === true
-        ? "red"
-        : "#605e5c"};
+  border: 1px solid ${({ error }) => (error === true ? "red" : "#605e5c")};
   border-radius: 10px;
   cursor: pointer;
 
   color: #605e5c;
+
+  &.error {
+    border: 1px solid #A80000;
+  }
 `;
-
-
 
 const FormContainer = styled(Container)`
   width: 100%;
@@ -270,8 +299,8 @@ const Checkbox = styled.div`
   @media screen and (max-width: 378px) {
     gap: 1px;
     label {
-    font-size: 12px;
-  }
+      font-size: 12px;
+    }
   }
 `;
 
@@ -336,7 +365,6 @@ export const Button = styled.button`
   color: ${({ $color }) => ($color ? $color : null)};
 `;
 
-
 const SelectDiv = styled.div`
   width: 100%;
   label {
@@ -352,33 +380,31 @@ const SelectDiv = styled.div`
 
   @media screen and (max-width: 960px) {
     img {
-    left: 76%;
-  }
+      left: 76%;
+    }
 
-  @media screen and (max-width: 680px) {
-    img {
-    left: 73%;
-  }
-  }
+    @media screen and (max-width: 680px) {
+      img {
+        left: 73%;
+      }
+    }
 
-  @media screen and (max-width: 426px) {
-    img {
-    left: 65%;
-  }
-  }
+    @media screen and (max-width: 426px) {
+      img {
+        left: 65%;
+      }
+    }
 
-  @media screen and (max-width: 378px) {
-    img {
-    left: 55%;
-  }
-  }
+    @media screen and (max-width: 378px) {
+      img {
+        left: 55%;
+      }
+    }
 
-  @media screen and (max-width: 321px) {
-    img {
-    left: 50%;
-  }
-  }
-
+    @media screen and (max-width: 321px) {
+      img {
+        left: 50%;
+      }
+    }
   }
 `;
-

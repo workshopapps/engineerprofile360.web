@@ -171,7 +171,7 @@ const List = () => {
     fetchAvailable()
       .then(({ data }) => {
         setAvailable(data);
-        console.log(auth);
+        // console.log(auth);
         // console.log(data);
       })
       .catch((error) => {
