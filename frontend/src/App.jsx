@@ -32,7 +32,11 @@ import Terms from "../src/ui/pages/termsAndService/TermsAndService";
 import Blog from "../src/main/pages/Blog";
 import AssessmentList from "./main/components/sections/userAssessmentList/AssessmentList";
 import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
-import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
+// import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
+import UserTakeAssessment from "./ui/pages/userTakeAssessment/UserTakeAssessment";
+import UserTakeAssessmentResult from "./ui/pages/userTakeAssessment/UserTakeAssessmentResult";
+import GuestTakeAssessment from "./ui/pages/guest/GuestTakeAssessment";
+import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
 import Privacy from "./main/pages/Privacy/privacy";
 // import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
@@ -129,6 +133,9 @@ const App = () => {
               path="/take-assessment-list"
               element={<UserTakeAssessment />}
             />
+            <Route path="/guest-take-assessment" element={<GuestTakeAssessment />}/>
+            <Route path="/guest-take-assessment-result" element={<GuestTakeAssessmentResult />}/>
+
 
             <Route path="/csv-uploading" element={<CsvUploading />} />
 
@@ -210,7 +217,8 @@ const App = () => {
                     element={<EmployeeDeparment />}
                   />
                 </Route>
-
+                <Route path="/take-assessment" element={<UserTakeAssessment />}/>
+                <Route path="/take-assessment-result" element={<UserTakeAssessmentResult />}/>
                 <Route path="/assessment" element={<MainAssessment />}>
                   <Route path="" element={<AssessmentFirstPage />} />
                   <Route

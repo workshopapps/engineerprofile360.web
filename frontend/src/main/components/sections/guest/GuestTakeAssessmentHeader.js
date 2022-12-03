@@ -1,11 +1,11 @@
 import React from "react";
 import TimerSvg from "../../../../assets//icons/app/timer-start.svg";
 import { useState, useEffect } from "react";
-import styles from "./UserTakeAssessment.module.css";
+import styles from "./GuestTakeAssessment.module.css";
 import { Outlet } from "react-router-dom";
 import PageInfo from "../../../../ui/components/molecules/PageInfo";
 
-function UserTakeAssessmentHeader() {
+function GuestTakeAssessmentHeader() {
   const [time, setTime] = useState((1 / 2) * 60 * 60 * 1000);
   useEffect(() => {
     setTimeout(() => {
@@ -36,7 +36,7 @@ function UserTakeAssessmentHeader() {
       <Outlet />
           <div><p>Login ID: 12345</p></div>
         </div>
-        <div>
+          <div>
             <p>
               <span className={styles.Text_muted}>Course :</span>Design thnking
               Process
@@ -77,4 +77,4 @@ function UserTakeAssessmentHeader() {
   );
 }
 
-export default UserTakeAssessmentHeader;
+export default GuestTakeAssessmentHeader;
