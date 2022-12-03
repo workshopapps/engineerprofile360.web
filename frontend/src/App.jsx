@@ -59,6 +59,7 @@ import EmployeesListing from "./ui/components/Employees/EmployeesListing";
 import EmployeeProfile from "./ui/components/Employees/EmployeeProfile";
 import AcceptReject from "./ui/pages/Accept Reject Profile/AcceptReject";
 import MainAssessment from "./ui/pages/Assessment";
+import Fillemployee from "./ui/pages/FillEmployee/FillEmployee";
 
 const ROLES = {
   Employees: 1,
@@ -106,7 +107,7 @@ const App = () => {
               path="/admin-view-assessment"
               element={<AdminViewAssessment />}
             />
-
+            <Route path="/fill-employee" element={<Fillemployee />} />
             <Route path="/csv-uploading" element={<CsvUploading />} />
 
             <Route
@@ -139,6 +140,7 @@ const App = () => {
               element={<AdminEmailVerified />}
             />
             <Route path="/accept-reject-profile" element={<AcceptReject />} />
+            
           </Route>
 
           {/* Private Route */}
