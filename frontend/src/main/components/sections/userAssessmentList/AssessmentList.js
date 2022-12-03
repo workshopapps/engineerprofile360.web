@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./AssessmentList.module.css";
 import ArrowSvg from "../../../../assets/icons/app/arrow-down.svg";
 import FilterSvg from "../../../../assets//icons/app/filter.svg";
-import MenuSvg from "../../../../assets//icons/app/menu.svg";
+import MenuSvg from "../../../../assets/icons/app/menu.svg";
 export default function AssessmentList() {
   return (
     <div className={styles.Assessment_container}>
