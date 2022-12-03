@@ -27,58 +27,55 @@ function ViewAssessmentHeader() {
 
   return (
     <>
-      <Container>
-        <Sidebar />
-        <WrapperDiv>
-          <Active>
-            <h5>Assessment</h5>
-            <img src={pointer} alt="arrow-right-pointer" />
-            <h4>View Assessment</h4>
-          </Active>
-          <HeaderContainer>
-            <TextDiv>
-              <h2>Preview Assessment</h2>
-              <TextWrapper>
-                <div>
-                  <p>
-                    Course : <span>Design thinking Process</span>
-                  </p>
-                  <p>
-                    Department : <span>UX Design</span>
-                  </p>
-                </div>
-                <div>
-                  <p>
-                    Duration : <span>30 Minutes</span>
-                  </p>
-                  <p>
-                    Deadline : <span>Tue 3th, Nov 22</span>
-                  </p>
-                </div>
-              </TextWrapper>
-            </TextDiv>
-            <TimerDiv>
-              <img src={timer} alt="count-down timer" />
+      <WrapperDiv>
+        <Active>
+          <h5>Assessment</h5>
+          <img src={pointer} alt="arrow-right-pointer" />
+          <h4>View Assessment</h4>
+        </Active>
+        <HeaderContainer>
+          <TextDiv>
+            <h2>Preview Assessment</h2>
+            <TextWrapper>
               <div>
-                <p> {getFormattedTime(time)}</p>
-                <span>Timer</span>
+                <p>
+                  Course : <span>Design thinking Process</span>
+                </p>
+                <p>
+                  Department : <span>UX Design</span>
+                </p>
               </div>
-            </TimerDiv>
-          </HeaderContainer>
-          <Description>
-            <h5>
-              Description :
-              <span>
-                This assessment was created to ensure that the participant of
-                this test understands the core basics of software engineering.
-                This test consists of four stages with 5 questions each. The
-                stages include basic general knowledge, backend knowledge,
-                frontend knowledge and DevOps Knowledge.
-              </span>
-            </h5>
-          </Description>
-        </WrapperDiv>
-      </Container>
+              <div>
+                <p>
+                  Duration : <span>30 Minutes</span>
+                </p>
+                <p>
+                  Deadline : <span>Tue 3th, Nov 22</span>
+                </p>
+              </div>
+            </TextWrapper>
+          </TextDiv>
+          <TimerDiv>
+            <img src={timer} alt="count-down timer" />
+            <div>
+              <p> {getFormattedTime(time)}</p>
+              <span>Timer</span>
+            </div>
+          </TimerDiv>
+        </HeaderContainer>
+        <Description>
+          <h5>
+            Description :
+            <span>
+              This assessment was created to ensure that the participant of this
+              test understands the core basics of software engineering. This
+              test consists of four stages with 5 questions each. The stages
+              include basic general knowledge, backend knowledge, frontend
+              knowledge and DevOps Knowledge.
+            </span>
+          </h5>
+        </Description>
+      </WrapperDiv>
     </>
   );
 }
@@ -91,14 +88,7 @@ export const Container = styled.section`
   max-width: 1440px;
 `;
 export const WrapperDiv = styled.section`
-  width: 60%;
-
-  @media (min-width: 748px) {
-    width: 70%;
-  }
-  @media (min-width: 940px) {
-    width: 82%;
-  }
+  width: 100%;
 `;
 
 export const Active = styled.div`

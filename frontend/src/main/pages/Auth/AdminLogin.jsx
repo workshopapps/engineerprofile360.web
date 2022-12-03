@@ -23,7 +23,6 @@ const AdminLogin = () => {
 
   const [isSubmitted, setIsSubmitted] = useState("");
   const [showPassword, setShowPassword] = useState(true);
-  const [loginError, setLoginError] = useState();
 
   const {
     formData,
@@ -81,12 +80,25 @@ const AdminLogin = () => {
           JSON.stringify({ email, password })
         );
 
-        const accessToken = response?.data?.data.accessToken;
-        const roles = response?.data?.data.role;
-        const id = response?.data?.data.id;
+        const accessToken = response?.data?.data?.accessToken || "";
+        const roles = response?.data?.data.role || "";
+        const id = response?.data?.data.id || "";
+
+        // console.log(response);
 
         setAuth({ email, password, accessToken, roles, id });
-
+        persist &&
+          localStorage.setItem(
+            "EvalOrg",
+            JSON.stringify({
+              email,
+              password,
+              accessToken,
+              roles,
+              id,
+            })
+          );
+        console.log(response.data);
         if (response.data.errorState === false) {
           // Clear input fields
           setFormData({
@@ -95,10 +107,13 @@ const AdminLogin = () => {
           });
 
           navigate(from, { replace: true });
+        } else if (response.data.errorState === true) {
+          showErrorToast(response.data.message);
         }
       }
     } catch (err) {
       setIsSubmitted(false);
+      console.log(err);
       if (!err?.response) {
         showErrorToast("No Server Response");
       } else if (err.response?.data.errorState === true) {

@@ -1,18 +1,21 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { Button, Loader } from "../../../../styles/reusableElements.styled";
-import addCircle from "../../../../assets/icons/app/add-circle.svg";
-import down from "../../../../assets/icons/app/arrow-down-alt.svg";
-import dashboard from "../../../../assets/icons/app/dashboard.svg";
-import hamburger from "../../../../assets/icons/app/hamburger.svg";
-import PageInfo from "../../../components/molecules/PageInfo";
-import Flex from "../../../components/layout/Flex";
+import addCircle from "../../../assets/icons/app/add-circle.svg";
+import down from "../../../assets/icons/app/arrow-down.svg";
+import dashboard from "../../../assets/icons/app/dashboard.svg";
+import hamburger from "../../../assets/icons/app/hamburger.svg";
 import { Link } from "react-router-dom";
-import axios from "../../../../api/axios";
-import useAuth from "../../../../hooks/useAuth";
-// import useAuth from "";
+import PageInfo from "../../components/molecules/PageInfo";
+import Flex from "../../components/layout/Flex";
+import { Button, Loader } from "../../../styles/reusableElements.styled";
+import axios from "../../../api/axios";
+import useAuth from "../../../hooks/useAuth";
 
 const DataContext = createContext(null);
+
+const fetchAvailable = () => {
+  return axios("/user-assessment/org/org-available");
+};
 
 const info = [
   {
@@ -73,65 +76,15 @@ const info = [
   },
 ];
 
-const Buttons = () => {
-  const Mailto = ({ email, subject = "", body = "", children }) => {
-    let params = subject || body ? "?" : "";
-    if (subject) params += `subject=${encodeURIComponent(subject)}`;
-    if (body) params += `${subject ? "&" : ""}body=${encodeURIComponent(body)}`;
-
-    return <a href={`mailto:${email}${params}`}>{children}</a>;
-  };
-
-  return (
-    <div>
-      <Hide>
-        <Flex jc="flex-end" spacing={10}>
-          <Link to="/assessment/create-assessment">
-            <Button>
-              <Flex spacing={10} ai="center">
-                <img src={addCircle} alt="" />
-                <Text $color="white">Create New Assessment</Text>
-              </Flex>
-            </Button>
-          </Link>
-          <Mailto email="employee@email.com" subject="ASSESSMENTS">
-            <Button $variant="outlined">
-              <Text $color="#2667FF" $weight="600">
-                Send to employee
-              </Text>
-            </Button>
-          </Mailto>
-        </Flex>
-      </Hide>
-      <Show>
-        <Flex jc="flex-end" spacing={10}>
-          <Link to="/assessment/create-assessment">
-            <Button>
-              <Flex spacing={10} ai="center">
-                <img src={addCircle} alt="" />
-              </Flex>
-            </Button>
-          </Link>
-          <Mailto email="employee@email.com" subject="ASSESSMENTS">
-            <Button $variant="outlined">
-              <Text $color="#2667FF" $weight="600">
-                Send to employee
-              </Text>
-            </Button>
-          </Mailto>
-        </Flex>
-      </Show>
-    </div>
-  );
-};
 const Sort = () => {
   const {
-    available,
-    setAvailable,
     assessmentInfo,
     setAssessmentInfo,
+    available,
+    setAvailable,
     order,
     setOrder,
+    auth,
   } = useContext(DataContext);
   const sorting = () => {
     if (order === "asc") {
@@ -210,16 +163,11 @@ const Sort = () => {
 const List = () => {
   const { available, setAvailable, isLoading, setIsLoading } =
     useContext(DataContext);
-  const { auth, setAuth } = useAuth();
-
-  const fetchAvailable = () => {
-    return axios("/user-assessment/org/{auth.id}/org-available");
-  };
   useEffect(() => {
     fetchAvailable()
       .then(({ data }) => {
         setAvailable(data);
-        console.log(auth);
+        // console.log(data);
       })
       .catch((error) => {
         console.log(error);
@@ -237,7 +185,11 @@ const List = () => {
         </Flex>
       );
     } else if (available.data.length === 0) {
-      return <Text>Oops no available assessments, create an assessment</Text>;
+      return (
+        <Text>
+          Oops this user has no available assessments, come back later
+        </Text>
+      );
     }
     return (
       <table>
@@ -270,6 +222,7 @@ const List = () => {
       </table>
     );
   };
+
   return <AssessmentListings>{renderContent()}</AssessmentListings>;
 };
 
@@ -294,26 +247,42 @@ const Assessment = () => {
         jc="space-between"
       >
         <Flex spacing={24} ai="flex-end">
-          <Link to="/admin-assessment-list">
+          <Link to="/user-assessment-list">
             <Text $color="#2667FF" $weight="600">
-              Available (0)
+              {`Available (${"0"})`}
             </Text>
           </Link>
-          <Link to="/admin-assessment-list/completed">
+          <Link to="/user-assessment-list/completed">
             <Text>Completed (0)</Text>
           </Link>
         </Flex>
       </Flex>
+
       <TableSection />
     </Flex>
   );
 };
 
-const AssessmentList = () => {
+const UserAssessmentListAvailable = () => {
+  const auth = useAuth(useAuth);
   const [assessmentInfo, setAssessmentInfo] = useState(info);
   const [order, setOrder] = useState("asc");
   const [available, setAvailable] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetchAvailable()
+      .then(({ data }) => {
+        setAvailable(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
+
   return (
     <div>
       <DataContext.Provider
@@ -322,21 +291,21 @@ const AssessmentList = () => {
           setAssessmentInfo,
           order,
           setOrder,
-          available,
-          setAvailable,
           isLoading,
           setIsLoading,
+          available,
+          setAvailable,
         }}
       >
-        <PageInfo breadcrumb={["Dashboard", "Performance"]} />
-        <Buttons />
+        <PageInfo breadcrumb={["Assessments", "Assessment List"]} />
         <Assessment />
+        {/* {auth} */}
       </DataContext.Provider>
     </div>
   );
 };
 
-export default AssessmentList;
+export default UserAssessmentListAvailable;
 
 const AssessmentListings = styled.div`
   padding-top: ${({ theme }) => theme.spacing(3)};
