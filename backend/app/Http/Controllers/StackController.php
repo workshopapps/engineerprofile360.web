@@ -38,7 +38,7 @@ class StackController extends Controller
 
 
         } catch (\Exception $e) {
-            return $this->sendResponse(true, 'Error occurred while creating Stack', $e->getMessage());
+            return $this->sendResponse(true, 'Error occurred while creating new Stack', $e->getMessage());
         }
     }
 
