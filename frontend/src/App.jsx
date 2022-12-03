@@ -178,10 +178,10 @@ const App = () => {
               {/* Employee Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Employees} />}>
                 {/* Put in Protected pages in here */}
-                <Route
-                  path="/user-assessment-result"
-                  element={<UserAssessmentResult />}
-                />
+                {/* <Route
+                path="/user-assessment-result"
+                element={<UserAssessmentResult />}
+              /> */}
                 <Route
                   path="/employee-user-dashboard"
                   element={<EmployeeUserDashboard />}
@@ -252,7 +252,7 @@ const App = () => {
                 </Route>
 
                 {/* <Route element={<DashboardLayout />}>
-                <Route path="/assessment" element={<Assessment />} />
+              <Route path="/assessment" element={<Assessment />} />
               </Route> */}
               </Route>
               <Route path="/assessment" element={<Assessment />} />

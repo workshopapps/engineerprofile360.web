@@ -21,10 +21,10 @@ const Dashboard = () => {
         axios.get(`user/${auth.id}`),
         axios.get(`employee/company/${auth.id}`),
         axios.get(`assessment/${auth.id}`),
-        // axios.get(`user-assessment/org/${auth.id}/org-available`),
-        // axios.get(`user-assessment/org/${auth.id}/org-completed`),
-        // axios.get(`userscore/company/${auth.id}/max`),
-        // axios.get(`userscore/company/${auth.id}`),
+        axios.get(`user-assessment/org/${auth.id}/org-available`),
+        axios.get(`user-assessment/org/${auth.id}/org-completed`),
+        axios.get(`userscore/company/${auth.id}/max`),
+        axios.get(`userscore/company/${auth.id}`),
       ];
 
       try {
