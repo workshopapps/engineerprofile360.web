@@ -13,7 +13,13 @@ function Hero() {
   const [addDept, setAddDept] = useState(false);
   const [formData, setFormData] = useState("");
 
-  const departmentData = ["Mechanical Engineering", "Bismuth Engineering"];
+  const departmentData = [
+    "Mechanical Engineering",
+    "Bismuth Engineering",
+    "Software Engineering",
+    "Aerospace Engineering",
+    "Computer Engineering ",
+  ];
   const handleEdit = (e) => {
     setIsEditingData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
