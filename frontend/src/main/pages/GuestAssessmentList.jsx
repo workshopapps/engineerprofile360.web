@@ -8,38 +8,11 @@ import Sidebar from "../../ui/components/Sidebar";
 import { MainContainer } from "../../styles/reusableElements.styled";
 import Footer from "../../Layouts/Main/Partials/Footer";
 import axios from "../../api/axios";
+import { useNavigate } from "react-router-dom";
 
 const GuestAssessmentList = () => {
-  const assessmentList = [
-    {
-      id: 1,
-      department: "Introduction to Software Engineering",
-      timesTaken: 50,
-      previousScore: 87,
-    },
 
-    {
-      id: 2,
-      department: "Introduction to Software Engineering",
-      timesTaken: 50,
-      previousScore: 87,
-    },
-
-    {
-      id: 3,
-      department: "Introduction to Software Engineering",
-      timesTaken: 50,
-      previousScore: 87,
-    },
-
-    {
-      id: 4,
-      department: "Introduction to Software Engineering",
-      timesTaken: 50,
-      previousScore: 87,
-    },
-  ];
-
+  const navigate = useNavigate()
   const [assessmentDropdown, setAssessmentDropdown] = useState(false)
   const [stacks, setStacks] = useState([])
   const [interviews, setInterviews] = useState([])
@@ -47,6 +20,12 @@ const GuestAssessmentList = () => {
   useEffect(()=>{
     //instead loading stacks from server
     //load from local storaged
+    const guest = JSON.parse(localStorage.getItem('guest'))
+    console.log(guest.stack)
+    if (!guest) {
+      navigate("/guest-login")
+    }
+    fetchInterviews(guest.stack)
     
     //axios call will not be loaded again
     axios.get(`https://api.eval360.hng.tech/api/stack/all`).then((response)=>{
@@ -60,10 +39,9 @@ setStacks(JSON.parse(response.data.message))
   },[])
 
   const fetchInterviews = (stack_id) => {
-    
     //``
-    axios.get(`http://api.eval360.hng.tech/api/interview/stack/${stack_id}`).then((response)=>{
-
+    axios.get(`https://api.eval360.hng.tech/api/interview/stack/${stack_id}`).then((response)=>{
+console.log(response)
 setInterviews(response?.data?.data || [])
     }).catch((error)=>{
       console.log(error)
@@ -73,19 +51,16 @@ setInterviews(response?.data?.data || [])
     <>
     <Header />
     <MainContainer>
-    <Sidebar external={true} />
+    <Sidebar className="nav" external={true} />
       <Wrapper>
-        {/* <SideNav>
-          <p>Asssesment</p>
-        </SideNav> */}
         <Main>
           <div className="Filter_wrapper">
             <button className="Filter_button" style={{position:'relative'}} onClick={()=>setAssessmentDropdown((prev)=>!prev)}>
               Assessment Type <img src={ArrowSvg} alt="Arrow" width={13} />
               <div style={{display: assessmentDropdown?'block' :'none' ,padding:'1rem 1rem',left:'0' ,width:'100%',position:'absolute', top:'100%', zIndex:'2', backgroundColor:'#fff', boxShadow:'0 5px 5px 6px rgb(0 0 0/.2)'}}>
-              {(stacks || [])?.map((el)=> 
+              {(stacks || [])?.map((el, i)=> 
               {
-               return <h1  onClick={()=>fetchInterviews(el?.id || '')} style={{marginBottom:'2%'}}> {el?.name || ''}</h1>
+               return <h1 key={i}  onClick={()=>fetchInterviews(el?.id || '')} style={{marginBottom:'2%'}}> {el?.name || ''}</h1>
               }
               )}
               </div>
@@ -115,9 +90,9 @@ setInterviews(response?.data?.data || [])
               </thead>
 
               <tbody>
-                {interviews.map((item,i) => {
+                {interviews.length > 0 && interviews.map((item,i) => {
                   return (
-                    <tr key={item.id}>
+                    <tr key={i}>
                       <td>{i+1}</td>
                       <td>{item?.name || ''}</td>
                       <td>{item?.times_taken || ''}</td>
@@ -128,6 +103,7 @@ setInterviews(response?.data?.data || [])
                     </tr>
                   );
                 })}
+                {interviews.length === 0 && <tr><td colSpan="5">No Data available for this stack</td></tr>}
               </tbody>
             </table>
           </div>
@@ -143,11 +119,6 @@ setInterviews(response?.data?.data || [])
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
-`;
-
-const SideNav = styled.nav`
-  width: 240px;
-  color: #2667ff;
 `;
 
 const Main = styled.main`
@@ -191,6 +162,27 @@ const Main = styled.main`
     overflow-x: auto;
   }
 
+   /*scrolling responsive table*/
+   table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  td,
+  th {
+    text-align: center;
+    padding: 8px;
+  }
+
+  tr td:first-child {
+    min-width: 100px !important;
+  }
+  tr td:nth-of-type(5) {
+    display: flex;
+    justify-content: end;
+    margin-right: 15px;
+  }
+
   button {
     width: 201px;
     height: 48px;
@@ -231,26 +223,6 @@ const Main = styled.main`
     align-items: center;
   }
 
-  /*scrolling responsive table*/
-  table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-
-  td,
-  th {
-    text-align: center;
-    padding: 8px;
-  }
-
-  tr td:first-child {
-    min-width: 100px !important;
-  }
-  tr td:last-child {
-    display: flex;
-    justify-content: end;
-    margin-right: 15px;
-  }
 
   /* Media queries */
   @media screen and (max-width: 767px) {
@@ -259,7 +231,7 @@ const Main = styled.main`
 
     .Filter_wrapper {
       flex-direction: column;
-      justify-content: space-between;
+      align-items: start;
     }
 
     .Filter_flex {
