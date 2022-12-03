@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { Button, Title } from "../../../styles/reusableElements.styled";
-import { ReactComponent as EmployeeProfilePhoto } from "../../components/assets/user-photo.svg";
-import { ReactComponent as OverallChart } from "../../components/assets/overall-chart.svg";
+import { Button, Title } from "../../../../styles/reusableElements.styled";
+import { ReactComponent as EmployeeProfilePhoto } from "../../../components/assets/user-photo.svg";
+import { ReactComponent as OverallChart } from "../../../components/assets/overall-chart.svg";
 
 const EmployeeProfileData = [
   {
@@ -63,7 +63,7 @@ const EmployeeProfileDetailsCard = ({ name, department, level }) => {
   );
 };
 
-const EmployeeProfileCard = () => {
+const FullProfile = () => {
   return (
     <>
       <EmployeeProfileContainer>
@@ -150,7 +150,7 @@ const EmployeeProfileCard = () => {
   );
 };
 
-export default EmployeeProfileCard;
+export default FullProfile;
 const EmployeeProfileContainer = styled.div`
   padding: 0px 9px;
   padding-bottom: 100px;

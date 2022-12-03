@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Button } from "../../../styles/reusableElements.styled";
+import { Button } from "../../../../styles/reusableElements.styled";
 
 import { More } from "iconsax-react";
 import { Link } from "react-router-dom";
