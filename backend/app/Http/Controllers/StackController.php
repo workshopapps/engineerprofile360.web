@@ -36,8 +36,10 @@ class StackController extends Controller
             $return_message = Stack::create($data);
                 return $this->sendResponse(false, null, $return_message, Response::HTTP_CREATED);
 
+
         } catch (\Exception $e) {
-            return $this->sendResponse(true, 'Error occurred while creating Stack', $e->getMessage());
+            return $this->sendResponse(true, 'Error occurred while creating Stack', $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
