@@ -4,55 +4,27 @@ import { Title } from "../../../../styles/reusableElements.styled";
 import { useState } from "react";
 import bubble from "../assets/bubble.png";
 
-import Header from "../../../components/Header";
-import Sidebar from "../../../components/Sidebar";
 import AddDept from "./AddDept";
 import axios from "axios";
-
-const departmentData = [
-  {
-    id: 1,
-    departmentName: "Software Engineering",
-    numberOfStaffs: "30",
-    availableAssessments: "20",
-  },
-
-  {
-    id: 2,
-    departmentName: "Software Mechanotronic",
-    numberOfStaffs: "350",
-    availableAssessments: "44",
-  },
-
-  {
-    id: 3,
-    departmentName: "Bazzman Engineering",
-    numberOfStaffs: "440",
-    availableAssessments: "245",
-  },
-];
 
 function Hero() {
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingData, setIsEditingData] = useState();
   const [addDept, setAddDept] = useState(false);
-  const [formData, setFormData] = useState({
-    departmentName: "",
+  const [formData, setFormData] = useState("");
 
-    generalId: 12345,
-  });
-
-  const { generalId } = FormData;
+  const departmentData = ["Mechanical Engineering", "Bismuth Engineering"];
   const handleEdit = (e) => {
     setIsEditingData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  // useEffect(() => {
-  //   axios.get(`http://localhost:3000​/department​/${generalId}`).then((res) => {
-  //     setIsEditingData(res.data);
-  //     console.log(isEditingData);
-  //   });
-  // }, []);
+  useEffect(() => {
+    // COULD NOT ADD DATA THROUGH THE ADD DATA ENDPOINT, SO I'M USING LOCAL STORAGE TO SIMULATE USER EXPERIENCE..
+    //  axios.get(`http://localhost:3000​/department​/`).then((res) => {
+    //  setIsEditingData(res.data);
+    //  console.log(isEditingData);
+    // });
+  }, []);
 
   return (
     <>
@@ -151,19 +123,12 @@ function Hero() {
               <th>Action</th>
             </tr>
             {departmentData.map((department, index) => {
-              const {
-                id,
-                departmentName,
-                numberOfStaffs,
-                availableAssessments,
-              } = department;
-
               return (
-                <tr key={id}>
+                <tr>
                   <td>{index + 1}</td>
-                  <td contentEditable={isEditing}>{departmentName}</td>
-                  <td contentEditable={isEditing}>{numberOfStaffs}</td>
-                  <td contentEditable={isEditing}>{availableAssessments}</td>
+                  <td contentEditable={isEditing}>{department}</td>
+                  <td>0</td>
+                  <td>0</td>
 
                   <td>
                     <Button
