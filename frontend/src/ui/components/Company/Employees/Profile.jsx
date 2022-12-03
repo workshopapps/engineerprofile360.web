@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 import { More, TickSquare } from "iconsax-react";
-import { Button, Title } from "../../../styles/reusableElements.styled";
+import { Button, Title } from "../../../../styles/reusableElements.styled";
 
-const EmployeeProfile = () => {
+const Profile = () => {
   return (
     <ProfileOverview>
       <>
@@ -104,7 +104,7 @@ const OtherEmployees = () => {
   );
 };
 
-export default EmployeeProfile;
+export default Profile;
 
 const ProfileOverview = styled.div`
   display: flex;

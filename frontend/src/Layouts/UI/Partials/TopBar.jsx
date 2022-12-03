@@ -44,7 +44,7 @@ const TopBar = ({ handleLeftBarToggle, leftBar }) => {
           <Options>
             <UserCon>
               <img src={user} alt="" />
-              <span>{auth.fullName ? auth.fullName.split(" ")[0] : ""}</span>
+              <span>{auth.username ? auth.username : ""}</span>
             </UserCon>
             <Icons>
               <Notification color="#323130" />
@@ -197,13 +197,8 @@ const Icons = styled.div`
   align-items: flex-end;
   gap: ${({ theme }) => theme.spacing(2)};
 
-  img:first-of-type {
-    ${({ theme }) => theme.breakpoints.down("sm")} {
-      display: none;
-    }
-  }
 
-  img:nth-of-type(2) {
+  svg:nth-of-type(2) {
     ${({ theme }) => theme.breakpoints.up("sm")} {
       display: none;
     }
