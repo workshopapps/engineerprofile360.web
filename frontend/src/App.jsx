@@ -120,7 +120,7 @@ const App = () => {
             <Route path="/privacy-policy" element={<Privacy />} />
             <Route path="/employee-profile" element={<EmployeeProfile />} />
 
-          </Route>
+      
 
           <Route path="/guest-email" element={<GuestEmail />} />
 
@@ -192,6 +192,14 @@ const App = () => {
                 />
                 <Route path="admin-csv-upload" element={<AdminCSVUpload />} />
               </Route>
+              <Route
+              path="/take-assessment"
+              element={<UserTakeAssessment />}
+            />
+            <Route
+              path="/take-assessment-result"
+              element={<UserTakeAssessmentResult />}
+            />
               <Route
                 path="/user-assessment-result"
                 element={<UserAssessmentResult />}
