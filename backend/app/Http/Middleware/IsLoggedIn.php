@@ -36,7 +36,7 @@ class IsLoggedIn extends Controller
     
             // check if authorization header has been passed
             if(!isset($jwtToken) || empty($jwtToken)){
-                return $this->sendResponse(true,"JWT token is missing from cookies.", "Invalid Jwt token", null, 403);
+                return $this->sendResponse(true,"JWT token is missing from cookies.", "Invalid Jwt token", null, 401);
             }
     
             // decode the jwt token
