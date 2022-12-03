@@ -44,6 +44,9 @@ import Market from "./main/components/Market-comp-page-2/Market";
 import AdminCSVUpload from "./ui/pages/AdminUpload/AdminCSVUpload";
 import UserAssessmentListCompleted from "./ui/pages/UserAssestList/UserAssestListCompleted";
 
+import GuestEmail from "./main/pages/GuestEmail";
+import GuestAssessmentList from "./main/pages/GuestAssessmentList";
+
 import { User2FA } from "./ui/pages/userSignUp/User2FA";
 import AdminViewAssessment from "./ui/pages/admin-view-assessment/AdminViewAssessment";
 import Assessment from "./ui/pages/assessment/Assessment.jsx";
@@ -88,6 +91,8 @@ const App = () => {
         <GlobalStyles />
         <Routes>
           <Route path="/2FA" element={<User2FA />} />
+          <Route path="/guest-email" element={<GuestEmail />} />
+          <Route path="/guest-assessment-list" element={<GuestAssessmentList />} />
 
           {/* Public routes */}
           <Route element={<MainLayout />}>
@@ -128,8 +133,6 @@ const App = () => {
               element={<UserAssessmentListCompleted />}
             /> */}
           </Route>
-
-          <Route path="/guest-email" element={<GuestEmail />} />
 
           <Route element={<AdminAuthLayout />}>
             <Route path="/register" element={<AdminSignup />} />

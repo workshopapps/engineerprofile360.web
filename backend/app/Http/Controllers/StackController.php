@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class StackController extends Controller
 {
-
     public function addStack(StackRequest $request): JsonResponse
     {
         $name = $request->name;
