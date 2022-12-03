@@ -2,10 +2,12 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
-import { Button, Title } from "../../../styles/reusableElements.styled";
+import { Button, Title } from "../../../../styles/reusableElements.styled";
 
-const TopEmployees = ({ topPerformances, setIsLoading }) => {
-  const employees = topPerformances?.data ? topPerformances?.data : [];
+const TopEmployees = ({ topPerformances }) => {
+  const employees = topPerformances?.data
+    ? topPerformances?.data.filter((data) => data.points !== null)
+    : [];
 
   return (
     <div>
@@ -27,34 +29,47 @@ const TopEmployees = ({ topPerformances, setIsLoading }) => {
           </select>
         </Filter>
       </Header>
-      <TopEmployeesList>
-        <table>
-          <tbody>
-            <tr>
-              <th>#</th>
-              <th>Staff name</th>
-              <th>Department</th>
-              <th>Percentage</th>
-              <th>Action</th>
-            </tr>
-            {employees.map((employee, index) => (
-              <tr key={`employee-${index}`}>
-                <td>{index + 1}.</td>
-                <td>{employee.employee_name}</td>
-                <td>{employee.department}</td>
-                <td>{employee.points}%</td>
-                <td>
-                  <Link to="/">
-                    <Button $variant="outlined" $color="#2667ff">
-                      View Results
-                    </Button>
-                  </Link>
-                </td>
+      {employees.length > 0 ? (
+        <TopEmployeesList>
+          <table>
+            <tbody>
+              <tr>
+                <th>#</th>
+                <th>Staff name</th>
+                <th>Department</th>
+                <th>Percentage</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </TopEmployeesList>
+              {employees.map((employee, index) => (
+                <tr key={`employee-${index}`}>
+                  <td>{index + 1}.</td>
+                  <td>{employee.employee_name}</td>
+                  <td>{employee.department}</td>
+                  <td>{employee.points}%</td>
+                  <td>
+                    <Link to="/employees">
+                      <Button $variant="outlined" $color="#2667ff">
+                        View Results
+                      </Button>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </TopEmployeesList>
+      ) : (
+        <NoData>
+          <p>Oops! No data to show here</p>
+
+          <div>
+            <Button $variant="outlined" $color="#2667ff">
+              Create Assessment
+            </Button>
+            <Button>Add Employee</Button>
+          </div>
+        </NoData>
+      )}
     </div>
   );
 };
@@ -137,5 +152,23 @@ const TopEmployeesList = styled.div`
       font-size: 16px;
       font-weight: 600;
     }
+  }
+`;
+
+const NoData = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing(3)};
+  min-height: 300px;
+  font-size: 16px;
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: ${({ theme }) => theme.spacing(2)};
+    flex-wrap: wrap;
   }
 `;

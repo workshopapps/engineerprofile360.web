@@ -24,6 +24,8 @@ const GuestEmail = () => {
   );
 };
 
+export default GuestEmail;
+
 const Main = styled.main`
   display: grid;
   grid-template-columns: 1fr;
@@ -156,4 +158,4 @@ const Button = styled.button`
   }
 `;
 
-export default GuestEmail;
+
