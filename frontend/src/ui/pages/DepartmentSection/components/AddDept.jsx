@@ -2,37 +2,46 @@ import React, { useState } from "react";
 
 import styled from "styled-components";
 import { Loader, Title } from "../../../../styles/reusableElements.styled";
-
-import Axios from "axios";
+import { toast } from "react-toastify";
 import { Button, Wrapper } from "./Hero";
+import { axiosPrivate } from "../../../../api/axios";
 
-function AddDept({ formData, setFormData, setAddDept }) {
+function AddDept({ formData, setFormData, setAddDept, }) {
   const [loading, setLoading] = useState(false);
   const { departmentName } = formData;
   const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      generalId: 12345,
-      [e.target.name]: e.target.value,
-    }));
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const org_id = "c57d34e5-dcfe-4fba-821b-53c22ac27756";
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(departmentName);
-    // Axios.post(`http://104.225.216.199:8000/api/department/add`, {
-    //   name: departmentName,
-    // })
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+if(formData !== ""){
+   setLoading(true);
+   setFormData("");
+   axiosPrivate
+     .post("https://api.eval360.hng.tech/api/department/add", {
+       name: departmentName,
+       org_id: org_id,
+     })
+     .then((res) => {
+       toast.success("department added successfully");
+       setAddDept(false);
+       setLoading(false);
+     })
+     .catch((error) => {
+       console.log(error);
+       toast.error("could not add Department ");
+       setAddDept(false);
+     });
+}
+ 
   };
 
   return loading ? (
-    <Loader />
+    <Load>
+      <Loader />
+    </Load>
   ) : (
     <>
       <InputWrapper>
@@ -44,6 +53,7 @@ function AddDept({ formData, setFormData, setAddDept }) {
             <Label htmlFor="departmentName"> Title</Label>
             <InputField
               type="text"
+              required
               placeholder="Javascript"
               name="departmentName"
               value={departmentName}
@@ -152,4 +162,10 @@ export const InputField = styled.input`
   &:focus {
     border: 2px solid #2667ff;
   }
+`;
+export const Load = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 `;
