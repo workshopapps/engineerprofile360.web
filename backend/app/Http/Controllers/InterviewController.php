@@ -68,7 +68,7 @@ class InterviewController extends Controller
                 //throw $th;
                 return $this->sendResponse(true, $e->getMessage(), "Interviews Not Found", null, Response::HTTP_BAD_REQUEST);
         }
-   
+    }
 
     public function deleteInterview($id){
         try {
