@@ -9,9 +9,9 @@ import { AuthTitle, InputField } from "../../components";
 
 import useInputValidation from "../../../hooks/useInputValidation";
 import useAuth from "../../../hooks/useAuth";
-// import axios from "../../../api/axios";
+import axios from "../../../api/axios";
 
-import axios from "axios";
+// import axios from "axios";
 
 import editSvg from "../../../assets/icons/edit-2.svg";
 import arrowDown from "../../../assets/icons/arrow-down-filled.svg";
@@ -65,7 +65,7 @@ const GuestLogin = () => {
     // localStorage.setItem("persist", persist);
     const guest = JSON.parse(localStorage.getItem("guest"))
     if (guest) {
-      // navigate("/guest-assessments-list")
+      navigate("/guest-assessment-list")
     }
       axios
       .get("https://api.eval360.hng.tech/api/stack/all")
@@ -74,7 +74,7 @@ const GuestLogin = () => {
       })
       .catch((error) => console.log(error));
     
-  }, []);
+  });
 
   const { fname, email, stack } = formData;
 
@@ -113,7 +113,7 @@ const GuestLogin = () => {
     } 
     else {
       localStorage.setItem("guest", JSON.stringify({fullName: fname, email, stack}))
-      navigate("/guest-email")
+      navigate("/guest-assessment-list")
     }
   };
 
