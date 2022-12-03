@@ -13,10 +13,6 @@ import useAuth from "../../../hooks/useAuth";
 
 const DataContext = createContext(null);
 
-const fetchAvailable = () => {
-  return axios("/user-assessment/org/org-available");
-};
-
 const info = [
   {
     id: "1",
@@ -122,17 +118,18 @@ const Sort = () => {
   return (
     <SortContainer>
       <Flex
-        spacing={10}
         style={{
           border: "1px solid #8A8886",
           padding: "8px",
           borderRadius: "4px",
         }}
         ai="center"
-        onClick={() => sorting()}
       >
-        <Text> Assessment Type</Text>
-        <img src={down} />
+        <select>
+          <option onClick={() => sorting()}>
+            <Text> Assessment Type</Text>
+          </option>
+        </select>
       </Flex>
       <Flex ai="center" spacing={30}>
         <Flex
@@ -143,11 +140,12 @@ const Sort = () => {
             borderRadius: "4px",
           }}
           ai="center"
-          onClick={() => dateSort()}
         >
-          <Text>Sort By Date</Text>
-
-          <img src={down} />
+          <select>
+            <option>
+              <Text onClick={() => dateSort()}>Sort By Date</Text>
+            </option>
+          </select>
         </Flex>
         <Hide>
           <Flex spacing={10}>
@@ -161,12 +159,19 @@ const Sort = () => {
 };
 
 const List = () => {
+  const { auth, setAuth } = useAuth();
+
+  const fetchAvailable = () => {
+    return axios("/user-assessment/org/{auth.id}/org-available");
+  };
+
   const { available, setAvailable, isLoading, setIsLoading } =
     useContext(DataContext);
   useEffect(() => {
     fetchAvailable()
       .then(({ data }) => {
         setAvailable(data);
+        console.log(auth);
         // console.log(data);
       })
       .catch((error) => {
@@ -187,7 +192,7 @@ const List = () => {
     } else if (available.data.length === 0) {
       return (
         <Text>
-          Oops this user has no available assessments, come back later
+          Oops no available assessments for this user, come back later
         </Text>
       );
     }
@@ -202,7 +207,7 @@ const List = () => {
             <th>Deadline</th>
             <th>{""}</th>
           </tr>
-          {[available.data].map((d, idx) => {
+          {available.data.map((d, idx) => {
             return (
               <tr key={idx}>
                 <td>{idx + 1}</td>
@@ -236,6 +241,8 @@ const TableSection = () => {
 };
 
 const Assessment = () => {
+  const { available, setAvailable, isLoading, setIsLoading } =
+    useContext(DataContext);
   return (
     <Flex stack spacing={70}>
       <Flex
@@ -250,6 +257,7 @@ const Assessment = () => {
           <Link to="/user-assessment-list">
             <Text $color="#2667FF" $weight="600">
               {`Available (${"0"})`}
+              {/* {console.log(available.data.length)} */}
             </Text>
           </Link>
           <Link to="/user-assessment-list/completed">
@@ -264,24 +272,23 @@ const Assessment = () => {
 };
 
 const UserAssessmentListAvailable = () => {
-  const auth = useAuth(useAuth);
   const [assessmentInfo, setAssessmentInfo] = useState(info);
   const [order, setOrder] = useState("asc");
-  const [available, setAvailable] = useState([]);
+  const [available, setAvailable] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    fetchAvailable()
-      .then(({ data }) => {
-        setAvailable(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
+  //   useEffect(() => {
+  //     fetchAvailable()
+  //       .then(({ data }) => {
+  //         setAvailable(data);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       })
+  //       .finally(() => {
+  //         setIsLoading(false);
+  //       });
+  //   }, []);
 
   return (
     <div>
