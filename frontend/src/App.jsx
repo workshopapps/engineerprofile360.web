@@ -179,7 +179,7 @@ const App = () => {
                   path="/employee-user-dashboard"
                   element={<EmployeeUserDashboard />}
                 />
-                {/* <Route path="/employee-profile" element={<EmployeeProfile />} /> */}
+                <Route path="/employee-profile" element={<EmployeeProfile />} />
                 <Route path="/404" element={<Error />} />
               </Route>
 
