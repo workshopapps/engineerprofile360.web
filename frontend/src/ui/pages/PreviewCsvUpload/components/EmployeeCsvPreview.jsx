@@ -16,14 +16,14 @@ function EmployeeCsvPreview() {
         <SpanHolder>
           <p>
             {" "}
-            Selected(0/4)/
+            Selected(0/7)/
             <span>All</span>/<span>None</span>
           </p>
         </SpanHolder>
 
         <table>
-          <tbody>
-            <tr>
+          <Tbody>
+            <Tr>
               <th>#</th>
 
               <th>Name</th>
@@ -31,12 +31,13 @@ function EmployeeCsvPreview() {
               <th>Employee Email</th>
 
               <th>Department</th>
-            </tr>
+              <th></th>
+            </Tr>
             {CsvData.map((data, index) => {
               const { name, employee_email, username, department } = data;
               return (
-                <tr>
-                  <td>{index + 1}</td>
+                <Tr>
+                  <Td>{index + 1}</Td>
                   <td>{name}</td>
                   <td>{username}</td>
                   <td>{employee_email}</td>
@@ -45,23 +46,20 @@ function EmployeeCsvPreview() {
                   <td>
                     <Checkbox type="checkbox" />
                   </td>
-                </tr>
+                </Tr>
               );
             })}
-          </tbody>
+          </Tbody>
         </table>
         <ButtonWrapper>
           <Wrapper>
             <Button
               type="button"
-              onClick={(e) => {
-                setAddDept(false);
-              }}
-              border={"2px solid ##2667FF"}
+              border={"1px solid #2667FF"}
               w={"117px"}
               h={"48px"}
               text={"#2667FF"}
-              bg={"#fff"}
+              bg={"transparent"}
               rounded={"4px"}
               m={" 6px"}
             >
@@ -69,9 +67,6 @@ function EmployeeCsvPreview() {
             </Button>
             <Button
               type="submit"
-              onClick={(e) => {
-                handleSubmit(e);
-              }}
               border={"1px solid #2667FF"}
               w={"117px"}
               h={"48px"}
@@ -96,10 +91,11 @@ export const Container = styled.div`
   height: 100%;
   background-color: #c7e0f4;
   padding: 15px;
+  border-radius: 16px;
 `;
 export const CSV = styled.div`
   width: 100%;
-
+  margin: 20px 0;
   display: flex;
   align-items: center;
 `;
@@ -130,8 +126,20 @@ export const Checkbox = styled.input`
 `;
 
 export const ButtonWrapper = styled.div`
+  margin-top: 20px;
   width: 100%;
   justify-content: center;
   display: flex;
   align-items: center;
 `;
+
+export const Td = styled.td``;
+export const Tr = styled.tr`
+  margin: 40px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+`;
+
+export const Tbody = styled.tbody``;
