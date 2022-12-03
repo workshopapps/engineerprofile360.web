@@ -50,7 +50,7 @@ import { User2FA } from "./ui/pages/userSignUp/User2FA";
 import AdminViewAssessment from "./ui/pages/admin-view-assessment/AdminViewAssessment";
 import Assessment from "./ui/pages/assessment/Assessment.jsx";
 import UserAssessmentResult from "./ui/pages/user-assessment-result/UserAssessmentResult";
-import CsvUpload from "./ui/pages/csv/CsvUpload";
+// import CsvUpload from "./ui/pages/csv/CsvUpload";
 import CsvUploading from "./ui/pages/csv/CsvUploading";
 import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
 import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
@@ -108,9 +108,30 @@ const App = () => {
 
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/payment" element={<Payment />} />
-            
+            <Route
+              path="/take-assessment-list"
+              element={<UserTakeAssessment />}
+            />
+
+            <Route path="/csv-uploading" element={<CsvUploading />} />
 
             <Route
+              path="/csv-uploading-complete"
+              element={<CsvUploadComplete />}
+            />
+
+            <Route path="/setting" element={<AdminSetting />} />
+            <Route path="/privacy-policy" element={<Privacy />} />
+            <Route path="/employee-profile" element={<EmployeeProfile />} />
+            {/* <Route path="/admin-csv-upload" element={<AdminCSVUpload />} /> */}
+            {/* <Route
+              path="/user-assessment-completed"
+              element={<UserAssessmentListCompleted />}
+            /> */}
+          </Route>
+
+          <Route path="/guest-email" element={<GuestEmail />} />
+          <Route
               path="/guest-take-assessment"
               element={<GuestTakeAssessment />}
             />
@@ -119,14 +140,6 @@ const App = () => {
               path="/guest-take-assessment-result"
               element={<GuestTakeAssessmentResult />}
             />
-
-            <Route path="/setting" element={<AdminSetting />} />
-            <Route path="/privacy-policy" element={<Privacy />} />
-            <Route path="/employee-profile" element={<EmployeeProfile />} />
-
-      
-
-          <Route path="/guest-email" element={<GuestEmail />} />
 
           <Route element={<AdminAuthLayout />}>
             <Route path="/register" element={<AdminSignup />} />
@@ -200,6 +213,15 @@ const App = () => {
                   <Route path="admin-csv-upload" element={<AdminCSVUpload />} />
                 </Route>
                 <Route
+                  path="/take-assessment"
+                  element={<UserTakeAssessment />}
+                />
+
+              <Route
+                  path="/take-assessment-result"
+                  element={<UserTakeAssessmentResult />}
+                />
+                <Route
                   path="/user-assessment-result"
                   element={<UserAssessmentResult />}
                 />
@@ -212,15 +234,6 @@ const App = () => {
                     path="completed"
                     element={<CompletedUserAssessments />}
                   />
-                  <Route
-                  path="/take-assessment"
-                  element={<UserTakeAssessment />}
-                />
-
-              <Route
-                  path="/take-assessment-result"
-                  element={<UserTakeAssessmentResult />}
-                />
                 </Route>
               </Route>
 
