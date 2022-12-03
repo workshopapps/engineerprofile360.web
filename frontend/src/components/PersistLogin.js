@@ -10,39 +10,34 @@ const PersistLogin = () => {
   const [isLoading, setIsLoading] = useState(true);
   const refresh = useRefreshToken();
   const { setAuth, persist, auth } = useAuth();
-  const isMounted = useRef(true);
-
-  useEffect(() => {
-    const loggedInUser = localStorage.getItem("EvalOrg");
-
-    if (isMounted) {
-      loggedInUser !== null && setAuth(JSON.parse(loggedInUser));
-      setIsLoading(false);
-    }
-    return () => (isMounted.current = false);
-  }, [isMounted]);
-
-  // return { isLoading };
 
   // useEffect(() => {
-  //   let isMounted = true;
+  //   const loggedInUser = localStorage.getItem("EvalOrg");
 
-  // const verifyRefreshToken = async () => {
-  //   try {
-  //     await refresh();
-  //   } catch (err) {
-  //     console.error(err);
-  //   } finally {
-  //     isMounted && setIsLoading(false);
+  //   if (isMounted) {
+  //     loggedInUser !== null && setAuth(JSON.parse(loggedInUser));
+  //     setIsLoading(false);
   //   }
-  // };
+  // return () => (isMounted.current = false);
+  // }, [isMounted]);
 
-  // !auth?.accessToken ? verifyRefreshToken() : setIsLoading(false);
+  useEffect(() => {
+    let isMounted = true;
 
-  // return () => (isMounted = false);
+    const verifyRefreshToken = async () => {
+      try {
+        await refresh();
+      } catch (err) {
+        console.error(err);
+      } finally {
+        isMounted && setIsLoading(false);
+      }
+    };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+    !auth?.accessToken ? verifyRefreshToken() : setIsLoading(false);
+
+    return () => (isMounted = false);
+  }, []);
 
   return (
     <>{!persist ? <Outlet /> : isLoading ? <OverlayLoader /> : <Outlet />}</>
