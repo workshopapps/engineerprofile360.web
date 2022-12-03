@@ -69,6 +69,8 @@ import Error from "./ui/pages/404";
 import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
 import GuestLogin from "./main/pages/Auth/GuestLogin";
 import DepartmentSection from "./ui/pages/DepartmentSection/DepartmentSection";
+import {ServerError} from "./ui/pages/ServerError";
+
 
 const ROLES = {
   Employees: 1,
@@ -83,6 +85,7 @@ const App = () => {
         <GlobalStyles />
         <Routes>
           <Route path="/2FA" element={<User2FA />} />
+          <Route path="/serverError" element={<ServerError />} />
 
           {/* Public routes */}
           <Route element={<MainLayout />}>
