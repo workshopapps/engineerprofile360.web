@@ -65,7 +65,7 @@ class EmployeeController extends Controller
                 $csv = new CsvParser();
                 $payload = json_decode($request->getContent(), true);
                 $file = $payload['csv_file'];
-                $result = $csv->parseEmployeeCsv($file, $uid);
+                $result = $csv->parseEmployeeCsv($file, $uid, $payload['department_id']);
                 if ($result["error"] == false && $result["message"] == "csv parsed") {
                     $data = $result['data'];
                     return $this->sendResponse(false, null, "CSV Parsed Successfully", $data, Response::HTTP_OK);
@@ -155,7 +155,6 @@ class EmployeeController extends Controller
             $hash = Hash::make($raw_password);
             unset($json[$key]["id"]);
             $json[$key]['id'] = Str::uuid();
-            $json[$key]['department_id'] = $file['department_id'];
             $json[$key]['raw_password'] = $raw_password;
 
             $result = $this->insertEmployee($json[$key], $raw_password);
