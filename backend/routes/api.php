@@ -39,12 +39,12 @@ Route::get("/test", function () {
 
 //USERSCORE
 Route::prefix("userscore")->group(function () {
-    Route::get('/employee/{id}', [UserScoreController::class, 'getScoresByEmployeeID']);
-    Route::get('/assessment/{id}', [UserScoreController::class, 'getScoresByAssessmentID']);
-    Route::get('/company/{id}/max', [UserScoreController::class, 'getCompanyTopPerformance']);
-    Route::get('/company/{id}', [UserScoreController::class, 'getCompanyTopPerformances']);
-    Route::get('/{employeeId}/{assessmentId}', [UserScoreController::class, 'getScores']);
-    Route::post('/create', [UserScoreController::class, 'store']);
+    Route::get('/employee/{id}', [UserScoreController::class, 'getScoresByEmployeeID'])->middleware("isloggedin");
+    Route::get('/assessment/{id}', [UserScoreController::class, 'getScoresByAssessmentID'])->middleware("isloggedin", "isadmin");
+    Route::get('/company/{id}/max', [UserScoreController::class, 'getCompanyTopPerformance'])->middleware("isloggedin", "isadmin");
+    Route::get('/company/{id}', [UserScoreController::class, 'getCompanyTopPerformances'])->middleware("isloggedin", "isadmin");
+    Route::get('/{employeeId}/{assessmentId}', [UserScoreController::class, 'getScores'])->middleware("isloggedin");
+    Route::post('/create', [UserScoreController::class, 'store'])->middleware("isloggedin");
 });
 
 
