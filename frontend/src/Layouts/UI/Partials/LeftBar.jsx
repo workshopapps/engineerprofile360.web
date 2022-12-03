@@ -1,41 +1,174 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
+import useAuth from "../../../hooks/useAuth";
 
 import { Menu, TaskSquare, Profile2User, Home3, Folder2 } from "iconsax-react";
 
 const LeftBar = () => {
   const { pathname } = useLocation();
+  const { auth } = useAuth();
 
   return (
     <LeftBarContainer>
-      <List>
-        <ListItem $active={pathname.split("/")[1] === "dashboard" || pathname === "/dashboard" ? "active" : ""}>
-          <Link to="/dashboard">
-            <Menu /> Dashboard
-          </Link>
-        </ListItem>
-        <ListItem $active={pathname.split("/")[1] === "departments" || pathname === "/departments" ? "active" : ""}>
-          <Link to="/departments">
-            <Home3 /> Departments
-          </Link>
-        </ListItem>
-        <ListItem $active={pathname.split("/")[1] === "categories" || pathname === "/categories" ? "active" : ""}>
-          <Link to="/categories">
-            <Folder2 /> Categories
-          </Link>
-        </ListItem>
-        <ListItem $active={pathname.split("/")[1] === "assessment" || pathname === "/assessment" ? "active" : ""}>
-          <Link to="/assessment">
-            <TaskSquare /> Assessment
-          </Link>
-        </ListItem>
-        <ListItem $active={pathname.split("/")[1] === "employees" || pathname === "/employees" ? "active" : ""}>
-          <Link to="/employees">
-            <Profile2User /> Employees
-          </Link>
-        </ListItem>
-      </List>
+      {auth.roles === 1 && (
+        <List>
+          <ListItem
+            $active={
+              pathname.split("/")[1] === "dashboard" ||
+              pathname === "/dashboard"
+                ? "active"
+                : ""
+            }
+          >
+            <Link to="/dashboard">
+              <Menu /> Dashboard
+            </Link>
+          </ListItem>
+          <ListItem
+            $active={
+              pathname.split("/")[1] === "assessment" ||
+              pathname === "/assessment"
+                ? "active"
+                : ""
+            }
+          >
+            <Link to="/assessment">
+              <TaskSquare /> Assessment
+            </Link>
+          </ListItem>
+        </List>
+      )}
+
+      {auth.roles === 2 && (
+        <List>
+          <ListItem
+            $active={
+              pathname.split("/")[1] === "dashboard" ||
+              pathname === "/dashboard"
+                ? "active"
+                : ""
+            }
+          >
+            <Link to="/dashboard">
+              <Menu /> Dashboard
+            </Link>
+          </ListItem>
+          <ListItem
+            $active={
+              pathname.split("/")[1] === "departments" ||
+              pathname === "/departments"
+                ? "active"
+                : ""
+            }
+          >
+            <Link to="/departments">
+              <Home3 /> Departments
+            </Link>
+          </ListItem>
+          <ListItem
+            $active={
+              pathname.split("/")[1] === "categories" ||
+              pathname === "/categories"
+                ? "active"
+                : ""
+            }
+          >
+            <Link to="/categories">
+              <Folder2 /> Categories
+            </Link>
+          </ListItem>
+          <ListItem
+            $active={
+              pathname.split("/")[1] === "assessment" ||
+              pathname === "/assessment"
+                ? "active"
+                : ""
+            }
+          >
+            <Link to="/assessment">
+              <TaskSquare /> Assessment
+            </Link>
+          </ListItem>
+          <ListItem
+            $active={
+              pathname.split("/")[1] === "employees" ||
+              pathname === "/employees"
+                ? "active"
+                : ""
+            }
+          >
+            <Link to="/employees">
+              <Profile2User /> Employees
+            </Link>
+          </ListItem>
+        </List>
+      )}
+
+      {auth.roles === 3 && (
+        <List>
+          <ListItem
+            $active={
+              pathname.split("/")[1] === "dashboard" ||
+              pathname === "/dashboard"
+                ? "active"
+                : ""
+            }
+          >
+            <Link to="/dashboard">
+              <Menu /> Dashboard
+            </Link>
+          </ListItem>
+          <ListItem
+            $active={
+              pathname.split("/")[1] === "departments" ||
+              pathname === "/departments"
+                ? "active"
+                : ""
+            }
+          >
+            <Link to="/departments">
+              <Home3 /> Departments
+            </Link>
+          </ListItem>
+          <ListItem
+            $active={
+              pathname.split("/")[1] === "categories" ||
+              pathname === "/categories"
+                ? "active"
+                : ""
+            }
+          >
+            <Link to="/categories">
+              <Folder2 /> Categories
+            </Link>
+          </ListItem>
+          <ListItem
+            $active={
+              pathname.split("/")[1] === "assessment" ||
+              pathname === "/assessment"
+                ? "active"
+                : ""
+            }
+          >
+            <Link to="/assessment">
+              <TaskSquare /> Assessment
+            </Link>
+          </ListItem>
+          <ListItem
+            $active={
+              pathname.split("/")[1] === "employees" ||
+              pathname === "/employees"
+                ? "active"
+                : ""
+            }
+          >
+            <Link to="/employees">
+              <Profile2User /> Employees
+            </Link>
+          </ListItem>
+        </List>
+      )}
     </LeftBarContainer>
   );
 };
