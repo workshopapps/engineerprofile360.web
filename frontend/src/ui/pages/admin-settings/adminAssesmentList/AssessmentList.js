@@ -9,6 +9,7 @@ import PageInfo from "../../../components/molecules/PageInfo";
 import Flex from "../../../components/layout/Flex";
 import { Link } from "react-router-dom";
 import axios from "../../../../api/axios";
+import useAuth from "../../../../hooks/useAuth";
 
 const DataContext = createContext(null);
 
@@ -206,11 +207,17 @@ export const Sort = () => {
 export const List = () => {
   const { completed, setCompleted, isLoading, setIsLoading } =
     useContext(DataContext);
+  const { auth, setAuth } = useAuth();
+
+  const fetchCompleted = () => {
+    return axios("/user-assessment/org/{auth.id}/org-completed");
+  };
+
   useEffect(() => {
     fetchCompleted()
       .then(({ data }) => {
         setCompleted(data);
-        // console.log(data);
+        console.log(auth);
       })
       .catch((error) => {
         console.log(error);

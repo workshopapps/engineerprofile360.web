@@ -9,12 +9,10 @@ import PageInfo from "../../../components/molecules/PageInfo";
 import Flex from "../../../components/layout/Flex";
 import { Link } from "react-router-dom";
 import axios from "../../../../api/axios";
+import useAuth from "../../../../hooks/useAuth";
+// import useAuth from "";
 
 const DataContext = createContext(null);
-
-const fetchAvailable = () => {
-  return axios("/user-assessment/org/org-available");
-};
 
 const info = [
   {
@@ -212,11 +210,16 @@ const Sort = () => {
 const List = () => {
   const { available, setAvailable, isLoading, setIsLoading } =
     useContext(DataContext);
+  const { auth, setAuth } = useAuth();
+
+  const fetchAvailable = () => {
+    return axios("/user-assessment/org/{auth.id}/org-available");
+  };
   useEffect(() => {
     fetchAvailable()
       .then(({ data }) => {
         setAvailable(data);
-        // console.log(data);
+        console.log(auth);
       })
       .catch((error) => {
         console.log(error);
