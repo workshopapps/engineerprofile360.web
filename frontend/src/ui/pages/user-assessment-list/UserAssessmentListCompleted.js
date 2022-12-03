@@ -123,12 +123,14 @@ const Sort = () => {
         ai="center"
         onClick={() => sorting()}
       >
-        <Text> Assessment Type</Text>
-        <img src={down} />
+        <select>
+          <option>
+            <Text>Assessment Type</Text>
+          </option>
+        </select>
       </Flex>
       <Flex ai="center" spacing={30}>
         <Flex
-          spacing={10}
           style={{
             border: "1px solid #8A8886",
             padding: "8px",
@@ -137,9 +139,11 @@ const Sort = () => {
           ai="center"
           onClick={() => dateSort()}
         >
-          <Text>Sort By Date</Text>
-
-          <img src={down} />
+          <select>
+            <option>
+              <Text>Sort By Date</Text>
+            </option>
+          </select>
         </Flex>
         <Hide>
           <Flex spacing={10}>
@@ -159,7 +163,6 @@ const List = () => {
     fetchCompleted()
       .then(({ data }) => {
         setCompleted(data);
-        // console.log(data);
       })
       .catch((error) => {
         console.log(error);
