@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-import logo from "../../../assets/images/logo.svg";
 import facebook from "../../../assets/icons/facebook.svg";
 import instagram from "../../../assets/icons/instagram.svg";
 import twitter from "../../../assets/icons/twitter.svg";
@@ -12,13 +11,14 @@ import {
   Title,
 } from "../../../styles/reusableElements.styled";
 import { Link } from "react-router-dom";
+import Logo from "../../../components/Logo";
 
 const Footer = () => {
   return (
     <FooterTag>
       <FooterContainer>
         <SkriptContact>
-          <img src={logo} alt="Logo of Skript" />
+          <Logo size="lg" />
           <Newsletter>
             <p>
               Join our newsletter to stay up to date on features and releases.
@@ -104,9 +104,9 @@ const FooterContainer = styled(Container)`
   height: 96px;
   display: grid;
   grid-template-columns: 3fr 1fr 1fr 1fr;
-  column-gap: ${({ theme }) => theme.spacing(10)};
+  column-gap: ${({ theme }) => theme.spacing(5)};
   row-gap: ${({ theme }) => theme.spacing(8)};
-  padding: ${({theme}) => theme.spacing(6)} ${({theme}) => theme.spacing(6)};
+  padding: ${({ theme }) => theme.spacing(6)} ${({ theme }) => theme.spacing(6)};
 
   ${({ theme }) => theme.breakpoints.down("md")} {
     grid-template-columns: 1fr 1fr 1fr;
@@ -114,7 +114,8 @@ const FooterContainer = styled(Container)`
 
   ${({ theme }) => theme.breakpoints.down("xs")} {
     grid-template-columns: 1fr;
-    padding: ${({theme}) => theme.spacing(6)} ${({theme}) => theme.spacing(2)};
+    padding: ${({ theme }) => theme.spacing(6)}
+      ${({ theme }) => theme.spacing(2)};
   }
 `;
 
@@ -193,11 +194,11 @@ const List = styled.ul`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(3)};
-
+  padding: 0;
   li {
     font-size: 14px;
     display: flex;
-    align-items: center;
+    padding: 0;
     gap: ${({ theme }) => theme.spacing(2)};
   }
 

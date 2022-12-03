@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+
 import styled from "styled-components";
 import { Button, Title } from "../../../styles/reusableElements.styled";
 
-const TopEmployees = () => {
+const TopEmployees = ({ topPerformances, setIsLoading }) => {
+  const employees = topPerformances?.data ? topPerformances?.data : [];
+
   return (
     <div>
       <Header>
@@ -10,7 +14,9 @@ const TopEmployees = () => {
           <Title as="h2" $size="24px" $color="#6E6E6E" $weight="400">
             Top Employees
           </Title>
-          <span>View all</span>
+          <Link to="/employees">
+            <span>View all</span>
+          </Link>
         </div>
         <Filter>
           <select>
@@ -24,26 +30,28 @@ const TopEmployees = () => {
       <TopEmployeesList>
         <table>
           <tbody>
-          <tr>
-            <th>#</th>
-            <th>Staff name</th>
-            <th>Department</th>
-            <th>Assessment</th>
-            <th>Percentage</th>
-            <th>Action</th>
-          </tr>
             <tr>
-              <td>1.</td>
-              <td>Browyn Louis</td>
-              <td>Front End</td>
-              <td>React.js</td>
-              <td>100.00%</td>
-              <td>
-                <Button $variant="outlined" $color="#2667ff">
-                  View Results
-                </Button>
-              </td>
+              <th>#</th>
+              <th>Staff name</th>
+              <th>Department</th>
+              <th>Percentage</th>
+              <th>Action</th>
             </tr>
+            {employees.map((employee, index) => (
+              <tr key={`employee-${index}`}>
+                <td>{index + 1}.</td>
+                <td>{employee.employee_name}</td>
+                <td>{employee.department}</td>
+                <td>{employee.points}%</td>
+                <td>
+                  <Link to="/">
+                    <Button $variant="outlined" $color="#2667ff">
+                      View Results
+                    </Button>
+                  </Link>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </TopEmployeesList>
@@ -86,7 +94,7 @@ const Filter = styled.div`
     border-radius: ${({ theme }) => theme.spacing(0.5)};
     font-size: 14px;
     color: #323130;
-    background: #FFFFFF;
+    background: #ffffff;
     outline: none;
   }
 
@@ -106,7 +114,7 @@ const TopEmployeesList = styled.div`
   table {
     table-layout: fixed;
     width: 100%;
-    min-width: 960px;
+    min-width: 768px;
     overflow: auto;
 
     tr:first-of-type {

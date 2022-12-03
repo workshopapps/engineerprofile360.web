@@ -31,12 +31,12 @@ class IsLoggedIn extends Controller
             $jwtToken = $request->cookie($this->CookieName);
             
             // we were originally requesting token from the headers, but later change to using the cookie sent along thr browser for security reasons.
-            
+
             // $header = $request->header('Authorization');
     
             // check if authorization header has been passed
             if(!isset($jwtToken) || empty($jwtToken)){
-                return $this->sendResponse(true,"JWT token is missing", "Invalid Jwt token", null, 403);
+                return $this->sendResponse(true,"JWT token is missing from cookies.", "Invalid Jwt token", null, 403);
             }
     
             // decode the jwt token

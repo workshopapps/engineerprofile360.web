@@ -15,3 +15,7 @@ export const showSuccessToast = (success) => {
     position: toast.POSITION.TOP_RIGHT,
   });
 };
+
+export const sleep = (sec=1)=> {
+  return new Promise(res => setTimeout(res(), sec*1000))
+}
