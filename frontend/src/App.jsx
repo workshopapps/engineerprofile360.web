@@ -10,7 +10,7 @@ import { MainLayout, UiLayout } from "./Layouts";
 
 import Contact from "./main/pages/Contact";
 import DemoSchedule from "./main/pages/Demo";
-import { AdminAuthLayout } from "./main/components";
+import { AdminAuthLayout, UserAuthLayout } from "./main/components";
 import {
   Home,
   About,
@@ -32,7 +32,11 @@ import Terms from "../src/ui/pages/termsAndService/TermsAndService";
 import Blog from "../src/main/pages/Blog";
 import AssessmentList from "./main/components/sections/userAssessmentList/AssessmentList";
 import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
-import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
+// import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
+import UserTakeAssessment from "./ui/pages/userTakeAssessment/UserTakeAssessment";
+import UserTakeAssessmentResult from "./ui/pages/userTakeAssessment/UserTakeAssessmentResult";
+import GuestTakeAssessment from "./ui/pages/guest/GuestTakeAssessment";
+import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
 import Privacy from "./main/pages/Privacy/privacy";
 // import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
@@ -55,6 +59,10 @@ import UserAssessmentResult from "./ui/pages/user-assessment-result/UserAssessme
 import CsvUploading from "./ui/pages/csv/CsvUploading";
 import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
 import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
+
+import UserResetPassword from "./ui/pages/user-password/UserResetPassword";
+import UserLogin from "./ui/pages/user-password/UserLogin";
+import UserForgotPassword from "./ui/pages/user-password/UserForgotPassword";
 import AssessmentFirstPage from "./ui/pages/AssessmentFirstPage";
 import CreateAssessment from "./ui/pages/CreateAssessment";
 
@@ -72,7 +80,7 @@ import UserAssessmentListOutlet from "./ui/pages/user-assessment-list/UserAssess
 import EmployeeUserDashboard from "./ui/pages/Employee/EmployeeDashboard";
 import Error from "./ui/pages/404";
 import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
-import GuestEmail from "./main/pages/GuestEmail";
+
 import GuestLogin from "./main/pages/Auth/GuestLogin";
 import DepartmentSection from "./ui/pages/DepartmentSection/DepartmentSection";
 import PersistLogin from "./components/PersistLogin";
@@ -92,7 +100,16 @@ const App = () => {
         <Routes>
           <Route path="/2FA" element={<User2FA />} />
           <Route path="/guest-email" element={<GuestEmail />} />
-          <Route path="/guest-assessment-list" element={<GuestAssessmentList />} />
+          <Route
+            path="/guest-assessment-list"
+            element={<GuestAssessmentList />}
+          />
+
+          <Route path="/user" element={<UserAuthLayout />}>
+            <Route path="reset-password" element={<UserResetPassword />} />
+            <Route path="login" element={<UserLogin />} />
+            <Route path="forgot-password" element={<UserForgotPassword />} />
+          </Route>
 
           {/* Public routes */}
           <Route element={<MainLayout />}>
@@ -116,6 +133,9 @@ const App = () => {
               path="/take-assessment-list"
               element={<UserTakeAssessment />}
             />
+            <Route path="/guest-take-assessment" element={<GuestTakeAssessment />}/>
+            <Route path="/guest-take-assessment-result" element={<GuestTakeAssessmentResult />}/>
+
 
             <Route path="/csv-uploading" element={<CsvUploading />} />
 
@@ -154,16 +174,20 @@ const App = () => {
 
           {/* Private Route */}
           <Route element={<UiLayout />}>
-            {/* Employee Route */}
             <Route element={<PersistLogin />}>
+              {/* Employee Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Employees} />}>
                 {/* Put in Protected pages in here */}
-                <Route path="/employee-profile" element={<EmployeeProfile />} />
-                <Route path="/404" element={<Error />} />
+                {/* <Route
+                path="/user-assessment-result"
+                element={<UserAssessmentResult />}
+              /> */}
                 <Route
                   path="/employee-user-dashboard"
                   element={<EmployeeUserDashboard />}
                 />
+                <Route path="/employee-profile" element={<EmployeeProfile />} />
+                <Route path="/404" element={<Error />} />
               </Route>
 
               {/* Organization Route */}
@@ -174,10 +198,6 @@ const App = () => {
                   path="/assessment/view-assessment"
                   element={<AdminViewAssessment />}
                 />
-                <Route
-                  path="/employees/csv-upload-preview"
-                  element={<PreviewCsvUpload />}
-                />
                 <Route path="/departments" element={<DepartmentSection />} />
                 <Route path="/dashboard" element={<CompanyDashboard />} />
                 <Route path="/employees" element={<Employees />}>
@@ -187,45 +207,55 @@ const App = () => {
                     path="full-profile"
                     element={<EmployeeFullProfile />}
                   />
+                  <Route
+                    path="employee-profile"
+                    element={<EmployeeProfile />}
+                  />
                   <Route path="add-employee" element={<AdminCSVUpload />} />
                   <Route
                     path="employee-department"
                     element={<EmployeeDeparment />}
                   />
                 </Route>
-                <Route
-                  path="employee-user-dashboard"
-                  element={<EmployeeUserDashboard />}
-                />
+                <Route path="/take-assessment" element={<UserTakeAssessment />}/>
+                <Route path="/take-assessment-result" element={<UserTakeAssessmentResult />}/>
                 <Route path="/assessment" element={<MainAssessment />}>
                   <Route path="" element={<AssessmentFirstPage />} />
+                  <Route
+                    path="user-assessment-result"
+                    element={<UserAssessmentResult />}
+                  />
                   <Route
                     path="create-assessment"
                     element={<CreateAssessment />}
                   />
                   <Route path="admin-csv-upload" element={<AdminCSVUpload />} />
-                </Route>
-                <Route
-                  path="/user-assessment-result"
-                  element={<UserAssessmentResult />}
-                />
-                <Route
-                  path="/user-assessment-list"
-                  element={<UserAssessmentListOutlet />}
-                >
-                  <Route path="" element={<UserAssessmentListAvailable />} />
                   <Route
-                    path="completed"
-                    element={<CompletedUserAssessments />}
+                    path="user-assessment-result"
+                    element={<UserAssessmentResult />}
                   />
+                  <Route
+                    path="user-assessment-outlet"
+                    element={<UserAssessmentListOutlet />}
+                  >
+                    <Route path="" element={<UserAssessmentListAvailable />} />
+                    <Route
+                      path="completed"
+                      element={<CompletedUserAssessments />}
+                    />
+                  </Route>
                 </Route>
-              </Route>
 
-              {/* Overall Admin Route */}
-              <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
-                {/* Put in Protected pages in here */}
+                {/* Overall Admin Route */}
+                <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
+                  {/* Put in Protected pages in here */}
+                </Route>
+
+                {/* <Route element={<DashboardLayout />}>
+              <Route path="/assessment" element={<Assessment />} />
+              </Route> */}
               </Route>
-                <Route path="/assessment" element={<Assessment />} />
+              <Route path="/assessment" element={<Assessment />} />
             </Route>
           </Route>
         </Routes>

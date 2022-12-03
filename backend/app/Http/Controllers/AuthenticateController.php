@@ -372,7 +372,6 @@ class AuthenticateController extends Controller
         $user = User::where("user_id", $id);
         $verifyToken = Token::where("token", $token);
 
-
         if ($user->count() == 0) {
             return $this->sendResponse(true, 'Invalid verification link, no user was found', "Invalid verification link", null, 404);
         }

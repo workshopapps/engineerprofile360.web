@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import ArrowSvg from "../../assets/icons/app/arrow-down.svg";
 import FilterSvg from "../../assets/icons/app/filter.svg";
 import MenuSvg from "../../assets/icons/app/menu.svg";
@@ -11,110 +11,144 @@ import axios from "../../api/axios";
 import { useNavigate } from "react-router-dom";
 
 const GuestAssessmentList = () => {
+  const navigate = useNavigate();
+  const [assessmentDropdown, setAssessmentDropdown] = useState(false);
+  const [stacks, setStacks] = useState([]);
+  const [interviews, setInterviews] = useState([]);
 
-  const navigate = useNavigate()
-  const [assessmentDropdown, setAssessmentDropdown] = useState(false)
-  const [stacks, setStacks] = useState([])
-  const [interviews, setInterviews] = useState([])
-
-  useEffect(()=>{
+  useEffect(() => {
     //instead loading stacks from server
     //load from local storaged
-    const guest = JSON.parse(localStorage.getItem('guest'))
-    console.log(guest.stack)
+    let guest = localStorage.getItem("guest");
+    // console.log(guest);
     if (!guest) {
-      navigate("/guest-login")
+      navigate("/guest-login");
+    } else {
+      guest = JSON.parse(guest);
+      console.log(guest);
+      fetchInterviews(guest.stack);
+
+      //axios call will not be loaded again
+      axios
+        .get(`https://api.eval360.hng.tech/api/stack/all`)
+        .then((response) => {
+          setStacks(JSON.parse(response.data.message));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-    fetchInterviews(guest.stack)
-    
-    //axios call will not be loaded again
-    axios.get(`https://api.eval360.hng.tech/api/stack/all`).then((response)=>{
-
-setStacks(JSON.parse(response.data.message))
-    }).catch((error)=>{
-      console.log(error)
-    })
-
     //call  fetchInterviews function with stackId
-  },[])
+  }, []);
 
   const fetchInterviews = (stack_id) => {
     //``
-    axios.get(`https://api.eval360.hng.tech/api/interview/stack/${stack_id}`).then((response)=>{
-console.log(response)
-setInterviews(response?.data?.data || [])
-    }).catch((error)=>{
-      console.log(error)
-    })
-  }
+    axios
+      .get(`https://api.eval360.hng.tech/api/interview/stack/${stack_id}`)
+      .then((response) => {
+        // console.log(response)
+        setInterviews(response?.data?.data || []);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <>
-    <Header />
-    <MainContainer>
-    <Sidebar className="nav" external={true} />
-      <Wrapper>
-        <Main>
-          <div className="Filter_wrapper">
-            <button className="Filter_button" style={{position:'relative'}} onClick={()=>setAssessmentDropdown((prev)=>!prev)}>
-              Assessment Type <img src={ArrowSvg} alt="Arrow" width={13} />
-              <div style={{display: assessmentDropdown?'block' :'none' ,padding:'1rem 1rem',left:'0' ,width:'100%',position:'absolute', top:'100%', zIndex:'2', backgroundColor:'#fff', boxShadow:'0 5px 5px 6px rgb(0 0 0/.2)'}}>
-              {(stacks || [])?.map((el, i)=> 
-              {
-               return <h1 key={i}  onClick={()=>fetchInterviews(el?.id || '')} style={{marginBottom:'2%'}}> {el?.name || ''}</h1>
-              }
-              )}
-              </div>
-            </button>
-            <div className="Filter_flex">
-              <button className="Filter_button">
-                Sort By Date <img src={ArrowSvg} alt="Arrow" width={13} />
+      <Header />
+      <MainContainer>
+        <Sidebar className="nav" external={true} />
+        <Wrapper>
+          <Main>
+            <h1>Select Assessment</h1>
+            <div className="Filter_wrapper">
+              <button
+                className="Filter_button"
+                style={{ position: "relative" }}
+                onClick={() => setAssessmentDropdown((prev) => !prev)}
+              >
+                Assessment Type <img src={ArrowSvg} alt="Arrow" width={13} />
+                <div
+                  style={{
+                    display: assessmentDropdown ? "block" : "none",
+                    padding: "1rem 1rem",
+                    left: "0",
+                    width: "100%",
+                    position: "absolute",
+                    top: "100%",
+                    zIndex: "2",
+                    backgroundColor: "#fff",
+                    boxShadow: "0 5px 5px 6px rgb(0 0 0/.2)",
+                  }}
+                >
+                  {(stacks || [])?.map((el, i) => {
+                    return (
+                      <p
+                        key={i}
+                        onClick={() => fetchInterviews(el?.id || "")}
+                        style={{ marginBottom: "2%" }}
+                      >
+                        {" "}
+                        {el?.name || ""}
+                      </p>
+                    );
+                  })}
+                </div>
               </button>
-              <div>
-                <img src={FilterSvg} alt="Filter" width={40} />
-              </div>
-              <div>
-                <img src={MenuSvg} alt="Menu" width={40} />
+              <div className="Filter_flex">
+                <button className="Filter_button">
+                  Sort By Date <img src={ArrowSvg} alt="Arrow" width={13} />
+                </button>
+                <div>
+                  <img src={FilterSvg} alt="Filter" width={40} />
+                </div>
+                <div>
+                  <img src={MenuSvg} alt="Menu" width={40} />
+                </div>
               </div>
             </div>
-          </div>
-          <div className="table_container">
-            <table>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>Number of times Taken</th>
-                  <th>Company Name</th>
-                  <th></th>
-                </tr>
-              </thead>
+            <div className="table_container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Number of times Taken</th>
+                    <th>Company Name</th>
+                    <th></th>
+                  </tr>
+                </thead>
 
-              <tbody>
-                {interviews.length > 0 && interviews.map((item,i) => {
-                  return (
-                    <tr key={i}>
-                      <td>{i+1}</td>
-                      <td>{item?.name || ''}</td>
-                      <td>{item?.times_taken || ''}</td>
-                      <td>{item?.company_name || ''}</td>
-                      <td>
-                        <button>Take Assessment</button>
-                      </td>
+                <tbody>
+                  {interviews.length > 0 &&
+                    interviews.map((item, i) => {
+                      return (
+                        <tr key={i}>
+                          <td>{i + 1}</td>
+                          <td>{item?.name || ""}</td>
+                          <td>{item?.times_taken || ""}</td>
+                          <td>{item?.company_name || ""}</td>
+                          <td>
+                            <button>Take Assessment</button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  {interviews.length === 0 && (
+                    <tr>
+                      <td colSpan="5">No Data available for this stack</td>
                     </tr>
-                  );
-                })}
-                {interviews.length === 0 && <tr><td colSpan="5">No Data available for this stack</td></tr>}
-              </tbody>
-            </table>
-          </div>
-        </Main>
-      </Wrapper>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </Main>
+        </Wrapper>
       </MainContainer>
       <Footer />
     </>
   );
 };
-
 
 const Wrapper = styled.div`
   display: flex;
@@ -132,6 +166,16 @@ const Main = styled.main`
   padding-bottom: 40px;
   padding: 40px;
 
+  h1 {
+    align-self: start;
+    margin-bottom: 50px;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 37px;
+    /* identical to box height */
+
+    color: #6e6e6e;
+  }
   table {
     border-collapse: collapse;
     width: 100%;
@@ -162,8 +206,8 @@ const Main = styled.main`
     overflow-x: auto;
   }
 
-   /*scrolling responsive table*/
-   table {
+  /*scrolling responsive table*/
+  table {
     border-collapse: collapse;
     width: 100%;
   }
@@ -222,7 +266,6 @@ const Main = styled.main`
     justify-content: space-between;
     align-items: center;
   }
-
 
   /* Media queries */
   @media screen and (max-width: 767px) {

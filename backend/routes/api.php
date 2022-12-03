@@ -87,6 +87,14 @@ Route::prefix("assessment")->group(function () {
     Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAssessment'])->middleware("isloggedin", "isadmin");
 });
 
+
+//Admin Assessment routes operations
+Route::prefix("assessment/admin")->group(function () {
+    Route::post('/create', [AssessmentController::class, 'adminCreateAssessment'])->middleware("isloggedin", "isoveralladmin");
+    Route::put('/{assessmentId}', [AssessmentController::class, 'adminUpdateAssessment'])->middleware("isloggedin", "isoveralladmin");
+    Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'adminDeleteAssessment'])->middleware("isloggedin", "isoveralladmin");
+});
+
 // Test Employee Adding using csv file
 // Visit http://localhost:8000 in the browser and upload a csv containing a the following attributes (s/n, fullname, username, email)
 Route::post("/test_csv", function (Request $req) {
@@ -146,7 +154,7 @@ Route::prefix("category")->group(function () {
     Route::put('/{categoryId}/update', [CategoryController::class, 'updateCategory'])->middleware("isloggedin");
     Route::post('/add', [CategoryController::class, 'createCategory'])->middleware("isloggedin", "isadmin");
     Route::delete('{catId}/delete', [CategoryController::class, 'deleteCategory'])->middleware("isloggedin", "isadmin");
-    Route::get("/get/{org_id}", [CategoryController::class, "getCategoriesByOrgId"]);
+    Route::get("/get/{org_id}", [CategoryController::class, "getCategoriesByOrgId"])->middleware("isloggedin", "isadmin");
     Route::get('/assessment/{id}', [CategoryController::class, 'getByAssessmentId'])->middleware("isloggedin", "isadmin");
 });
 

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { TaskSquare, TickCircle, Note, Profile2User } from "iconsax-react";
@@ -89,7 +90,9 @@ const Chart = ({ topPerformance }) => {
         <Title as="h2" $size="24px" $color="#6E6E6E" $weight="400">
           Top Performance
         </Title>
-        <span>View all</span>
+        <Link to="/employees">
+          <span>View all</span>
+        </Link>
       </Header>
       <PerformancesChart>
         <Radar data={data} />

@@ -32,7 +32,7 @@ const TopBar = ({ handleLeftBarToggle, leftBar }) => {
     <TopBarContainer>
       <TopBarContent>
         <LogoContainer>
-        <Logo size="sm" />
+          <Logo size="sm" />
         </LogoContainer>
         <Navigation>
           <SearchInputField
@@ -196,7 +196,6 @@ const Icons = styled.div`
   display: flex;
   align-items: flex-end;
   gap: ${({ theme }) => theme.spacing(2)};
-
 
   svg:nth-of-type(2) {
     ${({ theme }) => theme.breakpoints.up("sm")} {
