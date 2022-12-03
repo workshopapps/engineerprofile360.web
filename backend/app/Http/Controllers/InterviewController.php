@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class InterviewController extends Controller
 {
+    
     public function addInterview(InterviewRequest $request): JsonResponse
     {
         $data = $request->all();
@@ -68,7 +69,7 @@ class InterviewController extends Controller
                 //throw $th;
                 return $this->sendResponse(true, $e->getMessage(), "Interviews Not Found", null, Response::HTTP_BAD_REQUEST);
         }
-   
+    }
 
     public function deleteInterview($id){
         try {

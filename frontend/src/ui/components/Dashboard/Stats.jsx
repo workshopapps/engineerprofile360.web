@@ -1,40 +1,88 @@
 import React from "react";
 import styled from "styled-components";
 
-import { TaskSquare, TickCircle, Star, Messages3 } from "iconsax-react";
+import { TaskSquare, TickCircle, Note, Profile2User } from "iconsax-react";
 import { Title } from "../../../styles/reusableElements.styled";
 
-const Stats = () => {
+import {
+  Chart as ChartJS,
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Radar } from "react-chartjs-2";
+
+ChartJS.register(
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend
+);
+
+const Stats = ({ stats, topPerformance }) => {
   return (
-    <StatsContainer>
-      <IndividualStats>
-        <Assessment>
-          <TaskSquare color="#141ae9" />
-          <Type>Assessments</Type>
-          <Number>102</Number>
-        </Assessment>
-        <Rate>
-          <Star color="#107c10" />
-          <Type>Success Rate</Type>
-          <Number>102</Number>
-        </Rate>
-        <VerifiedUsers>
-          <TickCircle color="#141ae9" />
-          <Type>Verified Staffs</Type>
-          <Number>102</Number>
-        </VerifiedUsers>
-        <Feedbacks>
-          <Messages3 color="#141ae9" />
-          <Type>Feedbacks</Type>
-          <Number>102</Number>
-        </Feedbacks>
-      </IndividualStats>
-      <Chart />
-    </StatsContainer>
+    <>
+      <StatsContainer>
+        <IndividualStats>
+          <Stat>
+            <Profile2User color="#141ae9" />
+            <Type>
+              Total No. of <br /> Employees
+            </Type>
+            <Number>{stats.employees}</Number>
+          </Stat>
+          <Stat>
+            <Note color="#141ae9" />
+            <Type>
+              Total <br />
+              Assessments
+            </Type>
+            <Number>{stats.assessments}</Number>
+          </Stat>
+          <Stat>
+            <TickCircle color="#141ae9" />
+            <Type>
+              Approved <br />
+              Assessments
+            </Type>
+            <Number>{stats.availableAssessments}</Number>
+          </Stat>
+          <Stat>
+            <TaskSquare color="#141ae9" />
+            <Type>
+              Completed
+              <br /> Assessments
+            </Type>
+            <Number>{stats.completedAssessments}</Number>
+          </Stat>
+        </IndividualStats>
+        <Chart topPerformance={topPerformance} />
+      </StatsContainer>
+    </>
   );
 };
 
-const Chart = () => {
+const Chart = ({ topPerformance }) => {
+  const data = {
+    labels: topPerformance?.categories
+      ? JSON.parse(topPerformance?.categories)
+      : [],
+    datasets: [
+      {
+        label: "Categories",
+        data: topPerformance?.passed_questions,
+        backgroundColor: "rgba(95, 210, 85, 0.2)",
+        borderColor: "#107C10",
+        borderWidth: 2,
+      },
+    ],
+  };
+
   return (
     <Performances>
       <Header>
@@ -43,7 +91,9 @@ const Chart = () => {
         </Title>
         <span>View all</span>
       </Header>
-      <PerformancesChart></PerformancesChart>
+      <PerformancesChart>
+        <Radar data={data} />
+      </PerformancesChart>
     </Performances>
   );
 };
@@ -99,6 +149,7 @@ const Stat = styled.div`
 
 const Type = styled.div`
   font-size: 16px;
+  color: #141ae9;
 `;
 
 const Number = styled.div`
@@ -106,10 +157,12 @@ const Number = styled.div`
 `;
 
 const Performances = styled.div`
-  flex: 0 0 40%;
+  flex: 0 0 45%;
+  padding-right: 2.5%;
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
     width: 100%;
+    padding-right: 0;
   }
 `;
 const Header = styled.div`
@@ -129,41 +182,8 @@ const PerformancesChart = styled.div`
   background: #f8fbfd;
   width: 100%;
   height: 85%;
+  display: flex;
+  align-tems: center;
+  justify-content: center;
   min-height: 300px;
-`;
-
-const Assessment = styled(Stat)`
-  ${Type} {
-    color: #141ae9;
-  }
-`;
-
-const Rate = styled(Stat)`
-  ${Type} {
-    color: #107c10;
-  }
-
-  ${Number} {
-    color: #1e1e1e1;
-  }
-`;
-
-const VerifiedUsers = styled(Stat)`
-  ${Type} {
-    color: #141ae9;
-  }
-
-  ${Number} {
-    color: #1e1e1e1;
-  }
-`;
-
-const Feedbacks = styled(Stat)`
-  ${Type} {
-    color: #141ae9;
-  }
-
-  ${Number} {
-    color: #1e1e1e1;
-  }
 `;
