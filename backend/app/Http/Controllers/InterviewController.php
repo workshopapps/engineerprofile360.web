@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class InterviewController extends Controller
 {
+    
     public function addInterview(InterviewRequest $request): JsonResponse
     {
         $data = $request->all();
