@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import Stats from "../components/Dashboard/Stats";
-import TopEmployees from "../components/Dashboard/TopEmployees";
-import PageInfo from "../components/molecules/PageInfo";
-import useAuth from "../../hooks/useAuth";
-import axios from "../../api/axios";
-import { showErrorToast } from "../../helpers/helper";
-import { OverlayLoader } from "../../styles/reusableElements.styled";
+import Stats from "../../components/Company/Dashboard/Stats";
+import TopEmployees from "../../components/Company/Dashboard/TopEmployees";
+import PageInfo from "../../components/molecules/PageInfo";
+import useAuth from "../../../hooks/useAuth";
+import axios from "../../../api/axios";
+import { showErrorToast } from "../../../helpers/helper";
+import { OverlayLoader } from "../../../styles/reusableElements.styled";
 
 const Dashboard = () => {
-  const { auth, setAuth } = useAuth();
+  const { auth } = useAuth();
   const [stats, setStats] = useState({});
   const [topPerformance, setTopPerformance] = useState({});
   const [topPerformances, setTopPerformances] = useState({});
@@ -33,9 +33,8 @@ const Dashboard = () => {
         });
 
         setIsLoading(false);
+        
 
-        const username = response[0]?.data?.data.username;
-        const fullName = response[0]?.data?.data.full_name;
         const employees = response[1]?.data.data.data.length;
         const assessments = response[2]?.data.data.length;
         const availableAssessments = response[3]?.data.data.length;
@@ -43,11 +42,6 @@ const Dashboard = () => {
         const topEmployee = response[5]?.data.data;
         const topEmployees = response[6]?.data;
 
-        setAuth({
-          ...auth,
-          username,
-          fullName,
-        });
         setStats({
           employees,
           assessments,
@@ -60,7 +54,7 @@ const Dashboard = () => {
         // console.log(response);
       } catch (err) {
         if (!err?.response) {
-          showErrorToast("No Server Response");
+          showErrorToast(err.message);
         } else if (err?.response.data.errorState === true) {
           showErrorToast(err.response.data.message);
           setFetchError(err.response.data.message);

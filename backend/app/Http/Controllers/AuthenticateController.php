@@ -362,47 +362,6 @@ class AuthenticateController extends Controller {
         }
     }
 
-    // verify organization email
-    public function verifyEmail(Request $request, $id, $token){
-        // verify if that user exists
-        $user = User::where("user_id", $id);
-        $verifyToken = Token::where("token", $token);
-
-
-        if($user->count() == 0){
-            return $this->sendResponse(true, 'Invalid verification link, no user was found',"Invalid verification link", null, 404);
-        }
-
-        if($verifyToken->count() == 0){
-            return $this->sendResponse(true, 'Invalid verification link: token not found',"Invalid verification token", null, 400);
-        }
-
-        $exp = $verifyToken->first()["exp"];
-        $isExpired = $this->isExpired($exp);
-
-        if($isExpired){
-            // remove expired link from db
-            Token::where("user_id", $id)->delete();
-            return $this->sendResponse(true, "verification link expired", "link already expired", null, 400);
-        }
-
-        // check if user has been verified already
-        $users = User::where("user_id", $id);
-
-        if($users->first()["isVerified"] == 1){
-            return $this->sendResponse(true, "user email has been verified", "Email has been verified already", null, 200);
-        }
-
-
-        // update verified user status
-        User::where("user_id", $id)->update(array("isVerified"=>true));
-
-        // delte token from db
-        // Token::where("user_id", $id)->delete();
-
-        return $this->sendResponse(false, null, "Email verified successfully", null, 200);
-    }
-
     public function forgotPassword(Request $req, $email){
         // validate data
         $validator = Validator::make([
@@ -429,6 +388,48 @@ class AuthenticateController extends Controller {
         // send client response
         return $this->sendResponse(false, null, "Password reset link sent",null, 200);
     }
+
+        // verify organization email
+        public function verifyEmail(Request $request, $id, $token){
+            // verify if that user exists
+            $user = User::where("user_id", $id);
+            $verifyToken = Token::where("token", $token);
+    
+    
+            if($user->count() == 0){
+                return $this->sendResponse(true, 'Invalid verification link, no user was found',"Invalid verification link", null, 404);
+            }
+    
+            if($verifyToken->count() == 0){
+                return $this->sendResponse(true, 'Invalid verification link: token not found',"Invalid verification token", null, 400);
+            }
+    
+            $exp = $verifyToken->first()["exp"];
+            $isExpired = $this->isExpired($exp);
+    
+            if($isExpired){
+                // remove expired link from db
+                Token::where("user_id", $id)->delete();
+                return $this->sendResponse(true, "verification link expired", "link already expired", null, 400);
+            }
+    
+            // check if user has been verified already
+            $users = User::where("user_id", $id);
+    
+            if($users->first()["isVerified"] == 1){
+                return $this->sendResponse(true, "user email has been verified", "Email has been verified already", null, 200);
+            }
+    
+    
+            // update verified user status
+            User::where("user_id", $id)->update(array("isVerified"=>true));
+    
+            // delete token from db
+            // Token::where("user_id", $id)->delete();
+    
+            return $this->sendResponse(false, null, "Email verified successfully", null, 200);
+        }
+    
 
     public function verifyPasswordReset(Request $req, $id, $token){
 

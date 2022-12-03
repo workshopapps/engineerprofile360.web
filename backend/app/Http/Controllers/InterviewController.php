@@ -47,7 +47,7 @@ class InterviewController extends Controller
 
     public function getInterviewByStack($stackId) {
         try {
-            $interviews = Interview::where('stack_id', $stackId)->paginate(5);
+            $interviews = Interview::where('stack_id', $stackId)->get();
          
             if( !$interviews) {
                 return $this->sendResponse(

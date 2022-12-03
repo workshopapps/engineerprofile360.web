@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { TaskSquare, TickCircle, Note, Profile2User } from "iconsax-react";
-import { Title } from "../../../styles/reusableElements.styled";
+import { Title } from "../../../../styles/reusableElements.styled";
 
 import {
   Chart as ChartJS,
@@ -71,11 +71,11 @@ const Chart = ({ topPerformance }) => {
   const data = {
     labels: topPerformance?.categories
       ? JSON.parse(topPerformance?.categories)
-      : [],
+      : ["", "", "", "", "", ""],
     datasets: [
       {
         label: "Categories",
-        data: topPerformance?.passed_questions,
+        data: topPerformance?.passed_questions || [0, 0, 0, 0, 0, 0],
         backgroundColor: "rgba(95, 210, 85, 0.2)",
         borderColor: "#107C10",
         borderWidth: 2,
