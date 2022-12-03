@@ -133,9 +133,14 @@ const App = () => {
               path="/take-assessment-list"
               element={<UserTakeAssessment />}
             />
-            <Route path="/guest-take-assessment" element={<GuestTakeAssessment />}/>
-            <Route path="/guest-take-assessment-result" element={<GuestTakeAssessmentResult />}/>
-
+            <Route
+              path="/guest-take-assessment"
+              element={<GuestTakeAssessment />}
+            />
+            <Route
+              path="/guest-take-assessment-result"
+              element={<GuestTakeAssessmentResult />}
+            />
 
             <Route path="/csv-uploading" element={<CsvUploading />} />
 
@@ -147,7 +152,7 @@ const App = () => {
             <Route path="/setting" element={<AdminSetting />} />
             <Route path="/privacy-policy" element={<Privacy />} />
             <Route path="/employee-profile" element={<EmployeeProfile />} />
-            {/* <Route path="/admin-csv-upload" element={<AdminCSVUpload />} /> */}
+            <Route path="/admin-csv-upload" element={<AdminCSVUpload />} />
             {/* <Route
               path="/user-assessment-completed"
               element={<UserAssessmentListCompleted />}
@@ -217,8 +222,14 @@ const App = () => {
                     element={<EmployeeDeparment />}
                   />
                 </Route>
-                <Route path="/take-assessment" element={<UserTakeAssessment />}/>
-                <Route path="/take-assessment-result" element={<UserTakeAssessmentResult />}/>
+                <Route
+                  path="/take-assessment"
+                  element={<UserTakeAssessment />}
+                />
+                <Route
+                  path="/take-assessment-result"
+                  element={<UserTakeAssessmentResult />}
+                />
                 <Route path="/assessment" element={<MainAssessment />}>
                   <Route path="" element={<AssessmentFirstPage />} />
                   <Route
