@@ -231,11 +231,10 @@ class AssessmentController extends Controller
     
             
             if(!isset($payload["name"]) || !isset($payload["start_date"]) || !isset($payload["start_time"])){
-                return $this->sendResponse(true, "expected a valid payload", "invalid payload given.", null, 400);
+                return $this->sendResponse(true, "expected a valid payload", "invalid payload given.", null, Response::HTTP_BAD_REQUEST);
             }
             
             $uid = $request->user["id"];
-            $id = Str::uuid();
             $name = $payload["name"];
             $start_date = $payload["start_date"];
             $start_time = $payload["start_time"];
@@ -243,12 +242,11 @@ class AssessmentController extends Controller
             $restAssessment = Assessment::where("name", $name);
 
             if($restAssessment->count() > 0){
-                return $this->sendResponse(true, "assessment name already exists", "name already exists.", null, 400);
+                return $this->sendResponse(true, "assessment name already exists", "name already exists.", null, Response::HTTP_BAD_REQUEST);
             }
 
             // category data
             $data = [
-                "id"=> $id,
                 "name"=>$name,
                 "start_date"=> $start_date,
                 "start_time"=> $start_time,
@@ -257,9 +255,9 @@ class AssessmentController extends Controller
 
             Assessment::create($data);
 
-            return $this->sendResponse(false,null, "assessment created.", $data, 200);
+            return $this->sendResponse(false,null, "assessment created.", $data, Response::HTTP_CREATED);
         }  catch (\Exception $e) {
-            return $this->sendResponse(true,'something went wrong creating assessment', $e->getMessage(), null, 500);
+            return $this->sendResponse(true,'something went wrong creating assessment', $e->getMessage(), null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -269,11 +267,11 @@ class AssessmentController extends Controller
             $payload = json_decode($request->getContent(), true);
 
             if(!isset($payload["name"]) || !isset($payload["start_date"]) || !isset($payload["start_time"])){
-                return $this->sendResponse(true, "expected a valid payload", "invalid payload given.", null, 400);
+                return $this->sendResponse(true, "expected a valid payload", "invalid payload given.", null, Response::HTTP_BAD_REQUEST);
             }
 
             if(!isset($assessmentId) || empty($assessmentId)){
-                return $this->sendResponse(true, "expected a valid category 'id'  but got none", "category id is missing.", null, 400);
+                return $this->sendResponse(true, "expected a valid category 'id'  but got none", "category id is missing.", null, Response::HTTP_BAD_REQUEST);
             }
 
 
@@ -284,14 +282,14 @@ class AssessmentController extends Controller
             $assessment = Assessment::where('id',$assessmentId)->where("org_id", $uid);
 
             if($assessment->count() == 0 ) {
-                return $this->sendResponse(true, "assessment doesnt exists", "assessment not found.", null, 404);
+                return $this->sendResponse(true, "assessment doesnt exists", "assessment not found.", null, Response::HTTP_NOT_FOUND);
             }
 
             // check if it same user who's trying to update assessment
             $org_id = $assessment->first()["org_id"];
 
             if($org_id !== $uid){
-                return $this->sendResponse(true, "not authorised to update assessment", "unauthorised.", null, 401);
+                return $this->sendResponse(true, "not authorised to update assessment", "unauthorised.", null, Response::HTTP_UNAUTHORIZED);
             }
 
             $newName = $updatedName == "" ? $assessment->first()["name"] : $updatedName;
@@ -308,7 +306,7 @@ class AssessmentController extends Controller
 
             return $this->sendResponse(false, null, 'assessment updated successfully', $updatedName, Response::HTTP_OK);
         }  catch (Exception $e) {
-            return $this->sendResponse(true,"something went wrong updating assessment ".$e->getMessage(),'failed updating assessment.',null,500);
+            return $this->sendResponse(true,"something went wrong updating assessment ".$e->getMessage(),'failed updating assessment.',null,Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
     }
@@ -317,7 +315,7 @@ class AssessmentController extends Controller
     {
         try{
             if(!isset($assessmentId) || empty($assessmentId)){
-                return $this->sendResponse(true, "expected a valid assessment 'id'  but got none", "assessment id is missing.", null, 400);
+                return $this->sendResponse(true, "expected a valid assessment 'id'  but got none", "assessment id is missing.", null, Response::HTTP_BAD_REQUEST);
             }
 
 
@@ -325,14 +323,14 @@ class AssessmentController extends Controller
             $assessment = Assessment::where('id',$assessmentId)->where("org_id", $uid);
 
             if($assessment->count() == 0 ) {
-                return $this->sendResponse(true, "assessment doesnt exists", "assessment not found.", null, 404);
+                return $this->sendResponse(true, "assessment doesnt exists", "assessment not found.", null, Response::HTTP_NOT_FOUND);
             }
 
             // check if it same user who's trying to delete assessment
             $org_id = $assessment->first()["org_id"];
 
             if($org_id !== $uid){
-                return $this->sendResponse(true, "not authorised to delete assessment", "unauthorised.", null, 401);
+                return $this->sendResponse(true, "not authorised to delete assessment", "unauthorised.", null, Response::HTTP_UNAUTHORIZED);
             }
 
 
@@ -340,7 +338,7 @@ class AssessmentController extends Controller
 
             return $this->sendResponse(false, null, 'assessment deleted successfully', null, Response::HTTP_OK);
         }  catch (Exception $e) {
-            return $this->sendResponse(true,"something went wrong deleting assessment ".$e->getMessage(),'failed deleting assessment.',null,500);
+            return $this->sendResponse(true,"something went wrong deleting assessment ".$e->getMessage(),'failed deleting assessment.',null,Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
     }

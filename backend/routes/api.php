@@ -77,10 +77,14 @@ Route::prefix("assessment")->group(function () {
     Route::get('/{organisationId}', [AssessmentController::class, 'getAssByOrgId']);
     Route::put('/{assessmentId}', [AssessmentController::class, 'updateAssessment'])->middleware("isloggedin", "isadmin");
     Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAssessment'])->middleware("isloggedin", "isadmin");
-    
-    Route::post('admin/create', [AssessmentController::class, 'adminCreateAssessment'])->middleware("isloggedin", "isoveralladmin");
-    Route::put('admin/{assessmentId}', [AssessmentController::class, 'adminUpdateAssessment'])->middleware("isloggedin", "isoveralladmin");
-    Route::delete('admin/{assessmentId}/delete', [AssessmentController::class, 'adminDeleteAssessment'])->middleware("isloggedin", "isoveralladmin");
+});
+
+
+//Admin Assessment routes operations
+Route::prefix("assessment/admin")->group(function () {
+    Route::post('/create', [AssessmentController::class, 'adminCreateAssessment'])->middleware("isloggedin", "isoveralladmin");
+    Route::put('/{assessmentId}', [AssessmentController::class, 'adminUpdateAssessment'])->middleware("isloggedin", "isoveralladmin");
+    Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'adminDeleteAssessment'])->middleware("isloggedin", "isoveralladmin");
 });
 
 // Test Employee Adding using csv file
