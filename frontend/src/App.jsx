@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import RequireAuth from "./components/requireAuth";
@@ -31,6 +30,7 @@ import Support from "../src/ui/pages/UserSupport";
 import Terms from "../src/ui/pages/termsAndService/TermsAndService";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
 import Blog from "../src/main/pages/Blog";
+import AssessmentList from "./main/components/sections/userAssessmentList/AssessmentList";
 import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
 import UserTakeAssessment from "./ui/pages/userTakeAssessment/UserTakeAssessment";
 import UserTakeAssessmentResult from "./ui/pages/userTakeAssessment/UserTakeAssessmentResult";
@@ -48,6 +48,7 @@ import AdminCSVUpload from "./ui/pages/AdminUpload/AdminCSVUpload";
 import UserAssessmentListCompleted from "./ui/pages/UserAssestList/UserAssestListCompleted";
 
 import GuestEmail from "./main/pages/GuestEmail";
+import GuestLogin from "./main/pages/Auth/GuestLogin";
 import GuestAssessmentList from "./main/pages/GuestAssessmentList";
 
 import { User2FA } from "./ui/pages/userSignUp/User2FA";
@@ -75,8 +76,6 @@ import UserAssessmentListOutlet from "./ui/pages/user-assessment-list/UserAssess
 import EmployeeUserDashboard from "./ui/pages/Employee/EmployeeDashboard";
 import Error from "./ui/pages/404";
 import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
-import GuestEmail from "./main/pages/GuestEmail";
-import GuestLogin from "./main/pages/Auth/GuestLogin";
 import DepartmentSection from "./ui/pages/DepartmentSection/DepartmentSection";
 import PersistLogin from "./components/PersistLogin";
 import PreviewCsvUpload from "./ui/pages/PreviewCsvUpload/PreviewCsvUpload";
@@ -96,6 +95,8 @@ const App = () => {
           <Route path="/2FA" element={<User2FA />} />
           <Route path="/guest-email" element={<GuestEmail />} />
           <Route path="/guest-assessment-list" element={<GuestAssessmentList />} />
+          <Route path="/guest-take-assessment" element={<GuestTakeAssessment />}/>
+          <Route path="/guest-take-assessment-result" element={<GuestTakeAssessmentResult />}/>
 
           {/* Public routes */}
           <Route element={<MainLayout />}>
@@ -109,6 +110,7 @@ const App = () => {
             <Route path="/termsAndService" element={<Terms />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/comparison" element={<ComparisonPage />} />
+            <Route path="/assessment-list" element={<AssessmentList />} />
             <Route path="/admin-assessment" element={<AdminAssessmentList />} />
             <Route path="/market-comparison" element={<Market />} />
 
@@ -135,18 +137,6 @@ const App = () => {
               element={<UserAssessmentListCompleted />}
             /> */}
           </Route>
-
-<<<<<<< HEAD
-          <Route path="/guest-email" element={<GuestEmail />} />
-          <Route
-              path="/guest-take-assessment"
-              element={<GuestTakeAssessment />}
-            />
-
-          <Route
-              path="/guest-take-assessment-result"
-              element={<GuestTakeAssessmentResult />}
-            />
 
           <Route element={<AdminAuthLayout />}>
             <Route path="/register" element={<AdminSignup />} />
