@@ -10,7 +10,7 @@ import { MainLayout, UiLayout } from "./Layouts";
 
 import Contact from "./main/pages/Contact";
 import DemoSchedule from "./main/pages/Demo";
-import { AdminAuthLayout } from "./main/components";
+import { AdminAuthLayout, UserAuthLayout } from "./main/components";
 import {
   Home,
   About,
@@ -55,6 +55,10 @@ import UserAssessmentResult from "./ui/pages/user-assessment-result/UserAssessme
 import CsvUploading from "./ui/pages/csv/CsvUploading";
 import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
 import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
+
+import UserResetPassword from "./ui/pages/user-password/UserResetPassword";
+import UserLogin from "./ui/pages/user-password/UserLogin";
+import UserForgotPassword from "./ui/pages/user-password/UserForgotPassword";
 import AssessmentFirstPage from "./ui/pages/AssessmentFirstPage";
 import CreateAssessment from "./ui/pages/CreateAssessment";
 
@@ -95,6 +99,12 @@ const App = () => {
             path="/guest-assessment-list"
             element={<GuestAssessmentList />}
           />
+
+          <Route path="/user" element={<UserAuthLayout />}>
+            <Route path="reset-password" element={<UserResetPassword />} />
+            <Route path="login" element={<UserLogin />} />
+            <Route path="forgot-password" element={<UserForgotPassword />} />
+          </Route>
 
           {/* Public routes */}
           <Route element={<MainLayout />}>
