@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\Stack;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\StackRequest;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 class StackController extends Controller
 {
+
     public function addStack(StackRequest $request): JsonResponse
     {
         $name = $request->name;
