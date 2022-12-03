@@ -83,10 +83,11 @@ const AdminLogin = () => {
         const accessToken = response?.data?.data?.accessToken || "";
         const roles = response?.data?.data.role || "";
         const id = response?.data?.data.id || "";
+        const username = response?.data?.data.username || "";
 
         // console.log(response);
 
-        setAuth({ email, password, accessToken, roles, id });
+        setAuth({ email, password, accessToken, roles, id, username });
         console.log(response.data);
         if (response.data.errorState === false) {
           // Clear input fields

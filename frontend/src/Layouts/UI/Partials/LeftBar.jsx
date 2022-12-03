@@ -74,6 +74,7 @@ const ListItem = styled.li`
     color: ${(props) => (props.$active === "active" ? "#141ae9" : "#323130")};
     font-weight: 600;
     padding: ${({ theme }) => theme.spacing(2)};
+    margin-left: -16px;
     border-radius: ${({ theme }) => theme.spacing(1)};
 
     &:hover {

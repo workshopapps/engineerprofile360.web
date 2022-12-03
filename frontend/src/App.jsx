@@ -23,6 +23,9 @@ import {
   AdminVerifyEmail,
   AdminEmailVerified,
 } from "./main/pages";
+
+import { CompanyDashboard, Employees } from "./ui/pages/Company";
+
 import Support from "../src/ui/pages/UserSupport";
 import Terms from "../src/ui/pages/termsAndService/TermsAndService";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
@@ -40,9 +43,7 @@ import HelpCenter from "../src/main/pages/HelpCenter";
 import Market from "./main/components/Market-comp-page-2/Market";
 import AdminCSVUpload from "./ui/pages/AdminUpload/AdminCSVUpload";
 import UserAssessmentListCompleted from "./ui/pages/UserAssestList/UserAssestListCompleted";
-
 import { User2FA } from "./ui/pages/userSignUp/User2FA";
-import { DashboardLayout } from "../src/Layouts/Dashboard/DashboardLayout";
 import AdminViewAssessment from "./ui/pages/admin-view-assessment/AdminViewAssessment";
 import Assessment from "./ui/pages/assessment/Assessment.jsx";
 import UserAssessmentResult from "./ui/pages/user-assessment-result/UserAssessmentResult";
@@ -50,19 +51,21 @@ import CsvUpload from "./ui/pages/csv/CsvUpload";
 import CsvUploading from "./ui/pages/csv/CsvUploading";
 import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
 import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
-import Dashboard from "./ui/pages/Dashboard";
 import AssessmentFirstPage from "./ui/pages/AssessmentFirstPage";
 import CreateAssessment from "./ui/pages/CreateAssessment";
-import Employees from "./ui/pages/Employees";
-import EmployeesListing from "./ui/components/Employees/EmployeesListing";
-import EmployeeProfile from "./ui/components/Employees/EmployeeProfile";
-import EmployeeProfileCard from "./ui/components/Employees/EmployeeProfileCard";
+
+import {
+  EmployeeProfile,
+  EmployeeFullProfile,
+  EmployeesListing,
+} from "./ui/components/Company/Employees";
+
 import AcceptReject from "./ui/pages/Accept Reject Profile/AcceptReject";
 import MainAssessment from "./ui/pages/Assessment";
 import UserAssessmentListAvailable from "./ui/pages/user-assessment-list/UserAssessmentListAvailable";
 import CompletedUserAssessments from "./ui/pages/user-assessment-list/UserAssessmentListCompleted";
 import UserAssessmentListOutlet from "./ui/pages/user-assessment-list/UserAssessmentListOutlet";
-import EmployeeUserDashboard from "./ui/pages/EmployeeUserDashboard";
+import EmployeeUserDashboard from "./ui/pages/Employee/EmployeeUserDashboard";
 import Error from "./ui/pages/404";
 import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
 import DepartmentSection from "./ui/pages/DepartmentSection/DepartmentSection";
@@ -157,11 +160,12 @@ const App = () => {
                 element={<AdminViewAssessment />}
               />
               <Route path="/departments" element={<DepartmentSection />} />
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard" element={<CompanyDashboard />} />
+
               <Route path="/employees" element={<Employees />}>
                 <Route path="" element={<EmployeesListing />} />
                 <Route path="profile" element={<EmployeeProfile />} />
-                <Route path="full-profile" element={<EmployeeProfileCard />} />
+                <Route path="full-profile" element={<EmployeeFullProfile />} />
                 <Route path="add-employee" element={<AdminCSVUpload />} />
                 <Route
                   path="employee-department"
@@ -201,9 +205,7 @@ const App = () => {
               {/* Put in Protected pages in here */}
             </Route>
 
-            <Route element={<DashboardLayout />}>
-              <Route path="/assessment" element={<Assessment />} />
-            </Route>
+            <Route path="/assessment" element={<Assessment />} />
           </Route>
         </Routes>
       </ThemeProvider>
