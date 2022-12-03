@@ -16,6 +16,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\UserAssessmentController;
+use App\Helper\Helper;
 
 // util functions
 // employee csv file parser.
@@ -32,9 +33,11 @@ use App\Http\Controllers\UserAssessmentController;
 |
 */
 // other route functions here
-Route::get("/test", function () {
+Route::get("/test", function (Helper $helper) {
     // execute the function
-    return $this->successResponse(true, "Test case pass", null, 200);
+    $helper->emailVerification("chisainty@gmail.com", "Divine", "hshshs-snssssj-sjsjsjs-sksksks");
+    $helper->sendWelcomeMail("chisainty@gmail.com", "Divine", "hshshs-snssssj-sjsjsjs-sksksks");
+    return view("emails.signup");
 });
 
 //USERSCORE
@@ -82,7 +85,6 @@ Route::prefix("assessment")->group(function () {
     Route::get('/{organization_id}', [AssessmentController::class, 'getAssByOrgId']);
     Route::put('/{assessmentId}', [AssessmentController::class, 'updateAssessment'])->middleware("isloggedin", "isadmin");
     Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAssessment'])->middleware("isloggedin", "isadmin");
-
 });
 
 // Test Employee Adding using csv file
@@ -96,7 +98,7 @@ Route::post("/test_csv", function (Request $req) {
 // authentication route
 Route::prefix("auth")->group(function () {
     // organization register & login
-    Route::prefix("organization")->group(function(){
+    Route::prefix("organization")->group(function () {
         Route::post('register', [AuthenticateController::class, "OrganizationRegister"]);
         Route::post('/login', [AuthenticateController::class, "OrganizationLogin"]);
     });
@@ -180,8 +182,6 @@ Route::prefix('interview')->group(function () {
     Route::get('get/{id}', [InterviewController::class, 'getInterviewById']);
     Route::get('get/{company}', [InterviewController::class, 'getInterviewByCompanyName']);
     Route::put('update/{interviewId}', [InterviewController::class, 'updateInterview']);
-
-
 });
 
 // User Assessment routes
@@ -194,7 +194,6 @@ Route::prefix("user-assessment")->group(function () {
     Route::get('/{employee_id}/completed', [UserAssessmentController::class, 'getEmployeeCompletedAssessment'])->middleware("isloggedin");
     Route::put('/{id}/update', [UserAssessmentController::class, 'updateUserAssessment']);
     Route::delete('/{id}/delete', [UserAssessmentController::class, 'deleteUserAssessment']);
-
 });
 
 // Stack route
