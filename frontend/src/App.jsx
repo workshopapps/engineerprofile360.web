@@ -76,6 +76,7 @@ import UserAssessmentListOutlet from "./ui/pages/user-assessment-list/UserAssess
 import EmployeeUserDashboard from "./ui/pages/Employee/EmployeeDashboard";
 import Error from "./ui/pages/404";
 import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
+
 import GuestLogin from "./main/pages/Auth/GuestLogin";
 import DepartmentSection from "./ui/pages/DepartmentSection/DepartmentSection";
 import PersistLogin from "./components/PersistLogin";
@@ -234,7 +235,7 @@ const App = () => {
               </Route>
 
               {/* <Route element={<DashboardLayout />}>
-                <Route path="/assessment" element={<Assessment />} />
+              <Route path="/assessment" element={<Assessment />} />
               </Route> */}
             </Route>
             <Route path="/assessment" element={<Assessment />} />
