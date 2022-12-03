@@ -80,7 +80,6 @@ import UserAssessmentListOutlet from "./ui/pages/user-assessment-list/UserAssess
 import EmployeeUserDashboard from "./ui/pages/Employee/EmployeeDashboard";
 import Error from "./ui/pages/404";
 import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
-import GuestLogin from "./main/pages/Auth/GuestLogin";
 import DepartmentSection from "./ui/pages/DepartmentSection/DepartmentSection";
 import PersistLogin from "./components/PersistLogin";
 import PreviewCsvUpload from "./ui/pages/PreviewCsvUpload/PreviewCsvUpload";
@@ -237,8 +236,6 @@ const App = () => {
                   element={<UserTakeAssessmentResult />}
                 />
                 <Route
-                  path="/user-assessment-result"
-
                   path="user-assessment-result"
                   element={<UserAssessmentResult />}
                 />
