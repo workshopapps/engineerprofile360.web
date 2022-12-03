@@ -170,7 +170,6 @@ Route::prefix("department")->group(function () {
 
 // Interview routes
 Route::prefix('interview')->group(function () {
-
     Route::get('all', [InterviewController::class, 'getInterviews']);
     Route::get('{id}', [InterviewController::class, 'getInterviewById']);
     Route::get('/stack/{stack_id}', [InterviewController::class, 'getInterviewByStack']);
