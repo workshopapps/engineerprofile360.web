@@ -73,6 +73,7 @@ import GuestEmail from "./main/pages/GuestEmail";
 import GuestLogin from "./main/pages/Auth/GuestLogin";
 import DepartmentSection from "./ui/pages/DepartmentSection/DepartmentSection";
 import PersistLogin from "./components/PersistLogin";
+import PreviewCsvUpload from "./ui/pages/PreviewCsvUpload/PreviewCsvUpload";
 
 const ROLES = {
   Employees: 1,
@@ -169,6 +170,10 @@ const App = () => {
                 <Route
                   path="/assessment/view-assessment"
                   element={<AdminViewAssessment />}
+                />
+                <Route
+                  path="/employees/csv-upload-preview"
+                  element={<PreviewCsvUpload />}
                 />
                 <Route path="/departments" element={<DepartmentSection />} />
                 <Route path="/dashboard" element={<CompanyDashboard />} />
