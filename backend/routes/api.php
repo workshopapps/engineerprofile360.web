@@ -170,7 +170,6 @@ Route::prefix("department")->group(function () {
 
 // Interview routes
 Route::prefix('interview')->group(function () {
-
     Route::get('all', [InterviewController::class, 'getInterviews']);
     Route::get('{id}', [InterviewController::class, 'getInterviewById']);
     Route::get('/stack/{stack_id}', [InterviewController::class, 'getInterviewByStack']);
@@ -199,8 +198,8 @@ Route::prefix("user-assessment")->group(function () {
 // Stack route
 Route::prefix("stack")->group(function () {
     Route::post('add', [StackController::class, 'addStack'])->middleware("isloggedin", "isadmin");
-    Route::put('update/{stackId}', [StackController::class, 'updateStack']);
-    Route::put('delete/{stackId}', [StackController::class, 'deleteStack']);
+    Route::put('update/{stackId}', [StackController::class, 'updateStack'])->middleware("isloggedin", "isadmin");
+    Route::delete('delete/{stackId}', [StackController::class, 'deleteStack']);
     Route::get('all', [StackController::class, 'getAllStacks']);
     Route::get('{id}', [StackController::class, 'getStackById']);
 });
