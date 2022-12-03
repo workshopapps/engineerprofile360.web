@@ -212,6 +212,15 @@ const App = () => {
                     path="completed"
                     element={<CompletedUserAssessments />}
                   />
+                  <Route
+                  path="/take-assessment"
+                  element={<UserTakeAssessment />}
+                />
+
+              <Route
+                  path="/take-assessment-result"
+                  element={<UserTakeAssessmentResult />}
+                />
                 </Route>
               </Route>
 
