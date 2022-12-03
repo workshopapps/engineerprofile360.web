@@ -51,8 +51,7 @@ function UserTakeAssessmentHeader() {
               <span className={styles.Text_muted}>Duration :</span> 30 Minutes
             </p>
             <p>
-              <span className={styles.Text_muted}>Deadline :</span> Tue 3th, Nov
-              22
+              <span className={styles.Text_muted}>Deadline :</span> {new Date().toDateString()}
             </p>
           </div>
 
