@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./UserTakeAssessment.module.css";
+import styled from 'styled-components';
 import UserTakeAssessmentHeader from "./UserTakeAssessmentHeader";
 import { useState,useEffect } from "react";
 import axios from "../../../api/axios";
@@ -26,36 +26,37 @@ export default  function UserTakeAssessment() {
     useAnswers[`${id}`]=option;
   };
   
-    const Prev = () => {
-        if(currentPage  > 1 ){
-          return <input type="button" 
-          className={styles.Button_next} 
-          onClick={(e) => {
-            setCurrentPage(currentPage-1)
-          }}
-          value="Previous" />}
-        }
-    
-        const Next = () => {
-          if(currentPage  < Math.ceil(currentPost.length / questionsPerPage)){
-            return <input type="button" 
-            className={styles.Button_next} 
-            onClick={(e) => {setCurrentPage(currentPage+1)}} 
-            value="Next" />
-            }
-        }
+  const Prev = () => {
+    if(currentPage  > 1 ){
+      return <input type="button" 
+      className="button_next" 
+      onClick={(e) => {
+        setCurrentPage(currentPage-1)
+      }}
+      value="Previous" />
+    }
+  }
+
+const Next = () => {
+  if(currentPage  < Math.ceil(currentPost.length / questionsPerPage)){
+    return <input type="button" 
+    className="button_next" 
+    onClick={(e) => {setCurrentPage(currentPage+1)}} 
+    value="Next" />
+  }
+}
   
   return (
     <>
-      <div className={styles.UserTakeAssessment_container}>
+      <AssessmentContainer>
         <UserTakeAssessmentHeader />
        
-        <div className={styles.Questions}>
+        <div className="questions">
           <form>
           {currentPost.map((assessment, i) => {
             const { question_id, options, correct_answers,id } = assessment;
             return (
-              <div className={styles.QuestionsWrapper} key={i}>
+              <div className="questionswrapper" key={i}>
                 <p>{question_id}</p>
                   {options.map((query, i) => {
                     return (
@@ -79,23 +80,113 @@ export default  function UserTakeAssessment() {
             
             <br />
 
-            <div className={styles.Filter_Next_Submit}>
+            <div className="filter_next_submit">
              {<Prev />}
              {<Next />}
              
                 <button type="button"
-                className={styles.Button_submit} 
+                className="button_submit" 
                 onClick={()=>{
-                    localStorage.setItem("evalAssessment",JSON.stringify(useAnswers)) ;
-                    navigate("/take-assessment-result");
+                  localStorage.setItem("evalAssessment",JSON.stringify(useAnswers)) ;
+                  navigate("/take-assessment-result");
                 }}>
-                     Submit 
-                     </button>
+                  Submit 
+                </button>
                 
             </div>
           </form>
         </div>
-      </div>
+      </AssessmentContainer>
 </>
   );
 }
+
+const AssessmentContainer = styled.div`
+height: auto;
+margin:auto;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 10px;
+color:#323130;
+padding: 40px;
+
+.button_next {
+  margin: 0 20px;
+  padding: 10px 16px;
+  width: 139px;
+  height: 60px;
+  background-color: #FFFFFF;
+  border: 1px solid #2667FF;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  color: #2667FF;
+  cursor: pointer;
+}
+
+.button_submit {
+  margin: 0 20px;
+  padding: 10px 16px;
+  width: 139px;
+  height: 60px;
+  background-color: #2667FF;
+  border: 1px solid #FFFFFF;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.filter_next_submit {
+  display: flex;
+  width: 100%!important;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.questions {
+  display: flex;
+  width: 100%!important;
+  flex-direction: column;
+  margin:0px 0px;
+}
+
+.questions p{
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  margin-top: 50px;
+}
+
+.questions label{
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #201F1E;
+  padding-left: 10px;
+}
+
+.questions input[type=radio]{
+  margin-left: 10px;
+}
+
+
+.questionswrapper {
+  margin: 0;
+}
+
+  @media screen and (max-width: 767px) {
+    text-align: left;
+
+    .filter-flex {
+      width: 100%;
+    }
+  }
+
+`

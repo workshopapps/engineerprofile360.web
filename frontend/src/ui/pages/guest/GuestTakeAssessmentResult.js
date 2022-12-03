@@ -1,7 +1,6 @@
 import React from "react";
-import styles from "./GuestTakeAssessment.module.css";
+import styled from 'styled-components';
 import GuestTakeAssessmentHeader from "./GuestTakeAssessmentResultHeader";
-import { QuestionData } from "./QuestionData";
 import { useState,useEffect } from "react";
 import axios from "../../../api/axios";
 import { Link } from "react-router-dom";
@@ -44,7 +43,7 @@ export default function GuestTakeAssessmentResult() {
   const Prev = () => {
     if(currentPage  > 1 ){
       return <input type="button" 
-      className={styles.Button_next} 
+      className="button_next"  
       onClick={(e) => {
         setCurrentPage(currentPage-1)
       }}
@@ -54,7 +53,7 @@ export default function GuestTakeAssessmentResult() {
     const Next = () => {
       if(currentPage  < Math.ceil(currentPost.length / questionsPerPage)){
         return <input type="button" 
-        className={styles.Button_next} 
+        className="button_next"  
         onClick={(e) => {setCurrentPage(currentPage+1)}} 
         value="Next" />
         }
@@ -62,15 +61,15 @@ export default function GuestTakeAssessmentResult() {
   
   return (
     <>
-      <div className={styles.GuestTakeAssessment_container}>
+       <GuestAssessmentContainer>
         <GuestTakeAssessmentHeader correctA={correctAnswers} totalQ={totalQuestions}/>
        
-        <div className={styles.Questions_Score}>
+        <div className="questions-score">
           <form>
           {currentPost.map((assessment, i) => {
             const { question_id, options, correct_answers,id } = assessment;
             return (
-              <div className={styles.QuestionsWrapper} key={i}>
+              <div className="questionswrapper" key={i}>
                 <p>{question_id}</p>
                   {options.map((query, i) => {
                     return (
@@ -92,19 +91,104 @@ export default function GuestTakeAssessmentResult() {
             
             <br />
 
-            <div className={styles.Filter_Next_Submit}>
+            <div className="filter_next_submit">
              {<Prev />}
               {<Next />}
               <Link to="/guest-email">
               <button type="button"
-                className={styles.Button_submit} >
+                className="button_submit"  >
                      Done 
                      </button>
                 </Link>
             </div>
           </form>
         </div>
-      </div>
+      </GuestAssessmentContainer>
 </>
   );
 }
+
+const GuestAssessmentContainer = styled.div`
+height: auto;
+margin:auto;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 10px;
+color:#323130;
+padding: 40px;
+
+.button_next {
+  margin: 0 20px;
+  padding: 10px 16px;
+  width: 139px;
+  height: 60px;
+  background-color: #FFFFFF;
+  border: 1px solid #2667FF;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  color: #2667FF;
+  cursor: pointer;
+}
+
+.button_submit {
+  margin: 0 20px;
+  padding: 10px 16px;
+  width: 139px;
+  height: 60px;
+  background-color: #2667FF;
+  border: 1px solid #FFFFFF;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.filter_next_submit {
+  display: flex;
+  width: 100%!important;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.questions-score {
+  display: flex;
+  width: 100%!important;
+  flex-direction: column;
+  margin:0px 0px;
+}
+
+.questions-score  p{
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  margin-top: 50px;
+}
+
+.questions-score  label{
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #201F1E;
+  padding-left: 10px;
+}
+
+.questions-score  input[type=radio]{
+  margin-left: 10px;
+}
+
+.questionswrapper {
+  margin: -20px 0px;
+}
+
+  @media screen and (max-width: 767px) {
+    text-align: left;
+  }
+
+`

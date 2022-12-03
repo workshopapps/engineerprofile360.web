@@ -1,7 +1,7 @@
 import React from "react";
 import TimerSvg from "../../../assets/icons/app/timer-start.svg";
 import { useState, useEffect } from "react";
-import styles from "./GuestTakeAssessment.module.css";
+import styled from 'styled-components';
 import { Outlet } from "react-router-dom";
 import PageInfo from "../../../ui/components/molecules/PageInfo";
 
@@ -27,8 +27,8 @@ function GuestTakeAssessmentHeader() {
 
   return (
     <>
-      <div className={styles.Filter_wrapper}>
-        <div className={styles.Filter_nav}> 
+      <FilterWrapper>
+        <div className="filter-nav"> 
         <PageInfo
         breadcrumb={["Assessment", "Take Assessment"]}
         pageTitle="Take Assessment"
@@ -38,24 +38,24 @@ function GuestTakeAssessmentHeader() {
         </div>
           <div>
             <p>
-              <span className={styles.Text_muted}>Course :</span>Design thnking
+              <span className="text-muted">Course :</span>Design thnking
               Process
             </p>
             <p>
-              <span className={styles.Text_muted}>Department :</span>UX Design 
+              <span className="text-muted">Department :</span>UX Design 
             </p>
           </div>
 
           <div>
             <p>
-              <span className={styles.Text_muted}>Duration :</span> 30 Minutes
+              <span className="text-muted">Duration :</span> 30 Minutes
             </p>
             <p>
-              <span className={styles.Text_muted}>Deadline :</span> {new Date().toDateString()}
+              <span className="text-muted">Deadline :</span> {new Date().toDateString()}
             </p>
           </div>
 
-          <div className={styles.Filter_flex}>
+          <div className="filter-flex">
             <img src={TimerSvg} alt="Filter" width={40} />
             <div>
             {getFormattedTime(time)}
@@ -63,17 +63,80 @@ function GuestTakeAssessmentHeader() {
             </div>
             <div></div>
           </div>
-        </div>
+        </FilterWrapper>
 
-        <div className={styles.Description}>
+        <Description>
           <b>Description:</b> This assessment was created to ensure that the
           participant of this test understands the core basics of software
           engineering. This test consists of four stages with 5 questions each.
           The stages include basic general knowledge, backend knowledge, frontend
           knowledge and DevOps Knowledge.
-        </div>
+        </Description>
     </>
   );
 }
 
 export default GuestTakeAssessmentHeader;
+
+
+const FilterWrapper = styled.div`
+display: flex;
+    width: 100%!important;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+.text-muted {
+    opacity: 0.3;
+    margin-right: 20px;
+  }
+
+  .filter-nav {
+    display: flex;
+    width: 100%!important;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  p{
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #323130;
+  }
+
+  span{
+    font-size: 16px;
+  }
+
+  .filter-flex {
+    display: flex;
+    width: 30%;
+    padding: 20px;
+    border: 1px solid;
+    justify-content: space-between;
+
+  }
+
+  @media screen and (max-width: 767px) {
+    text-align: left;
+
+    .filter-flex {
+      width: 100%;
+    }
+  }
+
+`
+const Description = styled.div`
+  margin-top: 10px;
+  border-top: 1px solid #323130;
+  font-size: 16px;
+  line-height: 22px;
+  padding:20px 0;
+  border-bottom: 1px solid #323130;
+
+  @media screen and (max-width: 767px) {
+    text-align: left;
+  }
+`
