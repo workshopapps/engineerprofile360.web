@@ -54,7 +54,7 @@ import Dashboard from "./ui/pages/Dashboard";
 import AssessmentFirstPage from "./ui/pages/AssessmentFirstPage";
 import CreateAssessment from "./ui/pages/CreateAssessment";
 import Employees from "./ui/pages/Employees";
-import UserProfile from "./ui/pages/UserProfile";
+import UserProfile from "./ui/pages/user-profile/UserProfile";
 import EmployeesListing from "./ui/components/Employees/EmployeesListing";
 import EmployeeProfile from "./ui/components/Employees/EmployeeProfile";
 import AcceptReject from "./ui/pages/Accept Reject Profile/AcceptReject";
@@ -62,6 +62,9 @@ import MainAssessment from "./ui/pages/Assessment";
 import EmployeeUserDashboard from "./ui/pages/EmployeeUserDashboard";
 import Error from "./ui/pages/404";
 import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
+import UserAssessmentListOutlet from "./ui/pages/user-assessment-list/UserAssessmentListOutlet";
+import UserAssessmentListAvailable from "./ui/pages/user-assessment-list/UserAssessmentListAvailable";
+import CompletedUserAssessments from "./ui/pages/user-assessment-list/UserAssessmentListCompleted";
 
 const ROLES = {
   Employees: 1,
