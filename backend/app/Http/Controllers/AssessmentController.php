@@ -266,10 +266,6 @@ class AssessmentController extends Controller
         try{
             $payload = json_decode($request->getContent(), true);
 
-            if(!isset($payload["name"]) || !isset($payload["start_date"]) || !isset($payload["start_time"])){
-                return $this->sendResponse(true, "expected a valid payload", "invalid payload given.", null, Response::HTTP_BAD_REQUEST);
-            }
-
             if(!isset($assessmentId) || empty($assessmentId)){
                 return $this->sendResponse(true, "expected a valid category 'id'  but got none", "category id is missing.", null, Response::HTTP_BAD_REQUEST);
             }
@@ -279,6 +275,7 @@ class AssessmentController extends Controller
             $updatedName = $payload["name"];
             $startDate = $payload["start_date"];
             $startTime = $payload["start_time"];
+            
             $assessment = Assessment::where('id',$assessmentId)->where("org_id", $uid);
 
             if($assessment->count() == 0 ) {
