@@ -2,7 +2,6 @@ import React from "react";
 import ArrowSvg from "../../assets/icons/app/arrow-down.svg";
 import FilterSvg from "../../assets/icons/app/filter.svg";
 import MenuSvg from "../../assets/icons/app/menu.svg";
-import Header from "../../ui/components/Header";
 import styled from "styled-components";
 
 const GuestAssessmentList = () => {
@@ -36,8 +35,7 @@ const GuestAssessmentList = () => {
     },
   ];
   return (
-    <Container>
-      <Header />
+    <>
       <Wrapper>
         <SideNav>
           <p>Asssesment</p>
@@ -90,14 +88,10 @@ const GuestAssessmentList = () => {
           </div>
         </Main>
       </Wrapper>
-    </Container>
+    </>
   );
 };
 
-const Container = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-`;
 
 const Wrapper = styled.div`
   display: flex;
