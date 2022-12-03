@@ -363,6 +363,35 @@ class AuthenticateController extends Controller {
         }
     }
 
+
+    public function forgotPassword(Request $req, $email){
+        // validate data
+        $validator = Validator::make([
+            "email"=>$email
+        ],[
+            'email' => 'required|string|email|max:255'
+        ]);
+
+        if($validator->fails()){
+            return $this->sendResponse(true, $validator->errors(), 'Invalid email address', null, 422);
+        }
+
+
+        // check if a user already has an account
+        $users = User::where('email', '=', $email);
+
+        if($users->count() == 0){
+            return $this->sendResponse(true, "email address doesnt exists", "User with this email address doesnt exists.", null, 404);
+        }
+
+        // generate and send a password reset link
+        $this->helper->passwordReset($email, $users->first()["user_id"]);
+
+        // send client response
+        return $this->sendResponse(false, null, "Password reset link sent",null, 200);
+    }
+
+    
     // verify organization email
     public function verifyEmail(Request $request, $id, $token){
         // verify if that user exists
@@ -402,33 +431,6 @@ class AuthenticateController extends Controller {
         Token::where("user_id", $id)->delete();
 
         return $this->sendResponse(false, null, "Email verified successfully", null, 200);
-    }
-
-    public function forgotPassword(Request $req, $email){
-        // validate data
-        $validator = Validator::make([
-            "email"=>$email
-        ],[
-            'email' => 'required|string|email|max:255'
-        ]);
-
-        if($validator->fails()){
-            return $this->sendResponse(true, $validator->errors(), 'Invalid email address', null, 422);
-        }
-
-
-        // check if a user already has an account
-        $users = User::where('email', '=', $email);
-
-        if($users->count() == 0){
-            return $this->sendResponse(true, "email address doesnt exists", "User with this email address doesnt exists.", null, 404);
-        }
-
-        // generate and send a password reset link
-        $this->helper->passwordReset($email, $users->first()["user_id"]);
-
-        // send client response
-        return $this->sendResponse(false, null, "Password reset link sent",null, 200);
     }
 
     public function verifyPasswordReset(Request $req, $id, $token){

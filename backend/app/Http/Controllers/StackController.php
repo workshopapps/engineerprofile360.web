@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\Stack;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\StackRequest;
@@ -13,39 +14,58 @@ use Symfony\Component\HttpFoundation\Response;
 class StackController extends Controller
 {
 
+    // public function addStack(StackRequest $request): JsonResponse
+    // {
+    //     dd($request->id());
+    //     try{
+    //         $payload = json_decode($request->getContent(), true);
+    
+    //         if(!isset($payload["name"])){
+    //             return $this->sendResponse(true, "expected a valid payload", "invalid payload given.", null, Response::HTTP_BAD_REQUEST);
+    //         }
+            
+    //         $user = $request->user["id"];
+    //         // $id = Str::uuid();
+    //         $name = $payload["name"];
+            
+    //         $restStack = Stack::where("name", $name);
+
+    //         if($restStack->count() > 0){
+    //             return $this->sendResponse(true, "Stack name already exists", "name already exists.", null, Response::HTTP_BAD_REQUEST);
+    //         }
+
+    //         // stack data
+    //         $data = [
+    //             // "id"=> $id,
+    //             "name"=>$name,
+    //             "user_id" => $user
+    //         ];
+
+    //         Stack::create($data);
+
+    //         return $this->sendResponse(false,null, "Stack created.", $data, Response::HTTP_CREATED);
+    //     }  catch (\Exception $e) {
+    //         return $this->sendResponse(true,'something went wrong creating stack', $e->getMessage());
+    //     }
+    // }
+
     public function addStack(StackRequest $request): JsonResponse
     {
-        try{
-            $payload = json_decode($request->getContent(), true);
-    
-            if(!isset($payload["name"])){
-                return $this->sendResponse(true, "expected a valid payload", "invalid payload given.", null, Response::HTTP_BAD_REQUEST);
-            }
-            
-            $uid = $request->user["id"];
-            $id = Str::uuid();
-            $name = $payload["name"];
-            
-            $restStack = Stack::where("name", $name);
-
-            if($restStack->count() > 0){
-                return $this->sendResponse(true, "Stack name already exists", "name already exists.", null, Response::HTTP_BAD_REQUEST);
+        dd($request->id());
+        $data = $request->all();
+        try {
+            if($data){
+                Stack::create($data);
+                return $this->sendResponse(false, null, 'Stack created', $data, Response::HTTP_CREATED);
+            }else {
+                return $this->sendResponse(true, 'Stack failed', Response::HTTP_BAD_REQUEST);
             }
 
-            // stack data
-            $data = [
-                "id"=> $id,
-                "name"=>$name,
-                "user_id" => $uid
-            ];
-
-            Stack::create($data);
-
-            return $this->sendResponse(false,null, "Stack created.", $data, Response::HTTP_CREATED);
-        }  catch (\Exception $e) {
-            return $this->sendResponse(true,'something went wrong creating stack', $e->getMessage());
+        }catch (\Exception $e) {
+            return $this->sendResponse(true, 'Stack not created', $e->getMessage());
         }
     }
+    
 
   
     public function updateStack(StackRequest $request, $stack_id): JsonResponse
