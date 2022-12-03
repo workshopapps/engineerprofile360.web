@@ -18,6 +18,7 @@ const UiLayout = () => {
       <Main as="main">
         <NavBar
           $open={leftBar && document.body.clientWidth <= 960 ? "open" : "close"}
+          onClick={handleLeftBarToggle}
         >
           <LeftBar />
         </NavBar>

@@ -13,11 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('stacks', function (Blueprint $table) {
-            $table->uuid('id')->unique();
-            $table->string('name')->unique();
-            $table->string('user_id');
-            $table->timestamps();
+        Schema::table('questions', function (Blueprint $table) {
+            $table->foreignId('company_id')->nullable()->index();
         });
     }
 
@@ -28,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stacks');
+        Schema::table('questions', function (Blueprint $table) {
+            //
+        });
     }
 };
