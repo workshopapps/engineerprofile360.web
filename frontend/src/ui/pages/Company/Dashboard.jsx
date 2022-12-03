@@ -21,10 +21,10 @@ const Dashboard = () => {
         axios.get(`user/${auth.id}`),
         axios.get(`employee/company/${auth.id}`),
         axios.get(`assessment/${auth.id}`),
-        axios.get(`user-assessment/org/${auth.id}/org-available`),
-        axios.get(`user-assessment/org/${auth.id}/org-completed`),
-        axios.get(`userscore/company/${auth.id}/max`),
-        axios.get(`userscore/company/${auth.id}`),
+        // axios.get(`user-assessment/org/${auth.id}/org-available`),
+        // axios.get(`user-assessment/org/${auth.id}/org-completed`),
+        // axios.get(`userscore/company/${auth.id}/max`),
+        // axios.get(`userscore/company/${auth.id}`),
       ];
 
       try {
@@ -33,7 +33,6 @@ const Dashboard = () => {
         });
 
         setIsLoading(false);
-        
 
         const employees = response[1]?.data.data.data.length;
         const assessments = response[2]?.data.data.length;
@@ -46,7 +45,7 @@ const Dashboard = () => {
           employees,
           assessments,
           availableAssessments,
-          completedAssessments
+          completedAssessments,
         });
         setTopPerformance(topEmployee);
         setTopPerformances(topEmployees);
@@ -69,7 +68,10 @@ const Dashboard = () => {
     <>
       <PageInfo pageTitle="Company's Dashboard" />
       <Stats stats={stats} topPerformance={topPerformance} />
-      <TopEmployees topPerformances={topPerformances} setIsLoading={setIsLoading} />
+      <TopEmployees
+        topPerformances={topPerformances}
+        setIsLoading={setIsLoading}
+      />
 
       {isLoading ? (
         <OverlayLoader>
