@@ -90,7 +90,7 @@ const AdminLogin = () => {
         setAuth({ email, password, accessToken, roles, id });
         persist &&
           localStorage.setItem(
-            "EvalOrg",
+            "Eval360",
             JSON.stringify({
               email,
               password,
