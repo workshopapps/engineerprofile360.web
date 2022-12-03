@@ -81,7 +81,7 @@ const SKillRating = ({ title }) => {
   );
 };
 
-const EmployeeUserDashboardLayout = () => {
+const Dashboard = () => {
   const [assessmentTypeDropdown, setAssessmentTypeDropdown] =
     React.useState(false);
 
@@ -336,7 +336,7 @@ const EmployeeUserDashboardLayout = () => {
   );
 };
 
-export default EmployeeUserDashboardLayout;
+export default Dashboard;
 
 const StatsContainer = styled.div`
   display: flex;

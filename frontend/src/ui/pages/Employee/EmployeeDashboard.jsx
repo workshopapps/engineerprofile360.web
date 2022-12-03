@@ -1,11 +1,11 @@
 import React from "react";
-import axios from "../../api/axios";
-import { showErrorToast } from "../../helpers/helper";
-import useAuth from "../../hooks/useAuth";
-import EmployeeUserDashboardLayout from "../components/Employees/EmployeeUserDashboardLayout";
-import PageInfo from "../components/molecules/PageInfo";
+import axios from "../../../api/axios";
+import { showErrorToast } from "../../../helpers/helper";
+import useAuth from "../../../hooks/useAuth";
+import Dashboard from "../../components/Employee/Dashboard";
+import PageInfo from "../../components/molecules/PageInfo";
 
-const EmployeeUserDashboard = () => {
+const EmployeeDashboard = () => {
   const { auth, setAuth } = useAuth();
   const [isLoading, setIsLoading] = React.useState(true);
   const [fetchError, setFetchError] = React.useState("");
@@ -49,9 +49,9 @@ const EmployeeUserDashboard = () => {
         }`}
         breadcrumb={["Dashboard", ""]}
       />
-      <EmployeeUserDashboardLayout />
+      <EmployeeDashboard />
     </>
   );
 };
 
-export default EmployeeUserDashboard;
+export default EmployeeDashboard;
