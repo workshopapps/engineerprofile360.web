@@ -176,66 +176,40 @@ const App = () => {
                     path="full-profile"
                     element={<EmployeeProfileCard />}
                   />
+                  <Route
+                    path="employee-profile"
+                    element={<EmployeeProfile />}
+                  />
                   <Route path="add-employee" element={<AdminCSVUpload />} />
+                  <Route
+                    path="employee-department"
+                    element={<EmployeeDeparment />}
+                  />
                 </Route>
 
                 <Route path="/assessment" element={<MainAssessment />}>
                   <Route path="" element={<AssessmentFirstPage />} />
                   <Route
-                    path="/user-assessment-result"
+                    path="user-assessment-result"
                     element={<UserAssessmentResult />}
                   />
                   <Route
-                    path="/user-assessment-result"
+                    path="create-assessment"
+                    element={<CreateAssessment />}
+                  />
+                  <Route path="admin-csv-upload" element={<AdminCSVUpload />} />
+                  <Route
+                    path="user-assessment-result"
                     element={<UserAssessmentResult />}
                   />
                   <Route
-                    path="/user-assessment-list"
+                    path="user-assessment-outlet"
                     element={<UserAssessmentListOutlet />}
                   >
                     <Route path="" element={<UserAssessmentListAvailable />} />
                     <Route
                       path="completed"
                       element={<CompletedUserAssessments />}
-                    />
-                  </Route>
-                  <Route
-                    path="/employee-profile"
-                    element={<EmployeeProfile />}
-                  />
-                  <Route path="/404" element={<Error />} />
-                </Route>
-
-                {/* Organization Route */}
-                <Route
-                  element={<RequireAuth allowedRole={ROLES.Organization} />}
-                >
-                  <Route path="/ui" element={"my guy"} />
-                  <Route path="/404" element={<Error />} />
-
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/employees" element={<Employees />}>
-                    <Route path="" element={<EmployeesListing />} />
-                    <Route path="profile" element={<EmployeeProfile />} />
-                    <Route
-                      path="full-profile"
-                      element={<EmployeeProfileCard />}
-                    />
-                    <Route path="add-employee" element={<AdminCSVUpload />} />{" "}
-                    <Route
-                      path="employee-department"
-                      element={<EmployeeDeparment />}
-                    />
-                  </Route>
-                  <Route path="/assessment" element={<MainAssessment />}>
-                    <Route path="" element={<AssessmentFirstPage />} />
-                    <Route
-                      path="create-assessment"
-                      element={<CreateAssessment />}
-                    />
-                    <Route
-                      path="admin-csv-upload"
-                      element={<AdminCSVUpload />}
                     />
                   </Route>
                 </Route>
