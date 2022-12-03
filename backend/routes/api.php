@@ -108,6 +108,8 @@ Route::prefix("auth")->group(function () {
 
     Route::post('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
 
+    Route::post('/refresh', [AuthenticateController::class, 'refreshJwtToken']);
+
     Route::prefix("password")->group(
         function () {
             // forgot password
@@ -142,7 +144,7 @@ Route::prefix("category")->group(function () {
     Route::put('/{categoryId}/update', [CategoryController::class, 'updateCategory'])->middleware("isloggedin");
     Route::post('/add', [CategoryController::class, 'createCategory'])->middleware("isloggedin", "isadmin");
     Route::delete('{catId}/delete', [CategoryController::class, 'deleteCategory'])->middleware("isloggedin", "isadmin");
-    Route::get("/allCategories", [CategoryController::class, "getCategoriesByOrgId"])->middleware("isloggedin", "isadmin");
+    Route::get("/get/{org_id}", [CategoryController::class, "getCategoriesByOrgId"]);
     Route::get('/assessment/{id}', [CategoryController::class, 'getByAssessmentId'])->middleware("isloggedin", "isadmin");
 });
 

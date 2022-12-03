@@ -95,11 +95,15 @@ class UserAssessmentController extends Controller
      * @return \Illuminate\Http\Response
      */
     //
-    public function getOrgAvailableAssessment($id): JsonResponse
+    public function getOrgAvailableAssessment($org_id): JsonResponse
     {
-
+        
+        $exist = $userAssessment = UserAssessment::where('org_id', $org_id)->exists();
+        if (!$exist) {
+            return $this->sendResponse(true,  'Fetch User Assessment failed', 'No user assessment available for this Company', null, Response::HTTP_NOT_FOUND);
+        }
         try {
-            $userAssessment = UserAssessment::where('org_id', $id)->get();
+            $userAssessment = UserAssessment::where('org_id', $org_id)->with("assessment")->get();
             return $this->sendResponse(false, null, 'OK', $userAssessment, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, 'Fetch Available User Assessment By Company ID failed', $e->getMessage());
@@ -113,11 +117,15 @@ class UserAssessmentController extends Controller
      * @return \Illuminate\Http\Response
      */
     //
-    public function getOrgCompletedAssessment($id): JsonResponse
+    public function getOrgCompletedAssessment($org_id): JsonResponse
     {
+        $exist = $userAssessment = UserAssessment::where('org_id', $org_id)->where("completed", true)->exists();
+        if (!$exist) {
+            return $this->sendResponse(true, 'Fetch User Assessment failed', 'No user assessment completed for this Company', null, Response::HTTP_NOT_FOUND);
+        }
 
         try {
-            $userAssessment = UserAssessment::where('org_id', $id)->where("completed", true)->get();
+            $userAssessment = UserAssessment::where('org_id', $org_id)->where("completed", true)->with("assessment")->get();
         
             return $this->sendResponse(false, null, 'OK', $userAssessment, Response::HTTP_OK);
         } catch (Exception $e) {
