@@ -31,4 +31,5 @@ export { default as BioMedicalBooking } from "./BioMedical/BioMedicalBooking";
 //  Auth Layout export
 
 export { default as AdminAuthLayout } from "./Auth/Layout/AdminAuthLayout";
+export { default as UserAuthLayout } from "./Auth/Layout/UserAuthLayout";
 export { default as AuthTitle } from "./Auth/molecules/AuthTitle";
