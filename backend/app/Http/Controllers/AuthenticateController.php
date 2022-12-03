@@ -131,9 +131,6 @@ class AuthenticateController extends Controller {
             return $this->sendResponse(true,"Something went wrong login in ".$e->getMessage(), "employee not found", null, 500);
         }
     }
-
-    // handle overall skript admin login
-
     // handle overall Eval360 admin login
     public function OverallAdminLogin(Request $request){
         try {
@@ -148,7 +145,7 @@ class AuthenticateController extends Controller {
                 return $this->sendResponse(true,$validator->errors(), 'invalid credentials supplied', null, 422);
             }
 
-            $users = User::where('email', $email)->where("role", 3);
+            $users = User::where('email', $email)->where("isAdmin", true);
 
             if ($users->count() > 0) {
                 
@@ -169,7 +166,8 @@ class AuthenticateController extends Controller {
                         "accessToken"=>$accToken,
                         "id"=>$users->first()["user_id"],
                         "role"=>$users->first()["role"],
-                        "username"=>$users->first()["username"]
+                        "username"=>$users->first()["username"],
+                        "isAdmin"=>$users->first()["isAdmin"]
                     ];
     
                     // company data
@@ -214,7 +212,7 @@ class AuthenticateController extends Controller {
             }
 
         } catch (\Exception $e) {
-            return $this->sendResponse(true,"Something went wrong login in ".$e->getMessage(), "organization not found", null, 500);
+            return $this->sendResponse(true,"Something went wrong login in ".$e->getMessage(), "admin not found", null, 500);
         }
     }
 
@@ -253,7 +251,8 @@ class AuthenticateController extends Controller {
                         "accessToken"=>$accToken,
                         "id"=>$users->first()["user_id"],
                         "role"=>$users->first()["role"],
-                        "username"=>$users->first()["username"]
+                        "username"=>$users->first()["username"],
+                        "isAdmin"=>$users->first()["isAdmin"],
                     ];
 
                     // company data
@@ -280,7 +279,7 @@ class AuthenticateController extends Controller {
                     // check if user is unverified
                     if($users->first()["isVerified"] < 1){
                         $this->helper->emailVerification($email,$user_id);
-                        return $this->sendResponse(true, "account not verfied.. a verification link has been sent to you account.", "failed to login.. verify your account.", null, 200);
+                        return $this->sendResponse(true, "account not verfied.. a verification link has been sent to you account.", "failed to login.. verify your account.", null, 400);
                     }
 
                     // set http-only cookie
@@ -428,7 +427,7 @@ class AuthenticateController extends Controller {
         User::where("user_id", $id)->update(array("isVerified"=>true));
 
         // delte token from db
-        Token::where("user_id", $id)->delete();
+        // Token::where("user_id", $id)->delete();
 
         return $this->sendResponse(false, null, "Email verified successfully", null, 200);
     }

@@ -10,6 +10,6 @@ class Stack extends Model
 {
     use HasFactory, Uuids;
 
-    protected $fillable = ['name', 'user_id'];
+    protected $fillable = ["name", "user_id"];
 
 }

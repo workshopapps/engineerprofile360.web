@@ -90,7 +90,7 @@ Route::prefix("assessment")->group(function () {
 Route::post("/test_csv", function (Request $req) {
     $csv = new CsvParser();
     $payload = json_decode($req->getContent(), true);
-    return $csv->parseEmployeeCsv($payload);
+    return $csv->parseEmployeeCsv($payload, '');
 });
 
 // authentication route
@@ -106,7 +106,7 @@ Route::prefix("auth")->group(function () {
     // overall admin login
     Route::post('/eval360/admin/login', [AuthenticateController::class, 'OverallAdminLogin']);
 
-    Route::get('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
+    Route::post('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
 
     Route::prefix("password")->group(
         function () {
@@ -170,7 +170,6 @@ Route::prefix("department")->group(function () {
 
 // Interview routes
 Route::prefix('interview')->group(function () {
-
     Route::get('all', [InterviewController::class, 'getInterviews']);
     Route::get('{id}', [InterviewController::class, 'getInterviewById']);
     Route::get('/stack/{stack_id}', [InterviewController::class, 'getInterviewByStack']);
@@ -198,9 +197,9 @@ Route::prefix("user-assessment")->group(function () {
 
 // Stack route
 Route::prefix("stack")->group(function () {
-    Route::post('add', [StackController::class, 'addStack']);//->middleware("isloggedin", "isadmin");
-    Route::put('update/{stackId}', [StackController::class, 'updateStack']);
-    Route::put('delete/{stackId}', [StackController::class, 'deleteStack']);
+    Route::post('add', [StackController::class, 'addStack'])->middleware("isloggedin", "isadmin");
+    Route::put('update/{stackId}', [StackController::class, 'updateStack'])->middleware("isloggedin", "isadmin");
+    Route::delete('delete/{stackId}', [StackController::class, 'deleteStack']);
     Route::get('all', [StackController::class, 'getAllStacks']);
     Route::get('{id}', [StackController::class, 'getStackById']);
 });

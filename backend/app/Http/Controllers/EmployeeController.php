@@ -65,7 +65,7 @@ class EmployeeController extends Controller
                 $csv = new CsvParser();
                 $payload = json_decode($request->getContent(), true);
                 $file = $payload['csv_file'];
-                $result = $csv->parseEmployeeCsv($file);
+                $result = $csv->parseEmployeeCsv($file, $uid);
                 if ($result["error"] == false && $result["message"] == "csv parsed") {
                     $data = $result['data'];
                     return $this->sendResponse(false, null, "CSV Parsed Successfully", $data, Response::HTTP_OK);
@@ -140,9 +140,30 @@ class EmployeeController extends Controller
     public function confirmCSV(Request $request)
     {
         $parser = new CsvParser();
+        $passed = 0; $failed = 0;
         $file = json_decode($request->getContent(), true);
-        $data = $parser->trimEmployeeCSV($file['data'], $file['department_id'], $file['org_id']);
-        return $this->insertEmployee($data);
+        $json = $file['data'];
+        foreach($json as $key => $item){
+            // check if employe exists
+            $empExists = Employee::where("email", $json[$key]["email"]);
+
+            if ($empExists->count() > 0) {
+                return $this->sendResponse(true, "employee already exists", "employee with this email already exists", null, Response::HTTP_BAD_REQUEST);
+            }
+
+            $raw_password = implode("", $this->generateRandomPwd(10));
+            $hash = Hash::make($raw_password);
+            unset($json[$key]["id"]);
+            $json[$key]['id'] = Str::uuid();
+            $json[$key]['department_id'] = $file['department_id'];
+            $json[$key]['raw_password'] = $raw_password;
+
+            $result = $this->insertEmployee($json[$key], $raw_password);
+
+            if($result['$errorState']==true) $failed++;
+            else $passed++;
+        }
+        return $this->sendResponse(false, null, "$passed Employee Added Successfully, $failed failed", $json, Response::HTTP_CREATED);
     }
 
     public function insertEmployee($data, $empPassword)
