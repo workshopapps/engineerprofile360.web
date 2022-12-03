@@ -7,12 +7,15 @@ import Options from "../../../main/components/Payment/Options";
 
 const SelectType = () => {
   const [isSelected, setIsSelected] = useState({});
+  const [formData, setFormData] = useState({});
 
   const handleChange = (e) => {
     console.log(e.target.id);
-    setIsSelected({ ...isSelected, [e.target.id]: e.target.value });
+    setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
+  const { name, department, date } = formData;
+  console.log(formData);
   return (
     <SelectContainer>
       <p>Select the target staffs for the assessment</p>
@@ -20,34 +23,32 @@ const SelectType = () => {
       <SelectItemContainer>
         <SelectItem>
           <label>Select Department</label>
-          <Dropdown
-            id={"department"}
-            value={isSelected["department"]}
-            onChange={(e) => handleChange(e)}
-          >
-            <Options selected value="Front-End Development" />
-            <Options value="Back-End Development" />
-            <Options value="Project Management" />
-            <Options value="Software Engineer" />
-            <Options value="Blockchain Development" />
-            <Options value="Devops" />
-          </Dropdown>
-        </SelectItem>
-        <SelectItem>
-          <label>Select Skill Level</label>
-          <Dropdown
-            id={"level"}
-            value={isSelected["level"]}
-            onChange={(e) => handleChange(e)}
-          >
-            <Options selected value="Senior Level" />
-            <Options value="Middle Level" />
-            <Options value="Junior Level" />
-            <Options value="Trainee Level" />
-          </Dropdown>
+          <select id={"department"} value={department} onChange={handleChange}>
+            <option value="Front-End Development">
+              Front-End Development{" "}
+            </option>
+            <option value="Back-End">Back-end Development </option>
+            <option value="PM"> Project Management </option>
+            <option value="Software Engineer">Software Engineer</option>
+            <option value="Blockchain Development">
+              Blockchain Development
+            </option>
+            <option value="Devops">Devops</option>
+          </select>
         </SelectItem>
         <SelectItem>
           <label>Set Date & Time</label>
+          <input id="date" type="date" onChange={handleChange} value={date} />
+        </SelectItem>
+        <SelectItem>
+          <label>Assessment</label>
+          <input
+            id="name"
+            type="text"
+            placeholder="Title of Assessment"
+            onChange={handleChange}
+            value={name}
+          />
         </SelectItem>
       </SelectItemContainer>
       <Buttons>
@@ -100,12 +101,37 @@ const SelectItemContainer = styled.div`
 const SelectItem = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 30px;
 
   label {
     margin-bottom: -15px;
     font-weight: 400;
     font-size: 16px;
     line-height: 19px;
+    color: #605e5c;
+  }
+
+  select,
+  input {
+    border: 1px solid #106ebe;
+    border-radius: 2px;
+    height: 40px;
+    outline: none;
+  }
+
+  select {
+    color: #605e5c;
+  }
+
+  input {
+    padding-left: 5px;
+
+    ::placeholder {
+      color: #605e5c;
+    }
+  }
+
+  input[type="date"] {
     color: #605e5c;
   }
 `;
