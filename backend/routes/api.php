@@ -108,6 +108,8 @@ Route::prefix("auth")->group(function () {
 
     Route::post('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
 
+    Route::post('/refresh', [AuthenticateController::class, 'refreshJwtToken']);
+
     Route::prefix("password")->group(
         function () {
             // forgot password
