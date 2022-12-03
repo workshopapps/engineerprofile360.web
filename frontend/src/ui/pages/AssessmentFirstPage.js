@@ -28,7 +28,7 @@ const Heading = () => {
           </Flex>
         </Link>
         <Link
-          to="/view-assessment"
+          to="/assessment/view-assessment"
           style={{
             border: "2px solid #2667FF",
           }}

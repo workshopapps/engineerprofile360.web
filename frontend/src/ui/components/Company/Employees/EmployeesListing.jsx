@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { Button } from "../../../styles/reusableElements.styled";
+import { Button } from "../../../../styles/reusableElements.styled";
 
 import { More } from "iconsax-react";
+import { Link } from "react-router-dom";
 
 const EmployeesListing = () => {
   return (
@@ -46,7 +47,9 @@ const EmployeesListing = () => {
           </tbody>
         </table>
       </EmployeesTable>
-      <AddButton>Add New</AddButton>
+      <Link to="/employees/add-employee">
+        <AddButton>Add New</AddButton>
+      </Link>
     </EmployeesList>
   );
 };
@@ -137,9 +140,9 @@ const EmployeesTable = styled.div`
 
 const AddButton = styled(Button)`
   min-width: 250px;
-  justify-self: flex-end;
+  justify-self: end;
   font-weight: 400;
-  align-self: flex-end;
+  margin-left: auto;
 `;
 
 const TabButton = styled(Button)`

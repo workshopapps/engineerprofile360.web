@@ -7,7 +7,7 @@ h2 {
   color: #605e5c;
 }
 
-ul {
+/* ul {
   list-style: none;
   padding: 20px;
   margin: 0;
@@ -15,7 +15,7 @@ ul {
 
 li {
   padding: 10px 15px;
-}
+} */
 
 .hide {
   display: block;

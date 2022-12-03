@@ -17,40 +17,41 @@ class AssessmentController extends Controller
     // @benrobo -> dont touch this method  
     public function createAssessment(Request $request)
     {
-        try{
+        try {
             $payload = json_decode($request->getContent(), true);
-    
-            
-            if(!isset($payload["name"]) || !isset($payload["start_date"]) || !isset($payload["start_time"])){
+
+
+            if (!isset($payload["name"]) || !isset($payload["start_date"]) || !isset($payload["start_time"]) || !isset($payload["department_id"])) {
                 return $this->sendResponse(true, "expected a valid payload", "invalid payload given.", null, 400);
             }
-            
+
             $uid = $request->user["id"];
             $id = Str::uuid();
             $name = $payload["name"];
             $start_date = $payload["start_date"];
             $start_time = $payload["start_time"];
-            
+
             $restAssessment = Assessment::where("name", $name);
 
-            if($restAssessment->count() > 0){
+            if ($restAssessment->count() > 0) {
                 return $this->sendResponse(true, "assessment name already exists", "name already exists.", null, 400);
             }
 
             // category data
             $data = [
-                "id"=> $id,
-                "name"=>$name,
-                "start_date"=> $start_date,
-                "start_time"=> $start_time,
-                "org_id"=> $uid
+                "id" => $id,
+                "name" => $name,
+                "start_date" => $start_date,
+                "start_time" => $start_time,
+                "department_id" => $payload["department_id"],
+                "org_id" => $uid
             ];
 
             Assessment::create($data);
 
-            return $this->sendResponse(false,null, "assessment created.", $data, 200);
-        }  catch (\Exception $e) {
-            return $this->sendResponse(true,'something went wrong creating assessment', $e->getMessage(), null, 500);
+            return $this->sendResponse(false, null, "assessment created.", $data, 200);
+        } catch (\Exception $e) {
+            return $this->sendResponse(true, 'something went wrong creating assessment', $e->getMessage(), null, 500);
         }
     }
 
@@ -58,23 +59,23 @@ class AssessmentController extends Controller
     // @Benrobo -> this method has been updated, dont touch.
     public function deleteAssessment(Request $request, $assessmentId): JsonResponse
     {
-        try{
-            if(!isset($assessmentId) || empty($assessmentId)){
+        try {
+            if (!isset($assessmentId) || empty($assessmentId)) {
                 return $this->sendResponse(true, "expected a valid assessment 'id'  but got none", "assessment id is missing.", null, 400);
             }
 
 
             $uid = $request->user["id"];
-            $assessment = Assessment::where('id',$assessmentId)->where("org_id", $uid);
+            $assessment = Assessment::where('id', $assessmentId)->where("org_id", $uid);
 
-            if($assessment->count() == 0 ) {
+            if ($assessment->count() == 0) {
                 return $this->sendResponse(true, "assessment doesnt exists", "assessment not found.", null, 404);
             }
 
             // check if it same user who's trying to delete assessment
             $org_id = $assessment->first()["org_id"];
 
-            if($org_id !== $uid){
+            if ($org_id !== $uid) {
                 return $this->sendResponse(true, "not authorised to delete assessment", "unauthorised.", null, 404);
             }
 
@@ -82,23 +83,22 @@ class AssessmentController extends Controller
             $assessment->delete();
 
             return $this->sendResponse(false, null, 'assessment deleted successfully', null, Response::HTTP_OK);
-        }  catch (Exception $e) {
-            return $this->sendResponse(true,"something went wrong deleting assessment ".$e->getMessage(),'failed deleting assessment.',null,500);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, "something went wrong deleting assessment " . $e->getMessage(), 'failed deleting assessment.', null, 500);
         }
-
     }
 
     // @Benrobo -> this method has been updated, dont touch.
     public function updateAssessment(Request $request, $assessmentId)
     {
-        try{
+        try {
             $payload = json_decode($request->getContent(), true);
 
-            if(!isset($payload["name"]) || !isset($payload["start_date"]) || !isset($payload["start_time"])){
+            if (!isset($payload["name"]) || !isset($payload["start_date"]) || !isset($payload["start_time"])) {
                 return $this->sendResponse(true, "expected a valid payload", "invalid payload given.", null, 400);
             }
 
-            if(!isset($assessmentId) || empty($assessmentId)){
+            if (!isset($assessmentId) || empty($assessmentId)) {
                 return $this->sendResponse(true, "expected a valid category 'id'  but got none", "category id is missing.", null, 400);
             }
 
@@ -107,16 +107,16 @@ class AssessmentController extends Controller
             $updatedName = $payload["name"];
             $startDate = $payload["start_date"];
             $startTime = $payload["start_time"];
-            $assessment = Assessment::where('id',$assessmentId)->where("org_id", $uid);
+            $assessment = Assessment::where('id', $assessmentId)->where("org_id", $uid);
 
-            if($assessment->count() == 0 ) {
+            if ($assessment->count() == 0) {
                 return $this->sendResponse(true, "assessment doesnt exists", "assessment not found.", null, 404);
             }
 
             // check if it same user who's trying to update assessment
             $org_id = $assessment->first()["org_id"];
 
-            if($org_id !== $uid){
+            if ($org_id !== $uid) {
                 return $this->sendResponse(true, "not authorised to update assessment", "unauthorised.", null, 404);
             }
 
@@ -125,32 +125,30 @@ class AssessmentController extends Controller
             $newTime = $startTime == "" ? $assessment->first()["start_time"] : $startTime;
 
             $updatedData = [
-                "name"=>$newName,
-                "start_date"=>$newDate,
-                "start_time"=>$newTime,
+                "name" => $newName,
+                "start_date" => $newDate,
+                "start_time" => $newTime,
             ];
 
             $assessment->update($updatedData);
 
             return $this->sendResponse(false, null, 'assessment updated successfully', $updatedName, Response::HTTP_OK);
-        }  catch (Exception $e) {
-            return $this->sendResponse(true,"something went wrong updating assessment ".$e->getMessage(),'failed updating assessment.',null,500);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, "something went wrong updating assessment " . $e->getMessage(), 'failed updating assessment.', null, 500);
         }
-
     }
 
     // @juddee ---- get organization assessments
     // @Benrobo -> this method has been updated, please dont touch it.  
-    public function getAssByOrgId($organization_id="")
+    public function getAssByOrgId($organization_id = "")
     {
         try {
             $assessments = Assessment::where("org_id", $organization_id)->get();
 
             return $this->sendResponse(false, null, 'All assessments', $assessments, Response::HTTP_OK);
-        }  catch (Exception $e) {
-            return $this->sendResponse(true,"something went wrong fetching assessments ".$e->getMessage(),'failed fetching assessments.',null,500);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, "something went wrong fetching assessments " . $e->getMessage(), 'failed fetching assessments.', null, 500);
         }
-
     }
 
     // @Benrobo -> still under development
@@ -209,8 +207,6 @@ class AssessmentController extends Controller
                 $details,
                 Response::HTTP_OK
             );
-
-
         } catch (Exception $e) {
             return $this->sendResponse(
                 true,
@@ -219,7 +215,6 @@ class AssessmentController extends Controller
                 null,
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
-
         }
     }
 }

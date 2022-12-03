@@ -18,7 +18,7 @@ class QuestionsController extends Controller
                 Question::create($data);
                 return $this->sendResponse(false, null, 'Question created', $data, Response::HTTP_CREATED);
             } else {
-                return $this->sendResponse(true, 'Query failed', Response::HTTP_FAILED);
+                return $this->sendResponse(true, 'Query failed', Response::HTTP_NOT_IMPLEMENTED);
             }
         } catch (Exception $e) {
             return $this->sendResponse(true, 'Question not created', $e->getMessage());
@@ -58,13 +58,28 @@ class QuestionsController extends Controller
             $questions = Question::find($id);
             $checkQuestions = Question::where('id', $id)->exists();
             if (!$checkQuestions) {
-                return $this->sendResponse(true, 'Fetch Question By ID failed', 'No questions exist for this ID', null, Response::HTTP_NOT_FOUND);
+                return $this->sendResponse(true, 'Fetch Question By ID failed', 'No questions exist for this company ID', null, Response::HTTP_NOT_FOUND);
             }
             return $this->sendResponse(false, null, 'OK', $questions, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, 'Fetch Question By ID failed', $e->getMessage());
         }
     }
+
+    public function getQuestByAssId($id)
+    {
+        try {
+            $questions = Question::where('assessment_id', $id)->get();
+            $checkQuestions = Question::where('assessment_id', $id)->exists();
+            if (!$checkQuestions) {
+                return $this->sendResponse(true, "Fetch Question By Assessment ID failed", 'No Question Exist for this Assessment ID', null, Response::HTTP_NOT_FOUND);
+            }
+            return $this->sendResponse(false, null, "OK", $questions, Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, "Fetch Question By Assessment ID failed", $e->getMessage());
+        }
+    }
+
 
     public function getQuestByComId($id): JsonResponse
     {
@@ -95,20 +110,6 @@ class QuestionsController extends Controller
             return $this->sendResponse(false, null, "OK", $questions->get(), Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Fetch Question By Category ID failed", $e->getMessage());
-        }
-    }
-
-    public function getQuestByAssId($id)
-    {
-        try {
-            $questions = Question::where('assessment_id', $id)->get();
-            $checkQuestions = Question::where('assessment_id', $id)->exists();
-            if (!$checkQuestions) {
-                return $this->sendResponse(true, "Fetch Question By Assessment ID failed", 'No Question Exist for this Assessment ID', null, Response::HTTP_NOT_FOUND);
-            }
-            return $this->sendResponse(false, null, "OK", $questions, Response::HTTP_OK);
-        } catch (Exception $e) {
-            return $this->sendResponse(true, "Fetch Question By Assessment ID failed", $e->getMessage());
         }
     }
 
