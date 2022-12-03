@@ -69,6 +69,7 @@ import Error from "./ui/pages/404";
 import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
 import GuestLogin from "./main/pages/Auth/GuestLogin";
 import DepartmentSection from "./ui/pages/DepartmentSection/DepartmentSection";
+import PreviewCsvUpload from "./ui/pages/PreviewCsvUpload/PreviewCsvUpload";
 
 const ROLES = {
   Employees: 1,
@@ -161,6 +162,10 @@ const App = () => {
               <Route
                 path="/assessment/view-assessment"
                 element={<AdminViewAssessment />}
+              />
+              <Route
+                path="/employee-csv-upload-preview"
+                element={<PreviewCsvUpload />}
               />
               <Route path="/departments" element={<DepartmentSection />} />
               <Route path="/dashboard" element={<Dashboard />} />
