@@ -31,7 +31,10 @@ import Terms from "../src/ui/pages/termsAndService/TermsAndService";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
 import Blog from "../src/main/pages/Blog";
 import AssessmentList from "./main/components/sections/userAssessmentList/AssessmentList";
-import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
+import AdminAssessmentList, {
+  CompletedAssessmentList,
+} from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
+import AvailableAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AdminAssessmentListAvailable";
 // import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
 import UserTakeAssessment from "./ui/pages/userTakeAssessment/UserTakeAssessment";
 import UserTakeAssessmentResult from "./ui/pages/userTakeAssessment/UserTakeAssessmentResult";
@@ -82,13 +85,13 @@ import EmployeeUserDashboard from "./ui/pages/Employee/EmployeeDashboard";
 import Error from "./ui/pages/404";
 import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
 
-
 import GuestLogin from "./main/pages/Auth/GuestLogin";
 import DepartmentSection from "./ui/pages/DepartmentSection/DepartmentSection";
 import { ServerError } from "./ui/pages/ServerError";
 
 import PersistLogin from "./components/PersistLogin";
 import PreviewCsvUpload from "./ui/pages/PreviewCsvUpload/PreviewCsvUpload";
+import AdminAssessmmentListOutlet from "./ui/pages/admin-settings/adminAssesmentList/AdminAssessmmentListOutlet";
 import Fillemployee from "./ui/pages/FillEmployee/FillEmployee";
 
 const ROLES = {
@@ -151,7 +154,6 @@ const App = () => {
               element={<GuestTakeAssessmentResult />}
             />
 
-
             <Route path="/csv-uploading" element={<CsvUploading />} />
 
             <Route
@@ -208,6 +210,17 @@ const App = () => {
               {/* Organization Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
                 <Route path="/ui" element={"my guy"} />
+
+                <Route
+                  path="admin-assessment-list"
+                  element={<AdminAssessmmentListOutlet />}
+                >
+                  <Route path="" element={<AvailableAssessmentList />} />
+                  <Route
+                    path="completed"
+                    element={<CompletedAssessmentList />}
+                  />
+                </Route>
                 <Route path="/404" element={<Error />} />
                 <Route
                   path="/assessment/view-assessment"
