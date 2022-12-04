@@ -7,6 +7,7 @@ use Exception;
 use App\Http\Requests\AddDepartmentRequest;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Request;
 
 
 class DepartmentController extends Controller
@@ -65,20 +66,27 @@ class DepartmentController extends Controller
         }
     }
 
-    public function updateDepartment(AddDepartmentRequest $request, $id)
+    /**
+     * Edit/Update department by id.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function updateDepartment(Request $request, $id)
     {
         try {
-            $updateDepartment  = $request->all();
+            $data = $request->all();
 
             $department = Department::find($id);
-            $checkDepartment = Department::where('id', $id)->exists();
+
+            $checkDepartment = Department::where("id", $id)->exists();
 
             if (!$checkDepartment) {
-                $checkDepartment = [];
-                return $this->sendResponse(true, null, 'This department does\'nt exists', $checkDepartment, Response::HTTP_NOT_FOUND);
+                $department = [];
+                return $this->sendResponse(true, null, 'This department does\'nt exists', $department, Response::HTTP_NOT_FOUND);
             }
 
-            $department->update($updateDepartment);
+            $department->update($data);
 
             return $this->sendResponse(false, null, 'Department Updated Successfully', $department, Response::HTTP_OK);
         } catch (Exception $e) {
@@ -86,20 +94,26 @@ class DepartmentController extends Controller
         }
     }
 
-    public function deleteDepartment($id)
+    /**
+     * Delete department by id.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function deleteDepartment($id): JsonResponse
     {
         try {
             $department = Department::find($id);
             $checkDepartment = Department::where('id', $id)->exists();
 
             if (!$checkDepartment) {
-                $checkDepartment = [];
-                return $this->sendResponse(true, null, 'This department does\'nt exists', $checkDepartment, Response::HTTP_NOT_FOUND);
+                $department = [];
+                return $this->sendResponse(true, null, 'This department does\'nt exists', $department, Response::HTTP_NOT_FOUND);
             }
 
             $department->delete();
 
-            return $this->sendResponse(false, null, 'Department deleted successfully', Response::HTTP_OK);
+            return $this->sendResponse(false, null, 'Department deleted successfully', $department, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, null, 'Something went wrong', Response::HTTP_BAD_REQUEST);
         }
