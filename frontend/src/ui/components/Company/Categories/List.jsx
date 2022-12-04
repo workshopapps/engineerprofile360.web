@@ -1,14 +1,20 @@
 import React from "react";
+import { useState } from "react";
 import styled from "styled-components";
+
+import Modal from "./Modal";
 
 import { More } from "iconsax-react";
 import { Button } from "../../../../styles/reusableElements.styled";
 
 const List = () => {
+  const [toggleCreateCat, setToggleCreateCat] = useState(false);
   return (
-    <>
+    <OverallContainer>
       <ButtonCategory>
-        <AddCategoryBtn>Add New Category</AddCategoryBtn>
+        <AddCategoryBtn onClick={() => setToggleCreateCat(true)}>
+          Add New Category
+        </AddCategoryBtn>
         <ActionButton>
           <EditBtn>Edit</EditBtn>
           <Delete>Delete</Delete>
@@ -34,14 +40,28 @@ const List = () => {
                 <More />
               </td>
             </tr>
+            <tr>
+              <td>2.</td>
+              <td>CSS</td>
+              <td>105</td>
+              <td>
+                <More />
+              </td>
+            </tr>
           </tbody>
         </table>
       </CategoryListing>
-    </>
+      {toggleCreateCat && <Modal setToggleCreateCat={setToggleCreateCat} />}
+    </OverallContainer>
   );
 };
 
 export default List;
+
+const OverallContainer = styled.div`
+  position: relative;
+  height: 75vh;
+`;
 
 const ButtonCategory = styled.div`
   display: flex;
