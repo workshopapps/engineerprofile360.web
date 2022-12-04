@@ -140,7 +140,7 @@ Route::prefix("company")->group(function () {
 
 // questions route operations
 Route::prefix("question")->group(function () {
-    Route::post('add', [QuestionsController::class, 'addManually']);
+    Route::post('add', [QuestionsController::class, 'addManually'])->middleware("isloggedin", "isadmin");
     Route::get('{id}', [QuestionsController::class, 'getQuestById']);
     Route::get('company/{id}', [QuestionsController::class, 'getQuestByComId']);
     Route::get('category/{id}', [QuestionsController::class, 'getQuestByCatId']);
@@ -176,8 +176,8 @@ Route::prefix("department")->group(function () {
     Route::get('{id}', [DepartmentController::class, 'getDeptByID'])->middleware("isloggedin", "isadmin");
     Route::get('company/{id}', [DepartmentController::class, 'getDeptByOrgID'])->middleware("isloggedin", "isadmin");
     Route::post('/add', [DepartmentController::class, 'addDepartment'])->middleware("isloggedin", "isadmin");
-    Route::put('update/{departmentId}', [DepartmentController::class, 'updateDepartment'])->middleware("isloggedin", "isadmin");
-    Route::delete('delete/{departmentId}', [DepartmentController::class, 'deleteDepartment'])->middleware("isloggedin", "isadmin");
+    Route::put('{departmentId}/update/', [DepartmentController::class, 'updateDepartment'])->middleware("isloggedin", "isadmin");
+    Route::delete('{departmentId}/delete/', [DepartmentController::class, 'deleteDepartment'])->middleware("isloggedin", "isadmin");
 });
 
 // Interview routes
