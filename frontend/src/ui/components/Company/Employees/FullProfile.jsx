@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "../../../../api/axios";
 // import { showErrorToast } from "../../../../helpers/helper";
@@ -50,6 +50,13 @@ const FullProfile = () => {
   const [employeeDetails, setEmployeeDetails] = React.useState(null);
   const [, setEmployeeDetailLoading] = React.useState(false);
 
+  const [employeeUserAssessmentCompleted, setEmployeeUserAssessmentCompleted] =
+    useState(null);
+  const [, setEmployeeUserAssessmentCompletedLoading] = React.useState(false);
+
+  const [employeeUserScore, setEmployeeUserScore] = useState(null);
+  const [, setEmployeeUserScoreLoading] = React.useState(false);
+
   //Get Employee Details
   React.useEffect(() => {
     const getEmployeeDetails = async () => {
@@ -67,6 +74,44 @@ const FullProfile = () => {
     };
     getEmployeeDetails();
   }, [auth.id, employeeDetails]);
+
+  //Get Employee User Assessment Details
+  React.useEffect(() => {
+    const getEmployeeUserAssessmentDetails = async () => {
+      try {
+        const response = await axios.get(
+          `user-assessment/${auth.id}/completed`
+        );
+        setEmployeeUserAssessmentCompleted(response.data);
+        setEmployeeUserAssessmentCompletedLoading(false);
+      } catch (err) {
+        if (!err?.response) {
+          // showErrorToast("No Server Response");
+        } else if (err?.response.data.errorState === true) {
+          // showErrorToast(err.response.data.message);
+        }
+      }
+    };
+    getEmployeeUserAssessmentDetails();
+  }, [auth.id, employeeUserAssessmentCompleted]);
+
+  //Get Employee User Score Details
+  React.useEffect(() => {
+    const getEmployeeUserScoreDetails = async () => {
+      try {
+        const response = await axios.get(`user-score/employee/${auth.id}`);
+        setEmployeeUserScore(response.data);
+        setEmployeeUserScoreLoading(false);
+      } catch (err) {
+        if (!err?.response) {
+          // showErrorToast("No Server Response");
+        } else if (err?.response.data.errorState === true) {
+          // showErrorToast(err.response.data.message);
+        }
+      }
+    };
+    getEmployeeUserScoreDetails();
+  }, [auth.id, employeeUserScore]);
 
   const EmployeeProfileData = [
     {
