@@ -2,28 +2,29 @@ import React from "react";
 import { Button, Title } from "../../../styles/reusableElements.styled";
 import styled from "styled-components";
 import { ReactComponent as UserPhoto } from "./assets/user-photo.svg";
-import { ReactComponent as ChartData } from "./assets/chart.svg";
 import PageInfo from "../../components/molecules/PageInfo";
+import axios from "../../../api/axios";
+import useAuth from "../../../hooks/useAuth";
+import { Radar } from "react-chartjs-2";
+import { Link } from "react-router-dom";
 
-const UserProfileData = [
-  { title: "Name", value: "Sir Seyi Alameen" },
-  { title: "Department", value: "UX Engineer" },
-  { title: "Course", value: "Design Thinking 901" },
-  { title: "Percentage", value: "93.3%", color: "#107C10" },
-];
-
-const ResultStats = [
-  { title: "Design Research 203", status: "Completed", bgColor: "#F8FBFD" },
-  { title: "Prototyping And Flow 205", status: "Completed" },
-  { title: "User experience on WebApp", status: "Completed" },
-  { title: "User experience on Mobile", status: "Completed" },
-];
-
-const BreadCrumbList = [
-  { name: "Employees" },
-  { name: "Profiles" },
-  { name: "Sir Seyi Alameen" },
-];
+//ChartData Schema
+const data = {
+  labels: ["Javascript", "PHP", "Java", "ReactJs", "Nodejs", "WordPress"],
+  datasets: [
+    {
+      label: "Dataset",
+      data: [65, 59, 90, 81, 56, 55, 40],
+      fill: true,
+      backgroundColor: "rgba(255, 99, 132, 0.2)",
+      borderColor: "rgb(255, 99, 132)",
+      pointBackgroundColor: "rgb(255, 99, 132)",
+      pointBorderColor: "#fff",
+      pointHoverBackgroundColor: "#fff",
+      pointHoverBorderColor: "rgb(255, 99, 132)",
+    },
+  ],
+};
 
 const ResultStatCard = ({ name, status, bgColor }) => {
   return (
@@ -52,6 +53,49 @@ const UserCard = ({ name, value, color }) => {
 };
 
 const UserAssessmentResult = () => {
+  const { auth } = useAuth();
+
+  const [, setUserAssessmentResultDetails] =
+    React.useState(null);
+  const [, setUserAssessmentDetailLoading] = React.useState(false);
+
+  //Get Employee Details
+  React.useEffect(() => {
+    const getUserAssessmentResult = async () => {
+      try {
+        const response = await axios.get(`user-assessment/${auth.id}`);
+        setUserAssessmentResultDetails(response.data);
+        setUserAssessmentDetailLoading(false);
+      } catch (err) {
+        if (!err?.response) {
+          // showErrorToast("No Server Response");
+        } else if (err?.response.data.errorState === true) {
+          // showErrorToast(err.response.data.message);
+        }
+      }
+    };
+    getUserAssessmentResult();
+  }, [auth.id]);
+
+  const UserProfileData = [
+    { title: "Name", value: auth.username },
+    { title: "Department", value: "UX Engineer" },
+    { title: "Course", value: "Design Thinking 901" },
+    { title: "Percentage", value: "93.3%", color: "#107C10" },
+  ];
+
+  const ResultStats = [
+    { title: "Design Research 203", status: "Completed", bgColor: "#F8FBFD" },
+    { title: "Prototyping And Flow 205", status: "Completed" },
+    { title: "User experience on WebApp", status: "Completed" },
+    { title: "User experience on Mobile", status: "Completed" },
+  ];
+
+  const BreadCrumbList = [
+    { name: "Employees" },
+    { name: "Profiles" },
+    { name: auth.username },
+  ];
   return (
     <>
       <PageInfo
@@ -78,7 +122,7 @@ const UserAssessmentResult = () => {
         </ProfileStatsCard>
         <ChartContainer>
           <Chart>
-            <ChartData />
+            <Radar data={data} />
           </Chart>
           <Result>
             <Title
@@ -111,7 +155,11 @@ const UserAssessmentResult = () => {
           >
             Recommend Staff for Promotion
           </Button>
-          <Button>View Full Profile</Button>
+
+          <Link to="/employees/full-profile">
+            {" "}
+            <Button>View Full Profile </Button>
+          </Link>
         </ButtonContainer>
       </UserAssessmentContainer>
     </>
@@ -222,6 +270,10 @@ const ButtonContainer = styled.div`
   }
 
   button {
+    width: 100%;
+    max-width: 565px;
+  }
+  a {
     width: 100%;
     max-width: 565px;
   }
