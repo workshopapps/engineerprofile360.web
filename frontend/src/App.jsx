@@ -83,6 +83,8 @@ import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
 
 import GuestLogin from "./main/pages/Auth/GuestLogin";
 import DepartmentSection from "./ui/pages/DepartmentSection/DepartmentSection";
+import {ServerError} from "./ui/pages/ServerError";
+
 import PersistLogin from "./components/PersistLogin";
 import PreviewCsvUpload from "./ui/pages/PreviewCsvUpload/PreviewCsvUpload";
 
@@ -99,6 +101,7 @@ const App = () => {
         <GlobalStyles />
         <Routes>
           <Route path="/2FA" element={<User2FA />} />
+          <Route path="/serverError" element={<ServerError />} />
           <Route path="/guest-email" element={<GuestEmail />} />
           <Route
             path="/guest-assessment-list"
@@ -133,9 +136,14 @@ const App = () => {
               path="/take-assessment-list"
               element={<UserTakeAssessment />}
             />
-            <Route path="/guest-take-assessment" element={<GuestTakeAssessment />}/>
-            <Route path="/guest-take-assessment-result" element={<GuestTakeAssessmentResult />}/>
-
+            <Route
+              path="/guest-take-assessment"
+              element={<GuestTakeAssessment />}
+            />
+            <Route
+              path="/guest-take-assessment-result"
+              element={<GuestTakeAssessmentResult />}
+            />
 
             <Route path="/csv-uploading" element={<CsvUploading />} />
 
@@ -147,7 +155,7 @@ const App = () => {
             <Route path="/setting" element={<AdminSetting />} />
             <Route path="/privacy-policy" element={<Privacy />} />
             <Route path="/employee-profile" element={<EmployeeProfile />} />
-            {/* <Route path="/admin-csv-upload" element={<AdminCSVUpload />} /> */}
+            <Route path="/admin-csv-upload" element={<AdminCSVUpload />} />
             {/* <Route
               path="/user-assessment-completed"
               element={<UserAssessmentListCompleted />}
@@ -198,6 +206,10 @@ const App = () => {
                   path="/assessment/view-assessment"
                   element={<AdminViewAssessment />}
                 />
+                <Route
+                  path="/employees/csv-upload-preview"
+                  element={<PreviewCsvUpload />}
+                />
                 <Route path="/departments" element={<DepartmentSection />} />
                 <Route path="/dashboard" element={<CompanyDashboard />} />
                 <Route path="/employees" element={<Employees />}>
@@ -217,8 +229,14 @@ const App = () => {
                     element={<EmployeeDeparment />}
                   />
                 </Route>
-                <Route path="/take-assessment" element={<UserTakeAssessment />}/>
-                <Route path="/take-assessment-result" element={<UserTakeAssessmentResult />}/>
+                <Route
+                  path="/take-assessment"
+                  element={<UserTakeAssessment />}
+                />
+                <Route
+                  path="/take-assessment-result"
+                  element={<UserTakeAssessmentResult />}
+                />
                 <Route path="/assessment" element={<MainAssessment />}>
                   <Route path="" element={<AssessmentFirstPage />} />
                   <Route
