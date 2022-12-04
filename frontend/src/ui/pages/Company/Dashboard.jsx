@@ -52,6 +52,7 @@ const Dashboard = () => {
 
         // console.log(response);
       } catch (err) {
+        setIsLoading(false);
         if (!err?.response) {
           showErrorToast(err.message);
         } else if (err?.response.data.errorState === true) {
