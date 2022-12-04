@@ -352,6 +352,7 @@ const StatsContainer = styled.div`
     justify-content: center;
     text-align: center;
     gap: 30px;
+    padding: 10px 20px;
   }
 `;
 
@@ -388,7 +389,7 @@ const ChartSection = styled.div`
   border-radius: 12px;
   padding: 35.35px 40px;
   min-height: 336px;
-  ${({ theme }) => theme.breakpoints.down("md")} {
+  ${({ theme }) => theme.breakpoints.down("lg")} {
     width: 100%;
   }
 `;
