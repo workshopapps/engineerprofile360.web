@@ -56,7 +56,6 @@ const FullProfile = () => {
       try {
         const response = await axios.get(`employee/${auth.id}`);
         setEmployeeDetails(response.data);
-        console.log("Hey", employeeDetails);
         setEmployeeDetailLoading(false);
       } catch (err) {
         if (!err?.response) {
