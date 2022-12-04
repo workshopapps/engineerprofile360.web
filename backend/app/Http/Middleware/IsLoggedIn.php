@@ -26,22 +26,22 @@ class IsLoggedIn extends Controller
 
     public function handle(Request $request, Closure $next)
     {        
+        
         try {
-            // get token from cookies
-            $jwtToken = $request->cookie($this->CookieName);
-            
-            // we were originally requesting token from the headers, but later change to using the cookie sent along thr browser for security reasons.
-            
-            // $header = $request->header('Authorization');
-    
-            // check if authorization header has been passed
-            if(!isset($jwtToken) || empty($jwtToken)){
-                return $this->sendResponse(true,"JWT token is missing", "Invalid Jwt token", null, 403);
+            $header = $request->header("Authorization");
+
+            if(!isset($header) || empty($header)){
+                return $this->sendResponse(true,"Authorization header missing", "Unauthorised",null, 401);
             }
-    
-            // decode the jwt token
-            $jwt = $this->helper->decodeJwt($jwtToken);
-            
+
+            $token = explode(" ", $header)[1];
+
+            if(!isset($token) || empty($token)){
+                return $this->sendResponse(true,"invalid token, missing JWT token", "Unauthorised",null, 401);
+            }
+
+            $jwt = $this->helper->decodeJwt($token);
+
             $user = [
                 "id"=>$jwt->id,
                 "email"=>$jwt->email
@@ -49,7 +49,7 @@ class IsLoggedIn extends Controller
 
             //pass the attribute onto the request
             $request->merge(['user' => $user]);
-            
+
             // call the next operation
             return $next($request);
         } catch (\Exception $e) {

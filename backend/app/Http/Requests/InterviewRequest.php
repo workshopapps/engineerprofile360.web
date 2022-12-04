@@ -13,7 +13,7 @@ class InterviewRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -28,7 +28,7 @@ class InterviewRequest extends FormRequest
             'stack_id' => "required",
             'name' => "required|string",
             'company_name' => 'required|string',
-            'times_taken' => 'nullable'
+          
         ];
     }
 }
