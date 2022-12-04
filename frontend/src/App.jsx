@@ -203,6 +203,10 @@ const App = () => {
                   path="/assessment/view-assessment"
                   element={<AdminViewAssessment />}
                 />
+                <Route
+                  path="/employees/csv-upload-preview"
+                  element={<PreviewCsvUpload />}
+                />
                 <Route path="/departments" element={<DepartmentSection />} />
                 <Route path="/dashboard" element={<CompanyDashboard />} />
                 <Route path="/employees" element={<Employees />}>
