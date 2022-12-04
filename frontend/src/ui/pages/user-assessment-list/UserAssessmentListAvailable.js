@@ -164,11 +164,10 @@ const List = () => {
   const { auth, setAuth } = useAuth();
 
   const fetchAvailable = () => {
-    return axios("/user-assessment/org/{auth.id}/org-available");
+    return axios(`/user-assessment/org/${auth.id}/org-available`);
   };
 
   const postData = (e) => {
-    // e.preventDefault();
     axios.post(`/user-assessment/accept/${auth.id}/${auth.id}/${auth.id}`, {
       assessmentId: auth.id,
       employeeId: auth.id,
@@ -180,8 +179,6 @@ const List = () => {
     fetchAvailable()
       .then(({ data }) => {
         setAvailable(data);
-        // console.log(auth);
-        // console.log(data);
       })
       .catch((error) => {
         console.log(error);
@@ -289,19 +286,6 @@ const UserAssessmentListAvailable = () => {
   const [order, setOrder] = useState("asc");
   const [available, setAvailable] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-
-  //   useEffect(() => {
-  //     fetchAvailable()
-  //       .then(({ data }) => {
-  //         setAvailable(data);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       })
-  //       .finally(() => {
-  //         setIsLoading(false);
-  //       });
-  //   }, []);
 
   return (
     <div>

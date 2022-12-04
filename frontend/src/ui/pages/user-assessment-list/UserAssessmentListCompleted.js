@@ -160,13 +160,12 @@ const List = () => {
   const { auth, setAuth } = useAuth();
 
   const fetchCompleted = () => {
-    return axios("/user-assessment/org/{auth.id}/org-completed");
+    return axios(`/user-assessment/org/${auth.id}/org-completed`);
   };
   useEffect(() => {
     fetchCompleted()
       .then(({ data }) => {
         setCompleted(data);
-        // console.log(auth);
       })
       .catch((error) => {
         console.log(error);
