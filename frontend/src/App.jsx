@@ -294,7 +294,6 @@ const App = () => {
               <Route path="/assessment" element={<Assessment />} />
             </Route>
           </Route>
-          <Route path="add" element={<AdminCSVUpload />} />
         </Routes>
       </ThemeProvider>
       <StyledToastContainer />

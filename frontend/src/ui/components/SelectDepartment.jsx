@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Button, Title } from "../../styles/reusableElements.styled";
 
@@ -58,7 +59,9 @@ export default function SelectDepartment() {
       </div>
       <div>
         <Button $variant="outlined">Cancel</Button>
-        <Button onClick={proceed}>Proceed</Button>
+        <Link to="/employees/add-employee">
+          <Button onClick={proceed}>Proceed</Button>
+        </Link>
       </div>
     </Container>
   );
