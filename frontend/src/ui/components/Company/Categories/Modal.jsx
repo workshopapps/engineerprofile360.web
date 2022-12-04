@@ -1,34 +1,63 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "../../../../api/axios";
+import { showErrorToast, showSuccessToast } from "../../../../helpers/helper";
+
+import useAuth from "../../../../hooks/useAuth";
+import { Loader } from "../../../../styles/reusableElements.styled";
 
 import { Title } from "../../../../styles/reusableElements.styled";
 import { Button } from "../../../../styles/reusableElements.styled";
 
 const Modal = ({ setToggleCreateCat }) => {
   const [formData, setFormData] = useState({
-    catergory_name: "",
+    category_name: "",
   });
+  const { auth } = useAuth();
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (formData) => {
+  const orgId = auth.id;
+  const { category_name: name } = formData;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitted(true);
     try {
-      if (formData.category_name > 4) {
-        axios.post("category/add");
+      if (name.length !== "") {
+        const response = await axios.post(
+          "category/add",
+          JSON.stringify({ name, orgId })
+        );
+
+        console.log(response.data);
+
+        response.data.errorState === false &&
+          showSuccessToast(response.data.message);
+        setIsSubmitted(false);
+        setToggleCreateCat(false);
       }
-    } catch (err) {}
+    } catch (err) {
+      if (!err?.response) {
+        showErrorToast("No Server Response");
+      } else if (err.response?.data.errorState === true) {
+        showErrorToast(err.response.data.message);
+        setIsSubmitted(false);
+      }
+    }
   };
 
   console.log(formData);
 
-  const { category_name } = formData;
-
   return (
     <>
       <InputWrapper onClick={(e) => setToggleCreateCat(false)}>
-        <form onClick={(e) => e.stopPropagation()}>
+        <form
+          onClick={(e) => e.stopPropagation()}
+          onSubmit={(e) => handleSubmit(e)}
+        >
           <Title as="h2" $size="18px" $color="#323130" $weight="400">
             Create a new Category
           </Title>
@@ -39,7 +68,7 @@ const Modal = ({ setToggleCreateCat }) => {
               required
               placeholder="Javascript"
               name="category_name"
-              value={category_name}
+              value={name}
               onChange={(e) => {
                 handleChange(e);
               }}
@@ -57,9 +86,6 @@ const Modal = ({ setToggleCreateCat }) => {
             </Button>
             <Button
               type="submit"
-              onClick={(e) => {
-                handleSubmit(e);
-              }}
               border={"1px solid #2667FF"}
               w={"117px"}
               h={"48px"}
@@ -68,7 +94,7 @@ const Modal = ({ setToggleCreateCat }) => {
               rounded={"4px"}
               m={" 6px"}
             >
-              Proceed
+              {isSubmitted ? <Loader /> : "Proceed"}
             </Button>
           </ButtonContainer>
         </form>

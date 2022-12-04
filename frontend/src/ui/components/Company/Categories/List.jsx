@@ -1,14 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 
 import Modal from "./Modal";
+import useAuth from "../../../../hooks/useAuth";
+import axios from "../../../../api/axios";
 
 import { More } from "iconsax-react";
 import { Button } from "../../../../styles/reusableElements.styled";
 
 const List = () => {
   const [toggleCreateCat, setToggleCreateCat] = useState(false);
+  const { auth } = useAuth();
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const getAllCatgories = async () => {
+      const response = await axios.get(`/category/get/${auth.id}`);
+      setCategories(response.data.data);
+    };
+
+    getAllCatgories();
+  }, []);
+
   return (
     <OverallContainer>
       <ButtonCategory>
@@ -29,25 +43,18 @@ const List = () => {
               <th>Number of Questions</th>
               <th></th>
             </tr>
-            <tr>
-              <td>1.</td>
-              <td>Javascript</td>
-              <td>105</td>
-              <td>
-                {/* <Button $variant="outlined" $color="#2667ff">
-                  View Profile
-                </Button> */}
-                <More />
-              </td>
-            </tr>
-            <tr>
-              <td>2.</td>
-              <td>CSS</td>
-              <td>105</td>
-              <td>
-                <More />
-              </td>
-            </tr>
+            {categories.length > 0
+              ? categories?.map((category, id) => (
+                  <tr>
+                    <td>{`${id + 1}.`}</td>
+                    <td>{category.name}</td>
+                    <td>105</td>
+                    <td>
+                      <More />
+                    </td>
+                  </tr>
+                ))
+              : "Oops no data to return yet. Create a new category"}
           </tbody>
         </table>
       </CategoryListing>
