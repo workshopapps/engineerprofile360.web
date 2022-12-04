@@ -26,10 +26,17 @@ function Hero() {
 
   useEffect(() => {
     // COULD NOT ADD DATA THROUGH THE ADD DATA ENDPOINT, SO I'M USING LOCAL STORAGE TO SIMULATE USER EXPERIENCE..
-    //  axios.get(`http://localhost:3000​/department​/`).then((res) => {
-    //  setIsEditingData(res.data);
-    //  console.log(isEditingData);
-    // });
+    axios
+      .get(
+        `  http://104.225.216.199:8000/api/department/company/80a5cae5-89f2-4636-8999-a92c4237817a`
+      )
+      .then((res) => {
+        setIsEditingData(res.data);
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   return (
