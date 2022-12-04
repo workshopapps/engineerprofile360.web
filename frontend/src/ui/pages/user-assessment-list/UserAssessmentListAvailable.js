@@ -159,20 +159,26 @@ const Sort = () => {
 };
 
 const List = () => {
+  const { available, setAvailable, isLoading, setIsLoading } =
+    useContext(DataContext);
   const { auth, setAuth } = useAuth();
 
   const fetchAvailable = () => {
-    return axios("/user-assessment/org/{auth.id}/org-available");
+    return axios(`/user-assessment/org/${auth.id}/org-available`);
   };
 
-  const { available, setAvailable, isLoading, setIsLoading } =
-    useContext(DataContext);
+  const postData = (e) => {
+    axios.post(`/user-assessment/accept/${auth.id}/${auth.id}/${auth.id}`, {
+      assessmentId: auth.id,
+      employeeId: auth.id,
+      orgId: auth.id,
+    });
+  };
+
   useEffect(() => {
     fetchAvailable()
       .then(({ data }) => {
         setAvailable(data);
-        // console.log(auth);
-        // console.log(data);
       })
       .catch((error) => {
         console.log(error);
@@ -196,6 +202,7 @@ const List = () => {
         </Text>
       );
     }
+
     return (
       <table>
         <tbody>
@@ -216,7 +223,11 @@ const List = () => {
                 <td>{d.duration}</td>
                 <td>{d.date}</td>
                 <td>
-                  <Button $variant="outlined" $color="#2667ff">
+                  <Button
+                    $variant="outlined"
+                    $color="#2667ff"
+                    onClick={() => postData()}
+                  >
                     Take Test
                   </Button>
                 </td>
@@ -257,7 +268,6 @@ const Assessment = () => {
           <Link to="/user-assessment-list">
             <Text $color="#2667FF" $weight="600">
               {`Available (${"0"})`}
-              {/* {console.log(available.data.length)} */}
             </Text>
           </Link>
           <Link to="/user-assessment-list/completed">
@@ -277,19 +287,6 @@ const UserAssessmentListAvailable = () => {
   const [available, setAvailable] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
-  //   useEffect(() => {
-  //     fetchAvailable()
-  //       .then(({ data }) => {
-  //         setAvailable(data);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       })
-  //       .finally(() => {
-  //         setIsLoading(false);
-  //       });
-  //   }, []);
-
   return (
     <div>
       <DataContext.Provider
@@ -306,7 +303,6 @@ const UserAssessmentListAvailable = () => {
       >
         <PageInfo breadcrumb={["Assessments", "Assessment List"]} />
         <Assessment />
-        {/* {auth} */}
       </DataContext.Provider>
     </div>
   );

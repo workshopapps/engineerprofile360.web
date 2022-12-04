@@ -15,7 +15,6 @@ const PersistLogin = () => {
     let isMounted = true;
 
     const loggedInUser = localStorage.getItem("Eval360");
-    console.log(auth.id);
     if (isMounted) {
       loggedInUser !== null && setAuth(JSON.parse(loggedInUser));
       setIsLoading(false);
