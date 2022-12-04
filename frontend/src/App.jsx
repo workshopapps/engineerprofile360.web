@@ -84,7 +84,7 @@ import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
 
 import GuestLogin from "./main/pages/Auth/GuestLogin";
 import DepartmentSection from "./ui/pages/DepartmentSection/DepartmentSection";
-import {ServerError} from "./ui/pages/ServerError";
+import { ServerError } from "./ui/pages/ServerError";
 
 import PersistLogin from "./components/PersistLogin";
 import PreviewCsvUpload from "./ui/pages/PreviewCsvUpload/PreviewCsvUpload";
@@ -276,6 +276,7 @@ const App = () => {
               <Route path="/assessment" element={<Assessment />} />
             </Route>
           </Route>
+          <Route path="add" element={<AdminCSVUpload />} />
         </Routes>
       </ThemeProvider>
       <StyledToastContainer />

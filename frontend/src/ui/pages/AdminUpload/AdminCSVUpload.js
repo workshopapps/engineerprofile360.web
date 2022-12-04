@@ -119,6 +119,10 @@ const CreateTypeContainer = styled.div`
     font-size: 18px;
     line-height: 24px;
     color: #323130;
+
+    @media screen and (max-width: 400px) {
+      font-size: 11px;
+    }
   }
 `;
 
@@ -157,6 +161,10 @@ const UploadCSVContent = styled.div`
   .icon {
     height: 150px;
     width: 150px;
+
+    @media screen and (max-width: 400px) {
+      height: 100px;
+    }
   }
 `;
 
@@ -179,6 +187,11 @@ const Buttons = styled.div`
     .plus-icon {
       width: 24px;
       height: 24px;
+
+      @media screen and (max-width: 400px) {
+        width: 15px;
+        height: 24px;
+      }
     }
 
     p {
@@ -186,6 +199,10 @@ const Buttons = styled.div`
       font-size: 16px;
       line-height: 24px;
       color: #ebf4f9;
+
+      @media screen and (max-width: 400px) {
+        font-size: 13px;
+      }
     }
   }
 
