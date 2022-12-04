@@ -375,9 +375,13 @@ const EmployeeStatsContainer = styled.div`
 `;
 
 const OverallContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   border: 1px solid #f8fbfd;
   border-radius: 8px;
   width: 100%;
+  padding: 28px 0px;
 
   svg {
     width: 100%;
