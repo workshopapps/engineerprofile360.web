@@ -82,12 +82,14 @@ import EmployeeUserDashboard from "./ui/pages/Employee/EmployeeDashboard";
 import Error from "./ui/pages/404";
 import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
 
+
 import GuestLogin from "./main/pages/Auth/GuestLogin";
 import DepartmentSection from "./ui/pages/DepartmentSection/DepartmentSection";
 import { ServerError } from "./ui/pages/ServerError";
 
 import PersistLogin from "./components/PersistLogin";
 import PreviewCsvUpload from "./ui/pages/PreviewCsvUpload/PreviewCsvUpload";
+import Fillemployee from "./ui/pages/FillEmployee/FillEmployee";
 
 const ROLES = {
   Employees: 1,
@@ -137,6 +139,9 @@ const App = () => {
               path="/take-assessment-list"
               element={<UserTakeAssessment />}
             />
+
+            <Route path="/fill-employee" element={<Fillemployee />} />
+
             <Route
               path="/guest-take-assessment"
               element={<GuestTakeAssessment />}
@@ -145,6 +150,7 @@ const App = () => {
               path="/guest-take-assessment-result"
               element={<GuestTakeAssessmentResult />}
             />
+
 
             <Route path="/csv-uploading" element={<CsvUploading />} />
 
