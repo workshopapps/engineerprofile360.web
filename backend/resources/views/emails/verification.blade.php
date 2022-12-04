@@ -1,18 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Test Email</title>
-</head>
-<body>
-    <h1>Verify your email address</h1>
-
-    Verify your email address using the link below.
-
-    <a href="{{$mailData["data"]}}">Verification Link</a>
-    
-    <p>{{$mailData["message"]}}</p>
-</body>
-</html>
+@extends('layouts.template')
+@section('content')
+    <p>Hi, {{$mailData["data"]["firstname"]??"user"}}</p>
+    <p>You're almost ready to access your evaluation portal.</p>
+    <p>Simply tap on the big blue button below to verify your account. </p>
+    <br>
+    <a class="krLcDa" href={{$mailData["data"]["link"]??""}} style="color: #ffffff">Verify Account</a>
+    <br><br>
+    <p>See you inside!</p>
+@endsection

@@ -33,7 +33,7 @@ class Signup extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Signup',
+            subject: 'Congratulations, your account is ready',
         );
     }
 

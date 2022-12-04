@@ -31,10 +31,10 @@ class EmployeeController extends Controller
     public function byCompId($company_id)
     {
         try {
-            $employees = Employee::where('org_id', $company_id)->paginate(5);
-            if (!$employees) {
-                return $this->sendResponse(true, "Company employees do not exist", "Employees not found", null, Response::HTTP_NOT_FOUND);
-            }
+            $employees = Employee::select('employees.id as employee_id', 'departments.name as department', 'employees.fullname as employee_name', 'employees.username as username','employees.email as email', 'employees.occupation as occupation', 'employees.created_at as created_at', 'employees.updated_at as updated_at')
+                ->join('departments', 'departments.id', '=', 'employees.department_id')
+                ->where('employees.org_id', $company_id)
+                ->paginate(5);
             return $this->sendResponse(false, null, "Employee Found", $employees, Response::HTTP_OK);
         } catch (Exception $e) {
             //throw $th;
@@ -140,10 +140,11 @@ class EmployeeController extends Controller
     public function confirmCSV(Request $request)
     {
         $parser = new CsvParser();
-        $passed = 0; $failed = 0;
+        $passed = 0;
+        $failed = 0;
         $file = json_decode($request->getContent(), true);
         $json = $file['data'];
-        foreach($json as $key => $item){
+        foreach ($json as $key => $item) {
             // check if employe exists
             $empExists = Employee::where("email", $json[$key]["email"]);
 
@@ -159,7 +160,7 @@ class EmployeeController extends Controller
 
             $result = $this->insertEmployee($json[$key], $raw_password);
 
-            if($result['$errorState']==true) $failed++;
+            if ($result['$errorState'] == true) $failed++;
             else $passed++;
         }
         return $this->sendResponse(false, null, "$passed Employee Added Successfully, $failed failed", $json, Response::HTTP_CREATED);

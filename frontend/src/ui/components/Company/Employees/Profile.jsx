@@ -196,7 +196,6 @@ const EmployeesTable = styled.div`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(3)};
   table {
-    table-layout: fixed;
     width: 100%;
     min-width: 1080px;
     overflow: auto;

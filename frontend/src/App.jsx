@@ -24,7 +24,7 @@ import {
   AdminEmailVerified,
 } from "./main/pages";
 
-import { CompanyDashboard, Employees } from "./ui/pages/Company";
+import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 
 import Support from "../src/ui/pages/UserSupport";
 import Terms from "../src/ui/pages/termsAndService/TermsAndService";
@@ -77,6 +77,7 @@ import {
 
 import AcceptReject from "./ui/pages/Accept Reject Profile/AcceptReject";
 import MainAssessment from "./ui/pages/Assessment";
+// import { Category } from "./ui/pages/category/Category";
 import UserAssessmentListAvailable from "./ui/pages/user-assessment-list/UserAssessmentListAvailable";
 import CompletedUserAssessments from "./ui/pages/user-assessment-list/UserAssessmentListCompleted";
 import UserAssessmentListOutlet from "./ui/pages/user-assessment-list/UserAssessmentListOutlet";
@@ -86,6 +87,8 @@ import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
 
 import GuestLogin from "./main/pages/Auth/GuestLogin";
 import DepartmentSection from "./ui/pages/DepartmentSection/DepartmentSection";
+import {ServerError} from "./ui/pages/ServerError";
+
 import PersistLogin from "./components/PersistLogin";
 import PreviewCsvUpload from "./ui/pages/PreviewCsvUpload/PreviewCsvUpload";
 import AdminAssessmmentListOutlet from "./ui/pages/admin-settings/adminAssesmentList/AdminAssessmmentListOutlet";
@@ -103,6 +106,7 @@ const App = () => {
         <GlobalStyles />
         <Routes>
           <Route path="/2FA" element={<User2FA />} />
+          <Route path="/serverError" element={<ServerError />} />
           <Route path="/guest-email" element={<GuestEmail />} />
           <Route
             path="/guest-assessment-list"
@@ -156,7 +160,7 @@ const App = () => {
             <Route path="/setting" element={<AdminSetting />} />
             <Route path="/privacy-policy" element={<Privacy />} />
             <Route path="/employee-profile" element={<EmployeeProfile />} />
-            {/* <Route path="/admin-csv-upload" element={<AdminCSVUpload />} /> */}
+            <Route path="/admin-csv-upload" element={<AdminCSVUpload />} />
             {/* <Route
               path="/user-assessment-completed"
               element={<UserAssessmentListCompleted />}
@@ -218,6 +222,10 @@ const App = () => {
                   path="/assessment/view-assessment"
                   element={<AdminViewAssessment />}
                 />
+                <Route
+                  path="/employees/csv-upload-preview"
+                  element={<PreviewCsvUpload />}
+                />
                 <Route path="/departments" element={<DepartmentSection />} />
                 <Route path="/dashboard" element={<CompanyDashboard />} />
                 <Route path="/employees" element={<Employees />}>
@@ -272,15 +280,14 @@ const App = () => {
                   </Route>
                 </Route>
 
-                {/* Overall Admin Route */}
-                <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
-                  {/* Put in Protected pages in here */}
-                </Route>
-
-                {/* <Route element={<DashboardLayout />}>
-              <Route path="/assessment" element={<Assessment />} />
-              </Route> */}
+                <Route path="/categories" element={<Category />} />
               </Route>
+
+              {/* Overall Admin Route */}
+              <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
+                {/* Put in Protected pages in here */}
+              </Route>
+
               <Route path="/assessment" element={<Assessment />} />
             </Route>
           </Route>
