@@ -32,6 +32,10 @@ function AssessmentContent() {
       .then((res) => {
         console.log(res);
         setData(res.data);
+        console.log(data);
+        console.log(data.options);
+        console.log(data.question);
+        console.log(data.id);
         setLoading(false);
       })
       .catch((error) => {
@@ -53,9 +57,7 @@ function AssessmentContent() {
   const currentPost = AssessmentData.slice(indexOfFirstPost, indexOfLastPost);
 
   const paginate = (pageNums) => setCurrentPage(pageNums);
-  return loading ? (
-    <OverlayLoader />
-  ) : (
+  return (
     <>
       <Container>
         <WrapperDiv>
