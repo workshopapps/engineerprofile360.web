@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->uuid('id')->unique();
             $table->string("question_id");
-            $table->string("question");
             $table->string("options");
             $table->string("timeframe");
             $table->string("correct_answers");
