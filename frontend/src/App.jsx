@@ -87,11 +87,12 @@ import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
 
 import GuestLogin from "./main/pages/Auth/GuestLogin";
 import DepartmentSection from "./ui/pages/DepartmentSection/DepartmentSection";
-import {ServerError} from "./ui/pages/ServerError";
+import { ServerError } from "./ui/pages/ServerError";
 
 import PersistLogin from "./components/PersistLogin";
 import PreviewCsvUpload from "./ui/pages/PreviewCsvUpload/PreviewCsvUpload";
 import AdminAssessmmentListOutlet from "./ui/pages/admin-settings/adminAssesmentList/AdminAssessmmentListOutlet";
+import Fillemployee from "./ui/pages/FillEmployee/FillEmployee";
 
 const ROLES = {
   Employees: 1,
@@ -141,6 +142,9 @@ const App = () => {
               path="/take-assessment-list"
               element={<UserTakeAssessment />}
             />
+
+            <Route path="/fill-employee" element={<Fillemployee />} />
+
             <Route
               path="/guest-take-assessment"
               element={<GuestTakeAssessment />}
@@ -268,29 +272,29 @@ const App = () => {
                     path="user-assessment-result"
                     element={<UserAssessmentResult />}
                   />
-                  <Route
-                    path="user-assessment-list"
-                    element={<UserAssessmentListOutlet />}
-                  >
-                    <Route path="" element={<UserAssessmentListAvailable />} />
-                    <Route
-                      path="completed"
-                      element={<CompletedUserAssessments />}
-                    />
-                  </Route>
                 </Route>
 
                 <Route path="/categories" element={<Category />} />
+                <Route
+                  path="user-assessment-list"
+                  element={<UserAssessmentListOutlet />}
+                >
+                  <Route path="" element={<UserAssessmentListAvailable />} />
+                  <Route
+                    path="completed"
+                    element={<CompletedUserAssessments />}
+                  />
+                </Route>
               </Route>
 
               {/* Overall Admin Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
                 {/* Put in Protected pages in here */}
               </Route>
-
               <Route path="/assessment" element={<Assessment />} />
             </Route>
           </Route>
+          <Route path="add" element={<AdminCSVUpload />} />
         </Routes>
       </ThemeProvider>
       <StyledToastContainer />
