@@ -254,7 +254,7 @@ const App = () => {
                     element={<UserAssessmentResult />}
                   />
                   <Route
-                    path="user-assessment-outlet"
+                    path="user-assessment-list"
                     element={<UserAssessmentListOutlet />}
                   >
                     <Route path="" element={<UserAssessmentListAvailable />} />

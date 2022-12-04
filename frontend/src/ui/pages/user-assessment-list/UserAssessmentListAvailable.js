@@ -196,6 +196,14 @@ const List = () => {
         </Text>
       );
     }
+
+    // const postData = (e) => {
+    //   e.preventDefault(
+    //     axios.post("/user-assessment/accept/{auth.id}/{auth.id}/{auth.id}")
+    //   );
+    // };
+    // onClick = { postData };
+
     return (
       <table>
         <tbody>
