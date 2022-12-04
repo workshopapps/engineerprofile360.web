@@ -9,39 +9,38 @@ const PersistLogin = () => {
   // const [loggedIn, setLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const refresh = useRefreshToken();
-  const { setAuth, persist, auth } = useAuth();
-
-  // useEffect(() => {
-  //   const loggedInUser = localStorage.getItem("EvalOrg");
-
-  //   if (isMounted) {
-  //     loggedInUser !== null && setAuth(JSON.parse(loggedInUser));
-  //     setIsLoading(false);
-  //   }
-  // return () => (isMounted.current = false);
-  // }, [isMounted]);
+  const { setAuth, auth } = useAuth();
 
   useEffect(() => {
     let isMounted = true;
 
-    const verifyRefreshToken = async () => {
-      try {
-        await refresh();
-      } catch (err) {
-        console.error(err);
-      } finally {
-        isMounted && setIsLoading(false);
-      }
-    };
-
-    !auth?.accessToken ? verifyRefreshToken() : setIsLoading(false);
-
+    const loggedInUser = localStorage.getItem("Eval360");
+    if (isMounted) {
+      loggedInUser !== null && setAuth(JSON.parse(loggedInUser));
+      setIsLoading(false);
+    }
     return () => (isMounted = false);
   }, []);
 
-  return (
-    <>{!persist ? <Outlet /> : isLoading ? <OverlayLoader /> : <Outlet />}</>
-  );
+  // useEffect(() => {
+  //   let isMounted = true;
+
+  //   const verifyRefreshToken = async () => {
+  //     try {
+  //       await refresh();
+  //     } catch (err) {
+  //       console.error(err);
+  //     } finally {
+  //       isMounted && setIsLoading(false);
+  //     }
+  //   };
+
+  //   !auth?.accessToken ? verifyRefreshToken() : setIsLoading(false);
+
+  //   return () => (isMounted = false);
+  // }, []);
+
+  return <>{!auth ? <Outlet /> : isLoading ? <OverlayLoader /> : <Outlet />}</>;
 
   // Will be refactored
 };

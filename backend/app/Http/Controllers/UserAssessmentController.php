@@ -97,11 +97,6 @@ class UserAssessmentController extends Controller
     //
     public function getOrgAvailableAssessment($org_id): JsonResponse
     {
-        
-        $exist = $userAssessment = UserAssessment::where('org_id', $org_id)->exists();
-        if (!$exist) {
-            return $this->sendResponse(true,  'Fetch User Assessment failed', 'No user assessment available for this Company', null, Response::HTTP_NOT_FOUND);
-        }
         try {
             $userAssessment = UserAssessment::where('org_id', $org_id)->with("assessment")->get();
             return $this->sendResponse(false, null, 'OK', $userAssessment, Response::HTTP_OK);
@@ -119,11 +114,6 @@ class UserAssessmentController extends Controller
     //
     public function getOrgCompletedAssessment($org_id): JsonResponse
     {
-        $exist = $userAssessment = UserAssessment::where('org_id', $org_id)->where("completed", true)->exists();
-        if (!$exist) {
-            return $this->sendResponse(true, 'Fetch User Assessment failed', 'No user assessment completed for this Company', null, Response::HTTP_NOT_FOUND);
-        }
-
         try {
             $userAssessment = UserAssessment::where('org_id', $org_id)->where("completed", true)->with("assessment")->get();
         
@@ -327,12 +317,9 @@ class UserAssessmentController extends Controller
 
                 return $this->sendResponse(true, null, 'User Top Performance', $max, Response::HTTP_OK);
             }
-
             return $this->sendResponse(true, null, 'No Score found for the given User Id', [], Response::HTTP_NOT_FOUND);
-
         } catch (Exception $e) {
             Log::error("UserScore Error", array("details" => $e->getMessage()));
-
             return $this->sendResponse(false, null, "Unable to fetch User's Top Performance", Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
