@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { axiosPrivate } from "../../../../api/axios";
+import { toast } from "react-toastify";
+import {
+  Loader,
+  OverlayLoader,
+} from "../../../../styles/reusableElements.styled";
 
 import { AssessmentData } from "./AssessmentData";
 import Pagination from "./Pagination";
@@ -10,6 +15,8 @@ import { Container, WrapperDiv } from "./ViewAssessmentHeader";
 function AssessmentContent() {
   const [isEditing, setIsEditing] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const [questionsPerPage] = useState(5);
   const [inputValue, setInputValue] = useState([
@@ -24,8 +31,13 @@ function AssessmentContent() {
       .get(`http://api.eval360.hng.tech/api/question/assessment/${company_id}`)
       .then((res) => {
         console.log(res);
+        setData(res.data);
+        setLoading(false);
       })
       .catch((error) => {
+        setLoading(false);
+        toast.error("could not fetch questions");
+
         console.log(error);
       });
   }, []);
@@ -41,14 +53,16 @@ function AssessmentContent() {
   const currentPost = AssessmentData.slice(indexOfFirstPost, indexOfLastPost);
 
   const paginate = (pageNums) => setCurrentPage(pageNums);
-  return (
+  return loading ? (
+    <OverlayLoader />
+  ) : (
     <>
       <Container>
         <WrapperDiv>
-          {currentPost.map((assessment, i) => {
-            const { question, options } = assessment;
+          {data.map((assessment) => {
+            const { question, options, id } = assessment;
             return (
-              <QuestionContainer key={i}>
+              <QuestionContainer key={id}>
                 <Question contentEditable={isEditing}>{question}</Question>
                 <div>
                   {options.map((query, i) => {
