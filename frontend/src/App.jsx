@@ -222,7 +222,7 @@ const App = () => {
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
                 {/* Put in Protected pages in here */}
               </Route>
-                <Route path="/assessment" element={<Assessment />} />
+              <Route path="/assessment" element={<Assessment />} />
             </Route>
           </Route>
         </Routes>
