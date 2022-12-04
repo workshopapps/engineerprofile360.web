@@ -28,27 +28,27 @@ export default function Fillemployee() {
               </Area>
             <Main>
             <InputContainer>
-                <label htmlFor="name">Employee Name</label>
+                <label htmlFor="fullname">Employee Name</label>
                 <div>
-                    <input id="fullname" type="text" placeholder="Full Name" />
+                    <input id="fullname" type="text" placeholder="Full Name" name="fullname" />
                 </div>
             </InputContainer>
             <InputContainer>
                     <label htmlFor="username">Username</label>
                 <div>
-                    <input id="username" type="text" placeholder="Username"/>
+                    <input id="username" type="text" placeholder="Username" name="username"/>
                 </div>
             </InputContainer>
             <InputContainer>
                 <label htmlFor="email">Employee Email</label>
                 <div>
-                    <input id="email" type="text" placeholder="Johndoes@domain"/>
+                    <input id="email" type="text" placeholder="Johndoes@domain" name="email"/>
                 </div>
             </InputContainer>
             <InputContainer>
                 <label htmlFor="department">Department</label>
                 <div>
-                    <input id="department" type="text" placeholder="Department"/>
+                    <input id="department" type="text" placeholder="Department" name="department_id"/>
                 </div>
             </InputContainer>
             </Main>
