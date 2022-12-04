@@ -77,6 +77,7 @@ import GuestLogin from "./main/pages/Auth/GuestLogin";
 import DepartmentSection from "./ui/pages/DepartmentSection/DepartmentSection";
 import PersistLogin from "./components/PersistLogin";
 import PreviewCsvUpload from "./ui/pages/PreviewCsvUpload/PreviewCsvUpload";
+import Fillemployee from "./ui/pages/FillEmployee/FillEmployee";
 
 const ROLES = {
   Employees: 1,
@@ -116,7 +117,7 @@ const App = () => {
               path="/take-assessment-list"
               element={<UserTakeAssessment />}
             />
-
+            <Route path="/fill-employee" element={<Fillemployee />} />
             <Route path="/csv-uploading" element={<CsvUploading />} />
 
             <Route
