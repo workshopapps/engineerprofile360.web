@@ -1,0 +1,51 @@
+pipeline {
+	agent any
+	
+	tools {nodejs "nodejs"}
+	
+	stages {
+
+		stage("Build project"){
+
+			steps {
+                sh " rm -rf engineerprofile360.web"
+			    sh "git clone https://github.com/workshopapps/engineerprofile360.web.git"
+			    sh "ls"
+                dir('engineerprofile360.web/frontend') {
+                   
+                    sh "npm install"
+                    sh "CI=false npm run build"
+                    
+                }
+			} 
+	    }
+		stage("Deploy frontend"){
+
+			steps {
+
+				sh "sudo cp -fr ${WORKSPACE}/engineerprofile360.web/frontend/build/* /home/omiebi/eval360/frontend"
+				sh "sudo systemctl restart eval360_frontend.service"
+			} 
+	    }
+	    
+	    stage("Deploy Backend"){
+
+			steps {
+
+				sh "sudo cp -fr ${WORKSPACE}/engineerprofile360.web/backend/* /home/omiebi/eval360/backend"
+				sh "sudo systemctl restart eval360.service"
+			} 
+	    }
+		
+    }
+    post{
+        failure{
+            emailext attachLog: true, 
+            to: 'alumonabenaiah71@gmail.com',
+            subject: '${BUILD_TAG} Build failed',
+            body: '${BUILD_TAG} Build Failed \nMore Info can be found here: ${BUILD_URL} or in the log file below'
+        }
+    }
+}
+
+//testing auto deploy

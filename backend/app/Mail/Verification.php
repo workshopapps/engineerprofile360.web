@@ -32,8 +32,9 @@ class Verification extends Mailable
      */
     public function envelope()
     {
+        $firstname = $this->mailData["data"]["firstname"];
         return new Envelope(
-            subject: 'Signup',
+            subject: "Welcome $firstname, please verify your account",
         );
     }
 

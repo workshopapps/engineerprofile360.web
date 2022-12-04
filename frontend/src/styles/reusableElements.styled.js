@@ -108,13 +108,13 @@ export const Loader = styled.div`
 
 export const OverlayLoader = styled.div`
   width: 100%;
-  height: 100vh;
+  height: ${(props) => props.contained ? "100%" : "100vh" };
   background: rgb(255,255,255);
   position: fixed;
-  top: 0;
-  bottom:: 0;
-  left: 0;
-  right: 0;
+  top: ${(props) => props.contained ? "initial" : "0" };
+  bottom: ${(props) => props.contained ? "initial" : "0" };
+  left: ${(props) => props.contained ? "initial" : "0" };
+  right: ${(props) => props.contained ? "initial" : "0" };
   display: flex;
   align-items: center;
   justify-content: center;

@@ -3,7 +3,7 @@ import headerpic from '../../../assets/images/comparison.png';
 import logo from '../../../assets/images/skriptlogo.svg';
 import BambooHR from '../../../assets/images/bamboo.png';
 import styled, {css} from 'styled-components';
-import {Button} from '../../../styles/reusableElements.styled'
+import {Button} from '../../../styles/reusableElements.styled';
 
 const ComparisonHeading  = styled.div`
     display:grid;

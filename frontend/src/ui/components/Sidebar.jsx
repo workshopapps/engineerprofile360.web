@@ -5,21 +5,21 @@ import dashboard from "../../assets/icons/app/dashboard.svg";
 import assessment from "../../assets/icons/app/assessment.svg";
 import user from "../../assets/icons/app/user.svg";
 
-const Sidebar = () => {
+const Sidebar = ({external=false}) => {
   return (
     <SidebarContainer>
-      <SidebarItem>
+      {!external &&<SidebarItem>
         <img src={dashboard} alt="dashboard icon" />
         <p>Dashboard</p>
-      </SidebarItem>
+      </SidebarItem>}
       <SidebarItem>
         <img src={assessment} alt="assessment icon" />
         <p>Assessments</p>
       </SidebarItem>
-      <SidebarItem>
+      {!external &&<SidebarItem>
         <img src={user} alt="user icon" />
         <p>Employees</p>
-      </SidebarItem>
+      </SidebarItem>}
     </SidebarContainer>
   );
 };

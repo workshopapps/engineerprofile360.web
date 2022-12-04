@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class InterviewController extends Controller
 {
+    
     public function addInterview(InterviewRequest $request): JsonResponse
     {
         $data = $request->all();
@@ -46,7 +47,7 @@ class InterviewController extends Controller
 
     public function getInterviewByStack($stackId) {
         try {
-            $interviews = Interview::where('stack_id', $stackId)->paginate(5);
+            $interviews = Interview::where('stack_id', $stackId)->get();
          
             if( !$interviews) {
                 return $this->sendResponse(
@@ -68,7 +69,7 @@ class InterviewController extends Controller
                 //throw $th;
                 return $this->sendResponse(true, $e->getMessage(), "Interviews Not Found", null, Response::HTTP_BAD_REQUEST);
         }
-   
+    }
 
     public function deleteInterview($id){
         try {
@@ -94,9 +95,9 @@ class InterviewController extends Controller
             $updatedData = $request->all();
             //Get Interview to be updated
             $interview = Interview::find($interviewId);
-            $interview = Interview::where('id', $interviewId)->exists();
+            $checkInterview = Interview::where('id', $interviewId)->exists();
             //Return an error if fetching failed
-            if (!$interview) {
+            if (!$checkInterview) {
                 return $this->sendResponse(true, null, 'Interview not found', null, Response::HTTP_NOT_FOUND);
             }
             

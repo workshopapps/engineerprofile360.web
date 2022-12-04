@@ -1,5 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { axiosPrivate } from "../../../../api/axios";
+import { toast } from "react-toastify";
+import {
+  Loader,
+  OverlayLoader,
+} from "../../../../styles/reusableElements.styled";
 
 import { AssessmentData } from "./AssessmentData";
 import Pagination from "./Pagination";
@@ -8,6 +15,8 @@ import { Container, WrapperDiv } from "./ViewAssessmentHeader";
 function AssessmentContent() {
   const [isEditing, setIsEditing] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [data, setData] = useState();
+  const [loading, setLoading] = useState(true);
 
   const [questionsPerPage] = useState(5);
   const [inputValue, setInputValue] = useState([
@@ -15,7 +24,31 @@ function AssessmentContent() {
       answer: "",
     },
   ]);
+
+  const company_id = "7b3ba4e0-fa72-46f6-b9ad-3d490e76ecac";
+  useEffect(() => {
+    axiosPrivate
+      .get(`http://api.eval360.hng.tech/api/question/assessment/${company_id}`)
+      .then((res) => {
+        console.log(res);
+        setData(res);
+        console.log(data);
+        console.log(res);
+
+        console.log(data.options);
+
+        console.log(data.id);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        toast.error("could not fetch questions");
+
+        console.log(error);
+      });
+  }, []);
   const answer = inputValue;
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setInputValue(e.target.value);
@@ -30,10 +63,10 @@ function AssessmentContent() {
     <>
       <Container>
         <WrapperDiv>
-          {currentPost.map((assessment, i) => {
-            const { question, options } = assessment;
+          {data.map((assessment) => {
+            const { question, options, id } = assessment;
             return (
-              <QuestionContainer key={i}>
+              <QuestionContainer key={id}>
                 <Question contentEditable={isEditing}>{question}</Question>
                 <div>
                   {options.map((query, i) => {
@@ -64,12 +97,19 @@ function AssessmentContent() {
           />
 
           <ButtonWrapper>
-            <ButtonShade
+            <ButtonClearNext
               onClick={() => {
-                setIsEditing(!isEditing);
+                navigate("/assessment");
               }}
             >
-              {isEditing ? "Apply Change" : "Edit"}
+              Next
+            </ButtonClearNext>
+            <ButtonShade
+              onClick={() => {
+                navigate("/fill-assessment");
+              }}
+            >
+              Edit
             </ButtonShade>
           </ButtonWrapper>
         </WrapperDiv>
@@ -85,15 +125,6 @@ export const QuestionContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   margin: 15px 0;
-  @media (min-width: 748px) {
-    transform: translateY(-130px);
-  }
-  @media (min-width: 1200px) {
-    transform: translateY(-180px);
-  }
-  @media (min-width: 1300px) {
-    transform: translateY(-270px);
-  }
 `;
 
 export const Question = styled.h4`
@@ -130,9 +161,6 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  @media (min-width: 748px) {
-    transform: translateY(-130px);
-  }
 `;
 export const ButtonClear = styled.button`
   color: #323130;
@@ -142,6 +170,27 @@ export const ButtonClear = styled.button`
   width: 75px;
   height: 60px;
   margin: 0 15px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-in;
+
+  &:hover {
+    color: #fff;
+    background-color: #2667ff;
+    border: none;
+    border: none;
+  }
+`;
+export const ButtonClearNext = styled.button`
+  color: #323130;
+  background-color: white;
+  border: 1px solid #2667ff;
+  cursor: pointer;
+  width: 139px;
+  height: 60px;
+
   border-radius: 4px;
   display: flex;
   justify-content: center;
