@@ -98,7 +98,7 @@ export const CreateCategory = (props) => {
                             </select> */}
                     </Input>
                     < Buttons>
-                        <Button onClick={props.cancel} variant >Cancel</Button>
+                        <Button onClick={props.cancel} $variant='outlined' >Cancel</Button>
                         <Button type='submit' >Proceed</Button>
                     </Buttons>
                 </form>
