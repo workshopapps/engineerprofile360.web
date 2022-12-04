@@ -83,6 +83,11 @@ const AddCategoryBtn = styled(Button)`
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
+
+  @media (max-width: 419px) {
+    font-size: 12px;
+    width: 90px;
+  }
 `;
 
 const ActionButton = styled.div`
@@ -101,6 +106,13 @@ const EditBtn = styled(Button)`
   padding: 8px 10px;
   width: 120px;
   height: 35px;
+
+  @media (max-width: 517px) {
+    width: 60px;
+  }
+  @media (max-width: 419px) {
+    font-size: 12px;
+  }
 `;
 
 const Delete = styled(Button)`
@@ -114,6 +126,12 @@ const Delete = styled(Button)`
   padding: 8px 10px;
   width: 120px;
   height: 35px;
+  @media (max-width: 517px) {
+    width: 60px;
+  }
+  @media (max-width: 419px) {
+    font-size: 12px;
+  }
 `;
 
 const CategoryListing = styled.div`
@@ -126,6 +144,16 @@ const CategoryListing = styled.div`
     overflow: auto;
     white-space: initial;
     /* background: #f8fbfd; */
+
+    @media (max-width: 517px) {
+      th:nth-child(2) {
+        padding-right: 50px;
+      }
+
+      th:nth-child(3) {
+        padding-right: 20px;
+      }
+    }
 
     tr:first-of-type {
       width: 100%;
