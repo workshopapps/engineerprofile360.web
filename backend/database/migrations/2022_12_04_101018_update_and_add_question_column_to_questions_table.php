@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::table('questions', function (Blueprint $table) {
             $table->string("question");
+            if (Schema::hasColumn('questions', 'question_id')) {
+                $table->dropColumn('question_id');
+          }
         });
     }
 
@@ -27,6 +30,7 @@ return new class extends Migration
     {
         Schema::table('questions', function (Blueprint $table) {
             //
+            
         });
     }
 };
