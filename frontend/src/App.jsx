@@ -83,13 +83,10 @@ import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
 
 import GuestLogin from "./main/pages/Auth/GuestLogin";
 import DepartmentSection from "./ui/pages/DepartmentSection/DepartmentSection";
-<<<<<<< HEAD
 import {ServerError} from "./ui/pages/ServerError";
 
-=======
 import PersistLogin from "./components/PersistLogin";
 import PreviewCsvUpload from "./ui/pages/PreviewCsvUpload/PreviewCsvUpload";
->>>>>>> dev
 
 const ROLES = {
   Employees: 1,
