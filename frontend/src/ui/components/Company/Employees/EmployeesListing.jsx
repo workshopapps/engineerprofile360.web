@@ -3,9 +3,12 @@ import styled from "styled-components";
 import { Button } from "../../../../styles/reusableElements.styled";
 
 import { More } from "iconsax-react";
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 
 const EmployeesListing = () => {
+  const { employees, topEmployees } = useOutletContext();
+
+  console.log(employees);
   return (
     <EmployeesList>
       <EmployeesTab>
@@ -32,18 +35,20 @@ const EmployeesListing = () => {
               <th>Position</th>
               <th>Actions</th>
             </tr>
-            <tr>
-              <td>1.</td>
-              <td>Browyn Louis</td>
-              <td>AEB</td>
-              <td>400LEVEL</td>
-              <td>
-                <Button $variant="outlined" $color="#2667ff">
-                  View Profile
-                </Button>
-                <More />
-              </td>
-            </tr>
+            {employees.map((employee, index) => (
+              <tr key={employee.employee_id}>
+                <td>{index + 1}.</td>
+                <td>{employee.employee_name}</td>
+                <td>{employee.department}</td>
+                <td>{employee.occupation || "NIL"}</td>
+                <td>
+                  <Button $variant="outlined" $color="#2667ff">
+                    View Profile
+                  </Button>
+                  <More />
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </EmployeesTable>
@@ -58,7 +63,7 @@ export default EmployeesListing;
 
 const EmployeesList = styled.div`
   display: flex;
-  gap: ${({ theme }) => theme.spacing(4)};
+  gap: ${({ theme }) => theme.spacing(2)};
   flex-direction: column;
 `;
 

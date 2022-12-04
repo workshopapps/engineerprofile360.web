@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
 import { Button, Title } from "../../../../styles/reusableElements.styled";
 
-const TopEmployees = ({ topPerformances }) => {
-  const employees = topPerformances?.data
-    ? topPerformances?.data.filter((data) => data.points !== null)
-    : [];
+const TopEmployees = ({ topPerformances, departments }) => {
+  // const [filter, setFilter] = useState("all");
+  const allDepartments = departments;
+  const topEmployees = topPerformances ? topPerformances : [];
+
+  // const handleFilter = (e) => {
+  //   setFilter(e.target.value);
+  // };
 
   return (
     <div>
@@ -23,13 +27,20 @@ const TopEmployees = ({ topPerformances }) => {
         <Filter>
           <select>
             <option value="all">Department</option>
+            {allDepartments
+              ? allDepartments.map((department) => (
+                  <option key={department.id} value={department.name}>
+                    {department.name}
+                  </option>
+                ))
+              : ""}
           </select>
           <select>
             <option>Sort By Date</option>
           </select>
         </Filter>
       </Header>
-      {employees.length > 0 ? (
+      {topEmployees ? (
         <TopEmployeesList>
           <table>
             <tbody>
@@ -40,21 +51,23 @@ const TopEmployees = ({ topPerformances }) => {
                 <th>Percentage</th>
                 <th>Action</th>
               </tr>
-              {employees.map((employee, index) => (
-                <tr key={`employee-${index}`}>
-                  <td>{index + 1}.</td>
-                  <td>{employee.employee_name}</td>
-                  <td>{employee.department}</td>
-                  <td>{employee.points}%</td>
-                  <td>
-                    <Link to="/employees">
-                      <Button $variant="outlined" $color="#2667ff">
-                        View Results
-                      </Button>
-                    </Link>
-                  </td>
-                </tr>
-              ))}
+              {topEmployees
+                .filter((employee) => employee.points !== null)
+                .map((employee, index) => (
+                  <tr key={`employee-${index}`}>
+                    <td>{index + 1}.</td>
+                    <td>{employee.employee_name}</td>
+                    <td>{employee.department}</td>
+                    <td>{employee.points}%</td>
+                    <td>
+                      <Link to="/employees">
+                        <Button $variant="outlined" $color="#2667ff">
+                          View Results
+                        </Button>
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </TopEmployeesList>
