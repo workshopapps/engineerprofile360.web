@@ -1,14 +1,63 @@
-import React from "react";
-
+import React, {useEffect, useState} from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { MainContainer } from "../../../styles/reusableElements.styled";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import styled from "styled-components";
+import axios from "../../../api/axios";
+
 
 
 
 export default function Fillemployee() {
+  const [fullName, setFullName] = useState('')
+  const [userName, setUserName] = useState('')
+  const [email, setEmail] = useState('')
+  const [department, setDepartment] = useState('')
+  const [id, setId] = useState('') 
+  
+  useEffect (()=>{
+    let ids=localStorage.getItem("departments") 
+    setId(ids)
+    axios.get(`https://api.eval360.hng.tech/api/department/${ids}`).then((response)=>{
+      console.log(response)
+      setDepartment(response?.data?.data?.name || {})
+    }).catch((error)=>{
+      console.log(error)
+    })
+  },[]) 
+  const showErrorToast = (error) => {
+    toast.error(error, {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
+  const [tab, setTab] = useState("head");
+
+  const showSuccess = (error) => {
+    toast.success(error, {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
+  const handleSubmit = (e) => {
+    axios.post(`https://api.eval360.hng.tech/api/employee/add?type=manual`,{
+      email: email,
+      username: userName,
+      department_id: id,
+      fullname: fullName
+    }).then((response)=>{
+      setEmail('')
+      setUserName('')
+      setDepartment('')
+      setFullName('')
+      console.log(response)
+      showSuccess('Employee Added Successfully')
+    }).catch((error)=>{
+      console.log(error)
+      showErrorToast(error)
+    })
+  }
   return (
     <>
     <Header />
@@ -17,38 +66,49 @@ export default function Fillemployee() {
       <Container>
         
         <Upload>
-          <form>
+          <form onSubmit={(e)=>handleSubmit(e)}>
             <Card>
-              <Head>
-                <p>Upload Csv file</p>
-                <p>Add Employee Manually</p>
-              </Head>
-              <Area>
-                <span>Input assessment and select response type below:</span>
-              </Area>
+              
+              <CreateTypeContainer>
+          <Head
+            onClick={() => setTab("head")}
+            className={tab === "head" ? "active" : ""}
+          >
+            <p>Upload CSV file</p>
+          </Head>
+          <Add
+            onClick={() => setTab("add")}
+            className={tab === "add" ? "active" : ""}
+          >
+            <p>Add Employee Manually</p>
+          </Add>
+        </CreateTypeContainer>
+        <Area>
+            <span>Input assessment and select response type below:</span>
+        </Area>
             <Main>
             <InputContainer>
                 <label htmlFor="fullname">Employee Name</label>
                 <div>
-                    <input id="fullname" type="text" placeholder="Full Name" name="fullname" />
+                    <input id="fullname" type="text" placeholder="Full Name" name="fullname" value={fullName} onChange={(e)=>setFullName(e.target.value)} />
                 </div>
             </InputContainer>
             <InputContainer>
                     <label htmlFor="username">Username</label>
                 <div>
-                    <input id="username" type="text" placeholder="Username" name="username"/>
+                    <input id="username" type="text" placeholder="Username" name="username"  value={userName} onChange={(e)=>setUserName(e.target.value)} />
                 </div>
             </InputContainer>
             <InputContainer>
                 <label htmlFor="email">Employee Email</label>
                 <div>
-                    <input id="email" type="text" placeholder="Johndoes@domain" name="email"/>
+                    <input id="email" type="text" placeholder="Johndoes@domain" name="email"  value={email} onChange={(e)=>setEmail(e.target.value)} />
                 </div>
             </InputContainer>
             <InputContainer>
                 <label htmlFor="department">Department</label>
                 <div>
-                    <input id="department" type="text" placeholder="Department" name="department_id"/>
+                    <input id="department" type="text" placeholder="Department" name="department_id"  value={department} disabled={true} />
                 </div>
             </InputContainer>
             </Main>
@@ -188,31 +248,7 @@ const Card = styled.div`
     align-items: center;
 
 `;
-const Head = styled.div`
-    display: flex;
-    width: 100%;
 
-    p {
-    padding: 16px;
-    flex-basis:100%;
-    text-align: center;
-    
-    &:nth-child(1){
-    color: #323130;
-    background-color: #F8FBFD;
-    border-radius: 0 16px 0 0;
-      }
-    
-      &:nth-child(2){
-        background-color: #2667FF;
-        border: 1px solid #586279;
-        border-radius: 16px 0 0 0;
-        color: #FFFFFF;
-      }
-    
-    
-}
-`;
 const Area = styled.div`
     padding-left: 10px;
     color: #323130;
@@ -274,3 +310,48 @@ const Main = styled.div`
     padding-right: 50px;
 
 `;
+const CreateTypeContainer = styled.div`
+  width: 100%;
+  display: flex;
+
+  & .active {
+    background: #2667ff;
+    border: 1px solid #2667ff;
+  }
+
+  & .active p {
+    color: #ffffff;
+  }
+
+  p {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 24px;
+    color: #323130;
+  }
+`;
+
+const Head = styled.div`
+  width: 100%;
+  text-align: center;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-left-radius: 16px;
+  border: 1px solid #c7e0f4;
+  cursor: pointer;
+`;
+
+const Add = styled.div`
+  width: 100%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 72px;
+  border: 1px solid #c7e0f4;
+  border-top-right-radius: 16px;
+  cursor: pointer;
+`;
+

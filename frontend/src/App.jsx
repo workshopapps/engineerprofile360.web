@@ -160,10 +160,13 @@ const App = () => {
                 {/* Put in Protected pages in here */}
                 <Route path="/employee-profile" element={<EmployeeProfile />} />
                 <Route path="/404" element={<Error />} />
+                
                 <Route
                   path="/employee-user-dashboard"
                   element={<EmployeeUserDashboard />}
+                  
                 />
+                
               </Route>
 
               {/* Organization Route */}
@@ -174,6 +177,7 @@ const App = () => {
                   path="/assessment/view-assessment"
                   element={<AdminViewAssessment />}
                 />
+                
                 <Route
                   path="/employees/csv-upload-preview"
                   element={<PreviewCsvUpload />}
@@ -188,6 +192,8 @@ const App = () => {
                     element={<EmployeeFullProfile />}
                   />
                   <Route path="add-employee" element={<AdminCSVUpload />} />
+            
+                  
                   <Route
                     path="employee-department"
                     element={<EmployeeDeparment />}
