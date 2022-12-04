@@ -18,7 +18,7 @@ function AssessmentContent() {
     },
   ]);
 
-  const company_id = "c57d34e5-dcfe-4fba-821b-53c22ac27756";
+  const company_id = "7b3ba4e0-fa72-46f6-b9ad-3d490e76ecac";
   useEffect(() => {
     axiosPrivate
       .get(`http://api.eval360.hng.tech/api/question/company/${company_id}`)
