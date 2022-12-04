@@ -82,7 +82,14 @@ Route::prefix("assessment")->group(function () {
     Route::get('/{organization_id}', [AssessmentController::class, 'getAssByOrgId']);
     Route::put('/{assessmentId}', [AssessmentController::class, 'updateAssessment'])->middleware("isloggedin", "isadmin");
     Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAssessment'])->middleware("isloggedin", "isadmin");
+});
 
+
+//Admin Assessment routes operations
+Route::prefix("assessment/admin")->group(function () {
+    Route::post('/create', [AssessmentController::class, 'adminCreateAssessment'])->middleware("isloggedin", "isoveralladmin");
+    Route::put('/{assessmentId}', [AssessmentController::class, 'adminUpdateAssessment'])->middleware("isloggedin", "isoveralladmin");
+    Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'adminDeleteAssessment'])->middleware("isloggedin", "isoveralladmin");
 });
 
 // Test Employee Adding using csv file
@@ -107,6 +114,8 @@ Route::prefix("auth")->group(function () {
     Route::post('/eval360/admin/login', [AuthenticateController::class, 'OverallAdminLogin']);
 
     Route::post('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
+
+    Route::post('/refresh', [AuthenticateController::class, 'refreshJwtToken']);
 
     Route::prefix("password")->group(
         function () {
@@ -142,7 +151,7 @@ Route::prefix("category")->group(function () {
     Route::put('/{categoryId}/update', [CategoryController::class, 'updateCategory'])->middleware("isloggedin");
     Route::post('/add', [CategoryController::class, 'createCategory'])->middleware("isloggedin", "isadmin");
     Route::delete('{catId}/delete', [CategoryController::class, 'deleteCategory'])->middleware("isloggedin", "isadmin");
-    Route::get("/allCategories", [CategoryController::class, "getCategoriesByOrgId"])->middleware("isloggedin", "isadmin");
+    Route::get("/get/{org_id}", [CategoryController::class, "getCategoriesByOrgId"])->middleware("isloggedin", "isadmin");
     Route::get('/assessment/{id}', [CategoryController::class, 'getByAssessmentId'])->middleware("isloggedin", "isadmin");
 });
 

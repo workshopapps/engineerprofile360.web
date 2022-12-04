@@ -24,11 +24,11 @@ const AuthTitleCon = styled.div`
     font-size: 20px;
 
     ${({ theme }) => theme.breakpoints.down("sm")} {
-        font-size: 20px;
+      font-size: 20px;
     }
 
     ${({ theme }) => theme.breakpoints.down("xs")} {
-        font-size: 18px;
+      font-size: 18px;
     }
   }
 `;

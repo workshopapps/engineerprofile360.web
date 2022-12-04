@@ -2,8 +2,12 @@ import styled, { css } from "styled-components";
 import Footer from "../../Layouts/Main/Partials/Footer";
 
 import celebration from "../../assets/images/celebration.png";
+import { useEffect } from "react";
 
 const GuestEmail = () => {
+  useEffect(() => {
+    localStorage.removeItem("guest");
+  })
   return (
     <>
       <Main>
@@ -23,6 +27,8 @@ const GuestEmail = () => {
     </>
   );
 };
+
+export default GuestEmail;
 
 const Main = styled.main`
   display: grid;
@@ -156,4 +162,4 @@ const Button = styled.button`
   }
 `;
 
-export default GuestEmail;
+
