@@ -63,8 +63,8 @@ function AssessmentContent() {
     <>
       <Container>
         <WrapperDiv>
-          {currentPost.map((assessment) => {
-            const { question, options, i } = assessment;
+          {currentPost.map((assessment, i) => {
+            const { question, options } = assessment;
             return (
               <QuestionContainer key={i}>
                 <Question contentEditable={isEditing}>{question}</Question>
