@@ -58,7 +58,6 @@ class DepartmentController extends Controller
     {
         try {
             $department = Department::where("org_id", $id);
-            if (!$department->count()) return $this->sendResponse(true, "Not found", "Department not found", Response::HTTP_NOT_FOUND);
             return $this->sendResponse(false, null, "Successful", $department->get(), Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Error fetching the departments", $e->getMessage(), Response::HTTP_BAD_REQUEST);
