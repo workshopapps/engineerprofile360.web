@@ -24,7 +24,7 @@ import {
   AdminEmailVerified,
 } from "./main/pages";
 
-import { CompanyDashboard, Employees } from "./ui/pages/Company";
+import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 
 import Support from "../src/ui/pages/UserSupport";
 import Terms from "../src/ui/pages/termsAndService/TermsAndService";
@@ -74,6 +74,7 @@ import {
 
 import AcceptReject from "./ui/pages/Accept Reject Profile/AcceptReject";
 import MainAssessment from "./ui/pages/Assessment";
+// import { Category } from "./ui/pages/category/Category";
 import UserAssessmentListAvailable from "./ui/pages/user-assessment-list/UserAssessmentListAvailable";
 import CompletedUserAssessments from "./ui/pages/user-assessment-list/UserAssessmentListCompleted";
 import UserAssessmentListOutlet from "./ui/pages/user-assessment-list/UserAssessmentListOutlet";
@@ -264,15 +265,14 @@ const App = () => {
                   </Route>
                 </Route>
 
-                {/* Overall Admin Route */}
-                <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
-                  {/* Put in Protected pages in here */}
-                </Route>
-
-                {/* <Route element={<DashboardLayout />}>
-              <Route path="/assessment" element={<Assessment />} />
-              </Route> */}
+                <Route path="/categories" element={<Category />} />
               </Route>
+
+              {/* Overall Admin Route */}
+              <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
+                {/* Put in Protected pages in here */}
+              </Route>
+
               <Route path="/assessment" element={<Assessment />} />
             </Route>
           </Route>
