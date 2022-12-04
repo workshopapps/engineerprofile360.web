@@ -1,0 +1,10 @@
+POST http://localhost:8000/api/stack/add
+Content-Type: application/json
+
+
+{
+    "name":"Java",
+    "user_id": "3e4818c1-5a22-4d88-8fcf-0b154a9585"
+}
+
+

@@ -6,12 +6,14 @@ import notification from "../../assets/icons/app/notification.svg"
 import arrowDown from "../../assets/icons/app/arrow-down.svg"
 import userButton from "../../assets/images/app/User-button.png"
 import { Divider } from "../../styles/reusableElements.styled"
-
+import Logo from '../../components/Logo' 
 const Header = () => {
   return (
     <HeaderContainer>
       <LogoAndSearch>
-        <img src={logo} alt="Logo SVG" />
+        {/* <img src={logo} alt="Logo SVG" /> */}
+      
+      <Logo size="lg"/>
         <form>
           <input type="text" placeholder="Search" />
         </form>
