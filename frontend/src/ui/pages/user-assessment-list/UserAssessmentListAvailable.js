@@ -159,14 +159,23 @@ const Sort = () => {
 };
 
 const List = () => {
+  const { available, setAvailable, isLoading, setIsLoading } =
+    useContext(DataContext);
   const { auth, setAuth } = useAuth();
 
   const fetchAvailable = () => {
     return axios("/user-assessment/org/{auth.id}/org-available");
   };
 
-  const { available, setAvailable, isLoading, setIsLoading } =
-    useContext(DataContext);
+  const postData = (e) => {
+    // e.preventDefault();
+    axios.post(`/user-assessment/accept/${auth.id}/${auth.id}/${auth.id}`, {
+      assessmentId: "",
+      employeeId: "",
+      orgId: "",
+    });
+  };
+
   useEffect(() => {
     fetchAvailable()
       .then(({ data }) => {
@@ -189,20 +198,15 @@ const List = () => {
           <Loader />
         </Flex>
       );
-    } else if (available.data.length === 0) {
-      return (
-        <Text>
-          Oops no available assessments for this user, come back later
-        </Text>
-      );
     }
 
-    // const postData = (e) => {
-    //   e.preventDefault(
-    //     axios.post("/user-assessment/accept/{auth.id}/{auth.id}/{auth.id}")
+    // else if (available.data.length < 0) {
+    //   return (
+    //     <Text>
+    //       Oops no available assessments for this user, come back later
+    //     </Text>
     //   );
-    // };
-    // onClick = { postData };
+    // }
 
     return (
       <table>
@@ -224,7 +228,11 @@ const List = () => {
                 <td>{d.duration}</td>
                 <td>{d.date}</td>
                 <td>
-                  <Button $variant="outlined" $color="#2667ff">
+                  <Button
+                    $variant="outlined"
+                    $color="#2667ff"
+                    onClick={() => postData()}
+                  >
                     Take Test
                   </Button>
                 </td>
