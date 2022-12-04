@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
@@ -22,7 +22,7 @@ const TopEmployees = ({ topPerformances }) => {
         </div>
         <Filter>
           <select>
-            <option>Assessment</option>
+            <option value="all">Department</option>
           </select>
           <select>
             <option>Sort By Date</option>
@@ -127,14 +127,14 @@ const TopEmployeesList = styled.div`
   width: 100%;
   overflow: auto;
   table {
-    table-layout: fixed;
     width: 100%;
-    min-width: 768px;
+    min-width: 960px;
     overflow: auto;
 
     tr:first-of-type {
       width: 100%;
       background: #f8fbfd;
+      text-align: left;
 
       th:first-of-type {
         padding-right: 24px;

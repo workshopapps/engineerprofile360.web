@@ -2,6 +2,18 @@ import axios from "axios";
 
 const BASEURL = "https://api.eval360.hng.tech/api/";
 // const BASEURL = "http://104.225.216.199:8000/api/";
+//const BASEURL = "http://localhost:8000/api/";
+
+
+const token = localStorage.getItem("Eval360");
+console.log(token);
+const JWT_TOKEN = JSON.parse(token);
+console.log(JWT_TOKEN);
+if (JWT_TOKEN?.accessToken) {
+  axios.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${JWT_TOKEN?.accessToken}`;
+}
 
 export default axios.create({
   baseURL: BASEURL,

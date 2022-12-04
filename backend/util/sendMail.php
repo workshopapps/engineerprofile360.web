@@ -6,79 +6,84 @@ use App\Mail\Signup;
 use App\Mail\Verification;
 use Illuminate\Support\Facades\Mail;
 
-class Mailer{
+class Mailer
+{
 
-    public function signUpMail($from, $to, $message="", $data=""){
+    public function signUpMail($from, $to, $data = "")
+    {
         $mailData = [
-            "from"=>$from,
-            "message"=>$message,
-            "data"=>$data
+            "from" => $from,
+            "data" => $data
         ];
 
         try {
             Mail::to($to)->send(new Signup($mailData));
         } catch (\Exception $e) {
-            echo("Something went wrong sending mail".$e->getMessage());
+            echo ("Something went wrong sending mail" . $e->getMessage());
         }
     }
 
-    public function verifyEmail($from, $to, $message="", $data=""){
+    public function verifyEmail($from, $to, $message = "", $data = [])
+    {
         $mailData = [
-            "from"=>$from,
-            "message"=>$message,
-            "data"=>$data
+            "from" => $from,
+            "message" => $message,
+            "data" => $data
         ];
 
         try {
             Mail::to($to)->send(new Verification($mailData));
         } catch (\Exception $e) {
-            echo("Something went wrong sending mail ".$e->getMessage());
+            echo ("Something went wrong sending mail " . $e->getMessage());
         }
     }
 
-    public function passwordReset($from, $to,$msg, $data=""){
+    public function passwordReset($from, $to, $msg, $data = "")
+    {
         $mailData = [
-            "from"=>$from,
-            "data"=>$data,
-            "message"=>$msg
+            "from" => $from,
+            "data" => $data,
+            "message" => $msg
         ];
 
         try {
             Mail::to($to)->send(new PasswordReset($mailData));
         } catch (\Exception $e) {
-            echo("Something went wrong sending mail ".$e->getMessage());
+            echo ("Something went wrong sending mail " . $e->getMessage());
         }
     }
 
-    public function sendEmployeeOnboardingMail($emp_fullname,$emp_username,$emp_password,$login_link, $to, $org_name){
+    public function sendEmployeeOnboardingMail($emp_fullname, $emp_username, $emp_password, $login_link, $to, $org_name)
+    {
         $mailData = [
-            "emp_fullname"=>$emp_fullname,
-            "emp_username"=>$emp_username,
-            "emp_password"=>$emp_password,
-            "login_link"=>$login_link,
-            "org_name"=>$org_name,
-            "emp_email"=> $to
+            "emp_fullname" => $emp_fullname,
+            "emp_username" => $emp_username,
+            "emp_password" => $emp_password,
+            "login_link" => $login_link,
+            "org_name" => $org_name,
+            "emp_email" => $to
         ];
 
         try {
             Mail::to($to)->send(new Onboarding($mailData));
         } catch (\Exception $e) {
-            echo("Something went wrong sending mail ".$e->getMessage());
+            echo ("Something went wrong sending mail " . $e->getMessage());
         }
     }
 
-    public function notifyEmployeeAssessment($from, $to, $org_name, $assessment_category, $data=""){
+    public function notifyEmployeeAssessment($from, $to, $org_name, $assessment_category, $data = "")
+    {
         $mailData = [
-            "employee_name"=>$from,
-            "data"=>$data,
-            "assessment_category"=>$assessment_category,
-            "org_name"=>$org_name
+            "employee_name" => $from,
+            "data" => $data,
+            "assessment_category" => $assessment_category,
+            "org_name" => $org_name
         ];
 
         try {
             Mail::to($to)->send(new PasswordReset($mailData));
         } catch (\Exception $e) {
-            echo("Something went wrong sending mail ".$e->getMessage());
+            echo ("Something went wrong sending mail " . $e->getMessage());
         }
     }
 }
