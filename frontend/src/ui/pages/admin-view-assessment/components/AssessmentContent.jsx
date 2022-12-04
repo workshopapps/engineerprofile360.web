@@ -31,7 +31,7 @@ function AssessmentContent() {
       .get(`http://api.eval360.hng.tech/api/question/assessment/${company_id}`)
       .then((res) => {
         console.log(res);
-        setData(res.data);
+        setData(res);
         console.log(data);
         console.log(data.options);
         console.log(data.question);
