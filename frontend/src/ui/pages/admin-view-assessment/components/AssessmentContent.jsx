@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { axiosPrivate } from "../../../../api/axios";
 
 import { AssessmentData } from "./AssessmentData";
 import Pagination from "./Pagination";
@@ -16,6 +17,18 @@ function AssessmentContent() {
       answer: "",
     },
   ]);
+
+  const company_id = "7b3ba4e0-fa72-46f6-b9ad-3d490e76ecac";
+  useEffect(() => {
+    axiosPrivate
+      .get(`http://api.eval360.hng.tech/api/question/company/${company_id}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   const answer = inputValue;
   const navigate = useNavigate();
 
@@ -130,7 +143,6 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
 `;
 export const ButtonClear = styled.button`
   color: #323130;
@@ -145,7 +157,6 @@ export const ButtonClear = styled.button`
   justify-content: center;
   align-items: center;
   transition: all 0.3s ease-in;
- 
 
   &:hover {
     color: #fff;

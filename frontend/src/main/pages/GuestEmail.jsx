@@ -2,8 +2,12 @@ import styled, { css } from "styled-components";
 import Footer from "../../Layouts/Main/Partials/Footer";
 
 import celebration from "../../assets/images/celebration.png";
+import { useEffect } from "react";
 
 const GuestEmail = () => {
+  useEffect(() => {
+    localStorage.removeItem("guest");
+  })
   return (
     <>
       <Main>

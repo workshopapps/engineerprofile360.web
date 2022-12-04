@@ -33,7 +33,6 @@ const Dashboard = () => {
         });
 
         setIsLoading(false);
-        
 
         const employees = response[1]?.data.data.data.length;
         const assessments = response[2]?.data.data.length;
@@ -46,13 +45,14 @@ const Dashboard = () => {
           employees,
           assessments,
           availableAssessments,
-          completedAssessments
+          completedAssessments,
         });
         setTopPerformance(topEmployee);
         setTopPerformances(topEmployees);
 
         // console.log(response);
       } catch (err) {
+        setIsLoading(false);
         if (!err?.response) {
           showErrorToast(err.message);
         } else if (err?.response.data.errorState === true) {
@@ -69,7 +69,10 @@ const Dashboard = () => {
     <>
       <PageInfo pageTitle="Company's Dashboard" />
       <Stats stats={stats} topPerformance={topPerformance} />
-      <TopEmployees topPerformances={topPerformances} setIsLoading={setIsLoading} />
+      <TopEmployees
+        topPerformances={topPerformances}
+        setIsLoading={setIsLoading}
+      />
 
       {isLoading ? (
         <OverlayLoader>

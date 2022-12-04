@@ -1,14 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
 import { Button, Title } from "../../../../styles/reusableElements.styled";
 
 const TopEmployees = ({ topPerformances }) => {
-  const employees = topPerformances?.data
-    ? topPerformances?.data.filter((data) => data.points !== null)
-    : [];
+  const [top, setTop] = useState([]);
 
+  useEffect(() => {
+    const employees = topPerformances?.data
+      ? topPerformances?.data.filter((data) => data.points !== null)
+      : [];
+
+    setTop(employees);
+  }, [topPerformances?.data]);
+
+  console.log(top);
   return (
     <div>
       <Header>
@@ -22,14 +29,14 @@ const TopEmployees = ({ topPerformances }) => {
         </div>
         <Filter>
           <select>
-            <option>Assessment</option>
+            <option value="all">Department</option>
           </select>
           <select>
             <option>Sort By Date</option>
           </select>
         </Filter>
       </Header>
-      {employees.length > 0 ? (
+      {top.length > 0 ? (
         <TopEmployeesList>
           <table>
             <tbody>
@@ -40,7 +47,7 @@ const TopEmployees = ({ topPerformances }) => {
                 <th>Percentage</th>
                 <th>Action</th>
               </tr>
-              {employees.map((employee, index) => (
+              {top.map((employee, index) => (
                 <tr key={`employee-${index}`}>
                   <td>{index + 1}.</td>
                   <td>{employee.employee_name}</td>
@@ -127,14 +134,14 @@ const TopEmployeesList = styled.div`
   width: 100%;
   overflow: auto;
   table {
-    table-layout: fixed;
     width: 100%;
-    min-width: 768px;
+    min-width: 960px;
     overflow: auto;
 
     tr:first-of-type {
       width: 100%;
       background: #f8fbfd;
+      text-align: left;
 
       th:first-of-type {
         padding-right: 24px;

@@ -96,7 +96,6 @@ class UserScoreController extends Controller
             $userScore = UserScore::select('*')
                 ->join('user_assessments', 'user_assessments.userscore_id', '=', 'user_scores.id')
                 ->where('user_assessments.org_id', $id)->orderBy('user_assessments.result', 'asc');
-            if (!$userScore->count()) return $this->sendResponse(true, "Not Found", "User Score not found", Response::HTTP_NOT_FOUND);
             return $this->sendResponse(false, null, "Successful", $userScore->first(), Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Error fetching user scores", $e->getMessage(), Response::HTTP_BAD_REQUEST);
@@ -113,7 +112,7 @@ class UserScoreController extends Controller
     {
 
         try {
-            $userScore = UserAssessment::select('employees.id as employee_id', 'departments.name as department', 'employees.fullname as employee_name', 'user_assessments.correct_questions as points', 'user_assessments.created_at as created_at', 'user_assessments.updated_at as updated_at')
+            $userScore = UserAssessment::select('employees.id as employee_id', 'departments.name as department', 'employees.fullname as employee_name', 'employees.occupation as occupation', 'user_assessments.correct_questions as points', 'user_assessments.created_at as created_at', 'user_assessments.updated_at as updated_at')
                 ->rightJoin('employees', 'employees.id', '=', 'user_assessments.employee_id')
                 ->join('departments', 'departments.id', '=', 'employees.department_id')
                 ->where('employees.org_id', $id)
