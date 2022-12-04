@@ -170,9 +170,9 @@ const List = () => {
   const postData = (e) => {
     // e.preventDefault();
     axios.post(`/user-assessment/accept/${auth.id}/${auth.id}/${auth.id}`, {
-      assessmentId: "",
-      employeeId: "",
-      orgId: "",
+      assessmentId: auth.id,
+      employeeId: auth.id,
+      orgId: auth.id,
     });
   };
 
@@ -198,15 +198,13 @@ const List = () => {
           <Loader />
         </Flex>
       );
+    } else if (available.data.length === 0) {
+      return (
+        <Text>
+          Oops no available assessments for this user, come back later
+        </Text>
+      );
     }
-
-    // else if (available.data.length < 0) {
-    //   return (
-    //     <Text>
-    //       Oops no available assessments for this user, come back later
-    //     </Text>
-    //   );
-    // }
 
     return (
       <table>
@@ -273,7 +271,6 @@ const Assessment = () => {
           <Link to="/user-assessment-list">
             <Text $color="#2667FF" $weight="600">
               {`Available (${"0"})`}
-              {/* {console.log(available.data.length)} */}
             </Text>
           </Link>
           <Link to="/user-assessment-list/completed">
@@ -322,7 +319,6 @@ const UserAssessmentListAvailable = () => {
       >
         <PageInfo breadcrumb={["Assessments", "Assessment List"]} />
         <Assessment />
-        {/* {auth} */}
       </DataContext.Provider>
     </div>
   );
