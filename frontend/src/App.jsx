@@ -83,6 +83,8 @@ import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
 
 import GuestLogin from "./main/pages/Auth/GuestLogin";
 import DepartmentSection from "./ui/pages/DepartmentSection/DepartmentSection";
+import {ServerError} from "./ui/pages/ServerError";
+
 import PersistLogin from "./components/PersistLogin";
 import PreviewCsvUpload from "./ui/pages/PreviewCsvUpload/PreviewCsvUpload";
 
@@ -99,6 +101,7 @@ const App = () => {
         <GlobalStyles />
         <Routes>
           <Route path="/2FA" element={<User2FA />} />
+          <Route path="/serverError" element={<ServerError />} />
           <Route path="/guest-email" element={<GuestEmail />} />
           <Route
             path="/guest-assessment-list"
