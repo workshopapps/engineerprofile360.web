@@ -15,7 +15,7 @@ import { Container, WrapperDiv } from "./ViewAssessmentHeader";
 function AssessmentContent() {
   const [isEditing, setIsEditing] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
 
   const [questionsPerPage] = useState(5);
@@ -33,8 +33,10 @@ function AssessmentContent() {
         console.log(res);
         setData(res);
         console.log(data);
+        console.log(res);
+
         console.log(data.options);
-        console.log(data.question);
+
         console.log(data.id);
         setLoading(false);
       })
