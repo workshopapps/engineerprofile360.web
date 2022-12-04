@@ -259,26 +259,25 @@ const App = () => {
                     path="user-assessment-result"
                     element={<UserAssessmentResult />}
                   />
-                  <Route
-                    path="user-assessment-outlet"
-                    element={<UserAssessmentListOutlet />}
-                  >
-                    <Route path="" element={<UserAssessmentListAvailable />} />
-                    <Route
-                      path="completed"
-                      element={<CompletedUserAssessments />}
-                    />
-                  </Route>
                 </Route>
 
                 <Route path="/categories" element={<Category />} />
+                <Route
+                  path="user-assessment-list"
+                  element={<UserAssessmentListOutlet />}
+                >
+                  <Route path="" element={<UserAssessmentListAvailable />} />
+                  <Route
+                    path="completed"
+                    element={<CompletedUserAssessments />}
+                  />
+                </Route>
               </Route>
 
               {/* Overall Admin Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
                 {/* Put in Protected pages in here */}
               </Route>
-
               <Route path="/assessment" element={<Assessment />} />
             </Route>
           </Route>
