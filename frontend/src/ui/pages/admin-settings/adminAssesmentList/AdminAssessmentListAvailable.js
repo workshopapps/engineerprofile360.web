@@ -1,15 +1,16 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import addCircle from "../../../assets/icons/app/add-circle.svg";
-import down from "../../../assets/icons/app/arrow-down.svg";
-import dashboard from "../../../assets/icons/app/dashboard.svg";
-import hamburger from "../../../assets/icons/app/hamburger.svg";
+import { Button, Loader } from "../../../../styles/reusableElements.styled";
+import addCircle from "../../../../assets/icons/app/add-circle.svg";
+import down from "../../../../assets/icons/app/arrow-down-alt.svg";
+import dashboard from "../../../../assets/icons/app/dashboard.svg";
+import hamburger from "../../../../assets/icons/app/hamburger.svg";
+import PageInfo from "../../../components/molecules/PageInfo";
+import Flex from "../../../components/layout/Flex";
 import { Link } from "react-router-dom";
-import PageInfo from "../../components/molecules/PageInfo";
-import Flex from "../../components/layout/Flex";
-import { Button, Loader } from "../../../styles/reusableElements.styled";
-import axios from "../../../api/axios";
-import useAuth from "../../../hooks/useAuth";
+import axios from "../../../../api/axios";
+import useAuth from "../../../../hooks/useAuth";
+// import useAuth from "";
 
 const DataContext = createContext(null);
 
@@ -72,19 +73,76 @@ const info = [
   },
 ];
 
+const Buttons = () => {
+  const Mailto = ({ email, subject = "", body = "", children }) => {
+    let params = subject || body ? "?" : "";
+    if (subject) params += `subject=${encodeURIComponent(subject)}`;
+    if (body) params += `${subject ? "&" : ""}body=${encodeURIComponent(body)}`;
+
+    return <a href={`mailto:${email}${params}`}>{children}</a>;
+  };
+
+  return (
+    <div>
+      <Hide>
+        <Flex jc="flex-end" spacing={10}>
+          <Link to="/assessment/create-assessment">
+            <Button>
+              <Flex spacing={10} ai="center">
+                <img src={addCircle} alt="" />
+                <Text $color="white">Create New Assessment</Text>
+              </Flex>
+            </Button>
+          </Link>
+          <Mailto email="employee@email.com" subject="ASSESSMENTS">
+            <Button $variant="outlined">
+              <Text $color="#2667FF" $weight="600">
+                Send to employee
+              </Text>
+            </Button>
+          </Mailto>
+        </Flex>
+      </Hide>
+      <Show>
+        <Flex jc="flex-end" spacing={10}>
+          <Link to="/assessment/create-assessment">
+            <Button>
+              <Flex spacing={10} ai="center">
+                <img src={addCircle} alt="" />
+              </Flex>
+            </Button>
+          </Link>
+          <Mailto email="employee@email.com" subject="ASSESSMENTS">
+            <Button $variant="outlined">
+              <Text $color="#2667FF" $weight="600">
+                Send to employee
+              </Text>
+            </Button>
+          </Mailto>
+        </Flex>
+      </Show>
+    </div>
+  );
+};
 const Sort = () => {
-  const { assessmentInfo, setAssessmentInfo, order, setOrder } =
-    useContext(DataContext);
+  const {
+    available,
+    setAvailable,
+    assessmentInfo,
+    setAssessmentInfo,
+    order,
+    setOrder,
+  } = useContext(DataContext);
   const sorting = () => {
     if (order === "asc") {
-      const sorted = [...assessmentInfo].sort((a, b) =>
+      const sorted = [...available.data].sort((a, b) =>
         a.dept.toLowerCase() > b.dept.toLowerCase() ? 1 : -1
       );
       setAssessmentInfo(sorted);
       setOrder("dsc");
     }
     if (order === "dsc") {
-      const sorted = [...assessmentInfo].sort((a, b) =>
+      const sorted = [...available.data].sort((a, b) =>
         a.dept.toLowerCase() < b.dept.toLowerCase() ? 1 : -1
       );
       setAssessmentInfo(sorted);
@@ -94,14 +152,14 @@ const Sort = () => {
 
   const dateSort = () => {
     if (order === "asc") {
-      const sortedDate = [...assessmentInfo].sort((a, b) =>
+      const sortedDate = [...available.data].sort((a, b) =>
         new Date(b.date) > new Date(a.date) ? 1 : -1
       );
       setAssessmentInfo(sortedDate);
       setOrder("dsc");
     }
     if (order === "dsc") {
-      const sortedDate = [...assessmentInfo].sort((a, b) =>
+      const sortedDate = [...available.data].sort((a, b) =>
         new Date(b.date) < new Date(a.date) ? 1 : -1
       );
       setAssessmentInfo(sortedDate);
@@ -120,14 +178,12 @@ const Sort = () => {
         ai="center"
         onClick={() => sorting()}
       >
-        <select>
-          <option>
-            <Text>Assessment Type</Text>
-          </option>
-        </select>
+        <Text> Assessment Type</Text>
+        <img src={down} />
       </Flex>
       <Flex ai="center" spacing={30}>
         <Flex
+          spacing={10}
           style={{
             border: "1px solid #8A8886",
             padding: "8px",
@@ -136,11 +192,9 @@ const Sort = () => {
           ai="center"
           onClick={() => dateSort()}
         >
-          <select>
-            <option>
-              <Text>Sort By Date</Text>
-            </option>
-          </select>
+          <Text>Sort By Date</Text>
+
+          <img src={down} />
         </Flex>
         <Hide>
           <Flex spacing={10}>
@@ -154,24 +208,25 @@ const Sort = () => {
 };
 
 const List = () => {
-  const { completed, setCompleted, isLoading, setIsLoading } =
+  const { available, setAvailable, isLoading, setIsLoading } =
     useContext(DataContext);
-
   const { auth, setAuth } = useAuth();
 
-  const fetchCompleted = () => {
-    return axios(`/user-assessment/org/${auth.id}/org-completed`);
+  const fetchAvailable = () => {
+    return axios("/user-assessment/org/{auth.id}/org-available");
   };
   useEffect(() => {
-    fetchCompleted()
+    fetchAvailable()
       .then(({ data }) => {
-        setCompleted(data);
+        setAvailable(data);
+        console.log(auth);
       })
       .catch((error) => {
         console.log(error);
       })
       .finally(() => {
         setIsLoading(false);
+        console.log();
       });
   }, []);
   const renderContent = () => {
@@ -181,12 +236,8 @@ const List = () => {
           <Loader />
         </Flex>
       );
-    } else if (completed.data.length === 0) {
-      return (
-        <Text>
-          Oops this user has no completed assessments, come back later
-        </Text>
-      );
+    } else if (available.data.length === 0) {
+      return <Text>Oops no available assessments, create an assessment</Text>;
     }
     return (
       <table>
@@ -199,7 +250,7 @@ const List = () => {
             <th>Deadline</th>
             <th>{""}</th>
           </tr>
-          {[completed.data].map((d, idx) => {
+          {[available.data].map((d, idx) => {
             return (
               <tr key={idx}>
                 <td>{idx + 1}</td>
@@ -243,26 +294,25 @@ const Assessment = () => {
         jc="space-between"
       >
         <Flex spacing={24} ai="flex-end">
-          <Link to="/user-assessment-list">
-            <Text>Available (0)</Text>
-          </Link>
-          <Link to="/user-assessment-list/completed">
+          <Link to="/admin-assessment-list">
             <Text $color="#2667FF" $weight="600">
-              Completed (0)
+              Available (0)
             </Text>
+          </Link>
+          <Link to="/admin-assessment-list/completed">
+            <Text>Completed (0)</Text>
           </Link>
         </Flex>
       </Flex>
-
       <TableSection />
     </Flex>
   );
 };
 
-const CompletedUserAssessments = () => {
+const AvailableAssessmentList = () => {
   const [assessmentInfo, setAssessmentInfo] = useState(info);
   const [order, setOrder] = useState("asc");
-  const [completed, setCompleted] = useState([]);
+  const [available, setAvailable] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   return (
     <div>
@@ -272,20 +322,21 @@ const CompletedUserAssessments = () => {
           setAssessmentInfo,
           order,
           setOrder,
-          completed,
-          setCompleted,
+          available,
+          setAvailable,
           isLoading,
           setIsLoading,
         }}
       >
-        <PageInfo breadcrumb={["Assessments", "Assessment List"]} />
+        <PageInfo breadcrumb={["Dashboard", "Performance"]} />
+        <Buttons />
         <Assessment />
       </DataContext.Provider>
     </div>
   );
 };
 
-export default CompletedUserAssessments;
+export default AvailableAssessmentList;
 
 const AssessmentListings = styled.div`
   padding-top: ${({ theme }) => theme.spacing(3)};
