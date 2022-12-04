@@ -1,21 +1,74 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import Dropdown from "../../../main/components/Payment/Dropdown";
-import Options from "../../../main/components/Payment/Options";
-
 const SelectType = () => {
-  const [isSelected, setIsSelected] = useState({});
   const [formData, setFormData] = useState({});
+  const [touched, setTouched] = useState({});
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     console.log(e.target.id);
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
+  const onBlur = (e) => {
+    setTouched((prevState) => ({
+      ...prevState,
+      [e.target.id]: true,
+    }));
+  };
+
+  const validate = (formData) => {
+    const error = {};
+
+    if (!formData.department) {
+      console.log("fuckk");
+      error.department = "Please select a department";
+    }
+
+    if (!formData.name) {
+      error.name = "Please give your assessment a name";
+    } else if (formData?.name?.length < 5) {
+      error.name = "Assessment name cannot be less then 5";
+    }
+    if (!formData.date) {
+      error.date = "Please select a valid date";
+    }
+
+    setErrors(error);
+  };
+
+  useEffect(() => {
+    validate(formData);
+  }, [formData, touched]);
+
+  const onNextPage = (formData) => {
+    validate(formData);
+
+    if (Object.keys(errors).length > 0) {
+      setTouched({
+        name: true,
+        date: true,
+        department: true,
+      });
+    }
+
+    if (Object.keys(errors).length === 0) {
+      setTouched({
+        name: false,
+        date: false,
+        department: false,
+      });
+    }
+
+    if (Object.keys(errors).length === 0) {
+      console.log("omo");
+      navigate("/assessment/admin-csv-upload", { state: { formData } });
+    }
+  };
 
   const { name, department, date } = formData;
-  console.log(formData);
   return (
     <SelectContainer>
       <p>Select the target staffs for the assessment</p>
@@ -23,10 +76,14 @@ const SelectType = () => {
       <SelectItemContainer>
         <SelectItem>
           <label>Select Department</label>
-          <select id={"department"} value={department} onChange={handleChange}>
-            <option value="Front-End Development">
-              Front-End Development{" "}
-            </option>
+          <select
+            id="department"
+            value={department}
+            onChange={handleChange}
+            onBlur={onBlur}
+          >
+            <option defaultValue>Select Department</option>
+            <option value="Front-End Development">Front-End Development</option>
             <option value="Back-End">Back-end Development </option>
             <option value="PM"> Project Management </option>
             <option value="Software Engineer">Software Engineer</option>
@@ -35,10 +92,20 @@ const SelectType = () => {
             </option>
             <option value="Devops">Devops</option>
           </select>
+          {errors.department && touched.department && (
+            <span>{errors.department}</span>
+          )}
         </SelectItem>
         <SelectItem>
           <label>Set Date & Time</label>
-          <input id="date" type="date" onChange={handleChange} value={date} />
+          <input
+            id="date"
+            type="date"
+            onChange={handleChange}
+            value={date}
+            onBlur={onBlur}
+          />
+          {errors.date && touched.date && <span>{errors.date}</span>}
         </SelectItem>
         <SelectItem>
           <label>Assessment</label>
@@ -48,12 +115,19 @@ const SelectType = () => {
             placeholder="Title of Assessment"
             onChange={handleChange}
             value={name}
+            onBlur={onBlur}
           />
+          {errors && errors.name && touched.name && <span>{errors.name}</span>}
         </SelectItem>
       </SelectItemContainer>
       <Buttons>
         <Link to={-1}>Cancel</Link>
-        <Link to="/assessment/admin-csv-upload">Proceed</Link>
+        <button
+          color={Object.keys(errors).length > 0 ? true : false}
+          onClick={() => onNextPage(formData)}
+        >
+          Proceed
+        </button>
       </Buttons>
     </SelectContainer>
   );
@@ -70,7 +144,6 @@ const SelectContainer = styled.div`
   background: #f8fbfd;
   border: 1px solid ${({ theme }) => theme.palette.main.primary.light};
   margin: 40px auto;
-  gap: 32px;
 
   p {
     font-weight: 400;
@@ -101,14 +174,13 @@ const SelectItemContainer = styled.div`
 const SelectItem = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 30px;
 
   label {
-    margin-bottom: -15px;
     font-weight: 400;
     font-size: 16px;
     line-height: 19px;
     color: #605e5c;
+    margin-bottom: 20px;
   }
 
   select,
@@ -134,6 +206,11 @@ const SelectItem = styled.div`
   input[type="date"] {
     color: #605e5c;
   }
+
+  span {
+    padding-top: 5px;
+    color: ${({ theme }) => theme.palette.status.error.color};
+  }
 `;
 
 const Buttons = styled.div`
@@ -144,7 +221,8 @@ const Buttons = styled.div`
   justify-content: center;
   margin: auto;
 
-  a {
+  a,
+  button {
     border-radius: 4px;
     font-weight: 400;
     font-size: 16px;
@@ -153,12 +231,12 @@ const Buttons = styled.div`
     cursor: pointer;
   }
 
-  a:first-child {
+  a {
     border: 1px solid #2667ff;
     color: #2667ff;
   }
 
-  a:last-child {
+  button {
     background: #2667ff;
     color: #ebf4f9;
   }
