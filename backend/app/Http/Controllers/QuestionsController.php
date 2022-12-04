@@ -12,14 +12,20 @@ class QuestionsController extends Controller
 {
     public function addManually(CreateQuestionRequest $request): JsonResponse
     {
-        $data = $request->all();
         try {
-            if ($data) {
-                Question::create($data);
-                return $this->sendResponse(false, null, 'Question created', $data, Response::HTTP_CREATED);
-            } else {
-                return $this->sendResponse(true, 'Query failed', Response::HTTP_NOT_IMPLEMENTED);
+            $data = $request->validated();
+            if (!$data)  return $this->sendResponse(true, "Not Permited", "The passed questions doesn't match the categories supplied", Response::HTTP_UNPROCESSABLE_ENTITY);
+            $output = array();
+            for ($i = 0; $i < count($data['questions']); $i++) {
+                $result = Question::create([
+                    "company_id" => $data["company_id"],
+                    "category_id" => $data["category_id"],
+                    "assessment_id" => $data["assessment_id"],
+                    ...$data['questions'][$i]
+                ]);
+                array_push($output, $result);
             }
+            return $this->sendResponse(false, null, 'Question created', $output, Response::HTTP_CREATED);
         } catch (Exception $e) {
             return $this->sendResponse(true, 'Question not created', $e->getMessage());
         }

@@ -25,12 +25,14 @@ class CreateQuestionRequest extends BaseRequest
     {
         return [
             'category_id' => "required",
-            'question_id' => "required",
+            'company_id' => "required",
             'assessment_id' => "required",
-            'correct_answers' => 'required',
-            'options' => 'required',
-            'timeframe' => 'required|string',
-            'is_multiple_answers' => 'required|boolean'
+            'questions' => 'array|required',
+            'questions.*.question_id' => "required|string",
+            'questions.*.correct_answers' => "required",
+            'questions.*.options' => 'required',
+            'questions.*.timeframe' => 'required|string',
+            'questions.*.is_multiple_answers' => 'required|boolean'
         ];
     }
 }
