@@ -64,7 +64,6 @@ const EmployeesList = styled.div`
 
 const EmployeesTab = styled.div`
   display: flex;
-  // gap: ${({ theme }) => theme.spacing(0)};
 `;
 
 const Filter = styled.div`
@@ -97,10 +96,11 @@ const EmployeesTable = styled.div`
   width: 100%;
   overflow: auto;
   table {
-    table-layout: fixed;
     width: 100%;
     min-width: 960px;
+    text-align: left;
     overflow: auto;
+    white-space: initial;
 
     tr:first-of-type {
       width: 100%;

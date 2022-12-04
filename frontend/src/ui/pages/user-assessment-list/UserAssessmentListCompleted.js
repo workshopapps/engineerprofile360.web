@@ -166,7 +166,7 @@ const List = () => {
     fetchCompleted()
       .then(({ data }) => {
         setCompleted(data);
-        console.log(auth);
+        // console.log(auth);
       })
       .catch((error) => {
         console.log(error);

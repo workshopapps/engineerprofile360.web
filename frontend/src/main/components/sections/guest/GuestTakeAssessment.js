@@ -1,14 +1,16 @@
 import React from "react";
-import styles from "./UserTakeAssessment.module.css";
-import UserTakeAssessmentHeader from "./UserTakeAssessmentHeader";
+import styles from "./GuestTakeAssessment.module.css";
+import GuestTakeAssessmentHeader from "./GuestTakeAssessmentHeader";
 import { useState,useEffect } from "react";
 import axios from "../../../../api/axios";
 import { useNavigate } from "react-router-dom";
 
-export default  function UserTakeAssessment() {
+export default  function GuestTakeAssessment() {
     useEffect(() => {
         const fetchQuestion = async () => {
            let res = await axios.get("question/assessment/2ea09b93-6682-11ed-9941-3863bbb7c6d/");
+           console.log(Object.keys(res.data.data).length);
+           console.log(res);
            setCurrentPost(res.data.data);
         };
         fetchQuestion();
@@ -47,8 +49,8 @@ export default  function UserTakeAssessment() {
   
   return (
     <>
-      <div className={styles.UserTakeAssessment_container}>
-        <UserTakeAssessmentHeader />
+      <div className={styles.GuestTakeAssessment_container}>
+        <GuestTakeAssessmentHeader />
        
         <div className={styles.Questions}>
           <form>
@@ -87,7 +89,7 @@ export default  function UserTakeAssessment() {
                 className={styles.Button_submit} 
                 onClick={()=>{
                     localStorage.setItem("evalAssessment",JSON.stringify(useAnswers)) ;
-                    navigate("/take-assessment-result");
+                    navigate("/guest-take-assessment-result");
                 }}>
                      Submit 
                      </button>
