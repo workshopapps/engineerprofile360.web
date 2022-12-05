@@ -43,13 +43,12 @@ import AdminAssessmentList, {
 } from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
 import AvailableAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AdminAssessmentListAvailable";
 // import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
-import UserTakeAssessment from "./ui/pages/userTakeAssessment/UserTakeAssessment";
-import UserTakeAssessmentResult from "./ui/pages/userTakeAssessment/UserTakeAssessmentResult";
+//import UserTakeAssessment from "./ui/pages/userTakeAssessment/UserTakeAssessment";
+//import UserTakeAssessmentResult from "./ui/pages/userTakeAssessment/UserTakeAssessmentResult";
 import GuestTakeAssessment from "./ui/pages/guest/GuestTakeAssessment";
 import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
 // import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
-// import Testimonial from "./main/components/Testimonials/Testimonial";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
 // import EmployeeTakeAssessment from "../miscellaneous/pages/EmployeeTakeAssessment";
 // import UserTakeAssessment from "./ui/pages/userTakeAssessment/UserTakeAssessment";
@@ -127,7 +126,7 @@ const App = () => {
             <Route path="/biomedical-landing" element={<BioMedical />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/demo" element={<DemoSchedule />} />
-            <Route path="/support" element={<UserSupport />} />
+            <Route path="/support" element={<Support />} />
             <Route path="/help-center" element={<HelpCenter />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/blog" element={<Blog />} />
@@ -141,7 +140,7 @@ const App = () => {
   
 
             {/* UNKNOWN ROUTES */}
-            <Route path="/fill-employee" element={<Fillemployee />} />
+            {/* <Route path="/fill-employee" element={<Fillemployee />} /> */}
             <Route path="/guest-take-assessment" element={<GuestTakeAssessment />}/>
             <Route
               path="/guest-take-assessment-result" element={<GuestTakeAssessmentResult />}/>
@@ -240,10 +239,10 @@ const App = () => {
                     element={<EmployeeDeparment />}
                   />
                 </Route>
-                <Route
+                {/* <Route
                   path="/take-assessment"
                   element={<UserTakeAssessment />}
-                />
+                /> */}
                 {/* <Route
                   path="/take-assessment-result"
                   element={<UserTakeAssessmentResult />}
