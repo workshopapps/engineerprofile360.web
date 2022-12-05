@@ -47,7 +47,7 @@ const EmployeesListing = () => {
           </tbody>
         </table>
       </EmployeesTable>
-      <Link to="/employees/add-employee">
+      <Link to="/employees/employee-department">
         <AddButton>Add New</AddButton>
       </Link>
     </EmployeesList>

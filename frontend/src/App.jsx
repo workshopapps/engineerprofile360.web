@@ -24,14 +24,17 @@ import {
   AdminEmailVerified,
 } from "./main/pages";
 
-import { CompanyDashboard, Employees } from "./ui/pages/Company";
+import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 
 import Support from "../src/ui/pages/UserSupport";
 import Terms from "../src/ui/pages/termsAndService/TermsAndService";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
 import Blog from "../src/main/pages/Blog";
 import AssessmentList from "./main/components/sections/userAssessmentList/AssessmentList";
-import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
+import AdminAssessmentList, {
+  CompletedAssessmentList,
+} from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
+import AvailableAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AdminAssessmentListAvailable";
 // import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
 import UserTakeAssessment from "./ui/pages/userTakeAssessment/UserTakeAssessment";
 import UserTakeAssessmentResult from "./ui/pages/userTakeAssessment/UserTakeAssessmentResult";
@@ -74,6 +77,7 @@ import {
 
 import AcceptReject from "./ui/pages/Accept Reject Profile/AcceptReject";
 import MainAssessment from "./ui/pages/Assessment";
+// import { Category } from "./ui/pages/category/Category";
 import UserAssessmentListAvailable from "./ui/pages/user-assessment-list/UserAssessmentListAvailable";
 import CompletedUserAssessments from "./ui/pages/user-assessment-list/UserAssessmentListCompleted";
 import UserAssessmentListOutlet from "./ui/pages/user-assessment-list/UserAssessmentListOutlet";
@@ -83,10 +87,12 @@ import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
 
 import GuestLogin from "./main/pages/Auth/GuestLogin";
 import DepartmentSection from "./ui/pages/DepartmentSection/DepartmentSection";
-import {ServerError} from "./ui/pages/ServerError";
+import { ServerError } from "./ui/pages/ServerError";
 
 import PersistLogin from "./components/PersistLogin";
 import PreviewCsvUpload from "./ui/pages/PreviewCsvUpload/PreviewCsvUpload";
+import AdminAssessmmentListOutlet from "./ui/pages/admin-settings/adminAssesmentList/AdminAssessmmentListOutlet";
+import Fillemployee from "./ui/pages/FillEmployee/FillEmployee";
 
 const ROLES = {
   Employees: 1,
@@ -136,6 +142,9 @@ const App = () => {
               path="/take-assessment-list"
               element={<UserTakeAssessment />}
             />
+
+            <Route path="/fill-employee" element={<Fillemployee />} />
+
             <Route
               path="/guest-take-assessment"
               element={<GuestTakeAssessment />}
@@ -201,6 +210,17 @@ const App = () => {
               {/* Organization Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
                 <Route path="/ui" element={"my guy"} />
+
+                <Route
+                  path="admin-assessment-list"
+                  element={<AdminAssessmmentListOutlet />}
+                >
+                  <Route path="" element={<AvailableAssessmentList />} />
+                  <Route
+                    path="completed"
+                    element={<CompletedAssessmentList />}
+                  />
+                </Route>
                 <Route path="/404" element={<Error />} />
                 <Route
                   path="/assessment/view-assessment"
@@ -252,26 +272,24 @@ const App = () => {
                     path="user-assessment-result"
                     element={<UserAssessmentResult />}
                   />
+                </Route>
+
+                <Route path="/categories" element={<Category />} />
+                <Route
+                  path="user-assessment-list"
+                  element={<UserAssessmentListOutlet />}
+                >
+                  <Route path="" element={<UserAssessmentListAvailable />} />
                   <Route
-                    path="user-assessment-outlet"
-                    element={<UserAssessmentListOutlet />}
-                  >
-                    <Route path="" element={<UserAssessmentListAvailable />} />
-                    <Route
-                      path="completed"
-                      element={<CompletedUserAssessments />}
-                    />
-                  </Route>
+                    path="completed"
+                    element={<CompletedUserAssessments />}
+                  />
                 </Route>
+              </Route>
 
-                {/* Overall Admin Route */}
-                <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
-                  {/* Put in Protected pages in here */}
-                </Route>
-
-                {/* <Route element={<DashboardLayout />}>
-              <Route path="/assessment" element={<Assessment />} />
-              </Route> */}
+              {/* Overall Admin Route */}
+              <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
+                {/* Put in Protected pages in here */}
               </Route>
               <Route path="/assessment" element={<Assessment />} />
             </Route>

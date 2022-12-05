@@ -1,50 +1,31 @@
 import React from "react";
 import styled from "styled-components";
+import axios from "../../../../api/axios";
+// import { showErrorToast } from "../../../../helpers/helper";
+import useAuth from "../../../../hooks/useAuth";
 import { Button, Title } from "../../../../styles/reusableElements.styled";
 import { ReactComponent as EmployeeProfilePhoto } from "../../../components/assets/user-photo.svg";
-import { ReactComponent as OverallChart } from "../../../components/assets/overall-chart.svg";
+import { Radar } from "react-chartjs-2";
+import { Link } from "react-router-dom";
 
-const EmployeeProfileData = [
-  {
-    name: "Emmanuella Bella",
-    department: "Electrical Engineering",
-    level: "Junior Engineer",
-  },
-];
+//ChartData Schema
+const data = {
+  labels: ["Javascript", "PHP", "Java", "ReactJs", "Nodejs", "WordPress"],
+  datasets: [
+    {
+      label: "Dataset",
+      data: [65, 59, 90, 81, 56, 55, 40],
+      fill: true,
+      backgroundColor: "rgba(255, 99, 132, 0.2)",
+      borderColor: "rgb(255, 99, 132)",
+      pointBackgroundColor: "rgb(255, 99, 132)",
+      pointBorderColor: "#fff",
+      pointHoverBackgroundColor: "#fff",
+      pointHoverBorderColor: "rgb(255, 99, 132)",
+    },
+  ],
+};
 
-const EmployeeProfileStats = [
-  {
-    total: 77,
-    category: "Assessment",
-  },
-  {
-    total: 1024,
-    category: "Performance",
-  },
-
-  {
-    total: 22,
-    category: "FeedBacks",
-  },
-];
-
-const EmployeeData = [
-  { title: "Name", value: "Emmanuella Bella" },
-  { title: "Date of Birth", value: "03-04-2005" },
-  { title: "Telephone", value: "+234 904 500 4705" },
-  { title: "Email Address", value: "engr.emmy@gmail.com" },
-  { title: "Contact Address", value: "No. 14 Alimosho, Lagos" },
-  { title: "Department", value: "Civil Engineering" },
-  { title: "Position", value: "Team Lead" },
-  { title: "Level", value: "Junior Engineer" },
-];
-const EmployeeStatsData = [
-  { title: "Technical Skills", value: "60%" },
-  { title: "Communication SKills", value: "50%" },
-  { title: "Languages", value: "80%" },
-  { title: "Soft Skills", value: "70%" },
-  { title: "Experience Skills", value: "60%" },
-];
 const EmployeeProfileDetailsCard = ({ name, department, level }) => {
   return (
     <EmployeeProfileInfoDetails>
@@ -64,6 +45,71 @@ const EmployeeProfileDetailsCard = ({ name, department, level }) => {
 };
 
 const FullProfile = () => {
+  const { auth } = useAuth();
+
+  const [employeeDetails, setEmployeeDetails] = React.useState(null);
+  const [, setEmployeeDetailLoading] = React.useState(false);
+
+  //Get Employee Details
+  React.useEffect(() => {
+    const getEmployeeDetails = async () => {
+      try {
+        const response = await axios.get(`employee/${auth.id}`);
+        setEmployeeDetails(response.data);
+        setEmployeeDetailLoading(false);
+      } catch (err) {
+        if (!err?.response) {
+          // showErrorToast("No Server Response");
+        } else if (err?.response.data.errorState === true) {
+          // showErrorToast(err.response.data.message);
+        }
+      }
+    };
+    getEmployeeDetails();
+  }, [auth.id, employeeDetails]);
+
+  const EmployeeProfileData = [
+    {
+      name: auth.username,
+      department: "Electrical Engineering",
+      level: "Junior Engineer",
+    },
+  ];
+
+  const EmployeeProfileStats = [
+    {
+      total: 77,
+      category: "Assessment",
+    },
+    {
+      total: 1024,
+      category: "Performance",
+    },
+
+    {
+      total: 22,
+      category: "FeedBacks",
+    },
+  ];
+
+  const EmployeeData = [
+    { title: "Name", value: auth.username },
+    { title: "Date of Birth", value: "03-04-2005" },
+    { title: "Telephone", value: "+234 904 500 4705" },
+    { title: "Email Address", value: "engr.emmy@gmail.com" },
+    { title: "Contact Address", value: "No. 14 Alimosho, Lagos" },
+    { title: "Department", value: "Civil Engineering" },
+    { title: "Position", value: "Team Lead" },
+    { title: "Level", value: "Junior Engineer" },
+  ];
+  const EmployeeStatsData = [
+    { title: "Technical Skills", value: "60%" },
+    { title: "Communication SKills", value: "50%" },
+    { title: "Languages", value: "80%" },
+    { title: "Soft Skills", value: "70%" },
+    { title: "Experience Skills", value: "60%" },
+  ];
+
   return (
     <>
       <EmployeeProfileContainer>
@@ -127,11 +173,13 @@ const FullProfile = () => {
                 ))
               : ""}
             <ButtonContainer>
-              <Button style={{ marginTop: "57px" }}>View Assessment</Button>
+              <Link to="/assessment/view-assessment">
+                <Button style={{ marginTop: "57px" }}>View Assessment</Button>
+              </Link>
             </ButtonContainer>
           </EmployeeStatsContainer>
           <OverallContainer>
-            <OverallChart />
+            <Radar data={data} />
             <ChartCard>
               <Title
                 $size="20px"
@@ -234,7 +282,7 @@ const EmployeeProfileInnerContainer = styled.div`
   align-items: flex-start;
   padding-top: 80px;
 
-  ${({ theme }) => theme.breakpoints.down("md")} {
+  @media screen and (max-width: 1200px) {
     flex-direction: column;
     justify-content: center;
     gap: 10px;
