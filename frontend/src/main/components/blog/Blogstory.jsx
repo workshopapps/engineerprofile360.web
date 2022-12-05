@@ -9,12 +9,13 @@ import frame6 from "../../../assets/images/frame6.png";
 import icons from "../../../assets/images/icons.png";
 import desktop from "../../../assets/images/desktop.png";
 import avatar from "../../../assets/images/Avatar.png";
-
 import "./blogstory.css";
+import styled from "styled-components";
+import { Container } from "../../../styles/reusableElements.styled";
 
-export default function Blogstory() {
+const BlogStory = () => {
   return (
-    <div id="blogstory">
+    <BlogStoryContainer>
       <img src={desktop} alt="" id="desktop" />
       <div id="path">
         <div>
@@ -158,6 +159,144 @@ export default function Blogstory() {
           <button>View more</button>
         </div>
       </div>
-    </div>
+    </BlogStoryContainer>
   );
-}
+};
+
+export default BlogStory;
+
+const BlogStoryContainer = styled(Container)`
+  #profile {
+    display: grid;
+    justify-content: center;
+  }
+  #blogstory #profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: auto;
+  }
+  #blogstory #profile p {
+    text-align: center;
+    margin: 5px;
+    padding: 0;
+  }
+  #blogstory #profile p:nth-child(1) {
+    color: #323130;
+    font-size: 20px;
+  }
+  #blogstory #profile p:nth-child(2) {
+    color: #605e5c;
+    font-size: 20px;
+  }
+  #blogstory #cardContainer h1 {
+    text-align: center;
+    color: #605e5c;
+  }
+  #blogstory #cardContainer button {
+    padding: 7px;
+    color: #2667ff;
+    background: white;
+    border: #2667ff solid;
+    margin-top: 10px;
+    border-radius: 4px;
+    margin: auto;
+    width: 100%;
+  }
+  #blogstory #blogheader {
+    background-image: url();
+    background: #2667ff8c 55%;
+    padding-top: 70px;
+    padding-bottom: 50px;
+  }
+  #blogstory #blogheader p,
+  #blogstory #blogheader h1 {
+    text-align: center;
+    color: white;
+  }
+  #blogstory #blogheader img {
+    margin: auto;
+  }
+  #blogstory #path {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+  }
+  #blogstory #body {
+    padding: 0 20px;
+  }
+  #blogstory #body h3 {
+    color: #323130;
+  }
+  #blogstory #body p,
+  #blogstory #body li {
+    color: #605e5c;
+    font-size: 20px;
+  }
+  #blogstory .subscribe h1 {
+    color: #2667ff;
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 33.5px;
+  }
+  #blogstory .subscribe p {
+    color: #605e5c;
+    margin-top: 25px;
+    margin-bottom: 56px;
+  }
+  #blogstory .subscribe #input {
+    display: grid;
+  }
+  #blogstory .subscribe #input input {
+    padding: 7px;
+    color: #8a8886;
+    background: #f2f3f7;
+    border: 1px solid #8a8886;
+    border-radius: 4px;
+  }
+  #blogstory .subscribe #input button {
+    padding: 7px;
+    background: #2667ff;
+    color: white;
+    border: #2667ff solid;
+    margin-top: 10px;
+    border-radius: 4px;
+  }
+  @media (min-width: 500px) {
+    #blogstory #cardContainer #button {
+      display: grid;
+      justify-content: center;
+    }
+    #blogstory #cardContainer #button button {
+      width: 200px;
+    }
+    #blogstory .subscribe h1 {
+      text-align: center;
+    }
+    #blogstory .subscribe p {
+      text-align: center;
+    }
+    #blogstory .subscribe #input {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: auto;
+    }
+    #blogstory .subscribe #input input {
+      margin-right: 14px;
+      padding: 15px;
+      width: 345px;
+    }
+    #blogstory .subscribe #input button {
+      padding: 12px 24px;
+      margin: 0;
+    }
+    #cards {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-around;
+    }
+  }
+`;
