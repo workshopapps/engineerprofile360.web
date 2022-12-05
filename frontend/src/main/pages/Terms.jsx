@@ -1,8 +1,8 @@
 import React from "react";
-import Sms from "../../../assets/icons/sms.png";
-import "./style.css";
+import Sms from "../../assets/icons/sms.png";
+import "../components/Terms/style.css";
 
-function TermsAndService() {
+function Terms() {
   return (
     <div className="container mainDiv">
       <div className="terms">
@@ -417,4 +417,4 @@ function TermsAndService() {
   );
 }
 
-export default TermsAndService;
+export default Terms;

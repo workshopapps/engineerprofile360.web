@@ -48,19 +48,19 @@ import {
   FCText,
   FagComp2,
   FcTriangle,
-} from "./Market.styled";
-import HowFrag from "./HowFrag";
-import WhichFrag from "./WhichFrag";
-import MarketImg from "../../../assets/images/market.png";
-import Side from "../../../assets/images/markey-2.png";
-import UpperS from "../../../assets/images/markt3.svg";
-import UpperL from "../../../assets/images/mrket4.svg";
-import How1 from "../../../assets/images/how1.svg";
-import How2 from "../../../assets/images/how2.svg";
-import Quote from "./images/quote.svg";
-import Testimony from "./images/testimony.svg";
-import Triangle from "./images/triangle.svg";
-import Ready from "../Home/HomeGetStarted.jsx";
+} from "../components/Market/Market.styled";
+import HowFrag from "../components/Market/HowFrag";
+import WhichFrag from "../components/Market/WhichFrag";
+import MarketImg from "../../assets/images/market.png";
+import Side from "../../assets/images/markey-2.png";
+import UpperS from "../../assets/images/markt3.svg";
+import UpperL from "../../assets/images/mrket4.svg";
+import How1 from "../../assets/images/how1.svg";
+import How2 from "../../assets/images/how2.svg";
+import Quote from "../components/Market/images/quote.svg";
+import Testimony from "../components/Market/images/testimony.svg";
+import Triangle from "../components/Market/images/triangle.svg";
+import Ready from "../components/Home/HomeGetStarted.jsx";
 
 const Market = () => {
   return (

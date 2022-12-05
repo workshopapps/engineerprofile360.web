@@ -8,8 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { GlobalStyles, theme } from "./styles/globalStyles";
 import { MainLayout, UiLayout } from "./Layouts";
 
-import Contact from "./main/pages/Contact";
-import DemoSchedule from "./main/pages/Demo";
+//DEFAULT EXPORTS FROM MAIN  
 import { AdminAuthLayout, UserAuthLayout } from "./main/components";
 import {
   Home,
@@ -22,15 +21,22 @@ import {
   AdminPasswordSuccess,
   AdminVerifyEmail,
   AdminEmailVerified,
+  Blog,
+  Contact,
+  DemoSchedule,
+  HelpCenter,
+  Market,
+  Payment,
+  PricingPage,
+  Privacy,
+  Support,
+  Terms
 } from "./main/pages";
 
-import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 
-import Support from "../src/ui/pages/UserSupport";
-import Terms from "../src/ui/pages/termsAndService/TermsAndService";
+
+import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
-import Blog from "../src/main/pages/Blog";
-import AssessmentList from "./main/components/sections/userAssessmentList/AssessmentList";
 import AdminAssessmentList, {
   CompletedAssessmentList,
 } from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
@@ -40,14 +46,9 @@ import UserTakeAssessment from "./ui/pages/userTakeAssessment/UserTakeAssessment
 import UserTakeAssessmentResult from "./ui/pages/userTakeAssessment/UserTakeAssessmentResult";
 import GuestTakeAssessment from "./ui/pages/guest/GuestTakeAssessment";
 import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
-import Privacy from "./main/pages/Privacy/privacy";
 // import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 // import Testimonial from "./main/components/Testimonials/Testimonial";
-import PricingPage from "./main/pages/PricingPage";
-import Payment from "./main/pages/Payment";
-import HelpCenter from "../src/main/pages/HelpCenter";
-import Market from "./main/components/Market-comp-page-2/Market";
 import AdminCSVUpload from "./ui/pages/AdminUpload/AdminCSVUpload";
 import UserAssessmentListCompleted from "./ui/pages/UserAssestList/UserAssestListCompleted";
 
@@ -120,7 +121,7 @@ const App = () => {
             <Route path="forgot-password" element={<UserForgotPassword />} />
           </Route>
 
-          {/* Public routes */}
+          {/* PUBLIC ROUTES */}
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
             <Route path="/about-us" element={<About />} />
@@ -129,40 +130,28 @@ const App = () => {
             <Route path="/demo" element={<DemoSchedule />} />
             <Route path="/support" element={<Support />} />
             <Route path="/help-center" element={<HelpCenter />} />
-            <Route path="/termsAndService" element={<Terms />} />
+            <Route path="/terms" element={<Terms />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/comparison" element={<ComparisonPage />} />
-            <Route path="/assessment-list" element={<AssessmentList />} />
             <Route path="/admin-assessment" element={<AdminAssessmentList />} />
             <Route path="/market-comparison" element={<Market />} />
-
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/payment" element={<Payment />} />
-            <Route
-              path="/take-assessment-list"
-              element={<UserTakeAssessment />}
-            />
+            <Route path="/privacy-policy" element={<Privacy />} />
 
+  
+
+            {/* UNKNOWN ROUTES */}
             <Route path="/fill-employee" element={<Fillemployee />} />
-
+            <Route path="/guest-take-assessment" element={<GuestTakeAssessment />}/>
             <Route
-              path="/guest-take-assessment"
-              element={<GuestTakeAssessment />}
-            />
-            <Route
-              path="/guest-take-assessment-result"
-              element={<GuestTakeAssessmentResult />}
-            />
-
+              path="/guest-take-assessment-result" element={<GuestTakeAssessmentResult />}/>
             <Route path="/csv-uploading" element={<CsvUploading />} />
-
             <Route
               path="/csv-uploading-complete"
               element={<CsvUploadComplete />}
             />
-
             <Route path="/setting" element={<AdminSetting />} />
-            <Route path="/privacy-policy" element={<Privacy />} />
             <Route path="/employee-profile" element={<EmployeeProfile />} />
             <Route path="/admin-csv-upload" element={<AdminCSVUpload />} />
             {/* <Route

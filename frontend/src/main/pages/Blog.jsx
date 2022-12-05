@@ -1,5 +1,5 @@
-import { BlogCard } from "../components/blog/BlogCard";
-import "../components/blog/blog.css";
+import { BlogCard } from "../components/Blog/BlogCard";
+import "../components/Blog/blog.css";
 import { Link } from "react-router-dom";
 import frame1 from "../../assets/images/dp1.png";
 import frame2 from "../../assets/images/frame2.png";

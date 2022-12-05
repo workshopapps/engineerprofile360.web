@@ -1,11 +1,11 @@
 import React from "react";
-import Flex from "../components/layout/Flex";
+import Flex from "../../ui/components/layout/Flex";
 import demo from "../../assets/images/demo.svg";
 import privacy from "../../assets/images/privacy.svg";
 import terms from "../../assets/images/terms.svg";
 import faq from "../../assets/images/faq.svg";
 import icon from "../../assets/icons/search.svg";
-import Grid, { GridItem } from "../components/layout/Grid";
+import Grid, { GridItem } from "../../ui/components/layout/Grid";
 import { Container } from "../../styles/reusableElements.styled";
 import styled from "styled-components";
 

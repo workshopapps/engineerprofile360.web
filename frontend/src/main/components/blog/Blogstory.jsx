@@ -1,5 +1,5 @@
 import React from "react";
-import { BlogCard } from "../blog/BlogCard";
+import { BlogCard } from "./BlogCard";
 import dp from "../../../assets/images/dp.png";
 import dp2 from "../../../assets/images/dp2.png";
 import dp3 from "../../../assets/images/dp3.png";
