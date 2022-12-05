@@ -282,7 +282,7 @@ class AuthenticateController extends Controller
 
                     // check if user is unverified
                     if ($users->first()["isVerified"] < 1) {
-                        $this->helper->emailVerification($email, $user_id);
+                        $this->helper->emailVerification($email, explode(" ", $users->first()["full_name"])[0] ?? "User", $user_id);
                         return $this->sendResponse(true, "account not verfied.. a verification link has been sent to you account.", "failed to login.. verify your account.", null, 400);
                     }
 
@@ -358,7 +358,7 @@ class AuthenticateController extends Controller
             // send organization email
             $this->helper->emailVerification($email, explode(" ", $fullname)[0] ?? "User", $uid);
             $this->helper->sendWelcomeMail($email, explode(" ", $fullname)[0] ?? "User");
-            
+
             return $this->sendResponse(false, null, "User registered successfully", $clientExtractedData, 200);
         } catch (\Exception $e) {
             return $this->sendResponse(true, $e->getMessage(), "Something went wrong registering, please try again",  null, 500);

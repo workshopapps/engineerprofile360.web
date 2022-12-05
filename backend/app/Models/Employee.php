@@ -14,11 +14,26 @@ class Employee extends Model
 
     /**
      * @var $fillable
-    */
+     */
     protected $fillable = [
         'email', 'fullname', 'username', 'hash', 'image',
         'occupation', 'reftoken', 'role', 'org_id'
     ];
 
-    protected $hidden = ['hash']; 
+    protected $hidden = ['hash', 'reftoken'];
+
+    public function assessment()
+    {
+        return $this->hasMany(UserAssessment::class, 'employee_id');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'department_id');
+    }
+
+    public function userscore()
+    {
+        return $this->HasMany(UserScore::class, 'employee_id');
+    }
 }
