@@ -3,7 +3,7 @@ import TimerSvg from "../../../assets/icons/app/timer-start.svg";
 import { useState, useEffect } from "react";
 import styled from 'styled-components';
 import { Outlet } from "react-router-dom";
-import PageInfo from "../../../ui/components/molecules/PageInfo";
+import PageInfo from "../molecules/PageInfo";
 
 function GuestTakeAssessmentHeader() {
   const [time, setTime] = useState((1 / 2) * 60 * 60 * 1000);
