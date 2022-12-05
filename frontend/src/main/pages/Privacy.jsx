@@ -1,21 +1,22 @@
-import styles from "./privacy.module.css";
+import styled from "styled-components";
 
 const Privacy = () => {
   return (
     <>
-      <div className={styles.container}>
-        <div className={styles.page__header}>
-          <h1 className={styles.page__head}>
-            Skript <span>Privacy Policy</span>
+    <PrivacyContainer>
+      <div className="container">
+        <div className="page__header">
+          <h1 className="page__head">
+            Eval360 <span>Privacy Policy</span>
           </h1>
-          <div className={styles.page__date}>
+          <div className="page__date">
             Last updated on November 15, 2022
           </div>
         </div>
-        <div className={styles.right_left}>
-          <div className={styles.main__content}>
-            <div>
-              <p className={styles.text}>
+        <div className="right_left">
+          <div className="main__content">
+            <div className="first">
+              <p>
                 Skript, owned by the mechanic team Axle group and affiliated
                 companies described as "we," "our," and "us" on this page, put
                 in a lot of effort in managing your data (the information we
@@ -41,16 +42,16 @@ const Privacy = () => {
                 <li>11. Privacy policy changes</li>
                 <li>12. Contact us</li>
               </ol>
-              <p className={styles.text}>
+              <p className="text">
                 To avoid doubt, when we use "you" on this page, we're referring
                 to visitors, partners, prospective clients, and their engineer
                 employees.
               </p>
             </div>
 
-            <div id="data_collection">
-              <h2 className={styles.title}>Data Collection</h2>
-              <p className={styles.text}>
+            <div id="data_collection" className="second">
+              <h2 className="title">Data Collection</h2>
+              <p className="text">
                 To serve you better, we collect different information from you
                 across your interaction with our platform.
                 <br /> Types of data collected
@@ -75,7 +76,7 @@ const Privacy = () => {
                 <li>- Cookies and usage data</li>
               </ul>
 
-              <p className={styles.text}>
+              <p className="text">
                 <br />
                 <b>Usage Data</b> <br />
                 In your interaction with our platform, we may collect
@@ -107,9 +108,9 @@ const Privacy = () => {
               </ul>
             </div>
 
-            <div id="use_of_data">
-              <h2 className={styles.title}>Use Of Data</h2>
-              <p className={styles.text}>
+            <div id="use_of_data" className="second">
+              <h2 className="title">Use Of Data</h2>
+              <p className="text">
                 Skripts uses your personal data for a more personalised and
                 secure experience on our platform. General data, including
                 direct engineer data in our skill assessment tests, help us
@@ -148,9 +149,9 @@ const Privacy = () => {
               </ul>
             </div>
 
-            <div id="data_retention">
-              <h2 className={styles.title}>Data Retention</h2>
-              <p className={styles.text}>
+            <div id="data_retention" className="second">
+              <h2 className="title">Data Retention</h2>
+              <p className="text">
                 To provide accurate engineer skill assessments on our platform,
                 we retain the data we collect from you for as long as required.
                 In addition, Skript may also retain your data for as long as
@@ -162,9 +163,9 @@ const Privacy = () => {
               </p>
             </div>
 
-            <div id="data_transfer">
-              <h2 className={styles.title}>Data Transfer</h2>
-              <p className={styles.text}>
+            <div id="data_transfer" className="second">
+              <h2 className="title">Data Transfer</h2>
+              <p className="text">
                 Data Transfer To deliver our services to you, we may maintain or
                 transfer your data outside the jurisdiction of the privacy laws
                 in your region. However, Skript ensures that your data is safe
@@ -176,9 +177,9 @@ const Privacy = () => {
               </p>
             </div>
 
-            <div id="data_sharing">
-              <h2 className={styles.title}>Data Sharing</h2>
-              <p className={styles.text}>
+            <div id="data_sharing" className="second">
+              <h2 className="title">Data Sharing</h2>
+              <p className="text">
                 While we ensure your data is safe, we will share your data with
                 relevant authorities on special requests like when subpoenaed or
                 ordered by the courts. However, we will only share your data
@@ -196,9 +197,9 @@ const Privacy = () => {
               </p>
             </div>
 
-            <div id="data_security">
-              <h2 className={styles.title}>Data Security</h2>
-              <p className={styles.text}>
+            <div id="data_security" className="second">
+              <h2 className="title">Data Security</h2>
+              <p className="text">
                 Skript ensures data safety by using commercially available data
                 protection systems to keep your data safe online and
                 electronically. We ensure that all third-party companies we
@@ -209,9 +210,9 @@ const Privacy = () => {
               </p>
             </div>
 
-            <div id="legal_basis">
-              <h2 className={styles.title}>Legal Basis</h2>
-              <p className={styles.text}>
+            <div id="legal_basis" className="second">
+              <h2 className="title">Legal Basis</h2>
+              <p className="text">
                 In compliance with the General Data Protection Regulation for
                 users in the European economic area and the UK, here are some of
                 the reasons Skript may access your data:
@@ -224,9 +225,9 @@ const Privacy = () => {
               </ul>
             </div>
 
-            <div id="your_right">
-              <h2 className={styles.title}>Your Data Right</h2>
-              <p className={styles.text}>
+            <div id="your_right" className="second">
+              <h2 className="title">Your Data Right</h2>
+              <p className="text">
                 You are not obligated to give us your data and can revoke our
                 access to your data anytime. Depending on the privacy law
                 governing your area, some laws, like the GDPR privacy law
@@ -251,9 +252,9 @@ const Privacy = () => {
               </p>
             </div>
 
-            <div id="other_site">
-              <h2 className={styles.title}>Links to Other Sites</h2>
-              <p className={styles.text}>
+            <div id="other_site" className="second">
+              <h2 className="title">Links to Other Sites</h2>
+              <p className="text">
                 Skript may include links to other sites; however, we are not
                 responsible for the privacy policies on these sites or how they
                 process your data. Therefore, you should pay extra attention to
@@ -261,9 +262,9 @@ const Privacy = () => {
                 platform.
               </p>
             </div>
-            <div id="chidren">
-              <h2 className={styles.title}>Children Privacy</h2>
-              <p className={styles.text}>
+            <div id="chidren" className="second">
+              <h2 className="title">Children Privacy</h2>
+              <p className="text">
                 We do not offer services to children (under 18 years) and, as
                 such, do not collect children's data. Consequently, our clients
                 register their engineers on our platforms and are obligated to
@@ -272,9 +273,9 @@ const Privacy = () => {
                 we can delete the data where necessary.
               </p>
             </div>
-            <div id="policy_change">
-              <h2 className={styles.title}>Changes to Privacy Policy</h2>
-              <p className={styles.text}>
+            <div id="policy_change" className="second">
+              <h2 className="title">Changes to Privacy Policy</h2>
+              <p className="text">
                 In line with best practices, we may update our privacy policy
                 occasionally. When we make these changes, we'll notify you
                 through any available communication channel and on our platform.
@@ -282,9 +283,9 @@ const Privacy = () => {
                 this document
               </p>
             </div>
-            <div id="contact">
-              <h2 className={styles.title}>Contact Us</h2>
-              <p className={styles.text}>
+            <div id="contact" className="second">
+              <h2 className="title">Contact Us</h2>
+              <p className="text">
                 If you require clarifications to any point in this privacy
                 policy or you choose to exercise your right to your data, reach
                 out to us on any of the following platforms:
@@ -297,78 +298,278 @@ const Privacy = () => {
               </p>
             </div>
           </div>
-          <div className={styles.righ_feature}>
-            <h2 className={styles.title__table}>TABLE OF CONTENT</h2>
-            <div className={styles.table}>
+          <div className="righ_feature">
+            <h2 className="title__table">TABLE OF CONTENT</h2>
+            <div className="table">
               <div>
-                <a href="#data_collection" className={styles.link__section}>
+                <a href="#data_collection" className="link__section">
                   Data Collection
                 </a>
               </div>
               <div>
-                <a href="#use_of_data" className={styles.link__section}>
+                <a href="#use_of_data" className="link__section">
                   Use Of Data
                 </a>
               </div>
               <div>
-                <a href="#data_retention" className={styles.link__section}>
+                <a href="#data_retention" className="link__section">
                   Data Retention
                 </a>
               </div>
               <div>
-                <a href="#data_transfer" className={styles.link__section}>
+                <a href="#data_transfer" className="link__section">
                   Data Transfer
                 </a>
               </div>
               <div>
-                <a href="#data_sharing" className={styles.link__section}>
+                <a href="#data_sharing" className="link__section">
                   Data Sharing
                 </a>
               </div>
               <div>
-                <a href="#data_security" className={styles.link__section}>
+                <a href="#data_security" className="link__section">
                   Data Security
                 </a>
               </div>
               <div>
-                <a href="#legal_basis" className={styles.link__section}>
+                <a href="#legal_basis" className="link__section">
                   Legal Basis
                 </a>
               </div>
               <div>
-                <a href="#your_right" className={styles.link__section}>
+                <a href="#your_right" className="link__section">
                   Your Data Right
                 </a>
               </div>
               <div>
-                <a href="#other_site" className={styles.link__section}>
+                <a href="#other_site" className="link__section">
                   Links to Other Sites
                 </a>
               </div>
               <div>
-                <a href="#children" className={styles.link__section}>
+                <a href="#children" className="link__section">
                   Children Privacy
                 </a>
               </div>
               <div>
-                <a href="#policy_change" className={styles.link__section}>
+                <a href="#policy_change" className="link__section">
                   Changes to Privacy Policy
                 </a>
               </div>
               <div>
-                <a href="#contact" className={styles.link__section}>
+                <a href="#contact" className="link__section">
                   Contact Us
                 </a>
               </div>
             </div>
-            <button className={styles.button}>
+            <button className="button">
               Questions? Leave a message
             </button>
           </div>
         </div>
       </div>
+    </PrivacyContainer>
     </>
   );
 };
 
 export default Privacy;
+
+const PrivacyContainer = styled.div ` 
+.container {
+  height: 100%;
+  width: 85%;
+  margin: 1rem auto;
+  padding: 2rem 0;
+}
+
+.page__header {
+  margin-bottom: 1rem;
+}
+
+.page__date {
+  font-weight: 100;
+  font-size: 16px;
+  color: #605e5c;
+  margin-bottom: 10rem;
+}
+
+.main__content {
+  color: #323130;
+}
+
+.title {
+  width: 100%;
+  height: 36px;
+  
+  
+  font-weight: 600;
+  font-size: 28px;
+  color: #323130;
+}
+.right_left {
+  display: flex;
+  gap: 3rem;
+}
+
+.title__table {
+  font-weight: 100;
+  font-size: 18px;
+  line-height: 24px;
+  color: #323130;
+  justify-content: center;
+  text-align: center;
+}
+
+.table {
+  min-width: 329px;
+  height: 400px;
+  overflow: auto;
+  background: #eff6fc;
+  padding: 23px 23px;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  border: 2px solid #2667ff;
+  border-radius: 5px;
+}
+
+.link__section {
+  width: 100%;
+  height: 24px;
+  
+  
+  font-weight: 400;
+  font-size: 18px;
+  color: #4a4242;
+  text-decoration: none;
+}
+
+.button {
+  margin-top: 23px;
+  width: 100%;
+  margin-left: auto;
+  height: 50px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #2e2e2e;
+  border-color: #2667ff;
+  border-radius: 5px;
+  background-color: #ffffff;
+  border: 2px solid #2667ff;
+  border-radius: 0.125rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.button img {
+  margin-right: 20px;
+} 
+
+.terms {
+  margin-bottom: 2rem;
+}
+
+ .terms h1 {
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+ .terms h1 span {
+  color: #295a9a;
+  font-size: 1.8rem;
+}
+ .terms p {
+  font-size: 16px;
+  line-height: 28px;
+  text-align:center;
+}
+ .first p {
+  margin-bottom: 2.5rem;
+  font-size: 16px;
+  line-height: 28px;
+  text-align:left;
+}
+ .second h1 {
+  font-weight: 600;
+  text-align:left;
+}
+ .second h2 {
+  font-weight: 600;
+  text-align:left;
+  margin-top: 2rem;
+}
+ .second p {
+  margin-top: 1rem;
+  font-size: 16px;
+  line-height: 28px;
+  text-align:left;
+}
+
+h6{
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+p {
+  margin-bottom: 0px !important;
+}
+
+@media screen and (max-width: 991px) {
+  .container {
+    height: 100%;
+    width: 90%;
+    margin: auto;
+  }
+
+  .page__header {
+    margin-bottom: -9rem;
+  }
+  
+  .page__head {
+    font-weight: 600;
+    color: #2e2e2e;
+  }
+  
+  .page__date {
+    font-weight: 100;
+    font-size: 7px;
+    color: #605e5c;
+  }
+
+  .main__content {
+    width: 100%;
+    color: #323130;
+    font-size: 15px;
+    font-weight: 100;
+    line-height: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+
+  .title {
+    width: 100%;
+    height: 36px;
+    font-weight: 600;
+    font-size: 16px;
+    color: #323130;
+  }
+
+  .right_left {
+    display: flex;
+    flex-direction: column-reverse;
+    width:100%;
+  } 
+
+  .right_feature {
+    margin: 25px 0;
+  }
+}
+`
