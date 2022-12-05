@@ -64,8 +64,6 @@ import {
   EmployeeFullProfile,
   EmployeesListing,
 } from "./ui/components/Company/Employees";
-
-import AcceptReject from "./ui/pages/AcceptRejectProfile/AcceptReject";
 import MainAssessment from "./ui/pages/Company/Assessment";
 import UserAssessmentListOutlet from "./ui/pages/Employee/EmployeeAssessmentList";
 import EmployeeUserDashboard from "./ui/pages/Employee/EmployeeDashboard";
@@ -167,7 +165,6 @@ const App = () => {
               path={"/auth/verify/:user_id/:token"}
               element={<AdminEmailVerified />}
             />
-            <Route path="/accept-reject-profile" element={<AcceptReject />} />
             {/* <Route path="/guest-login" element={<GuestLogin />} /> */}
           </Route>
 
