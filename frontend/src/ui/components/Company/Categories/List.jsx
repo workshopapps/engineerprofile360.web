@@ -37,24 +37,26 @@ const List = () => {
       <CategoryListing>
         <table>
           <tbody>
-            <tr>
-              <th>#</th>
-              <th>Category</th>
-              <th>Number of Questions</th>
-              <th></th>
-            </tr>
-            {categories.length > 0
-              ? categories?.map((category, id) => (
-                  <tr>
-                    <td>{`${id + 1}.`}</td>
-                    <td>{category.name}</td>
-                    <td>105</td>
-                    <td>
-                      <More />
-                    </td>
-                  </tr>
-                ))
-              : "Oops no data to return yet. Create a new category"}
+            <>
+              <tr>
+                <th>#</th>
+                <th>Category</th>
+                <th>Number of Questions</th>
+                <th></th>
+              </tr>
+              {categories.length > 0
+                ? categories?.map((category, id) => (
+                    <tr>
+                      <td>{`${id + 1}.`}</td>
+                      <td>{category.name}</td>
+                      <td>105</td>
+                      <td>
+                        <More />
+                      </td>
+                    </tr>
+                  ))
+                : "Oops no data to return yet. Create a new category"}
+            </>
           </tbody>
         </table>
       </CategoryListing>

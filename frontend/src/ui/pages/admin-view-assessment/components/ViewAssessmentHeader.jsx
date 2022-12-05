@@ -3,7 +3,6 @@ import styled from "styled-components";
 import pointer from "../assets/pointer.png";
 import timer from "../assets/timer-start.png";
 import { useState, useEffect } from "react";
-import Sidebar from "../../../components/Sidebar";
 
 function ViewAssessmentHeader() {
   const [time, setTime] = useState((1 / 2) * 60 * 60 * 1000);

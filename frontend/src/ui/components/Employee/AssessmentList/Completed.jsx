@@ -1,15 +1,15 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import addCircle from "../../../assets/icons/app/add-circle.svg";
-import down from "../../../assets/icons/app/arrow-down.svg";
-import dashboard from "../../../assets/icons/app/dashboard.svg";
-import hamburger from "../../../assets/icons/app/hamburger.svg";
+import addCircle from "../../../../assets/icons/app/add-circle.svg";
+import down from "../../../../assets/icons/app/arrow-down.svg";
+import dashboard from "../../../../assets/icons/app/dashboard.svg";
+import hamburger from "../../../../assets/icons/app/hamburger.svg";
 import { Link } from "react-router-dom";
-import PageInfo from "../../components/molecules/PageInfo";
-import Flex from "../../components/layout/Flex";
-import { Button, Loader } from "../../../styles/reusableElements.styled";
-import axios from "../../../api/axios";
-import useAuth from "../../../hooks/useAuth";
+import PageInfo from "../../molecules/PageInfo";
+import Flex from "../../layout/Flex";
+import { Button, Loader } from "../../../../styles/reusableElements.styled";
+import axios from "../../../../api/axios";
+import useAuth from "../../../../hooks/useAuth";
 
 const DataContext = createContext(null);
 
@@ -73,25 +73,18 @@ const info = [
 ];
 
 const Sort = () => {
-  const {
-    assessmentInfo,
-    setAssessmentInfo,
-    available,
-    setAvailable,
-    order,
-    setOrder,
-    auth,
-  } = useContext(DataContext);
+  const { assessmentInfo, setAssessmentInfo, order, setOrder } =
+    useContext(DataContext);
   const sorting = () => {
     if (order === "asc") {
-      const sorted = [...available.data].sort((a, b) =>
+      const sorted = [...assessmentInfo].sort((a, b) =>
         a.dept.toLowerCase() > b.dept.toLowerCase() ? 1 : -1
       );
       setAssessmentInfo(sorted);
       setOrder("dsc");
     }
     if (order === "dsc") {
-      const sorted = [...available.data].sort((a, b) =>
+      const sorted = [...assessmentInfo].sort((a, b) =>
         a.dept.toLowerCase() < b.dept.toLowerCase() ? 1 : -1
       );
       setAssessmentInfo(sorted);
@@ -101,14 +94,14 @@ const Sort = () => {
 
   const dateSort = () => {
     if (order === "asc") {
-      const sortedDate = [...available.data].sort((a, b) =>
+      const sortedDate = [...assessmentInfo].sort((a, b) =>
         new Date(b.date) > new Date(a.date) ? 1 : -1
       );
       setAssessmentInfo(sortedDate);
       setOrder("dsc");
     }
     if (order === "dsc") {
-      const sortedDate = [...available.data].sort((a, b) =>
+      const sortedDate = [...assessmentInfo].sort((a, b) =>
         new Date(b.date) < new Date(a.date) ? 1 : -1
       );
       setAssessmentInfo(sortedDate);
@@ -118,32 +111,34 @@ const Sort = () => {
   return (
     <SortContainer>
       <Flex
+        spacing={10}
         style={{
           border: "1px solid #8A8886",
           padding: "8px",
           borderRadius: "4px",
         }}
         ai="center"
+        onClick={() => sorting()}
       >
         <select>
-          <option onClick={() => sorting()}>
-            <Text> Assessment Type</Text>
+          <option>
+            <Text>Assessment Type</Text>
           </option>
         </select>
       </Flex>
       <Flex ai="center" spacing={30}>
         <Flex
-          spacing={10}
           style={{
             border: "1px solid #8A8886",
             padding: "8px",
             borderRadius: "4px",
           }}
           ai="center"
+          onClick={() => dateSort()}
         >
           <select>
             <option>
-              <Text onClick={() => dateSort()}>Sort By Date</Text>
+              <Text>Sort By Date</Text>
             </option>
           </select>
         </Flex>
@@ -159,33 +154,24 @@ const Sort = () => {
 };
 
 const List = () => {
-  const { available, setAvailable, isLoading, setIsLoading } =
+  const { completed, setCompleted, isLoading, setIsLoading } =
     useContext(DataContext);
+
   const { auth, setAuth } = useAuth();
 
-  const fetchAvailable = () => {
-    return axios(`/user-assessment/org/${auth.id}/org-available`);
+  const fetchCompleted = () => {
+    return axios(`/user-assessment/org/${auth.id}/org-completed`);
   };
-
-  const postData = (e) => {
-    axios.post(`/user-assessment/accept/${auth.id}/${auth.id}/${auth.id}`, {
-      assessmentId: auth.id,
-      employeeId: auth.id,
-      orgId: auth.id,
-    });
-  };
-
   useEffect(() => {
-    fetchAvailable()
+    fetchCompleted()
       .then(({ data }) => {
-        setAvailable(data);
+        setCompleted(data);
       })
       .catch((error) => {
         console.log(error);
       })
       .finally(() => {
         setIsLoading(false);
-        console.log();
       });
   }, []);
   const renderContent = () => {
@@ -195,14 +181,13 @@ const List = () => {
           <Loader />
         </Flex>
       );
-    } else if (available.data.length === 0) {
+    } else if (completed.data.length === 0) {
       return (
         <Text>
-          Oops no available assessments for this user, come back later
+          Oops this user has no completed assessments, come back later
         </Text>
       );
     }
-
     return (
       <table>
         <tbody>
@@ -214,7 +199,7 @@ const List = () => {
             <th>Deadline</th>
             <th>{""}</th>
           </tr>
-          {available.data.map((d, idx) => {
+          {[completed.data].map((d, idx) => {
             return (
               <tr key={idx}>
                 <td>{idx + 1}</td>
@@ -223,11 +208,7 @@ const List = () => {
                 <td>{d.duration}</td>
                 <td>{d.date}</td>
                 <td>
-                  <Button
-                    $variant="outlined"
-                    $color="#2667ff"
-                    onClick={() => postData()}
-                  >
+                  <Button $variant="outlined" $color="#2667ff">
                     Take Test
                   </Button>
                 </td>
@@ -238,7 +219,6 @@ const List = () => {
       </table>
     );
   };
-
   return <AssessmentListings>{renderContent()}</AssessmentListings>;
 };
 
@@ -252,8 +232,6 @@ const TableSection = () => {
 };
 
 const Assessment = () => {
-  const { available, setAvailable, isLoading, setIsLoading } =
-    useContext(DataContext);
   return (
     <Flex stack spacing={70}>
       <Flex
@@ -266,12 +244,12 @@ const Assessment = () => {
       >
         <Flex spacing={24} ai="flex-end">
           <Link to="/user-assessment-list">
-            <Text $color="#2667FF" $weight="600">
-              {`Available (${"0"})`}
-            </Text>
+            <Text>Available (0)</Text>
           </Link>
           <Link to="/user-assessment-list/completed">
-            <Text>Completed (0)</Text>
+            <Text $color="#2667FF" $weight="600">
+              Completed (0)
+            </Text>
           </Link>
         </Flex>
       </Flex>
@@ -281,12 +259,11 @@ const Assessment = () => {
   );
 };
 
-const UserAssessmentListAvailable = () => {
+const CompletedUserAssessments = () => {
   const [assessmentInfo, setAssessmentInfo] = useState(info);
   const [order, setOrder] = useState("asc");
-  const [available, setAvailable] = useState({});
+  const [completed, setCompleted] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
   return (
     <div>
       <DataContext.Provider
@@ -295,10 +272,10 @@ const UserAssessmentListAvailable = () => {
           setAssessmentInfo,
           order,
           setOrder,
+          completed,
+          setCompleted,
           isLoading,
           setIsLoading,
-          available,
-          setAvailable,
         }}
       >
         <PageInfo breadcrumb={["Assessments", "Assessment List"]} />
@@ -308,7 +285,7 @@ const UserAssessmentListAvailable = () => {
   );
 };
 
-export default UserAssessmentListAvailable;
+export default CompletedUserAssessments;
 
 const AssessmentListings = styled.div`
   padding-top: ${({ theme }) => theme.spacing(3)};
