@@ -1,27 +1,108 @@
-import "./BlogCard.css";
-import { Link } from "react-router-dom";
-export function BlogCard(props) {
+import styled from "styled-components";
+import React from "react";
+import { Title } from "../../../styles/reusableElements.styled";
+
+const BlogCard = ({
+  featuredImage,
+  category,
+  timestamp,
+  title,
+  summary,
+  avatar,
+  name,
+  date,
+}) => {
   return (
-    <div id="blog">
-      <img src={props.src} alt={props.alt} id="blogImage" />
-      <div id="blogname">
-        <p id="blogtitle">{props.blog}</p>
-        <div id="time">
-          <div id="span"></div>
-          <p id="blogtime">{props.time} mins read</p>
-        </div>
-      </div>
-      <Link to={props.link} id="links">
-        <h3>{props.title}</h3>
-      </Link>
-      <p id="description">{props.description}</p>
-      <div id="blogDisplayPicture">
-        <img src={props.displayPicture} alt="" />
-        <div id="name">
-          <p>{props.name}</p>
-          <p>{props.date}</p>
-        </div>
-      </div>
-    </div>
+    <BlogCardContainer>
+      <FeaturedImage src={featuredImage} alt="featured-image" />
+      <BlogInnerContainer>
+        <InfoOne>
+          <p>{category}</p>
+          <TimeStamp>
+            <StatusDot />
+            <p>{timestamp}</p>
+          </TimeStamp>
+        </InfoOne>
+        <Title
+          as="h1"
+          $size="18px"
+          $lHeight="24px"
+          color="#323130"
+          $weight="400"
+        >
+          {title}
+        </Title>
+        <Summary>{summary}</Summary>
+        <InfoTwo>
+          <img src={avatar} alt="avatar" />
+          <div>
+            <Title as="h5" $size="14px" $weight="400" $lHeight="20px">
+              {name}
+            </Title>
+            <p>{date}</p>
+          </div>
+        </InfoTwo>
+      </BlogInnerContainer>
+    </BlogCardContainer>
   );
-}
+};
+
+export default BlogCard;
+
+const BlogCardContainer = styled.div`
+  border: 1px solid #d1d1d1;
+`;
+
+const FeaturedImage = styled.img`
+  width: 100%;
+`;
+
+const BlogInnerContainer = styled.div`
+  padding: 0px 16px;
+
+  h1 {
+    margin-bottom: 8px;
+  }
+`;
+
+const Summary = styled.p`
+  font-size: 14px;
+  line-height: 20px;
+  color: #605e5c;
+  margin-bottom: 50px;
+`;
+const InfoOne = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 24px;
+
+  p {
+    font-size: 12px;
+    line-height: 16px;
+  }
+`;
+
+const InfoTwo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 18px;
+
+  p {
+    font-size: 12px;
+    line-height: 16px;
+  }
+`;
+
+const TimeStamp = styled.div`
+  display: flex;
+  gap: 8px;
+  align-items: center;
+`;
+const StatusDot = styled.div`
+  width: 8px;
+  height: 8px;
+  background: #328cc1;
+  border-radius: 8px;
+`;
