@@ -5,8 +5,8 @@ import Notifications from "./components/Notifcations";
 import Teams from "./components/Teams";
 import Integrations from "./components/Integration";
 import API from "./components/API";
-import Sidebar from "../../components/Sidebar";
-import Header from "../../components/Header";
+// import Sidebar from "../../components/Sidebar";
+// import Header from "../../components/Header";
 import { MainContainer } from "../../../styles/reusableElements.styled";
 import styled from "styled-components";
 
@@ -27,9 +27,9 @@ const AdminSetting = () => {
   };
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <MainContainer>
-        <Sidebar />
+        {/* <Sidebar /> */}
 
         <Main>
           <h1 className="main_heading">Settings</h1>
@@ -39,7 +39,9 @@ const AdminSetting = () => {
                 <li
                   onClick={navClickHandler}
                   key={item}
-                  className={`nav_item ${activeNav === item ? "nav_active" : ""}`}
+                  className={`nav_item ${
+                    activeNav === item ? "nav_active" : ""
+                  }`}
                 >
                   {item}
                 </li>
@@ -119,7 +121,6 @@ const Main = styled.main`
     .nav_active {
       font-size: 16px;
     }
-
   }
 `;
 

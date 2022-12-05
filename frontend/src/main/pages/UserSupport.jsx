@@ -1,68 +1,13 @@
 import React from "react";
-import Flex from "../components/layout/Flex";
+import Flex from "../../ui/components/layout/Flex";
 import demo from "../../assets/images/demo.svg";
 import privacy from "../../assets/images/privacy.svg";
 import terms from "../../assets/images/terms.svg";
 import faq from "../../assets/images/faq.svg";
 import icon from "../../assets/icons/search.svg";
-import Grid, { GridItem } from "../components/layout/Grid";
+import Grid, { GridItem } from "../../ui/components/layout/Grid";
 import { Container } from "../../styles/reusableElements.styled";
 import styled from "styled-components";
-
-const CardContainer = styled.div`
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 16px;
-  background: #ffffff;
-  border-radius: 4px;
-  height: 400px;
-`;
-
-const SearchArea = styled.div`
-  height: 40vh;
-  background: rgba(38, 103, 255, 0.3);
-  margin-left: auto;
-  margin-right: auto;
-`;
-
-const CardTitle = styled.p`
-  font-weight: 400;
-  font-size: 32px;
-  line-height: 40px;
-  text-align: center;
-`;
-
-const CardDesc = styled.p`
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 28px;
-  text-align: center;
-`;
-
-const Heading = styled.p`
-  font-weight: 600;
-  font-size: 42px;
-  line-height: 52px;
-  color: #ffffff;
-  text-align: center;
-`;
-
-const SearchBox = styled.div`
-  display: flex;
-  min-width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-  background: #f0f0f0;
-  border-radius: 5px;
-  position: relative;
-`;
-
-const SearchIcon = styled.img`
-  position: absolute;
-  z-index: 2;
-  bottom: 20px;
-  left: 20px;
-`;
 
 const Card = () => {
   return (
@@ -182,3 +127,58 @@ const UserSupport = () => {
 };
 
 export default UserSupport;
+
+const CardContainer = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 16px;
+  background: #ffffff;
+  border-radius: 4px;
+  height: 400px;
+`;
+
+const SearchArea = styled.div`
+  height: 40vh;
+  background: rgba(38, 103, 255, 0.3);
+  margin-left: auto;
+  margin-right: auto;
+`;
+
+const CardTitle = styled.p`
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 40px;
+  text-align: center;
+`;
+
+const CardDesc = styled.p`
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 28px;
+  text-align: center;
+`;
+
+const Heading = styled.p`
+  font-weight: 600;
+  font-size: 42px;
+  line-height: 52px;
+  color: #ffffff;
+  text-align: center;
+`;
+
+const SearchBox = styled.div`
+  display: flex;
+  min-width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  background: #f0f0f0;
+  border-radius: 5px;
+  position: relative;
+`;
+
+const SearchIcon = styled.img`
+  position: absolute;
+  z-index: 2;
+  bottom: 20px;
+  left: 20px;
+`;

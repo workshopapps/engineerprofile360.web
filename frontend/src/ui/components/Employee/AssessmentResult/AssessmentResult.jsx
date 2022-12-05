@@ -1,9 +1,9 @@
 import React from "react";
-import { Button, Title } from "../../../styles/reusableElements.styled";
+import { Button, Title } from "../../../../styles/reusableElements.styled";
 import styled from "styled-components";
 import { ReactComponent as UserPhoto } from "./assets/user-photo.svg";
 import { ReactComponent as ChartData } from "./assets/chart.svg";
-import PageInfo from "../../components/molecules/PageInfo";
+import PageInfo from "../../molecules/PageInfo";
 
 const UserProfileData = [
   { title: "Name", value: "Sir Seyi Alameen" },

@@ -1,30 +1,32 @@
 import React from "react";
-import styled from 'styled-components';
-import PageInfo from "../../../ui/components/molecules/PageInfo";
+import styled from "styled-components";
+import PageInfo from "../../src/ui/components/molecules/PageInfo";
 
-function UserTakeAssessmentResultHeader({correctA='' ,totalQ=''}) {
+function UserTakeAssessmentResultHeader({ correctA = "", totalQ = "" }) {
   return (
     <>
       <FilterWrapper>
-        <div className="filter-nav"> 
-        <PageInfo
-        breadcrumb={["Assessment", "Assessment Result"]}
-        pageTitle=""
-      />
+        <div className="filter-nav">
+          <PageInfo
+            breadcrumb={["Assessment", "Assessment Result"]}
+            pageTitle=""
+          />
         </div>
-          <div>
-            <p> 
-              <b>Here are your responses to your assessment and your overall score</b>
-            </p>
-          </div>
+        <div>
+          <p>
+            <b>
+              Here are your responses to your assessment and your overall score
+            </b>
+          </p>
+        </div>
 
-          <div className="filter-flex-score">
-            <div>
+        <div className="filter-flex-score">
+          <div>
             <h1>{`${correctA} / ${totalQ}`}</h1>
             Total Score
-            </div>
           </div>
-        </FilterWrapper>
+        </div>
+      </FilterWrapper>
     </>
   );
 }
@@ -32,21 +34,21 @@ function UserTakeAssessmentResultHeader({correctA='' ,totalQ=''}) {
 export default UserTakeAssessmentResultHeader;
 
 const FilterWrapper = styled.div`
-display: flex;
-    width: 100%!important;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+  display: flex;
+  width: 100% !important;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 
-.text-muted {
+  .text-muted {
     opacity: 0.3;
     margin-right: 20px;
   }
 
   .filter-nav {
     display: flex;
-    width: 100%!important;
+    width: 100% !important;
     flex-direction: column;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -58,15 +60,14 @@ display: flex;
     border: 1px solid;
     justify-content: center;
     text-align: center;
-
   }
-  p{
+  p {
     margin-bottom: 20px;
     font-size: 16px;
     color: #323130;
   }
 
-  span{
+  span {
     font-size: 16px;
   }
 
@@ -76,7 +77,6 @@ display: flex;
     padding: 20px;
     border: 1px solid;
     justify-content: space-between;
-
   }
 
   @media screen and (max-width: 767px) {
@@ -86,5 +86,4 @@ display: flex;
       width: 100%;
     }
   }
-
-`
+`;

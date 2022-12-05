@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router";
 
-const UserAssessmentListOutlet = () => {
+const EmployeeAssessmentList = () => {
   return (
     <>
       <Outlet />
@@ -9,4 +9,4 @@ const UserAssessmentListOutlet = () => {
   );
 };
 
-export default UserAssessmentListOutlet;
+export default EmployeeAssessmentList;
