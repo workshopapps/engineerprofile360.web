@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { axiosPrivate } from "../../../../api/axios";
+import { axiosPrivate } from "../../../../../../api/axios";
 import { toast } from "react-toastify";
 import {
   Loader,
   OverlayLoader,
-} from "../../../../styles/reusableElements.styled";
+} from "../../../../../../styles/reusableElements.styled";
 
 import { AssessmentData } from "./AssessmentData";
 import Pagination from "./Pagination";

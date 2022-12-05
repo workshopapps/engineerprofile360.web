@@ -1,27 +1,24 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { Button, Loader } from "../../../../styles/reusableElements.styled";
-import addCircle from "../../../../assets/icons/app/add-circle.svg";
-import down from "../../../../assets/icons/app/arrow-down-alt.svg";
-import dashboard from "../../../../assets/icons/app/dashboard.svg";
-import hamburger from "../../../../assets/icons/app/hamburger.svg";
-import PageInfo from "../../../components/molecules/PageInfo";
-import Flex from "../../../components/layout/Flex";
+import { Button, Loader } from "../../../../../styles/reusableElements.styled";
+import addCircle from "../../../../../assets/icons/app/add-circle.svg";
+import down from "../../../../../assets/icons/app/arrow-down-alt.svg";
+import dashboard from "../../../../../assets/icons/app/dashboard.svg";
+import hamburger from "../../../../../assets/icons/app/hamburger.svg";
+import PageInfo from "../../../molecules/PageInfo";
+import Flex from "../../../layout/Flex";
 import { Link } from "react-router-dom";
-import axios from "../../../../api/axios";
-import useAuth from "../../../../hooks/useAuth";
+import axios from "../../../../../api/axios";
+import useAuth from "../../../../../hooks/useAuth";
+// import useAuth from "";
 
 const DataContext = createContext(null);
-
-const fetchCompleted = () => {
-  return axios("/user-assessment/org/org-completed");
-};
 
 const info = [
   {
     id: "1",
-    dept: "Introduction to Software Engineering",
-    course: "Python 101",
+    dept: "HNG Tutorials",
+    course: "Zuri 101",
     duration: "30 mins",
     date: "25 Apr 2020",
   },
@@ -76,7 +73,7 @@ const info = [
   },
 ];
 
-export const Buttons = () => {
+const Buttons = () => {
   const Mailto = ({ email, subject = "", body = "", children }) => {
     let params = subject || body ? "?" : "";
     if (subject) params += `subject=${encodeURIComponent(subject)}`;
@@ -127,39 +124,45 @@ export const Buttons = () => {
     </div>
   );
 };
-export const Sort = () => {
-  const { completed, setCompleted, data, setData, order, setOrder } =
-    useContext(DataContext);
+const Sort = () => {
+  const {
+    available,
+    setAvailable,
+    assessmentInfo,
+    setAssessmentInfo,
+    order,
+    setOrder,
+  } = useContext(DataContext);
   const sorting = () => {
     if (order === "asc") {
-      const sorted = [...completed.data].sort((a, b) =>
+      const sorted = [...available.data].sort((a, b) =>
         a.dept.toLowerCase() > b.dept.toLowerCase() ? 1 : -1
       );
-      setCompleted(sorted);
+      setAssessmentInfo(sorted);
       setOrder("dsc");
     }
     if (order === "dsc") {
-      const sorted = [...completed.data].sort((a, b) =>
+      const sorted = [...available.data].sort((a, b) =>
         a.dept.toLowerCase() < b.dept.toLowerCase() ? 1 : -1
       );
-      setCompleted(sorted);
+      setAssessmentInfo(sorted);
       setOrder("asc");
     }
   };
 
   const dateSort = () => {
     if (order === "asc") {
-      const sortedDate = [...completed.data].sort((a, b) =>
+      const sortedDate = [...available.data].sort((a, b) =>
         new Date(b.date) > new Date(a.date) ? 1 : -1
       );
-      setCompleted(sortedDate);
+      setAssessmentInfo(sortedDate);
       setOrder("dsc");
     }
     if (order === "dsc") {
-      const sortedDate = [...completed.data].sort((a, b) =>
+      const sortedDate = [...available.data].sort((a, b) =>
         new Date(b.date) < new Date(a.date) ? 1 : -1
       );
-      setCompleted(sortedDate);
+      setAssessmentInfo(sortedDate);
       setOrder("asc");
     }
   };
@@ -204,19 +207,18 @@ export const Sort = () => {
   );
 };
 
-export const List = () => {
-  const { completed, setCompleted, isLoading, setIsLoading } =
+const List = () => {
+  const { available, setAvailable, isLoading, setIsLoading } =
     useContext(DataContext);
   const { auth, setAuth } = useAuth();
 
-  const fetchCompleted = () => {
-    return axios("/user-assessment/org/{auth.id}/org-completed");
+  const fetchAvailable = () => {
+    return axios("/user-assessment/org/{auth.id}/org-available");
   };
-
   useEffect(() => {
-    fetchCompleted()
+    fetchAvailable()
       .then(({ data }) => {
-        setCompleted(data);
+        setAvailable(data);
         console.log(auth);
       })
       .catch((error) => {
@@ -234,13 +236,8 @@ export const List = () => {
           <Loader />
         </Flex>
       );
-    } else if (completed.data.length === 0) {
-      return (
-        <Text>
-          There are no completed assessments, check for available ones and
-          complete
-        </Text>
-      );
+    } else if (available.data.length === 0) {
+      return <Text>Oops no available assessments, create an assessment</Text>;
     }
     return (
       <table>
@@ -253,7 +250,7 @@ export const List = () => {
             <th>Deadline</th>
             <th>{""}</th>
           </tr>
-          {[completed.data].map((d, idx) => {
+          {[available.data].map((d, idx) => {
             return (
               <tr key={idx}>
                 <td>{idx + 1}</td>
@@ -276,7 +273,7 @@ export const List = () => {
   return <AssessmentListings>{renderContent()}</AssessmentListings>;
 };
 
-export const TableSection = () => {
+const TableSection = () => {
   return (
     <Flex stack spacing={16}>
       <Sort />
@@ -285,7 +282,7 @@ export const TableSection = () => {
   );
 };
 
-export const Assessment = () => {
+const Assessment = () => {
   return (
     <Flex stack spacing={70}>
       <Flex
@@ -297,12 +294,14 @@ export const Assessment = () => {
         jc="space-between"
       >
         <Flex spacing={24} ai="flex-end">
-          <Link to="/admin-assessment-list">
-            <Text>Available (0)</Text>
+          <Link to="/assessment/assessment-list">
+            <Text $color="#2667FF" $weight="600">
+              Available (0)
+            </Text>
           </Link>
-          <Text $color="#2667FF" $weight="600">
-            Completed (0)
-          </Text>
+          <Link to="/assessment/assessment-list/completed">
+            <Text>Completed (0)</Text>
+          </Link>
         </Flex>
       </Flex>
       <TableSection />
@@ -310,21 +309,21 @@ export const Assessment = () => {
   );
 };
 
-export const CompletedAssessmentList = () => {
+const AvailableAssessmentList = () => {
   const [assessmentInfo, setAssessmentInfo] = useState(info);
   const [order, setOrder] = useState("asc");
-  const [completed, setCompleted] = useState([]);
+  const [available, setAvailable] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   return (
     <div>
       <DataContext.Provider
         value={{
-          completed,
-          setCompleted,
           assessmentInfo,
           setAssessmentInfo,
           order,
           setOrder,
+          available,
+          setAvailable,
           isLoading,
           setIsLoading,
         }}
@@ -337,9 +336,9 @@ export const CompletedAssessmentList = () => {
   );
 };
 
-export default CompletedAssessmentList;
+export default AvailableAssessmentList;
 
-export const AssessmentListings = styled.div`
+const AssessmentListings = styled.div`
   padding-top: ${({ theme }) => theme.spacing(3)};
   width: 100%;
   overflow: auto;
@@ -374,7 +373,7 @@ export const AssessmentListings = styled.div`
   }
 `;
 
-export const Text = styled.p`
+const Text = styled.p`
   white-space: nowrap;
   color: ${({ $color }) => ($color ? $color : "initial")};
   font-size: ${({ $size }) => ($size ? $size : "14px")};
@@ -382,14 +381,14 @@ export const Text = styled.p`
   line-height: ${({ $lHeight }) => ($lHeight ? $lHeight : "20px")};
 `;
 
-export const Hide = styled.div`
+const Hide = styled.div`
   display: block;
 
   @media screen and (max-width: 768px) {
     display: none;
   } ;
 `;
-export const Show = styled.div`
+const Show = styled.div`
   display: none;
 
   @media screen and (max-width: 768px) {
@@ -397,7 +396,7 @@ export const Show = styled.div`
   } ;
 `;
 
-export const SortContainer = styled.div`
+const SortContainer = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0 10px;

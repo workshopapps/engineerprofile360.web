@@ -7,7 +7,7 @@ import Integrations from "./components/Integration";
 import API from "./components/API";
 // import Sidebar from "../../components/Sidebar";
 // import Header from "../../components/Header";
-import { MainContainer } from "../../../styles/reusableElements.styled";
+import { MainContainer } from "../../styles/reusableElements.styled";
 import styled from "styled-components";
 
 const AdminSetting = () => {

@@ -39,11 +39,13 @@ import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 
 import UserSupport from "./main/pages/UserSupport";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
+import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
+import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
 // import EmployeeTakeAssessment from "../miscellaneous/pages/EmployeeTakeAssessment";
 // import UserTakeAssessment from "./ui/pages/userTakeAssessment/UserTakeAssessment";
 // import UserTakeAssessmentResult from "../miscellaneous/pages/UserTakeAssessmentResult";
-import GuestTakeAssessment from "./ui/pages/Guest/GuestTakeAssessment";
-import GuestTakeAssessmentResult from "./ui/pages/Guest/GuestTakeAssessmentResult";
+import GuestTakeAssessment from "./ui/pages/guest/GuestTakeAssessment";
+import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import AdminCSVUpload from "./ui/components/Company/Assessments/AdminCSVUpload";
@@ -51,7 +53,7 @@ import AdminCSVUpload from "./ui/components/Company/Assessments/AdminCSVUpload";
 import GuestEmail from "./main/pages/GuestEmail";
 import GuestAssessmentList from "./main/pages/GuestAssessmentList";
 
-import AdminViewAssessment from "./ui/pages/admin-view-assessment/AdminViewAssessment";
+import AdminViewAssessment from "./ui/components/Company/Assessments/admin-view-assessment/AdminViewAssessment";
 // import Assessment from "./miscellaneous/assessment/Assessment.js";
 import { ComparisonPage } from "./main/pages/ComparisonPage/ComparisonPage";
 import AssessmentFirstPage from "./ui/components/Company/Assessments/AssessmentFirstPage";
@@ -63,7 +65,7 @@ import {
   EmployeesListing,
 } from "./ui/components/Company/Employees";
 
-import AcceptReject from "./ui/pages/Accept Reject Profile/AcceptReject";
+import AcceptReject from "./ui/pages/AcceptRejectProfile/AcceptReject";
 import MainAssessment from "./ui/pages/Company/Assessment";
 import UserAssessmentListOutlet from "./ui/pages/Employee/EmployeeAssessmentList";
 import EmployeeUserDashboard from "./ui/pages/Employee/EmployeeDashboard";
@@ -82,6 +84,9 @@ import {
 } from "./ui/components/Employee";
 import EmployeeAssessmentResult from "./ui/pages/Employee/EmployeeAssessmentResult";
 import EmployeeAssessmentList from "./ui/pages/Employee/EmployeeAssessmentList";
+import AdminAssessmmentListOutlet from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmmentListOutlet";
+import AdminAssessmentListAvailable from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmentListAvailable";
+import AssessmentList from "./ui/components/Company/Assessments/adminAssesmentList/AssessmentList";
 
 const ROLES = {
   Employees: 1,
@@ -240,6 +245,15 @@ const App = () => {
                 /> */}
                 <Route path="/assessment" element={<MainAssessment />}>
                   <Route path="" element={<AssessmentFirstPage />} />
+
+                  <Route
+                    path="assessment-list"
+                    element={<AdminAssessmmentListOutlet />}
+                  >
+                    <Route path="" element={<AdminAssessmentListAvailable />} />
+                    <Route path="completed" element={<AssessmentList />} />
+                  </Route>
+
                   <Route
                     path="user-assessment-result"
                     element={<EmployeeAssessmentResult />}
