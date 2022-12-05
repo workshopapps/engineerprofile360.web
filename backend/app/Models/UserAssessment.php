@@ -21,5 +21,4 @@ class UserAssessment extends Model
     {  
         return $this->belongsTo(Assessment::class ,'assessment_id');
     }
-
 }

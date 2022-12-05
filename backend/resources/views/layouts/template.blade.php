@@ -38,6 +38,7 @@
         <img src="https://dicodetech.com/images/eval360.png" alt="logo">
     </center>
     @yield('content')
-    <p>Regards,<br>The Eval360 team</p>
+    <p>Regards,</p>
+    <p>The Eval360 team</p>
 </body>
 </html>
