@@ -2,9 +2,10 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 
-import Modal from "./Modal";
+import Modal from "../../Modal";
 import useAuth from "../../../../hooks/useAuth";
 import axios from "../../../../api/axios";
+import CategoryForm from "./CategoryForm";
 
 import { More } from "iconsax-react";
 import { Button } from "../../../../styles/reusableElements.styled";
@@ -13,6 +14,7 @@ const List = () => {
   const [toggleCreateCat, setToggleCreateCat] = useState(false);
   const { auth } = useAuth();
   const [categories, setCategories] = useState([]);
+  const [updateCategories, setUpdateCategories] = useState(false);
 
   useEffect(() => {
     const getAllCatgories = async () => {
@@ -21,7 +23,7 @@ const List = () => {
     };
 
     getAllCatgories();
-  }, []);
+  }, [updateCategories]);
 
   return (
     <OverallContainer>
@@ -60,7 +62,17 @@ const List = () => {
           </tbody>
         </table>
       </CategoryListing>
-      {toggleCreateCat && <Modal setToggleCreateCat={setToggleCreateCat} />}
+      {toggleCreateCat && (
+        <Modal
+          setToggleCreateCat={setToggleCreateCat}
+          Form={
+            <CategoryForm
+              setToggleCreateCat={setToggleCreateCat}
+              setUpdateCategories={setUpdateCategories}
+            />
+          }
+        />
+      )}
     </OverallContainer>
   );
 };

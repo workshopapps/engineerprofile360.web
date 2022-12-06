@@ -62,7 +62,7 @@ const AdminCSVUpload = () => {
               </>
             ) : (
               <NameContainer>
-                {files?.[0]?.type === "CSV" ? (
+                {files?.[0]?.type === "text/csv" ? (
                   <Success>
                     <p>{files?.[0]?.name}</p>
                     <img src={close} onClick={() => setFiles({})} alt="" />

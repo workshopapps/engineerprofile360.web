@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "../../../../api/axios";
 import { showErrorToast, showSuccessToast } from "../../../../helpers/helper";
@@ -9,7 +9,7 @@ import { Loader } from "../../../../styles/reusableElements.styled";
 import { Title } from "../../../../styles/reusableElements.styled";
 import { Button } from "../../../../styles/reusableElements.styled";
 
-const Modal = ({ setToggleCreateCat }) => {
+const CategoryForm = ({ setToggleCreateCat, setUpdateCategories }) => {
   const [formData, setFormData] = useState({
     category_name: "",
   });
@@ -38,6 +38,7 @@ const Modal = ({ setToggleCreateCat }) => {
           showSuccessToast(response.data.message);
         setIsSubmitted(false);
         setToggleCreateCat(false);
+        setUpdateCategories(true);
       }
     } catch (err) {
       if (!err?.response) {
@@ -49,89 +50,67 @@ const Modal = ({ setToggleCreateCat }) => {
     }
   };
 
-  console.log(formData);
-
   return (
-    <>
-      <InputWrapper onClick={(e) => setToggleCreateCat(false)}>
-        <form
-          onClick={(e) => e.stopPropagation()}
-          onSubmit={(e) => handleSubmit(e)}
-        >
-          <Title as="h2" $size="18px" $color="#323130" $weight="400">
-            Create a new Category
-          </Title>
-          <InputFieldWrapper>
-            <Label htmlFor="category_name"> Title</Label>
-            <InputField
-              type="text"
-              required
-              placeholder="Javascript"
-              name="category_name"
-              value={name}
-              onChange={(e) => {
-                handleChange(e);
-              }}
-            />
-          </InputFieldWrapper>
+    <FormContainer
+      onClick={(e) => e.stopPropagation()}
+      onSubmit={(e) => handleSubmit(e)}
+    >
+      <Title as="h2" $size="18px" $color="#323130" $weight="400">
+        Create a new Category
+      </Title>
+      <InputFieldWrapper>
+        <Label htmlFor="category_name"> Title</Label>
+        <InputField
+          type="text"
+          required
+          placeholder="Javascript"
+          name="category_name"
+          value={name}
+          onChange={(e) => {
+            handleChange(e);
+          }}
+        />
+      </InputFieldWrapper>
 
-          <ButtonContainer>
-            <Button
-              type="button"
-              onClick={(e) => {
-                setToggleCreateCat(false);
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              border={"1px solid #2667FF"}
-              w={"117px"}
-              h={"48px"}
-              text={"#fff"}
-              bg={"#2667FF"}
-              rounded={"4px"}
-              m={" 6px"}
-            >
-              {isSubmitted ? <Loader /> : "Proceed"}
-            </Button>
-          </ButtonContainer>
-        </form>
-      </InputWrapper>
-    </>
+      <ButtonContainer>
+        <Button
+          type="button"
+          onClick={(e) => {
+            setToggleCreateCat(false);
+          }}
+        >
+          Cancel
+        </Button>
+        <Button
+          type="submit"
+          border={"1px solid #2667FF"}
+          w={"117px"}
+          h={"48px"}
+          text={"#fff"}
+          bg={"#2667FF"}
+          rounded={"4px"}
+          m={" 6px"}
+        >
+          {isSubmitted ? <Loader /> : "Proceed"}
+        </Button>
+      </ButtonContainer>
+    </FormContainer>
   );
 };
 
-export default Modal;
+export default CategoryForm;
 
-const InputWrapper = styled.div`
-  width: 100%;
-  position: absolute;
+const FormContainer = styled.form`
   display: flex;
+  flex-direction: column;
   justify-content: center;
+
   align-items: center;
-  position: absolute;
-  height: 75vh;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 100;
-
-  background-color: rgba(255, 255, 255, 0.8);
-
-  form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    align-items: center;
-    width: 60%;
-    height: 338px;
-    border-radius: 4px;
-    background-color: #f8fbfd;
-    border: 1px solid #c7e0f4;
-  }
+  width: 60%;
+  height: 338px;
+  border-radius: 4px;
+  background-color: #f8fbfd;
+  border: 1px solid #c7e0f4;
 `;
 
 const InputFieldWrapper = styled.div`
