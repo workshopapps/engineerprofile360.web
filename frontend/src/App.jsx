@@ -8,19 +8,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { GlobalStyles, theme } from "./styles/globalStyles";
 import { MainLayout, UiLayout } from "./Layouts";
 
-//DEFAULT EXPORTS FROM MAIN  
-import { AdminAuthLayout, UserAuthLayout } from "./main/components";
+//DEFAULT EXPORTS FROM MAIN
 import {
   Home,
   About,
   BioMedical,
-  AdminSignup,
-  AdminLogin,
-  AdminResetPassword,
-  AdminSetPassword,
-  AdminPasswordSuccess,
-  AdminVerifyEmail,
-  AdminEmailVerified,
   Blog,
   BlogStory,
   Contact,
@@ -34,38 +26,27 @@ import {
   Terms,
 } from "./main/pages";
 
-
-
 import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
-// import UserProfile from "./ui/pages/user-profile/UserProfile";
-import AdminAssessmentList, {
-  CompletedAssessmentList,
-} from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
-import AvailableAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AdminAssessmentListAvailable";
-// import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
-//import UserTakeAssessment from "./ui/pages/userTakeAssessment/UserTakeAssessment";
-//import UserTakeAssessmentResult from "./ui/pages/userTakeAssessment/UserTakeAssessmentResult";
-import GuestTakeAssessment from "./ui/pages/guest/GuestTakeAssessment";
-import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
-// import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
-import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
+
+import UserSupport from "./main/pages/UserSupport";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
 // import EmployeeTakeAssessment from "../miscellaneous/pages/EmployeeTakeAssessment";
 // import UserTakeAssessment from "./ui/pages/userTakeAssessment/UserTakeAssessment";
 // import UserTakeAssessmentResult from "../miscellaneous/pages/UserTakeAssessmentResult";
+import GuestTakeAssessment from "./ui/pages/guest/GuestTakeAssessment";
+import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
+import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
+import Testimonial from "./main/components/Testimonials/Testimonial";
 import AdminCSVUpload from "./ui/pages/AdminUpload/AdminCSVUpload";
 
 import GuestEmail from "./main/pages/GuestEmail";
 import GuestAssessmentList from "./main/pages/GuestAssessmentList";
 
 import AdminViewAssessment from "./ui/pages/admin-view-assessment/AdminViewAssessment";
-import Assessment from "./ui/pages/assessment/Assessment.jsx";
-// import CsvUpload from "./ui/pages/csv/CsvUpload";
-import CsvUploading from "./ui/pages/csv/CsvUploading";
-import CsvUploadComplete from "./ui/pages/csv/CsvUploadingComplete";
-import { ComparisonPage } from "./ui/pages/ComparisonPage/ComparisonPage";
-import AssessmentFirstPage from "./ui/pages/AssessmentFirstPage";
-import CreateAssessment from "./ui/pages/CreateAssessment";
+// import Assessment from "./miscellaneous/assessment/Assessment.js";
+import { ComparisonPage } from "./main/pages/ComparisonPage/ComparisonPage";
+import AssessmentFirstPage from "./ui/components/Company/Assessments/AssessmentFirstPage";
+import CreateAssessment from "./ui/components/Company/Assessments/CreateAssessment";
 
 import {
   EmployeeProfile,
@@ -74,18 +55,18 @@ import {
 } from "./ui/components/Company/Employees";
 
 import AcceptReject from "./ui/pages/Accept Reject Profile/AcceptReject";
-import MainAssessment from "./ui/pages/Assessment";
+import MainAssessment from "./ui/pages/Company/Assessment";
 import UserAssessmentListOutlet from "./ui/pages/Employee/EmployeeAssessmentList";
 import EmployeeUserDashboard from "./ui/pages/Employee/EmployeeDashboard";
 import Error from "./ui/pages/404";
 import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
 
-import GuestLogin from "./main/pages/Auth/GuestLogin";
-import DepartmentSection from "./ui/pages/DepartmentSection/DepartmentSection";
+// import GuestLogin from "./main/pages/Auth/GuestLogin";
+import DepartmentSection from "./ui/pages/Company/DepartmentSection";
 import { ServerError } from "./ui/pages/ServerError";
 
 import PersistLogin from "./components/PersistLogin";
-import PreviewCsvUpload from "./ui/pages/PreviewCsvUpload/PreviewCsvUpload";
+import PreviewCsvUpload from "./ui/components/Company/Employees/PreviewCsvUpload/PreviewCsvUpload";
 import {
   AssessmentCompleted,
   AssessmentAvailable,
@@ -113,11 +94,11 @@ const App = () => {
             element={<GuestAssessmentList />}
           /> */}
 
-          <Route path="/user" element={<UserAuthLayout />}>
-            {/* <Route path="reset-password" element={<UserResetPassword />} />
+          {/* <Route path="/user" element={<UserAuthLayout />}> */}
+          {/* <Route path="reset-password" element={<UserResetPassword />} />
             <Route path="login" element={<UserLogin />} />
             <Route path="forgot-password" element={<UserForgotPassword />} /> */}
-          </Route>
+          {/* </Route> */}
 
           {/* PUBLIC ROUTES */}
           <Route element={<MainLayout />}>
@@ -148,6 +129,7 @@ const App = () => {
               path="/guest-take-assessment-result"
               element={<GuestTakeAssessmentResult />}
             />
+
             <Route path="/csv-uploading" element={<CsvUploading />} />
             <Route
               path="/csv-uploading-complete"
@@ -177,7 +159,7 @@ const App = () => {
               element={<AdminEmailVerified />}
             />
             <Route path="/accept-reject-profile" element={<AcceptReject />} />
-            <Route path="/guest-login" element={<GuestLogin />} />
+            {/* <Route path="/guest-login" element={<GuestLogin />} /> */}
           </Route>
 
           {/* Private Route */}
@@ -272,7 +254,7 @@ const App = () => {
                 {/* Put in Protected pages in here */}
               </Route>
 
-              <Route path="/assessment" element={<Assessment />} />
+              {/* <Route path="/assessment" element={<Assessment />} /> */}
             </Route>
           </Route>
         </Routes>
