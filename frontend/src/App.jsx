@@ -22,6 +22,7 @@ import {
   AdminVerifyEmail,
   AdminEmailVerified,
   Blog,
+  BlogStory,
   Contact,
   DemoSchedule,
   HelpCenter,
@@ -129,6 +130,7 @@ const App = () => {
             <Route path="/help-center" element={<HelpCenter />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog-story" element={<BlogStory />} />
             <Route path="/comparison" element={<ComparisonPage />} />
             <Route path="/admin-assessment" element={<AdminAssessmentList />} />
             <Route path="/market-comparison" element={<Market />} />
@@ -136,13 +138,16 @@ const App = () => {
             <Route path="/payment" element={<Payment />} />
             <Route path="/privacy-policy" element={<Privacy />} />
 
-  
-
             {/* UNKNOWN ROUTES */}
             {/* <Route path="/fill-employee" element={<Fillemployee />} /> */}
-            <Route path="/guest-take-assessment" element={<GuestTakeAssessment />}/>
             <Route
-              path="/guest-take-assessment-result" element={<GuestTakeAssessmentResult />}/>
+              path="/guest-take-assessment"
+              element={<GuestTakeAssessment />}
+            />
+            <Route
+              path="/guest-take-assessment-result"
+              element={<GuestTakeAssessmentResult />}
+            />
             <Route path="/csv-uploading" element={<CsvUploading />} />
             <Route
               path="/csv-uploading-complete"
