@@ -46,7 +46,8 @@ import UserSupport from "./main/pages/UserSupport";
 // import UserTakeAssessmentResult from "../miscellaneous/pages/UserTakeAssessmentResult";
 // import GuestTakeAssessment from "./ui/pages/guest/GuestTakeAssessment";
 // import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
-import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
+// import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
+
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import AdminCSVUpload from "./ui/components/Company/Assessments/AdminCSVUpload";
 
@@ -133,16 +134,16 @@ const App = () => {
 
             {/* UNKNOWN ROUTES */}
             {/* <Route path="/fill-employee" element={<Fillemployee />} /> */}
-            <Route
+            {/* <Route
               path="/guest-take-assessment"
               element={<GuestTakeAssessment />}
             />
             <Route
               path="/guest-take-assessment-result"
               element={<GuestTakeAssessmentResult />}
-            />
+            /> */}
 
-            <Route path="/setting" element={<AdminSetting />} />
+            {/* <Route path="/setting" element={<AdminSetting />} /> */}
             <Route path="/employee-profile" element={<EmployeeProfile />} />
             <Route path="/admin-csv-upload" element={<AdminCSVUpload />} />
             {/* <Route
