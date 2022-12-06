@@ -138,12 +138,12 @@ Route::prefix("question")->group(function () {
 });
 
 // Categories routes operation
-Route::prefix("category")->group(function () {
-    Route::put('/{categoryId}/update', [CategoryController::class, 'updateCategory'])->middleware("isloggedin");
-    Route::post('/add', [CategoryController::class, 'createCategory'])->middleware("isloggedin", "isadmin");
-    Route::delete('{catId}/delete', [CategoryController::class, 'deleteCategory'])->middleware("isloggedin", "isadmin");
-    Route::get("/allCategories", [CategoryController::class, "getCategoriesByOrgId"])->middleware("isloggedin", "isadmin");
-    Route::get('/assessment/{id}', [CategoryController::class, 'getByAssessmentId'])->middleware("isloggedin", "isadmin");
+Route::group(['prefix'=>"category", "middleware"=>["isloggedin", "isadmin"]], function () {
+    Route::post('/add', [CategoryController::class, 'createCategory']);
+    Route::get("/allCategories", [CategoryController::class, 'getCategoriesByCompanyId']);
+    Route::put('/{categoryId}/update', [CategoryController::class, 'updateCategory']);
+    Route::delete('{categoryId}/delete', [CategoryController::class, 'deleteCategory']);
+    Route::get('/{categoryId}', [CategoryController::class, 'getCategoryById']);
 });
 
 //Employee Routes
