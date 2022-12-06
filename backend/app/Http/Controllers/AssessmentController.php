@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use App\Models\Assessment;
+use App\Models\UserAssessment;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -333,5 +335,41 @@ class AssessmentController extends Controller
             return $this->sendResponse(true,"something went wrong deleting assessment ".$e->getMessage(),'failed deleting assessment.',null,Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    public function getCompanyAcceptedAssessments($companyId, $orgId):JsonResponse
+    {
+        try {
+            //this is validating the ownership of the data
+            $company = Company::where('user_id',$orgId)->where('id', $companyId)->first();
+
+            if(!$company){
+                return $this->sendResponse(true, "Unauthorized", "Unauthorized account", null, Response::HTTP_UNAUTHORIZED);
+            }
+
+            $accepted_assessments = UserAssessment::where('org_id', $company->user_id)->paginate(10);
+
+            return $this->sendResponse(false, null, "Accepted Assessments", $accepted_assessments, Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return $this->sendResponse(true, 'Accepted assessment could not be fetched', $e->getMessage(), null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function getCompanyCompletedAssessments($companyId, $orgId):JsonResponse
+    {
+        try {
+            //this is validating the ownership of the data
+            $company = Company::where('user_id',$orgId)->where('id', $companyId)->first();
+
+            if(!$company){
+                return $this->sendResponse(true, "Unauthorized", "Unauthorized account", null, Response::HTTP_UNAUTHORIZED);
+            }
+
+            $completed_assessments = UserAssessment::where('org_id', $company->user_id)->where('completed', true)->paginate(10);
+
+            return $this->sendResponse(false, null, "Completed Assessment", $completed_assessments, Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return $this->sendResponse(true, 'Accepted assessment could not be fetched', $e->getMessage(), null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }

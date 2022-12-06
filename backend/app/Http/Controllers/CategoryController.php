@@ -12,40 +12,31 @@ use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
-    // @benrobo -> please, dont touch the methods below
-    public function createCategory(Request $request)
+    /**
+     * Create a new Category.
+     *
+     * Create Category
+     * @param CategoryRequest $request
+     *
+     * @return JsonResponse
+     */
+    public function createCategory(CategoryRequest $request): JsonResponse
     {
+        $data = $request->all();
 
         try {
-            $payload = json_decode($request->getContent(), true);
+            //this checks if category already exists for the current user
+            $categoryExists = Category::where('name', $data['name'])->where('org_id', $data['org_id'])->first();
 
-
-            if (!isset($payload["name"])) {
-                return $this->sendResponse(true, "expected a valid category 'name  but got none", "category name is missing.", null, 400);
+            if($categoryExists){
+                return $this->sendResponse(true, "category already exists", "name already exists.", null, Response::HTTP_BAD_REQUEST);
             }
 
-            $uid = $request->user["id"];
-            $id = Str::uuid();
-            $name = $payload["name"];
+            $category = Category::create($data);
 
-            $restCategory = Category::where("name", $name);
-
-            if ($restCategory->count() > 0) {
-                return $this->sendResponse(true, "category name already exists", "name already exists.", null, 400);
-            }
-
-            // category data
-            $data = [
-                "id" => $id,
-                "name" => $name,
-                "org_id" => $uid
-            ];
-
-            Category::create($data);
-
-            return $this->sendResponse(false, null, "category created.", $data, 200);
+            return $this->sendResponse(false, null, "Category successfully created.", $category, Response::HTTP_CREATED);
         } catch (\Exception $e) {
-            return $this->sendResponse(true, 'something went wrong creating category', $e->getMessage(), null, 500);
+            return $this->sendResponse(true, 'Category could not be created', $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
