@@ -23,7 +23,7 @@ class UserScoreController extends Controller
     {
         try {
             $result = UserScoreService::submit($request->validated());
-            return $this->sendResponse(false, null, "User score was added successfully!", $result, Response::HTTP_OK);
+            return $this->sendResponse(false, null, "User score was added successfully!", $result, Response::HTTP_CREATED);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Error storing the userr score", $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
