@@ -202,11 +202,11 @@ class EmployeeController extends Controller
                     Response::HTTP_NOT_FOUND
                 );
             }
-            $employees = Employee::where('department_id', $departmentId)->paginate(10);
+            $employees = Employee::where('department_id', $department->id)->paginate(10);
 
             return $this->sendResponse(false, 'All Department Employees', $employees, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true, $e->getMessage(), "Employee could not be fetched", null, Response::HTTP_NOT_FOUND);
+            return $this->sendResponse(true, 'Employees not fetched', $e->getMessage());
         }
     }
 

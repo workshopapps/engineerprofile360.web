@@ -13,7 +13,7 @@ class Category extends Model
     /**
      * @var $fillable
      */
-    protected $fillable = ["id", "name", "org_id"];
+    protected $fillable = ["name", "org_id"];
 
 
     public function questions()
