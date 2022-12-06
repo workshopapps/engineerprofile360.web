@@ -51,7 +51,8 @@ export default BlogCard;
 
 const BlogCardContainer = styled.div`
   border: 1px solid #d1d1d1;
-  max-height: 480px;
+  min-height: 480px;
+  max-height: 700px;
   height: 100%;
 `;
 
