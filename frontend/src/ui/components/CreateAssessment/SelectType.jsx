@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import axios from "../../../api/axios";
+
+
 
 const SelectType = () => {
   const [formData, setFormData] = useState({});
@@ -43,7 +46,13 @@ const SelectType = () => {
     validate(formData);
   }, [formData, touched]);
 
-  const onNextPage = (formData) => {
+  const onNextPage =  async (formData) => {
+    
+    const response = await axios.post(
+      "assessment/create/",
+      JSON.stringify({ name:formData.name, start_date:formData.date, start_time:formData.date, department_id:formData.department })
+    );
+    console.log(response)
     validate(formData);
 
     if (Object.keys(errors).length > 0) {
