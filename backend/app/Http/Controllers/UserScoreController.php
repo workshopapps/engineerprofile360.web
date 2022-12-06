@@ -22,10 +22,8 @@ class UserScoreController extends Controller
     public function store(UserScoreStoreRequest $request)
     {
         try {
-            if (!UserScoreService::categoryMatchesScores($request->validated())) return $this->sendResponse(true, "Not Permited", "The passed questions doesn't match the categories supplied", Response::HTTP_UNPROCESSABLE_ENTITY);
-            $userScore = UserScore::create(UserScoreService::prepareRequest($request->validated()));
-            UserAssessment::where(["assessment_id" => $userScore->assessment_id])->update(["completed" => 1, "result" => ($request->validated()["correct_questions"] / $request->validated()["total_questions"]) * 100, ...$request->validated()]);
-            return $this->sendResponse(false, null, "User score was added successfully!", $userScore, Response::HTTP_OK);
+            $result = UserScoreService::submit($request->validated());
+            return $this->sendResponse(false, null, "User score was added successfully!", $result, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Error storing the userr score", $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
