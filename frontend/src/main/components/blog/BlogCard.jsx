@@ -101,7 +101,9 @@ const InfoTwo = styled.div`
 const TimeStamp = styled.div`
   display: flex;
   gap: 8px;
-  align-items: center;
+  justify-content: center;
+  align-items: baseline;
+  text-align: center;
 `;
 const StatusDot = styled.div`
   width: 8px;
