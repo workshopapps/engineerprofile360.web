@@ -36,10 +36,10 @@ const BlogStory = () => {
       </BlogStoryMainContainer>
       <BlogStoryContainer>
         <NavigationContainer>
-          <p>
+          <div>
             <Link to="/">Home</Link> / <Link to="/blog">Blog</Link> /
             <Link to="/blog-story">Skill Aquisation</Link>
-          </p>
+          </div>
           <SocialShare>
             <Facebook size="28" color="#393a32" />
             <Instagram size="28" color="#393a32" />
@@ -221,7 +221,7 @@ const Author = styled.p`
   margin-bottom: 4px;
 `;
 
-const TimeStampContainer = styled.p`
+const TimeStampContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
