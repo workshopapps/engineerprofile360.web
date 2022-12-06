@@ -337,9 +337,10 @@ class AssessmentController extends Controller
 
     }
 
-    public function getCompanyAcceptedAssessment($companyId, $orgId):JsonResponse
+    public function getCompanyAcceptedAssessments($companyId, $orgId):JsonResponse
     {
         try {
+            //this is validating the ownership of the data
             $company = Company::where('user_id',$orgId)->where('id', $companyId)->first();
 
             if(!$company){
@@ -348,10 +349,27 @@ class AssessmentController extends Controller
 
             $accepted_assessments = UserAssessment::where('org_id', $company->user_id)->paginate(10);
 
-            return $this->sendResponse(false, null, "assessment created.", $accepted_assessments, Response::HTTP_OK);
+            return $this->sendResponse(false, null, "Accepted Assessments", $accepted_assessments, Response::HTTP_OK);
         } catch (\Exception $e) {
             return $this->sendResponse(true, 'Accepted assessment could not be fetched', $e->getMessage(), null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
+    public function getCompanyCompletedAssessments($companyId, $orgId):JsonResponse
+    {
+        try {
+            //this is validating the ownership of the data
+            $company = Company::where('user_id',$orgId)->where('id', $companyId)->first();
+
+            if(!$company){
+                return $this->sendResponse(true, "Unauthorized", "Unauthorized account", null, Response::HTTP_UNAUTHORIZED);
+            }
+
+            $completed_assessments = UserAssessment::where('org_id', $company->user_id)->where('completed', true)->paginate(10);
+
+            return $this->sendResponse(false, null, "Completed Assessment", $completed_assessments, Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return $this->sendResponse(true, 'Accepted assessment could not be fetched', $e->getMessage(), null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }
