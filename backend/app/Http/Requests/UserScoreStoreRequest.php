@@ -27,10 +27,9 @@ class UserScoreStoreRequest extends BaseRequest
             "assessment_id" => 'required|exists:assessments,id',
             "employee_id" => 'required|exists:employees,id',
             "org_id" => 'required|exists:users,user_id',
-            "categories" => 'required|array',
-            "passed_questions" => 'required|array',
-            "total_questions" => 'required|integer',
-            "correct_questions" => 'required|integer'
+            "answers" => 'required|array',
+            "answers.*.question_id" => 'required|string',
+            "answers.*.answer" => 'required|array'
         ];
     }
 }

@@ -2,17 +2,71 @@
 
 namespace App\Services;
 
+use App\Models\Question;
+use App\Models\UserAssessment;
+use App\Models\UserScore;
+
 class UserScoreService
 {
-    public static function prepareRequest(array $request): array
+    public static function submit(array $request): array
     {
-        $request['categories'] = json_encode($request['categories']);
-        $request['passed_questions'] = json_encode($request['passed_questions']);
-        return  $request;
+        extract($request);
+        $result = self::calculateResult($request);
+        $uerScore = UserScore::create(self::prepareRequest($result["data"]));
+        UserAssessment::where(["assessment_id" => $assessment_id])->update([
+            "completed" => 1,
+            "userscore_id" => $uerScore->id,
+            "org_id" => $request["org_id"],
+            "result" => $result["points"],
+            "correct_questions" => $result["points"],
+            "total_questions" => $result["data"]["total_questions"]
+        ]);
+        return ["result" => $result["points"] . "/" . $result["data"]["total_questions"]];
     }
 
-    public static function categoryMatchesScores(array $request): int
+    public static function prepareRequest(array $data): array
     {
-        return count($request['categories']) === count($request['passed_questions']) ? 1 : 0;
+        $data['categories'] = json_encode($data['categories']);
+        $data['passed_questions'] = json_encode($data['passed_questions']);
+        return  $data;
+    }
+
+    public static function calculateResult(array $request): array
+    {
+        extract($request);
+        $result = [
+            "data" => [
+                "assessment_id" => $assessment_id,
+                "employee_id" => $employee_id,
+                "categories" => [],
+                "passed_questions" => [],
+                "total_questions" => 0,
+                "correct_questions" => 0
+            ],
+            "points" => 0
+        ];
+        foreach ($answers as $key => $value) {
+            //get question details
+            $questions = Question::where(["id" => $value["question_id"]])->with("category")->first();
+            // compare the answers
+            if (!array_diff($value["answer"], $questions->correct_answers)) {
+                //store the categories of the questions
+                if (!in_array($questions->category->name, $result["data"]["categories"])) {
+                    array_push($result["data"]["categories"], $questions->category->name);
+                }
+
+                //update answer count for each question category
+                $index = array_search($questions->category->name, $result["data"]["categories"]);
+                $points = count($value["answer"]);
+                if (isset($result["data"]["passed_questions"][$index])) {
+                    $result["data"]["passed_questions"][$index] += $points;
+                } else {
+                    array_push($result["data"]["passed_questions"], $points);
+                }
+                $result["points"] += $points;
+            }
+            $result["data"]["total_questions"] += $points ?? 1;
+        }
+        return $result;
     }
 }
