@@ -85,6 +85,7 @@ Route::prefix("assessment")->group(function () {
     Route::get('/{organization_id}', [AssessmentController::class, 'getAssByOrgId']);
     Route::put('/{assessmentId}', [AssessmentController::class, 'updateAssessment'])->middleware("isloggedin", "isadmin");
     Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAssessment'])->middleware("isloggedin", "isadmin");
+    Route::get('/{companyId}/{orgId}/accepted-assessment', [AssessmentController::class, 'getCompanyAcceptedAssessment'])->middleware("isloggedin", "isadmin");
 });
 
 
