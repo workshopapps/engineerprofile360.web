@@ -135,7 +135,7 @@ class CategoryController extends Controller
     {
         try {
             $uid = $request->user["id"];
-            $allCategories = Category::where("org_id", $uid)->get();
+            $allCategories = Category::where("org_id", $uid)->withCount("questions")->get();
 
             if ($allCategories->count() == 0) {
                 return $this->sendResponse(true, "No category found",

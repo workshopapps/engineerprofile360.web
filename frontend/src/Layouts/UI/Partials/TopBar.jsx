@@ -32,7 +32,7 @@ const TopBar = ({ handleLeftBarToggle, leftBar }) => {
     <TopBarContainer>
       <TopBarContent>
         <LogoContainer>
-        <Logo size="sm" />
+          <Logo size="sm" />
         </LogoContainer>
         <Navigation>
           <SearchInputField
@@ -44,7 +44,7 @@ const TopBar = ({ handleLeftBarToggle, leftBar }) => {
           <Options>
             <UserCon>
               <img src={user} alt="" />
-              <span>{auth.fullName ? auth.fullName.split(" ")[0] : ""}</span>
+              <span>{auth.username ? auth.username : ""}</span>
             </UserCon>
             <Icons>
               <Notification color="#323130" />
@@ -196,7 +196,6 @@ const Icons = styled.div`
   display: flex;
   align-items: flex-end;
   gap: ${({ theme }) => theme.spacing(2)};
-
 
   svg:nth-of-type(2) {
     ${({ theme }) => theme.breakpoints.up("sm")} {

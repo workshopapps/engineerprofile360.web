@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserScoreStoreRequest;
+use App\Models\Employee;
 use App\Models\UserAssessment;
 use App\Services\UserScoreService;
 use App\Models\UserScore;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -93,10 +95,11 @@ class UserScoreController extends Controller
     public function getCompanyTopPerformance(string $id)
     {
         try {
-            $userScore = UserScore::select('*')
-                ->join('user_assessments', 'user_assessments.userscore_id', '=', 'user_scores.id')
-                ->where('user_assessments.org_id', $id)->orderBy('user_assessments.result', 'asc');
-            if (!$userScore->count()) return $this->sendResponse(true, "Not Found", "User Score not found", Response::HTTP_NOT_FOUND);
+            $userScore = Employee::where("org_id", $id)->with("userscore")->with("department")->withCount([
+                'assessment AS points' => function ($query) {
+                    $query->select(DB::raw("SUM(result) as points"));
+                }
+            ])->orderBy('points', 'desc');
             return $this->sendResponse(false, null, "Successful", $userScore->first(), Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Error fetching user scores", $e->getMessage(), Response::HTTP_BAD_REQUEST);
@@ -104,7 +107,7 @@ class UserScoreController extends Controller
     }
 
     /**
-     * Get company top score order by performance
+     * Get company top employee by thier performance
      *
      * @param string  $id
      * @return Response
@@ -113,11 +116,11 @@ class UserScoreController extends Controller
     {
 
         try {
-            $userScore = UserAssessment::select('employees.id as employee_id', 'departments.name as department', 'employees.fullname as employee_name', 'user_assessments.correct_questions as points', 'user_assessments.created_at as created_at', 'user_assessments.updated_at as updated_at')
-                ->rightJoin('employees', 'employees.id', '=', 'user_assessments.employee_id')
-                ->join('departments', 'departments.id', '=', 'employees.department_id')
-                ->where('employees.org_id', $id)
-                ->orderBy('user_assessments.result', 'desc');
+            $userScore = Employee::where("org_id", $id)->with("department")->withCount([
+                'assessment AS points' => function ($query) {
+                    $query->select(DB::raw("SUM(result) as points"));
+                }
+            ])->orderBy('points', 'desc');
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Error fetching user scores", $e->getMessage(), Response::HTTP_BAD_REQUEST);

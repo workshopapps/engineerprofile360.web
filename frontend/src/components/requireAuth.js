@@ -9,7 +9,7 @@ const RequireAuth = ({ allowedRole }) => {
   return auth?.roles === allowedRole ? (
     <Outlet />
   ) : auth?.id ? (
-    <Navigate to="/unathorized" state={{ from: location }} replace />
+    <Navigate to="/unauthorized" state={{ from: location }} replace />
   ) : (
     <Navigate to="/login" state={{ from: location }} replace />
   );

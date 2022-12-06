@@ -17,4 +17,8 @@ class UserAssessment extends Model
         'correct_questions','result'
     ];
 
+    public function assessment()    
+    {  
+        return $this->belongsTo(Assessment::class ,'assessment_id');
+    }
 }

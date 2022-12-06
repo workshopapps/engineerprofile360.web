@@ -1,14 +1,42 @@
-import React from "react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Button, Title } from "../../styles/reusableElements.styled";
 
 export default function SelectDepartment() {
+  const [departments, setDepartments] = useState([]);
+  const [value, setValue] = useState("");
+  const [items, setItems] = useState([]);
+
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  };
+
+  const proceed = () => {
+    localStorage.setItem("departments", JSON.stringify(value));
+  };
+
+  const org_id = "c57d34e5-dcfe-4fba-821b-53c22ac27756";
+
+  useEffect(() => {
+    axios
+      .get(`https://api.eval360.hng.tech/api/department/company/${org_id}`)
+      .then((response) => {
+        setDepartments(response.data.data);
+      });
+
+    const items = JSON.parse(localStorage.getItem("departments"));
+    if (items) {
+      setItems(items);
+      setValue(items);
+    }
+  }, [departments]);
+
   return (
     <Container>
       <div>
-        <Title $color="#323130" $size="16px" $weight="400">
-          Select the target department to add employee:
-        </Title>
+        <h1>Select the target department to add employee:</h1>
         <div
           style={{
             display: "flex",
@@ -20,19 +48,20 @@ export default function SelectDepartment() {
           <Title $color="#605E5C" $size="16px" $weight="400">
             Select Department
           </Title>
-          <select name="" id="">
-            <option value="Electrical Eng.">Electrical Eng.</option>
-            <option value="Chemical Eng.">Chemical Eng.</option>
-            <option value="Software Eng.">Software Eng.</option>
-            <option value="Mechanical Eng.">Mechanical Eng.</option>
-            <option value="Marine Eng.">Marine Eng.</option>
-            <option value="Computer Eng.">Computer Eng.</option>
+          <select value={value} onChange={handleChange}>
+            {departments.map((department) => (
+              <option value={department.id} key={department.id}>
+                {department.name}
+              </option>
+            ))}
           </select>
         </div>
       </div>
       <div>
         <Button $variant="outlined">Cancel</Button>
-        <Button>Proceed</Button>
+        <Link to="/employees/add-employee">
+          <Button onClick={proceed}>Proceed</Button>
+        </Link>
       </div>
     </Container>
   );
@@ -56,6 +85,17 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    h1 {
+      color: #323130;
+      font-size: 22px;
+      font-weight: 400;
+
+      @media screen and (max-width: 450px) {
+        font-size: 14px;
+        text-align: left;
+      }
+    }
   }
 
   div:nth-child(2) {
@@ -72,5 +112,6 @@ const Container = styled.div`
     width: 100%;
     border-radius: 4px;
     padding 0 10px;
+    outline: none;
   }
 `;

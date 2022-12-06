@@ -22,9 +22,10 @@ class Helper extends Controller
     // public $baseUrl = "https://localhost:8000";
     public $clientUrl = "https://eval360.hng.tech"; // this would be the frontend client url
 
-    public function returnExpireTime(){
+    public function returnExpireTime()
+    {
         $startdate = date("Y-m-d H:i:s");
-        $expire = strtotime($startdate. ' + 10 minutes');
+        $expire = strtotime($startdate . ' + 10 minutes');
         return $expire;
     }
 
@@ -75,67 +76,87 @@ class Helper extends Controller
         return $decoded;
     }
 
-    public function emailVerification($email, $user_id){
+    public function emailVerification($email, $firstname, $user_id)
+    {
         $apiUrl = $this->baseUrl;
         $client = $this->clientUrl;
 
         try {
-            $token = substr(md5(openssl_random_pseudo_bytes(20)),-20);
+            $token = substr(md5(openssl_random_pseudo_bytes(20)), -20);
             $tokenData = [
-                "user_id"=>$user_id,
-                "token"=>$token,
-                "exp"=> $this->returnExpireTime()
+                "user_id" => $user_id,
+                "token" => $token,
+                "exp" => $this->returnExpireTime()
             ];
 
             Token::create($tokenData);
 
             $mail = new Mailer();
             $mailMsg = "Verify your email using the link above";
-            $mailData = "{$client}/auth/verify/${user_id}/${token}";
+            $mailData = array(
+                "link" => "{$client}/auth/verify/${user_id}/${token}",
+                "firstname" => $firstname
+            );
             $mail->verifyEmail("mail@dicodetech.com", $email, $mailMsg, $mailData);
         } catch (\Exception $e) {
-            return Log::info("Something went wrong sending email verification code.. ".$e->getMessage());
+            return Log::info("Something went wrong sending email verification code.. " . $e->getMessage());
         }
-        
     }
 
-    public function passwordReset($email, $user_id){
+    public function sendWelcomeMail($email, $firstname)
+    {
+        $client = $this->clientUrl;
+        try {
+            $mail = new Mailer();
+            $mailData = array(
+                "link" => "{$client}/login",
+                "firstname" => $firstname
+            );
+            $mail->signUpMail("mail@dicodetech.com", $email, $mailData);
+        } catch (\Exception $e) {
+            return Log::info("Something went wrong sending email verification code.. " . $e->getMessage());
+        }
+    }
+
+    public function passwordReset($email, $user_id)
+    {
         $apiUrl = $this->baseUrl;
         $client = $this->clientUrl;
         try {
             // create token
-            $token = substr(md5(openssl_random_pseudo_bytes(20)),-20);
+            $token = substr(md5(openssl_random_pseudo_bytes(20)), -20);
             $tokenData = [
-                "user_id"=>$user_id,
-                "token"=>$token,
-                "exp"=> $this->returnExpireTime()
+                "user_id" => $user_id,
+                "token" => $token,
+                "exp" => $this->returnExpireTime()
             ];
-    
+
             Token::create($tokenData);
-    
+
             $mail = new Mailer();
             $mailMsg = "Reset your password using the link above.";
             // $mailData = "${apiUrl}/api/auth/password/reset/${user_id}/${token}";
             $mailData = "{$client}/password/reset?uid=${user_id}&token=${token}";
             $mail->passwordReset("test@mail.com", $email, $mailMsg, $mailData);
         } catch (\Exception $e) {
-            return Log::error("Could not send password reset link".$e->getMessage());
+            return Log::error("Could not send password reset link" . $e->getMessage());
         }
     }
 
-    public function sendOnboardMail($emp_fullname,$emp_username,$emp_password, $to, $org_name){
+    public function sendOnboardMail($emp_fullname, $emp_username, $emp_password, $to, $org_name)
+    {
         try {
             $loginLink = "{$this->clientUrl}/login";
 
             $mail = new Mailer();
             $mail->sendEmployeeOnboardingMail($emp_fullname, $emp_username, $emp_password, $loginLink, $to, $org_name);
         } catch (\Exception $e) {
-            return Log::error("Could not send employe onboarding invite".$e->getMessage());
+            return Log::error("Could not send employe onboarding invite" . $e->getMessage());
         }
     }
 
-    public function notifyEmployee($emp_email, $emp_id){
+    public function notifyEmployee($emp_email, $emp_id)
+    {
         return "hey";
     }
-    
 }

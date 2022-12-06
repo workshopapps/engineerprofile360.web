@@ -1,6 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { axiosPrivate } from "../../../../api/axios";
+import { toast } from "react-toastify";
+import {
+  Loader,
+  OverlayLoader,
+} from "../../../../styles/reusableElements.styled";
 
 import { AssessmentData } from "./AssessmentData";
 import Pagination from "./Pagination";
@@ -9,6 +15,8 @@ import { Container, WrapperDiv } from "./ViewAssessmentHeader";
 function AssessmentContent() {
   const [isEditing, setIsEditing] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [data, setData] = useState();
+  const [loading, setLoading] = useState(true);
 
   const [questionsPerPage] = useState(5);
   const [inputValue, setInputValue] = useState([
@@ -16,6 +24,29 @@ function AssessmentContent() {
       answer: "",
     },
   ]);
+
+  const company_id = "7b3ba4e0-fa72-46f6-b9ad-3d490e76ecac";
+  useEffect(() => {
+    axiosPrivate
+      .get(`http://api.eval360.hng.tech/api/question/assessment/${company_id}`)
+      .then((res) => {
+        console.log(res);
+        setData(res);
+        console.log(data);
+        console.log(res);
+
+        console.log(data.options);
+
+        console.log(data.id);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        toast.error("could not fetch questions");
+
+        console.log(error);
+      });
+  }, []);
   const answer = inputValue;
   const navigate = useNavigate();
 
@@ -130,7 +161,6 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
 `;
 export const ButtonClear = styled.button`
   color: #323130;
@@ -145,7 +175,6 @@ export const ButtonClear = styled.button`
   justify-content: center;
   align-items: center;
   transition: all 0.3s ease-in;
- 
 
   &:hover {
     color: #fff;
