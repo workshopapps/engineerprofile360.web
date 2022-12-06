@@ -39,13 +39,13 @@ import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 
 import UserSupport from "./main/pages/UserSupport";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
-import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
-import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
+// import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
+// import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
 // import EmployeeTakeAssessment from "../miscellaneous/pages/EmployeeTakeAssessment";
 // import UserTakeAssessment from "./ui/pages/userTakeAssessment/UserTakeAssessment";
 // import UserTakeAssessmentResult from "../miscellaneous/pages/UserTakeAssessmentResult";
-import GuestTakeAssessment from "./ui/pages/guest/GuestTakeAssessment";
-import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
+// import GuestTakeAssessment from "./ui/pages/guest/GuestTakeAssessment";
+// import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import AdminCSVUpload from "./ui/components/Company/Assessments/AdminCSVUpload";
