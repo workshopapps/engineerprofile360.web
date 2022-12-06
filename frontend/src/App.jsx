@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GlobalStyles, theme } from "./styles/globalStyles";
 import { MainLayout, UiLayout } from "./Layouts";
+import AdminAuthLayout from "./Layouts/UI/AuthLayout";
 
 //DEFAULT EXPORTS FROM MAIN
 import {
@@ -26,6 +27,14 @@ import {
   Terms,
 } from "./main/pages";
 
+import AdminSignup from "./ui/pages/Company/Auth/AdminSignup";
+import AdminLogin from "./ui/pages/Company/Auth/AdminLogin";
+import AdminSetPassword from "./ui/pages/Company/Auth/AdminSetPassword";
+import AdminResetPassword from "./ui/pages/Company/Auth/AdminResetPassword";
+import AdminPasswordSuccess from "./ui/pages/Company/Auth/AdminPasswordSuccess";
+import AdminVerifyEmail from "./ui/pages/Company/Auth/AdminVerifyEmail";
+import AdminEmailVerified from "./ui/pages/Company/Auth/AdminEmailVerified";
+
 import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 
 import UserSupport from "./main/pages/UserSupport";
@@ -33,11 +42,11 @@ import UserSupport from "./main/pages/UserSupport";
 // import EmployeeTakeAssessment from "../miscellaneous/pages/EmployeeTakeAssessment";
 // import UserTakeAssessment from "./ui/pages/userTakeAssessment/UserTakeAssessment";
 // import UserTakeAssessmentResult from "../miscellaneous/pages/UserTakeAssessmentResult";
-import GuestTakeAssessment from "./ui/pages/guest/GuestTakeAssessment";
-import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
+import GuestTakeAssessment from "./ui/pages/Guest/GuestTakeAssessment";
+import GuestTakeAssessmentResult from "./ui/pages/Guest/GuestTakeAssessmentResult";
 import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
 import Testimonial from "./main/components/Testimonials/Testimonial";
-import AdminCSVUpload from "./ui/pages/AdminUpload/AdminCSVUpload";
+import AdminCSVUpload from "./ui/components/Company/Assessments/AdminCSVUpload";
 
 import GuestEmail from "./main/pages/GuestEmail";
 import GuestAssessmentList from "./main/pages/GuestAssessmentList";
@@ -113,7 +122,7 @@ const App = () => {
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog-story" element={<BlogStory />} />
             <Route path="/comparison" element={<ComparisonPage />} />
-            <Route path="/admin-assessment" element={<AdminAssessmentList />} />
+            {/* <Route path="/admin-assessment" element={<AdminAssessmentList />} /> */}
             <Route path="/market-comparison" element={<Market />} />
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/payment" element={<Payment />} />
@@ -130,11 +139,6 @@ const App = () => {
               element={<GuestTakeAssessmentResult />}
             />
 
-            <Route path="/csv-uploading" element={<CsvUploading />} />
-            <Route
-              path="/csv-uploading-complete"
-              element={<CsvUploadComplete />}
-            />
             <Route path="/setting" element={<AdminSetting />} />
             <Route path="/employee-profile" element={<EmployeeProfile />} />
             <Route path="/admin-csv-upload" element={<AdminCSVUpload />} />
