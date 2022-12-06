@@ -267,7 +267,6 @@ class AuthenticateController extends Controller
                         "org_mail" => $users->first()["email"]
                     ];
 
-
                     // update refToken in database
                     User::where('email', '=', $email)->update(array('refToken' => $refToken));
 
@@ -276,7 +275,10 @@ class AuthenticateController extends Controller
                     $comp = Company::where("user_id", $user_id);
 
                     if ($comp->count() == 0) {
-                        Company::create($companyData);
+                        $company = Company::create($companyData);
+                        $userResp["org_id"] = $company->id;
+                    } else {
+                        $userResp["org_id"] = $comp->first()["id"];
                     }
 
 
