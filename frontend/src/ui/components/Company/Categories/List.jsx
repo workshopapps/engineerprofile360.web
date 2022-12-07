@@ -148,9 +148,10 @@ const Delete = styled(Button)`
   }
 `;
 
-const CategoryListing = styled.div`
+export const CategoryListing = styled.div`
   width: 100%;
   overflow: auto;
+
   table {
     width: 100%;
     min-width: 960px;

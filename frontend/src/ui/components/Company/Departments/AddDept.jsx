@@ -4,28 +4,39 @@ import styled from "styled-components";
 import { Loader, Title } from "../../../../styles/reusableElements.styled";
 import { toast } from "react-toastify";
 import { Button, Wrapper } from "./Hero";
-import { axiosPrivate } from "../../../../api/axios";
+import axios from "../../../../api/axios";
+import useAuth from "../../../../hooks/useAuth";
 
-function AddDept({ formData, setFormData, setAddDept }) {
+function AddDept({
+  formData,
+  setFormData,
+  setAddDept,
+  setRunEffect,
+  runEffect,
+}) {
   const [loading, setLoading] = useState(false);
   const { departmentName } = formData;
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const org_id = "c57d34e5-dcfe-4fba-821b-53c22ac27756";
+  const { auth } = useAuth();
+
+  const org_id = auth.id;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData !== "") {
       setLoading(true);
       setFormData("");
-      axiosPrivate
+      axios
         .post("https://api.eval360.hng.tech/api/department/add", {
           name: departmentName,
           org_id: org_id,
         })
         .then((res) => {
           toast.success("department added successfully");
+          setRunEffect(!runEffect);
           setAddDept(false);
           setLoading(false);
         })
@@ -46,7 +57,7 @@ function AddDept({ formData, setFormData, setAddDept }) {
       <InputWrapper>
         <form>
           <Title as="h2" $size="28px" $color="#323130" $weight="400">
-            Create a new Category
+            Create a new Department
           </Title>
           <InputFieldWrapper>
             <Label htmlFor="departmentName"> Title</Label>
@@ -68,7 +79,7 @@ function AddDept({ formData, setFormData, setAddDept }) {
               onClick={(e) => {
                 setAddDept(false);
               }}
-              border={"2px solid ##2667FF"}
+              border={"2px solid#2667FF"}
               w={"117px"}
               h={"48px"}
               text={"#2667FF"}
@@ -104,7 +115,7 @@ export default AddDept;
 
 export const InputWrapper = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -112,9 +123,9 @@ export const InputWrapper = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 100;
+  z-index: 1;
 
-  background-color: #d8cece4e;
+  background-color: #f8fbfd0;
 
   form {
     display: flex;
@@ -123,9 +134,10 @@ export const InputWrapper = styled.div`
 
     align-items: center;
     width: 686px;
+    border: #c7e0f4;
     height: 338px;
     border-radius: 4px;
-    background-color: #c7e0f4;
+    background-color: #f8fbfd;
   }
 `;
 

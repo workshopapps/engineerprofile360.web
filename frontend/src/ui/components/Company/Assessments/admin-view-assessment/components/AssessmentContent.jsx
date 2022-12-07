@@ -1,119 +1,78 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { axiosPrivate } from "../../../../../../api/axios";
+
 import { toast } from "react-toastify";
 import {
   Loader,
   OverlayLoader,
 } from "../../../../../../styles/reusableElements.styled";
 
-import { AssessmentData } from "./AssessmentData";
-import Pagination from "./Pagination";
-import { Container, WrapperDiv } from "./ViewAssessmentHeader";
+import ViewAssessmentHeader, {
+  Container,
+  WrapperDiv,
+} from "./ViewAssessmentHeader";
+import axios from "../../../../../../api/axios";
 
 function AssessmentContent() {
-  const [isEditing, setIsEditing] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
+  const [questions, setQuestions] = useState([]);
 
-  const [questionsPerPage] = useState(5);
-  const [inputValue, setInputValue] = useState([
-    {
-      answer: "",
-    },
-  ]);
+  const company_id = "2ea09b93-6682-11ed-9941-3863bbb7c6d/";
 
-  const company_id = "7b3ba4e0-fa72-46f6-b9ad-3d490e76ecac";
   useEffect(() => {
-    axiosPrivate
-      .get(`http://api.eval360.hng.tech/api/question/assessment/${company_id}`)
-      .then((res) => {
-        console.log(res);
-        setData(res);
-        console.log(data);
-        console.log(res);
+    const fetchQuestions = async () => {
+      const response = await axios.get(`question/assessment/${company_id}`);
+      setQuestions(response.data.data);
+      console.log(response.data.data);
+      setLoading(false);
+    };
 
-        console.log(data.options);
-
-        console.log(data.id);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        toast.error("could not fetch questions");
-
-        console.log(error);
-      });
+    fetchQuestions();
   }, []);
-  const answer = inputValue;
   const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    setInputValue(e.target.value);
-  };
-
-  const indexOfLastPost = currentPage * questionsPerPage;
-  const indexOfFirstPost = indexOfLastPost - questionsPerPage;
-  const currentPost = AssessmentData.slice(indexOfFirstPost, indexOfLastPost);
-
-  const paginate = (pageNums) => setCurrentPage(pageNums);
-  return (
+  return loading ? (
+    <ButtonWrapper>
+      <Loader />
+    </ButtonWrapper>
+  ) : (
     <>
-      <Container>
+      <ViewAssessmentHeader />
+      <ButtonWrapper>
         <WrapperDiv>
-          {currentPost.map((assessment, i) => {
-            const { question, options } = assessment;
-            return (
-              <QuestionContainer key={i}>
-                <Question contentEditable={isEditing}>{question}</Question>
-                <div>
-                  {options.map((query, i) => {
-                    const { option } = query;
-                    return (
-                      <Answer key={i}>
-                        <input
-                          type="radio"
-                          value={answer}
-                          name={question}
-                          onChange={(e) => {
-                            handleChange(e);
-                          }}
-                        />
-                        <p contentEditable={isEditing}> {option}</p>;
-                      </Answer>
-                    );
-                  })}
-                </div>
-              </QuestionContainer>
-            );
-          })}
+          {questions.length > 0 &&
+            questions?.map((assessment) => {
+              const { question, options, id } = assessment;
 
-          <Pagination
-            questionsPerPage={questionsPerPage}
-            totalPage={AssessmentData.length}
-            paginate={paginate}
-          />
+              return (
+                <QuestionContainer key={id}>
+                  <Question>{question}</Question>
+                  <div>
+                    {options.map((option, i) => {
+                      return (
+                        <Answer key={i}>
+                          <input type="radio" name={question} />
+                          <p> {option}</p>;
+                        </Answer>
+                      );
+                    })}
+                  </div>
+                </QuestionContainer>
+              );
+            })}
 
           <ButtonWrapper>
             <ButtonClearNext
               onClick={() => {
-                navigate("/assessment");
+                navigate("/assessmentlist");
               }}
             >
               Next
             </ButtonClearNext>
-            <ButtonShade
-              onClick={() => {
-                navigate("/fill-assessment");
-              }}
-            >
-              Edit
-            </ButtonShade>
+            <ButtonShade>Edit</ButtonShade>
           </ButtonWrapper>
         </WrapperDiv>
-      </Container>
+      </ButtonWrapper>
     </>
   );
 }
