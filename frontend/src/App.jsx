@@ -51,7 +51,7 @@ import AdminCSVUpload from "./ui/components/Company/Assessments/AdminCSVUpload";
 // import GuestTakeAssessment from "./ui/pages/guest/GuestTakeAssessment";
 // import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
 import Testimonial from "./main/components/Testimonials/Testimonial";
-
+import EmployeeCSVUpload from "./ui/components/Company/Employees/EmployeeCSVUpload";
 import GuestEmail from "./main/pages/GuestEmail";
 import GuestAssessmentList from "./main/pages/GuestAssessmentList";
 
@@ -154,7 +154,7 @@ const App = () => {
             /> */}
 
             <Route path="/employee-profile" element={<EmployeeProfile />} />
-            <Route path="/admin-csv-upload" element={<AdminCSVUpload />} />
+            
             {/* <Route
                 path="/user-assessment-completed"
                 element={<UserAssessmentListCompleted />}
@@ -230,7 +230,8 @@ const App = () => {
                     path="employee-profile"
                     element={<EmployeeProfile />}
                   />
-                  <Route path="add-employee" element={<AdminCSVUpload />} />
+                  <Route path="add-employee" element={<EmployeeCSVUpload />} />
+                  
                   <Route
                     path="employee-department"
                     element={<EmployeeDeparment />}
@@ -263,7 +264,7 @@ const App = () => {
                     path="create-assessment"
                     element={<CreateAssessment />}
                   />
-                  <Route path="admin-csv-upload" element={<AdminCSVUpload />} />
+                  <Route path="/admin-csv-upload" element={<AdminCSVUpload />} />
                 </Route>
 
                 <Route path="/categories" element={<Category />} />
