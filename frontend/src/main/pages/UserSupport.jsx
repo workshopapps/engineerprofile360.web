@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Flex from "../../ui/components/layout/Flex";
 import demo from "../../assets/images/demo.svg";
 import privacy from "../../assets/images/privacy.svg";
@@ -13,36 +14,42 @@ const Card = () => {
   return (
     <Grid span={12}>
       <GridItem span={4} md={6} sm={12}>
-        <CardContainer>
-          <Flex ai="center" jc="center" stack spacing={16}>
-            <img src={demo} />
-            <CardTitle>Demo</CardTitle>
-            <CardDesc>
-              Watch a Tutorial video explaining how engineer 360 works
-            </CardDesc>
-          </Flex>
-        </CardContainer>
+        <Link to="/demo">
+          <CardContainer>
+            <Flex ai="center" jc="center" stack spacing={16}>
+              <img src={demo} />
+              <CardTitle>Demo</CardTitle>
+              <CardDesc>
+                Watch a Tutorial video explaining how engineer 360 works
+              </CardDesc>
+            </Flex>
+          </CardContainer>
+        </Link>
       </GridItem>
       <GridItem span={4} md={6} sm={12}>
-        <CardContainer>
-          <Flex ai="center" jc="center" stack spacing={16}>
-            <img src={privacy} />
-            <CardTitle>Privacy Policies</CardTitle>
-            <CardDesc>Privacy,Legal Information, Service agreements</CardDesc>
-          </Flex>
-        </CardContainer>
+        <Link to="/privacy-policy">
+          <CardContainer>
+            <Flex ai="center" jc="center" stack spacing={16}>
+              <img src={privacy} />
+              <CardTitle>Privacy Policies</CardTitle>
+              <CardDesc>Privacy,Legal Information, Service agreements</CardDesc>
+            </Flex>
+          </CardContainer>
+        </Link>
       </GridItem>
       <GridItem span={4} md={6} sm={12}>
-        <CardContainer>
-          <Flex ai="center" jc="center" stack spacing={16}>
-            <img src={terms} />
-            <CardTitle>Terms of Services</CardTitle>
-            <CardDesc>
-              Get information relating to using Engineer 360 as a Company
-              Administrator, User or third party
-            </CardDesc>
-          </Flex>
-        </CardContainer>
+        <Link to="/terms">
+          <CardContainer>
+            <Flex ai="center" jc="center" stack spacing={16}>
+              <img src={terms} />
+              <CardTitle>Terms of Services</CardTitle>
+              <CardDesc>
+                Get information relating to using Engineer 360 as a Company
+                Administrator, User or third party
+              </CardDesc>
+            </Flex>
+          </CardContainer>
+        </Link>
       </GridItem>
       <GridItem span={2} md={0} sm={0} />
       <GridItem span={4} md={6} sm={12}>
@@ -85,6 +92,7 @@ const SearchContainer = () => {
         spacing={30}
       >
         <Heading>How Can We Help You?</Heading>
+
         <SearchBox>
           <SearchIcon src={icon} alt="" />
           <input
@@ -98,9 +106,9 @@ const SearchContainer = () => {
             }}
             placeholder="Find terms of service, privacy policies and more..."
           />
-          <button
+          <SearchBtn
             style={{
-              padding: "16px 29px",
+              padding: "6px 29px",
               borderRadius: "4px",
               border: "none",
               background: "#2667FF",
@@ -108,7 +116,7 @@ const SearchContainer = () => {
             }}
           >
             Search
-          </button>
+          </SearchBtn>
         </SearchBox>
       </Flex>
     </SearchArea>
@@ -138,7 +146,8 @@ const CardContainer = styled.div`
 `;
 
 const SearchArea = styled.div`
-  height: 40vh;
+  height: 100%;
+  padding: 12rem 0;
   background: rgba(38, 103, 255, 0.3);
   margin-left: auto;
   margin-right: auto;
@@ -174,6 +183,10 @@ const SearchBox = styled.div`
   background: #f0f0f0;
   border-radius: 5px;
   position: relative;
+
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    min-width: 80%;
+  }
 `;
 
 const SearchIcon = styled.img`
@@ -181,4 +194,10 @@ const SearchIcon = styled.img`
   z-index: 2;
   bottom: 20px;
   left: 20px;
+`;
+
+const SearchBtn = styled.button`
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    display: none;
+  }
 `;
