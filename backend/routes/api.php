@@ -66,7 +66,7 @@ Route::prefix("user")->group(function () {
 });
 
 Route::prefix("admin")->group(function () {
-    Route::get('overview', [AdminController::class, 'getAdminOverview']);
+    Route::get('overview', [AdminController::class, 'getAdminOverview'])->middleware("isloggedin", "isadmin");
 
 });
 
