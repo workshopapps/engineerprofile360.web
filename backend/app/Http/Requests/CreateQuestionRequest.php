@@ -24,12 +24,12 @@ class CreateQuestionRequest extends BaseRequest
     public function rules()
     {
         return [
-            'question' => "required",
-            'category_id' => "required",
-            'assessment_id' => "required",
+            'category_id' => "required|string",
+            'assessment_id' => "required|string",
             'questions' => 'array|required',
-            'questions.*.correct_answers' => "required",
-            'questions.*.options' => 'required',
+            'questions.*.question' => "required|string",
+            'questions.*.correct_answers' => "required|array",
+            'questions.*.options' => 'required|array',
             'questions.*.timeframe' => 'required|string',
             'questions.*.is_multiple_answers' => 'required|boolean'
         ];
