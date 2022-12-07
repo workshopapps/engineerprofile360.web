@@ -27,7 +27,9 @@ class AssessmentRequest extends BaseRequest
             'org_id' => 'required',
             'name' => 'required',
             'start_date' => 'required',
-            'start_time' => 'required'
+            'start_time' => 'required',
+            'end_date' => 'required',
+            'end_time' => 'required'
         ];
     }
 }

@@ -8,7 +8,7 @@ import { PricingWrapper } from "../components/Pricing/PricingPage.style";
 function PricingPage() {
   return (
     <PricingWrapper>
-      <PricingHero />;
+      <PricingHero />
       <PriceCards />
       <GetToKnow />
       <Accordion />

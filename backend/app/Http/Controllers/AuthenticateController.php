@@ -267,7 +267,6 @@ class AuthenticateController extends Controller
                         "org_mail" => $users->first()["email"]
                     ];
 
-
                     // update refToken in database
                     User::where('email', '=', $email)->update(array('refToken' => $refToken));
 
@@ -276,7 +275,10 @@ class AuthenticateController extends Controller
                     $comp = Company::where("user_id", $user_id);
 
                     if ($comp->count() == 0) {
-                        Company::create($companyData);
+                        $company = Company::create($companyData);
+                        $userResp["org_id"] = $company->id;
+                    } else {
+                        $userResp["org_id"] = $comp->first()["id"];
                     }
 
 
@@ -543,6 +545,7 @@ class AuthenticateController extends Controller
     // refresh expire jwt-token
     public function refreshJwtToken(Request $req)
     {
+
         try {
             $jwtToken = $req->cookie($this->CookieName);
 
@@ -567,6 +570,13 @@ class AuthenticateController extends Controller
             return $this->sendResponseWithCookie(false, null, "refresh token", $data, 200, $this->CookieName, $newToken, $this->CookieExp);
         } catch (\Exception $e) {
             return $this->sendResponse(true, "something went wrong refreshing token: " . $e->getMessage(), "Unauthorised.", null, 500);
+        }
+    }
+
+    // Logout users
+    public function logout(Request $req){
+        if(Cookie::has($this->CookieName)){
+            Cookie::forget($this->CookieName);
         }
     }
 }

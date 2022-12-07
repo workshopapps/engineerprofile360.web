@@ -62,9 +62,9 @@ import CreateAssessment from "./ui/components/Company/Assessments/CreateAssessme
 
 import {
   EmployeeProfile,
-  EmployeeFullProfile,
   EmployeesListing,
 } from "./ui/components/Company/Employees";
+
 import MainAssessment from "./ui/pages/Company/Assessment";
 import UserAssessmentListOutlet from "./ui/pages/Employee/EmployeeAssessmentList";
 import EmployeeUserDashboard from "./ui/pages/Employee/EmployeeDashboard";
@@ -220,10 +220,6 @@ const App = () => {
                   <Route path="" element={<EmployeesListing />} />
                   <Route path="profile" element={<EmployeeProfile />} />
                   <Route
-                    path="full-profile"
-                    element={<EmployeeFullProfile />}
-                  />
-                  <Route
                     path="employee-profile"
                     element={<EmployeeProfile />}
                   />
@@ -269,6 +265,10 @@ const App = () => {
               {/* Overall Admin Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
                 {/* Put in Protected pages in here */}
+                <Route
+                  path="/admin/dashboard"
+                  element={"Admin pages will render here"}
+                />
               </Route>
 
               {/* <Route path="/assessment" element={<Assessment />} /> */}

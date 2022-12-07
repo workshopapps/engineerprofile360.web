@@ -1,7 +1,7 @@
 import React from "react";
 
 import PageInfo from "../../molecules/PageInfo";
-import SelectType from "../../CreateAssessment/SelectType";
+import SelectType from "./CreateAssessment/SelectType";
 
 const CreateAssessment = () => {
   return (
