@@ -31,7 +31,6 @@ import {
   Privacy,
   Support,
   Terms,
-  Testimonial
 } from "./main/pages";
 
 

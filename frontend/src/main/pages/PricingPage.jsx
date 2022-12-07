@@ -1,18 +1,18 @@
 import React from "react";
-import GetToKnow from "../components/Pricing/GetToKnow/GetToKnow";
-import PriceCards from "../components/Pricing/Pricecards/PriceCards";
-import PricingHero from "../components/Pricing/Hero/PricingHero";
+import GetToKnow from "../components/Pricing/GetToKnow";
+import PriceCards from "../components/Pricing/PriceCards";
+import PricingHero from "../components/Pricing/PricingHero";
 import Accordion from "../components/Pricing/Accordion/Accordion";
-import { PricingWrapper } from "../components/Pricing/PricingPage.style";
+import { Container } from "../../styles/reusableElements.styled";
 
 function PricingPage() {
   return (
-    <PricingWrapper>
+    <Container>
       <PricingHero />;
       <PriceCards />
       <GetToKnow />
       <Accordion />
-    </PricingWrapper>
+    </Container>
   );
 }
 
