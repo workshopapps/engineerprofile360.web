@@ -95,7 +95,7 @@ class AssessmentController extends Controller
         try {
             $payload = json_decode($request->getContent(), true);
 
-            if (!isset($payload["name"]) || !isset($payload["start_date"]) || !isset($payload["start_time"])) {
+            if (!isset($payload["name"])) {
                 return $this->sendResponse(true, "expected a valid payload", "invalid payload given.", null, 400);
             }
 
@@ -103,32 +103,16 @@ class AssessmentController extends Controller
                 return $this->sendResponse(true, "expected a valid category 'id'  but got none", "category id is missing.", null, 400);
             }
 
-
-            $uid = $request->user["id"];
             $updatedName = $payload["name"];
-            $startDate = $payload["start_date"];
-            $startTime = $payload["start_time"];
-            $assessment = Assessment::where('id', $assessmentId)->where("org_id", $uid);
+            $assessment = Assessment::where('id', $assessmentId);
 
             if ($assessment->count() == 0) {
                 return $this->sendResponse(true, "assessment doesnt exists", "assessment not found.", null, 404);
             }
 
-            // check if it same user who's trying to update assessment
-            $org_id = $assessment->first()["org_id"];
-
-            if ($org_id !== $uid) {
-                return $this->sendResponse(true, "not authorised to update assessment", "unauthorised.", null, 404);
-            }
-
             $newName = $updatedName == "" ? $assessment->first()["name"] : $updatedName;
-            $newDate = $startDate == "" ? $assessment->first()["start_date"] : $startDate;
-            $newTime = $startTime == "" ? $assessment->first()["start_time"] : $startTime;
-
             $updatedData = [
-                "name" => $newName,
-                "start_date" => $newDate,
-                "start_time" => $newTime,
+                "name" => $newName
             ];
 
             $assessment->update($updatedData);
