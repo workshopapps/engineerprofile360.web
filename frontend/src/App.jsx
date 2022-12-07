@@ -205,13 +205,11 @@ const App = () => {
                   />
                 </Route>
                 <Route path="/employee-profile" element={<EmployeeProfile />} />
-                <Route path="/404" element={<Error />} />
               </Route>
 
               {/* Organization Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
                 <Route path="/ui" element={"my guy"} />
-                <Route path="/404" element={<Error />} />
                 <Route
                   path="/assessment/view-assessment"
                   element={<AdminViewAssessment />}
@@ -278,6 +276,7 @@ const App = () => {
                 />
               </Route>
               <Route path="/setting" element={<AdminSetting />} />
+              <Route path="/404" element={<Error />} />
 
               {/* <Route path="/assessment" element={<Assessment />} /> */}
             </Route>
