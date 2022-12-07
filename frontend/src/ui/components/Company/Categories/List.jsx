@@ -12,6 +12,7 @@ import { showSuccessToast } from "../../../../helpers/helper";
 
 import { More } from "iconsax-react";
 import { Button } from "../../../../styles/reusableElements.styled";
+import { click } from "@testing-library/user-event/dist/click";
 
 const List = () => {
   const { auth } = useAuth();

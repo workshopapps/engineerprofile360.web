@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import user from "../../../assets/icons/app/user1.svg";
 import closeIcon from "../../../assets/icons/close.svg";
 import menuIcon from "../../../assets/icons/menu.svg";
 
@@ -43,7 +42,7 @@ const TopBar = ({ handleLeftBarToggle, leftBar }) => {
           />
           <Options>
             <UserCon>
-              <img src={user} alt="" />
+              <User color="#323130" />
               <span>{auth.username ? auth.username : ""}</span>
             </UserCon>
             <Icons>
@@ -185,7 +184,7 @@ const UserCon = styled.div`
     }
   }
 
-  img:first-of-type {
+  svg:first-of-type {
     ${({ theme }) => theme.breakpoints.down("xs")} {
       display: none;
     }

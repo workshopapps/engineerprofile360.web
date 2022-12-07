@@ -41,10 +41,6 @@ const InputWrapper = styled.div`
     border: 1px solid #c7e0f4;
 
     @media (max-width: 749px) {
-      width: 80%;
-    }
-
-    @media (max-width: 749px) {
       width: 100%;
     }
   }
