@@ -122,6 +122,8 @@ Route::prefix("auth")->group(function () {
 
     Route::post('/refresh', [AuthenticateController::class, 'refreshJwtToken']);
 
+    Route::post('/logout', [AuthenticateController::class, 'logout']);
+
     Route::prefix("password")->group(
         function () {
             // forgot password
