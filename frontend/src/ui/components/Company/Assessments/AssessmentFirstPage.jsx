@@ -166,6 +166,8 @@ const Assessments = () => {
         axios.get(`userscore/company/${auth.id}`),
       ];
 
+      console.log(auth);
+
       try {
         const response = await Promise.all(ENDPOINTS).then(function (data) {
           return data;
