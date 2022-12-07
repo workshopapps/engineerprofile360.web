@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string("name");
             $table->string("start_date");
             $table->string("start_time");
+            $table->string('department_id');
             $table->string('org_id');
             $table->timestamps();
             // $table->foreignId('user_id')->nullable()->constrained();
