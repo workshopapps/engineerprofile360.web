@@ -5,11 +5,7 @@ import { Link } from "react-router-dom";
 
 import close from "../../../../assets/icons/close.svg";
 
-<<<<<<< HEAD
-import CreateManual from "../../CreateAssessment/CreateManual";
-=======
 import CreateManual from "./CreateAssessment/CreateManual";
->>>>>>> dev
 
 const AdminCSVUpload = () => {
   const [tab, setTab] = useState("upload");
@@ -70,12 +66,6 @@ const AdminCSVUpload = () => {
             ) : (
               <NameContainer>
                 {files?.[0]?.type === "text/csv" ? (
-<<<<<<< HEAD
-                  <Success>
-                    <p>{files?.[0]?.name}</p>
-                    <img src={close} onClick={() => setFiles({})} alt="" />
-                  </Success>
-=======
                   <>
                     <Success>
                       <p>{files?.[0]?.name}</p>
@@ -88,7 +78,6 @@ const AdminCSVUpload = () => {
                       <GoButton>Upload</GoButton>
                     </UploadButton>
                   </>
->>>>>>> dev
                 ) : (
                   <Error>
                     <p>Invalid File Type: Must be CSV</p>

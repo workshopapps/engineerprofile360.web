@@ -9,15 +9,11 @@ import { Loader } from "../../../../styles/reusableElements.styled";
 import { Title } from "../../../../styles/reusableElements.styled";
 import { Button } from "../../../../styles/reusableElements.styled";
 
-<<<<<<< HEAD
-const CategoryForm = ({ setToggleCreateCat, setUpdateCategories }) => {
-=======
 const CategoryForm = ({
   setToggleCreateCat,
   setUpdateCategories,
   updateCategories,
 }) => {
->>>>>>> dev
   const [formData, setFormData] = useState({
     category_name: "",
   });
@@ -45,11 +41,7 @@ const CategoryForm = ({
           showSuccessToast(response.data.message);
         setIsSubmitted(false);
         setToggleCreateCat(false);
-<<<<<<< HEAD
-        setUpdateCategories(true);
-=======
         setUpdateCategories(!updateCategories);
->>>>>>> dev
       }
     } catch (err) {
       console.log(err);
@@ -86,28 +78,6 @@ const CategoryForm = ({
       </InputFieldWrapper>
 
       <ButtonContainer>
-<<<<<<< HEAD
-        <Button
-          type="button"
-          onClick={(e) => {
-            setToggleCreateCat(false);
-          }}
-        >
-          Cancel
-        </Button>
-        <Button
-          type="submit"
-          border={"1px solid #2667FF"}
-          w={"117px"}
-          h={"48px"}
-          text={"#fff"}
-          bg={"#2667FF"}
-          rounded={"4px"}
-          m={" 6px"}
-        >
-          {isSubmitted ? <Loader /> : "Proceed"}
-        </Button>
-=======
         {!isSubmitted && (
           <Button
             type="button"
@@ -135,7 +105,6 @@ const CategoryForm = ({
             Proceed
           </Button>
         )}
->>>>>>> dev
       </ButtonContainer>
     </FormContainer>
   );
