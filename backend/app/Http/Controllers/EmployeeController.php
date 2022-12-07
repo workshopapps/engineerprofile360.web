@@ -202,7 +202,7 @@ class EmployeeController extends Controller
             }
             $employees = Employee::where('department_id', $department->id)->paginate(10);
 
-            return $this->sendResponse(false, 'All Department Employees', $employees, Response::HTTP_OK);
+            return $this->sendResponse(false, null, 'All Department Employees', $employees, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, 'Employees not fetched', $e->getMessage());
         }
