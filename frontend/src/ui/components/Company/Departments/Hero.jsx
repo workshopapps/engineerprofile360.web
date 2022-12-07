@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Loader, Title } from "../../../../styles/reusableElements.styled";
 import { useState } from "react";
-import bubble from "./assets/bubble.png";
+import { More } from "iconsax-react";
 
 import AddDept, { Load } from "./AddDept";
 import axios from "axios";
@@ -30,7 +30,7 @@ function Hero() {
   });
 
   const { auth } = useAuth();
-  const org_id = auth.id;
+  const org_id = auth.org_id;
   const fetchDepartments = async () => {
     try {
       const response = await axios.get(
@@ -58,13 +58,16 @@ function Hero() {
         <EditModal
           setEditModal={setEditModal}
           departmentDetails={departmentDetails}
-          org_id={org_id}
+          setRunEffect={setRunEffect}
+          cancel={setOpenUpdate}
         />
       )}
       {deleteModal && (
         <DeleteModal
           setDeleteModal={setDeleteModal}
           departmentDetails={departmentDetails}
+          setRunEffect={setRunEffect}
+          cancel={setOpenUpdate}
         />
       )}
       <Container>
@@ -135,7 +138,7 @@ function Hero() {
                     };
                     return (
                       <tr key={id}>
-                        <td>{index + 1}</td>
+                        <td>{`${index + 1}.`}</td>
                         <td>{departmentName}</td>
                         <td>{employeeCount}</td>
                         <td>{assessmentCount}</td>
@@ -157,9 +160,7 @@ function Hero() {
                           </Button>
                         </td>
                         <td>
-                          <Bubble
-                            src={bubble}
-                            alt="bubble"
+                          <More
                             onClick={() => {
                               handleModal(index);
                             }}
@@ -175,7 +176,7 @@ function Hero() {
                       </tr>
                     );
                   })
-                : "Oops yu have no departments to show. Create a new Department"}
+                : "Oops! you have no departments to show. Create a new Department"}
             </tbody>
           </table>
         </CategoryListing>
@@ -244,10 +245,4 @@ export const CRUDContainer = styled.div`
 export const Wrapper = styled.div`
   display: flex;
   align-items: center;
-`;
-
-export const Bubble = styled.img`
-  padding-left: 20px;
-  cursor: pointer;
-  position: relative;
 `;

@@ -1,55 +1,70 @@
-import React from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "../../../../api/axios";
-import { Title } from "../../../../styles/reusableElements.styled";
-import { InputWrapper } from "./AddDept";
+import { Loader, Title } from "../../../../styles/reusableElements.styled";
+import { InputWrapper, Load } from "./AddDept";
 import { ModalContainer } from "./EditModal";
 import { Button, Wrapper } from "./Hero";
 
-function DeleteModal({ setDeleteModal, departmentDetails }) {
+function DeleteModal({
+  setDeleteModal,
+  departmentDetails,
+  setRunEffect,
+  cancel,
+}) {
+  const [loading, setLoading] = useState(false);
   const { id, departmentName } = departmentDetails;
 
-  const departmentId = id.id;
-  const name = departmentName.departmentName;
+  const departmentId = id;
+  console.log(departmentId);
+  const name = departmentName;
 
-  const handleDelete = async () => {
-    try {
-      const response = await axios.delete(
-        `http://api.eval360.hng.tech/api/department/${departmentId}/delete`
-      );
-      console.log("response");
-    } catch (error) {
-      toast.error("could not delete department");
-    }
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    axios.delete(
+      `https://api.eval360.hng.tech/api/department/${departmentId}/delete/`
+    );
+    setRunEffect((prev) => !prev);
+    setDeleteModal(false);
+
+    cancel(null);
+    setLoading(false);
+    toast.success("Department deleted successfully");
   };
-  return (
+  return loading ? (
+    <Load>
+      <Loader />
+    </Load>
+  ) : (
     <>
       <ModalContainer>
         <InputWrapper>
           <form>
             <Title as="h2" $size="28px" $color="#ce2d2d" $weight="400">
-              Are you sure you want to Delete {name}
+              Are you sure you want to Delete {name}?
             </Title>
             <Wrapper>
               <Button
                 type="button"
                 onClick={(e) => {
                   setDeleteModal(false);
+                  cancel(null);
                 }}
                 w={"117px"}
-                border={"2px solid#2667FF"}
+                border={"1px solid#2667FF"}
                 h={"48px"}
                 text={"#2667FF"}
                 bg={"#fff"}
                 rounded={"4px"}
                 m={" 6px"}
               >
-                Cancel
+                No
               </Button>
               <Button
                 type="submit"
                 onClick={(e) => {
-                  handleDelete();
+                  handleDelete(e);
                 }}
                 border={"1px solid #2667FF"}
                 w={"117px"}
@@ -59,7 +74,7 @@ function DeleteModal({ setDeleteModal, departmentDetails }) {
                 rounded={"4px"}
                 m={" 6px"}
               >
-                Proceed
+                Yes
               </Button>
             </Wrapper>
           </form>

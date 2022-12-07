@@ -1,16 +1,11 @@
 import React, { useState } from "react";
 
 import styled from "styled-components";
-import {
-  Loader,
-  MainContainer,
-  Title,
-} from "../../../../styles/reusableElements.styled";
+import { Loader, Title } from "../../../../styles/reusableElements.styled";
 import { toast } from "react-toastify";
 import { Button, Wrapper } from "./Hero";
 import axios from "../../../../api/axios";
 import useAuth from "../../../../hooks/useAuth";
-import { Container } from "../Assessments/admin-view-assessment/components/ViewAssessmentHeader";
 
 function AddDept({
   formData,
@@ -27,7 +22,7 @@ function AddDept({
 
   const { auth } = useAuth();
 
-  const org_id = auth.id;
+  const org_id = auth.org_id;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -84,7 +79,7 @@ function AddDept({
               onClick={(e) => {
                 setAddDept(false);
               }}
-              border={"2px solid#2667FF"}
+              border={"1px solid#2667FF"}
               w={"117px"}
               h={"48px"}
               text={"#2667FF"}
@@ -120,7 +115,7 @@ export default AddDept;
 
 export const InputWrapper = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
 
