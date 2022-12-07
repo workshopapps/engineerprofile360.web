@@ -15,8 +15,8 @@ import useAuth from "../../../../hooks/useAuth";
 function EditModal({ setEditModal, departmentDetails, org_id }) {
   console.log(departmentDetails);
   const [editedData, setEditedData] = useState({
-    id: departmentDetails.id.id,
-    departmentName: departmentDetails.departmentName.departmentName,
+    id: departmentDetails.id,
+    departmentName: departmentDetails.departmentName,
   });
   const { id, departmentName } = editedData;
 

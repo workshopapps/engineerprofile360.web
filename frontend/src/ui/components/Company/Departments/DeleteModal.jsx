@@ -1,4 +1,5 @@
 import React from "react";
+import { toast } from "react-toastify";
 import axios from "../../../../api/axios";
 import { Title } from "../../../../styles/reusableElements.styled";
 import { InputWrapper } from "./AddDept";
@@ -14,11 +15,11 @@ function DeleteModal({ setDeleteModal, departmentDetails }) {
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `http://api.eval360.hng.tech/api/department/${departmentId}/update`
+        `http://api.eval360.hng.tech/api/department/${departmentId}/delete`
       );
       console.log("response");
     } catch (error) {
-      // toast.error("could not delete department");
+      toast.error("could not delete department");
     }
   };
   return (

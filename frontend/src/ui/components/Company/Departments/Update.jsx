@@ -33,15 +33,14 @@ function Update({ setDeleteModal, cancel, setEditModal }) {
 
 export default Update;
 
-export const Container = styled.div`
+export const Container = styled.section`
   width: 112px;
   height: 100px;
   position: absolute;
-  right: 55px;
-  top: 0%;
+  right: 15px;
+  top: 21px;
   background-color: #fff;
 
-  cursor: pointer;
   padding: 4px;
   border-radius: 4px;
 
@@ -58,16 +57,19 @@ export const Edit = styled.p`
   text-align: end;
   color: #323130;
   margin: 1px;
+  cursor: pointer;
 `;
 export const Delete = styled.p`
   font-size: 16px;
   font-weight: normal;
   text-align: end;
   color: #b71f1f;
+  cursor: pointer;
 `;
 export const Cancel = styled.p`
   font-size: 16px;
   font-weight: normal;
   text-align: end;
   color: #112fb6;
+  cursor: pointer;
 `;

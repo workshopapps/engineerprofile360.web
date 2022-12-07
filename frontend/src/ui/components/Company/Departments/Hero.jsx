@@ -1,16 +1,17 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { Title } from "../../../../styles/reusableElements.styled";
+import { Loader, Title } from "../../../../styles/reusableElements.styled";
 import { useState } from "react";
 import bubble from "./assets/bubble.png";
 
-import AddDept from "./AddDept";
+import AddDept, { Load } from "./AddDept";
 import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
 import Update from "./Update";
 import { CategoryListing } from "../Categories/List";
 import EditModal from "./EditModal";
 import DeleteModal from "./DeleteModal";
+import { toast } from "react-toastify";
 
 function Hero() {
   const [editModal, setEditModal] = useState(false);
@@ -19,10 +20,10 @@ function Hero() {
   const [AllDept, setAllDept] = useState([]);
   const [addDept, setAddDept] = useState(false);
   const [formData, setFormData] = useState("");
-  const [showUpdate, setShowUpdate] = useState(false);
-  const [editable, setEditable] = useState(false);
+
   const [openUpdate, setOpenUpdate] = useState(null);
   const [runEffect, setRunEffect] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [departmentDetails, setDepartmentDetails] = useState({
     id: "",
     departmentName: "",
@@ -31,18 +32,27 @@ function Hero() {
   const { auth } = useAuth();
   const org_id = auth.id;
   const fetchDepartments = async () => {
-    const response = await axios.get(
-      ` https://api.eval360.hng.tech/api/department/company/${org_id}`
-    );
+    try {
+      const response = await axios.get(
+        ` https://api.eval360.hng.tech/api/department/company/${org_id}`
+      );
 
-    setAllDept(response.data.data);
-    console.log(response.data.data);
+      setAllDept(response.data.data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      toast.error("could not fetch  departments");
+    }
   };
   useEffect(() => {
     fetchDepartments();
   }, [runEffect]);
 
-  return (
+  return loading ? (
+    <Load>
+      <Loader />
+    </Load>
+  ) : (
     <>
       {editModal && (
         <EditModal
@@ -85,7 +95,7 @@ function Hero() {
             lh={"20px"}
             border={"2px solid #2667ff"}
           >
-            Add New Department{" "}
+            Add New Department
           </Button>
         </CRUDContainer>
         <CategoryListing>
@@ -100,6 +110,7 @@ function Hero() {
 
                 <th>Action</th>
               </tr>
+
               {AllDept.length > 0
                 ? AllDept?.map((department, index) => {
                     const {
@@ -112,8 +123,8 @@ function Hero() {
                     const handleModal = (i) => {
                       if (openUpdate === null) {
                         setDepartmentDetails({
-                          id: { id },
-                          departmentName: { departmentName },
+                          id: id,
+                          departmentName: departmentName,
                         });
                       }
                       if (openUpdate === i) {
@@ -236,7 +247,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Bubble = styled.img`
-  padding-right: 40px;
+  padding-left: 20px;
   cursor: pointer;
   position: relative;
 `;
