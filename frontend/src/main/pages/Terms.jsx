@@ -23,8 +23,8 @@ function Terms() {
                 companies that want to know how good their engineers are. It is
                 a questions on different topics. The tool builds a profile of
                 each engineer in the form of a spider-web chart so the company
-                knows defined below) through our software, or website, we need
-                to obtain your agreement to our Terms of Service. These Terms of
+                knows defined below through our software, or website, we need to
+                obtain your agreement to our Terms of Service. These Terms of
                 Service Service; "Skript service", "our service" "the service",
                 means the personalized service provided by Skript for
                 discovering and assessing Skript content, including all features
