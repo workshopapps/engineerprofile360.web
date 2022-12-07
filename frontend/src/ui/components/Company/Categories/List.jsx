@@ -11,7 +11,7 @@ import { showErrorToast } from "../../../../helpers/helper";
 import { showSuccessToast } from "../../../../helpers/helper";
 
 import { More } from "iconsax-react";
-import { Button } from "../../../../styles/reusableElements.styled";
+import { Button, Loader } from "../../../../styles/reusableElements.styled";
 import EditCategory from "./EditCategory";
 
 const List = () => {
@@ -35,9 +35,11 @@ const List = () => {
   const currentSelectedId = useRef();
 
   useEffect(() => {
+    setIsLoading(true);
     const getAllCatgories = async () => {
       const response = await axios.get(`/category/company/${auth.org_id}`);
       setCategories(response.data.data);
+      response.data.data.length > 0 && setIsLoading(false);
     };
 
     getAllCatgories();
@@ -201,9 +203,14 @@ const List = () => {
                   </tr>
                 ))
               ) : (
-                <NoData>
-                  Oops no data to return yet. Create a new category
-                </NoData>
+                <>
+                  <Load>{isLoading && <Loader />}</Load>
+                  {!isLoading && (
+                    <NoData>
+                      Oops no data to return yet. Create a new category
+                    </NoData>
+                  )}
+                </>
               )}
             </>
           </tbody>
@@ -308,7 +315,7 @@ export const CategoryListing = styled.div`
     text-align: left;
     overflow: auto;
     white-space: initial;
-    /* background: #f8fbfd; */
+    position: relative;
 
     @media (max-width: 517px) {
       th:nth-child(2) {
@@ -401,4 +408,11 @@ export const CategoryListing = styled.div`
 const NoData = styled.div`
   display: flex;
   margin-top: 36px;
+`;
+
+const Load = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px auto;
 `;
