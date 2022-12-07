@@ -124,12 +124,6 @@ function Hero() {
                     } = department;
 
                     const handleModal = (i) => {
-                      if (openUpdate === null) {
-                        setDepartmentDetails({
-                          id: id,
-                          departmentName: departmentName,
-                        });
-                      }
                       if (openUpdate === i) {
                         setOpenUpdate(null);
                       } else {
@@ -163,6 +157,10 @@ function Hero() {
                           <More
                             onClick={() => {
                               handleModal(index);
+                              setDepartmentDetails({
+                                id: id,
+                                departmentName: departmentName,
+                              });
                             }}
                           />
                           {openUpdate === index && (
