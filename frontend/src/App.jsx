@@ -41,23 +41,16 @@ import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 import UserSupport from "./main/pages/UserSupport";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
 // import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
-import Privacy from "./main/pages/Privacy/privacy";
 // import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
 import AdminSetting from "./ui/pages/AdminSetting";
-import PricingPage from "./main/pages/PricingPage";
-import Payment from "./main/pages/Payment";
-import HelpCenter from "../src/main/pages/HelpCenter";
-import Market from "./main/components/Market-comp-page-2/Market";
-import AdminCSVUpload from "./ui/pages/AdminUpload/AdminCSVUpload";
-import UserAssessmentListCompleted from "./ui/pages/UserAssestList/UserAssestListCompleted";
+import AdminCSVUpload from "./ui/components/Company/Assessments/AdminCSVUpload";
+// import UserAssessmentListCompleted from "./ui/pages/UserAssestList/UserAssestListCompleted";
 // import EmployeeTakeAssessment from "../miscellaneous/pages/EmployeeTakeAssessment";
 // import UserTakeAssessment from "./ui/pages/userTakeAssessment/UserTakeAssessment";
 // import UserTakeAssessmentResult from "../miscellaneous/pages/UserTakeAssessmentResult";
 // import GuestTakeAssessment from "./ui/pages/guest/GuestTakeAssessment";
 // import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
 import Testimonial from "./main/components/Testimonials/Testimonial";
-import AdminCSVUpload from "./ui/components/Company/Assessments/AdminCSVUpload";
-
 
 import GuestEmail from "./main/pages/GuestEmail";
 import GuestAssessmentList from "./main/pages/GuestAssessmentList";
@@ -233,10 +226,7 @@ const App = () => {
 
                 <Route path="/employees" element={<Employees />}>
                   <Route path="" element={<EmployeesListing />} />
-                  <Route
-                    path="profile"
-                    element={<EmployeeProfile />}
-                  />
+                  <Route path="profile" element={<EmployeeProfile />} />
                   <Route
                     path="employee-profile"
                     element={<EmployeeProfile />}
@@ -283,12 +273,14 @@ const App = () => {
               {/* Overall Admin Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
                 {/* Put in Protected pages in here */}
-                <Route path="/admin/dashboard" element={"Admin pages will render here"} />
+                <Route
+                  path="/admin/dashboard"
+                  element={"Admin pages will render here"}
+                />
               </Route>
               <Route path="/setting" element={<AdminSetting />} />
 
               {/* <Route path="/assessment" element={<Assessment />} /> */}
-
             </Route>
           </Route>
         </Routes>
