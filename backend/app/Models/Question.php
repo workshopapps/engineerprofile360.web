@@ -22,7 +22,7 @@ class Question extends Model
         'category_id',
         'assessment_id',
         'company_id',
-        'question_id'
+        'question'
     ];
 
     protected $casts = [
