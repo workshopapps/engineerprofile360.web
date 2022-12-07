@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
+import { Text } from "../../../../main/components/Market/Market.styled";
 import { Button, Title } from "../../../../styles/reusableElements.styled";
 
 const TopEmployees = ({ topPerformances, departments }) => {
@@ -49,7 +50,7 @@ const TopEmployees = ({ topPerformances, departments }) => {
                   <td>{employee.completed_assessment_count}</td>
                   <td>{employee.points.toFixed(2)}%</td>
                   <td>
-                  <Link to="/employees/profile" state={employee.id}>
+                    <Link to="/employees/profile" state={employee.id}>
                       <Button $variant="outlined" $color="#2667ff">
                         View Results
                       </Button>
