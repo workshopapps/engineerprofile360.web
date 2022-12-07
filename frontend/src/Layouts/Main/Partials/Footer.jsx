@@ -84,7 +84,9 @@ const Footer = () => {
             &copy; {new Date().getFullYear()} Skript. All rights reserved.
           </span>
           <ul>
-            <li>Privacy policy</li>
+            <Link to="/privacy-policy">
+              <li>Privacy policy</li>
+            </Link>
             <li>Terms of service</li>
             <li>Cookie settings</li>
           </ul>
