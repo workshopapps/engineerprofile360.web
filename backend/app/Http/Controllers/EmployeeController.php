@@ -174,8 +174,9 @@ class EmployeeController extends Controller
             $org_id = $data["org_id"];
 
             // fetch organization info
-            $orgData = Company::where("user_id", $org_id)->first();
-            $org_name = ucfirst($orgData["name"]);
+            $orgData = Company::find($org_id);
+            if (!$orgData->count())  return $this->sendResponse(true, "Not found", "Company not found", null, Response::HTTP_NOT_FOUND);
+            $org_name = ucfirst($orgData->first()["name"]);
 
             // send employee email
             $this->helper->sendOnboardMail($fullname, $username, $empPassword, $email, $org_name);
