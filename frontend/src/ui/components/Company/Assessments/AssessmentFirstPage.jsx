@@ -80,8 +80,6 @@ const TopStaff = ({ topStaff }) => {
     setTopEmp(employees);
   }, [topStaff?.data]);
 
-  console.log(topEmp);
-
   return (
     <Flex stack spacing={18} style={{ maxHeight: "600px", paddingTop: "10px" }}>
       <Flex jc="space-between">
@@ -165,8 +163,6 @@ const Assessments = () => {
         axios.get(`user-assessment/org/${auth.id}/org-completed`),
         axios.get(`userscore/company/${auth.id}`),
       ];
-
-      console.log(auth);
 
       try {
         const response = await Promise.all(ENDPOINTS).then(function (data) {
