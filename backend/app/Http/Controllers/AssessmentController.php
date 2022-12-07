@@ -317,7 +317,7 @@ class AssessmentController extends Controller
                 return $this->sendResponse(true, "Unauthorized", "Unauthorized account", null, Response::HTTP_UNAUTHORIZED);
             }
 
-            $accepted_assessments = UserAssessment::where('org_id', $company->user_id)->paginate(10);
+            $accepted_assessments = UserAssessment::where('org_id', $company->user_id)->with('assessment')->paginate(10);
 
             return $this->sendResponse(false, null, "Accepted Assessments", $accepted_assessments, Response::HTTP_OK);
         } catch (\Exception $e) {
@@ -335,7 +335,7 @@ class AssessmentController extends Controller
                 return $this->sendResponse(true, "Unauthorized", "Unauthorized account", null, Response::HTTP_UNAUTHORIZED);
             }
 
-            $completed_assessments = UserAssessment::where('org_id', $company->user_id)->where('completed', true)->paginate(10);
+            $completed_assessments = UserAssessment::where('org_id', $company->user_id)->where('completed', true)->with('assessment')->paginate(10);
 
             return $this->sendResponse(false, null, "Completed Assessment", $completed_assessments, Response::HTTP_OK);
         } catch (\Exception $e) {
