@@ -199,7 +199,7 @@ Route::prefix('interview')->group(function () {
 
 // User Assessment routes
 Route::prefix("user-assessment")->group(function () {
-    Route::post('/accept/{assessmentId}/{employmentId}/{orgId}', [UserAssessmentController::class, 'acceptUserAssessment']);
+    Route::post('/accept/{assessmentId}/{employeeId}/{orgId}', [UserAssessmentController::class, 'acceptUserAssessment']);
     Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
     Route::get('/org/{org_id}/org-available', [UserAssessmentController::class, 'getOrgAvailableAssessment']);
     Route::get('/org/{org_id}/org-completed', [UserAssessmentController::class, 'getOrgCompletedAssessment']);
