@@ -102,27 +102,32 @@ const Buttons = () => {
 };
 
 const List = () => {
-  const { available, setAvailable, isLoading, setIsLoading } =
+  const { available, setAvailable, isLoading, setIsLoading, setCompleted } =
     useContext(DataContext);
-  const { auth, setAuth } = useAuth();;
-
-  const fetchAvailable = () => {
-    return axios("/user-assessment/org/{auth.id}/org-available");
-  };
+  const { auth } = useAuth();
 
   useEffect(() => {
-    fetchAvailable()
-      .then(({ data }) => {
-        setAvailable(data);
-        console.log(auth);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
+    const getAvailableAssessment = async () => {
+      try {
+        //Get Availlable Assessment
+        const response = await axios.get(`/assessment/${auth.id}`);
         setIsLoading(false);
-        console.log();
-      });
+        const availableData = response?.data?.data;
+        setAvailable(availableData);
+        //Get Completed Assessment Counts
+        const responseCompleted = await axios.get(
+          `/assessment/completed-assessments/${auth.org_id}/${auth.id}`
+        );
+        setCompleted(responseCompleted?.data?.data?.data);
+      } catch (err) {
+        if (!err?.response) {
+          showErrorToast("No Server Response");
+        } else if (err?.response.data.errorState === true) {
+          showErrorToast(err.response.data.message);
+        }
+      }
+    };
+    getAvailableAssessment();
   }, []);
 
   const renderContent = () => {
@@ -133,9 +138,9 @@ const List = () => {
         </LoaderContainer>
       );
     }
-    // else if (available.data.length === 0) {
-    //   return <Text>Oops no available assessments, create an assessment</Text>;
-    // }
+    else if (available.length === 0) {
+      return <Text>Oops no available assessments, create an assessment</Text>;
+    }
     return (
       <TableContainer>
         <table>
@@ -150,22 +155,23 @@ const List = () => {
               <th></th>
             </tr>
           </thead>
-          {/* [available.data] */}
           <tbody>
-            {info.map((d, idx) => {
+            {available.map((item, key) => {
               return (
-                <tr key={idx}>
-                  <td>{idx + 1}</td>
-                  <TH2>{d.dept}</TH2>
-                  <td>{d.course}</td>
-                  <td>{d.duration}</td>
-                  <td>{d.course}</td>
-                  <td>{d.date}</td>
+                <tr key={key}>
+                  <td>{key + 1}</td>
+                  <TH2>{item?.name}</TH2>
+                  <td>{item?.department_id}</td>
+                  <td>{item?.start_date}</td>
+                  <td>{item?.end_date - item?.start_date}</td>
+                  <td>{item?.end_date}</td>
 
                   <td>
-                    <Button $variant="outlined" $color="#2667ff">
-                      View Assessment
-                    </Button>
+                    <Link to="/assessment/view-assessment">
+                      <Button $variant="outlined" $color="#2667ff">
+                        View Assessment
+                      </Button>
+                    </Link>
                   </td>
                 </tr>
               );
@@ -182,18 +188,18 @@ const TableSection = () => {
   return <List />;
 };
 
-const Assessment = () => {
+const Assessment = ({ available, completed }) => {
   return (
     <>
       <AssessmentTabContainer>
         <AssessmentTab>
           <Link to="/assessment/assessment-list">
             <Text $color="#2667FF" $weight="600">
-              Available (0)
+              Available ({available})
             </Text>
           </Link>
           <Link to="/assessment/assessment-list/completed">
-            <Text>Completed (0)</Text>
+            <Text>Completed ({completed})</Text>
           </Link>
         </AssessmentTab>
       </AssessmentTabContainer>
@@ -206,6 +212,7 @@ const AvailableAssessmentList = () => {
   const [assessmentInfo, setAssessmentInfo] = useState(info);
   const [order, setOrder] = useState("asc");
   const [available, setAvailable] = useState([]);
+  const [completed, setCompleted] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   return (
     <>
@@ -219,11 +226,13 @@ const AvailableAssessmentList = () => {
           setAvailable,
           isLoading,
           setIsLoading,
+          setCompleted,
+          completed,
         }}
       >
         <PageInfo breadcrumb={["Dashboard", "Assessment list"]} />
         <Buttons />
-        <Assessment />
+        <Assessment available={available.length} completed={completed.length} />
       </DataContext.Provider>
     </>
   );
@@ -307,7 +316,9 @@ export const TableContainer = styled.div`
     width: 200px;
     overflow: hidden;
     text-align: left;
-    padding: 12px 0px;
+    padding-left: 12px;
+    padding-top: 12px;
+    padding-bottom: 12px;
   }
 
   th {

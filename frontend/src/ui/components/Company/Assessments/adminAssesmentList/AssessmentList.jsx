@@ -22,66 +22,6 @@ import {
 import { showErrorToast } from "../../../../../helpers/helper";
 
 const DataContext = createContext(null);
-
-const info = [
-  {
-    id: "1",
-    dept: "Introduction to Software Engineering",
-    course: "Python 101",
-    duration: "30 mins",
-    date: "25 Apr 2020",
-  },
-  {
-    id: "2",
-    dept: "Basics of software engineering",
-    course: "PHP 252",
-    duration: "30 mins",
-    date: "24 Jan 2022",
-  },
-  {
-    id: "3",
-    dept: "Introduction to cybersecurity",
-    course: "CYB 110",
-    duration: "30 mins",
-    date: "23 Apr 2021",
-  },
-  {
-    id: "4",
-    dept: "Principles of software engineering",
-    course: "Laravel 540",
-    duration: "30 mins",
-    date: "22 Mar 2022",
-  },
-  {
-    id: "5",
-    dept: "General Engineering assessment",
-    course: "Engineer 101",
-    duration: "30 mins",
-    date: "21 Feb 2022",
-  },
-  {
-    id: "6",
-    dept: "Introduction to Django Framework",
-    course: "Framework 505",
-    duration: "30 mins",
-    date: "20 Dec 2022",
-  },
-  {
-    id: "7",
-    dept: "HTML, CSS and Javascript",
-    course: "FE 360",
-    duration: "30 mins",
-    date: "19 Aug 2022",
-  },
-  {
-    id: "8",
-    dept: "General Software Engineering Work",
-    course: "GST 210",
-    duration: "30 mins",
-    date: "18 Oct 2022",
-  },
-];
-
 export const Buttons = () => {
   return (
     <ButtonContainer>
@@ -113,18 +53,25 @@ export const Buttons = () => {
 };
 
 export const List = () => {
-  const { completed, setCompleted, isLoading, setIsLoading } =
+  const { completed, setCompleted, isLoading, setIsLoading, setAvailable } =
     useContext(DataContext);
   const { auth } = useAuth();
 
   useEffect(() => {
     const getCompletedAssessment = async () => {
       try {
+        //Get Completed Assessment
         const response = await axios.get(
-          `/assessment/completed-assessments/3ed2cd12-f571-4570-bc8b-f388dd301f67/${auth.id}`
+          `/assessment/completed-assessments/${auth.org_id}/${auth.id}`
         );
-        setCompleted(response.data);
         setIsLoading(false);
+        const completedData = response?.data?.data?.data;
+        setCompleted(completedData);
+
+        //Get Availlable Assessment Count
+        const responseAvailable = await axios.get(`/assessment/${auth.id}`);
+        const availableCount = responseAvailable?.data?.data;
+        setAvailable(availableCount);
       } catch (err) {
         if (!err?.response) {
           showErrorToast("No Server Response");
@@ -134,7 +81,7 @@ export const List = () => {
       }
     };
     getCompletedAssessment();
-  }, [auth.id, setCompleted, setIsLoading]);
+  }, []);
 
   const renderContent = () => {
     if (isLoading) {
@@ -143,53 +90,55 @@ export const List = () => {
           <Loader />
         </Flex>
       );
+    } else if (completed.length === 0) {
+      return (
+        <Text>
+          There are no completed assessments, check for available ones and
+          complete
+        </Text>
+      );
     }
-
-    // else if (completed.data.length === 0) {
-    //   return (
-    //     <Text>
-    //       There are no completed assessments, check for available ones and
-    //       complete
-    //     </Text>
-    //   );
-    // }
     return (
-      <TableContainer>
-        <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <TH1>Assessment Name</TH1>
-              <th>Department</th>
-              <th>Accepted</th>
-              <th>Duration</th>
-              <th>Deadline</th>
-              <th></th>
-            </tr>
-          </thead>
-          {/* [available.data] */}
-          <tbody>
-            {info.map((d, idx) => {
-              return (
-                <tr key={idx}>
-                  <td>{idx + 1}</td>
-                  <TH2>{d.dept}</TH2>
-                  <td>{d.course}</td>
-                  <td>{d.duration}</td>
-                  <td>{d.course}</td>
-                  <td>{d.date}</td>
+      <>
+        <TableSection />
+        <TableContainer>
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <TH1>Assessment Name</TH1>
+                <th>Department</th>
+                <th>Accepted</th>
+                <th>Duration</th>
+                <th>Deadline</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {completed.map((item, key) => {
+                return (
+                  <tr key={key}>
+                    <td>{key + 1}</td>
+                    <TH2>{item?.name}</TH2>
+                    <td>{item?.department_id}</td>
+                    <td>{item?.start_date}</td>
+                    <td>{item?.end_date - item?.start_date}</td>
+                    <td>{item?.end_date}</td>
 
-                  <td>
-                    <Button $variant="outlined" $color="#2667ff">
-                      View Assessment
-                    </Button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </TableContainer>
+                    <td>
+                      <Link to="/assessment/view-assessment">
+                        <Button $variant="outlined" $color="#2667ff">
+                          View Assessment
+                        </Button>
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </TableContainer>
+      </>
     );
   };
   return <AssessmentListings>{renderContent()}</AssessmentListings>;
@@ -203,17 +152,17 @@ export const TableSection = () => {
   );
 };
 
-export const Assessment = () => {
+export const Assessment = ({ available, completed }) => {
   return (
     <>
       <AssessmentTabContainer>
         <AssessmentTab>
           <Link to="/assessment/assessment-list">
-            <Text>Available (0)</Text>
+            <Text>Available ({available})</Text>
           </Link>
           <Link to="/assessment/assessment-list/completed">
             <Text $color="#2667FF" $weight="600">
-              Completed (0)
+              Completed ({completed})
             </Text>
           </Link>
         </AssessmentTab>
@@ -224,9 +173,9 @@ export const Assessment = () => {
 };
 
 export const CompletedAssessmentList = () => {
-  const [assessmentInfo, setAssessmentInfo] = useState(info);
   const [order, setOrder] = useState("asc");
   const [completed, setCompleted] = useState([]);
+  const [available, setAvailable] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   return (
     <div>
@@ -234,8 +183,8 @@ export const CompletedAssessmentList = () => {
         value={{
           completed,
           setCompleted,
-          assessmentInfo,
-          setAssessmentInfo,
+          available,
+          setAvailable,
           order,
           setOrder,
           isLoading,
@@ -244,7 +193,7 @@ export const CompletedAssessmentList = () => {
       >
         <PageInfo breadcrumb={["Dashboard", "Assessment list"]} />
         <Buttons />
-        <Assessment />
+        <Assessment available={available.length} completed={completed.length} />
       </DataContext.Provider>
     </div>
   );
