@@ -65,8 +65,10 @@ Route::prefix("user")->group(function () {
     Route::put('verify-user/{userId}', [UserController::class, 'getVerifyUserById']);
 });
 
+//Admin operation routes
 Route::prefix("admin")->group(function () {
     Route::get('overview', [AdminController::class, 'getAdminOverview'])->middleware("isloggedin", "isadmin");
+    Route::get('users', [AdminController::class, 'getAllUsers']);//->middleware("isloggedin", "isadmin");
 
 });
 
