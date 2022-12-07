@@ -142,6 +142,10 @@ class QuestionsController extends Controller
         try {
             $questions = Question::where('category_id', $id);
             if (!$questions->count()) return $this->sendResponse(true, "Fetch Question By Category ID failed", 'No Question Exist for this Category ID', null, Response::HTTP_NOT_FOUND);
+            foreach($questions as $question){
+                $question->options = json_decode($question->options);
+                $question->correct_answers = json_decode($question->correct_answers);
+            }
             return $this->sendResponse(false, null, "OK", $questions->get(), Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Fetch Question By Category ID failed", $e->getMessage());
