@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateCategoryRequest;
+
 use Exception;
 use App\Models\Category;
+use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Requests\DeleteCategoriesRequest;
 use App\Http\Requests\CategoryRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\JsonResponse;
@@ -126,6 +128,40 @@ class CategoryController extends Controller
                 null,
                 'Categories',
                 $categories,
+                Response::HTTP_OK
+            );
+        } catch (Exception $e) {
+            return $this->sendResponse(true,"Error fetching category", $e->getMessage(), null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Delete multiple categories
+     *
+     * @return JsonResponse
+    */
+    public function deleteCompanyCategories( DeleteCategoriesRequest $request) : JsonResponse
+    {
+        $data = $request->all();
+
+        try{
+            $categories = Category::destroy($data['ids']);
+
+            if(!$categories){
+                return $this->sendResponse(
+                    true,
+                    'One or more categories not found',
+                    'Category does not exist',
+                    null,
+                    Response::HTTP_NOT_FOUND
+                );
+            }
+
+            return $this->sendResponse(
+                true,
+                null,
+                'Categories deleted successfully',
+                'Successfully deleted categories',
                 Response::HTTP_OK
             );
         } catch (Exception $e) {

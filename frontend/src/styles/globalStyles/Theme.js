@@ -68,6 +68,7 @@ const theme = {
     sm: 767,
     md: 959,
     lg: 1023,
+    touch: 1199,
     xl: 1439,
     up: function (screen) {
       switch (screen) {
@@ -79,6 +80,8 @@ const theme = {
           return `@media (min-width: ${this.md + 1}px)`;
         case "lg":
           return `@media (min-width: ${this.lg + 1}px)`;
+        case "touch":
+          return `@media (min-width: ${this.touch + 1}px)`;
         case "xl":
           return `@media (min-width: ${this.xl + 1}px)`;
         default:
@@ -95,6 +98,8 @@ const theme = {
           return `@media (max-width: ${this.md}px)`;
         case "lg":
           return `@media (max-width: ${this.lg}px)`;
+        case "touch":
+          return `@media (max-width: ${this.touch}px)`;
         case "xl":
           return `@media (max-width: ${this.xl}px)`;
         default:
