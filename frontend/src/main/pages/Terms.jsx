@@ -357,10 +357,7 @@ const Title = styled.h1`
   line-height: 2.25rem;
 `;
 
-const Section = styled.section`
- 
-  }
-`;
+const Section = styled.section``;
 
 const LeftContent = styled.div`
   display: flex;
