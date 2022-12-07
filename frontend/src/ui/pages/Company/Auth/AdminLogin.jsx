@@ -88,11 +88,12 @@ const AdminLogin = () => {
         const accessToken = response?.data?.data?.accessToken || "";
         const roles = response?.data?.data.role || "";
         const id = response?.data?.data.id || "";
+        const org_id = response?.data?.data.org_id || "";
         const username = response?.data?.data.username || "";
 
-        // console.log(response);
+        console.log(response);
 
-        setAuth({ email, password, accessToken, username, roles, id });
+        setAuth({ email, password, accessToken, username, roles, id, org_id });
         persist &&
           localStorage.setItem(
             "Eval360",
@@ -102,6 +103,7 @@ const AdminLogin = () => {
               accessToken,
               roles,
               id,
+              org_id,
               username,
             })
           );

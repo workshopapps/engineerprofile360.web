@@ -9,12 +9,17 @@ import CategoryForm from "./CategoryForm";
 
 import { More } from "iconsax-react";
 import { Button } from "../../../../styles/reusableElements.styled";
+import { click } from "@testing-library/user-event/dist/click";
 
 const List = () => {
   const [toggleCreateCat, setToggleCreateCat] = useState(false);
   const { auth } = useAuth();
   const [categories, setCategories] = useState([]);
   const [updateCategories, setUpdateCategories] = useState(false);
+  const [showMore, setShowMore] = useState({});
+  const [value, setValue] = useState({
+    categoryId: [],
+  });
 
   useEffect(() => {
     const getAllCatgories = async () => {
@@ -25,16 +30,42 @@ const List = () => {
     getAllCatgories();
   }, [updateCategories]);
 
+  const toggleOpen = (id) => {
+    setShowMore({
+      ...showMore,
+      [id]: !showMore[id],
+    });
+  };
+
+  const handleChange = (e, id) => {
+    const { value: indValue, checked } = e.target;
+    const { categoryId } = value;
+
+    if (checked) {
+      setValue({
+        categoryId: [...categoryId, indValue],
+      });
+    } else {
+      setValue({
+        categoryId: categoryId.filter((e) => e !== indValue),
+      });
+    }
+  };
+  const handleEdit = (id) => {};
+
+  const handleDelete = (id) => {};
+
+  const handleBulkDelete = (id) => {};
+
   return (
     <OverallContainer>
       <ButtonCategory>
         <AddCategoryBtn onClick={() => setToggleCreateCat(true)}>
           Add New Category
         </AddCategoryBtn>
-        <ActionButton>
-          <EditBtn>Edit</EditBtn>
-          <Delete>Delete</Delete>
-        </ActionButton>
+        {value.categoryId.length > 1 && (
+          <DeleteCategoryBtn>Delete</DeleteCategoryBtn>
+        )}
       </ButtonCategory>
       <CategoryListing>
         <table>
@@ -45,6 +76,7 @@ const List = () => {
                 <th>Category</th>
                 <th>Number of Questions</th>
                 <th></th>
+                <th></th>
               </tr>
               {categories.length > 0
                 ? categories?.map((category, id) => (
@@ -53,8 +85,23 @@ const List = () => {
                       <td>{category.name}</td>
                       <td>105</td>
                       <td>
-                        <More />
+                        <input
+                          type="checkbox"
+                          name={category.name}
+                          value={category.id}
+                          // checked={isChecked}
+                          onChange={handleChange}
+                        />
                       </td>
+                      <td>
+                        <More onClick={() => toggleOpen(id)} />
+                      </td>
+                      {showMore[id] && (
+                        <div>
+                          <p>Edit</p>
+                          <p>Delete</p>
+                        </div>
+                      )}
                     </tr>
                   ))
                 : "Oops no data to return yet. Create a new category"}
@@ -97,26 +144,16 @@ const AddCategoryBtn = styled(Button)`
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
-
-  @media (max-width: 419px) {
-    font-size: 12px;
-    width: 90px;
-  }
 `;
 
-const ActionButton = styled.div`
-  display: flex;
-  gap: 18px;
-`;
-
-const EditBtn = styled(Button)`
+const DeleteCategoryBtn = styled(Button)`
   background-color: transparent;
-  color: #323130;
+  border: 1px solid #b71f1f;
+  border-radius: 4px;
+  color: #b71f1f;
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  border: 1px solid #2667ff;
-  border-radius: 4px;
   padding: 8px 10px;
   width: 120px;
   height: 35px;
@@ -124,31 +161,13 @@ const EditBtn = styled(Button)`
   @media (max-width: 517px) {
     width: 60px;
   }
+
   @media (max-width: 419px) {
     font-size: 12px;
   }
 `;
 
-const Delete = styled(Button)`
-  background-color: transparent;
-  color: #a4262c;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 19px;
-  border: 1px solid #a4262c;
-  border-radius: 4px;
-  padding: 8px 10px;
-  width: 120px;
-  height: 35px;
-  @media (max-width: 517px) {
-    width: 60px;
-  }
-  @media (max-width: 419px) {
-    font-size: 12px;
-  }
-`;
-
-const CategoryListing = styled.div`
+export const CategoryListing = styled.div`
   width: 100%;
   overflow: auto;
   table {
@@ -199,14 +218,48 @@ const CategoryListing = styled.div`
     }
 
     tr {
+      height: 74px;
       td:last-of-type {
         display: flex;
         gap: ${({ theme }) => theme.spacing(4)};
         justify-content: space-between;
         align-items: center;
+        justify-content: center;
+        padding-top: 22px;
 
         svg {
           transform: rotate(90deg);
+          position: relative;
+          cursor: pointer;
+        }
+      }
+
+      div {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        padding: 8px;
+        gap: 16px;
+        position: absolute;
+        width: 120px;
+        height: 70px;
+        background-color: #ffffff;
+        z-index: 1;
+        border: 0.5px solid #8a8886;
+
+        border-radius: 4px;
+        top: 0;
+        right: 40px;
+        p {
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 19px;
+          color: #323130;
+          cursor: pointer;
+
+          :last-child {
+            color: #b71f1f;
+          }
         }
       }
     }
