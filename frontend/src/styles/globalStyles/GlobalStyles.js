@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { Link } from "react-router-dom";
 
 const GlobalStyles = createGlobalStyle`
     html {
@@ -14,7 +15,7 @@ const GlobalStyles = createGlobalStyle`
 
     body {
         font-family: 'Inter', sans-serif;
-        background-color: ${({theme}) => theme.palette.grey.white};
+        background-color: ${({ theme }) => theme.palette.grey.white};
     }
 
     button {
@@ -26,6 +27,10 @@ const GlobalStyles = createGlobalStyle`
     }
     a {
         text-decoration: none;
+        &:hover, &:active, &:visited,  {
+            color: #323130;
+            text-decoration: none;
+        }
     }
     p {
         font-size: 20px;
