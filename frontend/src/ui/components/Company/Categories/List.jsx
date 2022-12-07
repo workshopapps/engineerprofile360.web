@@ -107,7 +107,8 @@ const List = () => {
     setIsLoading(true);
     try {
       const response = await axios.delete(
-        `category/${value.categoryId}/delete`
+        `category/${auth.org_id}/delete`,
+        JSON.stringify({ ids: [...value.categoryId] })
       );
       if (response.data.errorState === false) {
         setToggleMaxDelete(false);
