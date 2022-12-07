@@ -28,7 +28,7 @@ export const Title = styled.h1`
 export const Button = styled.button`
   min-width: ${(props) => (props.$size === "xl" ? "100%" : "77px")};
   min-height: 44px;
-  max-width: ${(props) => props.$maxWidth ? props.$maxWidth : "288px"};
+  max-width: ${(props) => (props.$maxWidth ? props.$maxWidth : "288px")};
   height: ${(props) =>
     props.$size === "md" ? "48px" : props.$size === "lg" ? "80px" : "auto"};
   width: ${(props) =>
@@ -44,13 +44,12 @@ export const Button = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: ${({ theme }) => theme.spacing(1)};
+  gap: ${({ theme }) => theme.spacing(1.5)};
   border-radius: ${({ theme }) => theme.spacing(0.5)};
   padding: ${({ theme }) => theme.spacing(1.2)}
     ${({ theme }) => theme.spacing(2.5)};
   cursor: pointer;
   outline: none;
-  font-weight: ${(props) => (props.$weight ? props.$weight : "")};
 
   ${(props) => {
     switch (props.$variant) {
@@ -84,6 +83,7 @@ export const Button = styled.button`
     }
   }}
 
+  font-weight: ${({ $weight }) => ($weight ? $weight : null)}
   color: ${({ $color }) => ($color ? $color : null)};
 `;
 
@@ -108,20 +108,20 @@ export const Loader = styled.div`
 
 export const OverlayLoader = styled.div`
   width: 100%;
-  height: ${(props) => props.contained ? "100%" : "100vh" };
-  background: rgb(255,255,255);
-  position: fixed;
-  top: ${(props) => props.contained ? "initial" : "0" };
-  bottom: ${(props) => props.contained ? "initial" : "0" };
-  left: ${(props) => props.contained ? "initial" : "0" };
-  right: ${(props) => props.contained ? "initial" : "0" };
+  height: ${(props) => (props.contained ? "calc(100vh - 96px)" : "100vh")};
+  background: rgb(255, 255, 255);
+  position: ${(props) => (props.contained ? "initial" : "fixed")};
+  top: ${(props) => (props.contained ? "initial" : "0")};
+  bottom: ${(props) => (props.contained ? "initial" : "0")};
+  left: ${(props) => (props.contained ? "initial" : "0")};
+  right: ${(props) => (props.contained ? "initial" : "0")};
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 10;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(2)};
-  
+
   div {
     border: 8px solid #106ebe;
     border-top: 8px solid lightblue;
