@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\StackController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\InterviewController;
 use App\Http\Controllers\QuestionsController;
@@ -62,6 +63,11 @@ Route::prefix("user")->group(function () {
     Route::put('/{userId}/update', [UserController::class, 'updaterUserInfo'])->middleware("isloggedin");
 
     Route::put('verify-user/{userId}', [UserController::class, 'getVerifyUserById']);
+});
+
+Route::prefix("admin")->group(function () {
+    Route::get('overview', [AdminController::class, 'getAdminOverview']);
+
 });
 
 
