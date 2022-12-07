@@ -1,4 +1,5 @@
 import React from "react";
+import * as Sentry from "@sentry/react";
 import { Routes, Route } from "react-router-dom";
 import RequireAuth from "./components/requireAuth";
 import styled from "styled-components";
@@ -300,7 +301,7 @@ const App = () => {
     </>
   );
 };
-export default App;
+export default Sentry.withProfiler(App);
 
 const StyledToastContainer = styled(ToastContainer).attrs({
   className: "toast-container",
