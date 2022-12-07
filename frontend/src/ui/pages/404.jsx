@@ -5,6 +5,7 @@ import { Button, Title } from "../../styles/reusableElements.styled";
 import { Link } from "react-router-dom";
 
 export default function Error() {
+  console.log("omo");
   return (
     <Container>
       <img src={Oops} alt="" />

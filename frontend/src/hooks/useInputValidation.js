@@ -12,6 +12,8 @@ const useInputValidation = (initialState = {}, type = null) => {
 
     if (formData.uname?.length <= 0) {
       error.uname = "Username is required";
+    } else if (formData.uname?.length < 6) {
+      error.uname = "Username must be at least 6 characters.";
     }
     // if (formData && !formData.email) {
     if (formData.email?.length <= 0) {

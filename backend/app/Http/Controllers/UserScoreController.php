@@ -23,7 +23,7 @@ class UserScoreController extends Controller
     {
         try {
             $result = UserScoreService::submit($request->validated());
-            return $this->sendResponse(false, null, "User score was added successfully!", $result, Response::HTTP_CREATED);
+            return $this->sendResponse(false, null, "Your assessment has been submitted successfully!", $result, Response::HTTP_CREATED);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Error storing the userr score", $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
@@ -114,7 +114,7 @@ class UserScoreController extends Controller
     {
 
         try {
-            $userScore = Employee::where("org_id", $id)->with("department")->withCount([
+            $userScore = Employee::where("org_id", $id)->withCount("completed_assessment")->with("department")->withCount([
                 'assessment AS points' => function ($query) {
                     $query->select(DB::raw("SUM(result) as points"));
                 }
