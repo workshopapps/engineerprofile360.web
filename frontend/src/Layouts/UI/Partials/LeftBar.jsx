@@ -109,32 +109,32 @@ const LeftBar = () => {
         <List>
           <ListItem
             $active={
-              pathname.split("/")[1] === "dashboard" ||
-              pathname === "/dashboard"
+              pathname.split("/")[2] === "dashboard" ||
+              pathname === "/admin/dashboard"
                 ? "active"
                 : ""
             }
           >
-            <Link to="/dashboard">
+            <Link to="/admin/dashboard">
               <Menu /> Dashboard
             </Link>
           </ListItem>
           <ListItem
             $active={
-              pathname.split("/")[1] === "departments" ||
-              pathname === "/departments"
+              pathname.split("/")[2] === "departments" ||
+              pathname === "/admin/departments"
                 ? "active"
                 : ""
             }
           >
-            <Link to="/departments">
+            <Link to="/admin/departments">
               <Home3 /> Departments
             </Link>
           </ListItem>
           <ListItem
             $active={
-              pathname.split("/")[1] === "categories" ||
-              pathname === "/categories"
+              pathname.split("/")[2] === "categories" ||
+              pathname === "/admin/categories"
                 ? "active"
                 : ""
             }
@@ -145,25 +145,25 @@ const LeftBar = () => {
           </ListItem>
           <ListItem
             $active={
-              pathname.split("/")[1] === "assessment" ||
-              pathname === "/assessment"
+              pathname.split("/")[2] === "assessment" ||
+              pathname === "/admin/assessment"
                 ? "active"
                 : ""
             }
           >
-            <Link to="/assessment">
+            <Link to="/admin/assessment">
               <TaskSquare /> Assessment
             </Link>
           </ListItem>
           <ListItem
             $active={
-              pathname.split("/")[1] === "employees" ||
-              pathname === "/employees"
+              pathname.split("/")[2] === "employees" ||
+              pathname === "/admin/employees"
                 ? "active"
                 : ""
             }
           >
-            <Link to="/employees">
+            <Link to="/admin/employees">
               <Profile2User /> Employees
             </Link>
           </ListItem>

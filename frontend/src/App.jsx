@@ -267,6 +267,7 @@ const App = () => {
               {/* Overall Admin Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
                 {/* Put in Protected pages in here */}
+                <Route path="/admin/dashboard" element={"Admin pages will render here"} />
               </Route>
 
               {/* <Route path="/assessment" element={<Assessment />} /> */}

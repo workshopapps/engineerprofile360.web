@@ -46,10 +46,10 @@ const TopEmployees = ({ topPerformances, departments }) => {
                   <td>{index + 1}.</td>
                   <td>{employee.fullname}</td>
                   <td>{employee.department.name}</td>
-                  <td></td>
+                  <td>{employee.completed_assessment_count}</td>
                   <td>{employee.points.toFixed(2)}%</td>
                   <td>
-                    <Link to="/employees">
+                  <Link to="/employees/profile" state={employee.id}>
                       <Button $variant="outlined" $color="#2667ff">
                         View Results
                       </Button>

@@ -18,8 +18,8 @@ const Employees = () => {
   useEffect(() => {
     const getdetails = async () => {
       const ENDPOINTS = [
-        axios.get(`employee/company/${auth.id}`),
-        axios.get(`department/company/${auth.id}`),
+        axios.get(`employee/company/${auth.org_id}`),
+        axios.get(`department/company/${auth.org_id}`),
       ];
 
       try {
@@ -28,12 +28,11 @@ const Employees = () => {
         });
 
         const allEmployees = response[0]?.data?.data.data;
-        // const allDepartments = null;
+        const allDepartments = response[1]?.data;
         setIsLoading(false);
 
         setEmployees(allEmployees);
-
-        console.log(response);
+        setDepartments(allDepartments);
       } catch (err) {
         setIsLoading(false);
         if (!err?.response) {

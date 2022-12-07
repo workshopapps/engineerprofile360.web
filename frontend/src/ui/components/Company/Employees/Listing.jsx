@@ -13,22 +13,29 @@ const Listing = () => {
   useEffect(() => {
     setAllEmployees(employees ? employees : []);
     setDepts(departments ? departments : []);
+
   }, [employees, departments]);
 
+  console.log(depts);
   return (
     <EmployeesList>
       <Filter>
         <select>
           <option>Department</option>
+          {depts.map((dept) => (
+            <option key={dept.id} value={dept.name}>
+              {dept.name}
+            </option>
+          ))}
         </select>
-        <Link to="/create-employee">
+        <Link to="/add-employee">
           <Button $weight="400">
             <AddCircle color="#FFFFFF" /> Add New Employee
           </Button>
         </Link>
       </Filter>
       <EmployeesTable>
-        {employees.length > 0 ? (
+        {allEmployees.length > 0 ? (
           <table>
             <tbody>
               <tr>
@@ -39,15 +46,15 @@ const Listing = () => {
                 <th>Username</th>
                 <th>Actions</th>
               </tr>
-              {employees.map((employee, index) => (
-                <tr key={employee.employee_id}>
+              {allEmployees.map((employee, index) => (
+                <tr key={employee.id}>
                   <td>{index + 1}.</td>
-                  <td>{employee.employee_name}</td>
-                  <td>{employee.department}</td>
+                  <td>{employee.fullname}</td>
+                  <td>{employee.department.name}</td>
                   <td>{employee.email}</td>
                   <td>{employee.username}</td>
                   <td>
-                    <Link to="/employees/profile" state={employee.employee_id}>
+                    <Link to="/employees/profile" state={employee.id}>
                       <Button $variant="outlined" $color="#2667ff">
                         View Profile
                       </Button>
