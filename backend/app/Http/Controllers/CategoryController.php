@@ -145,8 +145,8 @@ class CategoryController extends Controller
         $data = $request->all();
 
         try{
-            $categories = Category::where('org_id', $data['ids'])->where('org_id', $orgId)->delete();
-            //var_dump($data['ids']);die;
+            $categories = Category::destroy($data['ids']);
+
             if(!$categories){
                 return $this->sendResponse(
                     true,
@@ -160,8 +160,8 @@ class CategoryController extends Controller
             return $this->sendResponse(
                 true,
                 null,
-                'Categories',
-                $categories,
+                'Categories deleted successfully',
+                'Successfully deleted categories',
                 Response::HTTP_OK
             );
         } catch (Exception $e) {

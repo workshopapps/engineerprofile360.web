@@ -162,7 +162,7 @@ Route::prefix("category")->group(function () {
     Route::delete('/{orgId}/{categoryId}/delete', [CategoryController::class, 'deleteCategory'])->middleware("isloggedin", "isadmin");
     Route::get('/{orgId}/{categoryId}', [CategoryController::class, 'getCategoryById'])->middleware("isloggedin", "isadmin");
 });
-Route::delete('category/{orgId}/delete', [CategoryController::class, 'deleteCompanyCategories']);//->middleware("isloggedin", "isadmin");
+Route::delete('category/{orgId}/delete', [CategoryController::class, 'deleteCompanyCategories'])->middleware("isloggedin", "isadmin");
 
 //Employee Routes
 Route::prefix('employee')->group(function () {
