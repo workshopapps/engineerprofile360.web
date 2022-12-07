@@ -1,4 +1,5 @@
 // import React from "react";
+import * as Sentry from "@sentry/react";
 import { Routes, Route } from "react-router-dom";
 import RequireAuth from "./components/requireAuth";
 import styled from "styled-components";
@@ -40,14 +41,15 @@ import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 import UserSupport from "./main/pages/UserSupport";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
 // import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
-// import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
+// import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
+import AdminSetting from "./ui/pages/AdminSetting";
+import AdminCSVUpload from "./ui/components/Company/Assessments/AdminCSVUpload";
+// import UserAssessmentListCompleted from "./ui/pages/UserAssestList/UserAssestListCompleted";
 // import EmployeeTakeAssessment from "../miscellaneous/pages/EmployeeTakeAssessment";
 // import UserTakeAssessment from "./ui/pages/userTakeAssessment/UserTakeAssessment";
 // import UserTakeAssessmentResult from "../miscellaneous/pages/UserTakeAssessmentResult";
 // import GuestTakeAssessment from "./ui/pages/guest/GuestTakeAssessment";
 // import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
-// import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
-
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import AdminCSVUpload from "./ui/components/Company/Assessments/AdminCSVUpload";
 import EmployeeCSVUpload from "./ui/components/Company/Employees/EmployeeCSVUpload";
@@ -140,9 +142,17 @@ const App = () => {
             <Route
               path="/guest-take-assessment-result"
               element={<GuestTakeAssessmentResult />}
+            />
+
+            <Route path="/csv-uploading" element={<CsvUploading />} />
+
+            <Route
+              path="/csv-uploading-complete"
+              element={<CsvUploadComplete />}
+            />
+            <Route path="/privacy-policy" element={<Privacy />} />
             /> */}
 
-            {/* <Route path="/setting" element={<AdminSetting />} /> */}
             <Route path="/employee-profile" element={<EmployeeProfile />} />
             <Route path="/admin-csv-upload" element={<AdminCSVUpload />} />
             {/* <Route
@@ -217,10 +227,7 @@ const App = () => {
 
                 <Route path="/employees" element={<Employees />}>
                   <Route path="" element={<EmployeesListing />} />
-                  <Route
-                    path="profile"
-                    element={<EmployeeProfile />}
-                  />
+                  <Route path="profile" element={<EmployeeProfile />} />
                   <Route
                     path="employee-profile"
                     element={<EmployeeProfile />}
@@ -267,8 +274,12 @@ const App = () => {
               {/* Overall Admin Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
                 {/* Put in Protected pages in here */}
-                <Route path="/admin/dashboard" element={"Admin pages will render here"} />
+                <Route
+                  path="/admin/dashboard"
+                  element={"Admin pages will render here"}
+                />
               </Route>
+              <Route path="/setting" element={<AdminSetting />} />
 
               {/* <Route path="/assessment" element={<Assessment />} /> */}
             </Route>
@@ -279,7 +290,7 @@ const App = () => {
     </>
   );
 };
-export default App;
+export default Sentry.withProfiler(App);
 
 const StyledToastContainer = styled(ToastContainer).attrs({
   className: "toast-container",
