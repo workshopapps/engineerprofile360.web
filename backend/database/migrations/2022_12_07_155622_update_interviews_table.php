@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('interviews', function (Blueprint $table) {
-            $table->dropColumn('company_name');
+            // $table->dropColumn('company_name');
             $table->dropColumn('name');
             $table->string('times_taken')->nullable()->change();
             $table->string('title')->after('id');
