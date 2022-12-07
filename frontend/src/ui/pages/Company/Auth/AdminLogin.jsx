@@ -103,6 +103,7 @@ const AdminLogin = () => {
               accessToken,
               roles,
               id,
+              org_id,
               username,
             })
           );
