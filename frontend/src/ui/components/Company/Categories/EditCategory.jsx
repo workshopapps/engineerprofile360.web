@@ -9,13 +9,15 @@ import { Loader } from "../../../../styles/reusableElements.styled";
 import { Title } from "../../../../styles/reusableElements.styled";
 import { Button } from "../../../../styles/reusableElements.styled";
 
-const CategoryForm = ({
-  setToggleCreateCat,
+const EditCategory = ({
+  setToggleEdit,
   setUpdateCategories,
   updateCategories,
+  currentSelectedName,
+  currentSelectedId,
 }) => {
   const [formData, setFormData] = useState({
-    category_name: "",
+    category_name: currentSelectedName,
   });
   const { auth } = useAuth();
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -23,22 +25,24 @@ const CategoryForm = ({
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const org_id = auth.org_id;
   const { category_name: name } = formData;
+  console.log(name);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitted(true);
     try {
       if (name.length !== "") {
-        const response = await axios.post(
-          "category/add",
-          JSON.stringify({ name, org_id })
+        const response = await axios.get(
+          `category/${auth.org_id}/${currentSelectedId}`,
+          JSON.stringify({ name })
         );
+
+        console.log(response.data);
 
         response.data.errorState === false &&
           showSuccessToast(response.data.message);
         setIsSubmitted(false);
-        setToggleCreateCat(false);
+        setToggleEdit(false);
         setUpdateCategories(!updateCategories);
       }
     } catch (err) {
@@ -58,14 +62,13 @@ const CategoryForm = ({
       onSubmit={(e) => handleSubmit(e)}
     >
       <Title as="h2" $size="18px" $color="#323130" $weight="400">
-        Create a new Category
+        Edit Category
       </Title>
       <InputFieldWrapper>
         <Label htmlFor="category_name"> Title</Label>
         <InputField
           type="text"
           required
-          placeholder="Javascript"
           name="category_name"
           value={name}
           onChange={(e) => {
@@ -79,7 +82,7 @@ const CategoryForm = ({
           <Button
             type="button"
             onClick={(e) => {
-              setToggleCreateCat(false);
+              setToggleEdit(false);
             }}
           >
             Cancel
@@ -107,7 +110,7 @@ const CategoryForm = ({
   );
 };
 
-export default CategoryForm;
+export default EditCategory;
 
 const FormContainer = styled.form`
   display: flex;

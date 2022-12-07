@@ -12,6 +12,7 @@ import { showSuccessToast } from "../../../../helpers/helper";
 
 import { More } from "iconsax-react";
 import { Button } from "../../../../styles/reusableElements.styled";
+import EditCategory from "./EditCategory";
 
 const List = () => {
   const { auth } = useAuth();
@@ -19,6 +20,7 @@ const List = () => {
   // USE STATES
   const [toggleCreateCat, setToggleCreateCat] = useState(false);
   const [toggleDelete, setToggleDelete] = useState(false);
+  const [toggleEdit, setToggleEdit] = useState(false);
   const [toggleMaxDelete, setToggleMaxDelete] = useState(false);
   const [categories, setCategories] = useState([]);
   const [updateCategories, setUpdateCategories] = useState(false);
@@ -31,8 +33,6 @@ const List = () => {
   // USE REFS
   const currentSelectedName = useRef();
   const currentSelectedId = useRef();
-
-  console.log(value.categoryId);
 
   useEffect(() => {
     const getAllCatgories = async () => {
@@ -64,7 +64,16 @@ const List = () => {
       });
     }
   };
-  const handleEdit = () => {};
+  const onEditClick = (name, cat_id, id) => {
+    setToggleEdit(true);
+    currentSelectedId.current = cat_id;
+    currentSelectedName.current = name;
+
+    setShowMore({
+      ...showMore,
+      [id]: !showMore[id],
+    });
+  };
 
   const onDeleteClick = (name, cat_id, id) => {
     setToggleDelete(true);
@@ -79,6 +88,9 @@ const List = () => {
   const onBulkDeleteClick = () => {
     setToggleMaxDelete(true);
   };
+
+  console.log({ ids: [...value.categoryId] });
+  console.log([...value.categoryId]);
 
   // Fucntions to be passed to the Delete Modal
   const handleDelete = async () => {
@@ -156,13 +168,12 @@ const List = () => {
                   <tr>
                     <td>{`${id + 1}.`}</td>
                     <td>{category.name}</td>
-                    <td>105</td>
+                    <td>0</td>
                     <td>
                       <input
                         type="checkbox"
                         name={category.name}
                         value={category.id}
-                        // checked={isChecked}
                         onChange={handleChange}
                       />
                     </td>
@@ -171,7 +182,13 @@ const List = () => {
                     </td>
                     {showMore[id] && (
                       <div>
-                        <p>Edit</p>
+                        <p
+                          onClick={() =>
+                            onEditClick(category.name, category.id, id)
+                          }
+                        >
+                          Edit
+                        </p>
                         <p
                           onClick={() =>
                             onDeleteClick(category.name, category.id, id)
@@ -209,11 +226,24 @@ const List = () => {
           handleDelete={handleDelete}
           isLoading={isLoading}
           setToggleDelete={setToggleDelete}
-          text={`Are you sure you want to delete ${(
-            <span>{currentSelectedName.current}</span>
-          )}`}
+          text={`Are you sure you want to delete ${currentSelectedName.current}`}
         />
       )}
+      {toggleEdit && (
+        <Modal
+          setToggleCreateCat={setToggleEdit}
+          Form={
+            <EditCategory
+              setToggleEdit={setToggleEdit}
+              setUpdateCategories={setUpdateCategories}
+              updateCategories={updateCategories}
+              currentSelectedName={currentSelectedName.current}
+              currentSelectedId={currentSelectedId.current}
+            />
+          }
+        />
+      )}
+
       {toggleMaxDelete && (
         <DeleteModal
           handleDelete={handleBulkDelete}
