@@ -16,14 +16,19 @@ export default function SelectDepartment() {
 
   const handleChange = (e) => {
     setValue(e.target.value);
-    useDept[`${e.target.selectedOptions[0].text}`]= e.target.value;
-    localStorage.setItem("departments", JSON.stringify(useDept));
+    localStorage.setItem("departments", JSON.stringify(e.target.value));
+    localStorage.setItem("departmentname", JSON.stringify(e.target.selectedOptions[0].text));
+
   };
   
 
   const proceed = (departments) => { 
     const localData = JSON.parse(localStorage.getItem("departments"));
-    if(localData){
+    const localDataName = JSON.parse(localStorage.getItem("departmentname"));
+    console.log(localData);
+    console.log(localDataName);
+
+    if(!localData=="" || !localDataName==""){
       navigate("/employees/add-employee/");
     } else {
       toast.error("Please choose a department");

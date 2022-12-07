@@ -11,13 +11,11 @@ const CreateEmployeeManual = () => {
     const [formData, setFormData] = useState({});
     const [touched, setTouched] = useState({});
     const [errors, setErrors] = useState({});
+    const dept_name = JSON.parse(localStorage.getItem("departmentname"));
     const dept_id = JSON.parse(localStorage.getItem("departments"));
     const { auth }  = useAuth();
     const org_id = auth.org_id;
     const navigate = useNavigate();
-
-    console.log(org_id);
-   
 
     const handleChange = (e) => {
       //console.log(e.target.id);
@@ -94,12 +92,19 @@ const CreateEmployeeManual = () => {
         .then((res) => {  
           toast.success(res.data.message);
           setLoading(false);
-          navigate("/employees/");
+          localStorage.removeItem('departmentname')
+          localStorage.removeItem('departments')
+          setTimeout(
+            () => navigate("/employees/"), 
+            5000
+          );
         })
         .catch((error) => {
           console.log(error);
           toast.error(error.response.data.message);
           setLoading(false);
+          localStorage.removeItem('departmentname')
+          localStorage.removeItem('departments')
         });
       }
     };
@@ -157,7 +162,7 @@ const CreateEmployeeManual = () => {
           <input
             id="dept"
             type="readonly"
-            value={dept_id}
+            value={dept_name}
             readOnly
           />
           {errors.dept && touched.dept && <span>{errors.dept}</span>}

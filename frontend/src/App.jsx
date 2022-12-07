@@ -51,7 +51,6 @@ import AdminCSVUpload from "./ui/components/Company/Assessments/AdminCSVUpload";
 // import GuestTakeAssessment from "./ui/pages/guest/GuestTakeAssessment";
 // import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
 import Testimonial from "./main/components/Testimonials/Testimonial";
-import AdminCSVUpload from "./ui/components/Company/Assessments/AdminCSVUpload";
 import EmployeeCSVUpload from "./ui/components/Company/Employees/EmployeeCSVUpload";
 import GuestEmail from "./main/pages/GuestEmail";
 import GuestAssessmentList from "./main/pages/GuestAssessmentList";
@@ -265,7 +264,6 @@ const App = () => {
                     path="create-assessment"
                     element={<CreateAssessment />}
                   />
-                  <Route path="admin-csv-upload" element={<AdminCSVUpload />} />
                 </Route>
 
                 <Route path="/categories" element={<Category />} />
