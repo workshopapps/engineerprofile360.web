@@ -31,10 +31,7 @@ class EmployeeController extends Controller
     public function byCompId($company_id)
     {
         try {
-            $employees = Employee::select('employees.id as employee_id', 'departments.name as department', 'employees.fullname as employee_name', 'employees.username as username', 'employees.email as email', 'employees.occupation as occupation', 'employees.created_at as created_at', 'employees.updated_at as updated_at')
-                ->join('departments', 'departments.id', '=', 'employees.department_id')
-                ->where('employees.org_id', $company_id)
-                ->paginate(5);
+            $employees = Employee::where('org_id', $company_id)->with('department')->paginate(5);
             return $this->sendResponse(false, null, "Employee Found", $employees, Response::HTTP_OK);
         } catch (Exception $e) {
             //throw $th;
