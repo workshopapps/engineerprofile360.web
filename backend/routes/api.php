@@ -157,7 +157,7 @@ Route::prefix("question")->group(function () {
 Route::prefix("category")->group(function () {
     Route::put('/{orgId}/{categoryId}/update', [CategoryController::class, 'updateCategory'])->middleware("isloggedin");
     Route::post('/add', [CategoryController::class, 'createCategory'])->middleware("isloggedin", "isadmin");
-    Route::delete('/{orgId}/{categoryId}/delete', [CategoryController::class, 'deleteCategory'])->middleware("isloggedin", "isadmin");
+    Route::delete('{categoryId}/{orgId}/delete', [CategoryController::class, 'deleteCategory']);//->middleware("isloggedin", "isadmin");
     Route::get('/company/{id}', [CategoryController::class, 'getCompanyCategories'])->middleware("isloggedin", "isadmin");
     Route::get('/{orgId}/{categoryId}', [CategoryController::class, 'getCategoryById'])->middleware("isloggedin", "isadmin");
 });
@@ -168,7 +168,7 @@ Route::prefix('employee')->group(function () {
     Route::post('add', [EmployeeController::class, 'addEmployee'])->middleware("isloggedin", "isadmin");
     Route::post('confirm', [EmployeeController::class, 'confirmCSV'])->middleware("isloggedin", "isadmin");
     Route::get('{id}', [EmployeeController::class, 'getById']);
-    Route::get('/company/{org_id}', [EmployeeController::class, 'byCompId']);
+    Route::get('company/{orgId}', [EmployeeController::class, 'getEmployeesByCompanyId']);
     Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
     Route::get('department/{departmentId}', [EmployeeController::class, 'getEmplyeesByDepartment']);
 });
