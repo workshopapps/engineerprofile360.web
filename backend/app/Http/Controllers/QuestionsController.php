@@ -14,11 +14,9 @@ class QuestionsController extends Controller
     {
         try {
             $data = $request->validated();
-            if (!$data)  return $this->sendResponse(true, "Not Permited", "The passed questions doesn't match the categories supplied", Response::HTTP_UNPROCESSABLE_ENTITY);
             $output = array();
             for ($i = 0; $i < count($data['questions']); $i++) {
                 $result = Question::create([
-                    "company_id" => $data["company_id"],
                     "category_id" => $data["category_id"],
                     "assessment_id" => $data["assessment_id"],
                     ...$data['questions'][$i]

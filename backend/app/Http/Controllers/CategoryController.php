@@ -118,10 +118,10 @@ class CategoryController extends Controller
      *
      * @return JsonResponse
     */
-    public function getCompanyCategories( $orgId ) : JsonResponse
+    public function getCompanyCategories($id) : JsonResponse
     {
         try{
-            $categories = Category::where('org_id', $orgId)->paginate(10);
+            $categories = Category::where('org_id', $id)->paginate(10);
 
             return $this->sendResponse(
                 true,

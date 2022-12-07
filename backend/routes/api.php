@@ -141,8 +141,6 @@ Route::prefix("company")->group(function () {
     Route::get('{id}', [CompanyController::class, 'byCompanyId']);
     Route::get('user/{userId}', [CompanyController::class, 'getCompanyByUserId']);
 });
-Route::get('company/{orgId}/categories', [CategoryController::class, 'getCompanyCategories'])->middleware("isloggedin", "isadmin");
-
 
 // questions route operations
 Route::prefix("question")->group(function () {
@@ -160,6 +158,7 @@ Route::prefix("category")->group(function () {
     Route::put('/{orgId}/{categoryId}/update', [CategoryController::class, 'updateCategory'])->middleware("isloggedin");
     Route::post('/add', [CategoryController::class, 'createCategory'])->middleware("isloggedin", "isadmin");
     Route::delete('/{orgId}/{categoryId}/delete', [CategoryController::class, 'deleteCategory'])->middleware("isloggedin", "isadmin");
+    Route::get('/company/{id}', [CategoryController::class, 'getCompanyCategories'])->middleware("isloggedin", "isadmin");
     Route::get('/{orgId}/{categoryId}', [CategoryController::class, 'getCategoryById'])->middleware("isloggedin", "isadmin");
 });
 Route::delete('category/{orgId}/delete', [CategoryController::class, 'deleteCompanyCategories'])->middleware("isloggedin", "isadmin");
@@ -171,7 +170,7 @@ Route::prefix('employee')->group(function () {
     Route::get('{id}', [EmployeeController::class, 'getById']);
     Route::get('/company/{org_id}', [EmployeeController::class, 'byCompId']);
     Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
-    Route::get('{departmentId}', [EmployeeController::class, 'getEmplyeesByDepartment']);
+    Route::get('department/{departmentId}', [EmployeeController::class, 'getEmplyeesByDepartment']);
 });
 Route::get('employees', [EmployeeController::class, 'getAllEmployees'])->middleware("isloggedin", "isadmin");
 

@@ -2,7 +2,7 @@
 
 return [
 
-    'dsn' => env('SENTRY_LARAVEL_DSN', env('SENTRY_DSN')),
+    'dsn' => 'https://ea081abc2ed24de887f1e9047c39bbd3@o4504278644948992.ingest.sentry.io/4504286349688832',
 
     // The release version of your application
     // Example with dynamic git hash: trim(exec('git --git-dir ' . base_path('.git') . ' log --pretty="%h" -n1 HEAD'))

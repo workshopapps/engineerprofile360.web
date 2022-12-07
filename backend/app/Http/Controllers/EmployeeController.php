@@ -174,8 +174,9 @@ class EmployeeController extends Controller
             $org_id = $data["org_id"];
 
             // fetch organization info
-            $orgData = Company::where("user_id", $org_id)->first();
-            $org_name = ucfirst($orgData["name"]);
+            $orgData = Company::find($org_id);
+            if (!$orgData->count())  return $this->sendResponse(true, "Not found", "Company not found", null, Response::HTTP_NOT_FOUND);
+            $org_name = ucfirst($orgData->first()["name"]);
 
             // send employee email
             $this->helper->sendOnboardMail($fullname, $username, $empPassword, $email, $org_name);
@@ -201,7 +202,7 @@ class EmployeeController extends Controller
             }
             $employees = Employee::where('department_id', $department->id)->paginate(10);
 
-            return $this->sendResponse(false, 'All Department Employees', $employees, Response::HTTP_OK);
+            return $this->sendResponse(false, null, 'All Department Employees', $employees, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, 'Employees not fetched', $e->getMessage());
         }
