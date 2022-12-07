@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -6,24 +6,38 @@ import Modal from "../../Modal";
 import useAuth from "../../../../hooks/useAuth";
 import axios from "../../../../api/axios";
 import CategoryForm from "./CategoryForm";
+import DeleteModal from "./DeleteModal";
+import { showErrorToast } from "../../../../helpers/helper";
+import { showSuccessToast } from "../../../../helpers/helper";
 
 import { More } from "iconsax-react";
 import { Button } from "../../../../styles/reusableElements.styled";
 import { click } from "@testing-library/user-event/dist/click";
 
 const List = () => {
-  const [toggleCreateCat, setToggleCreateCat] = useState(false);
   const { auth } = useAuth();
+
+  // USE STATES
+  const [toggleCreateCat, setToggleCreateCat] = useState(false);
+  const [toggleDelete, setToggleDelete] = useState(false);
+  const [toggleMaxDelete, setToggleMaxDelete] = useState(false);
   const [categories, setCategories] = useState([]);
   const [updateCategories, setUpdateCategories] = useState(false);
   const [showMore, setShowMore] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState({
     categoryId: [],
   });
 
+  // USE REFS
+  const currentSelectedName = useRef();
+  const currentSelectedId = useRef();
+
+  console.log(value.categoryId);
+
   useEffect(() => {
     const getAllCatgories = async () => {
-      const response = await axios.get(`/category/get/${auth.id}`);
+      const response = await axios.get(`/category/company/${auth.org_id}`);
       setCategories(response.data.data);
     };
 
@@ -51,11 +65,66 @@ const List = () => {
       });
     }
   };
-  const handleEdit = (id) => {};
+  const handleEdit = () => {};
 
-  const handleDelete = (id) => {};
+  const onDeleteClick = (name, cat_id, id) => {
+    setToggleDelete(true);
+    currentSelectedName.current = name;
+    currentSelectedId.current = cat_id;
+    setShowMore({
+      ...showMore,
+      [id]: !showMore[id],
+    });
+  };
 
-  const handleBulkDelete = (id) => {};
+  const onBulkDeleteClick = () => {
+    setToggleMaxDelete(true);
+  };
+
+  // Fucntions to be passed to the Delete Modal
+  const handleDelete = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.delete(
+        `category/${currentSelectedId.current}/${auth.org_id}/delete`
+      );
+      if (response.data.errorState === false) {
+        setToggleDelete(false);
+        setIsLoading(false);
+        setUpdateCategories(!updateCategories);
+        showSuccessToast(response.data.message);
+      }
+    } catch (err) {
+      setIsLoading(false);
+      if (!err.response) {
+        showErrorToast("No server response");
+      } else {
+        showErrorToast(err.response.data.message);
+      }
+    }
+  };
+
+  const handleBulkDelete = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.delete(
+        `category/${value.categoryId}/delete`
+      );
+      if (response.data.errorState === false) {
+        setToggleMaxDelete(false);
+        setIsLoading(false);
+        setUpdateCategories(!setUpdateCategories);
+        showSuccessToast(response.data.message);
+      }
+    } catch (err) {
+      setIsLoading(false);
+      if (!err.response) {
+        showErrorToast("No server response");
+      } else {
+        showErrorToast(err.response.data.message);
+      }
+    }
+  };
 
   return (
     <OverallContainer>
@@ -64,47 +133,61 @@ const List = () => {
           Add New Category
         </AddCategoryBtn>
         {value.categoryId.length > 1 && (
-          <DeleteCategoryBtn>Delete</DeleteCategoryBtn>
+          <DeleteCategoryBtn onClick={onBulkDeleteClick}>
+            Delete
+          </DeleteCategoryBtn>
         )}
       </ButtonCategory>
       <CategoryListing>
         <table>
           <tbody>
             <>
-              <tr>
-                <th>#</th>
-                <th>Category</th>
-                <th>Number of Questions</th>
-                <th></th>
-                <th></th>
-              </tr>
-              {categories.length > 0
-                ? categories?.map((category, id) => (
-                    <tr>
-                      <td>{`${id + 1}.`}</td>
-                      <td>{category.name}</td>
-                      <td>105</td>
-                      <td>
-                        <input
-                          type="checkbox"
-                          name={category.name}
-                          value={category.id}
-                          // checked={isChecked}
-                          onChange={handleChange}
-                        />
-                      </td>
-                      <td>
-                        <More onClick={() => toggleOpen(id)} />
-                      </td>
-                      {showMore[id] && (
-                        <div>
-                          <p>Edit</p>
-                          <p>Delete</p>
-                        </div>
-                      )}
-                    </tr>
-                  ))
-                : "Oops no data to return yet. Create a new category"}
+              {categories.data?.length > 0 && (
+                <tr>
+                  <th>#</th>
+                  <th>Category</th>
+                  <th>Number of Questions</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              )}
+              {categories.data?.length > 0 ? (
+                categories.data?.map((category, id) => (
+                  <tr>
+                    <td>{`${id + 1}.`}</td>
+                    <td>{category.name}</td>
+                    <td>105</td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        name={category.name}
+                        value={category.id}
+                        // checked={isChecked}
+                        onChange={handleChange}
+                      />
+                    </td>
+                    <td>
+                      <More onClick={() => toggleOpen(id)} />
+                    </td>
+                    {showMore[id] && (
+                      <div>
+                        <p>Edit</p>
+                        <p
+                          onClick={() =>
+                            onDeleteClick(category.name, category.id, id)
+                          }
+                        >
+                          Delete
+                        </p>
+                      </div>
+                    )}
+                  </tr>
+                ))
+              ) : (
+                <NoData>
+                  Oops no data to return yet. Create a new category
+                </NoData>
+              )}
             </>
           </tbody>
         </table>
@@ -116,8 +199,27 @@ const List = () => {
             <CategoryForm
               setToggleCreateCat={setToggleCreateCat}
               setUpdateCategories={setUpdateCategories}
+              updateCategories={updateCategories}
             />
           }
+        />
+      )}
+      {toggleDelete && (
+        <DeleteModal
+          handleDelete={handleDelete}
+          isLoading={isLoading}
+          setToggleDelete={setToggleDelete}
+          text={`Are you sure you want to delete ${(
+            <span>{currentSelectedName.current}</span>
+          )}`}
+        />
+      )}
+      {toggleMaxDelete && (
+        <DeleteModal
+          handleDelete={handleBulkDelete}
+          isLoading={isLoading}
+          setToggleDelete={setToggleMaxDelete}
+          text={"Are you sure you want to delete selected categories"}
         />
       )}
     </OverallContainer>
@@ -264,4 +366,9 @@ export const CategoryListing = styled.div`
       }
     }
   }
+`;
+
+const NoData = styled.div`
+  display: flex;
+  margin-top: 36px;
 `;

@@ -13,20 +13,25 @@ class Question extends Model
     protected $guarded = [];
     /**
      * @var $fillable
-    */
+     */
     protected $fillable = [
         'options',
         'timeframe',
-        'correct_answers', 
+        'correct_answers',
         'is_multiple_answers',
-        'category_id', 
-        'assessment_id', 
+        'category_id',
+        'assessment_id',
         'company_id',
-        'question_id'
+        'question'
     ];
 
     protected $casts = [
         'options' => 'array',
         'correct_answers' => 'array',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
 }

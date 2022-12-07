@@ -8,6 +8,7 @@ import { OverlayLoader } from "../../../styles/reusableElements.styled";
 
 import PageInfo from "../../components/molecules/PageInfo";
 
+
 const Employees = () => {
   const { auth } = useAuth();
   const [employees, setEmployees] = useState();

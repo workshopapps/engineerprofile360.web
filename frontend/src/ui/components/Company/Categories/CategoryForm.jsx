@@ -9,7 +9,15 @@ import { Loader } from "../../../../styles/reusableElements.styled";
 import { Title } from "../../../../styles/reusableElements.styled";
 import { Button } from "../../../../styles/reusableElements.styled";
 
+<<<<<<< HEAD
 const CategoryForm = ({ setToggleCreateCat, setUpdateCategories }) => {
+=======
+const CategoryForm = ({
+  setToggleCreateCat,
+  setUpdateCategories,
+  updateCategories,
+}) => {
+>>>>>>> dev
   const [formData, setFormData] = useState({
     category_name: "",
   });
@@ -19,9 +27,8 @@ const CategoryForm = ({ setToggleCreateCat, setUpdateCategories }) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const orgId = auth.id;
+  const org_id = auth.org_id;
   const { category_name: name } = formData;
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitted(true);
@@ -29,7 +36,7 @@ const CategoryForm = ({ setToggleCreateCat, setUpdateCategories }) => {
       if (name.length !== "") {
         const response = await axios.post(
           "category/add",
-          JSON.stringify({ name, orgId })
+          JSON.stringify({ name, org_id })
         );
 
         console.log(response.data);
@@ -38,12 +45,18 @@ const CategoryForm = ({ setToggleCreateCat, setUpdateCategories }) => {
           showSuccessToast(response.data.message);
         setIsSubmitted(false);
         setToggleCreateCat(false);
+<<<<<<< HEAD
         setUpdateCategories(true);
+=======
+        setUpdateCategories(!updateCategories);
+>>>>>>> dev
       }
     } catch (err) {
+      console.log(err);
+      setIsSubmitted(false);
       if (!err?.response) {
         showErrorToast("No Server Response");
-      } else if (err.response?.data.errorState === true) {
+      } else if (err?.response.data.errorState === true) {
         showErrorToast(err.response.data.message);
         setIsSubmitted(false);
       }
@@ -73,6 +86,7 @@ const CategoryForm = ({ setToggleCreateCat, setUpdateCategories }) => {
       </InputFieldWrapper>
 
       <ButtonContainer>
+<<<<<<< HEAD
         <Button
           type="button"
           onClick={(e) => {
@@ -93,6 +107,35 @@ const CategoryForm = ({ setToggleCreateCat, setUpdateCategories }) => {
         >
           {isSubmitted ? <Loader /> : "Proceed"}
         </Button>
+=======
+        {!isSubmitted && (
+          <Button
+            type="button"
+            onClick={(e) => {
+              setToggleCreateCat(false);
+            }}
+          >
+            Cancel
+          </Button>
+        )}
+
+        {isSubmitted && <Loader />}
+
+        {!isSubmitted && (
+          <Button
+            type="submit"
+            border={"1px solid #2667FF"}
+            w={"117px"}
+            h={"48px"}
+            text={"#fff"}
+            bg={"#2667FF"}
+            rounded={"4px"}
+            m={" 6px"}
+          >
+            Proceed
+          </Button>
+        )}
+>>>>>>> dev
       </ButtonContainer>
     </FormContainer>
   );
