@@ -93,20 +93,35 @@ const AdminLogin = () => {
 
         console.log(response);
 
-        setAuth({ email, password, accessToken, username, roles, id, org_id });
-        persist &&
-          localStorage.setItem(
-            "Eval360",
-            JSON.stringify({
-              email,
-              password,
-              accessToken,
-              roles,
-              id,
-              org_id,
-              username,
-            })
-          );
+        if (roles === 2) {
+          setAuth({ email, accessToken, username, roles, id, org_id });
+          persist &&
+            localStorage.setItem(
+              "Eval360",
+              JSON.stringify({
+                email,
+                accessToken,
+                roles,
+                id,
+                org_id,
+                username,
+              })
+            );
+        } else if (roles === 3) {
+          setAuth({ email, accessToken, username, roles, id });
+          persist &&
+            localStorage.setItem(
+              "Eval360",
+              JSON.stringify({
+                email,
+                accessToken,
+                roles,
+                id,
+                username,
+              })
+            );
+        }
+
         console.log(response.data);
         if (response.data.errorState === false) {
           // Clear input fields
@@ -115,7 +130,11 @@ const AdminLogin = () => {
             password: "",
           });
 
-          navigate(from, { replace: true });
+          if (roles === 2) {
+            navigate(from, { replace: true });
+          } else if (roles === 3) {
+            navigate("/admin/dashboard", { replace: true });
+          }
         } else if (response.data.errorState === true) {
           showErrorToast(response.data.message);
         }

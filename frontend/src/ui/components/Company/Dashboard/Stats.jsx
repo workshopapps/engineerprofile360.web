@@ -26,41 +26,50 @@ ChartJS.register(
 );
 
 const Stats = ({ stats, topPerformance }) => {
+  console.log(topPerformance);
   return (
     <>
       <StatsContainer>
         <IndividualStats>
-          <Stat>
-            <Profile2User color="#141ae9" />
-            <Type>
-              Total No. of <br /> Employees
-            </Type>
-            <Number>{stats.employees}</Number>
-          </Stat>
-          <Stat>
-            <Note color="#141ae9" />
-            <Type>
-              Total <br />
-              Assessments
-            </Type>
-            <Number>{stats.assessments}</Number>
-          </Stat>
-          <Stat>
-            <TickCircle color="#141ae9" />
-            <Type>
-              Approved <br />
-              Assessments
-            </Type>
-            <Number>{stats.availableAssessments}</Number>
-          </Stat>
-          <Stat>
-            <TaskSquare color="#141ae9" />
-            <Type>
-              Completed
-              <br /> Assessments
-            </Type>
-            <Number>{stats.completedAssessments}</Number>
-          </Stat>
+          <Link to="/employees">
+            <Stat>
+              <Profile2User color="#141ae9" />
+              <Type>
+                Total No. of <br /> Employees
+              </Type>
+              <Number>{stats.employees}</Number>
+            </Stat>
+          </Link>
+          <Link to="/assessments">
+            <Stat>
+              <Note color="#141ae9" />
+              <Type>
+                Total <br />
+                Assessments
+              </Type>
+              <Number>{stats.assessments}</Number>
+            </Stat>
+          </Link>
+          <Link to="/assessments">
+            <Stat>
+              <TickCircle color="#141ae9" />
+              <Type>
+                Approved <br />
+                Assessments
+              </Type>
+              <Number>{stats.availableAssessments}</Number>
+            </Stat>
+          </Link>
+          <Link to="/assessments">
+            <Stat>
+              <TaskSquare color="#141ae9" />
+              <Type>
+                Completed
+                <br /> Assessments
+              </Type>
+              <Number>{stats.completedAssessments}</Number>
+            </Stat>
+          </Link>
         </IndividualStats>
         <Chart topPerformance={topPerformance} />
       </StatsContainer>
@@ -151,12 +160,27 @@ const Stat = styled.div`
 `;
 
 const Type = styled.div`
-  font-size: 16px;
+  font-size: 18px;
   color: #141ae9;
+
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    font-size: 16px;
+  }
 `;
 
 const Number = styled.div`
-  font-size: 16px;
+  font-size: 18px;
+  color: #323130;
+  &:hover,
+  &:active,
+  &:visited {
+    color: #323130;
+    text-decoration: none;
+  }
+
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    font-size: 16px;
+  }
 `;
 
 const Performances = styled.div`
@@ -184,9 +208,10 @@ const Header = styled.div`
 const PerformancesChart = styled.div`
   background: #f8fbfd;
   width: 100%;
-  height: 85%;
+  height: 90%;
+  padding: ${({theme}) => theme.spacing(2)};
   display: flex;
-  align-tems: center;
+  align-items: center;
   justify-content: center;
-  min-height: 300px;
+  min-height: 400px;
 `;
