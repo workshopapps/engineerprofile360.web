@@ -41,16 +41,23 @@ import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 import UserSupport from "./main/pages/UserSupport";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
 // import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
-// import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
+import Privacy from "./main/pages/Privacy/privacy";
+// import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
+import AdminSetting from "./ui/pages/AdminSetting";
+import PricingPage from "./main/pages/PricingPage";
+import Payment from "./main/pages/Payment";
+import HelpCenter from "../src/main/pages/HelpCenter";
+import Market from "./main/components/Market-comp-page-2/Market";
+import AdminCSVUpload from "./ui/pages/AdminUpload/AdminCSVUpload";
+import UserAssessmentListCompleted from "./ui/pages/UserAssestList/UserAssestListCompleted";
 // import EmployeeTakeAssessment from "../miscellaneous/pages/EmployeeTakeAssessment";
 // import UserTakeAssessment from "./ui/pages/userTakeAssessment/UserTakeAssessment";
 // import UserTakeAssessmentResult from "../miscellaneous/pages/UserTakeAssessmentResult";
 // import GuestTakeAssessment from "./ui/pages/guest/GuestTakeAssessment";
 // import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
-// import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
-
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import AdminCSVUpload from "./ui/components/Company/Assessments/AdminCSVUpload";
+
 
 import GuestEmail from "./main/pages/GuestEmail";
 import GuestAssessmentList from "./main/pages/GuestAssessmentList";
@@ -141,9 +148,17 @@ const App = () => {
             <Route
               path="/guest-take-assessment-result"
               element={<GuestTakeAssessmentResult />}
+            />
+
+            <Route path="/csv-uploading" element={<CsvUploading />} />
+
+            <Route
+              path="/csv-uploading-complete"
+              element={<CsvUploadComplete />}
+            />
+            <Route path="/privacy-policy" element={<Privacy />} />
             /> */}
 
-            {/* <Route path="/setting" element={<AdminSetting />} /> */}
             <Route path="/employee-profile" element={<EmployeeProfile />} />
             <Route path="/admin-csv-upload" element={<AdminCSVUpload />} />
             {/* <Route
@@ -270,8 +285,10 @@ const App = () => {
                 {/* Put in Protected pages in here */}
                 <Route path="/admin/dashboard" element={"Admin pages will render here"} />
               </Route>
+              <Route path="/setting" element={<AdminSetting />} />
 
               {/* <Route path="/assessment" element={<Assessment />} /> */}
+
             </Route>
           </Route>
         </Routes>
