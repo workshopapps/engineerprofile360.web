@@ -98,26 +98,29 @@ class CategoryController extends Controller
         }
     }
 
-    public function getByCategoryId(Request $request, $categoryId): JsonResponse
+    public function getCategoryById($orgId, $categoryId): JsonResponse
     {
         try {
-            $uid = $request->user["id"];
-            $category = Category::find($categoryId);
+            $category = Category::where('id', $categoryId)->where('org_id', $orgId)->first();
 
-            if (!$category) return $this->sendResponse(true,'Category not found',
-                'category does not exist',null, Response::HTTP_NOT_FOUND);
-
-            $org_id = $category->where('org_id', $uid)->first()["org_id"];
-            if ($org_id !== $uid)
-            {
-                return $this->sendResponse(true, "not authorised to view category", "unauthorised.", null, 404);
+            if (!$category) {
+                return $this->sendResponse(
+                    true,
+                    'Category not found',
+                    'Category does not exist',
+                    null,
+                    Response::HTTP_NOT_FOUND);
             }
 
-            return $this->sendResponse(true, null,'category retrieved',
-                $category, Response::HTTP_OK);
+            return $this->sendResponse(
+                true,
+                null,
+                'Category',
+                $category,
+                Response::HTTP_OK
+            );
         } catch (Exception $e) {
-            return $this->sendResponse(true,"Error fetching category", $e->getMessage(), null,
-            Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->sendResponse(true,"Error fetching category", $e->getMessage(), null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }
