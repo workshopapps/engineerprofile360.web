@@ -27,6 +27,11 @@ class Employee extends Model
         return $this->hasMany(UserAssessment::class, 'employee_id');
     }
 
+    public function completed_assessment()
+    {
+        return $this->hasMany(UserAssessment::class, 'employee_id')->where("completed", 1);
+    }
+
     public function department()
     {
         return $this->belongsTo(Department::class, 'department_id');
