@@ -1,13 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Button, Loader } from "../../../../../styles/reusableElements.styled";
-import addCircle from "../../../../../assets/icons/app/add-circle.svg";
 import PageInfo from "../../../molecules/PageInfo";
 import Flex from "../../../layout/Flex";
 import { Link } from "react-router-dom";
 import axios from "../../../../../api/axios";
 import useAuth from "../../../../../hooks/useAuth";
 import { showErrorToast } from "../../../../../helpers/helper";
+import { AddCircle } from "iconsax-react";
 // import useAuth from "";
 
 const DataContext = createContext(null);
@@ -79,7 +79,7 @@ const Buttons = () => {
           <Link to="/assessment/create-assessment">
             <Button>
               <Flex spacing={10} ai="center">
-                <img src={addCircle} alt="" />
+                <AddCircle size="24" color="#fff" />
                 <Text $color="white">Create New Assessment</Text>
               </Flex>
             </Button>
@@ -91,7 +91,7 @@ const Buttons = () => {
           <Link to="/assessment/create-assessment">
             <Button>
               <Flex spacing={10} ai="center">
-                <img src={addCircle} alt="" />
+                <AddCircle size="24" color="#fff" />
               </Flex>
             </Button>
           </Link>

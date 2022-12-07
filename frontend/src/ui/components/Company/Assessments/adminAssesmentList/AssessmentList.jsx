@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { Button, Loader } from "../../../../../styles/reusableElements.styled";
-import addCircle from "../../../../../assets/icons/app/add-circle.svg";
 import PageInfo from "../../../molecules/PageInfo";
 import Flex from "../../../layout/Flex";
 import { Link } from "react-router-dom";
@@ -20,6 +19,7 @@ import {
   TH2,
 } from "./AdminAssessmentListAvailable";
 import { showErrorToast } from "../../../../../helpers/helper";
+import { AddCircle } from "iconsax-react";
 
 const DataContext = createContext(null);
 export const Buttons = () => {
@@ -30,7 +30,7 @@ export const Buttons = () => {
           <Link to="/assessment/create-assessment">
             <Button>
               <Flex spacing={10} ai="center">
-                <img src={addCircle} alt="" />
+                <AddCircle size="24" color="#fff" />
                 <Text $color="white">Create New Assessment</Text>
               </Flex>
             </Button>
@@ -42,7 +42,7 @@ export const Buttons = () => {
           <Link to="/assessment/create-assessment">
             <Button>
               <Flex spacing={10} ai="center">
-                <img src={addCircle} alt="" />
+                <AddCircle size="24" color="#fff" />
               </Flex>
             </Button>
           </Link>
