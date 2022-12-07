@@ -211,11 +211,11 @@ class EmployeeController extends Controller
      * @param string $orgId
      *
      * @return JsonResponse
-    */
+     */
     public function getEmployeesByCompanyId($orgId)
     {
         try {
-            $employees = Employee::where('org_id', $orgId)->withCount('assessment')->paginate(10);
+            $employees = Employee::where('org_id', $orgId)->with('department')->withCount('assessment')->paginate(10);
 
             return $this->sendResponse(
                 false,
@@ -228,5 +228,4 @@ class EmployeeController extends Controller
             return $this->sendResponse(true, 'Employees not fetched', $e->getMessage());
         }
     }
-
 }
