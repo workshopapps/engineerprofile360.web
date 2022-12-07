@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-/ Import Sentry 
+// Import Sentry 
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
 import reportWebVitals from './reportWebVitals';
