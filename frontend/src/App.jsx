@@ -64,6 +64,8 @@ import {
   EmployeeProfile,
   EmployeesListing,
 } from "./ui/components/Company/Employees";
+
+import Users from "./ui/pages/Admin/Users";
 import MainAssessment from "./ui/pages/Company/Assessment";
 import UserAssessmentListOutlet from "./ui/pages/Employee/EmployeeAssessmentList";
 import EmployeeUserDashboard from "./ui/pages/Employee/EmployeeDashboard";
@@ -217,10 +219,7 @@ const App = () => {
 
                 <Route path="/employees" element={<Employees />}>
                   <Route path="" element={<EmployeesListing />} />
-                  <Route
-                    path="profile"
-                    element={<EmployeeProfile />}
-                  />
+                  <Route path="profile" element={<EmployeeProfile />} />
                   <Route
                     path="employee-profile"
                     element={<EmployeeProfile />}
@@ -267,7 +266,11 @@ const App = () => {
               {/* Overall Admin Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
                 {/* Put in Protected pages in here */}
-                <Route path="/admin/dashboard" element={"Admin pages will render here"} />
+                <Route
+                  path="/admin/dashboard"
+                  element={"Admin pages will render here"}
+                />
+                <Route path="/admin/users" element={<Users />} />
               </Route>
 
               {/* <Route path="/assessment" element={<Assessment />} /> */}
