@@ -15,6 +15,8 @@ function Terms() {
           <PageDate>Last updated on November 15, 2022</PageDate>
         </PageHeader>
 
+        {/* Main Section */}
+
         <MainSection>
           <LeftContent>
             <Section>
