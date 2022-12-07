@@ -65,22 +65,11 @@ class AssessmentController extends Controller
                 return $this->sendResponse(true, "expected a valid assessment 'id'  but got none", "assessment id is missing.", null, 400);
             }
 
-
-            $uid = $request->user["id"];
-            $assessment = Assessment::where('id', $assessmentId)->where("org_id", $uid);
+            $assessment = Assessment::where('id', $assessmentId);
 
             if ($assessment->count() == 0) {
                 return $this->sendResponse(true, "assessment doesnt exists", "assessment not found.", null, 404);
             }
-
-            // check if it same user who's trying to delete assessment
-            $org_id = $assessment->first()["org_id"];
-
-            if ($org_id !== $uid) {
-                return $this->sendResponse(true, "not authorised to delete assessment", "unauthorised.", null, 404);
-            }
-
-
             $assessment->delete();
 
             return $this->sendResponse(false, null, 'assessment deleted successfully', null, Response::HTTP_OK);
