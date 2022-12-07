@@ -66,32 +66,22 @@ class CategoryController extends Controller
         }
     }
 
-    public function deleteCategory(Request $request, $category_id): JsonResponse
+    public function deleteCategory($categoryId, $orgId): JsonResponse
     {
+
         try {
-            if (empty($category_id)) {
-                return $this->sendResponse(true, "expected a valid category 'id'  but got none", "category id is missing.", null, 400);
-            }
 
-            $uid = $request->user["id"];
-            $category = Category::where('id', $category_id)->where("org_id", $uid);
+            $category = Category::where('id', $categoryId)->where('org_id', $orgId)->first();
 
-            if ($category->count() == 0) {
-                return $this->sendResponse(true, "category doesnt exists", "category not found.", null, 404);
-            }
-
-            // check if it same user who's trying to delete category
-            $org_id = $category->first()["org_id"];
-
-            if ($org_id !== $uid) {
-                return $this->sendResponse(true, "not authorised to delete category", "unauthorised.", null, 404);
+            if(!$category){
+                return $this->sendResponse(true, "Category does not exist", "Category not found for this user", null, Response::HTTP_NOT_FOUND);
             }
 
             $category->delete();
 
             return $this->sendResponse(false, null, 'Category deleted successfully', null, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true, "something went wrong deleting category " . $e->getMessage(), 'failed deleting category.', null, 500);
+            return $this->sendResponse(true, "Could not fetch category ", $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -103,7 +93,8 @@ class CategoryController extends Controller
 
             return $this->sendResponse(false, null, 'All categories', $allCategories, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true, "something went wrong fetching categories " . $e->getMessage(), 'failed fetching categories.', null, 500);
+            return $this->sendResponse(true, "something went wrong fetching categories " . $e->getMessage(),
+                'failed fetching categories.', null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 

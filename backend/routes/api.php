@@ -155,7 +155,7 @@ Route::prefix("question")->group(function () {
 Route::prefix("category")->group(function () {
     Route::put('/{org_id}/{categoryId}/update', [CategoryController::class, 'updateCategory'])->middleware("isloggedin");
     Route::post('/add', [CategoryController::class, 'createCategory'])->middleware("isloggedin", "isadmin");
-    Route::delete('{catId}/delete', [CategoryController::class, 'deleteCategory'])->middleware("isloggedin", "isadmin");
+    Route::delete('/{catId}/{orgId}/delete', [CategoryController::class, 'deleteCategory'])->middleware("isloggedin", "isadmin");
     Route::get("/get/{org_id}", [CategoryController::class, "getCategoriesByOrgId"])->middleware("isloggedin", "isadmin");
     Route::get('/{id}', [CategoryController::class, 'getByCategoryId'])->middleware("isloggedin", "isadmin");
 });
