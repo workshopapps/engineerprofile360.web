@@ -145,7 +145,8 @@ Route::prefix("company")->group(function () {
 // questions route operations
 Route::prefix("question")->group(function () {
     Route::post('upload', [QuestionsController::class, 'uploadCsv'])->middleware("isloggedin", "isadmin");
-    Route::post('add', [QuestionsController::class, 'addManually'])->middleware("isloggedin", "isadmin");
+    Route::post('add', [QuestionsController::class, 'addManually']);
+    // Route::post('add', [QuestionsController::class, 'addManually'])->middleware("isloggedin", "isadmin");
     Route::get('{id}', [QuestionsController::class, 'getQuestById']);
     Route::get('company/{id}', [QuestionsController::class, 'getQuestByComId']);
     Route::get('category/{id}', [QuestionsController::class, 'getQuestByCatId']);

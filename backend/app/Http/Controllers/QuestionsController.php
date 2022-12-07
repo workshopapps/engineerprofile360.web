@@ -39,12 +39,16 @@ class QuestionsController extends Controller
     {
         try {
             $data = $request->validated();
+       
             $output = array();
             for ($i = 0; $i < count($data['questions']); $i++) {
                 $result = Question::create([
                     "category_id" => $data["category_id"],
                     "assessment_id" => $data["assessment_id"],
-                    ...$data['questions'][$i]
+                    "company_id" => $data["company_id"],
+                    ...$data['questions'][$i],
+                    "options"=>json_encode($data['questions'][$i]["options"]),
+                    "correct_answers"=>json_encode($data['questions'][$i]["correct_answers"]),
                 ]);
                 array_push($output, $result);
             }
