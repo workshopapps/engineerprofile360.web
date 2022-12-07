@@ -51,6 +51,12 @@ export default BlogCard;
 
 const BlogCardContainer = styled.div`
   border: 1px solid #d1d1d1;
+<<<<<<< HEAD
+=======
+  min-height: 480px;
+  max-height: 700px;
+  height: 100%;
+>>>>>>> e4911459a466f60d8b9e0d77604c955b404b8aa1
 `;
 
 const FeaturedImage = styled.img`
@@ -98,7 +104,13 @@ const InfoTwo = styled.div`
 const TimeStamp = styled.div`
   display: flex;
   gap: 8px;
+<<<<<<< HEAD
   align-items: center;
+=======
+  justify-content: center;
+  align-items: baseline;
+  text-align: center;
+>>>>>>> e4911459a466f60d8b9e0d77604c955b404b8aa1
 `;
 const StatusDot = styled.div`
   width: 8px;

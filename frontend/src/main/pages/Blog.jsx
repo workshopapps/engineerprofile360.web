@@ -16,6 +16,118 @@ import styled from "styled-components";
 import React from "react";
 import { Button, Container, Title } from "../../styles/reusableElements.styled";
 import EmailNewsLetter from "../components/Blog/EmailNewsLetter";
+import { Link } from "react-router-dom";
+import { Category } from "iconsax-react";
+
+export const PostLists = [
+  {
+    featuredImage: frame1,
+    category: "Skill Aquisation",
+    timestamp: "8 mins read",
+    title: "6 High-Demand skills Engineers must have in 2023",
+    summary:
+      "Engineers bridge the gap between scientific discoveries amd commercial applications thatEngaged  me..",
+    name: "Mike Idah",
+    date: "8, June, 2022",
+    avatar: dp,
+  },
+
+  {
+    featuredImage: frame2,
+    category: "Recruitment & Sourcing",
+    timestamp: "10 mins read",
+    title: "Strategic HR Management and Hiring Process",
+    summary:
+      "When people think of Human Resource, they usually think of duties like payroll, recruitment and outsourci...",
+    name: "Flem Rogers",
+    date: "11, August, 2021",
+    avatar: dp2,
+  },
+
+  {
+    featuredImage: frame3,
+    category: "Emplpoyment Engagement",
+    timestamp: "5 mins read",
+    title: "Benefits of Adopting Digital HR Onboarding Software",
+    summary:
+      "Engineers bridge the gap between scientific discoveries amd commercial applications thatEngaged  me..",
+    name: "Joseph Jacob",
+    date: "11, August, 2021",
+    avatar: dp3,
+  },
+
+  {
+    featuredImage: frame4,
+    category: "Recruitment & Sourcing",
+    timestamp: "10 mins read",
+    title: "Improve Employee Engagement during Onboarding",
+    summary:
+      "Engaged employees make a difference between a companuy and that is just getting along and the on...",
+    name: "Flem Rogers",
+    date: "12, July, 2022",
+    avatar: dp,
+  },
+
+  {
+    featuredImage: frame5,
+    category: "Emplpoyment Engagement",
+    timestamp: "5 mins read",
+    title: "Tips for Niche Talent Aquisition",
+    summary:
+      "With niche recruitment, you cover one industry or a few industries. You specialize in the smaller areas...",
+    name: "Joseph Jacob",
+    date: "11, August, 2021",
+    avatar: dp2,
+  },
+
+  {
+    featuredImage: frame6,
+    category: "Talent Aquisition",
+    timestamp: "8 mins read",
+    title: "How Companies get better with Efficient Talent Evaluation",
+    summary:
+      "With the rise of more engineering talents, it is important to constantly assess talents for the evolut...",
+    name: "Mike Idah",
+    date: "8, June, 2022",
+    avatar: dp3,
+  },
+
+  {
+    featuredImage: frame7,
+    category: "Talent Evaluation",
+    timestamp: "10 mins read",
+    title: "5 of the Best tools for Evalutating Engineers",
+    summary:
+      "With the dire need for skilled professionals in a fast-paced working environment, the need for human...",
+    name: "Flem Rogers",
+    date: "12, July, 2021",
+    avatar: dp,
+  },
+
+  {
+    featuredImage: frame8,
+    category: "Emplpoyment Engagement",
+    timestamp: "5 mins read",
+    title: "Obstacles to manage employee performance",
+    summary:
+      "Skrill stands out amongst the best  evaluator tools with its unique features and scalable assessement...",
+    name: "Joseph Jacob",
+    date: "11, August, 2021",
+    avatar: dp2,
+  },
+
+  {
+    featuredImage: frame9,
+    category: "Employee Experience",
+    timestamp: "8 mins read",
+    title: "Impact of Organizational Culture on Hiring",
+    summary:
+      "When you think about your ideal job, you probably aren’t just thinking about your favorite role in a w ...",
+    name: "Ken Okonkwo",
+    date: "8, June, 2020",
+    avatar: dp3,
+  },
+];
 
 const Blog = () => {
   const [mobileShow, setMobileShow] = React.useState(false);
@@ -29,116 +141,6 @@ const Blog = () => {
     "Team Engagerment",
   ];
 
-  const PostLists = [
-    {
-      featuredImage: frame1,
-      category: "Skill Aquisation",
-      timestamp: "8 mins read",
-      title: "6 High-Demand skills Engineers must have in 2023",
-      summary:
-        "Engineers bridge the gap between scientific discoveries amd commercial applications thatEngaged  me..",
-      name: "Mike Idah",
-      date: "8, June, 2022",
-      avatar: dp,
-    },
-
-    {
-      featuredImage: frame2,
-      category: "Recruitment & Sourcing",
-      timestamp: "10 mins read",
-      title: "Strategic HR Management and Hiring Process",
-      summary:
-        "When people think of Human Resource, they usually think of duties like payroll, recruitment and outsourci...",
-      name: "Flem Rogers",
-      date: "11, August, 2021",
-      avatar: dp2,
-    },
-
-    {
-      featuredImage: frame3,
-      category: "Emplpoyment Engagement",
-      timestamp: "5 mins read",
-      title: "Benefits of Adopting Digital HR Onboarding Software",
-      summary:
-        "Engineers bridge the gap between scientific discoveries amd commercial applications thatEngaged  me..",
-      name: "Joseph Jacob",
-      date: "11, August, 2021",
-      avatar: dp3,
-    },
-
-    {
-      featuredImage: frame4,
-      category: "Recruitment & Sourcing",
-      timestamp: "10 mins read",
-      title: "Improve Employee Engagement during Onboarding",
-      summary:
-        "Engaged employees make a difference between a companuy and that is just getting along and the on...",
-      name: "Flem Rogers",
-      date: "12, July, 2022",
-      avatar: dp,
-    },
-
-    {
-      featuredImage: frame5,
-      category: "Emplpoyment Engagement",
-      timestamp: "5 mins read",
-      title: "Tips for Niche Talent Aquisition",
-      summary:
-        "With niche recruitment, you cover one industry or a few industries. You specialize in the smaller areas...",
-      name: "Joseph Jacob",
-      date: "11, August, 2021",
-      avatar: dp2,
-    },
-
-    {
-      featuredImage: frame6,
-      category: "Talent Aquisition",
-      timestamp: "8 mins read",
-      title: "How Companies get better with Efficient Talent Evaluation",
-      summary:
-        "With the rise of more engineering talents, it is important to constantly assess talents for the evolut...",
-      name: "Mike Idah",
-      date: "8, June, 2022",
-      avatar: dp3,
-    },
-
-    {
-      featuredImage: frame7,
-      category: "Talent Evaluation",
-      timestamp: "10 mins read",
-      title: "5 of the Best tools for Evalutating Engineers",
-      summary:
-        "With the dire need for skilled professionals in a fast-paced working environment, the need for human...",
-      name: "Flem Rogers",
-      date: "12, July, 2021",
-      avatar: dp,
-    },
-
-    {
-      featuredImage: frame8,
-      category: "Emplpoyment Engagement",
-      timestamp: "5 mins read",
-      title: "Obstacles to manage employee performance",
-      summary:
-        "Skrill stands out amongst the best  evaluator tools with its unique features and scalable assessement...",
-      name: "Joseph Jacob",
-      date: "11, August, 2021",
-      avatar: dp2,
-    },
-
-    {
-      featuredImage: frame9,
-      category: "Employee Experience",
-      timestamp: "8 mins read",
-      title: "Impact of Organizational Culture on Hiring",
-      summary:
-        "When you think about your ideal job, you probably aren’t just thinking about your favorite role in a w ...",
-      name: "Ken Okonkwo",
-      date: "8, June, 2020",
-      avatar: dp3,
-    },
-  ];
-
   return (
     <BlogContainer>
       <BlogNavigation>
@@ -148,7 +150,10 @@ const Blog = () => {
             : []}
         </BlogLinks>
         <BlogMobileLinksContainer>
-          <Button onClick={() => setMobileShow(!mobileShow)}>Categories</Button>
+          <Button onClick={() => setMobileShow(!mobileShow)}>
+            <span>Categories </span>
+            <Category size="28" color="#2667FF8C" />
+          </Button>
           {mobileShow ? (
             <BlogMobileLinks>
               {NavLinks
@@ -174,17 +179,18 @@ const Blog = () => {
       <PostContainer>
         {PostLists
           ? PostLists.map((post, key) => (
-              <BlogCard
-                key={key}
-                featuredImage={post.featuredImage}
-                category={post.category}
-                timestamp={post.timestamp}
-                title={post.title}
-                summary={post.summary}
-                name={post.name}
-                date={post.date}
-                avatar={post.avatar}
-              />
+              <Link to="/blog-story" key={key}>
+                <BlogCard
+                  featuredImage={post.featuredImage}
+                  category={post.category}
+                  timestamp={post.timestamp}
+                  title={post.title}
+                  summary={post.summary}
+                  name={post.name}
+                  date={post.date}
+                  avatar={post.avatar}
+                />
+              </Link>
             ))
           : []}
       </PostContainer>
@@ -242,7 +248,7 @@ const BlogMobileLinksContainer = styled.div`
 
   button {
     display: flex;
-    justify-content: start;
+    justify-content: space-between;
     background-color: #fff;
     border: 1px solid black;
     color: #605e5c;
@@ -257,15 +263,17 @@ const BlogMobileLinksContainer = styled.div`
 
 const BlogMobileLinks = styled.ul`
   position: absolute;
-  margin-top: 50px;
-  background-color: #fff;
+  margin-top: 49px;
+  padding: 20px 20px;
+  background-color: #2667ff;
+  color: #fff;
   width: 100%;
   top: 0;
   z-index: 20;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 20px;
 
   li {
   }
@@ -285,7 +293,7 @@ const HeaderContainer = styled.div`
   }
 `;
 
-const PostContainer = styled.div`
+export const PostContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 72px;
