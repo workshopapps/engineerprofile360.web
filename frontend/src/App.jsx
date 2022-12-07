@@ -42,7 +42,7 @@ import GuestTakeAssessment from "./ui/pages/guest/GuestTakeAssessment";
 import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
 import Privacy from "./main/pages/Privacy/privacy";
 // import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
-import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
+import AdminSetting from "./ui/pages/AdminSetting";
 // import Testimonial from "./main/components/Testimonials/Testimonial";
 import PricingPage from "./main/pages/PricingPage";
 import Payment from "./main/pages/Payment";
@@ -160,8 +160,6 @@ const App = () => {
               path="/csv-uploading-complete"
               element={<CsvUploadComplete />}
             />
-
-            <Route path="/setting" element={<AdminSetting />} />
             <Route path="/privacy-policy" element={<Privacy />} />
             <Route path="/employee-profile" element={<EmployeeProfile />} />
             <Route path="/admin-csv-upload" element={<AdminCSVUpload />} />
@@ -292,6 +290,7 @@ const App = () => {
                 {/* Put in Protected pages in here */}
               </Route>
               <Route path="/assessment" element={<Assessment />} />
+              <Route path="/setting" element={<AdminSetting />} />
             </Route>
           </Route>
         </Routes>
