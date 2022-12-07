@@ -31,7 +31,7 @@ class EmployeeController extends Controller
     public function byCompId($company_id)
     {
         try {
-            $employees = Employee::select('employees.id as employee_id', 'departments.name as department', 'employees.fullname as employee_name', 'employees.username as username','employees.email as email', 'employees.occupation as occupation', 'employees.created_at as created_at', 'employees.updated_at as updated_at')
+            $employees = Employee::select('employees.id as employee_id', 'departments.name as department', 'employees.fullname as employee_name', 'employees.username as username', 'employees.email as email', 'employees.occupation as occupation', 'employees.created_at as created_at', 'employees.updated_at as updated_at')
                 ->join('departments', 'departments.id', '=', 'employees.department_id')
                 ->where('employees.org_id', $company_id)
                 ->paginate(5);
@@ -58,14 +58,13 @@ class EmployeeController extends Controller
     {
         try {
             $query = $request->query('type');
-            $uid = $request->user["id"];
             $defaultPwd = implode("", $this->generateRandomPwd(10));
 
             if ($query === "csv") {
                 $csv = new CsvParser();
                 $payload = json_decode($request->getContent(), true);
                 $file = $payload['csv_file'];
-                $result = $csv->parseEmployeeCsv($file, $uid, $payload['department_id']);
+                $result = $csv->parseEmployeeCsv($file, $payload["org_id"], $payload['department_id']);
                 if ($result["error"] == false && $result["message"] == "csv parsed") {
                     $data = $result['data'];
                     return $this->sendResponse(false, null, "CSV Parsed Successfully", $data, Response::HTTP_OK);
@@ -73,21 +72,19 @@ class EmployeeController extends Controller
                     return $this->sendResponse(true, $result["error"], "Invalid File Type", null, Response::HTTP_BAD_REQUEST);
                 }
             } else if ($query === "manual") {
-
-
                 $payload = json_decode($request->getContent(), true);
 
                 // validate payload
-                if (!isset($payload["email"]) || !isset($payload["fullname"]) || !isset($payload["username"]) || !isset($payload["department_id"])) {
+                if (!isset($payload["email"]) || !isset($payload["fullname"]) || !isset($payload["username"]) || !isset($payload["department_id"]) || !isset($payload["org_id"])) {
                     return $this->sendResponse(true, "expected a valid employee 'username,fullname,email'  but got none", "missing employee data.", null, 400);
                 }
 
-                if (empty($payload["email"]) || empty($payload["fullname"]) || empty($payload["username"]) || empty($payload["department_id"])) {
+                if (empty($payload["email"]) || empty($payload["fullname"]) || empty($payload["username"]) || empty($payload["department_id"]) || empty($payload["org_id"])) {
                     return $this->sendResponse(true, "expected a valid employee 'username,fullname,email'  but got none", "missing employee data values.", null, 400);
                 }
 
                 // check if employe exists
-                $empExists = Employee::where("email", $payload["email"]);
+                $empExists = Employee::where(["email" => $payload["email"], "org_id" => $payload["org_id"]]);
 
                 if ($empExists->count() > 0) {
                     return $this->sendResponse(true, "employee already exists", "employee with this email already exists", null, Response::HTTP_BAD_REQUEST);
@@ -100,7 +97,7 @@ class EmployeeController extends Controller
                     "fullname" => $payload["fullname"],
                     "email" => $payload["email"],
                     "department_id" => $payload["department_id"],
-                    "org_id" => $uid,
+                    "org_id" => $payload["org_id"],
                     "hash" => $hash,
                     "raw_password" => $defaultPwd
                 ];
@@ -177,8 +174,9 @@ class EmployeeController extends Controller
             $org_id = $data["org_id"];
 
             // fetch organization info
-            $orgData = Company::where("user_id", $org_id)->first();
-            $org_name = ucfirst($orgData["name"]);
+            $orgData = Company::find($org_id);
+            if (!$orgData->count())  return $this->sendResponse(true, "Not found", "Company not found", null, Response::HTTP_NOT_FOUND);
+            $org_name = ucfirst($orgData->first()["name"]);
 
             // send employee email
             $this->helper->sendOnboardMail($fullname, $username, $empPassword, $email, $org_name);
@@ -202,11 +200,11 @@ class EmployeeController extends Controller
                     Response::HTTP_NOT_FOUND
                 );
             }
-            $employees = Employee::where('department_id', $departmentId)->paginate(10);
+            $employees = Employee::where('department_id', $department->id)->paginate(10);
 
-            return $this->sendResponse(false, 'All Department Employees', $employees, Response::HTTP_OK);
+            return $this->sendResponse(false, null, 'All Department Employees', $employees, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true, $e->getMessage(), "Employee could not be fetched", null, Response::HTTP_NOT_FOUND);
+            return $this->sendResponse(true, 'Employees not fetched', $e->getMessage());
         }
     }
 

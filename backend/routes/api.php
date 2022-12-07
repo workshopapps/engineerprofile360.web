@@ -85,6 +85,8 @@ Route::prefix("assessment")->group(function () {
     Route::get('/{organization_id}', [AssessmentController::class, 'getAssByOrgId']);
     Route::put('/{assessmentId}', [AssessmentController::class, 'updateAssessment'])->middleware("isloggedin", "isadmin");
     Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAssessment'])->middleware("isloggedin", "isadmin");
+    Route::get('/{companyId}/{orgId}/accepted-assessments', [AssessmentController::class, 'getCompanyAcceptedAssessments'])->middleware("isloggedin", "isadmin");
+    Route::get('/completed-assessments/{companyId}/{orgId}', [AssessmentController::class, 'getCompanyCompletedAssessments'])->middleware("isloggedin", "isadmin");
 });
 
 
@@ -120,6 +122,8 @@ Route::prefix("auth")->group(function () {
 
     Route::post('/refresh', [AuthenticateController::class, 'refreshJwtToken']);
 
+    Route::post('/logout', [AuthenticateController::class, 'logout']);
+
     Route::prefix("password")->group(
         function () {
             // forgot password
@@ -137,6 +141,8 @@ Route::prefix("company")->group(function () {
     Route::get('{id}', [CompanyController::class, 'byCompanyId']);
     Route::get('user/{userId}', [CompanyController::class, 'getCompanyByUserId']);
 });
+Route::get('company/{orgId}/categories', [CategoryController::class, 'getCompanyCategories'])->middleware("isloggedin", "isadmin");
+
 
 // questions route operations
 Route::prefix("question")->group(function () {
@@ -152,11 +158,11 @@ Route::prefix("question")->group(function () {
 
 // Categories routes operation
 Route::prefix("category")->group(function () {
-    Route::put('/{categoryId}/update', [CategoryController::class, 'updateCategory'])->middleware("isloggedin");
+    Route::put('/{orgId}/{categoryId}/update', [CategoryController::class, 'updateCategory'])->middleware("isloggedin");
     Route::post('/add', [CategoryController::class, 'createCategory'])->middleware("isloggedin", "isadmin");
-    Route::delete('{catId}/delete', [CategoryController::class, 'deleteCategory'])->middleware("isloggedin", "isadmin");
-    Route::get("/get/{org_id}", [CategoryController::class, "getCategoriesByOrgId"])->middleware("isloggedin", "isadmin");
-    Route::get('/assessment/{id}', [CategoryController::class, 'getByAssessmentId'])->middleware("isloggedin", "isadmin");
+    Route::delete('/{orgId}/{categoryId}/delete', [CategoryController::class, 'deleteCategory'])->middleware("isloggedin", "isadmin");
+    Route::get('/company/{id}', [CategoryController::class, 'getCompanyCategories'])->middleware("isloggedin", "isadmin");
+    Route::get('/{orgId}/{categoryId}', [CategoryController::class, 'getCategoryById'])->middleware("isloggedin", "isadmin");
 });
 
 //Employee Routes
@@ -166,7 +172,7 @@ Route::prefix('employee')->group(function () {
     Route::get('{id}', [EmployeeController::class, 'getById']);
     Route::get('/company/{org_id}', [EmployeeController::class, 'byCompId']);
     Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
-    Route::get('{departmentId}', [EmployeeController::class, 'getEmplyeesByDepartment']);
+    Route::get('department/{departmentId}', [EmployeeController::class, 'getEmplyeesByDepartment']);
 });
 Route::get('employees', [EmployeeController::class, 'getAllEmployees'])->middleware("isloggedin", "isadmin");
 

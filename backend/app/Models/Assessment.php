@@ -14,6 +14,13 @@ class Assessment extends Model
      * @var $fillable
     */
     protected $fillable = [
-        'id', 'name', 'start_date', 'start_time', 'org_id'
+        'id', 
+        'name', 
+        'start_date', 
+        'start_time', 
+        'end_date', 
+        'end_time', 
+        'org_id',
+        'department_id'
     ];
 }

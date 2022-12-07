@@ -31,7 +31,7 @@ class DepartmentController extends Controller
     public function getDeptByID(string $departmentId)
     {
         try {
-            $department = Department::find($departmentId);
+            $department = Department::where("id", $departmentId)->withCount('employee')->withCount('assessment')->get();
 
             if (!$department) {
                 return $this->sendResponse(
@@ -58,8 +58,8 @@ class DepartmentController extends Controller
     public function getDeptByOrgID(string $id)
     {
         try {
-            $department = Department::where("org_id", $id);
-            return $this->sendResponse(false, null, "Successful", $department->get(), Response::HTTP_OK);
+            $department = Department::where("org_id", $id)->withCount('employee')->withCount('assessment')->get();
+            return $this->sendResponse(false, null, "Successful", $department, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Error fetching the departments", $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
