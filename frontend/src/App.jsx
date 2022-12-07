@@ -50,7 +50,7 @@ import UserSupport from "./main/pages/UserSupport";
 
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import AdminCSVUpload from "./ui/components/Company/Assessments/AdminCSVUpload";
-
+import EmployeeCSVUpload from "./ui/components/Company/Employees/EmployeeCSVUpload";
 import GuestEmail from "./main/pages/GuestEmail";
 import GuestAssessmentList from "./main/pages/GuestAssessmentList";
 
@@ -225,7 +225,7 @@ const App = () => {
                     path="employee-profile"
                     element={<EmployeeProfile />}
                   />
-                  <Route path="add-employee" element={<AdminCSVUpload />} />
+                  <Route path="add-employee" element={<EmployeeCSVUpload />} />
                   <Route
                     path="employee-department"
                     element={<EmployeeDeparment />}
