@@ -31,7 +31,10 @@ class EmployeeController extends Controller
     public function byCompId($company_id)
     {
         try {
-            $employees = Employee::where('org_id', $company_id)->with('department')->paginate(5);
+            $employees = Employee::select('employees.id as employee_id', 'departments.name as department', 'employees.fullname as employee_name', 'employees.username as username', 'employees.email as email', 'employees.occupation as occupation', 'employees.created_at as created_at', 'employees.updated_at as updated_at')
+                ->join('departments', 'departments.id', '=', 'employees.department_id')
+                ->where('employees.org_id', $company_id)
+                ->paginate(5);
             return $this->sendResponse(false, null, "Employee Found", $employees, Response::HTTP_OK);
         } catch (Exception $e) {
             //throw $th;
@@ -169,11 +172,12 @@ class EmployeeController extends Controller
             $username = $data["username"];
             $email = $data["email"];
             $org_id = $data["org_id"];
+            $department_id = $data["department_id"];
 
             // fetch organization info
             $orgData = Company::find($org_id);
             if (!$orgData->count())  return $this->sendResponse(true, "Not found", "Company not found", null, Response::HTTP_NOT_FOUND);
-            $org_name = ucfirst($orgData->first()["name"]);
+            $org_name = ucfirst($orgData["name"]);
 
             // send employee email
             $this->helper->sendOnboardMail($fullname, $username, $empPassword, $email, $org_name);
@@ -199,7 +203,7 @@ class EmployeeController extends Controller
             }
             $employees = Employee::where('department_id', $department->id)->paginate(10);
 
-            return $this->sendResponse(false, null, 'All Department Employees', $employees, Response::HTTP_OK);
+            return $this->sendResponse(false, 'All Department Employees', $employees, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, 'Employees not fetched', $e->getMessage());
         }
@@ -222,28 +226,4 @@ class EmployeeController extends Controller
             return $this->sendResponse(true, 'Employees not fetched', $e->getMessage());
         }
     }
-
-    /**
-     * Get employees by companyId
-     * @param string $orgId
-     *
-     * @return JsonResponse
-    */
-    public function getEmployeesByCompanyId($orgId)
-    {
-        try {
-            $employees = Employee::where('org_id', $orgId)->withCount('assessment')->paginate(10);
-
-            return $this->sendResponse(
-                false,
-                null,
-                'All employees',
-                $employees,
-                Response::HTTP_OK
-            );
-        } catch (\Exception $e) {
-            return $this->sendResponse(true, 'Employees not fetched', $e->getMessage());
-        }
-    }
-
 }
