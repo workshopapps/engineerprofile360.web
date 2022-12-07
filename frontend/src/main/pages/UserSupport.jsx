@@ -151,6 +151,10 @@ const SearchArea = styled.div`
   background: rgba(38, 103, 255, 0.3);
   margin-left: auto;
   margin-right: auto;
+
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    padding: 4rem 0;
+  }
 `;
 
 const CardTitle = styled.p`
