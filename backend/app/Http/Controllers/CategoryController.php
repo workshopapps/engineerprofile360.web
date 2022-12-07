@@ -68,7 +68,6 @@ class CategoryController extends Controller
 
     public function deleteCategory($categoryId, $orgId): JsonResponse
     {
-
         try {
 
             $category = Category::where('id', $categoryId)->where('org_id', $orgId)->first();
@@ -82,19 +81,6 @@ class CategoryController extends Controller
             return $this->sendResponse(false, null, 'Category deleted successfully', null, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Could not fetch category ", $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    public function getCategoriesByOrgId(Request $request): JsonResponse
-    {
-        try {
-            $uid = $request->user["id"];
-            $allCategories = Category::where("org_id", $uid)->withCount("questions")->get();
-
-            return $this->sendResponse(false, null, 'All categories', $allCategories, Response::HTTP_OK);
-        } catch (Exception $e) {
-            return $this->sendResponse(true, "something went wrong fetching categories " . $e->getMessage(),
-                'failed fetching categories.', null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -117,6 +103,29 @@ class CategoryController extends Controller
                 null,
                 'Category',
                 $category,
+                Response::HTTP_OK
+            );
+        } catch (Exception $e) {
+            return $this->sendResponse(true,"Error fetching category", $e->getMessage(), null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Get company's categories
+     * @param string $orgId
+     *
+     * @return JsonResponse
+    */
+    public function getCompanyCategories( $orgId ) : JsonResponse
+    {
+        try{
+            $categories = Category::where('org_id', $orgId)->paginate(10);
+
+            return $this->sendResponse(
+                true,
+                null,
+                'Categories',
+                $categories,
                 Response::HTTP_OK
             );
         } catch (Exception $e) {
