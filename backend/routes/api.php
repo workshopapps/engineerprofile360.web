@@ -153,11 +153,11 @@ Route::prefix("question")->group(function () {
 
 // Categories routes operation
 Route::prefix("category")->group(function () {
-    Route::put('/{categoryId}/update', [CategoryController::class, 'updateCategory'])->middleware("isloggedin");
+    Route::put('/{org_id}/{categoryId}/update', [CategoryController::class, 'updateCategory'])->middleware("isloggedin");
     Route::post('/add', [CategoryController::class, 'createCategory'])->middleware("isloggedin", "isadmin");
     Route::delete('{catId}/delete', [CategoryController::class, 'deleteCategory'])->middleware("isloggedin", "isadmin");
     Route::get("/get/{org_id}", [CategoryController::class, "getCategoriesByOrgId"])->middleware("isloggedin", "isadmin");
-    Route::get('/assessment/{id}', [CategoryController::class, 'getByAssessmentId'])->middleware("isloggedin", "isadmin");
+    Route::get('/{id}', [CategoryController::class, 'getByCategoryId'])->middleware("isloggedin", "isadmin");
 });
 
 //Employee Routes
