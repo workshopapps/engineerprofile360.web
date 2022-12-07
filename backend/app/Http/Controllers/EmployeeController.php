@@ -222,4 +222,28 @@ class EmployeeController extends Controller
             return $this->sendResponse(true, 'Employees not fetched', $e->getMessage());
         }
     }
+
+    /**
+     * Get employees by companyId
+     * @param string $orgId
+     *
+     * @return JsonResponse
+    */
+    public function getEmployeesByCompanyId($orgId)
+    {
+        try {
+            $employees = Employee::where('org_id', $orgId)->withCount('assessment')->paginate(10);
+
+            return $this->sendResponse(
+                false,
+                null,
+                'All employees',
+                $employees,
+                Response::HTTP_OK
+            );
+        } catch (\Exception $e) {
+            return $this->sendResponse(true, 'Employees not fetched', $e->getMessage());
+        }
+    }
+
 }

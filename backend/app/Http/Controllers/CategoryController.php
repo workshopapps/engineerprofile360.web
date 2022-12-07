@@ -140,7 +140,7 @@ class CategoryController extends Controller
      *
      * @return JsonResponse
     */
-    public function deleteCompanyCategories( DeleteCategoriesRequest $request , $orgId) : JsonResponse
+    public function deleteCompanyCategories( DeleteCategoriesRequest $request) : JsonResponse
     {
         $data = $request->all();
 
