@@ -16,6 +16,6 @@ export const showSuccessToast = (success) => {
   });
 };
 
-export const sleep = (sec=1)=> {
-  return new Promise(res => setTimeout(res(), sec*1000))
-}
+export const sleep = (sec = 1) => {
+  return new Promise((res) => setTimeout(res(), sec * 1000));
+};

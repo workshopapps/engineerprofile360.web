@@ -68,7 +68,7 @@ const Stats = ({ stats, topPerformance }) => {
   );
 };
 
-const Chart = ({ topPerformance }) => {
+export const Chart = ({ topPerformance }) => {
   const data = {
     labels: topPerformance?.categories
       ? JSON.parse(topPerformance?.categories)

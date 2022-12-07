@@ -1,11 +1,11 @@
-p {
+/* p {
   color: #605e5c;
 }
 
 h1,
 h2 {
   color: #605e5c;
-}
+} */
 
 /* ul {
   list-style: none;
@@ -16,7 +16,7 @@ h2 {
 li {
   padding: 10px 15px;
 } */
-
+/* 
 .hide {
   display: block;
 }
@@ -132,4 +132,10 @@ li {
     display: flex;
     gap: 10px;
   }
+} */
+.hide {
+  display: block;
+}
+.show {
+  display: none;
 }

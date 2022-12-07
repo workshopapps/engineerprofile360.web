@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
+import { Text } from "../../../../main/components/Market/Market.styled";
 import { Button, Title } from "../../../../styles/reusableElements.styled";
 
 const TopEmployees = ({ topPerformances }) => {
@@ -16,6 +17,7 @@ const TopEmployees = ({ topPerformances }) => {
   }, [topPerformances?.data]);
 
   console.log(top);
+
   return (
     <div>
       <Header>

@@ -49,8 +49,6 @@ const Dashboard = () => {
         });
         setTopPerformance(topEmployee);
         setTopPerformances(topEmployees);
-
-        // console.log(response);
       } catch (err) {
         setIsLoading(false);
         if (!err?.response) {
