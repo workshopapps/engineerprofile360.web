@@ -29,7 +29,7 @@ const Listing = () => {
             </option>
           ))}
         </select>
-        <Link to="/add-employee">
+        <Link to="/employees/add-employee">
           <Button $weight="400">
             <AddCircle color="#FFFFFF" /> Add New Employee
           </Button>
@@ -55,7 +55,7 @@ const Listing = () => {
                   <td>{employee.email}</td>
                   <td>{employee.username}</td>
                   <td>
-                    <Link to="/employees/profile" state={employee.id}>
+                    <Link to={`/employees/profile/${employee.id}`}>
                       <Button $variant="outlined" $color="#2667ff">
                         View Profile
                       </Button>
@@ -70,9 +70,11 @@ const Listing = () => {
           <NoData>
             <p>Oops! No data to show here</p>
             <div>
-              <Button $weight="400">
-                <AddCircle color="#FFFFFF" /> Add New Employee
-              </Button>
+              <Link to="/employees/add-employee">
+                <Button $weight="400">
+                  <AddCircle color="#FFFFFF" /> Add New Employee
+                </Button>
+              </Link>
             </div>
           </NoData>
         )}
@@ -123,8 +125,15 @@ const EmployeesTable = styled.div`
     width: 100%;
     min-width: 960px;
     text-align: left;
+    border: none;
+    border-spacing: 0;
     overflow: auto;
     white-space: initial;
+
+    th,
+    td {
+      padding: ${({ theme }) => theme.spacing(1.5)};
+    }
 
     tr:first-of-type {
       width: 100%;

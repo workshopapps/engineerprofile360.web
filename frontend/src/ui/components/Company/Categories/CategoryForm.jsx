@@ -163,7 +163,7 @@ const Load = styled.div`
   width: 100%;
 `;
 
-const ButtonContainer = styled.div`
+export const ButtonContainer = styled.div`
   display: flex;
   gap: 10px;
   margin-top: 24px;

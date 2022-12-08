@@ -1,5 +1,6 @@
 // import React from "react";
-import * as Sentry from "@sentry/react";
+import * as atatus from "atatus-spa";
+//import * as Sentry from "@sentry/react";
 import { Routes, Route } from "react-router-dom";
 import RequireAuth from "./components/requireAuth";
 import styled from "styled-components";
@@ -87,6 +88,10 @@ import EmployeeAssessmentList from "./ui/pages/Employee/EmployeeAssessmentList";
 import AdminAssessmmentListOutlet from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmmentListOutlet";
 import AdminAssessmentListAvailable from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmentListAvailable";
 import AssessmentList from "./ui/components/Company/Assessments/adminAssesmentList/AssessmentList";
+
+atatus.config("4010279ebbd747e7a752082eea130df6").install();
+
+atatus.notify(new Error("Test Atatus Setup"));
 
 const ROLES = {
   Employees: 1,
@@ -225,11 +230,7 @@ const App = () => {
 
                 <Route path="/employees" element={<Employees />}>
                   <Route path="" element={<EmployeesListing />} />
-                  <Route path="profile" element={<EmployeeProfile />} />
-                  <Route
-                    path="employee-profile"
-                    element={<EmployeeProfile />}
-                  />
+                  <Route path="profile/:ID" element={<EmployeeProfile />} />
                   <Route path="add-employee" element={<EmployeeCSVUpload />} />
 
                   <Route
@@ -290,7 +291,7 @@ const App = () => {
     </>
   );
 };
-export default Sentry.withProfiler(App);
+export default App;
 
 const StyledToastContainer = styled(ToastContainer).attrs({
   className: "toast-container",
