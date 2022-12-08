@@ -21,7 +21,7 @@ class AssessmentController extends Controller
     {
         try {
             $payload = json_decode($request->getContent(), true);
-
+ 
 
             if (!isset($payload["name"]) || !isset($payload["start_date"]) || !isset($payload["start_time"]) ||  !isset($payload["end_date"]) || !isset($payload["end_time"]) || !isset($payload["department_id"]) || !isset($payload["org_id"])) {
                 return $this->sendResponse(true, "expected a valid payload", "invalid payload given.", null, 400);

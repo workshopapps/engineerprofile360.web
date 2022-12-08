@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string("correct_answers");
             $table->boolean("is_multiple_answers");
             $table->string('category_id');
-            $table->string('assessment_id');
+            $table->string('assessment_id'); 
             $table->timestamps();
         });
     }
