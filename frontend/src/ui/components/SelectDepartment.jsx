@@ -9,10 +9,10 @@ import { toast } from "react-toastify";
 export default function SelectDepartment() {
   const [departments, setDepartments] = useState([]);
   const [value, setValue] = useState("");
-  const [items, setItems] = useState([]);
+
   const { auth } = useAuth();
   const navigate  = useNavigate();
-  let useDept = {};
+
 
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -28,7 +28,7 @@ export default function SelectDepartment() {
     console.log(localData);
     console.log(localDataName);
 
-    if(!localData=="" || !localDataName==""){
+    if(!localData==="" || !localDataName===""){
       navigate("/employees/add-employee/");
     } else {
       toast.error("Please choose a department");

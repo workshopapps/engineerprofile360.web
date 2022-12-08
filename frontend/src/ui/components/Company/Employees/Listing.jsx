@@ -20,11 +20,22 @@ const Listing = () => {
 
   console.log(employees, departments);
 
+  const handleFilter = (e) => {
+    if (e.target.value === "all") {
+      setAllEmployees(employees ? employees : []);
+    } else {
+      const filtered = employees.filter(
+        (employee) => e.target.value === employee.department
+      );
+      setAllEmployees(filtered);
+    }
+  };
+
   return (
     <EmployeesList>
       <Filter>
-        <select>
-          <option>Department</option>
+        <select onChange={handleFilter}>
+          <option value="all">Department</option>
           {depts?.map((dept) => (
             <option key={dept.id} value={dept.name}>
               {dept.name}
@@ -113,57 +124,5 @@ const Filter = styled.div`
 
   select:last-of-type {
     width: 130px;
-  }
-`;
-
-const EmployeesTable = styled.div`
-  width: 100%;
-  overflow: auto;
-  table {
-    width: 100%;
-    min-width: 960px;
-    text-align: left;
-    border: none;
-    border-spacing: 0;
-    overflow: auto;
-    white-space: initial;
-
-    th,
-    td {
-      padding: ${({ theme }) => theme.spacing(1.5)};
-    }
-
-    tr:first-of-type {
-      width: 100%;
-      background: #f8fbfd;
-
-      th:first-of-type {
-        padding-right: 24px;
-      }
-
-      th {
-        font-size: 16px;
-        font-weight: 600;
-        color: #605e5c;
-      }
-    }
-
-    td {
-      color: #605e5c;
-      font-size: 16px;
-      font-weight: 600;
-    }
-
-    tr {
-      td:last-of-type {
-        display: flex;
-        gap: ${({ theme }) => theme.spacing(2)};
-        align-items: center;
-
-        svg {
-          transform: rotate(90deg);
-        }
-      }
-    }
   }
 `;
