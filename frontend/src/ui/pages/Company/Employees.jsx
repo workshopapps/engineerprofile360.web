@@ -43,7 +43,7 @@ const Employees = () => {
     };
 
     getdetails();
-  }, []);
+  }, [auth.org_id]);
 
   return (
     <>

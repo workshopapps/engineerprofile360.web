@@ -32,7 +32,7 @@ const Profile = () => {
       }
     };
     getDetails();
-  }, [ID]);
+  }, [ID, employeeID]);
 
   return (
     <>
