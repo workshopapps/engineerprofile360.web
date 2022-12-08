@@ -6,34 +6,12 @@ use App\Models\Question;
 use Exception;
 use App\Http\Requests\CreateQuestionRequest;
 use App\Http\Requests\CSVQuestionRequest;
+use App\Models\Assessment;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Http\Request;
-use App\Imports\QuestionsImport;
-use App\Models\Assessment;
-use App\Models\Category;
-use App\Services\QuestionService;
 
 class QuestionsController extends Controller
 {
-    public function uploadCsv(Request $request)
-    {
-
-        try {
-            if (in_array(
-                request()->file('your_file')?->getClientOriginalExtension(),
-                ['csv', 'xls', 'xlsx', 'xlsm', 'xlsb', 'xlt', 'xltx']
-            )) {
-                Excel::import(new QuestionsImport, request()->file('your_file'));
-                return $this->sendResponse(false, null, 'Question created', null, Response::HTTP_CREATED);
-            } else {
-                return $this->sendResponse(true, 'Invalid file extension', 'upload an excel file', null, Response::HTTP_BAD_REQUEST);
-            }
-        } catch (\Exception $e) {
-            return $this->sendResponse(true, $e->getMessage(), 'something went wrong', null, Response::HTTP_BAD_REQUEST);
-        }
-    }
-
     public function addManually(CreateQuestionRequest $request): JsonResponse
     {
         try {
@@ -44,7 +22,6 @@ class QuestionsController extends Controller
                 $result = Question::create([
                     "category_id" => $data["category_id"],
                     "assessment_id" => $data["assessment_id"],
-                    "company_id" => $data["company_id"],
                     ...$data['questions'][$i],
                     "options" => json_encode($data['questions'][$i]["options"]),
                     "correct_answers" => json_encode($data['questions'][$i]["correct_answers"]),
@@ -64,7 +41,7 @@ class QuestionsController extends Controller
         $type = explode(",", $base64)[0];
         // if ($type != "") return;
         $data = explode("\n", base64_decode(explode(",", $base64)[1]));
-        $assessment_id = $payload['assessment_id']??Assessment::create()
+        $assessment_id = $payload['assessment_id'] ?? Assessment::create(["name" => ""]);
         $result = [];
         for ($i = 1; $i < count($data); $i++) {
             $item = explode(",", $data[$i]);
@@ -76,9 +53,7 @@ class QuestionsController extends Controller
             $answer = $item[5] ?? null;
             $category_id = Category::where("name", $item[6])->first()['id'];
             if ($category_id) {
-                QuestionService::addQuestion($category_id, $assessment_id, $payload['company_id'], [
-                    
-                ]);
+                QuestionService::addQuestion($category_id, $assessment_id, $payload['company_id'], []);
             }
         }
     }
