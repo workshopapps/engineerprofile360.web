@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Title } from "../../../../../../styles/reusableElements.styled";
 import { Button, Wrapper } from "../../../Departments/Hero";
 import { CsvData } from "./CsvPreviewData";
+import { CategoryListing } from "../../../Categories/List";
 
 function EmployeeCsvPreview() {
   return (
@@ -20,37 +21,38 @@ function EmployeeCsvPreview() {
             <span>All</span>/<span>None</span>
           </p>
         </SpanHolder>
+        <CategoryListing>
+          <table>
+            <tbody>
+              <tr>
+                <th>#</th>
 
-        <table>
-          <Tbody>
-            <Tr>
-              <th>#</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Employee Email</th>
 
-              <th>Name</th>
-              <th>Username</th>
-              <th>Employee Email</th>
+                <th>Department</th>
+                <th></th>
+              </tr>
+              {CsvData.map((data, index) => {
+                const { name, employee_email, username, department } = data;
+                return (
+                  <tr>
+                    <td>{index + 1}</td>
+                    <td>{name}</td>
+                    <td>{username}</td>
+                    <td>{employee_email}</td>
 
-              <th>Department</th>
-              <th></th>
-            </Tr>
-            {CsvData.map((data, index) => {
-              const { name, employee_email, username, department } = data;
-              return (
-                <Tr>
-                  <Td>{index + 1}</Td>
-                  <td>{name}</td>
-                  <td>{username}</td>
-                  <td>{employee_email}</td>
-
-                  <td>{department}</td>
-                  <td>
-                    <Checkbox type="checkbox" />
-                  </td>
-                </Tr>
-              );
-            })}
-          </Tbody>
-        </table>
+                    <td>{department}</td>
+                    <td>
+                      <Checkbox type="checkbox" />
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </CategoryListing>
         <ButtonWrapper>
           <Wrapper>
             <Button
