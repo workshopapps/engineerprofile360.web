@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { Loader, Title } from "../../../../styles/reusableElements.styled";
 import { useState } from "react";
 import { More } from "iconsax-react";
-
 import AddDept, { Load } from "./AddDept";
 import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
@@ -14,6 +13,7 @@ import DeleteModal from "./DeleteModal";
 import { toast } from "react-toastify";
 
 function Hero() {
+  //? useState HOOKS
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
 
@@ -28,9 +28,11 @@ function Hero() {
     id: "",
     departmentName: "",
   });
-
+  //! USE AUTH
   const { auth } = useAuth();
   const org_id = auth.org_id;
+
+  //? ASYNC FUNCTION TO FETCH DEPARTMENTS
   const fetchDepartments = async () => {
     try {
       const response = await axios.get(
@@ -49,10 +51,12 @@ function Hero() {
   }, [runEffect]);
 
   return loading ? (
+    // lOADER COMPONENT
     <Load>
       <Loader />
     </Load>
   ) : (
+    // MAIN COMPONENTS
     <>
       {editModal && (
         <EditModal
@@ -184,16 +188,7 @@ function Hero() {
 }
 
 export default Hero;
-
-export const MainContainer = styled.div`
-  display: flex;
-  align-items: center;
-  height: 100vh;
-
-  margin-top: 96px;
-
-  gap: 20px;
-`;
+// STYLED COMPONENTS
 export const Container = styled.div`
   width: 100%;
   height: 100%;

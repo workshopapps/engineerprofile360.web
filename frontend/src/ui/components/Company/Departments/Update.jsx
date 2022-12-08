@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 function Update({ setDeleteModal, cancel, setEditModal }) {
+  // HOLDS THE EDIT , DELETE AND CANCEL BUTTONS
   const handleCancel = () => {
     cancel(null);
   };

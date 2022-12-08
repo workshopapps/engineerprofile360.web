@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import styled from "styled-components";
 
 function EditModal({ setEditModal, departmentDetails, setRunEffect, cancel }) {
+  //? useState HOOKS
   const [loading, setLoading] = useState(false);
   const [editedData, setEditedData] = useState({
     id: departmentDetails.id,
@@ -22,6 +23,7 @@ function EditModal({ setEditModal, departmentDetails, setRunEffect, cancel }) {
 
   const { id, departmentName } = editedData;
 
+  //? ASYNC FUNCTION TO EDIT DEPARTMENTS
   const handleEdit = async (e) => {
     e.preventDefault();
     if (editedData.length !== "") {
@@ -44,14 +46,17 @@ function EditModal({ setEditModal, departmentDetails, setRunEffect, cancel }) {
     }
   };
 
+  //? FUNCTION TO HANDLE FORM CHANGE
   const handleChange = async (e) => {
     setEditedData((prev) => ({ ...prev, departmentName: e.target.value }));
   };
+  // lOADER COMPONENT
   return loading ? (
     <Load>
       <Loader />
     </Load>
   ) : (
+    // MAIN COMPONENTS
     <>
       <ModalContainer>
         <InputWrapper>
@@ -118,6 +123,7 @@ function EditModal({ setEditModal, departmentDetails, setRunEffect, cancel }) {
 }
 
 export default EditModal;
+// STYLED COMPONENTS
 
 export const ModalContainer = styled.div`
   position: absolute;

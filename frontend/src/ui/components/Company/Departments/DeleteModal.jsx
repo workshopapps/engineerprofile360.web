@@ -12,31 +12,38 @@ function DeleteModal({
   setRunEffect,
   cancel,
 }) {
+  //? useState HOOKS
   const [loading, setLoading] = useState(false);
-  const { id, departmentName } = departmentDetails;
+  const { id: departmentId, departmentName: name } = departmentDetails;
 
-  const departmentId = id;
-  console.log(departmentId);
-  const name = departmentName;
-
+  //? ASYNC FUNCTION TO EDIT DEPARTMENTS
   const handleDelete = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    axios.delete(
-      `https://api.eval360.hng.tech/api/department/${departmentId}/delete/`
-    );
-    setRunEffect((prev) => !prev);
-    setDeleteModal(false);
+    try {
+      setLoading(true);
+      axios.delete(
+        `https://api.eval360.hng.tech/api/department/${departmentId}/delete/`
+      );
+      setRunEffect((prev) => !prev);
+      setDeleteModal(false);
 
-    cancel(null);
-    setLoading(false);
-    toast.success("Department deleted successfully");
+      cancel(null);
+      setLoading(false);
+      toast.success("Department deleted successfully");
+    } catch (error) {
+      cancel(null);
+      setLoading(false);
+      setDeleteModal(false);
+      toast.error("Could not add delete Department");
+    }
   };
+  // LOADER COMPONENTS
   return loading ? (
     <Load>
       <Loader />
     </Load>
   ) : (
+    //   MAIN  COMPONENTS
     <>
       <ModalContainer>
         <InputWrapper>

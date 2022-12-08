@@ -14,16 +14,19 @@ function AddDept({
   setRunEffect,
   runEffect,
 }) {
+  //? useState HOOKS
   const [loading, setLoading] = useState(false);
   const { departmentName } = formData;
+
+  //? FUNCTION TO HANDLE FORM CHANGE
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const { auth } = useAuth();
-
   const org_id = auth.org_id;
 
+  //? ASYNC FUNCTION TO ADD DEPARTMENTS
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData !== "") {
@@ -41,7 +44,6 @@ function AddDept({
           setLoading(false);
         })
         .catch((error) => {
-          console.log(error);
           toast.error("could not add Department ");
           setAddDept(false);
         });
@@ -49,10 +51,12 @@ function AddDept({
   };
 
   return loading ? (
+    // LOADER COMPONENTS
     <Load>
       <Loader />
     </Load>
   ) : (
+    // MAIN COMPONENTS
     <>
       <InputWrapper>
         <form>
@@ -112,6 +116,7 @@ function AddDept({
 }
 
 export default AddDept;
+// STYLED COMPONENTS
 
 export const InputWrapper = styled.div`
   width: 100%;
@@ -133,11 +138,19 @@ export const InputWrapper = styled.div`
     justify-content: center;
 
     align-items: center;
-    width: 686px;
+    width: 485px;
     border: #c7e0f4;
     height: 338px;
+
     border-radius: 4px;
     background-color: #f8fbfd;
+
+    ${({ theme }) => theme.breakpoints.up("xs")} {
+      width: 556px;
+    }
+    ${({ theme }) => theme.breakpoints.up("sm")} {
+      width: 686px;
+    }
   }
 `;
 
@@ -155,7 +168,7 @@ export const Label = styled.label`
 `;
 
 export const InputField = styled.input`
-  width: 555px;
+  width: 300px;
   height: 32px;
   display: flex;
   justify-content: center;
@@ -170,8 +183,15 @@ export const InputField = styled.input`
   padding: 0 10px;
   margin: 10px 0;
 
+  ${({ theme }) => theme.breakpoints.up("xs")} {
+    width: 450px;
+  }
+  ${({ theme }) => theme.breakpoints.up("sm")} {
+    width: 555px;
+  }
+
   &:focus {
-    border: 2px solid #2667ff;
+    border: 1px solid #2667ff;
   }
 `;
 export const Load = styled.div`
