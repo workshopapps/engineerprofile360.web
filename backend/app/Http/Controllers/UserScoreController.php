@@ -75,7 +75,7 @@ class UserScoreController extends Controller
     public function getScoresByEmployeeID(string $id)
     {
         try {
-            $userScore = Employee::where("employee_id", $id)
+            $userScore = Employee::where("id", $id)
                 ->with('department')->withCount("completed_assessment")->with('userscore');
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
         } catch (Exception $e) {
