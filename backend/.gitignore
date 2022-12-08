@@ -1,4 +1,5 @@
 /database/database.sqlite
+/database/database_test.sqlite
 /node_modules
 /public/build
 /public/hot
