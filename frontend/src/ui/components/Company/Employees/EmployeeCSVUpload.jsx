@@ -1,14 +1,30 @@
 import styled from "styled-components";
 import { BsCloudUpload, BsPlusCircle } from "react-icons/bs";
-import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { useRef, useState,useEffect } from "react";
+import { Link, useOutletContext } from "react-router-dom";
 import close from "../../../../assets/icons/close.svg";
+import { Title } from "../../../../styles/reusableElements.styled";
 import CreateEmployeeManual from "./CreateEmployeeManual";
+import axios from "../../../../api/axios";
 
 const EmployeeCSVUpload = () => {
   const [tab, setTab] = useState("manual");
   const [files, setFiles] = useState(null);
   const inputRef = useRef();
+  const { departments } = useOutletContext();
+  const [depts, setDepts] = useState([]);
+  useEffect(() => {
+    setDepts(departments?.data ? departments?.data : []);
+  }, [departments]);
+  
+  //const [departments, setDepartments] = useState([]);
+  const [selecteddepartment, setSelectedepartment] = useState({});
+
+  const handleChange = (e) => {
+    //console.log(e.target.value);
+    localStorage.setItem("departmentsID", JSON.stringify(e.target.value));
+    setSelectedepartment(e.target.value);
+  };
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -31,6 +47,32 @@ const EmployeeCSVUpload = () => {
 
   return (
     <>
+    <Selectontainer>
+    <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "start",
+            padding: "0 3rem",
+          }}
+        >
+           <Title $color="#605E5C" $size="16px" $weight="400">
+            Department
+          </Title>
+          <select value={selecteddepartment} onChange={handleChange} required>
+          <option>Select Department</option>
+          {depts
+            ? depts.map((dept) => (
+                <option key={dept.id} value={dept.id}>
+                  {dept.name}
+                </option>
+              ))
+            : ""}
+          </select>
+
+        </div>
+    </Selectontainer>
+   
       <Main>
         <CreateTypeContainer>
           <Upload
@@ -99,7 +141,6 @@ const Main = styled.main`
   display: flex;
   flex-direction: column;
   width: 90%;
-  height: 100vh;
   background: #f8fbfd;
   border: 1px dashed #c7e0f4;
   margin: auto;
@@ -154,6 +195,7 @@ const Manual = styled.div`
   height: 72px;
   border: 1px solid #c7e0f4;
   border-top-right-radius: 16px;
+  border-radius: 16px 16px 0 0;
   cursor: pointer;
   @media screen and (max-width: 500px) {
     font-size: 14px;
@@ -288,3 +330,61 @@ const Error = styled.div`
 `;
 
 const ManualUpload = styled.div``;
+
+const Selectontainer = styled.div`
+  width: 50%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 19px 5px;
+
+  @media screen and (max-width: 676px) {
+    width:100%
+  }    
+
+  div:first-of-type {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    @media screen and (max-width: 676px) {
+        padding: 0px 2rem !important;
+      }  
+
+    h1 {
+      color: #323130;
+      font-size: 22px;
+      font-weight: 400;
+
+      @media screen and (max-width: 450px) {
+        font-size: 14px;
+        text-align: left;
+      }
+      
+       
+
+    }
+  }
+
+  div:nth-child(2) {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+
+  select {
+    width: 100%;
+    padding: 0 10px;
+    border: 1px solid #106ebe;
+    border-radius: 2px;
+    height: 40px;
+    outline: none;
+  }
+`;
