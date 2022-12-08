@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import axios from "../../../../../api/axios";
 
 import {
   checkDate,
@@ -8,8 +9,10 @@ import {
   compareDate,
   compareTime,
 } from "../../../../../helpers/helper";
+import useAuth from "../../../../../hooks/useAuth";
 
 const SelectType = () => {
+  const { auth } = useAuth();
   const [formData, setFormData] = useState({
     department: "",
     start_time: "",
@@ -20,6 +23,7 @@ const SelectType = () => {
   });
   const [touched, setTouched] = useState({});
   const [errors, setErrors] = useState({});
+  const [comDepartment, setComDepartment] = useState([]);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -31,9 +35,6 @@ const SelectType = () => {
       [e.target.id]: true,
     }));
   };
-
-  checkTime(formData.start_time);
-  console.log(formData.start_time);
 
   const validate = (formData) => {
     const error = {};
@@ -76,6 +77,18 @@ const SelectType = () => {
   useEffect(() => {
     validate(formData);
   }, [formData, touched]);
+
+  useEffect(() => {
+    const getDepartment = async () => {
+      const response = await axios.get(
+        `https://api.eval360.hng.tech/api/department/company/${auth.org_id}`
+      );
+
+      setComDepartment(response.data.data);
+    };
+    getDepartment();
+  }, []);
+  console.log(comDepartment);
 
   const onNextPage = (formData) => {
     validate(formData);
@@ -123,14 +136,11 @@ const SelectType = () => {
             onBlur={onBlur}
           >
             <option defaultValue>Select Department</option>
-            <option value="Front-End Development">Front-End Development</option>
-            <option value="Back-End">Back-end Development </option>
-            <option value="PM"> Project Management </option>
-            <option value="Software Engineer">Software Engineer</option>
-            <option value="Blockchain Development">
-              Blockchain Development
-            </option>
-            <option value="Devops">Devops</option>
+            {comDepartment.map((dept, id) => (
+              <option key={id} value={dept.name}>
+                {dept.name}
+              </option>
+            ))}
           </select>
           {errors.department && touched.department && (
             <span>{errors.department}</span>

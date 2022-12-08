@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { BsCloudUpload, BsPlusCircle } from "react-icons/bs";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fileToBase64, toBase64 } from "../../../../helpers/helper";
 
 import close from "../../../../assets/icons/close.svg";
 
@@ -14,14 +15,33 @@ const AdminCSVUpload = () => {
 
   const handleDragOver = (e) => {
     e.preventDefault();
+    console.log(e);
   };
 
   const handleDrop = (e) => {
     e.preventDefault();
+    console.log(e);
     setFiles(e.dataTransfer.files);
   };
 
-  console.log(files?.[0]);
+  const handleConvertion = async () => {
+    // const file = document.querySelector("#myfile").files[0];
+    const file = files?.[0];
+    try {
+      const result = await toBase64(file);
+      return result;
+    } catch (error) {
+      console.error(error);
+      return;
+    }
+  };
+
+  files &&
+    handleConvertion().then((result) => {
+      console.log(result);
+    });
+
+  console.log(files);
 
   return (
     <>
@@ -49,6 +69,7 @@ const AdminCSVUpload = () => {
                 <input
                   type="file"
                   onChange={(e) => setFiles(e.target.files)}
+                  // onChange={(e) => setFiles(e)}
                   hidden
                   ref={inputRef}
                 />
@@ -348,9 +369,9 @@ const ManualUpload = styled.div``;
 
 const UploadButton = styled.div`
   display: flex;
-  width: 80%;
+  width: 100%;
   margin: 46px auto;
-  gap: 15px;
+  gap: 25px;
   height: 36px;
 `;
 
