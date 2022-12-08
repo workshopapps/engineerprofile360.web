@@ -1,4 +1,6 @@
 // import React from "react";
+import * as atatus from 'atatus-spa';
+//import * as Sentry from "@sentry/react";
 import { Routes, Route } from "react-router-dom";
 import RequireAuth from "./components/requireAuth";
 import styled from "styled-components";
@@ -40,17 +42,17 @@ import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 import UserSupport from "./main/pages/UserSupport";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
 // import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
-// import UserTakeAssessment from "./main/components/sections/userTakeAssessment/UserTakeAssessment";
+// import EmployeeProfile from "./ui/pages/EmployeeProfile/EmployeeProfile";
+import AdminSetting from "./ui/pages/AdminSetting";
+import AdminCSVUpload from "./ui/components/Company/Assessments/AdminCSVUpload";
+// import UserAssessmentListCompleted from "./ui/pages/UserAssestList/UserAssestListCompleted";
 // import EmployeeTakeAssessment from "../miscellaneous/pages/EmployeeTakeAssessment";
 // import UserTakeAssessment from "./ui/pages/userTakeAssessment/UserTakeAssessment";
 // import UserTakeAssessmentResult from "../miscellaneous/pages/UserTakeAssessmentResult";
 // import GuestTakeAssessment from "./ui/pages/guest/GuestTakeAssessment";
 // import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
-// import AdminSetting from "./ui/pages/AdminSetting/AdminSetting";
-
 import Testimonial from "./main/components/Testimonials/Testimonial";
-import AdminCSVUpload from "./ui/components/Company/Assessments/AdminCSVUpload";
-
+import EmployeeCSVUpload from "./ui/components/Company/Employees/EmployeeCSVUpload";
 import GuestEmail from "./main/pages/GuestEmail";
 import GuestAssessmentList from "./main/pages/GuestAssessmentList";
 
@@ -64,6 +66,7 @@ import {
   EmployeeProfile,
   EmployeesListing,
 } from "./ui/components/Company/Employees";
+
 import MainAssessment from "./ui/pages/Company/Assessment";
 import UserAssessmentListOutlet from "./ui/pages/Employee/EmployeeAssessmentList";
 import EmployeeUserDashboard from "./ui/pages/Employee/EmployeeDashboard";
@@ -85,6 +88,10 @@ import EmployeeAssessmentList from "./ui/pages/Employee/EmployeeAssessmentList";
 import AdminAssessmmentListOutlet from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmmentListOutlet";
 import AdminAssessmentListAvailable from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmentListAvailable";
 import AssessmentList from "./ui/components/Company/Assessments/adminAssesmentList/AssessmentList";
+
+atatus.config('4010279ebbd747e7a752082eea130df6').install();
+
+atatus.notify(new Error('Test Atatus Setup'));
 
 const ROLES = {
   Employees: 1,
@@ -140,11 +147,19 @@ const App = () => {
             <Route
               path="/guest-take-assessment-result"
               element={<GuestTakeAssessmentResult />}
+            />
+
+            <Route path="/csv-uploading" element={<CsvUploading />} />
+
+            <Route
+              path="/csv-uploading-complete"
+              element={<CsvUploadComplete />}
+            />
+            <Route path="/privacy-policy" element={<Privacy />} />
             /> */}
 
-            {/* <Route path="/setting" element={<AdminSetting />} /> */}
             <Route path="/employee-profile" element={<EmployeeProfile />} />
-            <Route path="/admin-csv-upload" element={<AdminCSVUpload />} />
+            
             {/* <Route
                 path="/user-assessment-completed"
                 element={<UserAssessmentListCompleted />}
@@ -196,13 +211,11 @@ const App = () => {
                   />
                 </Route>
                 <Route path="/employee-profile" element={<EmployeeProfile />} />
-                <Route path="/404" element={<Error />} />
               </Route>
 
               {/* Organization Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
                 <Route path="/ui" element={"my guy"} />
-                <Route path="/404" element={<Error />} />
                 <Route
                   path="/assessment/view-assessment"
                   element={<AdminViewAssessment />}
@@ -217,15 +230,13 @@ const App = () => {
 
                 <Route path="/employees" element={<Employees />}>
                   <Route path="" element={<EmployeesListing />} />
-                  <Route
-                    path="profile"
-                    element={<EmployeeProfile />}
-                  />
+                  <Route path="profile" element={<EmployeeProfile />} />
                   <Route
                     path="employee-profile"
                     element={<EmployeeProfile />}
                   />
-                  <Route path="add-employee" element={<AdminCSVUpload />} />
+                  <Route path="add-employee" element={<EmployeeCSVUpload />} />
+                  
                   <Route
                     path="employee-department"
                     element={<EmployeeDeparment />}
@@ -258,7 +269,7 @@ const App = () => {
                     path="create-assessment"
                     element={<CreateAssessment />}
                   />
-                  <Route path="admin-csv-upload" element={<AdminCSVUpload />} />
+                  <Route path="/admin-csv-upload" element={<AdminCSVUpload />} />
                 </Route>
 
                 <Route path="/categories" element={<Category />} />
@@ -267,8 +278,13 @@ const App = () => {
               {/* Overall Admin Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
                 {/* Put in Protected pages in here */}
-                <Route path="/admin/dashboard" element={"Admin pages will render here"} />
+                <Route
+                  path="/admin/dashboard"
+                  element={"Admin pages will render here"}
+                />
               </Route>
+              <Route path="/setting" element={<AdminSetting />} />
+              <Route path="/404" element={<Error />} />
 
               {/* <Route path="/assessment" element={<Assessment />} /> */}
             </Route>
