@@ -16,8 +16,9 @@ const EmployeeCSVUpload = () => {
 
   useEffect(() => {
     setDepts(departments ? departments : []);
-  }, [departments,depts]);
-
+  }, [departments]);
+  
+  //const [departments, setDepartments] = useState([]);
   const [selecteddepartment, setSelectedepartment] = useState({});
 
   const handleChange = (e) => {

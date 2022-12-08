@@ -25,7 +25,7 @@ const Listing = () => {
       setAllEmployees(employees ? employees : []);
     } else {
       const filtered = employees.filter(
-        (employee) => e.target.value === employee.department
+        (employee) => e.target.value === employee.department.name
       );
       setAllEmployees(filtered);
     }

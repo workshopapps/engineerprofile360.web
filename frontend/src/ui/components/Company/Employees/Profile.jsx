@@ -10,6 +10,7 @@ import {
 } from "../../../../styles/reusableElements.styled";
 import { ReactComponent as EmployeeProfilePhoto } from "../../../components/assets/user-photo.svg";
 import { Radar } from "react-chartjs-2";
+import { Edit } from "iconsax-react";
 
 const Profile = () => {
   const { ID } = useParams();
@@ -69,7 +70,9 @@ const Profile = () => {
                     $lHeight="40px"
                     $weight="400"
                   >
-                    70%
+                    {employee.completed_assessment_count
+                      ? employee.completed_assessment_count
+                      : "0"}
                   </Title>
                   <p>Assessments</p>
                 </EmployeeProfileDataCard>
@@ -82,7 +85,12 @@ const Profile = () => {
                     $lHeight="40px"
                     $weight="400"
                   >
-                    70%
+                    {employee.points
+                      ? `${(
+                          (employee.points / employee.total_points) *
+                          100
+                        ).toFixed(2)}%`
+                      : "0%"}
                   </Title>
                   <p>Performance</p>
                 </EmployeeProfileDataCard>
@@ -92,13 +100,55 @@ const Profile = () => {
           <EmployeeProfileInnerContainer>
             <EmployeeDataContainer>
               <Title as="h5" $size="14px" $lHeight="40px" $weight="500">
-                Employee Data
+                Employee Data <Edit size={24} />
               </Title>
 
               <EmployeeCard>
                 <p style={{ color: "#8E8E8E" }}>Name:</p>
                 <p style={{ color: "#323130" }}>
                   {employee.fullname ? employee.fullname : ""}
+                </p>
+              </EmployeeCard>
+
+              <EmployeeCard>
+                <p style={{ color: "#8E8E8E" }}>Phone Number:</p>
+                <p style={{ color: "#323130" }}>
+                  {employee.phone_number ? employee.phone_number : "NIL"}
+                </p>
+              </EmployeeCard>
+
+              <EmployeeCard>
+                <p style={{ color: "#8E8E8E" }}>Email:</p>
+                <p style={{ color: "#323130" }}>
+                  {employee.email ? employee.email : "NIL"}
+                </p>
+              </EmployeeCard>
+
+              <EmployeeCard>
+                <p style={{ color: "#8E8E8E" }}>Username:</p>
+                <p style={{ color: "#323130" }}>
+                  {employee.username ? employee.username : "NIL"}
+                </p>
+              </EmployeeCard>
+
+              <EmployeeCard>
+                <p style={{ color: "#8E8E8E" }}>Address:</p>
+                <p style={{ color: "#323130" }}>
+                  {employee.address ? employee.address : "NIL"}
+                </p>
+              </EmployeeCard>
+
+              <EmployeeCard>
+                <p style={{ color: "#8E8E8E" }}>Date of Birth:</p>
+                <p style={{ color: "#323130" }}>
+                  {employee.date_of_birth ? employee.date_of_birth : "NIL"}
+                </p>
+              </EmployeeCard>
+
+              <EmployeeCard>
+                <p style={{ color: "#8E8E8E" }}>Occupation:</p>
+                <p style={{ color: "#323130" }}>
+                  {employee.occupation ? employee.occupation : "NIL"}
                 </p>
               </EmployeeCard>
             </EmployeeDataContainer>
@@ -283,6 +333,9 @@ const EmployeeDataContainer = styled.div`
   h5 {
     padding: 0px 10px;
     padding-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 `;
 
