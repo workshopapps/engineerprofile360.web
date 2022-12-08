@@ -122,7 +122,7 @@ class EmployeeController extends Controller
                     'assessment AS total_points' => function ($query) {
                         $query->select(DB::raw("SUM(total_questions) as total_points"));
                     }
-                ]);
+                ])->first();
             if (!$employee) return $this->sendResponse(true, "Employee does not exist", "Employee not found", null, Response::HTTP_NOT_FOUND);
             return $this->sendResponse(false, null, "Employee Fetch Successful", $employee, Response::HTTP_OK);
         } catch (Exception $e) {
