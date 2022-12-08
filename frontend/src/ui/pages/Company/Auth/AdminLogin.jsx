@@ -95,18 +95,18 @@ const AdminLogin = () => {
 
         if (roles === 2) {
           setAuth({ email, accessToken, username, roles, id, org_id });
-          persist &&
-            localStorage.setItem(
-              "Eval360",
-              JSON.stringify({
-                email,
-                accessToken,
-                roles,
-                id,
-                org_id,
-                username,
-              })
-            );
+          // persist &&
+          localStorage.setItem(
+            "Eval360",
+            JSON.stringify({
+              email,
+              accessToken,
+              roles,
+              id,
+              org_id,
+              username,
+            })
+          );
         } else if (roles === 3) {
           setAuth({ email, accessToken, username, roles, id });
 
@@ -131,7 +131,8 @@ const AdminLogin = () => {
           });
 
           if (roles === 2) {
-            navigate(from, { replace: true });
+            // navigate(from, { replace: true });
+            window.location.href = "/dashboard"
           } else if (roles === 3) {
             navigate("/admin/dashboard", { replace: true });
           }
