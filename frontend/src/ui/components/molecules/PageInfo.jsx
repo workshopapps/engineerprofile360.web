@@ -40,6 +40,7 @@ const PageInfoContainer = styled.div`
   span {
     color: #6e6e6e;
     text-transform: capitalize;
+    font-size: 16px;
 
     &:last-child {
       font-weight: 600;

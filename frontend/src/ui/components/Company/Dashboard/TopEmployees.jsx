@@ -2,20 +2,22 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
+import { Text } from "../../../../main/components/Market/Market.styled";
 import { Button, Title } from "../../../../styles/reusableElements.styled";
 
-const TopEmployees = ({ topPerformances }) => {
+const TopEmployees = ({ topPerformances, departments }) => {
   const [top, setTop] = useState([]);
+  const [depts, setDepts] = useState();
 
   useEffect(() => {
     const employees = topPerformances?.data
       ? topPerformances?.data.filter((data) => data.points !== null)
       : [];
-
+    const allDepartments = departments ? departments : [];
     setTop(employees);
-  }, [topPerformances?.data]);
+    setDepts(allDepartments);
+  }, [topPerformances?.data, depts]);
 
-  console.log(top);
   return (
     <div>
       <Header>
@@ -27,14 +29,6 @@ const TopEmployees = ({ topPerformances }) => {
             <span>View all</span>
           </Link>
         </div>
-        <Filter>
-          <select>
-            <option value="all">Department</option>
-          </select>
-          <select>
-            <option>Sort By Date</option>
-          </select>
-        </Filter>
       </Header>
       {top.length > 0 ? (
         <TopEmployeesList>
@@ -44,17 +38,19 @@ const TopEmployees = ({ topPerformances }) => {
                 <th>#</th>
                 <th>Staff name</th>
                 <th>Department</th>
+                <th>Assessments Taken</th>
                 <th>Percentage</th>
                 <th>Action</th>
               </tr>
               {top.map((employee, index) => (
-                <tr key={`employee-${index}`}>
+                <tr key={employee.id}>
                   <td>{index + 1}.</td>
-                  <td>{employee.employee_name}</td>
-                  <td>{employee.department}</td>
-                  <td>{employee.points}%</td>
+                  <td>{employee.fullname}</td>
+                  <td>{employee.department.name}</td>
+                  <td>{employee.completed_assessment_count}</td>
+                  <td>{employee.points.toFixed(2)}%</td>
                   <td>
-                    <Link to="/employees">
+                    <Link to={`/employees/profile/${employee.id}`}>
                       <Button $variant="outlined" $color="#2667ff">
                         View Results
                       </Button>
@@ -104,31 +100,6 @@ const Header = styled.div`
   }
 `;
 
-const Filter = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-
-  select {
-    border: 1px solid ${({ theme }) => theme.palette.border.default};
-    padding: ${({ theme }) => theme.spacing(1)};
-    border-radius: ${({ theme }) => theme.spacing(0.5)};
-    font-size: 14px;
-    color: #323130;
-    background: #ffffff;
-    outline: none;
-  }
-
-  select:first-of-type {
-    width: 150px;
-  }
-
-  select:last-of-type {
-    width: 130px;
-  }
-`;
-
 const TopEmployeesList = styled.div`
   padding-top: ${({ theme }) => theme.spacing(3)};
   width: 100%;
@@ -136,7 +107,15 @@ const TopEmployeesList = styled.div`
   table {
     width: 100%;
     min-width: 960px;
+    border: none;
+    border-spacing: 0; 
     overflow: auto;
+    white-space: initial;
+
+    th,
+    td {
+      padding: ${({ theme }) => theme.spacing(1.5)};
+    }
 
     tr:first-of-type {
       width: 100%;
