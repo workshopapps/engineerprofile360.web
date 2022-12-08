@@ -11,14 +11,19 @@ class UserAssessment extends Model
     use HasFactory, Uuids;
 
     protected $fillable = [
-        'id','employee_id','assessment_id',
-        'org_id','userscore_id',
-        'completed','total_questions',
-        'correct_questions','result'
+        'id', 'employee_id', 'assessment_id',
+        'org_id', 'userscore_id',
+        'completed', 'total_questions',
+        'correct_questions', 'result'
     ];
 
-    public function assessment()    
-    {  
-        return $this->belongsTo(Assessment::class ,'assessment_id');
+    public function assessment()
+    {
+        return $this->belongsTo(Assessment::class, 'assessment_id');
+    }
+
+    public function userscore()
+    {
+        return $this->belongsTo(UserScore::class, 'userscore_id');
     }
 }
