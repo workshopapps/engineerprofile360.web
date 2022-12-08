@@ -7,6 +7,8 @@ use Exception;
 use App\Http\Requests\CreateQuestionRequest;
 use App\Http\Requests\CSVQuestionRequest;
 use App\Models\Assessment;
+use App\Models\Category;
+use App\Services\QuestionService;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -55,6 +57,12 @@ class QuestionsController extends Controller
             if ($category_id) {
                 QuestionService::addQuestion($category_id, $assessment_id, $payload['company_id'], []);
             }
+
+        try {
+            $result = QuestionService::uploadQuestions($request->validated());
+            return $this->sendResponse(false, null, 'Successful!', $result, Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, "Couldn't add questions", $e->getMessage());
         }
     }
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -22,7 +22,6 @@ import smsSvg from "../../../../assets/icons/smsenvelope.svg";
 
 const AdminLogin = () => {
   const { setAuth, persist, setPersist } = useAuth();
-  const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/dashboard";
 
@@ -95,31 +94,31 @@ const AdminLogin = () => {
 
         if (roles === 2) {
           setAuth({ email, accessToken, username, roles, id, org_id });
-          persist &&
-            localStorage.setItem(
-              "Eval360",
-              JSON.stringify({
-                email,
-                accessToken,
-                roles,
-                id,
-                org_id,
-                username,
-              })
-            );
+          // persist &&
+          localStorage.setItem(
+            "Eval360",
+            JSON.stringify({
+              email,
+              accessToken,
+              roles,
+              id,
+              org_id,
+              username,
+            })
+          );
         } else if (roles === 3) {
           setAuth({ email, accessToken, username, roles, id });
-          persist &&
-            localStorage.setItem(
-              "Eval360",
-              JSON.stringify({
-                email,
-                accessToken,
-                roles,
-                id,
-                username,
-              })
-            );
+
+          localStorage.setItem(
+            "Eval360",
+            JSON.stringify({
+              email,
+              accessToken,
+              roles,
+              id,
+              username,
+            })
+          );
         }
 
         console.log(response.data);
@@ -131,9 +130,11 @@ const AdminLogin = () => {
           });
 
           if (roles === 2) {
-            navigate(from, { replace: true });
+            // navigate(from, { replace: true });
+            window.location.href = from;
           } else if (roles === 3) {
-            navigate("/admin/dashboard", { replace: true });
+            // navigate("/admin/dashboard", { replace: true });
+            window.location.href = "/admin/dashboard";
           }
         } else if (response.data.errorState === true) {
           showErrorToast(response.data.message);

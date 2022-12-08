@@ -52,7 +52,7 @@ const TopStaff = ({ topStaff }) => {
                     </td>
                     <td>
                       <Text $weight="400" $size="16px">
-                        {emp.department}
+                        {emp.department.name}
                       </Text>
                     </td>
                     <td>

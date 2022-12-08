@@ -66,7 +66,7 @@ const Dashboard = () => {
     };
 
     getDetails();
-  }, []);
+  }, [auth.org_id]);
 
   return (
     <>

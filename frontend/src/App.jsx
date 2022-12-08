@@ -267,10 +267,7 @@ const App = () => {
                     path="create-assessment"
                     element={<CreateAssessment />}
                   />
-
                   <Route path="admin-csv-upload" element={<AdminCSVUpload />} />
-
-
                 </Route>
 
                 <Route path="/categories" element={<Category />} />
