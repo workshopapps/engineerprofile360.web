@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import axios from "../../../../api/axios";
@@ -8,7 +8,16 @@ import useAuth from "../../../../hooks/useAuth";
 import { Title } from "../../../../styles/reusableElements.styled";
 import { Button, Loader } from "../../../../styles/reusableElements.styled";
 
-const DeleteModal = ({ setToggleDelete, handleDelete, isLoading, text }) => {
+const DeleteModal = ({
+  setToggleDelete,
+  handleDelete,
+  isLoading,
+  setIsLoading,
+  text,
+}) => {
+  useEffect(() => {
+    isLoading && setIsLoading(false);
+  }, []);
   return (
     <OuterContainer>
       <InnerContainer>
