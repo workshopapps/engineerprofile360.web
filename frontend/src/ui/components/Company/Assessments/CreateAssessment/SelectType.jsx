@@ -90,6 +90,8 @@ const SelectType = () => {
   }, []);
 
   const onNextPage = (formData) => {
+    
+   
     validate(formData);
 
     if (Object.keys(errors).length > 0) {

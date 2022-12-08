@@ -4,6 +4,8 @@ import { Button } from "../../../../styles/reusableElements.styled";
 
 import { More, AddCircle } from "iconsax-react";
 import { Link, useOutletContext } from "react-router-dom";
+import NoData from "../../molecules/NoData";
+import TableComponent from "../../molecules/TableComponent";
 
 const Listing = () => {
   const [allEmployees, setAllEmployees] = useState([]);
@@ -35,50 +37,46 @@ const Listing = () => {
           </Button>
         </Link>
       </Filter>
-      <EmployeesTable>
-        {allEmployees.length > 0 ? (
-          <table>
-            <tbody>
-              <tr>
-                <th>#</th>
-                <th>Employee name</th>
-                <th>Department</th>
-                <th>Employee Email</th>
-                <th>Username</th>
-                <th>Actions</th>
+
+      {allEmployees.length > 0 ? (
+        <TableComponent>
+          <tbody>
+            <tr>
+              <th>#</th>
+              <th>Employee name</th>
+              <th>Department</th>
+              <th>Employee Email</th>
+              <th>Username</th>
+              <th>Actions</th>
+            </tr>
+            {allEmployees.map((employee, index) => (
+              <tr key={employee.id}>
+                <td>{index + 1}.</td>
+                <td>{employee.fullname}</td>
+                <td>{employee.department.name}</td>
+                <td>{employee.email}</td>
+                <td>{employee.username}</td>
+                <td>
+                  <Link to={`/employees/profile/${employee.id}`}>
+                    <Button $variant="outlined" $color="#2667ff">
+                      View Profile
+                    </Button>
+                  </Link>
+                  <More />
+                </td>
               </tr>
-              {allEmployees.map((employee, index) => (
-                <tr key={employee.id}>
-                  <td>{index + 1}.</td>
-                  <td>{employee.fullname}</td>
-                  <td>{employee.department.name}</td>
-                  <td>{employee.email}</td>
-                  <td>{employee.username}</td>
-                  <td>
-                    <Link to={`/employees/profile/${employee.id}`}>
-                      <Button $variant="outlined" $color="#2667ff">
-                        View Profile
-                      </Button>
-                    </Link>
-                    <More />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <NoData>
-            <p>Oops! No data to show here</p>
-            <div>
-              <Link to="/employees/add-employee">
-                <Button $weight="400">
-                  <AddCircle color="#FFFFFF" /> Add New Employee
-                </Button>
-              </Link>
-            </div>
-          </NoData>
-        )}
-      </EmployeesTable>
+            ))}
+          </tbody>
+        </TableComponent>
+      ) : (
+        <NoData text="Oops! No data here">
+          <Link to="/employees/add-employee">
+            <Button $weight="400">
+              <AddCircle color="#FFFFFF" /> Add New Employee
+            </Button>
+          </Link>
+        </NoData>
+      )}
     </EmployeesList>
   );
 };
@@ -167,23 +165,5 @@ const EmployeesTable = styled.div`
         }
       }
     }
-  }
-`;
-
-const NoData = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(3)};
-  min-height: 300px;
-  font-size: 16px;
-
-  div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: ${({ theme }) => theme.spacing(2)};
-    flex-wrap: wrap;
   }
 `;

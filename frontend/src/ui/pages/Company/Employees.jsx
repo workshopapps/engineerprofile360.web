@@ -47,11 +47,9 @@ const Employees = () => {
 
   return (
     <>
+      <PageInfo breadcrumb={["employees"]} />
       {!isLoading ? (
-        <>
-          <PageInfo breadcrumb={["employees"]} />
-          <Outlet context={{ employees, departments }} />
-        </>
+        <Outlet context={{ employees, departments }} />
       ) : (
         <OverlayLoader contained>
           <div></div>

@@ -2,8 +2,7 @@
 
 namespace App\Http\Requests;
 
-
-class StackRequest extends BaseRequest
+class CSVQuestionRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +22,8 @@ class StackRequest extends BaseRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:3',
-            'user_id' => 'required'
+            "org_id" => 'required',
+            "base64" => 'required'
         ];
     }
 }
