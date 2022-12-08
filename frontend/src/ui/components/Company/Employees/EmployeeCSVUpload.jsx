@@ -5,7 +5,7 @@ import { Link, useOutletContext } from "react-router-dom";
 import close from "../../../../assets/icons/close.svg";
 import { Title } from "../../../../styles/reusableElements.styled";
 import CreateEmployeeManual from "./CreateEmployeeManual";
-import axios from "../../../../api/axios";
+//import axios from "../../../../api/axios";
 
 const EmployeeCSVUpload = () => {
   const [tab, setTab] = useState("manual");
@@ -13,15 +13,14 @@ const EmployeeCSVUpload = () => {
   const inputRef = useRef();
   const { departments } = useOutletContext();
   const [depts, setDepts] = useState([]);
+
   useEffect(() => {
-    setDepts(departments?.data ? departments?.data : []);
-  }, [departments]);
-  
-  //const [departments, setDepartments] = useState([]);
+    setDepts(departments ? departments : []);
+  }, [departments,depts]);
+
   const [selecteddepartment, setSelectedepartment] = useState({});
 
   const handleChange = (e) => {
-    //console.log(e.target.value);
     localStorage.setItem("departmentsID", JSON.stringify(e.target.value));
     setSelectedepartment(e.target.value);
   };
