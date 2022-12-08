@@ -8,13 +8,11 @@ import { OverlayLoader } from "../../../styles/reusableElements.styled";
 
 import PageInfo from "../../components/molecules/PageInfo";
 
-
 const Employees = () => {
   const { auth } = useAuth();
   const [employees, setEmployees] = useState();
   const [departments, setDepartments] = useState();
   const [isLoading, setIsLoading] = useState(true);
-
 
   useEffect(() => {
     const getdetails = async () => {
@@ -49,11 +47,9 @@ const Employees = () => {
 
   return (
     <>
+      <PageInfo breadcrumb={["employees"]} />
       {!isLoading ? (
-        <>
-          <PageInfo breadcrumb={["employees"]} />
-          <Outlet context={{ employees, departments }} />
-        </>
+        <Outlet context={{ employees, departments }} />
       ) : (
         <OverlayLoader contained>
           <div></div>

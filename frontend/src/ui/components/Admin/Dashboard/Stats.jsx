@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
+import { Profile2User, People, User } from "iconsax-react";
 import axios from "axios";
 
 function Stats() {
@@ -52,25 +53,25 @@ function Stats() {
         <Cards>
 
           <Card>
-            <Img src="https://res.cloudinary.com/dpokiomqq/image/upload/v1670483167/user_pr5rfp-removebg-preview_r37p87.png" alt="user"/>
+          <User size="32" color="#1E1E1E"/>
             <Subtext>User</Subtext>
             <Text>1001</Text>
           </Card>
 
            <Card>
-            <Img src="https://res.cloudinary.com/dpokiomqq/image/upload/v1670483137/profile-2user-removebg-preview_gs3v4k.png" alt="employees"/>
+           <Profile2User size="32" color="#1E1E1E"/>
             <Subtext>Employee</Subtext>
             <Text>989</Text>
            </Card>
 
           <Card>
-            <img src="https://res.cloudinary.com/dpokiomqq/image/upload/v1670483437/people-removebg-preview_ilcddu.png" alt="company"/>
+            <People size="32" color="#1E1E1E"/>
             <Subtext>companies</Subtext>
             <Text>365</Text>
           </Card>
 
           <Card>
-            <img src="https://res.cloudinary.com/dpokiomqq/image/upload/v1670483437/people-removebg-preview_ilcddu.png" alt="people"/>
+            <People size="32" color="#1E1E1E"/>
             <Subtext>verified</Subtext>
             <Text>63%</Text>
           </Card>
@@ -140,11 +141,4 @@ const Text = styled.h3`
   line-height: 58px;
   color: #1E1E1E;
 `
-
-const Img = styled.img`
-  width:20px;
-  heigth:13px;
-`
-
-
   
