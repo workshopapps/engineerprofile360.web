@@ -91,8 +91,8 @@ const List = () => {
     setToggleMaxDelete(true);
   };
 
-  console.log({ ids: [...value.categoryId] });
-  console.log([...value.categoryId]);
+  // console.log({ ids: [...value.categoryId] });
+  // console.log([...value.categoryId]);
 
   // Fucntions to be passed to the Delete Modal
   const handleDelete = async () => {
@@ -232,6 +232,7 @@ const List = () => {
         <DeleteModal
           handleDelete={handleDelete}
           isLoading={isLoading}
+          setIsLoading={setIsLoading}
           setToggleDelete={setToggleDelete}
           text={`Are you sure you want to delete ${currentSelectedName.current}`}
         />
@@ -255,6 +256,7 @@ const List = () => {
         <DeleteModal
           handleDelete={handleBulkDelete}
           isLoading={isLoading}
+          setIsLoading={setIsLoading}
           setToggleDelete={setToggleMaxDelete}
           text={"Are you sure you want to delete selected categories"}
         />

@@ -32,7 +32,7 @@ const EditCategory = ({
     setIsSubmitted(true);
     try {
       if (name.length !== "") {
-        const response = await axios.get(
+        const response = await axios.patch(
           `category/${auth.org_id}/${currentSelectedId}`,
           JSON.stringify({ name })
         );
