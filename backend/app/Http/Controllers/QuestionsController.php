@@ -38,6 +38,26 @@ class QuestionsController extends Controller
 
     public function addCSV(CSVQuestionRequest $request)
     {
+        $payload = $request->validate();
+        $base64 = $payload['base64'];
+        $type = explode(",", $base64)[0];
+        // if ($type != "") return;
+        $data = explode("\n", base64_decode(explode(",", $base64)[1]));
+        $assessment_id = $payload['assessment_id'] ?? Assessment::create(["name" => ""]);
+        $result = [];
+        for ($i = 1; $i < count($data); $i++) {
+            $item = explode(",", $data[$i]);
+            $question = $item[0] ?? "Question";
+            $option1 = $item[1] ?? "option1";
+            $option2 = $item[2] ?? "option2";
+            $option3 = $item[3] ?? "option3";
+            $option4 = $item[4] ?? "option4";
+            $answer = $item[5] ?? null;
+            $category_id = Category::where("name", $item[6])->first()['id'];
+            if ($category_id) {
+                QuestionService::addQuestion($category_id, $assessment_id, $payload['company_id'], []);
+            }
+
         try {
             $result = QuestionService::uploadQuestions($request->validated());
             return $this->sendResponse(false, null, 'Successful!', $result, Response::HTTP_OK);

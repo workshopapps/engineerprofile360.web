@@ -34,7 +34,7 @@ class IsAdmin extends Controller
         try {
             $user = $request->user;
             $uid = $user["id"];
-    
+            
             // check if user exists.
             $org_user = User::where("user_id", $uid);
             
