@@ -84,7 +84,7 @@ class AssessmentController extends Controller
         try {
             $payload = json_decode($request->getContent(), true);
 
-            if (!isset($payload["name"])) {
+            if (!isset($request->name)) {
                 return $this->sendResponse(true, "expected a valid payload", "invalid payload given.", null, 400);
             }
 
@@ -92,7 +92,7 @@ class AssessmentController extends Controller
                 return $this->sendResponse(true, "expected a valid category 'id'  but got none", "category id is missing.", null, 400);
             }
 
-            $updatedName = $payload["name"];
+            $updatedName = $request->name;
             $assessment = Assessment::where('id', $assessmentId);
 
             if ($assessment->count() == 0) {
@@ -106,7 +106,7 @@ class AssessmentController extends Controller
 
             $assessment->update($updatedData);
 
-            return $this->sendResponse(false, null, 'assessment updated successfully', $updatedName, Response::HTTP_OK);
+            return $this->sendResponse(false, null, 'assessment updated successfully', $assessment->first()->refresh(), Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "something went wrong updating assessment " . $e->getMessage(), 'failed updating assessment.', null, 500);
         }
@@ -241,9 +241,9 @@ class AssessmentController extends Controller
 
 
             $uid = $request->user["id"];
-            $updatedName = $payload["name"];
-            $startDate = $payload["start_date"];
-            $startTime = $payload["start_time"];
+            $updatedName = $payload['name'];
+            $startDate = $payload['start_date'];
+            $startTime = $payload['start_time'];
 
             $assessment = Assessment::where('id', $assessmentId)->where("org_id", $uid);
 

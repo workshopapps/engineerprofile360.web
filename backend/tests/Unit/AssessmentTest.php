@@ -93,7 +93,6 @@ class AssessmentTest extends TestCase
 
    }
 
-
 	public function testCanGetCompletedAssessment()
 	{
 		$user = $this->authenticate();
@@ -111,13 +110,66 @@ class AssessmentTest extends TestCase
 	        'Content-Type' => 'application/json',
 	        'Authorization' => 'Bearer ' . $user['accessToken'],
 	    ])->getJson('/api/assessment/completed-assessments/'.$user['org_id'].'/'.$user['id']);
-	    // dd($response->json());
 	    $response->assertStatus(200)->assertJson([
         	'message' => "Completed Assessment"
     	]);
 
    }
 
+
+	public function testCanAdminUpdateAssessnment()
+	{
+		$user = $this->authenticate();
+		$department = Department::factory()->create([
+			'org_id' => $user['org_id']
+		]);
+
+		$assessment = Assessment::factory()->create([
+			"org_id" => $user['org_id'],
+			"department_id" => $department->id,
+		]);
+		
+		$update = [
+			"name" => $this->faker->word,
+            "start_date" => $assessment->start_date,
+            "start_time" => $assessment->start_time,
+		];
+		
+		$response = $this->withHeaders([
+	        'Accept' => 'application/json',
+	        'Authorization' => 'Bearer ' . $user['accessToken'],
+	    ])->put('/api/assessment/'.$assessment->id,$update);
+	    $response->assertStatus(200)->assertJson([
+        	'message' => "Assessment updated successfully"
+    	]);
+    }
+
+	public function testCanAdminDeleteAssessnment()
+	{
+		$user = $this->authenticate();
+		$department = Department::factory()->create([
+			'org_id' => $user['org_id']
+		]);
+
+		$assessment = Assessment::factory()->create([
+			"org_id" => $user['org_id'],
+			"department_id" => $department->id,
+		]);
+		
+		$update = [
+			"name" => $this->faker->word,
+            "start_date" => $assessment->start_date,
+            "start_time" => $assessment->start_time,
+		];
+		
+		$response = $this->withHeaders([
+	        'Accept' => 'application/json',
+	        'Authorization' => 'Bearer ' . $user['accessToken'],
+	    ])->delete('/api/assessment/'.$assessment->id.'/delete',$update);
+	    $response->assertStatus(200)->assertJson([
+        	'message' => "Assessment deleted successfully"
+    	]);
+    }
 
    private function authenticate()
    {
