@@ -70,9 +70,9 @@ const Dashboard = () => {
 
   return (
     <>
+      <PageInfo pageTitle="Company's Dashboard" />
       {!isLoading ? (
         <>
-          <PageInfo pageTitle="Company's Dashboard" />
           <Stats stats={stats} topPerformance={topPerformance} />
           <TopEmployees
             topPerformances={topPerformances}

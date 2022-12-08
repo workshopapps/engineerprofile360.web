@@ -13,11 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('interviews', function (Blueprint $table) {
-            $table->dropColumn('company_name');
-            $table->dropColumn('name');
-            $table->string('times_taken')->nullable()->change();
-            $table->string('title')->after('id');
+        Schema::table('employees', function (Blueprint $table) {
+            $table->dropColumn(['address', 'phone_number']);
         });
     }
 
@@ -28,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('employees', function (Blueprint $table) {
+            //
+        });
     }
 };

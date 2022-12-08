@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class InterviewController extends Controller
 {
-    
+
     public function addInterview(InterviewRequest $request): JsonResponse
     {
         $data = $request->all();
@@ -27,7 +27,7 @@ class InterviewController extends Controller
     public function getInterviews()
     {
         try {
-           $interviews = Interview::paginate(10);
+           $interviews = Interview::with('stack')->paginate(10);
             return $this->sendResponse(false, null, 'Interviews retrieved', $interviews, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, $e->getMessage(), 'Unable to retrieve interviews',null, Response::HTTP_BAD_REQUEST);
@@ -37,7 +37,7 @@ class InterviewController extends Controller
     public function getInterviewById($interviewId)
     {
         try {
-            $interview = Interview::find($interviewId);
+            $interview = Interview::with('stack')->find($interviewId);
             if (!$interview) return $this->sendResponse(true, null, 'Interview not found', null, Response::HTTP_NOT_FOUND);
             return $this->sendResponse(false, null, 'Interview retrieved', $interview, Response::HTTP_OK);
         } catch (Exception $e) {
@@ -48,7 +48,7 @@ class InterviewController extends Controller
     public function getInterviewByStack($stackId) {
         try {
             $interviews = Interview::where('stack_id', $stackId)->get();
-         
+
             if( !$interviews) {
                 return $this->sendResponse(
                     true,
@@ -90,7 +90,7 @@ class InterviewController extends Controller
 
     public function updateInterview(Request $request, $interviewId)
     {
-        
+
         try {
             $updatedData = $request->all();
             //Get Interview to be updated
@@ -100,7 +100,7 @@ class InterviewController extends Controller
             if (!$checkInterview) {
                 return $this->sendResponse(true, null, 'Interview not found', null, Response::HTTP_NOT_FOUND);
             }
-            
+
             $interview->update($updatedData);
             return $this->sendResponse(false, null, 'Interview updated', $updatedData, Response::HTTP_OK);
         } catch (Exception $e) {
@@ -116,11 +116,11 @@ class InterviewController extends Controller
                             $query->where('name', 'like', '%'.$company.'%');
                         })
                         ->get();
-            if (!$interview) 
+            if (!$interview)
                 return $this->sendResponse(true, null, 'Interview not found', null, Response::HTTP_NOT_FOUND);
             return $this->sendResponse(false, null, 'Interview retrieved', $interview, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, $e->getMessage(), "Error fetching interview", null, Response::HTTP_BAD_REQUEST);
-        }        
+        }
     }
 }
