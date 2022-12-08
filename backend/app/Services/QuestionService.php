@@ -2,26 +2,11 @@
 
 namespace App\Services;
 
-<<<<<<< HEAD
-=======
 use App\Models\Category;
->>>>>>> b96e9fc095f556017fa97e2e40c73c5b09dad19f
 use App\Models\Question;
 
 class QuestionService
 {
-<<<<<<< HEAD
-    public static function addQuestion(string $category_id, string $assessment_id, string $company_id, array $data): array
-    {
-        return Question::create([
-            "category_id" => $category_id,
-            "assessment_id" => $assessment_id,
-            "company_id" => $company_id,
-            ...$data,
-            "options" => json_encode($data["options"]),
-            "correct_answers" => json_encode($data["correct_answers"]),
-        ]);
-=======
     public static function uploadQuestions(array $payload): array
     {
         $base64 = $payload['base64'];
@@ -59,6 +44,5 @@ class QuestionService
             "success" => $success,
             "total" => $count - 1
         ];
->>>>>>> b96e9fc095f556017fa97e2e40c73c5b09dad19f
     }
 }
