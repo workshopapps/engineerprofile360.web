@@ -7,6 +7,11 @@ use Exception;
 use App\Http\Requests\CreateQuestionRequest;
 use App\Http\Requests\CSVQuestionRequest;
 use App\Models\Assessment;
+<<<<<<< HEAD
+=======
+use App\Models\Category;
+use App\Services\QuestionService;
+>>>>>>> b96e9fc095f556017fa97e2e40c73c5b09dad19f
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -36,6 +41,7 @@ class QuestionsController extends Controller
 
     public function addCSV(CSVQuestionRequest $request)
     {
+<<<<<<< HEAD
         $payload = $request->validate();
         $base64 = $payload['base64'];
         $type = explode(",", $base64)[0];
@@ -55,6 +61,13 @@ class QuestionsController extends Controller
             if ($category_id) {
                 QuestionService::addQuestion($category_id, $assessment_id, $payload['company_id'], []);
             }
+=======
+        try {
+            $result = QuestionService::uploadQuestions($request->validated());
+            return $this->sendResponse(false, null, 'Successful!', $result, Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, "Couldn't add questions", $e->getMessage());
+>>>>>>> b96e9fc095f556017fa97e2e40c73c5b09dad19f
         }
     }
 
