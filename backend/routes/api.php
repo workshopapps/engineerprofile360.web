@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\StackController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\InterviewController;
 use App\Http\Controllers\QuestionsController;
@@ -64,6 +65,13 @@ Route::prefix("user")->group(function () {
     Route::put('verify-user/{userId}', [UserController::class, 'getVerifyUserById']);
 });
 
+//Admin operation routes
+Route::prefix("admin")->group(function () {
+    Route::get('overview', [AdminController::class, 'getAdminOverview'])->middleware("isloggedin", "isadmin");
+    Route::get('users', [AdminController::class, 'getAllUsers'])->middleware("isloggedin", "isadmin");
+
+});
+
 
 
 // User Assessment routes
@@ -102,7 +110,11 @@ Route::prefix("assessment/admin")->group(function () {
 Route::post("/test_csv", function (Request $req) {
     $csv = new CsvParser();
     $payload = json_decode($req->getContent(), true);
+<<<<<<< HEAD
     // return $csv->parseEmployeeCsv($payload, '');
+=======
+    return $csv->parseEmployeeCsv($payload, '', '');
+>>>>>>> 5073ba70e062f999951d85de7b400d313e8d59d6
 });
 
 // authentication route
@@ -144,7 +156,9 @@ Route::prefix("company")->group(function () {
 
 // questions route operations
 Route::prefix("question")->group(function () {
+    Route::post('upload', [QuestionsController::class, 'uploadCsv'])->middleware("isloggedin", "isadmin");
     Route::post('add', [QuestionsController::class, 'addManually'])->middleware("isloggedin", "isadmin");
+    Route::post('add_csv', [QuestionsController::class, 'addCSV']);
     Route::get('{id}', [QuestionsController::class, 'getQuestById']);
     Route::get('company/{id}', [QuestionsController::class, 'getQuestByComId']);
     Route::get('category/{id}', [QuestionsController::class, 'getQuestByCatId']);
