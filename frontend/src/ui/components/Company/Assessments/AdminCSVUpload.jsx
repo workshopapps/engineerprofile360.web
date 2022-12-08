@@ -22,13 +22,19 @@ const AdminCSVUpload = () => {
     e.preventDefault();
     console.log(e);
     setFiles(e.dataTransfer.files);
+
+    Array.from(e.dataTransfer.files).map(async (file) => {
+      let text = await file.text();
+      console.log(text);
+    });
   };
 
   const handleConvertion = async () => {
     // const file = document.querySelector("#myfile").files[0];
-    const file = files?.[0];
+    // const file = files?.[0];
     try {
-      const result = await toBase64(file);
+      console.log(files);
+      const result = await toBase64(files);
       return result;
     } catch (error) {
       console.error(error);
@@ -36,12 +42,10 @@ const AdminCSVUpload = () => {
     }
   };
 
-  files &&
-    handleConvertion().then((result) => {
-      console.log(result);
-    });
-
-  console.log(files);
+  // files &&
+  //   handleConvertion().then((result) => {
+  //     console.log(result);
+  //   });
 
   return (
     <>

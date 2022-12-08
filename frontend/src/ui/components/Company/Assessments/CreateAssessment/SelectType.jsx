@@ -88,7 +88,6 @@ const SelectType = () => {
     };
     getDepartment();
   }, []);
-  console.log(comDepartment);
 
   const onNextPage = (formData) => {
     validate(formData);
