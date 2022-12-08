@@ -354,7 +354,7 @@ const Selectontainer = styled.div`
     align-items: center;
     
     @media screen and (max-width: 676px) {
-        padding: 0px 2rem;
+        padding: 0px 2rem !important;
       }  
 
     h1 {
