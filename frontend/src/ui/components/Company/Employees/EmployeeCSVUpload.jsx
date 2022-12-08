@@ -14,7 +14,7 @@ const EmployeeCSVUpload = () => {
   const { departments } = useOutletContext();
   const [depts, setDepts] = useState([]);
   useEffect(() => {
-    setDepts(departments?.data ? departments?.data : []);
+    setDepts(departments ? departments : []);
   }, [departments]);
   
   //const [departments, setDepartments] = useState([]);
