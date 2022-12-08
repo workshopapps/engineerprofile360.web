@@ -40,7 +40,7 @@ const Listing = () => {
               ))
             : ""}
         </select>
-        <Link to="/employees/add-employee">
+        <Link to="/employees/employee-department">
           <Button $weight="400">
             <AddCircle color="#FFFFFF" /> Add New Employee
           </Button>
