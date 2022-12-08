@@ -33,8 +33,7 @@ class QuestionService
                     "assessment_id" => $payload['assessment_id'],
                     "correct_answers" => [intval($answer) - 1],
                     "timeframe" => 1,
-                    "is_multiple_answers" => false,
-                    "company_id" => $payload['org_id']
+                    "is_multiple_answers" => false
                 ];
                 Question::create($output);
                 $success++;
