@@ -1,5 +1,6 @@
 // import React from "react";
-import * as Sentry from "@sentry/react";
+import * as atatus from "atatus-spa";
+//import * as Sentry from "@sentry/react";
 import { Routes, Route } from "react-router-dom";
 import RequireAuth from "./components/requireAuth";
 import styled from "styled-components";
@@ -88,6 +89,10 @@ import AdminAssessmmentListOutlet from "./ui/components/Company/Assessments/admi
 import AdminAssessmentListAvailable from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmentListAvailable";
 import AssessmentList from "./ui/components/Company/Assessments/adminAssesmentList/AssessmentList";
 
+atatus.config("4010279ebbd747e7a752082eea130df6").install();
+
+atatus.notify(new Error("Test Atatus Setup"));
+
 const ROLES = {
   Employees: 1,
   Organization: 2,
@@ -154,7 +159,7 @@ const App = () => {
             /> */}
 
             <Route path="/employee-profile" element={<EmployeeProfile />} />
-            
+
             {/* <Route
                 path="/user-assessment-completed"
                 element={<UserAssessmentListCompleted />}
@@ -227,7 +232,7 @@ const App = () => {
                   <Route path="" element={<EmployeesListing />} />
                   <Route path="profile/:ID" element={<EmployeeProfile />} />
                   <Route path="add-employee" element={<EmployeeCSVUpload />} />
-                  
+
                   <Route
                     path="employee-department"
                     element={<EmployeeDeparment />}
@@ -260,7 +265,10 @@ const App = () => {
                     path="create-assessment"
                     element={<CreateAssessment />}
                   />
+
                   <Route path="admin-csv-upload" element={<AdminCSVUpload />} />
+
+
                 </Route>
 
                 <Route path="/categories" element={<Category />} />
@@ -286,7 +294,7 @@ const App = () => {
     </>
   );
 };
-export default Sentry.withProfiler(App);
+export default App;
 
 const StyledToastContainer = styled(ToastContainer).attrs({
   className: "toast-container",
