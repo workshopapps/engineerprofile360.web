@@ -16,11 +16,13 @@ const CreateEmployeeManual = () => {
     const { auth }  = useAuth();
     const org_id = auth.org_id;
     const navigate = useNavigate();
-    const departmentid = localStorage.getItem("departmentsID");
+    const departmentid = JSON.parse(localStorage.getItem("departmentsID"));
+    
     
     const handleChange = (e) => {
       //console.log(e.target.id);
       setFormData({ ...formData, [e.target.id]: e.target.value });
+      console.log(departmentid);
     };
     
     const onBlur = (e) => {
