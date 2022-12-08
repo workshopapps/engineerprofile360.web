@@ -76,7 +76,7 @@ class UserScoreController extends Controller
     {
         try {
             $userScore = Employee::where("id", $id)
-                ->with('department')->withCount("completed_assessment")->with('userscore');
+                ->with('department')->withCount("completed_assessment")->with('completed_assessment.userscore');
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Error fetching user scores", $e->getMessage(), Response::HTTP_BAD_REQUEST);
