@@ -13,16 +13,17 @@ const Listing = () => {
   useEffect(() => {
     setAllEmployees(employees ? employees : []);
     setDepts(departments ? departments : []);
-
+    console.log(depts);
   }, [employees, departments]);
 
-  console.log(depts);
+  console.log(employees, departments);
+
   return (
     <EmployeesList>
       <Filter>
         <select>
           <option>Department</option>
-          {depts.map((dept) => (
+          {depts?.map((dept) => (
             <option key={dept.id} value={dept.name}>
               {dept.name}
             </option>
