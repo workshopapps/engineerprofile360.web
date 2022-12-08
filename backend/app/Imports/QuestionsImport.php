@@ -4,8 +4,7 @@ namespace App\Imports;
 
 use App\Models\Question;
 use Illuminate\Support\Facades\Hash;
-use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
+
 
 class QuestionsImport implements ToModel,WithHeadingRow
 {

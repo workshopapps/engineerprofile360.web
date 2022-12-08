@@ -5,41 +5,40 @@ namespace App\Http\Controllers;
 use App\Models\Question;
 use Exception;
 use App\Http\Requests\CreateQuestionRequest;
+use App\Http\Requests\CSVQuestionRequest;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use App\Imports\QuestionsImport;
-
+use App\Models\Assessment;
+use App\Models\Category;
+use App\Services\QuestionService;
 
 class QuestionsController extends Controller
 {
     public function uploadCsv(Request $request)
     {
-    
-       try {
-        if (in_array(request()->file('your_file')?->getClientOriginalExtension(),
-        ['csv','xls','xlsx','xlsm','xlsb','xlt','xltx'])) {
-           Excel::import(new QuestionsImport, request()->file('your_file'));
-          return $this->sendResponse(false, null, 'Question created', null, Response::HTTP_CREATED);
+
+        try {
+            if (in_array(
+                request()->file('your_file')?->getClientOriginalExtension(),
+                ['csv', 'xls', 'xlsx', 'xlsm', 'xlsb', 'xlt', 'xltx']
+            )) {
+                Excel::import(new QuestionsImport, request()->file('your_file'));
+                return $this->sendResponse(false, null, 'Question created', null, Response::HTTP_CREATED);
+            } else {
+                return $this->sendResponse(true, 'Invalid file extension', 'upload an excel file', null, Response::HTTP_BAD_REQUEST);
+            }
+        } catch (\Exception $e) {
+            return $this->sendResponse(true, $e->getMessage(), 'something went wrong', null, Response::HTTP_BAD_REQUEST);
         }
-        else{
-            return $this->sendResponse(true, 'Invalid file extension', 'upload an excel file', null, Response::HTTP_BAD_REQUEST);
-        }
-      
-  
-       
- 
-       } catch (\Exception $e) {
-        return $this->sendResponse(true,$e->getMessage(), 'something went wrong', null, Response::HTTP_BAD_REQUEST) ;
-       }
     }
 
     public function addManually(CreateQuestionRequest $request): JsonResponse
     {
         try {
             $data = $request->validated();
-       
+
             $output = array();
             for ($i = 0; $i < count($data['questions']); $i++) {
                 $result = Question::create([
@@ -47,8 +46,8 @@ class QuestionsController extends Controller
                     "assessment_id" => $data["assessment_id"],
                     "company_id" => $data["company_id"],
                     ...$data['questions'][$i],
-                    "options"=>json_encode($data['questions'][$i]["options"]),
-                    "correct_answers"=>json_encode($data['questions'][$i]["correct_answers"]),
+                    "options" => json_encode($data['questions'][$i]["options"]),
+                    "correct_answers" => json_encode($data['questions'][$i]["correct_answers"]),
                 ]);
                 array_push($output, $result);
             }
@@ -58,6 +57,31 @@ class QuestionsController extends Controller
         }
     }
 
+    public function addCSV(CSVQuestionRequest $request)
+    {
+        $payload = $request->validate();
+        $base64 = $payload['base64'];
+        $type = explode(",", $base64)[0];
+        // if ($type != "") return;
+        $data = explode("\n", base64_decode(explode(",", $base64)[1]));
+        $assessment_id = $payload['assessment_id']??Assessment::create()
+        $result = [];
+        for ($i = 1; $i < count($data); $i++) {
+            $item = explode(",", $data[$i]);
+            $question = $item[0] ?? "Question";
+            $option1 = $item[1] ?? "option1";
+            $option2 = $item[2] ?? "option2";
+            $option3 = $item[3] ?? "option3";
+            $option4 = $item[4] ?? "option4";
+            $answer = $item[5] ?? null;
+            $category_id = Category::where("name", $item[6])->first()['id'];
+            if ($category_id) {
+                QuestionService::addQuestion($category_id, $assessment_id, $payload['company_id'], [
+                    
+                ]);
+            }
+        }
+    }
 
     public function updateQuestion(CreateQuestionRequest $request, $question_id)
     {
@@ -103,7 +127,7 @@ class QuestionsController extends Controller
     {
         try {
             $questions = Question::where('assessment_id', $id)->get();
-            foreach($questions as $question){
+            foreach ($questions as $question) {
                 $question->options = json_decode($question->options);
                 $question->correct_answers = json_decode($question->correct_answers);
             }
@@ -145,7 +169,7 @@ class QuestionsController extends Controller
         try {
             $questions = Question::where('category_id', $id);
             if (!$questions->count()) return $this->sendResponse(true, "Fetch Question By Category ID failed", 'No Question Exist for this Category ID', null, Response::HTTP_NOT_FOUND);
-            foreach($questions as $question){
+            foreach ($questions as $question) {
                 $question->options = json_decode($question->options);
                 $question->correct_answers = json_decode($question->correct_answers);
             }
