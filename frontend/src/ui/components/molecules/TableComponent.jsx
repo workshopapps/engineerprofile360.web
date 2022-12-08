@@ -28,7 +28,7 @@ const Table = styled.table`
 
   th,
   td {
-    padding: ${({ theme }) => theme.spacing(1.5)};
+    padding: ${({ theme }) => theme.spacing(2)} ${({ theme }) => theme.spacing(1.5)};
   }
 
   tr:first-of-type {
@@ -51,5 +51,14 @@ const Table = styled.table`
     color: #605e5c;
     font-size: 16px;
     font-weight: 600;
+  }
+
+  td:last-of-type {
+    display: flex;
+    align-items: center;
+    gap: ${({theme}) => theme.spacing(2)};
+    svg {
+      transform: rotate(90deg);
+    }
   }
 `;
