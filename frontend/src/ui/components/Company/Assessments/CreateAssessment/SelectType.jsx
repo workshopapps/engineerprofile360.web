@@ -78,6 +78,8 @@ const SelectType = () => {
   }, [formData, touched]);
 
   const onNextPage = (formData) => {
+    
+   
     validate(formData);
 
     if (Object.keys(errors).length > 0) {

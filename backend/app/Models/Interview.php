@@ -16,4 +16,9 @@ class Interview extends Model
         return $this->belongsTo(Company::class, 'company_id');
     }
 
+    public function stack()
+    {
+        return $this->belongsTo(Stack::class);
+    }
+
 }

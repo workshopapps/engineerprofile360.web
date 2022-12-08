@@ -26,6 +26,7 @@ class CreateQuestionRequest extends BaseRequest
         return [
             'category_id' => "required|string",
             'assessment_id' => "required|string",
+            'company_id' => "required|string",
             'questions' => 'array|required',
             'questions.*.question' => "required|string",
             'questions.*.correct_answers' => "required|array",
