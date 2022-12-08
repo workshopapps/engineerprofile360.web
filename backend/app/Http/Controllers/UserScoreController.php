@@ -76,7 +76,14 @@ class UserScoreController extends Controller
     {
         try {
             $userScore = Employee::where("id", $id)
-                ->with('department')->withCount("completed_assessment")->with('completed_assessment.userscore');
+                ->with(['department', 'completed_assessment.userscore'])->withCount("completed_assessment")->withCount([
+                    'assessment AS points' => function ($query) {
+                        $query->select(DB::raw("SUM(result) as points"));
+                    },
+                    'assessment AS total_point' => function ($query) {
+                        $query->select(DB::raw("SUM(total_questions) as total_point"));
+                    }
+                ]);
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Error fetching user scores", $e->getMessage(), Response::HTTP_BAD_REQUEST);
