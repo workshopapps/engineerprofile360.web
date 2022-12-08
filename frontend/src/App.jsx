@@ -230,11 +230,7 @@ const App = () => {
 
                 <Route path="/employees" element={<Employees />}>
                   <Route path="" element={<EmployeesListing />} />
-                  <Route path="profile" element={<EmployeeProfile />} />
-                  <Route
-                    path="employee-profile"
-                    element={<EmployeeProfile />}
-                  />
+                  <Route path="profile/:ID" element={<EmployeeProfile />} />
                   <Route path="add-employee" element={<EmployeeCSVUpload />} />
 
                   <Route
@@ -269,6 +265,10 @@ const App = () => {
                     path="create-assessment"
                     element={<CreateAssessment />}
                   />
+
+                  <Route path="admin-csv-upload" element={<AdminCSVUpload />} />
+
+
                 </Route>
 
                 <Route path="/categories" element={<Category />} />

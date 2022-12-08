@@ -83,7 +83,7 @@ export const Button = styled.button`
     }
   }}
 
-  font-weight: ${({ $weight }) => ($weight ? $weight : null)}
+  font-weight: ${({ $weight }) => ($weight ? $weight : null)};
   color: ${({ $color }) => ($color ? $color : null)};
 `;
 

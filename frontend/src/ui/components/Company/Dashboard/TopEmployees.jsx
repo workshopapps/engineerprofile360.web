@@ -50,7 +50,7 @@ const TopEmployees = ({ topPerformances, departments }) => {
                   <td>{employee.completed_assessment_count}</td>
                   <td>{employee.points.toFixed(2)}%</td>
                   <td>
-                    <Link to="/employees/profile" state={employee.id}>
+                    <Link to={`/employees/profile/${employee.id}`}>
                       <Button $variant="outlined" $color="#2667ff">
                         View Results
                       </Button>
@@ -107,7 +107,15 @@ const TopEmployeesList = styled.div`
   table {
     width: 100%;
     min-width: 960px;
+    border: none;
+    border-spacing: 0; 
     overflow: auto;
+    white-space: initial;
+
+    th,
+    td {
+      padding: ${({ theme }) => theme.spacing(1.5)};
+    }
 
     tr:first-of-type {
       width: 100%;
