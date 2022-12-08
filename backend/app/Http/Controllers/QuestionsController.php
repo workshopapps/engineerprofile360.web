@@ -18,7 +18,6 @@ class QuestionsController extends Controller
     {
         try {
             $data = $request->validated();
-
             $output = array();
             for ($i = 0; $i < count($data['questions']); $i++) {
                 $result = Question::create([
@@ -90,15 +89,6 @@ class QuestionsController extends Controller
     {
         try {
             $questions = Question::where('assessment_id', $id)->get();
-            foreach ($questions as $question) {
-                $question->options = json_decode($question->options);
-                $question->correct_answers = json_decode($question->correct_answers);
-            }
-
-            $checkQuestions = Question::where('assessment_id', $id)->exists();
-            if (!$checkQuestions) {
-                return $this->sendResponse(true, "Fetch Question By Assessment ID failed", 'No Question Exist for this Assessment ID', null, Response::HTTP_NOT_FOUND);
-            }
             return $this->sendResponse(false, null, "OK", $questions, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Fetch Question By Assessment ID failed", $e->getMessage());
