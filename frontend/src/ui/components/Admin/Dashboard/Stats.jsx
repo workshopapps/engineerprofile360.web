@@ -1,49 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components';
 import { Profile2User, People, User } from "iconsax-react";
-import axios from "axios";
-
+import axios from '../../../../api/axios';
 function Stats() {
-   const [data, setData] = useState(null);
 
-   axios
-  .get("https://api.eval360.hng.tech/api/admin/overview", {
-
-  })
-  .then(res => {
-      console.log(res)
+  axios.get('admin/overview')
+  .then(response => {
+    console.log(response);
   })
   .catch(error => {
-    console.log(error)
-  })
-
-  // axios({
-  //   method: 'GET',
-  //   url: 'https://api.eval360.hng.tech/api/admin/overview',
-     
-  //    data: {
-
-  //     users: 1,
-
-  //     employees: 0,
-
-  //     companies: 1,
-
-  //     verifiedUsers: 100 
-     
-  //     }
-     
-     
-     
-  // }).then(response => {
-  //   console.log(response);
-  // }).catch(error => {
-  //   console.log(error);
-  // })
-
-
-
-
+    console.log(error);
+  });
   
   return (
     <Container encType="application/json">
