@@ -162,7 +162,7 @@ const data = {
 export default Profile;
 
 const EmployeeProfileContainer = styled.div`
-  padding: 0px 9px;
+  padding: 0px 0px;
   padding-bottom: 100px;
 `;
 
@@ -210,6 +210,7 @@ const EmployeeProfileInfo = styled.div`
     flex-direction: column;
     gap: 20px;
     justify-content: center;
+    align-items: center;
   }
 `;
 
@@ -229,6 +230,13 @@ const EmployeeProfileDataContainer = styled.div`
   display: flex;
   gap: ${({ theme }) => theme.spacing(3)};
   flex-wrap: wrap;
+
+  ${({ theme }) => theme.breakpoints.down("touch")} {
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const EmployeeProfileDataCard = styled.div`
@@ -257,7 +265,7 @@ const EmployeeProfileInnerContainer = styled.div`
   ${({ theme }) => theme.breakpoints.down("touch")} {
     flex-direction: column;
     justify-content: center;
-    gap: 10px;
+    gap: ${({theme}) => theme.spacing(6)};
   }
 `;
 

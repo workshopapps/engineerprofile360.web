@@ -15,11 +15,22 @@ const Listing = () => {
     setDepts(departments?.data ? departments?.data : []);
   }, [employees, departments]);
 
+  const handleFilter = (e) => {
+    if (e.target.value === "all") {
+      setAllEmployees(employees ? employees : []);
+    } else {
+      const filtered = employees
+        ? employees.filter((data) => e.target.value === data.department)
+        : [];
+      setAllEmployees(filtered);
+    }
+  };
+
   // console.log(depts);
   return (
     <EmployeesList>
       <Filter>
-        <select>
+        <select onChange={handleFilter}>
           <option value="all">Department</option>
           {depts
             ? depts.map((dept) => (
@@ -29,7 +40,7 @@ const Listing = () => {
               ))
             : ""}
         </select>
-        <Link to="/add-employee">
+        <Link to="/employees/add-employee">
           <Button $weight="400">
             <AddCircle color="#FFFFFF" /> Add New Employee
           </Button>
@@ -70,9 +81,11 @@ const Listing = () => {
           <NoData>
             <p>Oops! No data to show here</p>
             <div>
-              <Button $weight="400">
-                <AddCircle color="#FFFFFF" /> Add New Employee
-              </Button>
+              <Link to="/employees/add-employee">
+                <Button $weight="400">
+                  <AddCircle color="#FFFFFF" /> Add New Employee
+                </Button>
+              </Link>
             </div>
           </NoData>
         )}
@@ -124,7 +137,7 @@ const EmployeesTable = styled.div`
     min-width: 960px;
     text-align: left;
     border: none;
-    border-spacing: 0; 
+    border-spacing: 0;
     overflow: auto;
     white-space: initial;
 
