@@ -3,7 +3,11 @@ import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "../../../../api/axios";
 import { showErrorToast } from "../../../../helpers/helper";
-import { Button, Title, OverlayLoader } from "../../../../styles/reusableElements.styled";
+import {
+  Button,
+  Title,
+  OverlayLoader,
+} from "../../../../styles/reusableElements.styled";
 import { ReactComponent as EmployeeProfilePhoto } from "../../../components/assets/user-photo.svg";
 import { Radar } from "react-chartjs-2";
 
@@ -265,12 +269,12 @@ const EmployeeProfileInnerContainer = styled.div`
   ${({ theme }) => theme.breakpoints.down("touch")} {
     flex-direction: column;
     justify-content: center;
-    gap: ${({theme}) => theme.spacing(6)};
+    gap: ${({ theme }) => theme.spacing(6)};
   }
 `;
 
 const EmployeeDataContainer = styled.div`
-  border: 1px solid #f8fbfd;
+  border: 1px solid #edebe9;
   border-radius: 16px;
   width: 100%;
   display: flex;
@@ -298,7 +302,7 @@ const EmployeeCard = styled.div`
 const EmployeeStatsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  border: 1px solid #c7e0f4;
+  border: 1px solid #edebe9;
   width: 100%;
   border-radius: 16px;
   padding: 24px 20px;
@@ -310,7 +314,7 @@ const EmployeeStatsContainer = styled.div`
 `;
 
 const OverallContainer = styled.div`
-  border: 1px solid #f8fbfd;
+  border: 1px solid #edebe9;
   border-radius: 8px;
   width: 100%;
 

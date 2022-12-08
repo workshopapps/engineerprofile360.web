@@ -110,7 +110,7 @@ Route::prefix("assessment/admin")->group(function () {
 Route::post("/test_csv", function (Request $req) {
     $csv = new CsvParser();
     $payload = json_decode($req->getContent(), true);
-    return $csv->parseEmployeeCsv($payload, '');
+    return $csv->parseEmployeeCsv($payload, '', '');
 });
 
 // authentication route
@@ -152,7 +152,9 @@ Route::prefix("company")->group(function () {
 
 // questions route operations
 Route::prefix("question")->group(function () {
+    Route::post('upload', [QuestionsController::class, 'uploadCsv'])->middleware("isloggedin", "isadmin");
     Route::post('add', [QuestionsController::class, 'addManually'])->middleware("isloggedin", "isadmin");
+    Route::post('add_csv', [QuestionsController::class, 'addCSV']);
     Route::get('{id}', [QuestionsController::class, 'getQuestById']);
     Route::get('company/{id}', [QuestionsController::class, 'getQuestByComId']);
     Route::get('category/{id}', [QuestionsController::class, 'getQuestByCatId']);

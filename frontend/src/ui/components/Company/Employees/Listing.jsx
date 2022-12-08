@@ -14,33 +14,33 @@ const Listing = () => {
 
   useEffect(() => {
     setAllEmployees(employees ? employees : []);
-    setDepts(departments?.data ? departments?.data : []);
+    setDepts(departments ? departments : []);
+    console.log(depts);
   }, [employees, departments]);
+
+  console.log(employees, departments);
 
   const handleFilter = (e) => {
     if (e.target.value === "all") {
       setAllEmployees(employees ? employees : []);
     } else {
-      const filtered = employees
-        ? employees.filter((data) => e.target.value === data.department)
-        : [];
+      const filtered = employees.filter(
+        (employee) => e.target.value === employee.department
+      );
       setAllEmployees(filtered);
     }
   };
 
-  // console.log(depts);
   return (
     <EmployeesList>
       <Filter>
         <select onChange={handleFilter}>
           <option value="all">Department</option>
-          {depts
-            ? depts.map((dept) => (
-                <option key={dept.id} value={dept.name}>
-                  {dept.name}
-                </option>
-              ))
-            : ""}
+          {depts?.map((dept) => (
+            <option key={dept.id} value={dept.name}>
+              {dept.name}
+            </option>
+          ))}
         </select>
         <Link to="/employees/add-employee">
           <Button $weight="400">

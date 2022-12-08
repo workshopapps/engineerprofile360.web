@@ -91,7 +91,8 @@ import AssessmentList from "./ui/components/Company/Assessments/adminAssesmentLi
 
 atatus.config("4010279ebbd747e7a752082eea130df6").install();
 
-atatus.notify(new Error("Test Atatus Setup"));
+// atatus.notify(new Error("Test Atatus Setup"));
+atatus.notify();
 
 const ROLES = {
   Employees: 1,
@@ -264,10 +265,7 @@ const App = () => {
                     path="create-assessment"
                     element={<CreateAssessment />}
                   />
-
                   <Route path="admin-csv-upload" element={<AdminCSVUpload />} />
-
-
                 </Route>
 
                 <Route path="/categories" element={<Category />} />

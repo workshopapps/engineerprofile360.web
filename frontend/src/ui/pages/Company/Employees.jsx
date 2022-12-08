@@ -25,9 +25,9 @@ const Employees = () => {
         const response = await Promise.all(ENDPOINTS).then((data) => {
           return data;
         });
-
         const allEmployees = response[0]?.data?.data.data;
-        const allDepartments = response[1]?.data;
+        const allDepartments = response[1]?.data.data;
+        console.log(allEmployees, allDepartments);
         setIsLoading(false);
 
         setEmployees(allEmployees);
