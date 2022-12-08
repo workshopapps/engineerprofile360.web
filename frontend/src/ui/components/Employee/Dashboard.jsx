@@ -221,7 +221,7 @@ const Dashboard = () => {
             $color="#3D3D3D"
             style={{ marginBottom: "16px" }}
           >
-            Available Assessment
+            Available Assessments
           </Title>
           <p>View all</p>
         </AssessmentTitle>

@@ -1,37 +1,49 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Button, Title } from "../../styles/reusableElements.styled";
+import axios from "../../api/axios";
+import useAuth from "../../hooks/useAuth";
+import { toast } from "react-toastify";
 
 export default function SelectDepartment() {
   const [departments, setDepartments] = useState([]);
   const [value, setValue] = useState("");
   const [items, setItems] = useState([]);
+  const { auth } = useAuth();
+  const navigate  = useNavigate();
+  let useDept = {};
 
   const handleChange = (e) => {
     setValue(e.target.value);
+    localStorage.setItem("departments", JSON.stringify(e.target.value));
+    localStorage.setItem("departmentname", JSON.stringify(e.target.selectedOptions[0].text));
+
+  };
+  
+
+  const proceed = (departments) => { 
+    const localData = JSON.parse(localStorage.getItem("departments"));
+    const localDataName = JSON.parse(localStorage.getItem("departmentname"));
+    console.log(localData);
+    console.log(localDataName);
+
+    if(!localData=="" || !localDataName==""){
+      navigate("/employees/add-employee/");
+    } else {
+      toast.error("Please choose a department");
+    }
   };
 
-  const proceed = () => {
-    localStorage.setItem("departments", JSON.stringify(value));
-  };
-
-  const org_id = "c57d34e5-dcfe-4fba-821b-53c22ac27756";
+  const org_id = auth.org_id;
 
   useEffect(() => {
     axios
-      .get(`https://api.eval360.hng.tech/api/department/company/${org_id}`)
+      .get(`department/company/${org_id}`)
       .then((response) => {
         setDepartments(response.data.data);
       });
-
-    const items = JSON.parse(localStorage.getItem("departments"));
-    if (items) {
-      setItems(items);
-      setValue(items);
-    }
-  }, [departments]);
+  }, [departments,org_id]);
 
   return (
     <Container>
@@ -48,7 +60,8 @@ export default function SelectDepartment() {
           <Title $color="#605E5C" $size="16px" $weight="400">
             Select Department
           </Title>
-          <select value={value} onChange={handleChange}>
+          <select value={value} onChange={handleChange} required>
+          <option></option>
             {departments.map((department) => (
               <option value={department.id} key={department.id}>
                 {department.name}
@@ -58,10 +71,11 @@ export default function SelectDepartment() {
         </div>
       </div>
       <div>
+      <Link to="/employees">
         <Button $variant="outlined">Cancel</Button>
-        <Link to="/employees/add-employee">
+      </Link>
+        
           <Button onClick={proceed}>Proceed</Button>
-        </Link>
       </div>
     </Container>
   );
