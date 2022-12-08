@@ -8,9 +8,7 @@ function Stats() {
 
    axios
   .get("https://api.eval360.hng.tech/api/admin/overview", {
-    data: {
-      user: 1
-    }
+
   })
   .then(res => {
       console.log(res)
