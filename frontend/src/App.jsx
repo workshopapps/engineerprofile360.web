@@ -1,5 +1,5 @@
 // import React from "react";
-import * as atatus from "atatus-spa";
+//import * as atatus from "atatus-spa";
 //import * as Sentry from "@sentry/react";
 import { Routes, Route } from "react-router-dom";
 import RequireAuth from "./components/requireAuth";
@@ -89,10 +89,10 @@ import AdminAssessmmentListOutlet from "./ui/components/Company/Assessments/admi
 import AdminAssessmentListAvailable from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmentListAvailable";
 import AssessmentList from "./ui/components/Company/Assessments/adminAssesmentList/AssessmentList";
 
-atatus.config("4010279ebbd747e7a752082eea130df6").install();
+//atatus.config("4010279ebbd747e7a752082eea130df6").install();
 
 // atatus.notify(new Error("Test Atatus Setup"));
-atatus.notify();
+//atatus.notify();
 
 const ROLES = {
   Employees: 1,
