@@ -24,6 +24,7 @@ class CSVQuestionRequest extends BaseRequest
     public function rules()
     {
         return [
+            "org_id" => 'required|string',
             "assessment_id" => 'required|string',
             "base64" => 'required|string'
         ];
