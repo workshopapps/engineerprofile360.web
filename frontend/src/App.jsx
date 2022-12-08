@@ -93,7 +93,7 @@ import AssessmentList from "./ui/components/Company/Assessments/adminAssesmentLi
 
 atatus.config("4010279ebbd747e7a752082eea130df6").install();
 
-atatus.notify(new Error("Test Atatus Setup"));
+// atatus.notify(new Error("Test Atatus Setup"));
 
 const ROLES = {
   Employees: 1,

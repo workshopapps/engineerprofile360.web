@@ -7,34 +7,9 @@ use Exception;
 use App\Http\Requests\CreateQuestionRequest;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Http\Request;
-use App\Imports\QuestionsImport;
-
 
 class QuestionsController extends Controller
 {
-    public function uploadCsv(Request $request)
-    {
-    
-       try {
-        if (in_array(request()->file('your_file')?->getClientOriginalExtension(),
-        ['csv','xls','xlsx','xlsm','xlsb','xlt','xltx'])) {
-           Excel::import(new QuestionsImport, request()->file('your_file'));
-          return $this->sendResponse(false, null, 'Question created', null, Response::HTTP_CREATED);
-        }
-        else{
-            return $this->sendResponse(true, 'Invalid file extension', 'upload an excel file', null, Response::HTTP_BAD_REQUEST);
-        }
-      
-  
-       
- 
-       } catch (\Exception $e) {
-        return $this->sendResponse(true,$e->getMessage(), 'something went wrong', null, Response::HTTP_BAD_REQUEST) ;
-       }
-    }
-
     public function addManually(CreateQuestionRequest $request): JsonResponse
     {
         try {
@@ -45,10 +20,7 @@ class QuestionsController extends Controller
                 $result = Question::create([
                     "category_id" => $data["category_id"],
                     "assessment_id" => $data["assessment_id"],
-                    "company_id" => $data["company_id"],
                     ...$data['questions'][$i],
-                    "options"=>json_encode($data['questions'][$i]["options"]),
-                    "correct_answers"=>json_encode($data['questions'][$i]["correct_answers"]),
                 ]);
                 array_push($output, $result);
             }
@@ -103,11 +75,6 @@ class QuestionsController extends Controller
     {
         try {
             $questions = Question::where('assessment_id', $id)->get();
-            foreach($questions as $question){
-                $question->options = json_decode($question->options);
-                $question->correct_answers = json_decode($question->correct_answers);
-            }
-
             $checkQuestions = Question::where('assessment_id', $id)->exists();
             if (!$checkQuestions) {
                 return $this->sendResponse(true, "Fetch Question By Assessment ID failed", 'No Question Exist for this Assessment ID', null, Response::HTTP_NOT_FOUND);
@@ -145,10 +112,6 @@ class QuestionsController extends Controller
         try {
             $questions = Question::where('category_id', $id);
             if (!$questions->count()) return $this->sendResponse(true, "Fetch Question By Category ID failed", 'No Question Exist for this Category ID', null, Response::HTTP_NOT_FOUND);
-            foreach($questions as $question){
-                $question->options = json_decode($question->options);
-                $question->correct_answers = json_decode($question->correct_answers);
-            }
             return $this->sendResponse(false, null, "OK", $questions->get(), Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Fetch Question By Category ID failed", $e->getMessage());
