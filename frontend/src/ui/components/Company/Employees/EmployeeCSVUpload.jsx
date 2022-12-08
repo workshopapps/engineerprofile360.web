@@ -168,7 +168,7 @@ const CreateTypeContainer = styled.div`
     color: #323130;
 
     @media screen and (max-width: 500px) {
-      font-size: 11px;
+      font-size: 16px;
     }
   }
 `;

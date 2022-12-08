@@ -11,55 +11,43 @@ const CreateEmployeeManual = () => {
     const [formData, setFormData] = useState({});
     const [touched, setTouched] = useState({});
     const [errors, setErrors] = useState({});
-    const [selecteddepartment, setSelectedepartment] = useState([]);
-    const [departments, setDepartments] = useState([]);
     const { auth }  = useAuth();
     const org_id = auth.org_id;
     const navigate = useNavigate();
     const departmentid = JSON.parse(localStorage.getItem("departmentsID"));
-    
-    
     const handleChange = (e) => {
       setFormData({ ...formData, [e.target.id]: e.target.value });
     };
-    
     const onBlur = (e) => {
       setTouched((prevState) => ({
         ...prevState,
         [e.target.id]: true,
       }));
     };
-
     const validate = (formData) => {
-      const error = {};
-      const validemail = new RegExp( /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
-     
-      if (!formData.username) {
-        error.username = "Please enter your username";
-      }
-  
-      if (!formData.email) {
-        error.email = "Please enter your email";
-      } else if(!validemail.test(formData.email)){
-        error.email = "Please enter a valid email";
-      }
+    const error = {};
+    const validemail = new RegExp( /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+    if (!formData.username) {
+      error.username = "Please enter your username";
+    }
 
-      if (!formData.fullname) {
-        error.fullname = "Please enter your fullname";
-      }
+    if (!formData.email) {
+      error.email = "Please enter your email";
+    } else if(!validemail.test(formData.email)){
+      error.email = "Please enter a valid email";
+    }
 
-     if (!departmentid) {
-        // toast.error("Please select a department");
-         error.dept = "Please select a department";
-       }
-  
-      setErrors(error);
+    if (!formData.fullname) {
+      error.fullname = "Please enter your fullname";
+    }
+
+    if (!departmentid) {
+        error.dept = "Please select a department";
+    }
+    
+    setErrors(error);
     };
 
-    useEffect(() => {
-      validate(formData);
-    }, [formData, touched]);
-  
     const onNextPage = async (formData) => {
       validate(formData);
   
@@ -102,13 +90,11 @@ const CreateEmployeeManual = () => {
           );
         })
         .catch((error) => {
-          console.log(error);
           toast.error(error.response.data.message);
           setLoading(false);
         });
       }
     };
-  
     const { fullname, username, email } = formData;
   return loading ? (
     <Load>
@@ -261,6 +247,7 @@ const Buttons = styled.div`
   button {
     background: #2667ff;
     color: #ebf4f9;
+    border: 1px solid #2667ff;
   }
 
   @media (max-width: 802px) {
@@ -271,7 +258,7 @@ const Buttons = styled.div`
   @media (max-width: 669px) {
     a {
       font-size: 14px;
-      padding: 10px 18px;
+      
     }
   }
 `;
