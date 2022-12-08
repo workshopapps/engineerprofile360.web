@@ -102,7 +102,7 @@ Route::prefix("assessment/admin")->group(function () {
 Route::post("/test_csv", function (Request $req) {
     $csv = new CsvParser();
     $payload = json_decode($req->getContent(), true);
-    return $csv->parseEmployeeCsv($payload, '');
+    // return $csv->parseEmployeeCsv($payload, '');
 });
 
 // authentication route
