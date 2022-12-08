@@ -17,7 +17,6 @@ export default axios.create({
   baseURL: BASEURL,
   headers: {
     "content-type": "application/json",
-    "Authorization": `Bearer ${JWT_TOKEN?.accessToken}`
   },
 });
 
