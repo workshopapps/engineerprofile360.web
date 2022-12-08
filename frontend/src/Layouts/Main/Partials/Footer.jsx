@@ -53,7 +53,9 @@ const Footer = () => {
         <About>
           <ListTitle as="h6">About</ListTitle>
           <List>
-            <li>About us</li>
+            <Link to="/about-us">
+              <li>About us</li>
+            </Link>
             <Link to="/contact">
               <li>Contact us</li>
             </Link>
@@ -84,8 +86,12 @@ const Footer = () => {
             &copy; {new Date().getFullYear()} Skript. All rights reserved.
           </span>
           <ul>
-            <li>Privacy policy</li>
-            <li>Terms of service</li>
+            <Link to="/privacy-policy">
+              <li>Privacy policy</li>
+            </Link>
+            <Link to="/terms">
+              <li>Terms of service</li>
+            </Link>
             <li>Cookie settings</li>
           </ul>
         </Copyright>
