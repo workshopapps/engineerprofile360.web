@@ -1,11 +1,9 @@
 <?php
 
 namespace App\Http\Requests;
-<<<<<<< HEAD
 
-=======
 use Illuminate\Foundation\Http\FormRequest;
->>>>>>> b96e9fc095f556017fa97e2e40c73c5b09dad19f
+
 class CSVQuestionRequest extends BaseRequest
 {
     /**
@@ -27,10 +25,7 @@ class CSVQuestionRequest extends BaseRequest
     {
         return [
             "org_id" => 'required',
-<<<<<<< HEAD
-=======
             "assessment_id" => 'required',
->>>>>>> b96e9fc095f556017fa97e2e40c73c5b09dad19f
             "base64" => 'required'
         ];
     }
