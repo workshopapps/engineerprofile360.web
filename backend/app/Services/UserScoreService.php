@@ -31,6 +31,13 @@ class UserScoreService
         return  $data;
     }
 
+    public static function getQuery(int $index): array
+    {
+        $data['categories'] = json_encode($data['categories']);
+        $data['passed_questions'] = json_encode($data['passed_questions']);
+        return  $data;
+    }
+
     public static function calculateResult(array $request): array
     {
         extract($request);
