@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-// Import Sentry 
+// Import Sentry
 // import * as Sentry from "@sentry/react";
 // import { BrowserTracing } from "@sentry/tracing";
 // import reportWebVitals from './reportWebVitals';
 
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ScrollToTop from "./components/ScrollToTop";
 import App from "./App";
 import { AuthProvider } from "./context/authProvider";
 
@@ -25,6 +25,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+      <ScrollToTop />
       <AuthProvider>
         <Routes>
           <Route path="/*" element={<App />} />
