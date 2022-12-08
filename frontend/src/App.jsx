@@ -10,6 +10,9 @@ import { GlobalStyles, theme } from "./styles/globalStyles";
 import { MainLayout, UiLayout } from "./Layouts";
 import AdminAuthLayout from "./Layouts/UI/AuthLayout";
 
+
+import Dashboard from "./ui/pages/Admin/index";
+
 //DEFAULT EXPORTS FROM MAIN
 import {
   Home,
@@ -37,7 +40,6 @@ import AdminVerifyEmail from "./ui/pages/Company/Auth/AdminVerifyEmail";
 import AdminEmailVerified from "./ui/pages/Company/Auth/AdminEmailVerified";
 
 import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
-
 import UserSupport from "./main/pages/UserSupport";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
 // import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
@@ -268,7 +270,7 @@ const App = () => {
               {/* Overall Admin Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
                 {/* Put in Protected pages in here */}
-                <Route path="/admin/dashboard" element={"Admin pages will render here"} />
+                <Route path="/admin/dashboard" element={<Dashboard/>} />
               </Route>
 
               {/* <Route path="/assessment" element={<Assessment />} /> */}
