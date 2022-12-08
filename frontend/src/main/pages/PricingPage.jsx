@@ -8,7 +8,7 @@ import { Container } from "../../styles/reusableElements.styled";
 function PricingPage() {
   return (
     <Container>
-      <PricingHero />;
+      <PricingHero />;{/* <PricingWrapper> */}
       <PriceCards />
       <GetToKnow />
       <Accordion />

@@ -105,8 +105,8 @@ class UserController extends Controller
         try {
             $user = User::where('user_id', $userId)->first();
             if (!$user) return $this->sendResponse(true, 'User does not exist', 'User not found', Response::HTTP_NOT_FOUND);
-            if ($user->isAdmin) return $this->sendResponse(true, 'User is already an admin', 'Admin User', Response::HTTP_BAD_REQUEST);
-            $user->update(["isAdmin" => true]);
+            if ($user->role === 3) return $this->sendResponse(true, 'User is already an admin', 'Admin User', Response::HTTP_BAD_REQUEST);
+            $user->update(["role" => 3]);
             return $this->sendResponse(false, null, 'User is successfully an admin', Response::HTTP_OK);
         } catch (\Exception $e) {
             return $this->sendResponse(true, 'Not Successful', $e->getMessage());
@@ -116,31 +116,32 @@ class UserController extends Controller
     //Deactivate/block user(company)
     public function deactivateCompany(string $userId): JsonResponse
     {
-        try{
+        try {
             $company = User::find($userId);
 
             if (!$company) {
                 return $this->sendResponse(
-                    true, 
-                    'Company does not exist', 
-                    'Company not found', 
-                    Response::HTTP_NOT_FOUND);
+                    true,
+                    'Company does not exist',
+                    'Company not found',
+                    Response::HTTP_NOT_FOUND
+                );
             }
 
-            if($company->isBlocked === true) {
+            if ($company->isBlocked === true) {
                 return $this->sendResponse(
-                    true, 
-                    'Company is not activated', 
-                    'Company can not be activated', 
-                    Response::HTTP_NOT_FOUND);
+                    true,
+                    'Company is not activated',
+                    'Company can not be activated',
+                    Response::HTTP_NOT_FOUND
+                );
             }
 
             $company->isBlocked = true;
             $company->save();
 
             return $this->sendResponse(false, null, 'Company deactivated successfully', Response::HTTP_OK);
-
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return $this->sendResponse(true, 'Company not deactivated successfully', $e->getMessage());
         }
     }
@@ -149,7 +150,7 @@ class UserController extends Controller
     {
         try {
             $payload = json_decode($request->getContent(), true);
-            $user = User::where("user_id",$userId);
+            $user = User::where("user_id", $userId);
 
             if ($user->count() === 0) {
                 return $this->sendResponse(
@@ -164,7 +165,7 @@ class UserController extends Controller
 
             $uid = $request->user["id"];
 
-            if($userId !== $uid){
+            if ($userId !== $uid) {
                 return $this->sendResponse(
                     true,
                     'unauthorised to update user info',
@@ -175,9 +176,9 @@ class UserController extends Controller
             }
 
             $updatedData = [
-                "username"=> $payload["username"],
-                "email"=>$payload["email"],
-                "full_name"=> $payload["full_name"]
+                "username" => $payload["username"],
+                "email" => $payload["email"],
+                "full_name" => $payload["full_name"]
             ];
 
             $user->update($updatedData);
@@ -193,9 +194,10 @@ class UserController extends Controller
         $verified_companies = UserService::allVerifiedUsers();
         $verified_companies = $verified_companies->paginate(10);
         return $this->sendResponse(
-            false, null, 
+            false,
+            null,
             'Verified Companies',
-            $verified_companies, 
+            $verified_companies,
             Response::HTTP_OK
         );
     }

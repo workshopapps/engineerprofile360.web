@@ -2,20 +2,24 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
+import { Text } from "../../../../main/components/Market/Market.styled";
 import { Button, Title } from "../../../../styles/reusableElements.styled";
+import NoData from "../../molecules/NoData";
+import TableComponent from "../../molecules/TableComponent";
 
-const TopEmployees = ({ topPerformances }) => {
+const TopEmployees = ({ topPerformances, departments }) => {
   const [top, setTop] = useState([]);
+  const [depts, setDepts] = useState();
 
   useEffect(() => {
     const employees = topPerformances?.data
       ? topPerformances?.data.filter((data) => data.points !== null)
       : [];
-
+    const allDepartments = departments ? departments : [];
     setTop(employees);
-  }, [topPerformances?.data]);
+    setDepts(allDepartments);
+  }, [topPerformances?.data, depts]);
 
-  console.log(top);
   return (
     <div>
       <Header>
@@ -27,34 +31,27 @@ const TopEmployees = ({ topPerformances }) => {
             <span>View all</span>
           </Link>
         </div>
-        <Filter>
-          <select>
-            <option value="all">Department</option>
-          </select>
-          <select>
-            <option>Sort By Date</option>
-          </select>
-        </Filter>
       </Header>
       {top.length > 0 ? (
-        <TopEmployeesList>
-          <table>
+        <TableComponent>
             <tbody>
               <tr>
                 <th>#</th>
                 <th>Staff name</th>
                 <th>Department</th>
+                <th>Assessments Taken</th>
                 <th>Percentage</th>
                 <th>Action</th>
               </tr>
               {top.map((employee, index) => (
-                <tr key={`employee-${index}`}>
+                <tr key={employee.id}>
                   <td>{index + 1}.</td>
-                  <td>{employee.employee_name}</td>
-                  <td>{employee.department}</td>
-                  <td>{employee.points}%</td>
+                  <td>{employee.fullname}</td>
+                  <td>{employee.department.name}</td>
+                  <td>{employee.completed_assessment_count}</td>
+                  <td>{employee.points.toFixed(2)}%</td>
                   <td>
-                    <Link to="/employees">
+                    <Link to={`/employees/profile/${employee.id}`}>
                       <Button $variant="outlined" $color="#2667ff">
                         View Results
                       </Button>
@@ -63,18 +60,17 @@ const TopEmployees = ({ topPerformances }) => {
                 </tr>
               ))}
             </tbody>
-          </table>
-        </TopEmployeesList>
+        </TableComponent>
       ) : (
-        <NoData>
-          <p>Oops! No data to show here</p>
-
-          <div>
+        <NoData text="Oops! No data here">
+          <Link to="/assessmnet/create-assessment">
             <Button $variant="outlined" $color="#2667ff">
               Create Assessment
             </Button>
+          </Link>
+          <Link to="/employees/add-employee">
             <Button>Add Employee</Button>
-          </div>
+          </Link>
         </NoData>
       )}
     </div>
@@ -104,78 +100,4 @@ const Header = styled.div`
   }
 `;
 
-const Filter = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
 
-  select {
-    border: 1px solid ${({ theme }) => theme.palette.border.default};
-    padding: ${({ theme }) => theme.spacing(1)};
-    border-radius: ${({ theme }) => theme.spacing(0.5)};
-    font-size: 14px;
-    color: #323130;
-    background: #ffffff;
-    outline: none;
-  }
-
-  select:first-of-type {
-    width: 150px;
-  }
-
-  select:last-of-type {
-    width: 130px;
-  }
-`;
-
-const TopEmployeesList = styled.div`
-  padding-top: ${({ theme }) => theme.spacing(3)};
-  width: 100%;
-  overflow: auto;
-  table {
-    width: 100%;
-    min-width: 960px;
-    overflow: auto;
-
-    tr:first-of-type {
-      width: 100%;
-      background: #f8fbfd;
-      text-align: left;
-
-      th:first-of-type {
-        padding-right: 24px;
-      }
-
-      th {
-        font-size: 16px;
-        font-weight: 600;
-        color: #605e5c;
-      }
-    }
-
-    td {
-      color: #605e5c;
-      font-size: 16px;
-      font-weight: 600;
-    }
-  }
-`;
-
-const NoData = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(3)};
-  min-height: 300px;
-  font-size: 16px;
-
-  div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: ${({ theme }) => theme.spacing(2)};
-    flex-wrap: wrap;
-  }
-`;

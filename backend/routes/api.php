@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\StackController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\InterviewController;
 use App\Http\Controllers\QuestionsController;
@@ -64,6 +65,13 @@ Route::prefix("user")->group(function () {
     Route::put('verify-user/{userId}', [UserController::class, 'getVerifyUserById']);
 });
 
+//Admin operation routes
+Route::prefix("admin")->group(function () {
+    Route::get('overview', [AdminController::class, 'getAdminOverview'])->middleware("isloggedin", "isadmin");
+    Route::get('users', [AdminController::class, 'getAllUsers'])->middleware("isloggedin", "isadmin");
+
+});
+
 
 
 // User Assessment routes
@@ -85,6 +93,8 @@ Route::prefix("assessment")->group(function () {
     Route::get('/{organization_id}', [AssessmentController::class, 'getAssByOrgId']);
     Route::put('/{assessmentId}', [AssessmentController::class, 'updateAssessment'])->middleware("isloggedin", "isadmin");
     Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAssessment'])->middleware("isloggedin", "isadmin");
+    Route::get('/{companyId}/{orgId}/accepted-assessments', [AssessmentController::class, 'getCompanyAcceptedAssessments'])->middleware("isloggedin", "isadmin");
+    Route::get('/completed-assessments/{companyId}/{orgId}', [AssessmentController::class, 'getCompanyCompletedAssessments'])->middleware("isloggedin", "isadmin");
 });
 
 
@@ -100,7 +110,7 @@ Route::prefix("assessment/admin")->group(function () {
 Route::post("/test_csv", function (Request $req) {
     $csv = new CsvParser();
     $payload = json_decode($req->getContent(), true);
-    return $csv->parseEmployeeCsv($payload, '');
+    return $csv->parseEmployeeCsv($payload, '', '');
 });
 
 // authentication route
@@ -119,6 +129,8 @@ Route::prefix("auth")->group(function () {
     Route::post('verify/{id}/{token}', [AuthenticateController::class, 'verifyEmail']);
 
     Route::post('/refresh', [AuthenticateController::class, 'refreshJwtToken']);
+
+    Route::post('/logout', [AuthenticateController::class, 'logout']);
 
     Route::prefix("password")->group(
         function () {
@@ -140,7 +152,9 @@ Route::prefix("company")->group(function () {
 
 // questions route operations
 Route::prefix("question")->group(function () {
+    Route::post('upload', [QuestionsController::class, 'uploadCsv'])->middleware("isloggedin", "isadmin");
     Route::post('add', [QuestionsController::class, 'addManually'])->middleware("isloggedin", "isadmin");
+    Route::post('add_csv', [QuestionsController::class, 'addCSV']);
     Route::get('{id}', [QuestionsController::class, 'getQuestById']);
     Route::get('company/{id}', [QuestionsController::class, 'getQuestByComId']);
     Route::get('category/{id}', [QuestionsController::class, 'getQuestByCatId']);
@@ -151,21 +165,22 @@ Route::prefix("question")->group(function () {
 
 // Categories routes operation
 Route::prefix("category")->group(function () {
-    Route::put('/{categoryId}/update', [CategoryController::class, 'updateCategory'])->middleware("isloggedin");
+    Route::put('/{orgId}/{categoryId}/update', [CategoryController::class, 'updateCategory'])->middleware("isloggedin");
     Route::post('/add', [CategoryController::class, 'createCategory'])->middleware("isloggedin", "isadmin");
-    Route::delete('{catId}/delete', [CategoryController::class, 'deleteCategory'])->middleware("isloggedin", "isadmin");
-    Route::get("/get/{org_id}", [CategoryController::class, "getCategoriesByOrgId"])->middleware("isloggedin", "isadmin");
-    Route::get('/assessment/{id}', [CategoryController::class, 'getByAssessmentId'])->middleware("isloggedin", "isadmin");
+    Route::delete('{categoryId}/{orgId}/delete', [CategoryController::class, 'deleteCategory'])->middleware("isloggedin", "isadmin");
+    Route::get('/company/{id}', [CategoryController::class, 'getCompanyCategories'])->middleware("isloggedin", "isadmin");
+    Route::get('/{orgId}/{categoryId}', [CategoryController::class, 'getCategoryById'])->middleware("isloggedin", "isadmin");
 });
+Route::delete('category/{orgId}/delete', [CategoryController::class, 'deleteCompanyCategories'])->middleware("isloggedin", "isadmin");
 
 //Employee Routes
 Route::prefix('employee')->group(function () {
     Route::post('add', [EmployeeController::class, 'addEmployee'])->middleware("isloggedin", "isadmin");
     Route::post('confirm', [EmployeeController::class, 'confirmCSV'])->middleware("isloggedin", "isadmin");
     Route::get('{id}', [EmployeeController::class, 'getById']);
-    Route::get('/company/{org_id}', [EmployeeController::class, 'byCompId']);
+    Route::get('company/{orgId}', [EmployeeController::class, 'getEmployeesByCompanyId']);
     Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
-    Route::get('{departmentId}', [EmployeeController::class, 'getEmplyeesByDepartment']);
+    Route::get('department/{departmentId}', [EmployeeController::class, 'getEmplyeesByDepartment']);
 });
 Route::get('employees', [EmployeeController::class, 'getAllEmployees'])->middleware("isloggedin", "isadmin");
 
@@ -194,7 +209,7 @@ Route::prefix('interview')->group(function () {
 
 // User Assessment routes
 Route::prefix("user-assessment")->group(function () {
-    Route::post('/accept/{assessmentId}/{employmentId}/{orgId}', [UserAssessmentController::class, 'acceptUserAssessment']);
+    Route::post('/accept/{assessmentId}/{employeeId}/{orgId}', [UserAssessmentController::class, 'acceptUserAssessment']);
     Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
     Route::get('/org/{org_id}/org-available', [UserAssessmentController::class, 'getOrgAvailableAssessment']);
     Route::get('/org/{org_id}/org-completed', [UserAssessmentController::class, 'getOrgCompletedAssessment']);

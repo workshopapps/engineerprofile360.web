@@ -17,6 +17,7 @@ class Employee extends Model
      */
     protected $fillable = [
         'email', 'fullname', 'username', 'hash', 'image',
+        'address', 'phone_number',
         'occupation', 'reftoken', 'role', 'org_id'
     ];
 
@@ -25,6 +26,11 @@ class Employee extends Model
     public function assessment()
     {
         return $this->hasMany(UserAssessment::class, 'employee_id');
+    }
+
+    public function completed_assessment()
+    {
+        return $this->hasMany(UserAssessment::class, 'employee_id')->where("completed", 1);
     }
 
     public function department()

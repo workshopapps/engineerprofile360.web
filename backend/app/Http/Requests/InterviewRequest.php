@@ -26,9 +26,9 @@ class InterviewRequest extends FormRequest
         return [
             //
             'stack_id' => "required",
-            'name' => "required|string",
-            'company_name' => 'required|string',
-          
+            'title' => "required|string",
+            'times_taken' => 'nullable|string',
+
         ];
     }
 }

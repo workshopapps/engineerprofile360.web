@@ -22,10 +22,8 @@ class UserScoreController extends Controller
     public function store(UserScoreStoreRequest $request)
     {
         try {
-            if (!UserScoreService::categoryMatchesScores($request->validated())) return $this->sendResponse(true, "Not Permited", "The passed questions doesn't match the categories supplied", Response::HTTP_UNPROCESSABLE_ENTITY);
-            $userScore = UserScore::create(UserScoreService::prepareRequest($request->validated()));
-            UserAssessment::where(["assessment_id" => $userScore->assessment_id])->update(["completed" => 1, "result" => ($request->validated()["correct_questions"] / $request->validated()["total_questions"]) * 100, ...$request->validated()]);
-            return $this->sendResponse(false, null, "User score was added successfully!", $userScore, Response::HTTP_OK);
+            $result = UserScoreService::submit($request->validated());
+            return $this->sendResponse(false, null, "Your assessment has been submitted successfully!", $result, Response::HTTP_CREATED);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Error storing the userr score", $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
@@ -41,9 +39,7 @@ class UserScoreController extends Controller
     public function getScores(string $employeeId, string $assessmentId)
     {
         try {
-            $userScore = $userScore = UserScore::select('*')
-                ->join('user_assessments', 'user_assessments.userscore_id', '=', 'user_scores.id')
-                ->where(["user_scores.employee_id" => $employeeId, "user_scores.assessment_id" => $assessmentId]);
+            $userScore  = UserAssessment::where(["employee_id" => $employeeId, "assessment_id" => $assessmentId])->with('userscore');
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Error fetching the userscores", $e->getMessage(), Response::HTTP_BAD_REQUEST);
@@ -59,9 +55,7 @@ class UserScoreController extends Controller
     public function getScoresByAssessmentID(string $id)
     {
         try {
-            $userScore = UserScore::select('*')
-                ->join('user_assessments', 'user_assessments.userscore_id', '=', 'user_scores.id')
-                ->where('user_scores.assessment_id', $id);
+            $userScore = UserAssessment::where('assessment_id', $id)->with('userscore');
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Error fetching user scores", $e->getMessage(), Response::HTTP_BAD_REQUEST);
@@ -77,9 +71,16 @@ class UserScoreController extends Controller
     public function getScoresByEmployeeID(string $id)
     {
         try {
-            $userScore = UserScore::select('*')
-                ->join('user_assessments', 'user_assessments.userscore_id', '=', 'user_scores.id')
-                ->where("user_scores.employee_id", $id);
+            $userScore = Employee::where("id", $id)
+                ->with(['department', 'completed_assessment.userscore'])->withCount([
+                    "completed_assessment",
+                    'assessment AS points' => function ($query) {
+                        $query->select(DB::raw("SUM(result) as points"));
+                    },
+                    'assessment AS total_points' => function ($query) {
+                        $query->select(DB::raw("SUM(total_questions) as total_points"));
+                    }
+                ]);
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Error fetching user scores", $e->getMessage(), Response::HTTP_BAD_REQUEST);
@@ -95,7 +96,7 @@ class UserScoreController extends Controller
     public function getCompanyTopPerformance(string $id)
     {
         try {
-            $userScore = Employee::where("org_id", $id)->with("userscore")->with("department")->withCount([
+            $userScore = Employee::where("org_id", $id)->with(["userscore", "department"])->withCount([
                 'assessment AS points' => function ($query) {
                     $query->select(DB::raw("SUM(result) as points"));
                 }
@@ -117,6 +118,7 @@ class UserScoreController extends Controller
 
         try {
             $userScore = Employee::where("org_id", $id)->with("department")->withCount([
+                "completed_assessment",
                 'assessment AS points' => function ($query) {
                     $query->select(DB::raw("SUM(result) as points"));
                 }
