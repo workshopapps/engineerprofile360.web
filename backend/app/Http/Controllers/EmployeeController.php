@@ -12,6 +12,7 @@ use Illuminate\Http\JsonResponse;
 use App\Models\Employee;
 use App\Models\Department;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -28,7 +29,7 @@ class EmployeeController extends Controller
         $splited = str_split($alpnum);
         $pwd = [];
         for ($i = 0; $i < $salt; $i++) {
-            $rand = rand(0, strlen($alpnum)-1);
+            $rand = rand(0, strlen($alpnum) - 1);
             array_push($pwd, $splited[$rand]);
         }
         $pwd = implode("", $pwd);
@@ -44,22 +45,24 @@ class EmployeeController extends Controller
             if ($query === "csv") {
                 $csv = new CsvParser();
                 $payload = json_decode($request->getContent(), true);
-                $file = $payload['csv_file']; $org = $payload["org_id"]; $dept = $payload['department_id'];
+                $file = $payload['csv_file'];
+                $org = $payload["org_id"];
+                $dept = $payload['department_id'];
 
-                if ( !isset($file) || !isset($org) || !isset($dept) ) {
+                if (!isset($file) || !isset($org) || !isset($dept)) {
                     return $this->sendResponse(true, "expected a valid employee 'org_id, dept_id, file'  but got none", "missing employee data.", null, 400);
                 }
-                if ( empty($file) || empty($org) || empty($dept) ) {
+                if (empty($file) || empty($org) || empty($dept)) {
                     return $this->sendResponse(true, "expected a valid employee 'org_id, dept_id, file'  but got none", "missing employee data.", null, 400);
                 }
 
                 $result = $csv->parseEmployeeCsv($file, $org, $dept);
-                
+
                 foreach ($result['data'] as $key => $item) {
                     $empExists = Employee::where(["email" => $result['data'][$key]["email"], "org_id" => $result['data'][$key]["email"]]);
                     if ($empExists->count() > 0) $result['data'][$key]['is_exist'] = true;
                     else $result['data'][$key]['is_exist'] = false;
-                }//add a new column to check if email exists in that organization
+                } //add a new column to check if email exists in that organization
 
                 if ($result["error"] == false && $result["message"] == "csv parsed") {
                     $data = $result['data'];
@@ -110,7 +113,16 @@ class EmployeeController extends Controller
     public function getById(string $employee_id): JsonResponse
     {
         try {
-            $employee = Employee::find($employee_id);
+            $employee = Employee::where("id", $employee_id)
+                ->with(['department', 'completed_assessment.userscore'])->withCount([
+                    "completed_assessment",
+                    'assessment AS points' => function ($query) {
+                        $query->select(DB::raw("SUM(result) as points"));
+                    },
+                    'assessment AS total_points' => function ($query) {
+                        $query->select(DB::raw("SUM(total_questions) as total_points"));
+                    }
+                ]);
             if (!$employee) return $this->sendResponse(true, "Employee does not exist", "Employee not found", null, Response::HTTP_NOT_FOUND);
             return $this->sendResponse(false, null, "Employee Fetch Successful", $employee, Response::HTTP_OK);
         } catch (Exception $e) {
@@ -140,7 +152,7 @@ class EmployeeController extends Controller
 
         foreach ($json as $key => $item) {
             // only add employee where is_exist != true
-            if($json[$key]['is_exist'] == false){
+            if ($json[$key]['is_exist'] == false) {
                 $raw_password = $this->generateRandomPwd(10);
                 $hash = Hash::make($raw_password);
                 unset($json[$key]['id']);
@@ -149,11 +161,11 @@ class EmployeeController extends Controller
                 $json[$key]['hash'] = $hash;
                 $json[$key]['raw_password'] = $raw_password;
 
-                $result = $this->insertEmployee($json[$key], $raw_password); 
+                $result = $this->insertEmployee($json[$key], $raw_password);
                 if (json_decode($result->getContent(), true)['errorState'] == true) $failed++;
                 else $passed++;
-                if(json_decode($result->getContent(), true)['error'] != null) $last_error = json_decode($result->getContent(), true)['error'];
-            }        
+                if (json_decode($result->getContent(), true)['error'] != null) $last_error = json_decode($result->getContent(), true)['error'];
+            }
         }
         return $this->sendResponse(false, $last_error, "$passed Employee Added Successfully, $failed failed", $json, Response::HTTP_CREATED);
     }
