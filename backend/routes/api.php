@@ -69,6 +69,8 @@ Route::prefix("user")->group(function () {
 Route::prefix("admin")->group(function () {
     Route::get('overview', [AdminController::class, 'getAdminOverview'])->middleware("isloggedin", "isadmin");
     Route::get('users', [AdminController::class, 'getAllUsers'])->middleware("isloggedin", "isadmin");
+    Route::delete('/{companyId}/delete', [AdminController::class, 'deleteUserCompany']);
+
 
 });
 
