@@ -11,8 +11,8 @@ import { showErrorToast } from "../../../../helpers/helper";
 import { showSuccessToast } from "../../../../helpers/helper";
 
 import { More } from "iconsax-react";
-import { Button } from "../../../../styles/reusableElements.styled";
-import { click } from "@testing-library/user-event/dist/click";
+import { Button, Loader } from "../../../../styles/reusableElements.styled";
+import EditCategory from "./EditCategory";
 
 const List = () => {
   const { auth } = useAuth();
@@ -20,6 +20,7 @@ const List = () => {
   // USE STATES
   const [toggleCreateCat, setToggleCreateCat] = useState(false);
   const [toggleDelete, setToggleDelete] = useState(false);
+  const [toggleEdit, setToggleEdit] = useState(false);
   const [toggleMaxDelete, setToggleMaxDelete] = useState(false);
   const [categories, setCategories] = useState([]);
   const [updateCategories, setUpdateCategories] = useState(false);
@@ -33,12 +34,12 @@ const List = () => {
   const currentSelectedName = useRef();
   const currentSelectedId = useRef();
 
-  console.log(value.categoryId);
-
   useEffect(() => {
+    setIsLoading(true);
     const getAllCatgories = async () => {
       const response = await axios.get(`/category/company/${auth.org_id}`);
       setCategories(response.data.data);
+      response.data.data.length > 0 && setIsLoading(false);
     };
 
     getAllCatgories();
@@ -65,7 +66,16 @@ const List = () => {
       });
     }
   };
-  const handleEdit = () => {};
+  const onEditClick = (name, cat_id, id) => {
+    setToggleEdit(true);
+    currentSelectedId.current = cat_id;
+    currentSelectedName.current = name;
+
+    setShowMore({
+      ...showMore,
+      [id]: !showMore[id],
+    });
+  };
 
   const onDeleteClick = (name, cat_id, id) => {
     setToggleDelete(true);
@@ -80,6 +90,9 @@ const List = () => {
   const onBulkDeleteClick = () => {
     setToggleMaxDelete(true);
   };
+
+  // console.log({ ids: [...value.categoryId] });
+  // console.log([...value.categoryId]);
 
   // Fucntions to be passed to the Delete Modal
   const handleDelete = async () => {
@@ -108,7 +121,8 @@ const List = () => {
     setIsLoading(true);
     try {
       const response = await axios.delete(
-        `category/${value.categoryId}/delete`
+        `category/${auth.org_id}/delete`,
+        JSON.stringify({ ids: [...value.categoryId] })
       );
       if (response.data.errorState === false) {
         setToggleMaxDelete(false);
@@ -156,13 +170,12 @@ const List = () => {
                   <tr>
                     <td>{`${id + 1}.`}</td>
                     <td>{category.name}</td>
-                    <td>105</td>
+                    <td>0</td>
                     <td>
                       <input
                         type="checkbox"
                         name={category.name}
                         value={category.id}
-                        // checked={isChecked}
                         onChange={handleChange}
                       />
                     </td>
@@ -171,7 +184,13 @@ const List = () => {
                     </td>
                     {showMore[id] && (
                       <div>
-                        <p>Edit</p>
+                        <p
+                          onClick={() =>
+                            onEditClick(category.name, category.id, id)
+                          }
+                        >
+                          Edit
+                        </p>
                         <p
                           onClick={() =>
                             onDeleteClick(category.name, category.id, id)
@@ -184,9 +203,14 @@ const List = () => {
                   </tr>
                 ))
               ) : (
-                <NoData>
-                  Oops no data to return yet. Create a new category
-                </NoData>
+                <>
+                  <Load>{isLoading && <Loader />}</Load>
+                  {!isLoading && (
+                    <NoData>
+                      Oops no data to return yet. Create a new category
+                    </NoData>
+                  )}
+                </>
               )}
             </>
           </tbody>
@@ -208,16 +232,31 @@ const List = () => {
         <DeleteModal
           handleDelete={handleDelete}
           isLoading={isLoading}
+          setIsLoading={setIsLoading}
           setToggleDelete={setToggleDelete}
-          text={`Are you sure you want to delete ${(
-            <span>{currentSelectedName.current}</span>
-          )}`}
+          text={`Are you sure you want to delete ${currentSelectedName.current}`}
         />
       )}
+      {toggleEdit && (
+        <Modal
+          setToggleCreateCat={setToggleEdit}
+          Form={
+            <EditCategory
+              setToggleEdit={setToggleEdit}
+              setUpdateCategories={setUpdateCategories}
+              updateCategories={updateCategories}
+              currentSelectedName={currentSelectedName.current}
+              currentSelectedId={currentSelectedId.current}
+            />
+          }
+        />
+      )}
+
       {toggleMaxDelete && (
         <DeleteModal
           handleDelete={handleBulkDelete}
           isLoading={isLoading}
+          setIsLoading={setIsLoading}
           setToggleDelete={setToggleMaxDelete}
           text={"Are you sure you want to delete selected categories"}
         />
@@ -279,7 +318,7 @@ export const CategoryListing = styled.div`
     text-align: left;
     overflow: auto;
     white-space: initial;
-    /* background: #f8fbfd; */
+    position: relative;
 
     @media (max-width: 517px) {
       th:nth-child(2) {
@@ -372,4 +411,11 @@ export const CategoryListing = styled.div`
 const NoData = styled.div`
   display: flex;
   margin-top: 36px;
+`;
+
+const Load = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px auto;
 `;
