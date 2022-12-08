@@ -19,7 +19,7 @@ const TableWrapper = styled.div`
 
 const Table = styled.table`
   width: 100%;
-  min-width: 960px;
+  min-width: 100px;
   overflow: auto;
   border: none;
   border-spacing: 0;
