@@ -181,6 +181,8 @@ Route::prefix('employee')->group(function () {
     Route::get('company/{orgId}', [EmployeeController::class, 'getEmployeesByCompanyId']);
     Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
     Route::get('department/{departmentId}', [EmployeeController::class, 'getEmplyeesByDepartment']);
+    Route::delete('{employeeId}/delete', [EmployeeController::class, 'deleteEmployee']);
+
 });
 Route::get('employees', [EmployeeController::class, 'getAllEmployees'])->middleware("isloggedin", "isadmin");
 
