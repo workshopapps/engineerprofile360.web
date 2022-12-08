@@ -272,6 +272,7 @@ const DeleteCategoryBtn = styled(Button)`
 export const CategoryListing = styled.div`
   width: 100%;
   overflow: auto;
+
   table {
     width: 100%;
     min-width: 960px;
