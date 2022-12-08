@@ -23,7 +23,7 @@ class UserScoreController extends Controller
     {
         try {
             $result = UserScoreService::submit($request->validated());
-            return $this->sendResponse(false, null, "User score was added successfully!", $result, Response::HTTP_CREATED);
+            return $this->sendResponse(false, null, "Your assessment has been submitted successfully!", $result, Response::HTTP_CREATED);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Error storing the userr score", $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
@@ -75,9 +75,8 @@ class UserScoreController extends Controller
     public function getScoresByEmployeeID(string $id)
     {
         try {
-            $userScore = UserScore::select('*')
-                ->join('user_assessments', 'user_assessments.userscore_id', '=', 'user_scores.id')
-                ->where("user_scores.employee_id", $id);
+            $userScore = Employee::where("id", $id)
+                ->with('department')->withCount("completed_assessment")->with('completed_assessment.userscore');
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Error fetching user scores", $e->getMessage(), Response::HTTP_BAD_REQUEST);

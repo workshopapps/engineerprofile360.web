@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 import {
   AboutOverview,
@@ -10,13 +10,13 @@ import {
 
 const About = () => {
   return (
-    <>
+    <Fragment>
       <AboutOverview />
       <AboutStory />
       <AboutValues />
       <AboutMission />
       <AboutVision />
-    </>
+    </Fragment>
   );
 };
 

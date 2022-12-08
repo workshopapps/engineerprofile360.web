@@ -3,8 +3,8 @@ import ArrowSvg from "../../assets/icons/app/arrow-down.svg";
 import FilterSvg from "../../assets/icons/app/filter.svg";
 import MenuSvg from "../../assets/icons/app/menu.svg";
 import styled from "styled-components";
-import Header from "../../ui/components/Header";
-import Sidebar from "../../ui/components/Sidebar";
+// import Header from "../../ui/components/Header";
+// import Sidebar from "../../ui/components/Sidebar";
 import { MainContainer } from "../../styles/reusableElements.styled";
 import Footer from "../../Layouts/Main/Partials/Footer";
 import axios from "../../api/axios";
@@ -55,9 +55,9 @@ const GuestAssessmentList = () => {
   };
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <MainContainer>
-        <Sidebar className="nav" external={true} />
+        {/* <Sidebar className="nav" external={true} /> */}
         <Wrapper>
           <Main>
             <h1>Select Assessment</h1>
