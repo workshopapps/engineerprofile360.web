@@ -20,9 +20,7 @@ const CreateEmployeeManual = () => {
     
     
     const handleChange = (e) => {
-      //console.log(e.target.id);
       setFormData({ ...formData, [e.target.id]: e.target.value });
-      console.log(departmentid);
     };
     
     const onBlur = (e) => {
@@ -127,7 +125,7 @@ const CreateEmployeeManual = () => {
             type="text"
             placeholder="Fullname"
             onChange={handleChange}
-            value={fullname}
+            value={fullname || ''}
             onBlur={onBlur}
           />
           {errors.fullname && touched.fullname && <span>{errors.fullname}</span>}
@@ -139,7 +137,7 @@ const CreateEmployeeManual = () => {
             type="text"
             placeholder="Username"
             onChange={handleChange}
-            value={username}
+            value={username  || ''}
             onBlur={onBlur}
           />
           {errors && errors.username && touched.username && <span>{errors.username}</span>}
@@ -152,7 +150,7 @@ const CreateEmployeeManual = () => {
             type="email"
             placeholder="youra@email.com"
             onChange={handleChange}
-            value={email}
+            value={email  || ''}
             onBlur={onBlur}
           />
           {errors && errors.email && touched.email && <span>{errors.email}</span>}
