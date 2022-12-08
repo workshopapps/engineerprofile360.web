@@ -141,7 +141,6 @@ const Main = styled.main`
   display: flex;
   flex-direction: column;
   width: 90%;
-  height: 100vh;
   background: #f8fbfd;
   border: 1px dashed #c7e0f4;
   margin: auto;
@@ -381,10 +380,11 @@ const Selectontainer = styled.div`
   }
 
   select {
-    height: 32px;
     width: 100%;
-    border-radius: 4px;
-    padding 0 10px;
+    padding: 0 10px;
+    border: 1px solid #106ebe;
+    border-radius: 2px;
+    height: 40px;
     outline: none;
   }
 `;
