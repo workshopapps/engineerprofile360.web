@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { BsCloudUpload, BsPlusCircle } from "react-icons/bs";
 import { useRef, useState,useEffect } from "react";
 import { Link, useOutletContext } from "react-router-dom";
-import useAuth from "../../../../hooks/useAuth";
 import close from "../../../../assets/icons/close.svg";
 import { Title } from "../../../../styles/reusableElements.styled";
 import CreateEmployeeManual from "./CreateEmployeeManual";
@@ -19,11 +18,11 @@ const EmployeeCSVUpload = () => {
   }, [departments]);
   
   //const [departments, setDepartments] = useState([]);
-  const [selecteddepartment, setSelectedepartment] = useState([]);
-  const { auth }  = useAuth();
-  const org_id = auth.org_id;
+  const [selecteddepartment, setSelectedepartment] = useState({});
+
   const handleChange = (e) => {
-    console.log(e.target.value);
+    //console.log(e.target.value);
+    localStorage.setItem("departmentsID", JSON.stringify(e.target.value));
     setSelectedepartment(e.target.value);
   };
 
@@ -64,7 +63,7 @@ const EmployeeCSVUpload = () => {
           <option>Select Department</option>
           {depts
             ? depts.map((dept) => (
-                <option key={dept.id} value={dept.name}>
+                <option key={dept.id} value={dept.id}>
                   {dept.name}
                 </option>
               ))

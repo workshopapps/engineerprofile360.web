@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useOutletContext } from "react-router-dom";
 import useAuth from "../../../../hooks/useAuth";
 import styled from "styled-components";
 import axios from "../../../../api/axios";
@@ -16,7 +16,8 @@ const CreateEmployeeManual = () => {
     const { auth }  = useAuth();
     const org_id = auth.org_id;
     const navigate = useNavigate();
-
+    const departmentid = localStorage.getItem("departmentsID");
+    
     const handleChange = (e) => {
       //console.log(e.target.id);
       setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -47,7 +48,8 @@ const CreateEmployeeManual = () => {
         error.fullname = "Please enter your fullname";
       }
 
-     if (!formData.dept) {
+     if (!departmentid) {
+        // toast.error("Please select a department");
          error.dept = "Please select a department";
        }
   
@@ -75,7 +77,7 @@ const CreateEmployeeManual = () => {
           name: false,
           username: false,
           email: false,
-          dept: true,
+          dept: false,
         });
       }
   
@@ -84,7 +86,7 @@ const CreateEmployeeManual = () => {
         axios.post("employee/add?type=manual",
             {   
                 org_id:org_id,
-                department_id:selecteddepartment,
+                department_id:departmentid,
                 fullname:formData.fullname, 
                 username :formData.username,
                 email:formData.email
@@ -93,8 +95,7 @@ const CreateEmployeeManual = () => {
         .then((res) => {  
           toast.success(res.data.message);
           setLoading(false);
-          localStorage.removeItem('departmentname')
-          localStorage.removeItem('departments')
+          localStorage.removeItem('departmentsID');
           setTimeout(
             () => navigate("/employees/"), 
             5000
@@ -108,7 +109,7 @@ const CreateEmployeeManual = () => {
       }
     };
   
-    const { fullname, username, email,dept } = formData;
+    const { fullname, username, email } = formData;
   return loading ? (
     <Load>
       <Loader />
@@ -153,6 +154,7 @@ const CreateEmployeeManual = () => {
             onBlur={onBlur}
           />
           {errors && errors.email && touched.email && <span>{errors.email}</span>}
+          {errors && errors.dept && touched.dept && <span>{errors.dept}</span>}
         </InputItem>
       </InputItemContainer>
       <Buttons>
