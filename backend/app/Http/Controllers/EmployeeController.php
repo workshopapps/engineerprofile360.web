@@ -238,6 +238,7 @@ class EmployeeController extends Controller
     {
         try {
             $companies = Employee::paginate(10);
+            
             return $this->sendResponse(
                 false,
                 null,
@@ -264,7 +265,7 @@ class EmployeeController extends Controller
             return $this->sendResponse(
                 false,
                 null,
-                "All employees",
+                'All employees',
                 $employees,
                 Response::HTTP_OK
             );
@@ -299,7 +300,7 @@ class EmployeeController extends Controller
 
             return $this->sendResponse(false, null, 'Employee deleted successfully', null, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true, $e->getMessage(), "Could not fetch employee ", null,  Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->sendResponse(true, "Could not fetch employee ", $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }
