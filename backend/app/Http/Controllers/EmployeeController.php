@@ -211,7 +211,7 @@ class EmployeeController extends Controller
             if (!$department) {
                 return $this->sendResponse(
                     true,
-                    'Department do not exist',
+                    'Department does not exist',
                     'Department not found',
                     null,
                     Response::HTTP_NOT_FOUND
@@ -229,13 +229,12 @@ class EmployeeController extends Controller
     public function getAllEmployees()
     {
         try {
-            $allEmployees = Employee::paginate(10);
-            $totalCount = $allEmployees->total();
+            $employees = Employee::paginate(10);
             return $this->sendResponse(
                 false,
                 null,
-                "All employees (count: $totalCount)",
-                $allEmployees,
+                "All employees",
+                $employees,
                 Response::HTTP_OK
             );
         } catch (\Exception $e) {
