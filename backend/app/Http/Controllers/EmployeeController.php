@@ -114,7 +114,7 @@ class EmployeeController extends Controller
     {
         try {
             $employee = Employee::where("id", $employee_id)
-                ->with(['department', 'completed_assessment.userscore'])->withCount([
+                ->with(['department', 'completed_assessment.assessment.userscore'])->withCount([
                     "completed_assessment",
                     'assessment AS points' => function ($query) {
                         $query->select(DB::raw("SUM(result) as points"));
