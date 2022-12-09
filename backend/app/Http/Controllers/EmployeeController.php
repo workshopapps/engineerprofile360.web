@@ -238,7 +238,7 @@ class EmployeeController extends Controller
     {
         try {
             $companies = Employee::paginate(10);
-            
+
             return $this->sendResponse(
                 false,
                 null,
