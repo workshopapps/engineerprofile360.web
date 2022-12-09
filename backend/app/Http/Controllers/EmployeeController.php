@@ -143,7 +143,7 @@ class EmployeeController extends Controller
             
             return $this->sendResponse(false, null, "Employee Fetch Successful", $employee, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true, "Employee not found", $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->sendResponse(true, "Employee not found", $e->getMessage(),  null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -155,7 +155,7 @@ class EmployeeController extends Controller
             $employee->update($request->validated());
             return $this->sendResponse(false, null, "Employee Update Successful", $employee, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true, "Employee not fetched", $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->sendResponse(true, "Employee not fetched", $e->getMessage(),  null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -208,7 +208,7 @@ class EmployeeController extends Controller
 
             return $this->sendResponse(false, null, "Employee Added Successfully", $employee, Response::HTTP_CREATED);
         } catch (\Exception $e) {
-            return $this->sendResponse(true, "Employee Action Failed", $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->sendResponse(true, " Employee Action Failed", $e->getMessage(),  null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -219,7 +219,7 @@ class EmployeeController extends Controller
             if (!$department) {
                 return $this->sendResponse(
                     true,
-                    'Department does not exist',
+                    'Department do not exist',
                     'Department not found',
                     null,
                     Response::HTTP_NOT_FOUND
@@ -237,16 +237,16 @@ class EmployeeController extends Controller
     public function getAllEmployees()
     {
         try {
-            $employees = Employee::paginate(10);
+            $companies = Employee::paginate(10);
             return $this->sendResponse(
                 false,
                 null,
-                "All employees",
-                $employees,
+                'All employees',
+                $companies,
                 Response::HTTP_OK
             );
         } catch (\Exception $e) {
-            return $this->sendResponse(true, $e->getMessage(), 'Employees not fetched', null,  Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->sendResponse(true, 'Employees not fetched', $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
