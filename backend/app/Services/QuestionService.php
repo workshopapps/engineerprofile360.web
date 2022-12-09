@@ -44,4 +44,19 @@ class QuestionService
             "total" => $count - 1
         ];
     }
+
+    public static function addQuestions(array $data): array
+    {
+        $output = array();
+        for ($i = 0; $i < count($data['questions']); $i++) {
+            $result = Question::create([
+                "assessment_id" => $data["assessment_id"],
+                ...$data['questions'][$i],
+                "options" => json_encode($data['questions'][$i]["options"]),
+                "correct_answers" => json_encode($data['questions'][$i]["correct_answers"]),
+            ]);
+            array_push($output, $result);
+        }
+        return $output;
+    }
 }
