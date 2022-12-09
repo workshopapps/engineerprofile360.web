@@ -50,7 +50,7 @@ class AssessmentController extends Controller
 
             Assessment::create($data);
 
-            return $this->sendResponse(false, null, "assessment created.", $data, 201);
+            return $this->sendResponse(false, null, "assessment created.", $data, Response::HTTP_CREATED);
         } catch (\Exception $e) {
             return $this->sendResponse(true, 'something went wrong creating assessment', $e->getMessage(), null, 500);
         }
