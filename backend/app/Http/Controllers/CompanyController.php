@@ -11,29 +11,27 @@ use Symfony\Component\HttpFoundation\Response;
 class CompanyController extends Controller
 {
     /**
-     * Get all Companies
+     * Get all compamnies
+     *
+     * @return JsonResponse
      */
     public function getCompanies(): JsonResponse
     {
         try{
-            $companies = Company::get();
-            $checkCompanies = Company::exists();
+            $companies = Company::paginate(10);
 
-            if(!$checkCompanies) {
-                $checkCompanies = [];
-                return $this->sendResponse(true, null, 'Companies is empty', $checkCompanies, Response::HTTP_NOT_FOUND);
-            }
-
-            return $this->sendResponse(false, null, 'All companies fetched successfully', $companies, Response::HTTP_OK);
+            return $this->sendResponse(false, null, 'Companies', $companies, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true, null, 'Something went wrong', Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->sendResponse(true, 'Companies not fetched', $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
     /**
-     * Update company.
+     * Edit company
+     * @param CompanyRequest $request
+     * @param string $company_id
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function updateCompany(CompanyRequest $request, $company_id): JsonResponse
     {
@@ -52,38 +50,44 @@ class CompanyController extends Controller
 
             return $this->sendResponse(false, null, 'Company Updated Successfully', $company, Response::HTTP_OK);
         }  catch (Exception $e) {
-            return $this->sendResponse(true, null, 'Something went wrong', Response::HTTP_BAD_REQUEST);
+            return $this->sendResponse(true, 'Company not fetched', $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
     }
 
     /**
-     * Get company by ID.
+     * Get company
+     * @param string $id
      *
-     * @return \Illuminate\Http\Response
-     */
-    public function byCompanyId($id)
+     * @return JsonResponse
+    */
+    public function byCompanyId($id): JsonResponse
     {
         try {
             $company = Company::find($id);
-            $checkCompany = Company::where('id', $id)->exists();
 
-            if(!$checkCompany) {
-                $checkCompany = [];
-                return $this->sendResponse(true, null, 'The company doesn\'t exists', $checkCompany, Response::HTTP_NOT_FOUND);
+            if(!$company) {
+                return $this->sendResponse(
+                    true, 
+                    'Company not found', 
+                    'The company doesn\'t exists', 
+                    null, 
+                    Response::HTTP_NOT_FOUND
+                );
             }
 
             return $this->sendResponse(false, null, 'Company fetched successfully', $company, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true, null, 'Something went wrong', Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->sendResponse(true, 'Something went wrong', $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
-    /**
-     * Get company by user_id.
+   /**
+     * Get company by user_id
+     * @param string $user_id
      *
-     * @return \Illuminate\Http\Response
-     */
+     * @return JsonResponse
+    */
     public function getCompanyByUserId($user_id): JsonResponse
     {
         try {
@@ -91,13 +95,12 @@ class CompanyController extends Controller
             $checkCompany = Company::where('user_id', $user_id)->exists();
 
             if(!$checkCompany) {
-                $checkCompany = [];
-                return $this->sendResponse(true, null, 'The company doesn\'t exists', $checkCompany, Response::HTTP_NOT_FOUND);
+                return $this->sendResponse(true, 'Company not found', 'The company doesn\'t exists', null, Response::HTTP_NOT_FOUND);
             }
 
             return $this->sendResponse(false, null, 'Company fetched successfully', $company, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true, null, 'Something went wrong', Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->sendResponse(true, 'Something went wrong', $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

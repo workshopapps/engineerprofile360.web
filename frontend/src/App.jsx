@@ -1,5 +1,9 @@
 // import React from "react";
+
+// This is for DevOps App Monitoring - START
 import * as atatus from "atatus-spa";
+// This is for DevOps App Monitoring - END
+
 //import * as Sentry from "@sentry/react";
 import { Routes, Route } from "react-router-dom";
 import RequireAuth from "./components/requireAuth";
@@ -89,10 +93,12 @@ import AdminAssessmmentListOutlet from "./ui/components/Company/Assessments/admi
 import AdminAssessmentListAvailable from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmentListAvailable";
 import AssessmentList from "./ui/components/Company/Assessments/adminAssesmentList/AssessmentList";
 
+// This is for DevOps App Monitoring - START
 atatus.config("4010279ebbd747e7a752082eea130df6").install();
 
 // atatus.notify(new Error("Test Atatus Setup"));
 atatus.notify();
+// This is for DevOps App Monitoring - END
 
 const ROLES = {
   Employees: 1,

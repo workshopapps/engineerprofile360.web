@@ -37,7 +37,7 @@ class AdminController extends Controller
            
             return $this->sendResponse(false, null, "Admin Overview", $data, Response::HTTP_OK);
         } catch (\Exception $e) {
-            return $this->sendResponse(true, 'Overview could not be fetched', $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->sendResponse(true, 'Overview could not be fetched', $e->getMessage(), null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -67,7 +67,37 @@ class AdminController extends Controller
            
             return $this->sendResponse(false, null, "User data", $response, Response::HTTP_OK);
         } catch (\Exception $e) {
-            return $this->sendResponse(true, 'User data could not be fetched', $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->sendResponse(true, 'User data could not be fetched', $e->getMessage(), null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Delete a company
+     * @param string $companyId
+     *
+     * @return JsonResponse
+     */
+    public function deleteCompany($companyId): JsonResponse
+    {
+        try {
+
+            $company = Employee::find($companyId);
+
+            if(!$company){
+                return $this->sendResponse(
+                    true, 
+                    "Company does not exist", 
+                    "Company not found", 
+                    null, 
+                    Response::HTTP_NOT_FOUND
+                );
+            }
+
+            $company->delete();
+
+            return $this->sendResponse(false, null, 'Company deleted successfully', null, Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, "Could not fetch company ", $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }
