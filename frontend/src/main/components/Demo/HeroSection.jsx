@@ -12,7 +12,7 @@ const HeroSection = () => {
             Request A Demo
           </Title>
           <p>
-            Skript assesses engineers, and review their feedback to ascertain
+            Eval360 assesses engineers, and review their feedback to ascertain
             their work efficiency and performance.
           </p>
         </ContentContainer>

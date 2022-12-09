@@ -1,12 +1,2 @@
-import React from 'react'
-import Dashboard from './Dashboard/Dashboard'
+export { default as AdminLogin } from "./Auth/Login";
 
-function index() {
-  return (
-    <div>
-        <Dashboard/>
-    </div>
-  )
-}
-
-export default index

@@ -25,7 +25,7 @@ const Listing = () => {
       setAllEmployees(employees ? employees : []);
     } else {
       const filtered = employees.filter(
-        (employee) => e.target.value === employee.department
+        (employee) => e.target.value === employee.department.name
       );
       setAllEmployees(filtered);
     }
@@ -60,23 +60,24 @@ const Listing = () => {
               <th>Username</th>
               <th>Actions</th>
             </tr>
-            {allEmployees.map((employee, index) => (
-              <tr key={employee.id}>
-                <td>{index + 1}.</td>
-                <td>{employee.fullname}</td>
-                <td>{employee.department.name}</td>
-                <td>{employee.email}</td>
-                <td>{employee.username}</td>
-                <td>
-                  <Link to={`/employees/profile/${employee.id}`}>
-                    <Button $variant="outlined" $color="#2667ff">
-                      View Profile
-                    </Button>
-                  </Link>
-                  <More />
-                </td>
-              </tr>
-            ))}
+            {allEmployees.length > 0 &&
+              allEmployees.map((employee, index) => (
+                <tr key={employee?.id}>
+                  <td>{index + 1}.</td>
+                  <td>{employee?.fullname}</td>
+                  <td>{employee.department?.name}</td>
+                  <td>{employee?.email}</td>
+                  <td>{employee?.username}</td>
+                  <td>
+                    <Link to={`/employees/profile/${employee.id}`}>
+                      <Button $variant="outlined" $color="#2667ff">
+                        View Profile
+                      </Button>
+                    </Link>
+                    <More />
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </TableComponent>
       ) : (

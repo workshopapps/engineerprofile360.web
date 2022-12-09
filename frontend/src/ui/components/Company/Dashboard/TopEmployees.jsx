@@ -20,6 +20,8 @@ const TopEmployees = ({ topPerformances, departments }) => {
     setDepts(allDepartments);
   }, [topPerformances?.data, depts]);
 
+  console.log(top);
+
   return (
     <div>
       <Header>
@@ -49,7 +51,7 @@ const TopEmployees = ({ topPerformances, departments }) => {
                   <td>{employee.fullname}</td>
                   <td>{employee.department.name}</td>
                   <td>{employee.completed_assessment_count}</td>
-                  <td>{employee.points.toFixed(2)}%</td>
+                  <td>{((employee.points / employee.total_points) * 100).toFixed(2)}%</td>
                   <td>
                     <Link to={`/employees/profile/${employee.id}`}>
                       <Button $variant="outlined" $color="#2667ff">
