@@ -50,7 +50,7 @@ const Stats = ({ stats, topPerformance }) => {
               <Number>{stats.assessments}</Number>
             </Stat>
           </Link>
-          <Link to="/assessment">
+          <Link to="/assessment/assessment-list">
             <Stat>
               <TickCircle color="#141ae9" />
               <Type>
@@ -60,7 +60,7 @@ const Stats = ({ stats, topPerformance }) => {
               <Number>{stats.availableAssessments}</Number>
             </Stat>
           </Link>
-          <Link to="/assessment">
+          <Link to="/assessment/assessment-list/completed">
             <Stat>
               <TaskSquare color="#141ae9" />
               <Type>
