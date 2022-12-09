@@ -41,13 +41,17 @@ const CreateEmployeeManual = () => {
       error.fullname = "Please enter your fullname";
     }
 
-    if (!departmentid) {
+    if (!departmentid || departmentid==="" || departmentid==="Select Department")  {
         error.dept = "Please select a department";
     }
     
     setErrors(error);
     };
 
+    useEffect(() => {
+      validate(formData);
+    }, [formData, touched]);
+    
     const onNextPage = async (formData) => {
       validate(formData);
   

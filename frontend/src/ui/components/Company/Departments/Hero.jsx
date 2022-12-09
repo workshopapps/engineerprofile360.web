@@ -11,6 +11,7 @@ import { CategoryListing } from "../Categories/List";
 import EditModal from "./EditModal";
 import DeleteModal from "./DeleteModal";
 import { toast } from "react-toastify";
+import TableComponent from "../../molecules/TableComponent";
 
 function Hero() {
   //? useState HOOKS
@@ -106,7 +107,7 @@ function Hero() {
           </Button>
         </CRUDContainer>
         <CategoryListing>
-          <table>
+          <TableComponent>
             <tbody>
               <tr>
                 <th>#</th>
@@ -156,8 +157,7 @@ function Hero() {
                           >
                             View Departments
                           </Button>
-                        </td>
-                        <td>
+                       
                           <More
                             onClick={() => {
                               handleModal(index);
@@ -180,7 +180,7 @@ function Hero() {
                   })
                 : "Oops! you have no departments to show. Create a new Department"}
             </tbody>
-          </table>
+          </TableComponent>
         </CategoryListing>
       </Container>
     </>

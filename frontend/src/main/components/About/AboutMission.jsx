@@ -21,7 +21,7 @@ const AboutMission = () => {
           </li>
           <li>
             {" "}
-            With the Skript tool, we provide an efficient way to evaluate your
+            With the Eval360 tool, we provide an efficient way to evaluate your
             engineering talents and propel their development.
           </li>
           <li>

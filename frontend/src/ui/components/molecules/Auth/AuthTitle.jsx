@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Title } from "../../../../../styles/reusableElements.styled";
+import { Title } from "../../../../styles/reusableElements.styled";
 
 const AuthTitle = ({ title, text }) => {
   return (

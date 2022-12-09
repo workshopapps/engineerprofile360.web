@@ -61,7 +61,7 @@ function Accordion() {
       </AccordionWrapper>
 
       <AccordionHeader margin={" 90px 0 0 0 "}>
-        Skript is super easy to use and your company gets two
+        Eval360 is super easy to use and your company gets two
       </AccordionHeader>
       <AccordionHeader margin={" 5px 0 0 0"}>
         weeks free trial for any of the plans

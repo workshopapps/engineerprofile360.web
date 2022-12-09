@@ -14,7 +14,7 @@ const AccountOverview = () => {
             OVERVIEW <img src={overviewWing} alt="" />
           </Title>
           <p>
-            Skript is a skill evaluator tool that is used for assessing
+            Eval360 is a skill evaluator tool that is used for assessing
             engineers in an organisation.
             <br />
             <br />
@@ -23,7 +23,7 @@ const AccountOverview = () => {
             at any stage.
             <br />
             <br />
-            Skript helps companies to retain quality talent and advance the
+            Eval360 helps companies to retain quality talent and advance the
             skills of their engineers, which will foster efficiency and
             innovation.
           </p>

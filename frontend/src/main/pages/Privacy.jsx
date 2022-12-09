@@ -19,7 +19,7 @@ const Privacy = () => {
             <LeftContent>
               <Section>
                 <InsideContent>
-                  Skript, owned by the mechanic team Axle group and affiliated
+                  Eval360, owned by the mechanic team Axle group and affiliated
                   companies described as "we," "our," and "us" on this page, put
                   in a lot of effort in managing your data (the information we
                   collect from you), and this is why this page exists. This
@@ -97,7 +97,7 @@ const Privacy = () => {
                   <br />
                   <b>Cookies and Tracking Data</b>
                   <br />
-                  Skript uses tracking tech and cookies to follow users'
+                  Eval360 uses tracking tech and cookies to follow users'
                   activities on the platform. We may store some of this
                   information for more personalised offerings. Cookies are held
                   in your device, giving you some form of control. Some of the
@@ -113,7 +113,7 @@ const Privacy = () => {
               <Section id="use_of_data">
                 <Title>Use Of Data</Title>
                 <InsideContent>
-                  Skripts uses your personal data for a more personalised and
+                  Eval360 uses your personal data for a more personalised and
                   secure experience on our platform. General data, including
                   direct engineer data in our skill assessment tests, help us
                   provide more accurate services, comply with contractual and
@@ -158,8 +158,8 @@ const Privacy = () => {
                 <InsideContent>
                   To provide accurate engineer skill assessments on our
                   platform, we retain the data we collect from you for as long
-                  as required. In addition, Skript may also retain your data for
-                  as long as possible to comply with legal obligations and
+                  as required. In addition, Eval360 may also retain your data
+                  for as long as possible to comply with legal obligations and
                   resolve disputes and disagreements when they occur. We are not
                   obligated to keep this data for a specific time as we can
                   delete it or restrict it anytime it is reasonably right with
@@ -173,8 +173,8 @@ const Privacy = () => {
                 <InsideContent>
                   Data Transfer To deliver our services to you, we may maintain
                   or transfer your data outside the jurisdiction of the privacy
-                  laws in your region. However, Skript ensures that your data is
-                  safe during transfer and storage. We follow the appropriate
+                  laws in your region. However, Eval360 ensures that your data
+                  is safe during transfer and storage. We follow the appropriate
                   standard contractual clauses to keep your information safe.
                   Consenting to this privacy policy is regarded as giving us
                   permission to process, transfer and store your data in
@@ -206,7 +206,7 @@ const Privacy = () => {
               <Section id="data_security">
                 <Title>Data Security</Title>
                 <InsideContent>
-                  Skript ensures data safety by using commercially available
+                  Eval360 ensures data safety by using commercially available
                   data protection systems to keep your data safe online and
                   electronically. We ensure that all third-party companies we
                   share your data with are secure with robust data security
@@ -221,7 +221,7 @@ const Privacy = () => {
                 <InsideContent>
                   In compliance with the General Data Protection Regulation for
                   users in the European economic area and the UK, here are some
-                  of the reasons Skript may access your data:
+                  of the reasons Eval360 may access your data:
                 </InsideContent>
                 <Lst>
                   <Li>- In compliance with the law</Li>
@@ -262,7 +262,7 @@ const Privacy = () => {
               <Section id="other_site">
                 <Title>Links to Other Sites</Title>
                 <InsideContent>
-                  Skript may include links to other sites; however, we are not
+                  Eval360 may include links to other sites; however, we are not
                   responsible for the privacy policies on these sites or how
                   they process your data. Therefore, you should pay extra
                   attention to the privacy policies of linked sites once you
