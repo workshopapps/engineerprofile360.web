@@ -17,18 +17,7 @@ class QuestionsController extends Controller
     public function addManually(CreateQuestionRequest $request): JsonResponse
     {
         try {
-            $data = $request->validated();
-            $output = array();
-            for ($i = 0; $i < count($data['questions']); $i++) {
-                $result = Question::create([
-                    "category_id" => $data["category_id"],
-                    "assessment_id" => $data["assessment_id"],
-                    ...$data['questions'][$i],
-                    "options" => json_encode($data['questions'][$i]["options"]),
-                    "correct_answers" => json_encode($data['questions'][$i]["correct_answers"]),
-                ]);
-                array_push($output, $result);
-            }
+            $output = QuestionService::addQuestions($request->validated());
             return $this->sendResponse(false, null, 'Question created', $output, Response::HTTP_CREATED);
         } catch (Exception $e) {
             return $this->sendResponse(true, 'Question not created', $e->getMessage());

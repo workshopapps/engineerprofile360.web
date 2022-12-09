@@ -41,7 +41,7 @@ Route::get("/test", function (Helper $helper) {
     return view("emails.signup");
 });
 
-//USERSCORE
+//USERSCORE 
 Route::prefix("userscore")->group(function () {
     Route::get('/employee/{id}', [UserScoreController::class, 'getScoresByEmployeeID'])->middleware("isloggedin");
     Route::get('/assessment/{id}', [UserScoreController::class, 'getScoresByAssessmentID'])->middleware("isloggedin", "isadmin");
