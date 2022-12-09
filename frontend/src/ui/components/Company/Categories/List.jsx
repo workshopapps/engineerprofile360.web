@@ -10,7 +10,9 @@ import DeleteModal from "./DeleteModal";
 import { showErrorToast } from "../../../../helpers/helper";
 import { showSuccessToast } from "../../../../helpers/helper";
 
-import { More } from "iconsax-react";
+import { More, AddCircle } from "iconsax-react";
+import NoData from "../../molecules/NoData";
+import TableComponent from "../../molecules/TableComponent";
 import { Button, Loader } from "../../../../styles/reusableElements.styled";
 import EditCategory from "./EditCategory";
 
@@ -152,70 +154,66 @@ const List = () => {
           </DeleteCategoryBtn>
         )}
       </ButtonCategory>
+
       <CategoryListing>
-        <table>
-          <tbody>
-            <>
-              {categories.data?.length > 0 && (
-                <tr>
-                  <th>#</th>
-                  <th>Category</th>
-                  <th>Number of Questions</th>
-                  <th></th>
-                  <th></th>
-                </tr>
-              )}
-              {categories.data?.length > 0 ? (
-                categories.data?.map((category, id) => (
-                  <tr>
-                    <td>{`${id + 1}.`}</td>
-                    <td>{category.name}</td>
-                    <td>0</td>
-                    <td>
-                      <input
-                        type="checkbox"
-                        name={category.name}
-                        value={category.id}
-                        onChange={handleChange}
-                      />
-                    </td>
-                    <td>
-                      <More onClick={() => toggleOpen(id)} />
-                    </td>
-                    {showMore[id] && (
-                      <div>
-                        <p
-                          onClick={() =>
-                            onEditClick(category.name, category.id, id)
-                          }
-                        >
-                          Edit
-                        </p>
-                        <p
-                          onClick={() =>
-                            onDeleteClick(category.name, category.id, id)
-                          }
-                        >
-                          Delete
-                        </p>
-                      </div>
-                    )}
-                  </tr>
-                ))
-              ) : (
-                <>
-                  <Load>{isLoading && <Loader />}</Load>
-                  {!isLoading && (
-                    <NoData>
-                      Oops no data to return yet. Create a new category
-                    </NoData>
-                  )}
-                </>
-              )}
-            </>
-          </tbody>
-        </table>
+        {categories.data?.length > 0 ? (
+          <TableComponent>
+            <tr>
+              <th>#</th>
+              <th>Category</th>
+              <th>Number of Questions</th>
+              <th></th>
+            </tr>
+
+            {categories.data?.map((category, id) => (
+              <tr>
+                <td>{`${id + 1}.`}</td>
+                <td>{category.name}</td>
+                <td>0</td>
+                <td>
+                  <input
+                    type="checkbox"
+                    name={category.name}
+                    value={category.id}
+                    onChange={handleChange}
+                  />
+                  <More onClick={() => toggleOpen(id)} />
+                </td>
+                {showMore[id] && (
+                  <div>
+                    <p
+                      onClick={() =>
+                        onEditClick(category.name, category.id, id)
+                      }
+                    >
+                      Edit
+                    </p>
+                    <p
+                      onClick={() =>
+                        onDeleteClick(category.name, category.id, id)
+                      }
+                    >
+                      Delete
+                    </p>
+                  </div>
+                )}
+              </tr>
+            ))}
+          </TableComponent>
+        ) : (
+          <>
+            <Load>{isLoading && <Loader />}</Load>
+            {!isLoading && (
+              <NoData text="Oops! No data here yet">
+                <Button $weight="400" onClick={() => setToggleCreateCat(true)}>
+                  <AddCircle color="#FFFFFF" /> Add Category
+                </Button>
+              </NoData>
+            )}
+          </>
+        )}
       </CategoryListing>
+
       {toggleCreateCat && (
         <Modal
           setToggleCreateCat={setToggleCreateCat}
@@ -406,11 +404,6 @@ export const CategoryListing = styled.div`
       }
     }
   }
-`;
-
-const NoData = styled.div`
-  display: flex;
-  margin-top: 36px;
 `;
 
 const Load = styled.div`

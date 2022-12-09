@@ -17,10 +17,9 @@ import useInputValidation from "../../../../hooks/useInputValidation";
 import useAuth from "../../../../hooks/useAuth";
 import axios from "../../../../api/axios";
 
-import eyeSvg from "../../../../assets/icons/eye.svg";
-import smsSvg from "../../../../assets/icons/smsenvelope.svg";
+import { Eye, Sms } from "iconsax-react";
 
-const AdminLogin = () => {
+const Login = () => {
   const { setAuth, persist, setPersist } = useAuth();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/dashboard";
@@ -80,7 +79,7 @@ const AdminLogin = () => {
 
         const { email, password } = formData;
         const response = await axios.post(
-          "auth/organization/login",
+          "auth/employee/login",
           JSON.stringify({ email, password })
         );
 
@@ -92,7 +91,6 @@ const AdminLogin = () => {
 
         console.log(response);
 
-        if (roles === 2) {
           setAuth({ email, accessToken, username, roles, id, org_id });
           // persist &&
           localStorage.setItem(
@@ -106,20 +104,6 @@ const AdminLogin = () => {
               username,
             })
           );
-        } else if (roles === 3) {
-          setAuth({ email, accessToken, username, roles, id });
-
-          localStorage.setItem(
-            "Eval360",
-            JSON.stringify({
-              email,
-              accessToken,
-              roles,
-              id,
-              username,
-            })
-          );
-        }
 
         console.log(response.data);
         if (response.data.errorState === false) {
@@ -128,14 +112,9 @@ const AdminLogin = () => {
             email: "",
             password: "",
           });
+  
+          window.location.href = "/employee/dashboard";
 
-          if (roles === 2) {
-            // navigate(from, { replace: true });
-            window.location.href = from;
-          } else if (roles === 3) {
-            // navigate("/admin/dashboard", { replace: true });
-            window.location.href = "/admin/dashboard";
-          }
         } else if (response.data.errorState === true) {
           showErrorToast(response.data.message);
         }
@@ -158,7 +137,7 @@ const AdminLogin = () => {
         <ToastContainer />
         <AuthTitle
           title="Welcome back"
-          text="Please enter your login details"
+          text="Pick up where you left from"
         />
         <LoginForm onSubmit={(e) => handleSubmit(e, formData)}>
           <InputField
@@ -171,7 +150,7 @@ const AdminLogin = () => {
             handleChange={(e) => changeInputValue(e)}
             handleBlur={onBlur}
             error={errors && touched.email && errors.email?.length > 0}
-            endIcon={<img src={smsSvg} alt="" />}
+            endIcon={<Sms />}
             helperText={
               errors && errors.email && touched.email ? errors.email : ""
             }
@@ -187,10 +166,8 @@ const AdminLogin = () => {
             error={errors && touched.password && errors.password?.length > 0}
             handleBlur={onBlur}
             endIcon={
-              <img
+              <Eye
                 onClick={() => setShowPassword((prevState) => !prevState)}
-                src={eyeSvg}
-                alt=""
                 style={{ cursor: "pointer" }}
               />
             }
@@ -233,7 +210,7 @@ const AdminLogin = () => {
   );
 };
 
-export default AdminLogin;
+export default Login;
 
 const FormContainer = styled(Container)`
   width: 100%;

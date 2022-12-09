@@ -8,7 +8,7 @@ import {
   Button,
   Loader,
 } from "../../../../styles/reusableElements.styled";
-import AuthTitle from "../../../components/Company/Auth/molecules/AuthTitle";
+import AuthTitle from "../../../components/molecules/Auth/AuthTitle";
 import InputField from "../../../../components/InputField";
 
 import useInputValidation from "../../../../hooks/useInputValidation";
