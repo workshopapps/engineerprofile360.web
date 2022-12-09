@@ -9,13 +9,13 @@ import Feature4 from "./assets/feature4.svg";
 const FeatureLists = [
   {
     image: Feature1,
-    name: "Use Skript to improve your engineers",
+    name: "Use Eval360 to improve your engineers",
     description:
-      "Skript takes the load of evaluating your engineers skills off your neck, and lets you know if your engineers have the skills to work on your next big engineering product.",
+      "Eval360 takes the load of evaluating your engineers skills off your neck, and lets you know if your engineers have the skills to work on your next big engineering product.",
   },
   {
     image: Feature2,
-    name: "Save time with Skript",
+    name: "Save time with Eval360",
     description:
       "We save you time evaluating your engineers, by giving you prepared questions to evaluate your engineers at different levels.",
   },

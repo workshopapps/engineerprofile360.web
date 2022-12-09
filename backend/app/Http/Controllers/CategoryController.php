@@ -68,6 +68,13 @@ class CategoryController extends Controller
         }
     }
 
+    /**
+     * Delete a category
+     * @param string $categoryId
+     * @param string $orgId
+     *
+     * @return JsonResponse
+     */
     public function deleteCategory($categoryId, $orgId): JsonResponse
     {
         try {

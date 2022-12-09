@@ -16,14 +16,18 @@ const MobileNav = ({ handleMenu }) => {
         <Link to="/">
           <li>Home</li>
         </Link>
-        <li>Pricing</li>
+
+        <Link to="/pricing">
+          <li>Pricing</li>
+        </Link>
         <li>
           Resources
-          <img src={arrowDown} alt="" />
+          {/* <img src={arrowDown} alt="" /> */}
         </li>
         <Link to="/about-us">
           <li>
-            About <img src={arrowDown} alt="" />
+            About
+            {/* <img src={arrowDown} alt="" /> */}
           </li>
         </Link>
         <li>
@@ -76,7 +80,7 @@ const List = styled.ul`
     right: ${({ theme }) => theme.spacing(3)};
 
     img {
-        width: 24px;
+      width: 24px;
     }
   }
 

@@ -93,9 +93,6 @@ const List = () => {
     setToggleMaxDelete(true);
   };
 
-  // console.log({ ids: [...value.categoryId] });
-  // console.log([...value.categoryId]);
-
   // Fucntions to be passed to the Delete Modal
   const handleDelete = async () => {
     setIsLoading(true);
@@ -122,9 +119,11 @@ const List = () => {
   const handleBulkDelete = async () => {
     setIsLoading(true);
     try {
+      const ids = [...value.categoryId];
+      console.log(ids);
       const response = await axios.delete(
         `category/${auth.org_id}/delete`,
-        JSON.stringify({ ids: [...value.categoryId] })
+        JSON.stringify({ ids })
       );
       if (response.data.errorState === false) {
         setToggleMaxDelete(false);

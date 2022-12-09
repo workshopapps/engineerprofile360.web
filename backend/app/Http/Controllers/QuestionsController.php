@@ -17,19 +17,7 @@ class QuestionsController extends Controller
     public function addManually(CreateQuestionRequest $request): JsonResponse
     {
         try {
-            $data = $request->validated();
-
-            $output = array();
-            for ($i = 0; $i < count($data['questions']); $i++) {
-                $result = Question::create([
-                    "category_id" => $data["category_id"],
-                    "assessment_id" => $data["assessment_id"],
-                    ...$data['questions'][$i],
-                    "options" => json_encode($data['questions'][$i]["options"]),
-                    "correct_answers" => json_encode($data['questions'][$i]["correct_answers"]),
-                ]);
-                array_push($output, $result);
-            }
+            $output = QuestionService::addQuestions($request->validated());
             return $this->sendResponse(false, null, 'Question created', $output, Response::HTTP_CREATED);
         } catch (Exception $e) {
             return $this->sendResponse(true, 'Question not created', $e->getMessage());
@@ -90,15 +78,6 @@ class QuestionsController extends Controller
     {
         try {
             $questions = Question::where('assessment_id', $id)->get();
-            foreach ($questions as $question) {
-                $question->options = json_decode($question->options);
-                $question->correct_answers = json_decode($question->correct_answers);
-            }
-
-            $checkQuestions = Question::where('assessment_id', $id)->exists();
-            if (!$checkQuestions) {
-                return $this->sendResponse(true, "Fetch Question By Assessment ID failed", 'No Question Exist for this Assessment ID', null, Response::HTTP_NOT_FOUND);
-            }
             return $this->sendResponse(false, null, "OK", $questions, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "Fetch Question By Assessment ID failed", $e->getMessage());

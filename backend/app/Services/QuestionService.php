@@ -24,12 +24,12 @@ class QuestionService
             $option4 = trim($item[4]) ?? "option4";
             $answer = trim($item[5]) ?? "option";
             $category_name = trim($item[6]) ?? null;
-            $category_id = Category::where(["name" => $category_name, "org_id" => $payload['org_id']])->first()['id'];
-            if ($category_id) {
+            $category = Category::where(["name" => $category_name, "org_id" => $payload['org_id']])->first();
+            if ($category) {
                 $output = [
                     "question" => trim($item[0]) ?? "Question",
                     "options" => [$option1, $option2, $option3, $option4],
-                    "category_id" => $category_id,
+                    "category_id" => $category['id'],
                     "assessment_id" => $payload['assessment_id'],
                     "correct_answers" => [intval($answer) - 1],
                     "timeframe" => 1,
@@ -43,5 +43,20 @@ class QuestionService
             "success" => $success,
             "total" => $count - 1
         ];
+    }
+
+    public static function addQuestions(array $data): array
+    {
+        $output = array();
+        for ($i = 0; $i < count($data['questions']); $i++) {
+            $result = Question::create([
+                "assessment_id" => $data["assessment_id"],
+                ...$data['questions'][$i],
+                "options" => json_encode($data['questions'][$i]["options"]),
+                "correct_answers" => json_encode($data['questions'][$i]["correct_answers"]),
+            ]);
+            array_push($output, $result);
+        }
+        return $output;
     }
 }

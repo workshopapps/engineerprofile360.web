@@ -29,7 +29,7 @@ const Contact = () => {
             <h1>Send Us A Message</h1>
             <p>
               {" "}
-              You Can Reach Us At Anytime Via <span>Hi@skripthq.com</span>
+              You Can Reach Us At Anytime Via <span>Hi@Eval360hq.com</span>
             </p>
           </Title>
 
@@ -71,8 +71,8 @@ const Contact = () => {
               <div>
                 <h2>Chat With Us</h2>
                 {/* <p>Our Friendly Team Is Here To Help</p> */}
-                <a href="malito:skriptassessmenthq@gmail.com">
-                  skriptassessmenthq@gmail.com
+                <a href="malito:eval360assessmenthq@gmail.com">
+                  eval360assessmenthq@gmail.com
                 </a>
               </div>
             </Info>
