@@ -5,7 +5,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { Container } from "../../../styles/reusableElements.styled";
-import { AuthTitle, InputField } from "../../components";
+import { InputField } from "../../components";
+import AuthTitle from "../../../components/molecules/Auth/AuthTitle";
 
 import useInputValidation from "../../../hooks/useInputValidation";
 import useAuth from "../../../hooks/useAuth";

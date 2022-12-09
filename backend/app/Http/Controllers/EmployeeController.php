@@ -50,11 +50,15 @@ class EmployeeController extends Controller
                 $dept = $payload['department_id'];
 
                 if (!isset($file) || !isset($org) || !isset($dept)) {
-                    return $this->sendResponse(true, "expected a valid employee 'org_id, dept_id, file'  but got none", "missing employee data.", null, 400);
+                    return $this->sendResponse(true, "expected a valid employee 'org_id, dept_id, file'  but got none", "missing employee data.", null,  Response::HTTP_BAD_REQUEST);
                 }
                 if (empty($file) || empty($org) || empty($dept)) {
-                    return $this->sendResponse(true, "expected a valid employee 'org_id, dept_id, file'  but got none", "missing employee data.", null, 400);
+                    return $this->sendResponse(true, "expected a valid employee 'org_id, dept_id, file'  but got none", "missing employee data.", null,  Response::HTTP_BAD_REQUEST);
                 }
+
+                // check if organization and department exist
+                if (is_null(Company::find($org))) return $this->sendResponse(true, "Not found", "Company not found", null, Response::HTTP_NOT_FOUND);
+                if (is_null(Department::find($dept))) return $this->sendResponse(true, "Not found", "Department not found", null, Response::HTTP_NOT_FOUND);
 
                 $result = $csv->parseEmployeeCsv($file, $org, $dept);
 
@@ -75,12 +79,16 @@ class EmployeeController extends Controller
 
                 // validate payload
                 if (!isset($payload["email"]) || !isset($payload["fullname"]) || !isset($payload["username"]) || !isset($payload["department_id"]) || !isset($payload["org_id"])) {
-                    return $this->sendResponse(true, "expected a valid employee 'username,fullname,email'  but got none", "missing employee data.", null, 400);
+                    return $this->sendResponse(true, "expected a valid employee 'username,fullname,email'  but got none", "missing employee data.", null,  Response::HTTP_BAD_REQUEST);
                 }
 
                 if (empty($payload["email"]) || empty($payload["fullname"]) || empty($payload["username"]) || empty($payload["department_id"]) || empty($payload["org_id"])) {
-                    return $this->sendResponse(true, "expected a valid employee 'username,fullname,email'  but got none", "missing employee data values.", null, 400);
+                    return $this->sendResponse(true, "expected a valid employee 'username,fullname,email'  but got none", "missing employee data values.", null,  Response::HTTP_BAD_REQUEST);
                 }
+
+                // check if organization and department exist
+                if (is_null(Company::find($payload["org_id"]))) return $this->sendResponse(true, "Not found", "Company not found", null, Response::HTTP_NOT_FOUND);
+                if (is_null(Department::find($payload["department_id"]))) return $this->sendResponse(true, "Not found", "Department not found", null, Response::HTTP_NOT_FOUND);
 
                 // check if employe exists
                 $empExists = Employee::where(["email" => $payload["email"], "org_id" => $payload["org_id"]]);
@@ -106,7 +114,7 @@ class EmployeeController extends Controller
                 return $this->sendResponse(true, "query parameter not found", "Invalid query parameter", null, Response::HTTP_NOT_FOUND);
             }
         } catch (\Exception $e) {
-            return $this->sendResponse(true, "something went wrong adding employee " . $e->getMessage(), "Employee Action Failed", null, 500);
+            return $this->sendResponse(true, "something went wrong adding employee " , $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -123,10 +131,19 @@ class EmployeeController extends Controller
                         $query->select(DB::raw("SUM(total_questions) as total_points"));
                     }
                 ])->first();
-            if (!$employee) return $this->sendResponse(true, "Employee does not exist", "Employee not found", null, Response::HTTP_NOT_FOUND);
+            if (!$employee) {
+                return $this->sendResponse(
+                    true, 
+                    "Employee does not exist", 
+                    "Employee not found", 
+                    null, 
+                    Response::HTTP_NOT_FOUND
+                );
+            }
+            
             return $this->sendResponse(false, null, "Employee Fetch Successful", $employee, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true, $e->getMessage(), "Employee not found", null, Response::HTTP_NOT_FOUND);
+            return $this->sendResponse(true, "Employee not found", $e->getMessage(),  null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -138,7 +155,7 @@ class EmployeeController extends Controller
             $employee->update($request->validated());
             return $this->sendResponse(false, null, "Employee Update Successful", $employee, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true, $e->getMessage(), "Employee info not modified", null, Response::HTTP_NOT_MODIFIED);
+            return $this->sendResponse(true, "Employee not fetched", $e->getMessage(),  null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -173,24 +190,25 @@ class EmployeeController extends Controller
     public function insertEmployee($data, $empPassword)
     {
         try {
-            $employee = Employee::insert($data);
-
             $fullname = $data["fullname"];
             $username = $data["username"];
             $email = $data["email"];
             $org_id = $data["org_id"];
 
             // fetch organization info
-            $orgData = Company::find($org_id);
-            if (!$orgData->count())  return $this->sendResponse(true, "Not found", "Company not found", null, Response::HTTP_NOT_FOUND);
+            $orgData = Company::find($org_id); 
+            if (is_null($orgData)) return $this->sendResponse(true, "Not found", "Company not found", null, Response::HTTP_NOT_FOUND);
             $org_name = ucfirst($orgData->first()["name"]);
+
+            //insert only when organization exists
+            $employee = Employee::create($data);
 
             // send employee email
             $this->helper->sendOnboardMail($fullname, $username, $empPassword, $email, $org_name);
 
             return $this->sendResponse(false, null, "Employee Added Successfully", $employee, Response::HTTP_CREATED);
         } catch (\Exception $e) {
-            return $this->sendResponse(true, $e->getMessage(), "Employee Action Failed", null, 500);
+            return $this->sendResponse(true, " Employee Action Failed", $e->getMessage(),  null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -211,7 +229,7 @@ class EmployeeController extends Controller
 
             return $this->sendResponse(false, null, 'All Department Employees', $employees, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true, 'Employees not fetched', $e->getMessage());
+            return $this->sendResponse(true, 'Employees not fetched', $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -229,7 +247,7 @@ class EmployeeController extends Controller
                 Response::HTTP_OK
             );
         } catch (\Exception $e) {
-            return $this->sendResponse(true, 'Employees not fetched', $e->getMessage());
+            return $this->sendResponse(true, 'Employees not fetched', $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -252,7 +270,37 @@ class EmployeeController extends Controller
                 Response::HTTP_OK
             );
         } catch (\Exception $e) {
-            return $this->sendResponse(true, 'Employees not fetched', $e->getMessage());
+            return $this->sendResponse(true, 'Employees not fetched', $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Delete an employee
+     * @param string $employeeId
+     *
+     * @return JsonResponse
+     */
+    public function deleteEmployee($employeeId): JsonResponse
+    {
+        try {
+
+            $employee = Employee::find($employeeId);
+
+            if(!$employee){
+                return $this->sendResponse(
+                    true, 
+                    "Employee does not exist", 
+                    "Employee not found", 
+                    null, 
+                    Response::HTTP_NOT_FOUND
+                );
+            }
+
+            $employee->delete();
+
+            return $this->sendResponse(false, null, 'Employee deleted successfully', null, Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, "Could not fetch employee ", $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

@@ -5,7 +5,7 @@ import { Link, useOutletContext } from "react-router-dom";
 import close from "../../../../assets/icons/close.svg";
 import { Title } from "../../../../styles/reusableElements.styled";
 import CreateEmployeeManual from "./CreateEmployeeManual";
-import axios from "../../../../api/axios";
+//import axios from "../../../../api/axios";
 
 const EmployeeCSVUpload = () => {
   const [tab, setTab] = useState("manual");
@@ -13,6 +13,7 @@ const EmployeeCSVUpload = () => {
   const inputRef = useRef();
   const { departments } = useOutletContext();
   const [depts, setDepts] = useState([]);
+
   useEffect(() => {
     setDepts(departments ? departments : []);
   }, [departments]);
@@ -21,7 +22,6 @@ const EmployeeCSVUpload = () => {
   const [selecteddepartment, setSelectedepartment] = useState({});
 
   const handleChange = (e) => {
-    //console.log(e.target.value);
     localStorage.setItem("departmentsID", JSON.stringify(e.target.value));
     setSelectedepartment(e.target.value);
   };
@@ -60,7 +60,7 @@ const EmployeeCSVUpload = () => {
             Department
           </Title>
           <select value={selecteddepartment} onChange={handleChange} required>
-          <option>Select Department</option>
+          <option value="">Select Department</option>
           {depts
             ? depts.map((dept) => (
                 <option key={dept.id} value={dept.id}>
@@ -168,7 +168,7 @@ const CreateTypeContainer = styled.div`
     color: #323130;
 
     @media screen and (max-width: 500px) {
-      font-size: 11px;
+      font-size: 16px;
     }
   }
 `;
@@ -351,8 +351,8 @@ const Selectontainer = styled.div`
     justify-content: center;
     align-items: center;
     
-    @media screen and (max-width: 676px) {
-        padding: 0px 2rem !important;
+    @media screen and (max-width: 669px) {
+        padding: 0px 1.8rem !important;
       }  
 
     h1 {

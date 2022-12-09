@@ -1,5 +1,5 @@
 import React from "react";
-import EmployeeCsvPreview from "./components/EmployeeCsvPreview";
+import EmployeeCsvPreview from "./molecules/EmployeeCsvPreview";
 
 function PreviewCsvUpload() {
   return (
