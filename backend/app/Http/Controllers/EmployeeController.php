@@ -260,16 +260,16 @@ class EmployeeController extends Controller
     {
         try {
             $employees = Employee::where('org_id', $orgId)->with('department')->withCount('assessment')->paginate(10);
-            $totalCount = $employees->total();
+
             return $this->sendResponse(
                 false,
                 null,
-                "$totalCount employees fetched",
+                "All employees",
                 $employees,
                 Response::HTTP_OK
             );
         } catch (\Exception $e) {
-            return $this->sendResponse(true, $e->getMessage(), 'Employees not fetched', null,  Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->sendResponse(true, 'Employees not fetched', $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
