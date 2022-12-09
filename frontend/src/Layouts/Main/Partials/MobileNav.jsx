@@ -16,7 +16,10 @@ const MobileNav = ({ handleMenu }) => {
         <Link to="/">
           <li>Home</li>
         </Link>
-        <li>Pricing</li>
+
+        <Link to="/pricing">
+          <li>Pricing</li>
+        </Link>
         <li>
           Resources
           {/* <img src={arrowDown} alt="" /> */}

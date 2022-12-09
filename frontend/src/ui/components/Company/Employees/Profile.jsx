@@ -3,7 +3,11 @@ import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "../../../../api/axios";
 import { showErrorToast } from "../../../../helpers/helper";
-import { Button, Title, OverlayLoader } from "../../../../styles/reusableElements.styled";
+import {
+  Button,
+  Title,
+  OverlayLoader,
+} from "../../../../styles/reusableElements.styled";
 import { ReactComponent as EmployeeProfilePhoto } from "../../../components/assets/user-photo.svg";
 import { Radar } from "react-chartjs-2";
 
@@ -265,7 +269,7 @@ const EmployeeProfileInnerContainer = styled.div`
   ${({ theme }) => theme.breakpoints.down("touch")} {
     flex-direction: column;
     justify-content: center;
-    gap: ${({theme}) => theme.spacing(6)};
+    gap: ${({ theme }) => theme.spacing(6)};
   }
 `;
 
