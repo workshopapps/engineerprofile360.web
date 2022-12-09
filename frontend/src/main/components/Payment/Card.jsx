@@ -7,8 +7,8 @@ const Card = ({ isOpened }) => {
   return (
     <CardForm height={isOpened && "300px"}>
       <InputContainer>
-        <label htmlFor="name">Card Holder name</label>
-        <div>
+        <label>Card Holder name</label>
+        <div onChange={""}>
           <input id="name" type="text" />
         </div>
       </InputContainer>
@@ -61,16 +61,16 @@ const InputContainer = styled.div`
   }
 
   div {
-    height: 46px;
     width: 80%;
     background: #ffffff;
-    border: 1px solid #8a8886;
+    border: 1px;
     border-radius: 2px;
     display: flex;
     justify-content: center;
     align-items: center;
 
     input {
+      height: 50px;
       width: 100%;
       outline: none;
       padding: 5px 10px;
@@ -110,10 +110,9 @@ const Container = styled.div`
   }
 
   div {
-    height: 46px;
     width: 70%;
     background: #ffffff;
-    border: 1px solid #8a8886;
+    border: 1px;
     border-radius: 2px;
     display: flex;
     justify-content: space-between;

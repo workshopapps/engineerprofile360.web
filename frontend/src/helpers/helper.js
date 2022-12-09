@@ -52,3 +52,25 @@ export const compareTime = (time_1, time_2) => {
     Number(time_2.split(":")[1]) * 60 * 1000;
   return endTimems > startTimems;
 };
+
+export const fileToBase64 = (filename, filepath) => {
+  return new Promise((resolve) => {
+    var file = new File([filename], filepath);
+    var reader = new FileReader();
+    // Read file content on file loaded event
+    reader.onload = function (event) {
+      resolve(event.target.result);
+    };
+
+    // Convert data to base64
+    reader.readAsDataURL(file);
+  });
+};
+
+export const toBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });

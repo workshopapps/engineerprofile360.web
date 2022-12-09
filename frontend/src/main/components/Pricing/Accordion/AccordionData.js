@@ -1,5 +1,5 @@
 export const AccordionData = [
-  { question: "What is Script", answer: "Answer will be  displayed  here" },
+  { question: "What is Eval360", answer: "Answer will be  displayed  here" },
   {
     question: "What is the right plan for my company ?",
     answer: "Answer will be  displayed  here",
@@ -16,7 +16,8 @@ export const AccordionData = [
     answer: "Answer will be  displayed  here",
   },
   {
-    question: "Why should i pick Skript to help me with assessment of skills ?",
+    question:
+      "Why should i pick Eval360 to help me with assessment of skills ?",
 
     answer: "Answer will be  displayed  here",
   },

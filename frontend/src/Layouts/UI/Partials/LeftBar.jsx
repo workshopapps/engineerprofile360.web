@@ -121,14 +121,14 @@ const LeftBar = () => {
           </ListItem>
           <ListItem
             $active={
-              pathname.split("/")[2] === "departments" ||
-              pathname === "/admin/departments"
+              pathname.split("/")[2] === "stacks" ||
+              pathname === "/admin/stacks"
                 ? "active"
                 : ""
             }
           >
-            <Link to="/admin/departments">
-              <Home3 /> Departments
+            <Link to="/admin/stacks">
+              <Home3 /> Stacks
             </Link>
           </ListItem>
           <ListItem
@@ -145,19 +145,24 @@ const LeftBar = () => {
           </ListItem>
           <ListItem
             $active={
-              pathname.split("/")[2] === "assessment" ||
-              pathname === "/admin/assessment"
+              pathname.split("/")[2] === "assessments" ||
+              pathname === "/admin/assessments"
                 ? "active"
                 : ""
             }
           >
-            <Link to="/admin/assessment">
-              <TaskSquare /> Assessment
+            <Link to="/admin/assessments">
+              <TaskSquare /> Assessments
             </Link>
           </ListItem>
           <ListItem
             $active={
+<<<<<<< HEAD
               pathname.split("/")[2] === "users" || pathname === "/admin/users"
+=======
+              pathname.split("/")[2] === "users" ||
+              pathname === "/admin/users"
+>>>>>>> 71ab4694895cc7a03cebfaca00728024e75ef38a
                 ? "active"
                 : ""
             }

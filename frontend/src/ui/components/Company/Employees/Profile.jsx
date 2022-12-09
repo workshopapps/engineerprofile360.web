@@ -1,24 +1,29 @@
-import React, {useState, useEffect} from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import axios from "../../../../api/axios";
 import { showErrorToast } from "../../../../helpers/helper";
-import { Button, Title } from "../../../../styles/reusableElements.styled";
+import {
+  Button,
+  Title,
+  OverlayLoader,
+} from "../../../../styles/reusableElements.styled";
 import { ReactComponent as EmployeeProfilePhoto } from "../../../components/assets/user-photo.svg";
 import { Radar } from "react-chartjs-2";
+import { Edit } from "iconsax-react";
 
 const Profile = () => {
-  const location = useLocation();
-  const [userId, setUserId] = useState(location.state);
+  const { ID } = useParams();
+  const [employeeID, setEmployeeID] = useState(ID);
   const [employee, setEmployee] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
   // Get Employee Details
   useEffect(() => {
-    setUserId(location.state);
+    setEmployeeID(ID);
     const getDetails = async () => {
       try {
-        const response = await axios.get(`employee/${userId}`);
+        const response = await axios.get(`employee/${employeeID}`);
         setEmployee(response?.data.data);
         console.log(response?.data.data);
         setIsLoading(false);
@@ -32,57 +37,126 @@ const Profile = () => {
       }
     };
     getDetails();
-  }, [location.state]);
-
+  }, [ID, employeeID]);
 
   return (
     <>
-      <EmployeeProfileContainer>
-        <EmployeeProfileStatsCard>
-          <EmployeeProfileInfoCard>
-            <EmployeeProfileInfo>
-              <EmployeeProfilePhoto />
-                    <EmployeeProfileDetailsCard
-                      name={employee.fullname}
-                    />
-            </EmployeeProfileInfo>
-            {/* {EmployeeProfileStats
-              ? EmployeeProfileStats.map((item, key) => (
-                  <EmployeeProfileDataCard key={key}>
-                    <Title
-                      as="h5"
-                      $size="40px"
-                      $color="#A19F9D"
-                      $lHeight="40px"
-                      $weight="400"
-                    >
-                      {item.total}
-                    </Title>
-                    <p>{item.category}</p>
-                  </EmployeeProfileDataCard>
-                ))
-              : ""} */}
-          </EmployeeProfileInfoCard>
-        </EmployeeProfileStatsCard>
-        <EmployeeProfileInnerContainer>
-          <EmployeeDataContainer>
-            <Title as="h5" $size="14px" $lHeight="40px" $weight="500">
-              Employee Data
-            </Title>
-            {/* {EmployeeData
-              ? EmployeeData.map((item, key) => (
-                  <EmployeeCard key={key}>
-                    <p style={{ color: "#8E8E8E" }}>{item.title}:</p>
-                    <p style={{ color: "#323130" }}>{item.value}</p>
-                  </EmployeeCard>
-                ))
-              : ""} */}
-          </EmployeeDataContainer>
-          <EmployeeStatsContainer>
-            <Title $size="14px" $lHeight="40px" $weight="500">
-              Employee Stats
-            </Title>
-            {/* {EmployeeStatsData
+      {!isLoading ? (
+        <EmployeeProfileContainer>
+          <EmployeeProfileStatsCard>
+            <EmployeeProfileInfoCard>
+              <EmployeeProfileInfo>
+                <EmployeeProfilePhoto />
+                <EmployeeProfileInfoDetails>
+                  <Title
+                    as="h5"
+                    $size="18px"
+                    $color="#323130"
+                    $lHeight="24px"
+                    $weight="600"
+                  >
+                    {employee.fullname ? employee.fullname : ""}
+                  </Title>
+                  <p>{employee.occupation ? employee.occupation : "NIL"}</p>
+                </EmployeeProfileInfoDetails>
+              </EmployeeProfileInfo>
+
+              <EmployeeProfileDataContainer>
+                <EmployeeProfileDataCard>
+                  <Title
+                    as="h5"
+                    $size="40px"
+                    $color="#323130"
+                    $lHeight="40px"
+                    $weight="400"
+                  >
+                    {employee.completed_assessment_count
+                      ? employee.completed_assessment_count
+                      : "0"}
+                  </Title>
+                  <p>Assessments</p>
+                </EmployeeProfileDataCard>
+
+                <EmployeeProfileDataCard>
+                  <Title
+                    as="h5"
+                    $size="40px"
+                    $color="#323130"
+                    $lHeight="40px"
+                    $weight="400"
+                  >
+                    {employee.points
+                      ? `${(
+                          (employee.points / employee.total_points) *
+                          100
+                        ).toFixed(2)}%`
+                      : "0%"}
+                  </Title>
+                  <p>Performance</p>
+                </EmployeeProfileDataCard>
+              </EmployeeProfileDataContainer>
+            </EmployeeProfileInfoCard>
+          </EmployeeProfileStatsCard>
+          <EmployeeProfileInnerContainer>
+            <EmployeeDataContainer>
+              <Title as="h5" $size="14px" $lHeight="40px" $weight="500">
+                Employee Data <Edit size={24} />
+              </Title>
+
+              <EmployeeCard>
+                <p style={{ color: "#8E8E8E" }}>Name:</p>
+                <p style={{ color: "#323130" }}>
+                  {employee.fullname ? employee.fullname : ""}
+                </p>
+              </EmployeeCard>
+
+              <EmployeeCard>
+                <p style={{ color: "#8E8E8E" }}>Phone Number:</p>
+                <p style={{ color: "#323130" }}>
+                  {employee.phone_number ? employee.phone_number : "NIL"}
+                </p>
+              </EmployeeCard>
+
+              <EmployeeCard>
+                <p style={{ color: "#8E8E8E" }}>Email:</p>
+                <p style={{ color: "#323130" }}>
+                  {employee.email ? employee.email : "NIL"}
+                </p>
+              </EmployeeCard>
+
+              <EmployeeCard>
+                <p style={{ color: "#8E8E8E" }}>Username:</p>
+                <p style={{ color: "#323130" }}>
+                  {employee.username ? employee.username : "NIL"}
+                </p>
+              </EmployeeCard>
+
+              <EmployeeCard>
+                <p style={{ color: "#8E8E8E" }}>Address:</p>
+                <p style={{ color: "#323130" }}>
+                  {employee.address ? employee.address : "NIL"}
+                </p>
+              </EmployeeCard>
+
+              <EmployeeCard>
+                <p style={{ color: "#8E8E8E" }}>Date of Birth:</p>
+                <p style={{ color: "#323130" }}>
+                  {employee.date_of_birth ? employee.date_of_birth : "NIL"}
+                </p>
+              </EmployeeCard>
+
+              <EmployeeCard>
+                <p style={{ color: "#8E8E8E" }}>Occupation:</p>
+                <p style={{ color: "#323130" }}>
+                  {employee.occupation ? employee.occupation : "NIL"}
+                </p>
+              </EmployeeCard>
+            </EmployeeDataContainer>
+            <EmployeeStatsContainer>
+              <Title $size="14px" $lHeight="40px" $weight="500">
+                Employee Stats
+              </Title>
+              {/* {EmployeeStatsData
               ? EmployeeStatsData.map((item, key) => (
                   <EmployeeCard key={key}>
                     <p style={{ color: "#8E8E8E" }}>{item.title}:</p>
@@ -90,47 +164,35 @@ const Profile = () => {
                   </EmployeeCard>
                 ))
               : ""} */}
-            <ButtonContainer>
-              <Link to="">
-                <Button style={{ marginTop: "57px" }}>View Assessment</Button>
-              </Link>
-            </ButtonContainer>
-          </EmployeeStatsContainer>
-          <OverallContainer>
-            <Radar data={data} />
-            <ChartCard>
-              <Title
-                $size="20px"
-                $lHeight="28px"
-                $color="#323130"
-                $weight="400"
-              >
-                Tetra
-              </Title>
-              <p style={{ fontSize: "16px" }}>Software Vendor</p>
-            </ChartCard>
-          </OverallContainer>
-        </EmployeeProfileInnerContainer>
-      </EmployeeProfileContainer>
+              <ButtonContainer>
+                <Link to="">
+                  <Button style={{ marginTop: "57px" }}>View Assessment</Button>
+                </Link>
+              </ButtonContainer>
+            </EmployeeStatsContainer>
+            <OverallContainer>
+              <Radar data={data} />
+              <ChartCard>
+                <Title
+                  $size="20px"
+                  $lHeight="28px"
+                  $color="#323130"
+                  $weight="400"
+                >
+                  Tetra
+                </Title>
+                <p style={{ fontSize: "16px" }}>Software Vendor</p>
+              </ChartCard>
+            </OverallContainer>
+          </EmployeeProfileInnerContainer>
+        </EmployeeProfileContainer>
+      ) : (
+        <OverlayLoader contained>
+          <div></div>
+          <span>Just a moment</span>
+        </OverlayLoader>
+      )}
     </>
-  );
-};
-
-const EmployeeProfileDetailsCard = ({ name, department, level }) => {
-  return (
-    <EmployeeProfileInfoDetails>
-      <Title
-        as="h5"
-        $size="18px"
-        $color="#A19F9D"
-        $lHeight="24px"
-        $weight="600px"
-      >
-        {name}
-      </Title>
-      <p style={{ fontSize: "16px", color: "#201F1E" }}>{department}</p>
-      <p style={{ fontSize: "12px", color: "#A19F9D" }}>{level}</p>
-    </EmployeeProfileInfoDetails>
   );
 };
 
@@ -138,7 +200,7 @@ const data = {
   labels: ["Javascript", "PHP", "Java", "ReactJs", "Nodejs", "WordPress"],
   datasets: [
     {
-      label: "Dataset",
+      label: "Categories",
       data: [65, 59, 90, 81, 56, 55, 40],
       fill: true,
       backgroundColor: "rgba(255, 99, 132, 0.2)",
@@ -151,11 +213,10 @@ const data = {
   ],
 };
 
-
 export default Profile;
 
 const EmployeeProfileContainer = styled.div`
-  padding: 0px 9px;
+  padding: 0px 0px;
   padding-bottom: 100px;
 `;
 
@@ -196,13 +257,14 @@ const EmployeeProfileInfoCard = styled.div`
 
 const EmployeeProfileInfo = styled.div`
   display: flex;
-  gap: 40px;
-  align-items: center;
+  gap: 16px;
+  align-items: flex-start;
 
   ${({ theme }) => theme.breakpoints.down("touch")} {
     flex-direction: column;
     gap: 20px;
     justify-content: center;
+    align-items: center;
   }
 `;
 
@@ -218,6 +280,19 @@ const EmployeeProfileInfoDetails = styled.div`
   }
 `;
 
+const EmployeeProfileDataContainer = styled.div`
+  display: flex;
+  gap: ${({ theme }) => theme.spacing(3)};
+  flex-wrap: wrap;
+
+  ${({ theme }) => theme.breakpoints.down("touch")} {
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
 const EmployeeProfileDataCard = styled.div`
   display: flex;
   flex-direction: column;
@@ -227,6 +302,10 @@ const EmployeeProfileDataCard = styled.div`
   border: 1px solid #8a8886;
   border-radius: 8px;
   padding: 24px 20px;
+
+  p {
+    color: #323130;
+  }
 `;
 
 const EmployeeProfileInnerContainer = styled.div`
@@ -240,12 +319,12 @@ const EmployeeProfileInnerContainer = styled.div`
   ${({ theme }) => theme.breakpoints.down("touch")} {
     flex-direction: column;
     justify-content: center;
-    gap: 10px;
+    gap: ${({ theme }) => theme.spacing(6)};
   }
 `;
 
 const EmployeeDataContainer = styled.div`
-  border: 1px solid #f8fbfd;
+  border: 1px solid #edebe9;
   border-radius: 16px;
   width: 100%;
   display: flex;
@@ -254,6 +333,9 @@ const EmployeeDataContainer = styled.div`
   h5 {
     padding: 0px 10px;
     padding-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 `;
 
@@ -273,7 +355,7 @@ const EmployeeCard = styled.div`
 const EmployeeStatsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  border: 1px solid #c7e0f4;
+  border: 1px solid #edebe9;
   width: 100%;
   border-radius: 16px;
   padding: 24px 20px;
@@ -285,7 +367,7 @@ const EmployeeStatsContainer = styled.div`
 `;
 
 const OverallContainer = styled.div`
-  border: 1px solid #f8fbfd;
+  border: 1px solid #edebe9;
   border-radius: 8px;
   width: 100%;
 

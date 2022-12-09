@@ -38,7 +38,7 @@ const BioMedicalSteps = () => {
         $color="#323130"
         $lHeight="50px"
       >
-        How Skript works in 4 Steps
+        How Eval360 works in 4 Steps
       </BioMedicalTitle>
       <BioMedicalStepsCardContainer>
         {Steps

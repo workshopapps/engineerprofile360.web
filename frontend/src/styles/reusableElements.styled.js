@@ -83,7 +83,7 @@ export const Button = styled.button`
     }
   }}
 
-  font-weight: ${({ $weight }) => ($weight ? $weight : null)}
+  font-weight: ${({ $weight }) => ($weight ? $weight : null)};
   color: ${({ $color }) => ($color ? $color : null)};
 `;
 
@@ -108,7 +108,7 @@ export const Loader = styled.div`
 
 export const OverlayLoader = styled.div`
   width: 100%;
-  height: ${(props) => (props.contained ? "calc(100vh - 96px)" : "100vh")};
+  height: ${(props) => (props.contained ? "calc(100vh - 180px)" : "100vh")};
   background: rgb(255, 255, 255);
   position: ${(props) => (props.contained ? "initial" : "fixed")};
   top: ${(props) => (props.contained ? "initial" : "0")};

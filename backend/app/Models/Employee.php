@@ -17,10 +17,11 @@ class Employee extends Model
      */
     protected $fillable = [
         'email', 'fullname', 'username', 'hash', 'image',
+        'address', 'phone_number',
         'occupation', 'reftoken', 'role', 'org_id'
     ];
 
-    protected $hidden = ['hash', 'reftoken'];
+    protected $hidden = ['hash', 'reftoken', "raw_password"];
 
     public function assessment()
     {

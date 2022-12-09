@@ -9,7 +9,7 @@ const HelpSearch = () => {
     <Hero>
       <TextContainer>
         <Title $color="#323130" $size="42px" $weight="400" $lHeight="52px">
-          Skript Help Center
+          Eval360 Help Center
         </Title>
         <Input>
           <img src={search} alt="search icon" />

@@ -40,7 +40,7 @@ const Stats = ({ stats, topPerformance }) => {
               <Number>{stats.employees}</Number>
             </Stat>
           </Link>
-          <Link to="/assessments">
+          <Link to="/assessment">
             <Stat>
               <Note color="#141ae9" />
               <Type>
@@ -50,7 +50,7 @@ const Stats = ({ stats, topPerformance }) => {
               <Number>{stats.assessments}</Number>
             </Stat>
           </Link>
-          <Link to="/assessments">
+          <Link to="/assessment/assessment-list">
             <Stat>
               <TickCircle color="#141ae9" />
               <Type>
@@ -60,7 +60,7 @@ const Stats = ({ stats, topPerformance }) => {
               <Number>{stats.availableAssessments}</Number>
             </Stat>
           </Link>
-          <Link to="/assessments">
+          <Link to="/assessment/assessment-list/completed">
             <Stat>
               <TaskSquare color="#141ae9" />
               <Type>
@@ -77,7 +77,7 @@ const Stats = ({ stats, topPerformance }) => {
   );
 };
 
-const Chart = ({ topPerformance }) => {
+export const Chart = ({ topPerformance }) => {
   const data = {
     labels: topPerformance?.categories
       ? JSON.parse(topPerformance?.categories)
@@ -209,7 +209,7 @@ const PerformancesChart = styled.div`
   background: #f8fbfd;
   width: 100%;
   height: 90%;
-  padding: ${({theme}) => theme.spacing(2)};
+  padding: ${({ theme }) => theme.spacing(2)};
   display: flex;
   align-items: center;
   justify-content: center;

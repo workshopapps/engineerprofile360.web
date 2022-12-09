@@ -11,14 +11,17 @@ const NavBar = () => {
         <Link to="/">
           <li>Home</li>
         </Link>
-        <li>Pricing</li>
+        <Link to="/pricing">
+          <li>Pricing</li>
+        </Link>
         <li>
           Resources
-          <img src={arrowDown} alt="" />
+          {/* <img src={arrowDown} alt="" /> */}
         </li>
         <Link to="/about-us">
           <li>
-            About <img src={arrowDown} alt="" />
+            About
+            {/* <img src={arrowDown} alt="" /> */}
           </li>
         </Link>
       </List>

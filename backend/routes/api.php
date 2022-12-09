@@ -41,7 +41,7 @@ Route::get("/test", function (Helper $helper) {
     return view("emails.signup");
 });
 
-//USERSCORE
+//USERSCORE 
 Route::prefix("userscore")->group(function () {
     Route::get('/employee/{id}', [UserScoreController::class, 'getScoresByEmployeeID'])->middleware("isloggedin");
     Route::get('/assessment/{id}', [UserScoreController::class, 'getScoresByAssessmentID'])->middleware("isloggedin", "isadmin");
@@ -65,8 +65,12 @@ Route::prefix("user")->group(function () {
     Route::put('verify-user/{userId}', [UserController::class, 'getVerifyUserById']);
 });
 
+//Admin operation routes
 Route::prefix("admin")->group(function () {
     Route::get('overview', [AdminController::class, 'getAdminOverview'])->middleware("isloggedin", "isadmin");
+    Route::get('users', [AdminController::class, 'getAllUsers'])->middleware("isloggedin", "isadmin");
+    Route::delete('/{companyId}/delete', [AdminController::class, 'deleteUserCompany']);
+
 
 });
 
@@ -108,7 +112,7 @@ Route::prefix("assessment/admin")->group(function () {
 Route::post("/test_csv", function (Request $req) {
     $csv = new CsvParser();
     $payload = json_decode($req->getContent(), true);
-    return $csv->parseEmployeeCsv($payload, '');
+    return $csv->parseEmployeeCsv($payload, '', '');
 });
 
 // authentication route
@@ -150,7 +154,9 @@ Route::prefix("company")->group(function () {
 
 // questions route operations
 Route::prefix("question")->group(function () {
+    Route::post('upload', [QuestionsController::class, 'uploadCsv'])->middleware("isloggedin", "isadmin");
     Route::post('add', [QuestionsController::class, 'addManually'])->middleware("isloggedin", "isadmin");
+    Route::post('add_csv', [QuestionsController::class, 'addCSV'])->middleware("isloggedin", "isadmin");
     Route::get('{id}', [QuestionsController::class, 'getQuestById']);
     Route::get('company/{id}', [QuestionsController::class, 'getQuestByComId']);
     Route::get('category/{id}', [QuestionsController::class, 'getQuestByCatId']);
@@ -177,6 +183,8 @@ Route::prefix('employee')->group(function () {
     Route::get('company/{orgId}', [EmployeeController::class, 'getEmployeesByCompanyId']);
     Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
     Route::get('department/{departmentId}', [EmployeeController::class, 'getEmplyeesByDepartment']);
+    Route::delete('{employeeId}/delete', [EmployeeController::class, 'deleteEmployee']);
+
 });
 Route::get('employees', [EmployeeController::class, 'getAllEmployees'])->middleware("isloggedin", "isadmin");
 
