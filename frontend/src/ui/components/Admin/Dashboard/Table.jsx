@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
+
 function Table() {
   return (
     <div>
@@ -9,7 +10,7 @@ function Table() {
         <Button>View All</Button>  
       </Heading>   
         
-
+       
         <Tablecontent>
 
           <Thead>
@@ -28,8 +29,8 @@ function Table() {
             <Td>Eval360</Td>
             <Td>21/12/2022</Td>
           </Tr>
-        </Tablecontent>
-
+        </Tablecontent> 
+          
       </Containerdiv>
     
     </div>
@@ -68,51 +69,51 @@ const Button = styled.h5`
   color: #1E1E1E;
 `
 
-const Tablecontent = styled.table`
-  margin-top:20px;  
-  width: 100%;
-  border-collapse: collapse; 
-  overflow-x:hidden;
-`
+// const Tablecontent = styled.table`
+//   margin-top:20px;  
+//   width: 100%;
+//   border-collapse: collapse; 
+//   overflow-x:hidden;
+// `
 
 
-const Thead = styled.tr `
-  height: 37px;
-  background: #F8FBFD;
-  border-radius: 4px;
-`
+// const Thead = styled.tr `
+//   height: 37px;
+//   background: #F8FBFD;
+//   border-radius: 4px;
+// `
 
-const Tr = styled.tr`
-  margin-top:18px;
-`
+// const Tr = styled.tr`
+//   margin-top:18px;
+// `
 
-const Td = styled.td`
-  text-align: center;
-  place-items: center;
-  justify-content:center;
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 22px;
-  color: #605E5C;
-  margin-top:8px;
-`
+// const Td = styled.td`
+//   text-align: center;
+//   place-items: center;
+//   justify-content:center;
+//   font-family: 'Inter';
+//   font-style: normal;
+//   font-weight: 400;
+//   font-size: 16px;
+//   line-height: 22px;
+//   color: #605E5C;
+//   margin-top:8px;
+// `
 
-const Tdd = styled.td`
-  text-align: center;
-  place-items: center;
-  justify-content:center;
-  display:flex;
-  gap:10px;
-  margin-top:8px;
-`
+// const Tdd = styled.td`
+//   text-align: center;
+//   place-items: center;
+//   justify-content:center;
+//   display:flex;
+//   gap:10px;
+//   margin-top:8px;
+// `
 
-const Span = styled.span`
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 24px;
-  color: #605E5C;
-`
+// const Span = styled.span`
+//   font-family: 'Inter';
+//   font-style: normal;
+//   font-weight: 600;
+//   font-size: 18px;
+//   line-height: 24px;
+//   color: #605E5C;
+// `
