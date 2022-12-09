@@ -22,19 +22,13 @@ const AdminCSVUpload = () => {
     e.preventDefault();
     console.log(e);
     setFiles(e.dataTransfer.files);
-
-    Array.from(e.dataTransfer.files).map(async (file) => {
-      let text = await file.text();
-      console.log(text);
-    });
   };
 
   const handleConvertion = async () => {
     // const file = document.querySelector("#myfile").files[0];
-    // const file = files?.[0];
+    const file = files?.[0];
     try {
-      console.log(files);
-      const result = await toBase64(files);
+      const result = await toBase64(file);
       return result;
     } catch (error) {
       console.error(error);
@@ -42,10 +36,12 @@ const AdminCSVUpload = () => {
     }
   };
 
-  // files &&
-  //   handleConvertion().then((result) => {
-  //     console.log(result);
-  //   });
+  files &&
+    handleConvertion().then((result) => {
+      console.log(result);
+    });
+
+  console.log(files);
 
   return (
     <>
@@ -321,7 +317,9 @@ const Buttons = styled.div`
   }
 `;
 
-const NameContainer = styled.div``;
+const NameContainer = styled.div`
+  width: 30%;
+`;
 
 const Success = styled.div`
   padding: 10px 15px;
@@ -329,7 +327,7 @@ const Success = styled.div`
   border-radius: 15px;
   display: flex;
   align-items: center;
-  justify-items: center;
+  justify-content: space-between;
   gap: 15px;
   border: 1px solid ${({ theme }) => theme.palette.main.tertiary.tertiary};
 
@@ -352,7 +350,7 @@ const Error = styled.div`
   border-radius: 15px;
   display: flex;
   align-items: center;
-  justify-items: center;
+  justify-content: space-between;
   gap: 15px;
   border: 1px solid ${({ theme }) => theme.palette.status.error.color};
 
@@ -388,6 +386,7 @@ const CancelButton = styled.div`
   width: 50%;
   height: 100%;
   border-radius: 3px;
+  /* padding: 0 5px; */
   cursor: pointer;
 
   a {
@@ -404,5 +403,6 @@ const GoButton = styled.div`
   width: 50%;
   height: 100%;
   border-radius: 3px;
+  /* padding: 0 5px; */
   cursor: pointer;
 `;
