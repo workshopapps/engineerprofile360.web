@@ -56,6 +56,10 @@ class EmployeeController extends Controller
                     return $this->sendResponse(true, "expected a valid employee 'org_id, dept_id, file'  but got none", "missing employee data.", null,  Response::HTTP_BAD_REQUEST);
                 }
 
+                // check if organization and department exist
+                if (is_null(Company::find($org))) return $this->sendResponse(true, "Not found", "Company not found", null, Response::HTTP_NOT_FOUND);
+                if (is_null(Department::find($dept))) return $this->sendResponse(true, "Not found", "Department not found", null, Response::HTTP_NOT_FOUND);
+
                 $result = $csv->parseEmployeeCsv($file, $org, $dept);
 
                 foreach ($result['data'] as $key => $item) {
@@ -81,6 +85,10 @@ class EmployeeController extends Controller
                 if (empty($payload["email"]) || empty($payload["fullname"]) || empty($payload["username"]) || empty($payload["department_id"]) || empty($payload["org_id"])) {
                     return $this->sendResponse(true, "expected a valid employee 'username,fullname,email'  but got none", "missing employee data values.", null,  Response::HTTP_BAD_REQUEST);
                 }
+
+                // check if organization and department exist
+                if (is_null(Company::find($payload["org_id"]))) return $this->sendResponse(true, "Not found", "Company not found", null, Response::HTTP_NOT_FOUND);
+                if (is_null(Department::find($payload["department_id"]))) return $this->sendResponse(true, "Not found", "Department not found", null, Response::HTTP_NOT_FOUND);
 
                 // check if employe exists
                 $empExists = Employee::where(["email" => $payload["email"], "org_id" => $payload["org_id"]]);
