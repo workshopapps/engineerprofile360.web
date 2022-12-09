@@ -51,13 +51,16 @@ const AdminCSVUpload = () => {
 
   const handleUpload = async () => {
     try {
-      const response = axios.post(
+      const response = await axios.post(
         "question/add_csv",
         JSON.stringify({ encodedFile })
       );
+      console.log(response.data);
     } catch (err) {
       if (!err.response) {
         showErrorToast("No Server Response");
+      } else {
+        showErrorToast(err.response?.data.message);
       }
     }
   };
