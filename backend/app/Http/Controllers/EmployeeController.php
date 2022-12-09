@@ -161,23 +161,24 @@ class EmployeeController extends Controller
     public function insertEmployee($data, $empPassword)
     {
         try {
-            $employee = Employee::insert($data);
-
             $fullname = $data["fullname"];
             $username = $data["username"];
             $email = $data["email"];
             $org_id = $data["org_id"];
 
             // fetch organization info
-            $orgData = Company::find($org_id);
-            if (!$orgData->count())  return $this->sendResponse(true, "Not found", "Company not found", null, Response::HTTP_NOT_FOUND);
+            $orgData = Company::find($org_id); 
+            if (is_null($orgData)) return $this->sendResponse(true, "Not found", "Company not found", null, Response::HTTP_NOT_FOUND);
             $org_name = ucfirst($orgData->first()["name"]);
+
+            //insert only when organization exists
+            $employee = Employee::create($data);
 
             // send employee email
             $this->helper->sendOnboardMail($fullname, $username, $empPassword, $email, $org_name);
 
             return $this->sendResponse(false, null, "Employee Added Successfully", $employee, Response::HTTP_CREATED);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->sendResponse(true, $e->getMessage(), "Employee Action Failed", null, 500);
         }
     }
@@ -207,17 +208,17 @@ class EmployeeController extends Controller
     public function getAllEmployees()
     {
         try {
-            $companies = Employee::paginate(10);
-
+            $allEmployees = Employee::paginate(10);
+            $totalCount = $allEmployees->total();
             return $this->sendResponse(
                 false,
                 null,
-                'All employees',
-                $companies,
+                "All employees (count: $totalCount)",
+                $allEmployees,
                 Response::HTTP_OK
             );
         } catch (\Exception $e) {
-            return $this->sendResponse(true, 'Employees not fetched', $e->getMessage());
+            return $this->sendResponse(true, "Employees not fetched", $e->getMessage());
         }
     }
 
@@ -231,11 +232,11 @@ class EmployeeController extends Controller
     {
         try {
             $employees = Employee::where('org_id', $orgId)->with('department')->withCount('assessment')->paginate(10);
-
+            $totalCount = $employees->total();
             return $this->sendResponse(
                 false,
                 null,
-                'All employees',
+                "$totalCount employees fetched",
                 $employees,
                 Response::HTTP_OK
             );

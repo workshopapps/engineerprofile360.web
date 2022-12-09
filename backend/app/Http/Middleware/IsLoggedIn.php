@@ -34,7 +34,7 @@ class IsLoggedIn extends Controller
                 return $this->sendResponse(true,"Authorization header missing", "Unauthorised",null, 401);
             }
 
-            $token = explode(" ", $header)[1];
+            $token = explode(" ", $header)[0];
 
             if(!isset($token) || empty($token)){
                 return $this->sendResponse(true,"invalid token, missing JWT token", "Unauthorised",null, 401);
