@@ -17,7 +17,7 @@ import { showErrorToast } from "../../../../helpers/helper";
 
 import eyeSvg from "../../../../assets/icons/eye.svg";
 
-const AdminSetPassword = () => {
+const SetPassword = () => {
   const [showPassword, setShowPassword] = useState(true);
   const [isSubmitted, setIsSubmitted] = useState(null);
   const [passwordError, setPasswordError] = useState("");
@@ -224,7 +224,7 @@ const AdminSetPassword = () => {
   );
 };
 
-export default AdminSetPassword;
+export default SetPassword;
 
 const FormContainer = styled(Container)`
   width: 100%;

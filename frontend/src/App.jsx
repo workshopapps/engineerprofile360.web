@@ -12,8 +12,7 @@ import { ThemeProvider } from "styled-components";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GlobalStyles, theme } from "./styles/globalStyles";
-import { MainLayout, UiLayout } from "./Layouts";
-import AdminAuthLayout from "./Layouts/UI/AuthLayout";
+import { MainLayout, UiLayout, AuthLayout } from "./Layouts";
 
 //DEFAULT EXPORTS FROM MAIN
 import {
@@ -33,15 +32,22 @@ import {
   Terms,
 } from "./main/pages";
 
-import AdminSignup from "./ui/pages/Company/Auth/AdminSignup";
-import AdminLogin from "./ui/pages/Company/Auth/AdminLogin";
-import AdminSetPassword from "./ui/pages/Company/Auth/AdminSetPassword";
-import AdminResetPassword from "./ui/pages/Company/Auth/AdminResetPassword";
-import AdminPasswordSuccess from "./ui/pages/Company/Auth/AdminPasswordSuccess";
-import AdminVerifyEmail from "./ui/pages/Company/Auth/AdminVerifyEmail";
-import AdminEmailVerified from "./ui/pages/Company/Auth/AdminEmailVerified";
+import {
+  CompanyLogin,
+  CompanySignup,
+  CompanyEmailVerified,
+  CompanyPasswordSuccess,
+  CompanySetPassword,
+  CompanyResetPassword,
+  CompanyVerifyEmail,
+} from "./ui/pages/Company/";
 
 import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
+
+import { EmployeeLogin } from "./ui/pages/Employee";
+
+import { AdminLogin } from "./ui/pages/Admin";
+
 
 import UserSupport from "./main/pages/UserSupport";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
@@ -92,6 +98,7 @@ import EmployeeAssessmentList from "./ui/pages/Employee/EmployeeAssessmentList";
 import AdminAssessmmentListOutlet from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmmentListOutlet";
 import AdminAssessmentListAvailable from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmentListAvailable";
 import AssessmentList from "./ui/components/Company/Assessments/adminAssesmentList/AssessmentList";
+
 
 // This is for DevOps App Monitoring - START
 atatus.config("4010279ebbd747e7a752082eea130df6").install();
@@ -173,21 +180,34 @@ const App = () => {
               /> */}
           </Route>
 
-          <Route element={<AdminAuthLayout />}>
-            <Route path="/register" element={<AdminSignup />} />
-            <Route path="/login" element={<AdminLogin />} />
-            <Route path="/reset-password" element={<AdminResetPassword />} />
-            <Route
-              path="/reset-password-success"
-              element={<AdminPasswordSuccess />}
-            />
-            <Route path="/password/reset" element={<AdminSetPassword />} />
-            <Route path="/verify-email" element={<AdminVerifyEmail />} />
+          {/* Authentication Layout */}
+          <Route element={<AuthLayout />}>
+            {/* Company Auth Routes */}
+
+            <Route path="/register" element={<CompanySignup />} />
+            <Route path="/login" element={<CompanyLogin />} />
+            <Route path="/verify-email" element={<CompanyVerifyEmail />} />
             <Route
               path={"/auth/verify/:user_id/:token"}
-              element={<AdminEmailVerified />}
+              element={<CompanyEmailVerified />}
             />
+            <Route path="/reset-password" element={<CompanyResetPassword />} />
+            <Route path="/password/reset" element={<CompanySetPassword />} />
+            <Route
+              path="/reset-password-success"
+              element={<CompanyPasswordSuccess />}
+            />
+
+            {/* Employee Auth Routes */}
+
+            <Route path="/employee/login" element={<EmployeeLogin />} />
+
+            {/* Admin Auth Routes */}
+
+            <Route path="/admin/login" element={<AdminLogin />} />
+
             {/* <Route path="/guest-login" element={<GuestLogin />} /> */}
+            
           </Route>
 
           {/* Private Route */}
@@ -285,6 +305,12 @@ const App = () => {
                   element={"Admin pages will render here"}
                 />
               </Route>
+
+              <Route element={<RequireAuth allowedRole={ROLES.Employees} />}>
+                {/* Put in Protected pages in here */}
+                <Route path="/employee/dashboard" element={"boss"} />
+              </Route>
+
               <Route path="/setting" element={<AdminSetting />} />
               <Route path="/404" element={<Error />} />
 

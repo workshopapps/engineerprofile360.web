@@ -25,10 +25,16 @@ const Table = styled.table`
   border-spacing: 0;
   overflow: auto;
   white-space: initial;
+  position: relative;
+
+  tr {
+    position: relative;
+  }
 
   th,
   td {
-    padding: ${({ theme }) => theme.spacing(2)} ${({ theme }) => theme.spacing(1.5)};
+    padding: ${({ theme }) => theme.spacing(3)} ${({ theme }) => theme.spacing(1.5)};
+    position: relative;
   }
 
   tr:first-of-type {
@@ -56,9 +62,12 @@ const Table = styled.table`
   td:last-of-type {
     display: flex;
     align-items: center;
+    position: relative;
     gap: ${({theme}) => theme.spacing(2)};
     svg {
       transform: rotate(90deg);
+      position: relative;
+      cursor: pointer;
     }
   }
 `;

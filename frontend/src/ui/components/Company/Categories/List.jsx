@@ -13,7 +13,10 @@ import { showSuccessToast } from "../../../../helpers/helper";
 import { More, AddCircle } from "iconsax-react";
 import NoData from "../../molecules/NoData";
 import TableComponent from "../../molecules/TableComponent";
-import { Button, Loader } from "../../../../styles/reusableElements.styled";
+import {
+  Button,
+  OverlayLoader,
+} from "../../../../styles/reusableElements.styled";
 import EditCategory from "./EditCategory";
 
 const List = () => {
@@ -27,7 +30,7 @@ const List = () => {
   const [categories, setCategories] = useState([]);
   const [updateCategories, setUpdateCategories] = useState(false);
   const [showMore, setShowMore] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [value, setValue] = useState({
     categoryId: [],
   });
@@ -45,6 +48,7 @@ const List = () => {
     };
 
     getAllCatgories();
+    setIsLoading(false);
   }, [updateCategories]);
 
   const toggleOpen = (id) => {
@@ -145,7 +149,7 @@ const List = () => {
     <OverallContainer>
       <ButtonCategory>
         <AddCategoryBtn onClick={() => setToggleCreateCat(true)}>
-          Add New Category
+          <AddCircle color="#FFFFFF" /> Add New Category
         </AddCategoryBtn>
         {value.categoryId.length > 1 && (
           <DeleteCategoryBtn onClick={onBulkDeleteClick}>
@@ -153,61 +157,65 @@ const List = () => {
           </DeleteCategoryBtn>
         )}
       </ButtonCategory>
-
       <CategoryListing>
         {categories.data?.length > 0 ? (
-          <TableComponent>
-            <tr>
-              <th>#</th>
-              <th>Category</th>
-              <th>Number of Questions</th>
-              <th></th>
-            </tr>
-
-            {categories.data?.map((category, id) => (
+          <>
+            <TableComponent>
               <tr>
-                <td>{`${id + 1}.`}</td>
-                <td>{category.name}</td>
-                <td>0</td>
-                <td>
-                  <input
-                    type="checkbox"
-                    name={category.name}
-                    value={category.id}
-                    onChange={handleChange}
-                  />
-                  <More onClick={() => toggleOpen(id)} />
-                </td>
-                {showMore[id] && (
-                  <div>
-                    <p
-                      onClick={() =>
-                        onEditClick(category.name, category.id, id)
-                      }
-                    >
-                      Edit
-                    </p>
-                    <p
-                      onClick={() =>
-                        onDeleteClick(category.name, category.id, id)
-                      }
-                    >
-                      Delete
-                    </p>
-                  </div>
-                )}
+                <th>#</th>
+                <th>Category</th>
+                <th>Number of Questions</th>
+                <th></th>
               </tr>
-            ))}
-          </TableComponent>
+
+              {categories.data?.map((category, id) => (
+                <tr>
+                  <td>{`${id + 1}.`}</td>
+                  <td>{category.name}</td>
+                  <td>0</td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      name={category.name}
+                      value={category.id}
+                      onChange={handleChange}
+                    />
+                    <More onClick={() => toggleOpen(id)} />
+                  </td>
+                  {showMore[id] && (
+                    <Popup>
+                      <p
+                        onClick={() =>
+                          onEditClick(category.name, category.id, id)
+                        }
+                      >
+                        Edit
+                      </p>
+                      <p
+                        onClick={() =>
+                          onDeleteClick(category.name, category.id, id)
+                        }
+                      >
+                        Delete
+                      </p>
+                    </Popup>
+                  )}
+                </tr>
+              ))}
+            </TableComponent>
+          </>
         ) : (
           <>
-            <Load>{isLoading && <Loader />}</Load>
-            {!isLoading && (
+            {isLoading === false && categories.data?.length > 0 ? (
               <NoData text="Oops! No data here yet">
                 <Button $weight="400" onClick={() => setToggleCreateCat(true)}>
                   <AddCircle color="#FFFFFF" /> Add Category
                 </Button>
               </NoData>
+            ) : (
+              <OverlayLoader contained>
+                <div></div>
+              </OverlayLoader>
             )}
           </>
         )}
@@ -266,7 +274,7 @@ export default List;
 
 const OverallContainer = styled.div`
   position: relative;
-  height: 75vh;
+  // height: 75vh;
 `;
 
 const ButtonCategory = styled.div`
@@ -306,108 +314,35 @@ const DeleteCategoryBtn = styled(Button)`
 `;
 
 export const CategoryListing = styled.div`
-  width: 100%;
-  overflow: auto;
-
-  table {
-    width: 100%;
-    min-width: 960px;
-    text-align: left;
-    overflow: auto;
-    white-space: initial;
-    position: relative;
-
-    @media (max-width: 517px) {
-      th:nth-child(2) {
-        padding-right: 50px;
-      }
-
-      th:nth-child(3) {
-        padding-right: 20px;
-      }
-    }
-
-    tr:first-of-type {
-      width: 100%;
-      background: #f8fbfd;
-
-      th:first-of-type {
-        padding-right: 24px;
-      }
-
-      th:nth-child(2) {
-        padding-right: 200px;
-      }
-
-      th:nth-child(3) {
-        padding-right: 100px;
-      }
-
-      th {
-        font-size: 16px;
-        font-weight: 600;
-        color: #605e5c;
-      }
-    }
-
-    td {
-      color: #605e5c;
-      font-size: 16px;
-      font-weight: 600;
-    }
-
-    tr {
-      height: 74px;
-      td:last-of-type {
-        display: flex;
-        gap: ${({ theme }) => theme.spacing(4)};
-        justify-content: space-between;
-        align-items: center;
-        justify-content: center;
-        padding-top: 22px;
-
-        svg {
-          transform: rotate(90deg);
-          position: relative;
-          cursor: pointer;
-        }
-      }
-
-      div {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        padding: 8px;
-        gap: 16px;
-        position: absolute;
-        width: 120px;
-        height: 70px;
-        background-color: #ffffff;
-        z-index: 1;
-        border: 0.5px solid #8a8886;
-
-        border-radius: 4px;
-        top: 0;
-        right: 40px;
-        p {
-          font-weight: 400;
-          font-size: 16px;
-          line-height: 19px;
-          color: #323130;
-          cursor: pointer;
-
-          :last-child {
-            color: #b71f1f;
-          }
-        }
-      }
-    }
-  }
+  
 `;
 
-const Load = styled.div`
+const Popup = styled.span`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 50px auto;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 120px;
+  height: 70px;
+  background-color: #ffffff;
+  z-index: 1;
+  position: absolute;
+  padding: 8px;
+  gap: 16px;
+  border: 1px solid #8a8886;
+
+  top: 0px;
+  right: 150px;
+  border-radius: 4px;
+  p {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #323130;
+    cursor: pointer;
+
+    :last-child {
+      color: #b71f1f;
+    }
+  }
+
 `;

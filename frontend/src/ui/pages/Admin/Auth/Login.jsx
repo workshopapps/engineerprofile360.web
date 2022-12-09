@@ -17,12 +17,13 @@ import useInputValidation from "../../../../hooks/useInputValidation";
 import useAuth from "../../../../hooks/useAuth";
 import axios from "../../../../api/axios";
 
-import { Eye, Sms } from "iconsax-react";
+import eyeSvg from "../../../../assets/icons/eye.svg";
+import smsSvg from "../../../../assets/icons/smsenvelope.svg";
 
 const Login = () => {
   const { setAuth, persist, setPersist } = useAuth();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/employee/dashboard";
+  const from = location.state?.from?.pathname || "/admin/dashboard";
 
   const [isSubmitted, setIsSubmitted] = useState("");
   const [showPassword, setShowPassword] = useState(true);
@@ -79,7 +80,7 @@ const Login = () => {
 
         const { email, password } = formData;
         const response = await axios.post(
-          "auth/employee/login",
+          "auth/eval360/admin/login",
           JSON.stringify({ email, password })
         );
 
@@ -91,7 +92,7 @@ const Login = () => {
         console.log(response);
 
           setAuth({ email, accessToken, username, roles, id });
-          // persist &&
+
           localStorage.setItem(
             "Eval360",
             JSON.stringify({
@@ -103,6 +104,7 @@ const Login = () => {
             })
           );
 
+
         console.log(response.data);
         if (response.data.errorState === false) {
           // Clear input fields
@@ -110,10 +112,9 @@ const Login = () => {
             email: "",
             password: "",
           });
-  
-          window.location.href = from;
 
-        } else if (response.data.errorState === true) {
+            window.location.href = from;
+       } else if (response.data.errorState === true) {
           showErrorToast(response.data.message);
         }
       }
@@ -134,8 +135,8 @@ const Login = () => {
       <FormContainer>
         <ToastContainer />
         <AuthTitle
-          title="Welcome back"
-          text="Pick up where you left from"
+          title="Eval360 Admin"
+          text="Please enter your login details"
         />
         <LoginForm onSubmit={(e) => handleSubmit(e, formData)}>
           <InputField
@@ -143,12 +144,12 @@ const Login = () => {
             type="email"
             label="Email Address"
             id="email"
-            placeholder="janedoe@gmail.com"
+            placeholder="admin@eval360.com"
             value={email}
             handleChange={(e) => changeInputValue(e)}
             handleBlur={onBlur}
             error={errors && touched.email && errors.email?.length > 0}
-            endIcon={<Sms />}
+            endIcon={<img src={smsSvg} alt="" />}
             helperText={
               errors && errors.email && touched.email ? errors.email : ""
             }
@@ -164,8 +165,10 @@ const Login = () => {
             error={errors && touched.password && errors.password?.length > 0}
             handleBlur={onBlur}
             endIcon={
-              <Eye
+              <img
                 onClick={() => setShowPassword((prevState) => !prevState)}
+                src={eyeSvg}
+                alt=""
                 style={{ cursor: "pointer" }}
               />
             }
@@ -186,7 +189,7 @@ const Login = () => {
               <span>Remember me</span>
             </label>
 
-            <Link to="/employee/reset-password">Forgot password?</Link>
+            <Link to="/admin/reset-password">Forgot password?</Link>
           </Checkbox>
 
           <Button
@@ -196,7 +199,6 @@ const Login = () => {
           >
             {isSubmitted ? <Loader /> : "Sign In"}
           </Button>
-
         </LoginForm>
       </FormContainer>
     </>

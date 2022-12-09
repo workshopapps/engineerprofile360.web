@@ -11,7 +11,7 @@ import { showErrorToast } from "../../../../helpers/helper";
 import { TruckRemove } from "iconsax-react";
 import { BsFileEasel } from "react-icons/bs";
 
-const AdminEmailVerified = () => {
+const EmailVerified = () => {
   const [isError, setIsError] = useState(false);
   const { user_id, token } = useParams();
 
@@ -70,7 +70,7 @@ const AdminEmailVerified = () => {
   );
 };
 
-export default AdminEmailVerified;
+export default EmailVerified;
 
 const ResponseContainer = styled(Container)`
   width: 100%;

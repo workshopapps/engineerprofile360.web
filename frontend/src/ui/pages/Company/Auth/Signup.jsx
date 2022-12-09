@@ -18,7 +18,7 @@ import eyeSvg from "../../../../assets/icons/eye.svg";
 import smsSvg from "../../../../assets/icons/smsenvelope.svg";
 import editSvg from "../../../../assets/icons/edit-2.svg";
 
-const AdminSignup = () => {
+const Signup = () => {
   const [isSubmitted, setIsSubmitted] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [fetchError, setFetchError] = useState();
@@ -254,7 +254,7 @@ const AdminSignup = () => {
   );
 };
 
-export default AdminSignup;
+export default Signup;
 
 const FormContainer = styled(Container)`
   width: 100%;
