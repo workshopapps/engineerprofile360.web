@@ -100,4 +100,50 @@ class AdminController extends Controller
             return $this->sendResponse(true, "Could not fetch company ", $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     * Fetch all employees for admin.
+     *
+     *
+     * @return JsonResponse
+     */
+    public function getAllEmployees()
+    {
+        try {
+            $employees = Employee::paginate(10);
+
+            return $this->sendResponse(
+                false,
+                null,
+                'All employees',
+                $employees,
+                Response::HTTP_OK
+            );
+        } catch (\Exception $e) {
+            return $this->sendResponse(true, 'Employees not fetched', $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Fetch all companies for admin.
+     *
+     *
+     * @return JsonResponse
+     */
+    public function getAllCompanies()
+    {
+        try {
+            $companies = Company::paginate(10);
+
+            return $this->sendResponse(
+                false,
+                null,
+                'All employees',
+                $companies,
+                Response::HTTP_OK
+            );
+        } catch (\Exception $e) {
+            return $this->sendResponse(true, 'Employees not fetched', $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }
