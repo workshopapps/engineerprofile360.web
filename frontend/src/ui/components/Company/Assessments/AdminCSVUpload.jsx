@@ -2,15 +2,21 @@ import styled from "styled-components";
 import { BsCloudUpload, BsPlusCircle } from "react-icons/bs";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { fileToBase64, toBase64 } from "../../../../helpers/helper";
+import {
+  fileToBase64,
+  showErrorToast,
+  toBase64,
+} from "../../../../helpers/helper";
 
 import close from "../../../../assets/icons/close.svg";
 
 import CreateManual from "./CreateAssessment/CreateManual";
+import axios from "../../../../api/axios";
 
 const AdminCSVUpload = () => {
   const [tab, setTab] = useState("upload");
   const [files, setFiles] = useState(null);
+  const [encodedFile, setEndcodedFile] = useState("");
   const inputRef = useRef();
 
   const handleDragOver = (e) => {
@@ -25,7 +31,6 @@ const AdminCSVUpload = () => {
   };
 
   const handleConvertion = async () => {
-    // const file = document.querySelector("#myfile").files[0];
     const file = files?.[0];
     try {
       const result = await toBase64(file);
@@ -38,10 +43,24 @@ const AdminCSVUpload = () => {
 
   files &&
     handleConvertion().then((result) => {
+      setEndcodedFile(result);
       console.log(result);
     });
 
   console.log(files);
+
+  const handleUpload = async () => {
+    try {
+      const response = axios.post(
+        "question/add_csv",
+        JSON.stringify({ encodedFile })
+      );
+    } catch (err) {
+      if (!err.response) {
+        showErrorToast("No Server Response");
+      }
+    }
+  };
 
   return (
     <>
@@ -69,7 +88,6 @@ const AdminCSVUpload = () => {
                 <input
                   type="file"
                   onChange={(e) => setFiles(e.target.files)}
-                  // onChange={(e) => setFiles(e)}
                   hidden
                   ref={inputRef}
                 />
@@ -96,7 +114,7 @@ const AdminCSVUpload = () => {
                       <CancelButton>
                         <Link to={-1}>Cancel</Link>
                       </CancelButton>
-                      <GoButton>Upload</GoButton>
+                      <GoButton onClick={handleUpload}>Upload</GoButton>
                     </UploadButton>
                   </>
                 ) : (
