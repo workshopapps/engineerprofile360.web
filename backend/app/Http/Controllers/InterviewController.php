@@ -34,6 +34,33 @@ class InterviewController extends Controller
         }
     }
 
+    public function getInterviewsAdmin()
+    {
+        try {
+           $interviews = Interview::with('stack')->get();
+           if(!$interviews){
+            return $this->sendResponse(
+                true,
+                'Interviews for this stack do not exist',
+                'Interviews not found',
+                null,
+                Response::HTTP_NOT_FOUND
+            );}
+
+            return $this->sendResponse(
+                false,
+                null,
+                'Interviews',
+                $interviews,
+                Response::HTTP_OK
+            );
+
+
+        } catch (Exception $e) {
+            return $this->sendResponse(true, $e->getMessage(), 'Unable to retrieve interviews',null, Response::HTTP_BAD_REQUEST);
+        }
+    }
+
     public function getInterviewById($interviewId)
     {
         try {

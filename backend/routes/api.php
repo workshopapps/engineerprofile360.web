@@ -41,7 +41,7 @@ Route::get("/test", function (Helper $helper) {
     return view("emails.signup");
 });
 
-//USERSCORE 
+//USERSCORE
 Route::prefix("userscore")->group(function () {
     Route::get('/employee/{id}', [UserScoreController::class, 'getScoresByEmployeeID'])->middleware("isloggedin");
     Route::get('/assessment/{id}', [UserScoreController::class, 'getScoresByAssessmentID'])->middleware("isloggedin", "isadmin");
@@ -202,6 +202,7 @@ Route::prefix("department")->group(function () {
 // Interview routes
 Route::prefix('interview')->group(function () {
     Route::get('all', [InterviewController::class, 'getInterviews']);
+    Route::get('/admin/all', [InterviewController::class, 'getInterviewsAdmin'])->middleware("isloggedin", "isadmin");
     Route::get('{id}', [InterviewController::class, 'getInterviewById']);
     Route::get('/stack/{stack_id}', [InterviewController::class, 'getInterviewByStack']);
     Route::delete('delete/{id}', [InterviewController::class, 'deleteInterview'])->middleware("isloggedin", "isadmin");
