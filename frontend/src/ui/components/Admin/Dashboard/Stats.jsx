@@ -1,46 +1,56 @@
-import React from 'react'
+import React, { useState, useEffect} from 'react'
 import styled from 'styled-components';
 import { Profile2User, People, User } from "iconsax-react";
 import axios from '../../../../api/axios';
 function Stats() {
 
-  axios.get('admin/overview')
-  .then(response => {
-    console.log(response);
-  })
-  .catch(error => {
-    console.log(error);
-  });
+  const  [data, setData] = useState([])
+
+  useEffect(() => {
+    axios.get('admin/overview')
+    .then(response => {
+      setData(response.data.data)
+      console.log(response.data.data);
+    })
+    .catch(error => {
+      console.log(error);
+    }); 
+  }, [])
   
+  console.log(data);
+
   return (
     <Container encType="application/json">
         <HeadingText>Team Axle Main Admin</HeadingText>
-        <Cards>
 
-          <Card>
-          <User size="32" color="#1E1E1E"/>
-            <Subtext>User</Subtext>
-            <Text>1001</Text>
-          </Card>
+      
+            <Cards key={data.id}>
 
-           <Card>
-           <Profile2User size="32" color="#1E1E1E"/>
-            <Subtext>Employee</Subtext>
-            <Text>989</Text>
-           </Card>
+            <Card>
+            <User size="32" color="#1E1E1E"/>
+              <Subtext>users</Subtext>
+              <Text>{data.users}</Text>
+            </Card>
 
-          <Card>
-            <People size="32" color="#1E1E1E"/>
-            <Subtext>companies</Subtext>
-            <Text>365</Text>
-          </Card>
+            <Card>
+            <Profile2User size="32" color="#1E1E1E"/>
+              <Subtext>employees</Subtext>
+              <Text>{data.employees}</Text>
+            </Card>
 
-          <Card>
-            <People size="32" color="#1E1E1E"/>
-            <Subtext>verified</Subtext>
-            <Text>63%</Text>
-          </Card>
-        </Cards>
+            <Card>
+              <People size="32" color="#1E1E1E"/>
+              <Subtext>companies</Subtext>
+              <Text>{data.companies}</Text>
+            </Card>
+
+            <Card>
+              <People size="32" color="#1E1E1E"/>
+              <Subtext>verified</Subtext>
+              <Text>{(Math.round(data.verifiedUsers))}%</Text>
+            </Card>
+             </Cards> 
+
     </Container>
   )
 }
@@ -102,6 +112,7 @@ const Text = styled.h3`
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
+  text-align:center;
   font-size: 48px;
   line-height: 58px;
   color: #1E1E1E;
