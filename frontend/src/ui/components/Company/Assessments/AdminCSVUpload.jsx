@@ -12,12 +12,14 @@ import close from "../../../../assets/icons/close.svg";
 
 import CreateManual from "./CreateAssessment/CreateManual";
 import axios from "../../../../api/axios";
+import useAuth from "../../../../hooks/useAuth";
 
 const AdminCSVUpload = () => {
   const [tab, setTab] = useState("upload");
   const [files, setFiles] = useState(null);
   const [encodedFile, setEndcodedFile] = useState("");
   const inputRef = useRef();
+  const { auth } = useAuth();
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -53,7 +55,11 @@ const AdminCSVUpload = () => {
     try {
       const response = await axios.post(
         "question/add_csv",
-        JSON.stringify({ encodedFile })
+        JSON.stringify({
+          org_id: auth.org_id,
+          assessment_id: "9cc7279d-31d1-4a81-85a1-c9c1cd9db91f",
+          base64: encodedFile,
+        })
       );
       console.log(response.data);
     } catch (err) {
