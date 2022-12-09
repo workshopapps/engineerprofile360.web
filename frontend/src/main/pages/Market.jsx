@@ -93,7 +93,7 @@ const Market = () => {
         </Container>
         <SecondPage>
           <Container>
-            <UpperSvg src={UpperS} />
+            {/* <UpperSvg src={UpperS} /> */}
             <SPtext>
               Eval360 and Small-improvements, are both performance analysis
               tools that cater to companies seeking to make their engineers
@@ -102,7 +102,7 @@ const Market = () => {
               performance review software for mid-sized companies.
             </SPtext>
           </Container>
-          <LowerSvg src={UpperL} />
+          {/* <LowerSvg src={UpperL} /> */}
         </SecondPage>
         <ThirdPage>
           <Container>
