@@ -17,7 +17,7 @@ class DepartmentController extends Controller
         $data = $request->all();
 
         try {
-             //this checks if category already exists for the current user
+             //this checks if department already exists for the current user
              $departmentExists = Department::where('name', $data['name'])->where('org_id', $data['org_id'])->first();
 
              if($departmentExists){
