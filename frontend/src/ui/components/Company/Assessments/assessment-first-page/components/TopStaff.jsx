@@ -3,8 +3,12 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { More } from "iconsax-react";
 import Flex from "../../../../layout/Flex";
-import { Title } from "../../../../../../styles/reusableElements.styled";
+import {
+  Button,
+  Title,
+} from "../../../../../../styles/reusableElements.styled";
 import { Text } from "./AssessmentStats";
+import NoData from "../../../../molecules/NoData";
 
 const TopStaff = ({ topStaff }) => {
   const [topEmp, setTopEmp] = useState([]);
@@ -70,11 +74,7 @@ const TopStaff = ({ topStaff }) => {
           </table>
         </TopStaffTable>
       ) : (
-        <Flex>
-          <Text $weight="600">
-            Oops, no top staff to display at this moment
-          </Text>
-        </Flex>
+        <NoData text="Oops! No data here" />
       )}
     </Flex>
   );
