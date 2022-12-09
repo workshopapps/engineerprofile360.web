@@ -44,7 +44,7 @@ class IsAdmin extends Controller
             }
 
             // if the user doesnt have the organization level privilege
-            if($org_user->first()["role"] != 2){
+            if($org_user->first()["role"] != 2 || $org_user->first()["role"] != 3){
                 return $this->sendResponse(true,"Access Denied.", "Not permitted to perform this action.",null, 403);
             }
             
