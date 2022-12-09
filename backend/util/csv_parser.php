@@ -61,7 +61,7 @@ class CsvParser
         }
         $csvData = $oup["data"];
         $splitData = explode("\n", $csvData); 
-        $slicedData = array_slice($splitData, 1);
+        $slicedData = array_slice(array_filter($splitData, 'strlen'), 1);
         $finalJsonData = [];
         $i = 1;
 
