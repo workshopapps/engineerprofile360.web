@@ -35,8 +35,6 @@ const CategoryForm = ({
           JSON.stringify({ name, org_id })
         );
 
-        console.log(response.data);
-
         response.data.errorState === false &&
           showSuccessToast(response.data.message);
         setIsSubmitted(false);
@@ -44,7 +42,6 @@ const CategoryForm = ({
         setUpdateCategories(!updateCategories);
       }
     } catch (err) {
-      console.log(err);
       setIsSubmitted(false);
       if (!err?.response) {
         showErrorToast("No Server Response");

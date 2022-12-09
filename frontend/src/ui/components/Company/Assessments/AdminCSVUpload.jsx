@@ -2,26 +2,74 @@ import styled from "styled-components";
 import { BsCloudUpload, BsPlusCircle } from "react-icons/bs";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import {
+  fileToBase64,
+  showErrorToast,
+  toBase64,
+} from "../../../../helpers/helper";
 
 import close from "../../../../assets/icons/close.svg";
 
 import CreateManual from "./CreateAssessment/CreateManual";
+import axios from "../../../../api/axios";
+import useAuth from "../../../../hooks/useAuth";
 
 const AdminCSVUpload = () => {
   const [tab, setTab] = useState("upload");
   const [files, setFiles] = useState(null);
+  const [encodedFile, setEndcodedFile] = useState("");
   const inputRef = useRef();
+  const { auth } = useAuth();
 
   const handleDragOver = (e) => {
     e.preventDefault();
+    console.log(e);
   };
 
   const handleDrop = (e) => {
     e.preventDefault();
+    console.log(e);
     setFiles(e.dataTransfer.files);
   };
 
-  console.log(files?.[0]);
+  const handleConvertion = async () => {
+    const file = files?.[0];
+    try {
+      const result = await toBase64(file);
+      return result;
+    } catch (error) {
+      console.error(error);
+      return;
+    }
+  };
+
+  files &&
+    handleConvertion().then((result) => {
+      setEndcodedFile(result);
+      console.log(result);
+    });
+
+  console.log(files);
+
+  const handleUpload = async () => {
+    try {
+      const response = await axios.post(
+        "question/add_csv",
+        JSON.stringify({
+          org_id: auth.org_id,
+          assessment_id: "9cc7279d-31d1-4a81-85a1-c9c1cd9db91f",
+          base64: encodedFile,
+        })
+      );
+      console.log(response.data);
+    } catch (err) {
+      if (!err.response) {
+        showErrorToast("No Server Response");
+      } else {
+        showErrorToast(err.response?.data.message);
+      }
+    }
+  };
 
   return (
     <>
@@ -75,7 +123,7 @@ const AdminCSVUpload = () => {
                       <CancelButton>
                         <Link to={-1}>Cancel</Link>
                       </CancelButton>
-                      <GoButton>Upload</GoButton>
+                      <GoButton onClick={handleUpload}>Upload</GoButton>
                     </UploadButton>
                   </>
                 ) : (
@@ -296,7 +344,9 @@ const Buttons = styled.div`
   }
 `;
 
-const NameContainer = styled.div``;
+const NameContainer = styled.div`
+  width: 30%;
+`;
 
 const Success = styled.div`
   padding: 10px 15px;
@@ -304,7 +354,7 @@ const Success = styled.div`
   border-radius: 15px;
   display: flex;
   align-items: center;
-  justify-items: center;
+  justify-content: space-between;
   gap: 15px;
   border: 1px solid ${({ theme }) => theme.palette.main.tertiary.tertiary};
 
@@ -327,7 +377,7 @@ const Error = styled.div`
   border-radius: 15px;
   display: flex;
   align-items: center;
-  justify-items: center;
+  justify-content: space-between;
   gap: 15px;
   border: 1px solid ${({ theme }) => theme.palette.status.error.color};
 
@@ -348,9 +398,9 @@ const ManualUpload = styled.div``;
 
 const UploadButton = styled.div`
   display: flex;
-  width: 80%;
+  width: 100%;
   margin: 46px auto;
-  gap: 15px;
+  gap: 25px;
   height: 36px;
 `;
 
@@ -363,6 +413,7 @@ const CancelButton = styled.div`
   width: 50%;
   height: 100%;
   border-radius: 3px;
+  /* padding: 0 5px; */
   cursor: pointer;
 
   a {
@@ -379,5 +430,6 @@ const GoButton = styled.div`
   width: 50%;
   height: 100%;
   border-radius: 3px;
+  /* padding: 0 5px; */
   cursor: pointer;
 `;

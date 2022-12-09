@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useOutletContext } from "react-router-dom";
 import useAuth from "../../../../hooks/useAuth";
 import styled from "styled-components";
 import axios from "../../../../api/axios";
-import { Loader} from "../../../../styles/reusableElements.styled";
+import { Loader,Title } from "../../../../styles/reusableElements.styled";
 import { toast } from "react-toastify";
 
 const CreateEmployeeManual = () => {
@@ -11,14 +11,11 @@ const CreateEmployeeManual = () => {
     const [formData, setFormData] = useState({});
     const [touched, setTouched] = useState({});
     const [errors, setErrors] = useState({});
-    const dept_name = JSON.parse(localStorage.getItem("departmentname"));
-    const dept_id = JSON.parse(localStorage.getItem("departments"));
     const { auth }  = useAuth();
     const org_id = auth.org_id;
     const navigate = useNavigate();
-
+    const departmentid = JSON.parse(localStorage.getItem("departmentsID"));
     const handleChange = (e) => {
-      //console.log(e.target.id);
       setFormData({ ...formData, [e.target.id]: e.target.value });
     };
     const onBlur = (e) => {
@@ -27,36 +24,30 @@ const CreateEmployeeManual = () => {
         [e.target.id]: true,
       }));
     };
-  
     const validate = (formData) => {
-      const error = {};
-      const validemail = new RegExp( /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
-     
-      if (!formData.username) {
-        error.username = "Please enter your username";
-      }
-  
-      if (!formData.email) {
-        error.email = "Please enter your email";
-      } else if(!validemail.test(formData.email)){
-        error.email = "Please enter a valid email";
-      }
+    const error = {};
+    const validemail = new RegExp( /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+    if (!formData.username) {
+      error.username = "Please enter your username";
+    }
 
-      if (!formData.fullname) {
-        error.fullname = "Please enter your fullname";
-      }
+    if (!formData.email) {
+      error.email = "Please enter your email";
+    } else if(!validemail.test(formData.email)){
+      error.email = "Please enter a valid email";
+    }
 
-    //   if (!formData.dept) {
-    //     error.dept = "Pleas go back and select a department";
-    //   }
-  
-      setErrors(error);
+    if (!formData.fullname) {
+      error.fullname = "Please enter your fullname";
+    }
+
+    if (!departmentid) {
+        error.dept = "Please select a department";
+    }
+    
+    setErrors(error);
     };
-  
-    useEffect(() => {
-      validate(formData);
-    }, [formData, touched]);
-  
+
     const onNextPage = async (formData) => {
       validate(formData);
   
@@ -65,6 +56,7 @@ const CreateEmployeeManual = () => {
           fullname: true,
           username: true,
           email: true,
+          dept: true,
         });
       }
   
@@ -73,17 +65,16 @@ const CreateEmployeeManual = () => {
           name: false,
           username: false,
           email: false,
+          dept: false,
         });
       }
   
       if (Object.keys(errors).length === 0) {
-        //console.log("Good to go");
         setLoading(true);
-        //navigate("/assessment/admin-csv-upload", { state: { formData } });
         axios.post("employee/add?type=manual",
             {   
                 org_id:org_id,
-                department_id:dept_id,
+                department_id:departmentid,
                 fullname:formData.fullname, 
                 username :formData.username,
                 email:formData.email
@@ -92,39 +83,35 @@ const CreateEmployeeManual = () => {
         .then((res) => {  
           toast.success(res.data.message);
           setLoading(false);
-          localStorage.removeItem('departmentname')
-          localStorage.removeItem('departments')
+          localStorage.removeItem('departmentsID');
           setTimeout(
             () => navigate("/employees/"), 
             5000
           );
         })
         .catch((error) => {
-          console.log(error);
           toast.error(error.response.data.message);
           setLoading(false);
         });
       }
     };
-  
     const { fullname, username, email } = formData;
   return loading ? (
     <Load>
       <Loader />
     </Load>
   ) :(
+    
     <CreateEmployeeManualContainer>
-     <p></p>
-
       <InputItemContainer>
         <InputItem>
           <label>Employee Name</label>
           <input
             id="fullname"
             type="text"
-            placeholder="Full name"
+            placeholder="Fullname"
             onChange={handleChange}
-            value={fullname}
+            value={fullname || ''}
             onBlur={onBlur}
           />
           {errors.fullname && touched.fullname && <span>{errors.fullname}</span>}
@@ -136,7 +123,7 @@ const CreateEmployeeManual = () => {
             type="text"
             placeholder="Username"
             onChange={handleChange}
-            value={username}
+            value={username  || ''}
             onBlur={onBlur}
           />
           {errors && errors.username && touched.username && <span>{errors.username}</span>}
@@ -147,23 +134,13 @@ const CreateEmployeeManual = () => {
           <input
             id="email"
             type="email"
-            placeholder="kekesmovic@gmail.com"
+            placeholder="youra@email.com"
             onChange={handleChange}
-            value={email}
+            value={email  || ''}
             onBlur={onBlur}
           />
           {errors && errors.email && touched.email && <span>{errors.email}</span>}
-        </InputItem>
-
-        <InputItem>
-          <label>Employee Department</label>
-          <input
-            id="dept"
-            type="readonly"
-            value={dept_name}
-            readOnly
-          />
-          {errors.dept && touched.dept && <span>{errors.dept}</span>}
+          {errors && errors.dept && touched.dept && <span>{errors.dept}</span>}
         </InputItem>
       </InputItemContainer>
       <Buttons>
@@ -270,6 +247,7 @@ const Buttons = styled.div`
   button {
     background: #2667ff;
     color: #ebf4f9;
+    border: 1px solid #2667ff;
   }
 
   @media (max-width: 802px) {
@@ -280,7 +258,7 @@ const Buttons = styled.div`
   @media (max-width: 669px) {
     a {
       font-size: 14px;
-      padding: 10px 18px;
+      
     }
   }
 `;

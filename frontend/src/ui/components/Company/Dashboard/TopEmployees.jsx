@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Text } from "../../../../main/components/Market/Market.styled";
 import { Button, Title } from "../../../../styles/reusableElements.styled";
+import NoData from "../../molecules/NoData";
+import TableComponent from "../../molecules/TableComponent";
 
 const TopEmployees = ({ topPerformances, departments }) => {
   const [top, setTop] = useState([]);
@@ -18,6 +20,8 @@ const TopEmployees = ({ topPerformances, departments }) => {
     setDepts(allDepartments);
   }, [topPerformances?.data, depts]);
 
+  console.log(top);
+
   return (
     <div>
       <Header>
@@ -31,8 +35,7 @@ const TopEmployees = ({ topPerformances, departments }) => {
         </div>
       </Header>
       {top.length > 0 ? (
-        <TopEmployeesList>
-          <table>
+        <TableComponent>
             <tbody>
               <tr>
                 <th>#</th>
@@ -48,7 +51,7 @@ const TopEmployees = ({ topPerformances, departments }) => {
                   <td>{employee.fullname}</td>
                   <td>{employee.department.name}</td>
                   <td>{employee.completed_assessment_count}</td>
-                  <td>{employee.points.toFixed(2)}%</td>
+                  <td>{((employee.points / employee.total_points) * 100).toFixed(2)}%</td>
                   <td>
                     <Link to={`/employees/profile/${employee.id}`}>
                       <Button $variant="outlined" $color="#2667ff">
@@ -59,18 +62,17 @@ const TopEmployees = ({ topPerformances, departments }) => {
                 </tr>
               ))}
             </tbody>
-          </table>
-        </TopEmployeesList>
+        </TableComponent>
       ) : (
-        <NoData>
-          <p>Oops! No data to show here</p>
-
-          <div>
+        <NoData text="Oops! No data here">
+          <Link to="/assessmnet/create-assessment">
             <Button $variant="outlined" $color="#2667ff">
               Create Assessment
             </Button>
+          </Link>
+          <Link to="/employees/add-employee">
             <Button>Add Employee</Button>
-          </div>
+          </Link>
         </NoData>
       )}
     </div>
@@ -100,61 +102,4 @@ const Header = styled.div`
   }
 `;
 
-const TopEmployeesList = styled.div`
-  padding-top: ${({ theme }) => theme.spacing(3)};
-  width: 100%;
-  overflow: auto;
-  table {
-    width: 100%;
-    min-width: 960px;
-    border: none;
-    border-spacing: 0; 
-    overflow: auto;
-    white-space: initial;
 
-    th,
-    td {
-      padding: ${({ theme }) => theme.spacing(1.5)};
-    }
-
-    tr:first-of-type {
-      width: 100%;
-      background: #f8fbfd;
-      text-align: left;
-
-      th:first-of-type {
-        padding-right: 24px;
-      }
-
-      th {
-        font-size: 16px;
-        font-weight: 600;
-        color: #605e5c;
-      }
-    }
-
-    td {
-      color: #605e5c;
-      font-size: 16px;
-      font-weight: 600;
-    }
-  }
-`;
-
-const NoData = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(3)};
-  min-height: 300px;
-  font-size: 16px;
-
-  div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: ${({ theme }) => theme.spacing(2)};
-    flex-wrap: wrap;
-  }
-`;

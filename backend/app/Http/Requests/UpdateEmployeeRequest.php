@@ -24,10 +24,12 @@ class UpdateEmployeeRequest extends BaseRequest
     public function rules()
     {
         return [
-            'email' => 'required|email',
-            'fullname' => 'required',
-            'username' => 'required',
-            'occupation' => 'required'
+            'email' => 'email',
+            'fullname' => 'string',
+            'username' => 'string',
+            'occupation' => 'string',
+            'phone_number' => 'string',
+            'address' => 'string'
         ];
     }
 }

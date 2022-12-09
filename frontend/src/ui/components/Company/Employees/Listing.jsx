@@ -4,6 +4,8 @@ import { Button } from "../../../../styles/reusableElements.styled";
 
 import { More, AddCircle } from "iconsax-react";
 import { Link, useOutletContext } from "react-router-dom";
+import NoData from "../../molecules/NoData";
+import TableComponent from "../../molecules/TableComponent";
 
 const Listing = () => {
   const [allEmployees, setAllEmployees] = useState([]);
@@ -12,33 +14,33 @@ const Listing = () => {
 
   useEffect(() => {
     setAllEmployees(employees ? employees : []);
-    setDepts(departments?.data ? departments?.data : []);
+    setDepts(departments ? departments : []);
+    console.log(depts);
   }, [employees, departments]);
+
+  console.log(employees, departments);
 
   const handleFilter = (e) => {
     if (e.target.value === "all") {
       setAllEmployees(employees ? employees : []);
     } else {
-      const filtered = employees
-        ? employees.filter((data) => e.target.value === data.department)
-        : [];
+      const filtered = employees.filter(
+        (employee) => e.target.value === employee.department.name
+      );
       setAllEmployees(filtered);
     }
   };
 
-  // console.log(depts);
   return (
     <EmployeesList>
       <Filter>
         <select onChange={handleFilter}>
           <option value="all">Department</option>
-          {depts
-            ? depts.map((dept) => (
-                <option key={dept.id} value={dept.name}>
-                  {dept.name}
-                </option>
-              ))
-            : ""}
+          {depts?.map((dept) => (
+            <option key={dept.id} value={dept.name}>
+              {dept.name}
+            </option>
+          ))}
         </select>
         <Link to="/employees/add-employee">
           <Button $weight="400">
@@ -46,25 +48,26 @@ const Listing = () => {
           </Button>
         </Link>
       </Filter>
-      <EmployeesTable>
-        {allEmployees.length > 0 ? (
-          <table>
-            <tbody>
-              <tr>
-                <th>#</th>
-                <th>Employee name</th>
-                <th>Department</th>
-                <th>Employee Email</th>
-                <th>Username</th>
-                <th>Actions</th>
-              </tr>
-              {allEmployees.map((employee, index) => (
-                <tr key={employee.id}>
+
+      {allEmployees.length > 0 ? (
+        <TableComponent>
+          <tbody>
+            <tr>
+              <th>#</th>
+              <th>Employee name</th>
+              <th>Department</th>
+              <th>Employee Email</th>
+              <th>Username</th>
+              <th>Actions</th>
+            </tr>
+            {allEmployees.length > 0 &&
+              allEmployees.map((employee, index) => (
+                <tr key={employee?.id}>
                   <td>{index + 1}.</td>
-                  <td>{employee.fullname}</td>
-                  <td>{employee.department.name}</td>
-                  <td>{employee.email}</td>
-                  <td>{employee.username}</td>
+                  <td>{employee?.fullname}</td>
+                  <td>{employee.department?.name}</td>
+                  <td>{employee?.email}</td>
+                  <td>{employee?.username}</td>
                   <td>
                     <Link to={`/employees/profile/${employee.id}`}>
                       <Button $variant="outlined" $color="#2667ff">
@@ -75,21 +78,17 @@ const Listing = () => {
                   </td>
                 </tr>
               ))}
-            </tbody>
-          </table>
-        ) : (
-          <NoData>
-            <p>Oops! No data to show here</p>
-            <div>
-              <Link to="/employees/add-employee">
-                <Button $weight="400">
-                  <AddCircle color="#FFFFFF" /> Add New Employee
-                </Button>
-              </Link>
-            </div>
-          </NoData>
-        )}
-      </EmployeesTable>
+          </tbody>
+        </TableComponent>
+      ) : (
+        <NoData text="Oops! No data here">
+          <Link to="/employees/add-employee">
+            <Button $weight="400">
+              <AddCircle color="#FFFFFF" /> Add New Employee
+            </Button>
+          </Link>
+        </NoData>
+      )}
     </EmployeesList>
   );
 };
@@ -126,75 +125,5 @@ const Filter = styled.div`
 
   select:last-of-type {
     width: 130px;
-  }
-`;
-
-const EmployeesTable = styled.div`
-  width: 100%;
-  overflow: auto;
-  table {
-    width: 100%;
-    min-width: 960px;
-    text-align: left;
-    border: none;
-    border-spacing: 0;
-    overflow: auto;
-    white-space: initial;
-
-    th,
-    td {
-      padding: ${({ theme }) => theme.spacing(1.5)};
-    }
-
-    tr:first-of-type {
-      width: 100%;
-      background: #f8fbfd;
-
-      th:first-of-type {
-        padding-right: 24px;
-      }
-
-      th {
-        font-size: 16px;
-        font-weight: 600;
-        color: #605e5c;
-      }
-    }
-
-    td {
-      color: #605e5c;
-      font-size: 16px;
-      font-weight: 600;
-    }
-
-    tr {
-      td:last-of-type {
-        display: flex;
-        gap: ${({ theme }) => theme.spacing(2)};
-        align-items: center;
-
-        svg {
-          transform: rotate(90deg);
-        }
-      }
-    }
-  }
-`;
-
-const NoData = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(3)};
-  min-height: 300px;
-  font-size: 16px;
-
-  div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: ${({ theme }) => theme.spacing(2)};
-    flex-wrap: wrap;
   }
 `;
