@@ -40,7 +40,7 @@ const LeftBar = () => {
         </List>
       )}
 
-      {auth.roles !== 2 && (
+      {auth.roles === 2 && (
         <List>
           <ListItem
             $active={

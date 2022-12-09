@@ -9,7 +9,7 @@ import {
   Loader,
 } from "../../../../styles/reusableElements.styled";
 
-import AuthTitle from "../../../components/Company/Auth/molecules/AuthTitle";
+import AuthTitle from "../../../components/molecules/Auth/AuthTitle";
 import InputField from "../../../../components/InputField";
 
 import useInputValidation from "../../../../hooks/useInputValidation";
@@ -17,7 +17,7 @@ import { showErrorToast } from "../../../../helpers/helper";
 
 import eyeSvg from "../../../../assets/icons/eye.svg";
 
-const AdminSetPassword = () => {
+const SetPassword = () => {
   const [showPassword, setShowPassword] = useState(true);
   const [isSubmitted, setIsSubmitted] = useState(null);
   const [passwordError, setPasswordError] = useState("");
@@ -224,7 +224,7 @@ const AdminSetPassword = () => {
   );
 };
 
-export default AdminSetPassword;
+export default SetPassword;
 
 const FormContainer = styled(Container)`
   width: 100%;

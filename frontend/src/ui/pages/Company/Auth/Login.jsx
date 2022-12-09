@@ -11,7 +11,7 @@ import {
 } from "../../../../styles/reusableElements.styled";
 
 import InputField from "../../../../components/InputField";
-import AuthTitle from "../../../components/Company/Auth/molecules/AuthTitle";
+import AuthTitle from "../../../components/molecules/Auth/AuthTitle";
 
 import useInputValidation from "../../../../hooks/useInputValidation";
 import useAuth from "../../../../hooks/useAuth";
@@ -20,7 +20,7 @@ import axios from "../../../../api/axios";
 import eyeSvg from "../../../../assets/icons/eye.svg";
 import smsSvg from "../../../../assets/icons/smsenvelope.svg";
 
-const AdminLogin = () => {
+const Login = () => {
   const { setAuth, persist, setPersist } = useAuth();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/dashboard";
@@ -92,7 +92,6 @@ const AdminLogin = () => {
 
         console.log(response);
 
-        if (roles === 2) {
           setAuth({ email, accessToken, username, roles, id, org_id });
           // persist &&
           localStorage.setItem(
@@ -106,21 +105,7 @@ const AdminLogin = () => {
               username,
             })
           );
-        } else if (roles === 3) {
-          setAuth({ email, accessToken, username, roles, id });
-
-          localStorage.setItem(
-            "Eval360",
-            JSON.stringify({
-              email,
-              accessToken,
-              roles,
-              id,
-              username,
-            })
-          );
-        }
-
+        
         console.log(response.data);
         if (response.data.errorState === false) {
           // Clear input fields
@@ -129,13 +114,8 @@ const AdminLogin = () => {
             password: "",
           });
 
-          if (roles === 2) {
-            // navigate(from, { replace: true });
             window.location.href = from;
-          } else if (roles === 3) {
-            // navigate("/admin/dashboard", { replace: true });
-            window.location.href = "/admin/dashboard";
-          }
+
         } else if (response.data.errorState === true) {
           showErrorToast(response.data.message);
         }
@@ -233,7 +213,7 @@ const AdminLogin = () => {
   );
 };
 
-export default AdminLogin;
+export default Login;
 
 const FormContainer = styled(Container)`
   width: 100%;

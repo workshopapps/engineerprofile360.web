@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 import { Container, Button } from "../../../../styles/reusableElements.styled";
-import AuthTitle from "../../../components/Company/Auth/molecules/AuthTitle";
+import AuthTitle from "../../../components/molecules/Auth/AuthTitle";
 
 import success from "../../../../assets/images/img_done.png";
 import { Link, useParams } from "react-router-dom";
@@ -11,7 +11,7 @@ import { showErrorToast } from "../../../../helpers/helper";
 import { TruckRemove } from "iconsax-react";
 import { BsFileEasel } from "react-icons/bs";
 
-const AdminEmailVerified = () => {
+const EmailVerified = () => {
   const [isError, setIsError] = useState(false);
   const { user_id, token } = useParams();
 
@@ -70,7 +70,7 @@ const AdminEmailVerified = () => {
   );
 };
 
-export default AdminEmailVerified;
+export default EmailVerified;
 
 const ResponseContainer = styled(Container)`
   width: 100%;
