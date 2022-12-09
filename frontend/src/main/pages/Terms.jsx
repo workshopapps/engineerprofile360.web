@@ -21,21 +21,21 @@ function Terms() {
           <LeftContent>
             <Section>
               <InsideContent>
-                Skript is a tool that provides a subscription service for
+                Eval360 is a tool that provides a subscription service for
                 companies that want to know how good their engineers are. It is
                 a questions on different topics. The tool builds a profile of
                 each engineer in the form of a spider-web chart so the company
                 knows defined below through our software, or website, we need to
                 obtain your agreement to our Terms of Service. These Terms of
-                Service Service; "Skript service", "our service" "the service",
-                means the personalized service provided by Skript for
-                discovering and assessing Skript content, including all features
-                and functionalities, recommendations and reviews, our websites,
-                and user interfaces, as well as all content and software
-                associated with our service. Skript Evaluator (Skript, ``our``,
-                ``we,`` or ``us ``) provides the services described below to you
-                ("Services") unless you live in a country or territory where it
-                is not eligible.
+                Service Service; "Eval360 service", "our service" "the service",
+                means the personalized service provided by Eval360 for
+                discovering and assessing Eval360 content, including all
+                features and functionalities, recommendations and reviews, our
+                websites, and user interfaces, as well as all content and
+                software associated with our service. Eval360 Evaluator
+                (Eval360, ``our``, ``we,`` or ``us ``) provides the services
+                described below to you ("Services") unless you live in a country
+                or territory where it is not eligible.
               </InsideContent>
             </Section>
 
@@ -59,25 +59,25 @@ function Terms() {
             <Section id="Subscription">
               <Title>Subscription</Title>
               <InsideContent>
-                1. Your Skript software subscription will continue until
-                terminated. To use the Skript service you/your company must have
-                Internet access and a ready device, and provide us with one or
-                more Payment Methods. “Payment Method” means a current, valid,
-                accepted method of payment, as may be updated from time to time,
-                and which may include payment through your account with a third
-                party. Unless you cancel your membership before your billing
-                date, you authorize us to charge the membership fee for the next
-                billing cycle to your Payment Method (see "Cancellation" below).
-                2. We may offer several subscription plans, including
-                subscriptions offered by third parties in conjunction with the
-                provision of their products and services. We are not responsible
-                for the products and services provided by such third parties.
-                Some subscription plans may have differing conditions and
-                limitations, which will be disclosed at your sign-up or in other
-                communications made available to you. You can find specific
-                details regarding your Skript subscription by visiting the
-                Skript.com website and clicking on the "Account" link available
-                at the top of the pages under your profile name.
+                1. Your Eval360 software subscription will continue until
+                terminated. To use the Eval360 service you/your company must
+                have Internet access and a ready device, and provide us with one
+                or more Payment Methods. “Payment Method” means a current,
+                valid, accepted method of payment, as may be updated from time
+                to time, and which may include payment through your account with
+                a third party. Unless you cancel your membership before your
+                billing date, you authorize us to charge the membership fee for
+                the next billing cycle to your Payment Method (see
+                "Cancellation" below). 2. We may offer several subscription
+                plans, including subscriptions offered by third parties in
+                conjunction with the provision of their products and services.
+                We are not responsible for the products and services provided by
+                such third parties. Some subscription plans may have differing
+                conditions and limitations, which will be disclosed at your
+                sign-up or in other communications made available to you. You
+                can find specific details regarding your Eval360 subscription by
+                visiting the Eval360.com website and clicking on the "Account"
+                link available at the top of the pages under your profile name.
               </InsideContent>
             </Section>
 
@@ -85,7 +85,7 @@ function Terms() {
               <Title>Billing and Cancellation</Title>
               <InsideContent>
                 1. Billing Cycle. <br />
-                The Subscription fee for the Skript service and any other
+                The Subscription fee for the Eval360 service and any other
                 charges you may incur in connection with your use of the
                 service, such as taxes and possible transaction fees, will be
                 charged to your Payment Method on the specific payment date
@@ -95,19 +95,19 @@ function Terms() {
                 date may change, for example, if your Payment Method has not
                 successfully settled, when you change your subscription plan or
                 if your paid membership began on a day not contained in a given
-                month. Visit the Skript.com website and click on the "Billing
+                month. Visit the Eval360.com website and click on the "Billing
                 details" link on the "Account" page to see your next payment
                 date. We may authorize your Payment Method in anticipation of
                 membership or service-related charges through various methods,
                 including authorizing it for up to approximately one month of
                 service as soon as you register. If you signed up for
                 Enineering360 using your account with a third party as a Payment
-                Method, you can find the billing information about your Skript
+                Method, you can find the billing information about your Eval360
                 subscription by visiting your account with the applicable third
                 party. <br />
                 <br />
                 2. Payment Methods. <br />
-                To use the Skript service you must provide one or more Payment
+                To use the Eval360 service you must provide one or more Payment
                 Methods. You authorize us to charge any Payment Method
                 associated with your account in case your primary Payment Method
                 is declined or no longer available to us for payment of your
@@ -129,22 +129,22 @@ function Terms() {
                 continue to charge the applicable Payment Method(s). <br />
                 <br />
                 4. Cancellation. <br />
-                You can cancel your Skript subscription at any time, and you
-                will continue to have access to the Skript service through the
+                You can cancel your Eval360 subscription at any time, and you
+                will continue to have access to the Eval360 service through the
                 end of your billing period. To the extent permitted by the
                 applicable law, payments are non-refundable and we do not
                 provide refunds or credits for any partial membership periods or
-                unused Skript content. To cancel, go to the "Account" page and
+                unused Eval360 content. To cancel, go to the "Account" page and
                 follow the instructions for cancellation. If you cancel your
                 membership, your account will automatically close at the end of
                 your current billing period. To see when your account will
                 close, click "Billing details" on the "Account" page. If you
-                signed up for Skript using your account with a third party as a
-                Payment Method and wish to cancel your Skript subscription, you
+                signed up for Eval360 using your account with a third party as a
+                Payment Method and wish to cancel your Eval360 subscription, you
                 may need to do so through such a third party, for example by
                 visiting your account with the applicable third party and
-                turning off auto-renew, or unsubscribing from the Skript service
-                through that third party. <br />
+                turning off auto-renew, or unsubscribing from the Eval360
+                service through that third party. <br />
                 <br />
                 4.5. Changes to the Price and Subscription Plans. <br />
                 We may change our subscription plans and the price of our
@@ -157,19 +157,19 @@ function Terms() {
             <Section id="passwords">
               <Title>Passwords and Account Access</Title>
               <InsideContent>
-                The member who created the Skript account and whose Payment
+                The member who created the Eval360 account and whose Payment
                 Method is charged (the "Account Owner") is responsible for any
-                activity that occurs through the Skript account. To maintain
+                activity that occurs through the Eval360 account. To maintain
                 control over the account and to prevent anyone from accessing
                 the account (which would include information on the viewing
                 history for the account), the Account Owner should maintain
-                control over the Skript-ready devices that are used to access
+                control over the Eval360-ready devices that are used to access
                 the service and not reveal the password or details of the
                 Payment Method associated with the account to anyone. You are
                 responsible for updating and maintaining the accuracy of the
                 information you provide to us relating to your account. We can
                 terminate your account or place your account on hold to protect
-                you, Skript or our partners from identity theft or other
+                you, Eval360 or our partners from identity theft or other
                 fraudulent activity.
               </InsideContent>
             </Section>
@@ -177,7 +177,7 @@ function Terms() {
             <Section id="warranty" className="second">
               <Title>Warranties and Limitations on Liability</Title>
               <InsideContent>
-                The Skript service is provided "as is" and without warranty or
+                The Eval360 service is provided "as is" and without warranty or
                 condition. In particular, our service may not be uninterrupted
                 or error-free. You waive all special, indirect and consequential
                 damages against us. These terms will not limit any non-waivable
@@ -264,23 +264,24 @@ function Terms() {
                 12.1. Governing Law. These Terms of Service shall be governed by
                 and construed by the laws of Nigeria.
                 <br />
-                12.2. Unsolicited Materials. Skript does not accept unsolicited
-                materials or ideas for Skript content, and it is not responsible
-                for the similarity of any of its content or programming in any
-                media to materials or ideas transmitted to Skript. <br />
+                12.2. Unsolicited Materials. Eval360 does not accept unsolicited
+                materials or ideas for Eval360 content, and it is not
+                responsible for the similarity of any of its content or
+                programming in any media to materials or ideas transmitted to
+                Eval360. <br />
                 12.3. Customer Support. To find more information about our
                 service and its features or if you need assistance with your
-                account, please visit the Skript Help Center, which is
-                accessible through the Skript.com website. In certain instances,
-                Customer Service may best be able to assist you by using a
-                remote access support tool through which we have full access to
-                your computer. If you do not want us to have this access, you
-                should not consent to support through the remote access tool,
-                and we will assist you through other means. In the event of any
-                conflict between these Terms of Use and information provided by
-                Customer Support or other portions of our websites, these Terms
-                of Use will be controlled. <br />
-                12.4. Changes to Terms of Use and Assignment. Skript may, from
+                account, please visit the Eval360 Help Center, which is
+                accessible through the Eval360.com website. In certain
+                instances, Customer Service may best be able to assist you by
+                using a remote access support tool through which we have full
+                access to your computer. If you do not want us to have this
+                access, you should not consent to support through the remote
+                access tool, and we will assist you through other means. In the
+                event of any conflict between these Terms of Use and information
+                provided by Customer Support or other portions of our websites,
+                these Terms of Use will be controlled. <br />
+                12.4. Changes to Terms of Use and Assignment. Eval360 may, from
                 time to time, change these Terms of Use. We will notify you at
                 least 30 days before such changes apply to you. We may assign or
                 transfer our agreement with you including our associated rights

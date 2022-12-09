@@ -67,7 +67,7 @@ const BioMedicalTestimonials = () => {
           $color="#323130"
           $lHeight="50px"
         >
-          Join thousands of people in using Skript
+          Join thousands of people in using Eval360
         </BioMedicalTitle>
         <Quote src={QuoteIcon} title="quote" />
       </TitleContainer>

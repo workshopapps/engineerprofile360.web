@@ -29,7 +29,7 @@ const HelpTopics = () => {
           </p>
         </Box>
         <Box>
-          <img src={laptop} alt="About Skript SVG" />
+          <img src={laptop} alt="About Eval360 SVG" />
           <Title
             as={"h3"}
             $color="#A19F9D"
@@ -71,7 +71,7 @@ const HelpTopics = () => {
           <p>Check out our custormers frequently asked questions</p>
         </Box>
         <Box>
-          <img src={laptop} alt="About Skript SVG" />
+          <img src={laptop} alt="About Eval360 SVG" />
           <Title
             as={"h3"}
             $color="#A19F9D"

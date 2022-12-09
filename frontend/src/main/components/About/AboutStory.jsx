@@ -22,7 +22,7 @@ const AboutStory = () => {
           the role - the requisite skill - and temperament.
           <br />
           <br />
-          This was our main motivation for building Skript. A tool that will
+          This was our main motivation for building Eval360. A tool that will
           take away this worry from organisations, by helping them evaluate
           their engineers based on industry and worldwide standards, as well as
           tailoring it specific to their needs.
