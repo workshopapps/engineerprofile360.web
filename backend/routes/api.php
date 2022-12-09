@@ -69,6 +69,8 @@ Route::prefix("user")->group(function () {
 Route::prefix("admin")->group(function () {
     Route::get('overview', [AdminController::class, 'getAdminOverview'])->middleware("isloggedin", "isadmin");
     Route::get('users', [AdminController::class, 'getAllUsers'])->middleware("isloggedin", "isadmin");
+    Route::delete('/{companyId}/delete', [AdminController::class, 'deleteUserCompany']);
+
 
 });
 
@@ -181,6 +183,8 @@ Route::prefix('employee')->group(function () {
     Route::get('company/{orgId}', [EmployeeController::class, 'getEmployeesByCompanyId']);
     Route::put('{employeeId}/update', [EmployeeController::class, 'updateByID']);
     Route::get('department/{departmentId}', [EmployeeController::class, 'getEmplyeesByDepartment']);
+    Route::delete('{employeeId}/delete', [EmployeeController::class, 'deleteEmployee']);
+
 });
 Route::get('employees', [EmployeeController::class, 'getAllEmployees'])->middleware("isloggedin", "isadmin");
 

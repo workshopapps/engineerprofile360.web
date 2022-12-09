@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { toast } from "react-toastify";
-import {
-  Loader,
-  OverlayLoader,
-} from "../../../../../../styles/reusableElements.styled";
+import { Loader } from "../../../../../../styles/reusableElements.styled";
 
 import ViewAssessmentHeader, {
   Container,
@@ -17,15 +14,22 @@ import axios from "../../../../../../api/axios";
 function AssessmentContent() {
   const [loading, setLoading] = useState(true);
   const [questions, setQuestions] = useState([]);
-
-  const company_id = "2ea09b93-6682-11ed-9941-3863bbb7c6d/";
+  const { id } = useParams();
+  const assessment_id = id;
 
   useEffect(() => {
     const fetchQuestions = async () => {
-      const response = await axios.get(`question/assessment/${company_id}`);
-      setQuestions(response.data.data);
-      console.log(response.data.data);
-      setLoading(false);
+      try {
+        const response = await axios.get(
+          `question/assessment/${assessment_id}`
+        );
+        setQuestions(response.data.data);
+
+        setLoading(false);
+      } catch (error) {
+        toast.error("could not preview questions ");
+        navigate("/employee-assessment-list");
+      }
     };
 
     fetchQuestions();
@@ -64,7 +68,7 @@ function AssessmentContent() {
           <ButtonWrapper>
             <ButtonClearNext
               onClick={() => {
-                navigate("/assessmentlist");
+                navigate("/employee-assessment-list");
               }}
             >
               Next
