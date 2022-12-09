@@ -60,7 +60,7 @@ const EmployeeCSVUpload = () => {
             Department
           </Title>
           <select value={selecteddepartment} onChange={handleChange} required>
-          <option>Select Department</option>
+          <option value="">Select Department</option>
           {depts
             ? depts.map((dept) => (
                 <option key={dept.id} value={dept.id}>

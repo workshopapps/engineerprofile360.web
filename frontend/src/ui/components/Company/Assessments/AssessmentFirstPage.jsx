@@ -27,7 +27,7 @@ const Buttons = () => {
           </Button>
         </Show>
       </Link>
-      <Link to="/assessment/view-assessment">
+      <Link to="/assessment/assessment-list">
         <Hide>
           <Button $variant="outlined" $color="#2667FF">
             View Assessments
