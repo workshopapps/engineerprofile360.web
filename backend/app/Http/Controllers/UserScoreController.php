@@ -121,6 +121,9 @@ class UserScoreController extends Controller
                 "completed_assessment",
                 'assessment AS points' => function ($query) {
                     $query->select(DB::raw("SUM(result) as points"));
+                },
+                'assessment AS total_points' => function ($query) {
+                    $query->select(DB::raw("SUM(total_questions) as total_points"));
                 }
             ])->orderBy('points', 'desc');
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);

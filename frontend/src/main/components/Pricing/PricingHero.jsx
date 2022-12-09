@@ -1,25 +1,31 @@
+import React from "react";
+import { Container } from "../../../styles/reusableElements.styled";
+
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
-  max-width: 1300px;
-  width: 100%;
+function PricingHero() {
+  return (
+    <>
+      <Container>
+        <HeroHeader>
+          Find the right assessment plan that works for you
+        </HeroHeader>
+        <HeroText>
+          Skript plans start as low as $19 per month for basic plan, $29 per
+          month for business plan and $49
+        </HeroText>
+        <HeroText>per month for enterprise plan.</HeroText>
+        <HeroButtonDiv>
+          <HeroButtonShade>Monthly billing</HeroButtonShade>
+          <HeroButtonClear>Annual billing</HeroButtonClear>
+        </HeroButtonDiv>
+      </Container>
+    </>
+  );
+}
 
-  background-color: #fff;
+export default PricingHero;
 
-  font-family: "Inter", sans-serif;
-  display: flex;
-  align-items: center;
-  padding: 20px 5px 50px;
-  flex-direction: column;
-
-  @media (min-width: 748px) {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  }
-`;
 export const HeroHeader = styled.h2`
   font-size: 42px;
   text-align: center;
@@ -31,13 +37,14 @@ export const HeroText = styled.p`
   margin-top: 20px;
   font-weight: 400;
   line-height: 24px;
+  text-align: center;
 `;
 export const HeroButtonDiv = styled.p`
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 30px;
-  padding-bottom: 150px;
+  padding-bottom: 50px;
 `;
 export const HeroButtonShade = styled.button`
   font-size: 18px;

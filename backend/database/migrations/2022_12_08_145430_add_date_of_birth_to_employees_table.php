@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('employees', function (Blueprint $table) {
-            $table->dropColumn(['address', 'phone_number']);
+            $table->string('date_of_birth')->nullable();
         });
     }
 
