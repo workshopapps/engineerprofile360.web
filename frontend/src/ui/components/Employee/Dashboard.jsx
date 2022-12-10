@@ -10,6 +10,7 @@ import useAuth from "../../../hooks/useAuth";
 import axios from "../../../api/axios";
 import { showErrorToast } from "../../../helpers/helper";
 import { Radar } from "react-chartjs-2";
+import TableComponent from "../molecules/TableComponent";
 
 const AssessmentList = [
   {
@@ -113,6 +114,7 @@ const Dashboard = () => {
   React.useEffect(() => {
     const getChartDetails = async () => {
       try {
+        // const response = await axios.get(`userscore/employee/${auth.id}`);
         const response = await axios.get(
           `userscore/employee/aab92dfa-336d-4d63-8c43-7a9826529988`
         );
@@ -132,15 +134,16 @@ const Dashboard = () => {
 
   //Chart Data Schema
   const data = {
-    labels: chartDetails
-      ? JSON.parse(chartDetails?.data[0]?.categories?.split("/").join(""))
-      : [],
+    labels: [0, 0, 0, 0],
+    // labels: chartDetails
+    //   ? JSON.parse(chartDetails?.data[0]?.categories?.split("/").join(""))
+    //   : [0, 0, 0, 0],
     datasets: [
       {
         label: "Dataset",
         data: chartDetails
-          ? JSON.parse(chartDetails?.data[0]?.passed_questions)
-          : [],
+          ? chartDetails?.data[0]?.passed_questions
+          : [0, 0, 0, 0],
         fill: true,
         backgroundColor: "rgba(255, 99, 132, 0.2)",
         borderColor: "rgb(255, 99, 132)",
@@ -190,7 +193,7 @@ const Dashboard = () => {
             "Loading"
           ) : (
             <SkillRatingSection>
-              <div>
+              {/* <div>
                 {chartDetails
                   ? JSON.parse(
                       chartDetails?.data[0]?.categories?.split("/").join("")
@@ -203,12 +206,15 @@ const Dashboard = () => {
                       (item, key) => <SKillRating key={key} title={item} />
                     )
                   : ""}
-              </div>
+              </div> */}
             </SkillRatingSection>
           )}
         </SkillSection>
         <ChartSection>
-          {isChartLoading ? "Loading" : <Radar data={data} />}
+          {
+            // isChartLoading ? "Loading" :
+            <Radar data={data} />
+          }
         </ChartSection>
       </StatsContainer>
       <AssessmentContainer>
@@ -292,46 +298,44 @@ const Dashboard = () => {
           </SortContainer>
         </AssessmentSorting>
       </AssessmentContainer>
-      <TableContainer>
-        <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Department</th>
-              <th>Course</th>
-              <th>Grade</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {isAvailableAssessmentLoading
-              ? "Loading"
-              : AssessmentList
+      <TableComponent>
+        <tbody>
+          <tr>
+            <th>#</th>
+            <th>Department</th>
+            <th>Course</th>
+            <th>Grade</th>
+            <th>Actions</th>
+            <th></th>
+          </tr>
+
+          {
+            // isAvailableAssessmentLoading
+            //   ? "Loading"
+            //   :
+            AssessmentList
               ? AssessmentList.map((item, key) => (
                   <tr key={key}>
                     <td>{item.id}</td>
                     <td>{item.department}</td>
                     <td>{item.course}</td>
                     <td>{item.grade}</td>
-                    <td
-                      style={{
-                        display: "flex",
-                        gap: "20px",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                      }}
-                    >
+                    <td>
                       <Link to={item.result}>
-                        <Button $color="#2667FF">View Result</Button>
+                        <Button $variant="outlined" $color="#2667FF">
+                          View Result
+                        </Button>
                       </Link>
+                    </td>
+                    <td>
                       <ThreeDots />
                     </td>
                   </tr>
                 ))
-              : ""}
-          </tbody>
-        </table>
-      </TableContainer>
+              : []
+          }
+        </tbody>
+      </TableComponent>
     </>
   );
 };
@@ -390,7 +394,7 @@ const ChartSection = styled.div`
   border-radius: 12px;
   padding: 35.35px 40px;
   min-height: 336px;
-  ${({ theme }) => theme.breakpoints.down("md")} {
+  ${({ theme }) => theme.breakpoints.down("lg")} {
     width: 100%;
   }
 `;
@@ -449,45 +453,6 @@ const SortContainer = styled.div`
 const SortFilter = styled.div`
   display: flex;
   gap: 10px;
-
-  svg {
-    cursor: pointer;
-  }
-`;
-
-const TableContainer = styled.div`
-  width: 100%;
-  margin-top: 24px;
-  ${({ theme }) => theme.breakpoints.down("md")} {
-    overflow-x: auto;
-    width: 100%;
-  }
-  table {
-    width: 100%;
-  }
-  thead {
-    background-color: #f8fbfd;
-    padding: 9px 0px;
-    width: 100%;
-  }
-
-  tr {
-    padding: 9px 0px;
-    width: 100%;
-  }
-
-  th {
-    width: 200px;
-    max-width: 100%;
-  }
-  td {
-    width: 200px;
-    max-width: 100%;
-  }
-  button {
-    background-color: #fff;
-    border: 1px solid #2667ff;
-  }
 
   svg {
     cursor: pointer;

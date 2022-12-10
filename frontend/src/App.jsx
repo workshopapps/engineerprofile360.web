@@ -44,7 +44,7 @@ import {
 
 import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 
-import { EmployeeLogin } from "./ui/pages/Employee";
+import { EmployeeLogin, Dashboard } from "./ui/pages/Employee";
 
 import { AdminLogin } from "./ui/pages/Admin";
 
@@ -305,7 +305,11 @@ const App = () => {
 
               <Route element={<RequireAuth allowedRole={ROLES.Employees} />}>
                 {/* Put in Protected pages in here */}
-                <Route path="/employee/dashboard" element={"boss"} />
+                <Route
+                  path="/employee/dashboard"
+                  element={<Dashboard />}
+                />
+                {/* <Route path="/employee/dashboard" element={"boss"} /> */}
               </Route>
 
               <Route path="/setting" element={<AdminSetting />} />
