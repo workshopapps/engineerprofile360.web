@@ -47,7 +47,7 @@ function Table() {
                   <td>{table.name}</td>
                   <td>{table.email}</td>
                   <td>{table.company}</td>
-                  <td>{table.created}</td>                 
+                  <td>{(Date(table.created))}</td>                 
                 </tr>
         ))}
               
