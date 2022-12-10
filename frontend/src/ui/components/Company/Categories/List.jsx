@@ -31,6 +31,7 @@ const List = () => {
   const [updateCategories, setUpdateCategories] = useState(false);
   const [showMore, setShowMore] = useState({});
   const [isLoading, setIsLoading] = useState();
+  const [isOverlayLoading, setIsOverlayLoading] = useState(true);
   const [value, setValue] = useState({
     categoryId: [],
   });
@@ -40,14 +41,14 @@ const List = () => {
   const currentSelectedId = useRef();
 
   useEffect(() => {
-    setIsLoading(true);
+    setIsOverlayLoading(true);
     const getAllCatgories = async () => {
       try {
         const response = await axios.get(`/category/company/${auth.org_id}`);
         setCategories(response.data.data);
-        setIsLoading(false);
+        setIsOverlayLoading(false);
       } catch (err) {
-        setIsLoading(false);
+        setIsOverlayLoading(false);
         if (!err.response) {
           showErrorToast("No server response");
         } else {
@@ -215,15 +216,11 @@ const List = () => {
           </>
         ) : (
           <>
-            {categories.data?.length > 0 ? (
-              <NoData text="Oops! No data here yet">
-                <Button $weight="400" onClick={() => setToggleCreateCat(true)}>
-                  <AddCircle color="#FFFFFF" /> Add Category
-                </Button>
-              </NoData>
-            ) : (
-              ""
-            )}
+            <NoData text="Oops! No data here yet">
+              <Button $weight="400" onClick={() => setToggleCreateCat(true)}>
+                <AddCircle color="#FFFFFF" /> Add Category
+              </Button>
+            </NoData>
           </>
         )}
         {isLoading ? (
