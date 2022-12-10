@@ -93,8 +93,18 @@ function Hero() {
             onClick={() => {
               setAddDept(true);
             }}
+            w={"210px"}
+            h={"42px"}
+            text={"#fff"}
+            bg={"#2667ff"}
+            rounded={"4px"}
+            fs={"16px"}
+            fw={"400"}
+            lh={"20px"}
+            border={"2px solid #2667ff"}
+            m={" 0"}
           >
-           <AddCircle color="#FFFFFF" /> Add New Department
+            Add New Department
           </Button>
         </CRUDContainer>
         <CategoryListing>
@@ -148,7 +158,7 @@ function Hero() {
                           >
                             View Departments
                           </Button>
-                       
+
                           <More
                             onClick={() => {
                               handleModal(index);
