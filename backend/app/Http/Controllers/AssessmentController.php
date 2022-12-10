@@ -307,11 +307,11 @@ class AssessmentController extends Controller
         }
     }
 
-    public function getCompanyAcceptedAssessments($companyId, $userId): JsonResponse
+    public function getCompanyAcceptedAssessments($companyId, $orgId): JsonResponse
     {
         try {
             //this is validating the ownership of the data
-            $company = Company::where('user_id', $userId)->where('id', $companyId)->first();
+            $company = Company::where('user_id', $orgId)->where('id', $companyId)->first();
 
             if (!$company) {
                 return $this->sendResponse(true, "Unauthorized", "Unauthorized account", null, Response::HTTP_UNAUTHORIZED);
@@ -325,11 +325,11 @@ class AssessmentController extends Controller
         }
     }
 
-    public function getCompanyCompletedAssessments($companyId, $userId): JsonResponse
+    public function getCompanyCompletedAssessments($companyId, $orgId): JsonResponse
     {
         try {
             //this is validating the ownership of the data
-            $company = Company::where('user_id', $userId)->where('id', $companyId)->first();
+            $company = Company::where('user_id', $orgId)->where('id', $companyId)->first();
 
             if (!$company) {
                 return $this->sendResponse(true, "Unauthorized", "Unauthorized account", null, Response::HTTP_UNAUTHORIZED);
