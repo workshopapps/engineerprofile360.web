@@ -2,8 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import arrow from "./assets/arrow-right.png";
 import good from "./assets/goodblack.png";
+import { Navigate } from "react-router-dom";
 
 function PriceCards() {
+  const [gotoPayment, setGotoPayment] = React.useState(false);
+
+  if (gotoPayment) {
+    return <Navigate to="/payment" />;
+  }
+
   return (
     <>
       <CardWrapper>
@@ -14,7 +21,7 @@ function PriceCards() {
               <span>$19</span>/mo
             </p>
             <h5>or $199 yearly</h5>
-            <Button>Buy Now</Button>
+            <Button onClick={() => setGotoPayment(true)}>Buy Now</Button>
             <LearnMoreDiv>
               <p>Learn More</p>
               <img src={arrow} alt="arrow-right" />
@@ -55,7 +62,7 @@ function PriceCards() {
                 <span>$29</span>/mo
               </p>
               <h5>or $299 yearly</h5>
-              <Button>Buy Now</Button>
+              <Button onClick={() => setGotoPayment(true)}>Buy Now</Button>
               <LearnMoreDiv>
                 <p>Learn More</p>
                 <img src={arrow} alt="arrow-right" />
@@ -94,7 +101,7 @@ function PriceCards() {
               <span>$49</span>/mo
             </p>
             <h5>or $499 yearly</h5>
-            <Button>Buy Now</Button>
+            <Button onClick={() => setGotoPayment(true)}>Buy Now</Button>
             <LearnMoreDiv>
               <p>Learn More</p>
               <img src={arrow} alt="arrow-right" />

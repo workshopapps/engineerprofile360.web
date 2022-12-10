@@ -215,61 +215,61 @@ const App = () => {
               {/* </Route> */}
 
               {/* Organization Route */}
-              {/* <Route element={<RequireAuth allowedRole={ROLES.Organization} />}> */}
-              <Route
-                path="/assessment/view-assessment"
-                element={<AdminViewAssessment />}
-              />
-
-              <Route
-                path="/employees/csv-upload-preview"
-                element={<PreviewCsvUpload />}
-              />
-              <Route path="/departments" element={<DepartmentSection />} />
-              <Route path="/dashboard" element={<CompanyDashboard />} />
-
-              <Route path="/employees" element={<Employees />}>
-                <Route path="" element={<EmployeesListing />} />
-                <Route path="profile/:ID" element={<EmployeeProfile />} />
-                <Route path="add-employee" element={<EmployeeCSVUpload />} />
+              <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
+                <Route
+                  path="/assessment/view-assessment"
+                  element={<AdminViewAssessment />}
+                />
 
                 <Route
-                  path="employee-department"
-                  element={<EmployeeDeparment />}
+                  path="/employees/csv-upload-preview"
+                  element={<PreviewCsvUpload />}
                 />
-              </Route>
-              {/* <Route
+                <Route path="/departments" element={<DepartmentSection />} />
+                <Route path="/dashboard" element={<CompanyDashboard />} />
+
+                <Route path="/employees" element={<Employees />}>
+                  <Route path="" element={<EmployeesListing />} />
+                  <Route path="profile/:ID" element={<EmployeeProfile />} />
+                  <Route path="add-employee" element={<EmployeeCSVUpload />} />
+
+                  <Route
+                    path="employee-department"
+                    element={<EmployeeDeparment />}
+                  />
+                </Route>
+                {/* <Route
                   path="/take-assessment"
                   element={<UserTakeAssessment />}
                 /> */}
-              {/* <Route
+                {/* <Route
                   path="/take-assessment-result"
                   element={<UserTakeAssessmentResult />}
                 /> */}
-              <Route path="/assessment" element={<MainAssessment />}>
-                <Route path="" element={<AssessmentFirstPage />} />
+                <Route path="/assessment" element={<MainAssessment />}>
+                  <Route path="" element={<AssessmentFirstPage />} />
 
-                <Route
-                  path="assessment-list"
-                  element={<AdminAssessmmentListOutlet />}
-                >
-                  <Route path="" element={<AdminAssessmentListAvailable />} />
-                  <Route path="completed" element={<AssessmentList />} />
+                  <Route
+                    path="assessment-list"
+                    element={<AdminAssessmmentListOutlet />}
+                  >
+                    <Route path="" element={<AdminAssessmentListAvailable />} />
+                    <Route path="completed" element={<AssessmentList />} />
+                  </Route>
+
+                  <Route
+                    path="user-assessment-result"
+                    element={<EmployeeAssessmentResult />}
+                  />
+                  <Route
+                    path="create-assessment"
+                    element={<CreateAssessment />}
+                  />
+                  <Route path="admin-csv-upload" element={<AdminCSVUpload />} />
                 </Route>
 
-                <Route
-                  path="user-assessment-result"
-                  element={<EmployeeAssessmentResult />}
-                />
-                <Route
-                  path="create-assessment"
-                  element={<CreateAssessment />}
-                />
-                <Route path="admin-csv-upload" element={<AdminCSVUpload />} />
+                <Route path="/categories" element={<Category />} />
               </Route>
-
-              <Route path="/categories" element={<Category />} />
-              {/* </Route> */}
 
               {/* Overall Admin Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
