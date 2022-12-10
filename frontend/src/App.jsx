@@ -50,11 +50,8 @@ import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 
 import { EmployeeLogin, EmployeeDashboard } from "./ui/pages/Employee";
 
-<<<<<<< HEAD
-=======
-import { AdminLogin  } from "./ui/pages/Admin";
+import { AdminLogin } from "./ui/pages/Admin";
 
->>>>>>> b6c6584dac467a794a70d5e6bb5defa3da20a48e
 import UserSupport from "./main/pages/UserSupport";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
 // import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
@@ -85,7 +82,7 @@ import {
   EmployeesListing,
 } from "./ui/components/Company/Employees";
 
-import Users from "./ui/pages/Admin/Users";
+import Users from "./ui/pages/Admin/Users/Users";
 import MainAssessment from "./ui/pages/Company/Assessment";
 import UserAssessmentListOutlet from "./ui/pages/Employee/EmployeeAssessmentList";
 import Error from "./ui/pages/404";
@@ -212,11 +209,7 @@ const App = () => {
 
             <Route path="/admin/login" element={<AdminLogin />} />
 
-<<<<<<< HEAD
-            {/* <Route path="/guest-login" element={<GuestLogin />} /> */}
-=======
             <Route path="/guest-login" element={<GuestLogin />} />
->>>>>>> b6c6584dac467a794a70d5e6bb5defa3da20a48e
           </Route>
 
           {/* Private Route */}
@@ -250,34 +243,12 @@ const App = () => {
               {/* </Route> */}
 
               {/* Organization Route */}
-<<<<<<< HEAD
-              {/* <Route element={<RequireAuth allowedRole={ROLES.Organization} />}> */}
-              <Route
-                path="/assessment/view-assessment"
-                element={<AdminViewAssessment />}
-              />
-
-              <Route
-                path="/employees/csv-upload-preview"
-                element={<PreviewCsvUpload />}
-              />
-              <Route path="/departments" element={<DepartmentSection />} />
-              <Route path="/dashboard" element={<CompanyDashboard />} />
-
-              <Route path="/employees" element={<Employees />}>
-                <Route path="" element={<EmployeesListing />} />
-                <Route path="profile" element={<EmployeeProfile />} />
-                <Route path="employee-profile" element={<EmployeeProfile />} />
-                <Route path="add-employee" element={<AdminCSVUpload />} />
-=======
               <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
->>>>>>> b6c6584dac467a794a70d5e6bb5defa3da20a48e
                 <Route
                   path="/assessment/view-assessment"
                   element={<AdminViewAssessment />}
                 />
 
-                
                 <Route path="/departments" element={<DepartmentSection />} />
                 <Route path="/dashboard" element={<CompanyDashboard />} />
 
@@ -291,7 +262,10 @@ const App = () => {
                     />
                   </Route>
                   <Route path="add-employee" element={<EmployeeCSVUpload />} />
-                  <Route path="/employees/csv-upload-preview" element={<PreviewCsvUpload />}/>
+                  <Route
+                    path="/employees/csv-upload-preview"
+                    element={<PreviewCsvUpload />}
+                  />
                 </Route>
                 {/* <Route
                   path="/take-assessment"
@@ -329,19 +303,13 @@ const App = () => {
               {/* Overall Admin Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
                 {/* Put in Protected pages in here */}
-                <Route
-                  path="/admin/dashboard"
-<<<<<<< HEAD
-                  element={"Admin pages will render here"}
-                />
-                <Route path="/admin/users" element={<Users />} />
-=======
-                  element={<Dashboard/>} />
-                <Route/>
+                <Route path="/admin/dashboard" element={<Dashboard />} />
 
-                <Route path="/admin/stacks"
-                       element={<Stacks/>} />
-                </Route>
+                <Route />
+
+                <Route path="/admin/stacks" element={<Stacks />} />
+                <Route path="/admin/users" element={<Users />} />
+              </Route>
 
               <Route element={<RequireAuth allowedRole={ROLES.Employees} />}>
                 {/* Put in Protected pages in here */}
@@ -350,7 +318,6 @@ const App = () => {
                   element={<EmployeeDashboard />}
                 />
                 {/* <Route path="/employee/dashboard" element={"boss"} /> */}
->>>>>>> b6c6584dac467a794a70d5e6bb5defa3da20a48e
               </Route>
 
               <Route path="/setting" element={<AdminSetting />} />
