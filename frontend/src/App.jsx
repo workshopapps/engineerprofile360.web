@@ -44,7 +44,7 @@ import {
 
 import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 
-import { EmployeeLogin, Dashboard } from "./ui/pages/Employee";
+import { EmployeeLogin, EmployeeDashboard } from "./ui/pages/Employee";
 
 import { AdminLogin } from "./ui/pages/Admin";
 
@@ -78,7 +78,6 @@ import {
 
 import MainAssessment from "./ui/pages/Company/Assessment";
 import UserAssessmentListOutlet from "./ui/pages/Employee/EmployeeAssessmentList";
-import EmployeeUserDashboard from "./ui/pages/Employee/EmployeeDashboard";
 import Error from "./ui/pages/404";
 import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
 
@@ -217,10 +216,10 @@ const App = () => {
                 path="/employee-assessment-result"
                 element={<EmployeeAssessmentResult />}
               />
-              <Route
+              {/* <Route
                 path="/employee-user-dashboard"
                 element={<EmployeeUserDashboard />}
-              />
+              /> */}
               <Route
                 path="/employee-assessment-list"
                 element={<EmployeeAssessmentList />}
@@ -307,7 +306,7 @@ const App = () => {
                 {/* Put in Protected pages in here */}
                 <Route
                   path="/employee/dashboard"
-                  element={<Dashboard />}
+                  element={<EmployeeDashboard />}
                 />
                 {/* <Route path="/employee/dashboard" element={"boss"} /> */}
               </Route>
