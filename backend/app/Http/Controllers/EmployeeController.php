@@ -163,17 +163,19 @@ class EmployeeController extends Controller
     {
         $passed = 0;
         $failed = 0;
-        $file = json_decode($request->getContent(), true);
-        $json = $file['data'];
+        $file = json_decode($request->getContent(), true); 
+        $json = array_values(array_filter($file)); return $json; exit;
         $last_error = null;
 
         foreach ($json as $key => $item) {
             // only add employee where is_exist != true
-            if ($json[$key]['is_exist'] == false) {
+            // if ($json[$key]['is_exist'] == false) {
                 $raw_password = $this->generateRandomPwd(10);
                 $hash = Hash::make($raw_password);
-                unset($json[$key]['id']);
-                unset($json[$key]['is_exist']);
+                // unset($json[$key]['id']);
+                // unset($json[$key]['is_exist']); 
+                //...commented code will be removed after live testing...
+                unset($json[$key]['department']);
                 $json[$key]['id'] = Str::uuid();
                 $json[$key]['hash'] = $hash;
                 $json[$key]['raw_password'] = $raw_password;
@@ -182,7 +184,7 @@ class EmployeeController extends Controller
                 if (json_decode($result->getContent(), true)['errorState'] == true) $failed++;
                 else $passed++;
                 if (json_decode($result->getContent(), true)['error'] != null) $last_error = json_decode($result->getContent(), true)['error'];
-            }
+            // }
         }
         return $this->sendResponse(false, $last_error, "$passed Employee Added Successfully, $failed failed", $json, Response::HTTP_CREATED);
     }
