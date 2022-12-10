@@ -166,7 +166,14 @@ const List = () => {
         )}
       </ButtonCategory>
       <CategoryListing>
-        {categories.data?.length > 0 ? (
+      {isOverlayLoading ? (
+          <OverlayLoader contained>
+            <div></div>
+          </OverlayLoader>
+        ) : (
+          ""
+        )}
+        {categories.data?.length > 0 || categories.data ? (
           <>
             <TableComponent>
               <tbody>
@@ -223,13 +230,7 @@ const List = () => {
             </NoData>
           </>
         )}
-        {isLoading ? (
-          <OverlayLoader contained>
-            <div></div>
-          </OverlayLoader>
-        ) : (
-          ""
-        )}
+
       </CategoryListing>
 
       {toggleCreateCat && (

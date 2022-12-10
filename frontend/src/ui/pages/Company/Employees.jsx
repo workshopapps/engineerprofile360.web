@@ -13,7 +13,7 @@ const Employees = () => {
   const [employees, setEmployees] = useState();
   const [departments, setDepartments] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const { path } = useLocation();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     const getdetails = async () => {
@@ -47,11 +47,11 @@ const Employees = () => {
   }, [auth.org_id]);
 
   const breadcrumbs =
-    path === "/employees"
+    pathname === "/employees"
       ? ["employees"]
-      : path === "/employees/add-employee"
+      : pathname === "/employees/add-employee"
       ? ["employees", "add employee"]
-      : path === "/employees/employee/profile"
+      : pathname.startsWith("/employees/profile")
       ? ["employees", "employee", "profile"]
       : "";
 
