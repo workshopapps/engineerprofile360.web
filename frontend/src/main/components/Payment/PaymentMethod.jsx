@@ -23,14 +23,16 @@ const PaymentMethod = () => {
           <PaymentTypeContainer
             gap={isOpened ? "30px" : ""}
             height={isOpened ? "auto" : "72px"}
-            isOpened={isOpened}
-            onClick={() => setIsOpened((prevState) => !prevState)}
+            // isOpened={isOpened}
           >
             <PaymentType>
-              <CheckBox bg={isOpened ? true : false}></CheckBox>
+              <CheckBox
+                bg={isOpened ? true : false}
+                onClick={() => setIsOpened((prevState) => !prevState)}
+              />
               Credit or Debit card
             </PaymentType>
-            <Card isOpened={isOpened} />
+            {isOpened ? <Card /> : null}
           </PaymentTypeContainer>
           <PaymentTypeContainer>
             <PaymentType>
