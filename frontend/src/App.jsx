@@ -16,7 +16,7 @@ import { MainLayout, UiLayout, AuthLayout } from "./Layouts";
 
 // Admin dashboard
 import Dashboard from "./ui/pages/Admin/Dashboard/Dashboard";
-
+import Stacks from "./ui/pages/Admin/Stacks/Stacks";
 //DEFAULT EXPORTS FROM MAIN
 import {
   Home,
@@ -303,8 +303,11 @@ const App = () => {
                 <Route
                   path="/admin/dashboard"
                   element={<Dashboard/>} />
-                />
-              </Route>
+                <Route/>
+
+                <Route path="/admin/stacks"
+                       element={<Stacks/>} />
+                </Route>
 
               <Route element={<RequireAuth allowedRole={ROLES.Employees} />}>
                 {/* Put in Protected pages in here */}

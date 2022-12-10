@@ -7,7 +7,7 @@ import axios from '../../../../api/axios';
 
 function Table() {
 
-  const  [table, setTable] = useState([])
+  const  [table, setTable] = useState(null)
 
   useEffect(() => {
     axios.get('admin/users')
@@ -31,6 +31,7 @@ function Table() {
           </Heading>   
 
           <TableComponent>
+           
             <tbody>
              <tr>
                 <th>#</th>
@@ -40,13 +41,16 @@ function Table() {
                 <th>Created</th>
               </tr>
 
-              <tr>
-                <td key={table.id}></td>
-                <td>{table.name}</td>
-                <td>{table.email}</td>
-                <td>{table.company}</td>
-                <td>{table.created}</td>
-              </tr>
+              {table?.data.map((table, i) => (
+                <tr key={i}>
+                  <td>{i + 1}</td>
+                  <td>{table.name}</td>
+                  <td>{table.email}</td>
+                  <td>{table.company}</td>
+                  <td>{table.created}</td>                 
+                </tr>
+        ))}
+              
             </tbody>
           </TableComponent>
           
@@ -67,12 +71,4 @@ const Heading = styled.div`
   justify-content: space-between;
 `
 
-// const Title = styled.h3`
-//   font-family: 'Inter';
-//   font-style: normal;
-//   font-weight: 700;
-//   font-size: 20px;
-//   line-height: 36px;
-//   color: #1E1E1E;
-// `
 
