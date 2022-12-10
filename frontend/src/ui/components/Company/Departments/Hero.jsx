@@ -157,7 +157,7 @@ function Hero() {
                           >
                             View Departments
                           </Button>
-                       
+
                           <More
                             onClick={() => {
                               handleModal(index);
@@ -178,7 +178,7 @@ function Hero() {
                       </tr>
                     );
                   })
-                : "Oops! you have no departments to show. Create a new Department"}
+                : "Oops! you have no departments to show, create a new Department."}
             </tbody>
           </TableComponent>
         </CategoryListing>

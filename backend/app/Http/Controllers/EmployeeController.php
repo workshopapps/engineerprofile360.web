@@ -233,24 +233,6 @@ class EmployeeController extends Controller
         }
     }
 
-    //this will fetch all employees for admin
-    public function getAllEmployees()
-    {
-        try {
-            $companies = Employee::paginate(10);
-
-            return $this->sendResponse(
-                false,
-                null,
-                'All employees',
-                $companies,
-                Response::HTTP_OK
-            );
-        } catch (\Exception $e) {
-            return $this->sendResponse(true, 'Employees not fetched', $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-    }
-
     /**
      * Get employees by companyId
      * @param string $orgId
