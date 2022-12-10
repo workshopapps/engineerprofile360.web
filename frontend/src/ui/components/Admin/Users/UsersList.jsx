@@ -1,78 +1,64 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../../../api/axios";
 import styled from "styled-components";
-import { Button } from "../../../../styles/reusableElements.styled";
-import UserView from "./UserView";
+import TableComponent from "../../molecules/TableComponent";
 
 import { More } from "iconsax-react";
 
 const UsersList = () => {
   const [openMod, setOpenMod] = useState(false);
-  const [userMod, setUserMod] = useState(false);
+  const [users, setUsers] = useState(null);
   useEffect(() => {
     const getDetails = async () => {
-      const ENDPOINTS = [axios.get(`admin/users`)];
-      try {
-        const response = await ENDPOINTS.then((data) => {
-          return data;
+      axios
+        .get(`admin/users`)
+        .then((res) => {
+          console.log(res.data.data);
+          setUsers(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
         });
-        console.log(response);
-      } catch (error) {
-        // handle error
-        console.log(error);
-      }
     };
+
     getDetails();
   }, []);
 
   const toggleMod = () => {
     setOpenMod(!openMod);
   };
-  const toggleUserMod = () => {
-    setUserMod(!userMod);
-  };
-  return (
-    <EmployeesList>
-      <EmployeesTable>
-        <table>
-          <tbody>
-            <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Company</th>
-              <th>Created</th>
-              <th>Actions</th>
-            </tr>
-            <tr>
-              <td>1.</td>
-              <td>Seyi Ojo</td>
-              <td>Johndoes@domain</td>
-              <td>ABCD Company</td>
-              <td>24-12-2022</td>
-              <td>
-                <Button
-                  $variant="outlined"
-                  $color="#2667FF"
-                  onClick={toggleUserMod}
-                >
-                  View Profile
-                </Button>
 
-                <More onClick={toggleMod} />
-                {openMod ? (
-                  <Modal>
-                    <ModalEdit>Edit</ModalEdit>
-                    <ModalDelete>Delete</ModalDelete>
-                  </Modal>
-                ) : null}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </EmployeesTable>
-      {userMod ? <UserView toggleUserMod={toggleUserMod} /> : null}
-    </EmployeesList>
+  return (
+    <TableComponent>
+      <tbody>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Company</th>
+          <th>Created</th>
+          <th>Actions</th>
+        </tr>
+        {users?.data.map((user, i) => (
+          <tr key={i}>
+            <td>{i + 1}</td>
+            <td>{user.name}</td>
+            <td>{user.email}</td>
+            <td>{user.company}</td>
+            <td>{Date(user.created)}</td>
+            <td>
+              <More onClick={toggleMod} />
+              {openMod ? (
+                <Modal>
+                  <ModalEdit>Edit</ModalEdit>
+                  <ModalDelete>Delete</ModalDelete>
+                </Modal>
+              ) : null}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </TableComponent>
   );
 };
 
