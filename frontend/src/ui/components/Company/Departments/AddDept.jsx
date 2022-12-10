@@ -131,7 +131,7 @@ export const InputWrapper = styled.div`
   z-index: 1;
 
   background-color: rgba(248, 251, 253, 0);
-
+  overflow: hidden;
   form {
     display: flex;
     flex-direction: column;
@@ -144,6 +144,7 @@ export const InputWrapper = styled.div`
 
     border-radius: 4px;
     background-color: #f8fbfd;
+    overflow: hidden;
 
     ${({ theme }) => theme.breakpoints.up("xs")} {
       width: 556px;

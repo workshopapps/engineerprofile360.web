@@ -200,7 +200,7 @@ const data = {
   labels: ["Javascript", "PHP", "Java", "ReactJs", "Nodejs", "WordPress"],
   datasets: [
     {
-      label: "Dataset",
+      label: "Categories",
       data: [65, 59, 90, 81, 56, 55, 40],
       fill: true,
       backgroundColor: "rgba(255, 99, 132, 0.2)",

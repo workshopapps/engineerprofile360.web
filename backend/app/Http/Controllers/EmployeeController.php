@@ -122,7 +122,7 @@ class EmployeeController extends Controller
     {
         try {
             $employee = Employee::where("id", $employee_id)
-                ->with(['department', 'completed_assessment.userscore'])->withCount([
+                ->with(['department', 'completed_assessment.assessment.userscore'])->withCount([
                     "completed_assessment",
                     'assessment AS points' => function ($query) {
                         $query->select(DB::raw("SUM(result) as points"));
@@ -231,24 +231,6 @@ class EmployeeController extends Controller
 
             return $this->sendResponse(false, null, 'All Department Employees', $employees, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true, 'Employees not fetched', $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    //this will fetch all employees for admin
-    public function getAllEmployees()
-    {
-        try {
-            $companies = Employee::paginate(10);
-
-            return $this->sendResponse(
-                false,
-                null,
-                'All employees',
-                $companies,
-                Response::HTTP_OK
-            );
-        } catch (\Exception $e) {
             return $this->sendResponse(true, 'Employees not fetched', $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }

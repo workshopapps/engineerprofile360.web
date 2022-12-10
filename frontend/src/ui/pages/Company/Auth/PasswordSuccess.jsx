@@ -2,12 +2,12 @@ import React from "react";
 import styled from "styled-components";
 
 import { Container, Button } from "../../../../styles/reusableElements.styled";
-import AuthTitle from "../../../components/Company/Auth/molecules/AuthTitle";
+import AuthTitle from "../../../components/molecules/Auth/AuthTitle";
 
 import unlockIcon from "../../../../assets/icons/unlock.svg";
 import { Link } from "react-router-dom";
 
-const AdminPasswordSuccess = () => {
+const PasswordSuccess = () => {
   return (
     <>
       <SuccessContainer>
@@ -26,7 +26,7 @@ const AdminPasswordSuccess = () => {
   );
 };
 
-export default AdminPasswordSuccess;
+export default PasswordSuccess;
 
 const SuccessContainer = styled(Container)`
   width: 100%;

@@ -7,7 +7,7 @@ import {
   Button,
   Loader,
 } from "../../../../styles/reusableElements.styled";
-import AuthTitle from "../../../components/Company/Auth/molecules/AuthTitle";
+import AuthTitle from "../../../components/molecules/Auth/AuthTitle";
 import InputField from "../../../../components/InputField";
 
 import useInputValidation from "../../../../hooks/useInputValidation";
@@ -16,7 +16,7 @@ import { showErrorToast, showSuccessToast } from "../../../../helpers/helper";
 import securityIcon from "../../../../assets/icons/security-safe.svg";
 import smsSvg from "../../../../assets/icons/smsenvelope.svg";
 
-const AdminResetPassword = () => {
+const ResetPassword = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [resetPasswordError, setResetPasswordError] = useState("");
   const {
@@ -117,7 +117,7 @@ const AdminResetPassword = () => {
   );
 };
 
-export default AdminResetPassword;
+export default ResetPassword;
 
 const FormContainer = styled(Container)`
   width: 100%;

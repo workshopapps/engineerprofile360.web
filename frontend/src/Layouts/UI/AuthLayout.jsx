@@ -5,7 +5,7 @@ import { Link, Outlet } from "react-router-dom";
 import { Container } from "../../styles/reusableElements.styled";
 import Logo from "../../components/Logo";
 
-const AdminAuthLayout = () => {
+const AuthLayout = () => {
   return (
     <>
       <Header as="header">
@@ -20,7 +20,7 @@ const AdminAuthLayout = () => {
   );
 };
 
-export default AdminAuthLayout;
+export default AuthLayout;
 
 const Header = styled(Container)`
   height: 96px;

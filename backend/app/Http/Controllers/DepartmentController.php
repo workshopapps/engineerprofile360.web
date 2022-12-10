@@ -12,14 +12,19 @@ use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
-    // @dreywandowski --- add department
     public function addDepartment(AddDepartmentRequest $request)
     {
         $data = $request->all();
 
         try {
-            $department = Department::create($data);
+             //this checks if department already exists for the current user
+             $departmentExists = Department::where('name', $data['name'])->where('org_id', $data['org_id'])->first();
 
+             if($departmentExists){
+                 return $this->sendResponse(true, "department already exists", "name already exists.", null, Response::HTTP_BAD_REQUEST);
+             }
+
+            $department = Department::create($data);
 
             return $this->sendResponse(false, null, 'Department created successfully', $department, Response::HTTP_CREATED);
         } catch (Exception $e) {

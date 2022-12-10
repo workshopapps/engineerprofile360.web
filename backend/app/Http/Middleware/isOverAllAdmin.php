@@ -36,7 +36,7 @@ class isOverAllAdmin extends Controller
             }
 
             // if the user doesnt have the overall admin level privilege
-            if($org_user->first()["role"] != 3){
+            if($org_user->first()["role"] != 3 && $org_user->first()["isAdmin"] != 1){
                 return $this->sendResponse(true,"Access Denied.", "Not permitted to perform this action.",null, 403);
             }
             
