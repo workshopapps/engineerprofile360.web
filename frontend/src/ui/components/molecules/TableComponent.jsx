@@ -14,7 +14,7 @@ export default TableComponent;
 const TableWrapper = styled.div`
   padding-top: ${({ theme }) => theme.spacing(3)};
   width: 100%;
-  overflow: auto;
+  overflow-x: auto;
 `;
 
 const Table = styled.table`

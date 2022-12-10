@@ -70,8 +70,8 @@ Route::prefix("admin")->group(function () {
     Route::get('overview', [AdminController::class, 'getAdminOverview'])->middleware("isloggedin", "isadmin");
     Route::get('users', [AdminController::class, 'getAllUsers'])->middleware("isloggedin", "isadmin");
     Route::delete('/{companyId}/delete', [AdminController::class, 'deleteUserCompany']);
-
-
+    Route::get('/companies', [AdminController::class, 'getAllCompanies']);
+    Route::get('/employees', [AdminController::class, 'getAllEmployees']);
 });
 
 
@@ -92,7 +92,8 @@ Route::prefix("user-assessment")->group(function () {
 Route::prefix("assessment")->group(function () {
     Route::post('/create', [AssessmentController::class, 'createAssessment'])->middleware("isloggedin", "isadmin");
     // Route::get('/{assessmentId}/notify/{employeeId}', [AssessmentController::class, 'notifyEmployeeAssessment']); // do not uncomment this route, some adjusments is currently been made
-    Route::get('/{organization_id}', [AssessmentController::class, 'getAssByOrgId']);
+    Route::get('/{organization_id}', [AssessmentController::class, 'getAssByOrgId'])->middleware("isloggedin", "isadmin");
+    Route::get('/department/{id}', [AssessmentController::class, 'getAssByDepartmentId'])->middleware("isloggedin");
     Route::put('/{assessmentId}', [AssessmentController::class, 'updateAssessment'])->middleware("isloggedin", "isadmin");
     Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAssessment'])->middleware("isloggedin", "isadmin");
     Route::get('/{companyId}/{orgId}/accepted-assessments', [AssessmentController::class, 'getCompanyAcceptedAssessments'])->middleware("isloggedin", "isadmin");

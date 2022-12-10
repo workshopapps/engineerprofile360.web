@@ -33,4 +33,9 @@ class Assessment extends Model
     {
         return $this->belongsTo(Department::class, 'department_id');
     }
+
+    public function userscore()
+    {
+        return $this->hasOne(UserScore::class, 'assessment_id');
+    }
 }
