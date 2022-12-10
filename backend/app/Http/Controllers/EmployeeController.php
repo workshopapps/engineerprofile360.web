@@ -164,7 +164,7 @@ class EmployeeController extends Controller
         $passed = 0;
         $failed = 0;
         $file = json_decode($request->getContent(), true); 
-        $json = array_values(array_filter($file)); return $json; exit;
+        $json = array_values(array_filter($file));
         $last_error = null;
 
         foreach ($json as $key => $item) {
@@ -183,10 +183,10 @@ class EmployeeController extends Controller
                 $result = $this->insertEmployee($json[$key], $raw_password);
                 if (json_decode($result->getContent(), true)['errorState'] == true) $failed++;
                 else $passed++;
-                if (json_decode($result->getContent(), true)['error'] != null) $last_error = json_decode($result->getContent(), true)['error'];
+                if (json_decode($result->getContent(), true)['error'] != null) $last_error = json_decode($result->getContent(), true)['message'];
             // }
         }
-        return $this->sendResponse(false, $last_error, "$passed Employee Added Successfully, $failed failed", $json, Response::HTTP_CREATED);
+        return $this->sendResponse(false, "$passed Employee Added Successfully, $failed failed", $last_error, $json, Response::HTTP_CREATED);
     }
 
     public function insertEmployee($data, $empPassword)
