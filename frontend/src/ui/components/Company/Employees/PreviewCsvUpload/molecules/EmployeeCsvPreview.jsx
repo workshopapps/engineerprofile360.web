@@ -91,7 +91,7 @@ function EmployeeCsvPreview() {
         setLoading(true);
         const el = ref.current;
         const data = tableToJson(el);
-        console.log(data);
+        //console.log(data);
 
         
         try {
@@ -105,15 +105,15 @@ function EmployeeCsvPreview() {
             setLoading(false);
             toast.success(`${response.data.message}`);
             
-            // setTimeout(
-            //   () => navigate("/employees/"), 
-            //   1000
-            // );
+            setTimeout(
+               () => navigate("/employees/", {replace:true}), 
+               1000
+             );
             
           }else {
             toast.error(`${response.data.message}`);
           }
-          console.log(response.data.data);
+          //console.log(response.data.data);
         } catch (err) {
           setLoading(false);
           if (!err.response) {

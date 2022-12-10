@@ -314,7 +314,7 @@ const Manual = styled.div`
   height: 72px;
   border: 1px solid #c7e0f4;
   border-top-right-radius: 16px;
-  border-radius: 16px 16px 0 0;
+  /*border-radius: 16px 16px 0 0;*/
   cursor: pointer;
   
   @media (max-width: 721px) {

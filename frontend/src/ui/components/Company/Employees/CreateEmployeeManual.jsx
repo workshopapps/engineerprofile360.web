@@ -89,7 +89,7 @@ const CreateEmployeeManual = () => {
           setLoading(false);
           localStorage.removeItem('departmentsID');
           setTimeout(
-            () => navigate("/employees/"), 
+            () => navigate("/employees/", {replace:true}), 
             5000
           );
         })
