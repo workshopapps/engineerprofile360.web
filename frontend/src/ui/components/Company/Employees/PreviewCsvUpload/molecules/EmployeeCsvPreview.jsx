@@ -12,7 +12,7 @@ function EmployeeCsvPreview() {
   const navigate = useNavigate();
      const { state } = useLocation();
      const [loading, setLoading] = useState(false);
-     const [counter, setCounter] = useState(0);
+     const [ischecked, setIschecked] = useState();
      const CsvData = state.csvData || '';
      const deptid = state.departmentID|| '';
      const deptname = state.departmentName|| '';
@@ -82,11 +82,18 @@ function EmployeeCsvPreview() {
     }
     
     const handleClick = async() => {
-      setLoading(true);
+      const checkboxes = document.querySelectorAll('td input[type="checkbox"]:checked');
+        
+      if(checkboxes.length < 1) {
+        toast.error("Choose employees to be added");
+      }
+      else{
+        setLoading(true);
         const el = ref.current;
         const data = tableToJson(el);
         console.log(data);
 
+        
         try {
           const response = await axios.post(
             "/employee/confirm", JSON.stringify({
@@ -98,10 +105,10 @@ function EmployeeCsvPreview() {
             setLoading(false);
             toast.success(`${response.data.message}`);
             
-            setTimeout(
-              () => navigate("/employees/"), 
-              1000
-            );
+            // setTimeout(
+            //   () => navigate("/employees/"), 
+            //   1000
+            // );
             
           }else {
             toast.error(`${response.data.message}`);
@@ -117,7 +124,8 @@ function EmployeeCsvPreview() {
         }
         setLoading(false);
       }
- 
+    }
+   
   return loading ? (
     <OverlayLoader contained height={100}>
           <div></div>
