@@ -34,7 +34,7 @@ class IsAdmin extends Controller
         try {
             $user = $request->user;
             $uid = $user["id"];
-    
+            
             // check if user exists.
             $org_user = User::where("user_id", $uid);
             
@@ -42,9 +42,9 @@ class IsAdmin extends Controller
             if($org_user->count() == 0){
                 return $this->sendResponse(true,"Access Denied, user not found.", "Not permitted to perform this action.",null, 403);
             }
-
+            
             // if the user doesnt have the organization level privilege
-            if($org_user->first()["role"] != 2){
+            if($org_user->first()["role"] != 2 && $org_user->first()["role"] != 3){
                 return $this->sendResponse(true,"Access Denied.", "Not permitted to perform this action.",null, 403);
             }
             

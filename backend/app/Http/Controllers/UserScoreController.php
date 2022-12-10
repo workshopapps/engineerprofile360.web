@@ -72,7 +72,7 @@ class UserScoreController extends Controller
     {
         try {
             $userScore = Employee::where("id", $id)
-                ->with(['department', 'completed_assessment.userscore'])->withCount([
+                ->with(['department', 'completed_assessment.assessment.userscore'])->withCount([
                     "completed_assessment",
                     'assessment AS points' => function ($query) {
                         $query->select(DB::raw("SUM(result) as points"));
@@ -121,6 +121,9 @@ class UserScoreController extends Controller
                 "completed_assessment",
                 'assessment AS points' => function ($query) {
                     $query->select(DB::raw("SUM(result) as points"));
+                },
+                'assessment AS total_points' => function ($query) {
+                    $query->select(DB::raw("SUM(total_questions) as total_points"));
                 }
             ])->orderBy('points', 'desc');
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);

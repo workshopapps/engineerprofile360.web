@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams, Outlet } from "react-router-dom";
 import styled from "styled-components";
 import axios from "../../../../api/axios";
 import { showErrorToast } from "../../../../helpers/helper";
 import {
-  Button,
   Title,
   OverlayLoader,
 } from "../../../../styles/reusableElements.styled";
 import { ReactComponent as EmployeeProfilePhoto } from "../../../components/assets/user-photo.svg";
-import { Radar } from "react-chartjs-2";
 
 const Profile = () => {
   const { ID } = useParams();
@@ -36,7 +34,7 @@ const Profile = () => {
       }
     };
     getDetails();
-  }, [ID]);
+  }, [ID, employeeID]);
 
   return (
     <>
@@ -56,7 +54,11 @@ const Profile = () => {
                   >
                     {employee.fullname ? employee.fullname : ""}
                   </Title>
-                  <p>{employee.occupation ? employee.occupation : "NIL"}</p>
+                  <p>
+                    {employee.department?.name
+                      ? employee.department.name
+                      : "NIL"}
+                  </p>
                 </EmployeeProfileInfoDetails>
               </EmployeeProfileInfo>
 
@@ -69,7 +71,9 @@ const Profile = () => {
                     $lHeight="40px"
                     $weight="400"
                   >
-                    70%
+                    {employee.completed_assessment_count
+                      ? employee.completed_assessment_count
+                      : "0"}
                   </Title>
                   <p>Assessments</p>
                 </EmployeeProfileDataCard>
@@ -82,59 +86,22 @@ const Profile = () => {
                     $lHeight="40px"
                     $weight="400"
                   >
-                    70%
+                    {employee.points
+                      ? `${(
+                          (employee.points / employee.total_points) *
+                          100
+                        ).toFixed(2)}%`
+                      : "0%"}
                   </Title>
                   <p>Performance</p>
                 </EmployeeProfileDataCard>
               </EmployeeProfileDataContainer>
             </EmployeeProfileInfoCard>
           </EmployeeProfileStatsCard>
-          <EmployeeProfileInnerContainer>
-            <EmployeeDataContainer>
-              <Title as="h5" $size="14px" $lHeight="40px" $weight="500">
-                Employee Data
-              </Title>
 
-              <EmployeeCard>
-                <p style={{ color: "#8E8E8E" }}>Name:</p>
-                <p style={{ color: "#323130" }}>
-                  {employee.fullname ? employee.fullname : ""}
-                </p>
-              </EmployeeCard>
-            </EmployeeDataContainer>
-            <EmployeeStatsContainer>
-              <Title $size="14px" $lHeight="40px" $weight="500">
-                Employee Stats
-              </Title>
-              {/* {EmployeeStatsData
-              ? EmployeeStatsData.map((item, key) => (
-                  <EmployeeCard key={key}>
-                    <p style={{ color: "#8E8E8E" }}>{item.title}:</p>
-                    <p style={{ color: "#323130" }}>{item.value}</p>
-                  </EmployeeCard>
-                ))
-              : ""} */}
-              <ButtonContainer>
-                <Link to="">
-                  <Button style={{ marginTop: "57px" }}>View Assessment</Button>
-                </Link>
-              </ButtonContainer>
-            </EmployeeStatsContainer>
-            <OverallContainer>
-              <Radar data={data} />
-              <ChartCard>
-                <Title
-                  $size="20px"
-                  $lHeight="28px"
-                  $color="#323130"
-                  $weight="400"
-                >
-                  Tetra
-                </Title>
-                <p style={{ fontSize: "16px" }}>Software Vendor</p>
-              </ChartCard>
-            </OverallContainer>
-          </EmployeeProfileInnerContainer>
+          {/* Renders outlet */}
+          <Outlet context={{ employee }} />
+
         </EmployeeProfileContainer>
       ) : (
         <OverlayLoader contained>
@@ -144,23 +111,6 @@ const Profile = () => {
       )}
     </>
   );
-};
-
-const data = {
-  labels: ["Javascript", "PHP", "Java", "ReactJs", "Nodejs", "WordPress"],
-  datasets: [
-    {
-      label: "Dataset",
-      data: [65, 59, 90, 81, 56, 55, 40],
-      fill: true,
-      backgroundColor: "rgba(255, 99, 132, 0.2)",
-      borderColor: "rgb(255, 99, 132)",
-      pointBackgroundColor: "rgb(255, 99, 132)",
-      pointBorderColor: "#fff",
-      pointHoverBackgroundColor: "#fff",
-      pointHoverBorderColor: "rgb(255, 99, 132)",
-    },
-  ],
 };
 
 export default Profile;
@@ -256,77 +206,4 @@ const EmployeeProfileDataCard = styled.div`
   p {
     color: #323130;
   }
-`;
-
-const EmployeeProfileInnerContainer = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  gap: 20px;
-  align-items: flex-start;
-  padding-top: 80px;
-
-  ${({ theme }) => theme.breakpoints.down("touch")} {
-    flex-direction: column;
-    justify-content: center;
-    gap: ${({ theme }) => theme.spacing(6)};
-  }
-`;
-
-const EmployeeDataContainer = styled.div`
-  border: 1px solid #f8fbfd;
-  border-radius: 16px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-
-  h5 {
-    padding: 0px 10px;
-    padding-top: 20px;
-  }
-`;
-
-const EmployeeCard = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  border-top: 1px solid #eff6fc;
-  border-bottom: 1px solid #eff6fc;
-  padding: 10px 10px;
-
-  p {
-    font-size: 12px;
-  }
-`;
-
-const EmployeeStatsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  border: 1px solid #c7e0f4;
-  width: 100%;
-  border-radius: 16px;
-  padding: 24px 20px;
-
-  h5 {
-    padding: 0px 10px;
-    padding-top: 20px;
-  }
-`;
-
-const OverallContainer = styled.div`
-  border: 1px solid #f8fbfd;
-  border-radius: 8px;
-  width: 100%;
-
-  svg {
-    width: 100%;
-  }
-`;
-
-const ChartCard = styled.div`
-  padding: 28px 30px;
-`;
-
-const ButtonContainer = styled.div`
-  margin: auto;
 `;

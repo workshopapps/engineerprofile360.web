@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import useAuth from "../../../hooks/useAuth";
 
-import { Menu, TaskSquare, Profile2User, Home3, Folder2 } from "iconsax-react";
+import { Menu, TaskSquare, Profile2User, Home3, Folder2, Box1 } from "iconsax-react";
 
 const LeftBar = () => {
   const { pathname } = useLocation();
@@ -121,50 +121,38 @@ const LeftBar = () => {
           </ListItem>
           <ListItem
             $active={
-              pathname.split("/")[2] === "departments" ||
-              pathname === "/admin/departments"
+              pathname.split("/")[2] === "stacks" ||
+              pathname === "/admin/stacks"
                 ? "active"
                 : ""
             }
           >
-            <Link to="/admin/departments">
-              <Home3 /> Departments
+            <Link to="/admin/stacks">
+              <Box1 /> Stacks
             </Link>
           </ListItem>
           <ListItem
             $active={
-              pathname.split("/")[2] === "categories" ||
-              pathname === "/admin/categories"
+              pathname.split("/")[2] === "assessments" ||
+              pathname === "/admin/assessments"
                 ? "active"
                 : ""
             }
           >
-            <Link to="/categories">
-              <Folder2 /> Categories
+            <Link to="/admin/assessments">
+              <TaskSquare /> Assessments
             </Link>
           </ListItem>
           <ListItem
             $active={
-              pathname.split("/")[2] === "assessment" ||
-              pathname === "/admin/assessment"
+              pathname.split("/")[2] === "users" ||
+              pathname === "/admin/users"
                 ? "active"
                 : ""
             }
           >
-            <Link to="/admin/assessment">
-              <TaskSquare /> Assessment
-            </Link>
-          </ListItem>
-          <ListItem
-            $active={
-              pathname.split("/")[2] === "employees" ||
-              pathname === "/admin/employees"
-                ? "active"
-                : ""
-            }
-          >
-            <Link to="/admin/employees">
-              <Profile2User /> Employees
+            <Link to="/admin/users">
+              <Profile2User /> Users
             </Link>
           </ListItem>
         </List>

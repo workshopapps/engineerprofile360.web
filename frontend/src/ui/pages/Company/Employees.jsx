@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 import useAuth from "../../../hooks/useAuth";
 import axios from "../../../api/axios";
@@ -13,6 +13,7 @@ const Employees = () => {
   const [employees, setEmployees] = useState();
   const [departments, setDepartments] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const { path } = useLocation();
 
   useEffect(() => {
     const getdetails = async () => {
@@ -43,11 +44,20 @@ const Employees = () => {
     };
 
     getdetails();
-  }, []);
+  }, [auth.org_id]);
+
+  const breadcrumbs =
+    path === "/employees"
+      ? ["employees"]
+      : path === "/employees/add-employee"
+      ? ["employees", "add employee"]
+      : path === "/employees/employee/profile"
+      ? ["employees", "employee", "profile"]
+      : "";
 
   return (
     <>
-      <PageInfo breadcrumb={["employees"]} />
+      <PageInfo breadcrumb={breadcrumbs} />
       {!isLoading ? (
         <Outlet context={{ employees, departments }} />
       ) : (

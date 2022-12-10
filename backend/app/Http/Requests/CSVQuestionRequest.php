@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Foundation\Http\FormRequest;
+
 class CSVQuestionRequest extends BaseRequest
 {
     /**
@@ -22,8 +24,9 @@ class CSVQuestionRequest extends BaseRequest
     public function rules()
     {
         return [
-            "org_id" => 'required',
-            "base64" => 'required'
+            "org_id" => 'required|string',
+            "assessment_id" => 'required|string',
+            "base64" => 'required|string'
         ];
     }
 }

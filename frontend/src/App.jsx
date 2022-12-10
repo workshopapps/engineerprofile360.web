@@ -1,5 +1,9 @@
 // import React from "react";
+
+// This is for DevOps App Monitoring - START
 import * as atatus from "atatus-spa";
+// This is for DevOps App Monitoring - END
+
 //import * as Sentry from "@sentry/react";
 import { Routes, Route } from "react-router-dom";
 import RequireAuth from "./components/requireAuth";
@@ -8,8 +12,7 @@ import { ThemeProvider } from "styled-components";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GlobalStyles, theme } from "./styles/globalStyles";
-import { MainLayout, UiLayout } from "./Layouts";
-import AdminAuthLayout from "./Layouts/UI/AuthLayout";
+import { MainLayout, UiLayout, AuthLayout } from "./Layouts";
 
 //DEFAULT EXPORTS FROM MAIN
 import {
@@ -29,15 +32,21 @@ import {
   Terms,
 } from "./main/pages";
 
-import AdminSignup from "./ui/pages/Company/Auth/AdminSignup";
-import AdminLogin from "./ui/pages/Company/Auth/AdminLogin";
-import AdminSetPassword from "./ui/pages/Company/Auth/AdminSetPassword";
-import AdminResetPassword from "./ui/pages/Company/Auth/AdminResetPassword";
-import AdminPasswordSuccess from "./ui/pages/Company/Auth/AdminPasswordSuccess";
-import AdminVerifyEmail from "./ui/pages/Company/Auth/AdminVerifyEmail";
-import AdminEmailVerified from "./ui/pages/Company/Auth/AdminEmailVerified";
+import {
+  CompanyLogin,
+  CompanySignup,
+  CompanyEmailVerified,
+  CompanyPasswordSuccess,
+  CompanySetPassword,
+  CompanyResetPassword,
+  CompanyVerifyEmail,
+} from "./ui/pages/Company/";
 
 import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
+
+import { EmployeeLogin, EmployeeDashboard } from "./ui/pages/Employee";
+
+import { AdminLogin } from "./ui/pages/Admin";
 
 import UserSupport from "./main/pages/UserSupport";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
@@ -63,15 +72,15 @@ import AssessmentFirstPage from "./ui/components/Company/Assessments/AssessmentF
 import CreateAssessment from "./ui/components/Company/Assessments/CreateAssessment";
 
 import {
+  EmployeeAssessments,
+  EmployeeDetails,
   EmployeeProfile,
   EmployeesListing,
 } from "./ui/components/Company/Employees";
 
 import MainAssessment from "./ui/pages/Company/Assessment";
 import UserAssessmentListOutlet from "./ui/pages/Employee/EmployeeAssessmentList";
-import EmployeeUserDashboard from "./ui/pages/Employee/EmployeeDashboard";
 import Error from "./ui/pages/404";
-import EmployeeDeparment from "./ui/pages/EmployeeDeparment";
 
 // import GuestLogin from "./main/pages/Auth/GuestLogin";
 import DepartmentSection from "./ui/pages/Company/DepartmentSection";
@@ -89,10 +98,12 @@ import AdminAssessmmentListOutlet from "./ui/components/Company/Assessments/admi
 import AdminAssessmentListAvailable from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmentListAvailable";
 import AssessmentList from "./ui/components/Company/Assessments/adminAssesmentList/AssessmentList";
 
+// This is for DevOps App Monitoring - START
 atatus.config("4010279ebbd747e7a752082eea130df6").install();
 
-// atatus.notify(new Error("Test Atatus Setup"));
+atatus.notify(new Error("Test Atatus Setup"));
 atatus.notify();
+// This is for DevOps App Monitoring - END
 
 const ROLES = {
   Employees: 1,
@@ -167,20 +178,32 @@ const App = () => {
               /> */}
           </Route>
 
-          <Route element={<AdminAuthLayout />}>
-            <Route path="/register" element={<AdminSignup />} />
-            <Route path="/login" element={<AdminLogin />} />
-            <Route path="/reset-password" element={<AdminResetPassword />} />
-            <Route
-              path="/reset-password-success"
-              element={<AdminPasswordSuccess />}
-            />
-            <Route path="/password/reset" element={<AdminSetPassword />} />
-            <Route path="/verify-email" element={<AdminVerifyEmail />} />
+          {/* Authentication Layout */}
+          <Route element={<AuthLayout />}>
+            {/* Company Auth Routes */}
+
+            <Route path="/register" element={<CompanySignup />} />
+            <Route path="/login" element={<CompanyLogin />} />
+            <Route path="/verify-email" element={<CompanyVerifyEmail />} />
             <Route
               path={"/auth/verify/:user_id/:token"}
-              element={<AdminEmailVerified />}
+              element={<CompanyEmailVerified />}
             />
+            <Route path="/reset-password" element={<CompanyResetPassword />} />
+            <Route path="/password/reset" element={<CompanySetPassword />} />
+            <Route
+              path="/reset-password-success"
+              element={<CompanyPasswordSuccess />}
+            />
+
+            {/* Employee Auth Routes */}
+
+            <Route path="/employee/login" element={<EmployeeLogin />} />
+
+            {/* Admin Auth Routes */}
+
+            <Route path="/admin/login" element={<AdminLogin />} />
+
             {/* <Route path="/guest-login" element={<GuestLogin />} /> */}
           </Route>
 
@@ -194,10 +217,10 @@ const App = () => {
                 path="/employee-assessment-result"
                 element={<EmployeeAssessmentResult />}
               />
-              <Route
+              {/* <Route
                 path="/employee-user-dashboard"
                 element={<EmployeeUserDashboard />}
-              />
+              /> */}
               <Route
                 path="/employee-assessment-list"
                 element={<EmployeeAssessmentList />}
@@ -230,13 +253,14 @@ const App = () => {
 
                 <Route path="/employees" element={<Employees />}>
                   <Route path="" element={<EmployeesListing />} />
-                  <Route path="profile/:ID" element={<EmployeeProfile />} />
+                  <Route path="profile/:ID" element={<EmployeeProfile />}>
+                    <Route path="" element={<EmployeeDetails />} />
+                    <Route
+                      path="assessments"
+                      element={<EmployeeAssessments />}
+                    />
+                  </Route>
                   <Route path="add-employee" element={<EmployeeCSVUpload />} />
-
-                  <Route
-                    path="employee-department"
-                    element={<EmployeeDeparment />}
-                  />
                 </Route>
                 {/* <Route
                   path="/take-assessment"
@@ -279,6 +303,16 @@ const App = () => {
                   element={"Admin pages will render here"}
                 />
               </Route>
+
+              <Route element={<RequireAuth allowedRole={ROLES.Employees} />}>
+                {/* Put in Protected pages in here */}
+                <Route
+                  path="/employee/dashboard"
+                  element={<EmployeeDashboard />}
+                />
+                {/* <Route path="/employee/dashboard" element={"boss"} /> */}
+              </Route>
+
               <Route path="/setting" element={<AdminSetting />} />
               <Route path="/404" element={<Error />} />
 
