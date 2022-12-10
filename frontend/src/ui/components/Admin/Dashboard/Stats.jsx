@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Title } from "../../../../styles/reusableElements.styled";
 import { Profile2User, People, User } from "iconsax-react";
-import axios from "../../../../api/axios";
 
 const Stats = ({ stats }) => {
   const [data, setData] = useState(stats);
