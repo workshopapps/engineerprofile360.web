@@ -38,6 +38,7 @@ import {
 import {
   CompanyLogin,
   CompanySignup,
+  GuestLogin,
   CompanyEmailVerified,
   CompanyPasswordSuccess,
   CompanySetPassword,
@@ -49,7 +50,7 @@ import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 
 import { EmployeeLogin, EmployeeDashboard } from "./ui/pages/Employee";
 
-import { AdminLogin } from "./ui/pages/Admin";
+import { AdminLogin  } from "./ui/pages/Admin";
 
 import UserSupport from "./main/pages/UserSupport";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
@@ -208,7 +209,7 @@ const App = () => {
 
             <Route path="/admin/login" element={<AdminLogin />} />
 
-            {/* <Route path="/guest-login" element={<GuestLogin />} /> */}
+            <Route path="/guest-login" element={<GuestLogin />} />
           </Route>
 
           {/* Private Route */}
@@ -248,10 +249,7 @@ const App = () => {
                   element={<AdminViewAssessment />}
                 />
 
-                <Route
-                  path="/employees/csv-upload-preview"
-                  element={<PreviewCsvUpload />}
-                />
+                
                 <Route path="/departments" element={<DepartmentSection />} />
                 <Route path="/dashboard" element={<CompanyDashboard />} />
 
@@ -265,6 +263,7 @@ const App = () => {
                     />
                   </Route>
                   <Route path="add-employee" element={<EmployeeCSVUpload />} />
+                  <Route path="/employees/csv-upload-preview" element={<PreviewCsvUpload />}/>
                 </Route>
                 {/* <Route
                   path="/take-assessment"
