@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import useAuth from "../../../hooks/useAuth";
 
-import { Menu, TaskSquare, Profile2User, Home3, Folder2 } from "iconsax-react";
+import { Menu, TaskSquare, Profile2User, Home3, Folder2, Box1 } from "iconsax-react";
 
 const LeftBar = () => {
   const { pathname } = useLocation();
@@ -128,19 +128,7 @@ const LeftBar = () => {
             }
           >
             <Link to="/admin/stacks">
-              <Home3 /> Stacks
-            </Link>
-          </ListItem>
-          <ListItem
-            $active={
-              pathname.split("/")[2] === "categories" ||
-              pathname === "/admin/categories"
-                ? "active"
-                : ""
-            }
-          >
-            <Link to="/categories">
-              <Folder2 /> Categories
+              <Box1 /> Stacks
             </Link>
           </ListItem>
           <ListItem

@@ -14,7 +14,7 @@ export default TableComponent;
 const TableWrapper = styled.div`
   padding-top: ${({ theme }) => theme.spacing(3)};
   width: 100%;
-  overflow: auto;
+  overflow-x: auto;
 `;
 
 const Table = styled.table`
@@ -31,7 +31,9 @@ const Table = styled.table`
     position: relative;
   }
 
-  th,
+  th {
+    padding: ${({ theme }) => theme.spacing(2)} ${({ theme }) => theme.spacing(1.5)};
+  }
   td {
     padding: ${({ theme }) => theme.spacing(3)} ${({ theme }) => theme.spacing(1.5)};
     position: relative;

@@ -132,9 +132,10 @@ export const ModalContainer = styled.div`
   overflow: hidden;
   background-color: rgba(248, 251, 253, 0);
   width: 100%;
-  height: 100vh;
+  height: 60vh;
   display: flex;
   justify-content: center;
+
   align-items: center;
   z-index: 2;
 `;
