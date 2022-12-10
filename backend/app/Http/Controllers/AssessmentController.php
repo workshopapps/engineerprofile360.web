@@ -84,7 +84,7 @@ class AssessmentController extends Controller
         try {
             $payload = json_decode($request->getContent(), true);
 
-            if (!isset($request->name)) {
+            if (!isset($payload["name"])) {
                 return $this->sendResponse(true, "expected a valid payload", "invalid payload given.", null, 400);
             }
 
@@ -92,11 +92,11 @@ class AssessmentController extends Controller
                 return $this->sendResponse(true, "expected a valid category 'id'  but got none", "category id is missing.", null, 400);
             }
 
-            $updatedName = $request->name;
+            $updatedName = $payload["name"];
             $assessment = Assessment::where('id', $assessmentId);
 
             if ($assessment->count() == 0) {
-                return $this->sendResponse(true, "assessment doesnt exists", "assessment not found.", null, 404);
+                return $this->sendResponse(true, "assessment doesnt exists", "assessment not found.", null, Response::HTTP_NOT_FOUND);
             }
 
             $newName = $updatedName == "" ? $assessment->first()["name"] : $updatedName;
