@@ -37,6 +37,7 @@ class InterviewController extends Controller
     public function getInterviewsAdmin()
     {
         try {
+
            $interviews = Interview::with('stack')->paginate(10);
            if(!$interviews){
             return $this->sendResponse(
