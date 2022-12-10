@@ -123,11 +123,11 @@ const List = () => {
   const handleBulkDelete = async () => {
     setIsLoading(true);
     try {
-      const ids = [...value.categoryId];
-      console.log(ids);
+      const ids = { ids: [...value.categoryId]};
+      console.log(JSON.stringify(ids));
       const response = await axios.delete(
         `category/${auth.org_id}/delete`,
-        JSON.stringify({ ids })
+        JSON.stringify(ids)
       );
       if (response.data.errorState === false) {
         setToggleMaxDelete(false);
@@ -161,47 +161,49 @@ const List = () => {
         {categories.data?.length > 0 ? (
           <>
             <TableComponent>
-              <tr>
-                <th>#</th>
-                <th>Category</th>
-                <th>Number of Questions</th>
-                <th></th>
-              </tr>
-
-              {categories.data?.map((category, id) => (
+              <tbody>
                 <tr>
-                  <td>{`${id + 1}.`}</td>
-                  <td>{category.name}</td>
-                  <td>0</td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name={category.name}
-                      value={category.id}
-                      onChange={handleChange}
-                    />
-                    <More onClick={() => toggleOpen(id)} />
-                  </td>
-                  {showMore[id] && (
-                    <Popup>
-                      <p
-                        onClick={() =>
-                          onEditClick(category.name, category.id, id)
-                        }
-                      >
-                        Edit
-                      </p>
-                      <p
-                        onClick={() =>
-                          onDeleteClick(category.name, category.id, id)
-                        }
-                      >
-                        Delete
-                      </p>
-                    </Popup>
-                  )}
+                  <th>#</th>
+                  <th>Category</th>
+                  <th>Number of Questions</th>
+                  <th></th>
                 </tr>
-              ))}
+
+                {categories.data?.map((category, id) => (
+                  <tr key={category.id}>
+                    <td>{`${id + 1}.`}</td>
+                    <td>{category.name}</td>
+                    <td>0</td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        name={category.name}
+                        value={category.id}
+                        onChange={handleChange}
+                      />
+                      <More onClick={() => toggleOpen(id)} />
+                    </td>
+                    {showMore[id] && (
+                      <Popup>
+                        <p
+                          onClick={() =>
+                            onEditClick(category.name, category.id, id)
+                          }
+                        >
+                          Edit
+                        </p>
+                        <p
+                          onClick={() =>
+                            onDeleteClick(category.name, category.id, id)
+                          }
+                        >
+                          Delete
+                        </p>
+                      </Popup>
+                    )}
+                  </tr>
+                ))}
+              </tbody>
             </TableComponent>
           </>
         ) : (
@@ -313,9 +315,7 @@ const DeleteCategoryBtn = styled(Button)`
   }
 `;
 
-export const CategoryListing = styled.div`
-  
-`;
+export const CategoryListing = styled.div``;
 
 const Popup = styled.span`
   display: flex;
@@ -327,11 +327,11 @@ const Popup = styled.span`
   z-index: 1;
   position: absolute;
   padding: 8px;
-  gap: 16px;
+  gap: 12px;
   border: 1px solid #8a8886;
 
   top: 0px;
-  right: 150px;
+  right: 180px;
   border-radius: 4px;
   p {
     font-weight: 400;
@@ -344,5 +344,4 @@ const Popup = styled.span`
       color: #b71f1f;
     }
   }
-
 `;
