@@ -1,9 +1,11 @@
 import React from "react";
 import { Container } from "../../../styles/reusableElements.styled";
+import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 
 function PricingHero() {
+  const navigate = useNavigate();
   return (
     <>
       <Container>
@@ -16,8 +18,20 @@ function PricingHero() {
         </HeroText>
         <HeroText>per month for enterprise plan.</HeroText>
         <HeroButtonDiv>
-          <HeroButtonShade>Monthly billing</HeroButtonShade>
-          <HeroButtonClear>Annual billing</HeroButtonClear>
+          <HeroButtonShade
+            onClick={() => {
+              navigate("/payment");
+            }}
+          >
+            Monthly billing
+          </HeroButtonShade>
+          <HeroButtonClear
+            onClick={() => {
+              navigate("/payment");
+            }}
+          >
+            Annual billing
+          </HeroButtonClear>
         </HeroButtonDiv>
       </Container>
     </>

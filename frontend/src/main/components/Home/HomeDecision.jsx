@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 import {
   Container,
@@ -10,6 +11,7 @@ import {
 import preview from "./assets/images/preview.svg";
 
 const HomeDecision = () => {
+  const navigate = useNavigate();
   return (
     <HomeDecisionCon>
       <BannerContainer>
@@ -25,7 +27,13 @@ const HomeDecision = () => {
           team’s abilities, engineering management decisions can be made faster.
         </p>
         <ButtonGroup>
-          <Button>Request A Demo</Button>
+          <Button
+            onClick={() => {
+              navigate("/demo");
+            }}
+          >
+            Request A Demo
+          </Button>
           <Button $variant="disabled">Let's Chat?</Button>
         </ButtonGroup>
       </BannerContainer>
@@ -66,8 +74,7 @@ const BannerContainer = styled(Container)`
   }
 `;
 
-
 const ButtonGroup = styled.div`
   display: flex;
-  gap: ${({theme}) => theme.spacing(1)};
+  gap: ${({ theme }) => theme.spacing(1)};
 `;
