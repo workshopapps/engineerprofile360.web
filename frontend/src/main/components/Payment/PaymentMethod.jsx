@@ -14,7 +14,6 @@ const PaymentMethod = () => {
   const handleSelect = (e) => {
     setOptionValue(e.target.value);
   };
-  console.log(isOpened);
   return (
     <PaymentContainer>
       <SelectPayment>
