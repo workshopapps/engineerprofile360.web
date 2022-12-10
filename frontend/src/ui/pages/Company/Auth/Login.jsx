@@ -21,7 +21,7 @@ import eyeSvg from "../../../../assets/icons/eye.svg";
 import smsSvg from "../../../../assets/icons/smsenvelope.svg";
 
 const Login = () => {
-  const { setAuth, persist, setPersist } = useAuth();
+  const { auth, setAuth, persist, setPersist } = useAuth();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/dashboard";
 
@@ -106,7 +106,7 @@ const Login = () => {
             })
           );
         
-        console.log(response.data);
+        console.log(auth);
         if (response.data.errorState === false) {
           // Clear input fields
           setFormData({
