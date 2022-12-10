@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Title } from "../../../../../../styles/reusableElements.styled";
 import { Button, Wrapper } from "../../../Departments/Hero";
 import { CsvData } from "./CsvPreviewData";
-import { CategoryListing } from "../../../Categories/List";
+import TableComponent from "../../../../molecules/TableComponent";
 
 function EmployeeCsvPreview() {
   return (
@@ -21,38 +21,41 @@ function EmployeeCsvPreview() {
             <span>All</span>/<span>None</span>
           </p>
         </SpanHolder>
-        <CategoryListing>
-          <table>
-            <tbody>
-              <tr>
-                <th>#</th>
+        <TableComponent>
+          <CategoryListing>
+            <table>
+              <tbody>
+                <tr>
+                  <th>#</th>
 
-                <th>Name</th>
-                <th>Username</th>
-                <th>Employee Email</th>
+                  <th>Name</th>
+                  <th>Username</th>
+                  <th>Employee Email</th>
 
-                <th>Department</th>
-                <th></th>
-              </tr>
-              {CsvData.map((data, index) => {
-                const { name, employee_email, username, department } = data;
-                return (
-                  <tr>
-                    <td>{index + 1}</td>
-                    <td>{name}</td>
-                    <td>{username}</td>
-                    <td>{employee_email}</td>
+                  <th>Department</th>
+                  <th></th>
+                </tr>
+                {CsvData.map((data, index) => {
+                  const { name, employee_email, username, department } = data;
+                  return (
+                    <tr>
+                      <td>{index + 1}</td>
+                      <td>{name}</td>
+                      <td>{username}</td>
+                      <td>{employee_email}</td>
 
-                    <td>{department}</td>
-                    <td>
-                      <Checkbox type="checkbox" />
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </CategoryListing>
+                      <td>{department}</td>
+                      <td>
+                        <Checkbox type="checkbox" />
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </CategoryListing>
+        </TableComponent>
+
         <ButtonWrapper>
           <Wrapper>
             <Button
@@ -135,7 +138,15 @@ export const ButtonWrapper = styled.div`
   align-items: center;
 `;
 
-export const Td = styled.td``;
+export const CategoryListing = styled.div`
+  width: 100%;
+  table {
+    width: 100%;
+  }
+  tbody {
+    width: 100%;
+  }
+`;
 export const Tr = styled.tr`
   margin: 40px 0;
   display: flex;
