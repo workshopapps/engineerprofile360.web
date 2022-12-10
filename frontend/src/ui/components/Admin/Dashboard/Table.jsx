@@ -1,23 +1,26 @@
-import React from 'react'
+import React, { useState, useEffect} from 'react'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Title } from "../../../../styles/reusableElements.styled"
 import TableComponent from '../../molecules/TableComponent';
+import axios from '../../../../api/axios';
 
 function Table() {
 
-  // const  [data, setData] = useState([])
+  const  [table, setTable] = useState([])
 
-  // useEffect(() => {
-  //   axios.get('admin/overview')
-  //   .then(response => {
-  //     setData(response.data.data)
-  //     console.log(response.data.data);
-  //   })
-  //   .catch(error => {
-  //     console.log(error);
-  //   }); 
-  // }, [])
+  useEffect(() => {
+    axios.get('admin/users')
+    .then(response => {
+      setTable(response.data.data)
+      console.log(response.data.data);
+    })
+    .catch(error => {
+      console.log(error);
+    }); 
+  }, [])
+
+  console.log(table);
 
   return (
     <div>
@@ -38,11 +41,11 @@ function Table() {
               </tr>
 
               <tr>
-                <td>1</td>
-                <td>Precious</td>
-                <td>Eval360@gmail.com</td>
-                <td>Eval360</td>
-                <td>21/12/2022</td>
+                <td key={table.id}></td>
+                <td>{table.name}</td>
+                <td>{table.email}</td>
+                <td>{table.company}</td>
+                <td>{table.created}</td>
               </tr>
             </tbody>
           </TableComponent>
