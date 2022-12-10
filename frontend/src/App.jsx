@@ -14,6 +14,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { GlobalStyles, theme } from "./styles/globalStyles";
 import { MainLayout, UiLayout, AuthLayout } from "./Layouts";
 
+// Admin dashboard
+import Dashboard from "./ui/pages/Admin/Dashboard/Dashboard";
+
 //DEFAULT EXPORTS FROM MAIN
 import {
   Home,
@@ -47,7 +50,6 @@ import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 import { EmployeeLogin } from "./ui/pages/Employee";
 
 import { AdminLogin } from "./ui/pages/Admin";
-
 
 import UserSupport from "./main/pages/UserSupport";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
@@ -99,12 +101,10 @@ import AdminAssessmmentListOutlet from "./ui/components/Company/Assessments/admi
 import AdminAssessmentListAvailable from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmentListAvailable";
 import AssessmentList from "./ui/components/Company/Assessments/adminAssesmentList/AssessmentList";
 
-import Dashboard from "./ui/pages/Admin/Dashboard/Dashboard"
-
 // This is for DevOps App Monitoring - START
 atatus.config("4010279ebbd747e7a752082eea130df6").install();
 
-// atatus.notify(new Error("Test Atatus Setup"));
+atatus.notify(new Error("Test Atatus Setup"));
 atatus.notify();
 // This is for DevOps App Monitoring - END
 
@@ -208,7 +208,6 @@ const App = () => {
             <Route path="/admin/login" element={<AdminLogin />} />
 
             {/* <Route path="/guest-login" element={<GuestLogin />} /> */}
-            
           </Route>
 
           {/* Private Route */}

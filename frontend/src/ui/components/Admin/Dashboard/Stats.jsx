@@ -1,5 +1,6 @@
 import React, { useState, useEffect} from 'react'
 import styled from 'styled-components';
+import { Title } from "../../../../styles/reusableElements.styled";
 import { Profile2User, People, User } from "iconsax-react";
 import axios from '../../../../api/axios';
 function Stats() {
@@ -20,20 +21,20 @@ function Stats() {
   console.log(data);
 
   return (
-    <Container encType="application/json">
-        <HeadingText>Team Axle Main Admin</HeadingText>
-
-      
-            <Cards key={data.id}>
+    <div encType="application/json">
+        
+        <Title as="h4" $size="28px" $color="#1E1E1E" $weight="600">Team Axle Main Admin</Title>      
+          
+          <Cards key={data.id}>
 
             <Card>
-            <User size="32" color="#1E1E1E"/>
+              <User size="32" color="#1E1E1E"/>
               <Subtext>users</Subtext>
               <Text>{data.users}</Text>
             </Card>
 
             <Card>
-            <Profile2User size="32" color="#1E1E1E"/>
+              <Profile2User size="32" color="#1E1E1E"/>
               <Subtext>employees</Subtext>
               <Text>{data.employees}</Text>
             </Card>
@@ -49,29 +50,14 @@ function Stats() {
               <Subtext>verified</Subtext>
               <Text>{(Math.round(data.verifiedUsers))}%</Text>
             </Card>
-             </Cards> 
+          </Cards> 
 
-    </Container>
+    </div>
   )
 }
 
 export default Stats
 
-const Container = styled.div`
-
-
-`
-
-const HeadingText = styled.h4`
-  width: 308px;
-  height: 34px;
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 28px;
-  line-height: 34px;
-  color: #1E1E1E;
-`
 
 const Cards = styled.div`
   display:flex;

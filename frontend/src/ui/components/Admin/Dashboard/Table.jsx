@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { Title } from "../../../../styles/reusableElements.styled"
 import TableComponent from '../../molecules/TableComponent';
 
 function Table() {
@@ -22,8 +23,8 @@ function Table() {
     <div>
       <Containerdiv>
           <Heading>
-            <Title>User's Data</Title>
-            <Link to='/'>View All</Link>  
+            <Title as="h5" $size="20px" $color="#1E1E1E" $weight="700">User's Data</Title>
+            <Link to='/admin/users'>View All</Link>  
           </Heading>   
 
           <TableComponent>
@@ -63,12 +64,12 @@ const Heading = styled.div`
   justify-content: space-between;
 `
 
-const Title = styled.h3`
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 36px;
-  color: #1E1E1E;
-`
+// const Title = styled.h3`
+//   font-family: 'Inter';
+//   font-style: normal;
+//   font-weight: 700;
+//   font-size: 20px;
+//   line-height: 36px;
+//   color: #1E1E1E;
+// `
 

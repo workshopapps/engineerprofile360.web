@@ -1,18 +1,26 @@
+import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 function Update({ setDeleteModal, cancel, setEditModal }) {
   // HOLDS THE EDIT , DELETE AND CANCEL BUTTONS
-  const handleCancel = () => {
-    cancel(null);
-  };
+  const updateRef = useRef();
+  useEffect(() => {
+    const handleCancel = (e) => {
+      if (!updateRef.current.contains(e.target)) {
+        cancel(null);
+      }
+    };
+    document.addEventListener("mousedown", handleCancel);
+  });
 
   return (
     <>
       {
-        <Container>
+        <Container ref={updateRef}>
           <Edit
             onClick={() => {
               setEditModal(true);
+              cancel(null);
             }}
           >
             Edit
@@ -21,11 +29,11 @@ function Update({ setDeleteModal, cancel, setEditModal }) {
           <Delete
             onClick={() => {
               setDeleteModal(true);
+              cancel(null);
             }}
           >
             Delete
           </Delete>
-          <Cancel onClick={handleCancel}>Cancel</Cancel>
         </Container>
       }
     </>
@@ -36,10 +44,10 @@ export default Update;
 
 export const Container = styled.section`
   width: 112px;
-  height: 100px;
+  height: 70px;
   position: absolute;
-  right: 15px;
-  top: 21px;
+  right: 150px;
+  top: 11px;
   background-color: #fff;
 
   padding: 4px;
