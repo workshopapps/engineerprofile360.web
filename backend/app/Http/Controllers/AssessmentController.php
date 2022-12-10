@@ -124,6 +124,16 @@ class AssessmentController extends Controller
         }
     }
 
+    public function getAssByDepartmentId($id)
+    {
+        try {
+            $assessments = Assessment::where("department_id", $id)->get();
+            return $this->sendResponse(false, null, 'All assessments', $assessments, Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, "something went wrong fetching assessments " . $e->getMessage(), 'failed fetching assessments.', null, 500);
+        }
+    }
+
     // @Benrobo -> still under development
     public function notifyEmployeeAssessment($assessment_id, $employee_id)
     {
