@@ -6,7 +6,6 @@ import useAuth from "../../../../hooks/useAuth";
 import { Radar } from "react-chartjs-2";
 import { Title } from "../../../../styles/reusableElements.styled";
 
-
 const SKillRating = ({ title }) => {
   return (
     <Title
@@ -119,7 +118,6 @@ const Stats = () => {
 
 export default Stats;
 
-
 const StatsContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -136,6 +134,7 @@ const StatsContainer = styled.div`
     justify-content: center;
     text-align: center;
     gap: 30px;
+    padding: 10px 22px;
   }
 `;
 
@@ -176,4 +175,3 @@ const ChartSection = styled.div`
     width: 100%;
   }
 `;
-
