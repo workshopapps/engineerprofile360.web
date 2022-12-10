@@ -248,10 +248,7 @@ const App = () => {
                   element={<AdminViewAssessment />}
                 />
 
-                <Route
-                  path="/employees/csv-upload-preview"
-                  element={<PreviewCsvUpload />}
-                />
+                
                 <Route path="/departments" element={<DepartmentSection />} />
                 <Route path="/dashboard" element={<CompanyDashboard />} />
 
@@ -265,6 +262,7 @@ const App = () => {
                     />
                   </Route>
                   <Route path="add-employee" element={<EmployeeCSVUpload />} />
+                  <Route path="/employees/csv-upload-preview" element={<PreviewCsvUpload />}/>
                 </Route>
                 {/* <Route
                   path="/take-assessment"

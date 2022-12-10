@@ -3,7 +3,7 @@ import { Link, useNavigate,useOutletContext } from "react-router-dom";
 import useAuth from "../../../../hooks/useAuth";
 import styled from "styled-components";
 import axios from "../../../../api/axios";
-import { Loader,Title } from "../../../../styles/reusableElements.styled";
+import { OverlayLoader,Title } from "../../../../styles/reusableElements.styled";
 import { toast } from "react-toastify";
 
 const CreateEmployeeManual = () => {
@@ -89,7 +89,7 @@ const CreateEmployeeManual = () => {
           setLoading(false);
           localStorage.removeItem('departmentsID');
           setTimeout(
-            () => navigate("/employees/"), 
+            () => navigate("/employees/", {replace:true}), 
             5000
           );
         })
@@ -101,9 +101,10 @@ const CreateEmployeeManual = () => {
     };
     const { fullname, username, email } = formData;
   return loading ? (
-    <Load>
-      <Loader />
-    </Load>
+    <OverlayLoader contained height={100}>
+          <div></div>
+          <span>Just a moment...</span>
+        </OverlayLoader>
   ) :(
     
     <CreateEmployeeManualContainer>
@@ -165,9 +166,9 @@ export default CreateEmployeeManual;
 const CreateEmployeeManualContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 95%;
   margin: 30px auto;
-  gap: 15px;
+  padding: 32px 64px;
+  gap: 32px;
 
   p {
     font-weight: 400;
