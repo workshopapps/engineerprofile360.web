@@ -14,6 +14,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { GlobalStyles, theme } from "./styles/globalStyles";
 import { MainLayout, UiLayout, AuthLayout } from "./Layouts";
 
+// Admin dashboard
+import Dashboard from "./ui/pages/Admin/Dashboard/Dashboard";
+import Stacks from "./ui/pages/Admin/Stacks/Stacks";
 //DEFAULT EXPORTS FROM MAIN
 import {
   Home,
@@ -300,9 +303,12 @@ const App = () => {
                 {/* Put in Protected pages in here */}
                 <Route
                   path="/admin/dashboard"
-                  element={"Admin pages will render here"}
-                />
-              </Route>
+                  element={<Dashboard/>} />
+                <Route/>
+
+                <Route path="/admin/stacks"
+                       element={<Stacks/>} />
+                </Route>
 
               <Route element={<RequireAuth allowedRole={ROLES.Employees} />}>
                 {/* Put in Protected pages in here */}
