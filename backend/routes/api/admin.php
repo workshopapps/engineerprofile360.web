@@ -25,7 +25,7 @@ Route::prefix("admin")->group(function () {
         Route::post('add', [StackController::class, 'addStack'])->middleware("isloggedin", "isadmin");
         Route::put('{stackId}/update', [StackController::class, 'updateStack'])->middleware("isloggedin", "isadmin");
         Route::delete('{stackId}/delete', [StackController::class, 'deleteStack']);
-        Route::get('all', [StackController::class, 'getAllStacks']);
-        Route::get('{stackId}', [StackController::class, 'getStackById']);
+        Route::get('all', [StackController::class, 'getAllStacks'])->middleware("isloggedin", "isadmin");
+        Route::get('{stackId}', [StackController::class, 'getStackById'])->middleware("isloggedin", "isadmin");
     });
 });
