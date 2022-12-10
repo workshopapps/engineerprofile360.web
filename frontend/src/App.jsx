@@ -35,6 +35,7 @@ import {
 import {
   CompanyLogin,
   CompanySignup,
+  GuestLogin,
   CompanyEmailVerified,
   CompanyPasswordSuccess,
   CompanySetPassword,
@@ -46,7 +47,7 @@ import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 
 import { EmployeeLogin, EmployeeDashboard } from "./ui/pages/Employee";
 
-import { AdminLogin } from "./ui/pages/Admin";
+import { AdminLogin  } from "./ui/pages/Admin";
 
 import UserSupport from "./main/pages/UserSupport";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
@@ -204,7 +205,7 @@ const App = () => {
 
             <Route path="/admin/login" element={<AdminLogin />} />
 
-            {/* <Route path="/guest-login" element={<GuestLogin />} /> */}
+            <Route path="/guest-login" element={<GuestLogin />} />
           </Route>
 
           {/* Private Route */}
