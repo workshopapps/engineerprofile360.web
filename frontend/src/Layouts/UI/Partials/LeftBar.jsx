@@ -145,8 +145,7 @@ const LeftBar = () => {
           </ListItem>
           <ListItem
             $active={
-              pathname.split("/")[2] === "users" ||
-              pathname === "/admin/users"
+              pathname.split("/")[2] === "users" || pathname === "/admin/users"
                 ? "active"
                 : ""
             }

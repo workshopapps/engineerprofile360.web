@@ -108,7 +108,7 @@ class CategoryController extends Controller
             }
 
             return $this->sendResponse(
-                true,
+                false,
                 null,
                 'Category',
                 $category,
@@ -131,7 +131,7 @@ class CategoryController extends Controller
             $categories = Category::where('org_id', $id)->paginate(10);
 
             return $this->sendResponse(
-                true,
+                false,
                 null,
                 'Categories',
                 $categories,
@@ -165,7 +165,7 @@ class CategoryController extends Controller
             }
 
             return $this->sendResponse(
-                true,
+                false,
                 null,
                 'Categories deleted successfully',
                 'Successfully deleted categories',
