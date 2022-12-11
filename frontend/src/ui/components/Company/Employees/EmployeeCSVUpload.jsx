@@ -196,7 +196,7 @@ const EmployeeCSVUpload = () => {
                       <BsPlusCircle className="plus-icon" />
                       <p>Browse Computer</p>
                     </button>
-                    <button>
+                    <button onClick={() => inputRef.current.click()}>
                       <BsPlusCircle className="mobile-icon" />
                     </button>
                   </Buttons>
@@ -242,17 +242,23 @@ export default EmployeeCSVUpload;
 const Main = styled.main`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 90%;
   margin: auto;
   position: relative;
+
+  @media (max-width: 546px) {
+    border-radius: 10px;
+    width: 100%;
+  }
 `;
 const Container = styled.div`
   background: #f8fbfd;
   border: 1px dashed #c7e0f4;
   border-radius: 16px;
   position: relative;
-  width: 90%;
+  width: 100%;
   margin: auto;
+  height:600px;
 
   @media (max-width: 546px) {
     border-radius: 10px;

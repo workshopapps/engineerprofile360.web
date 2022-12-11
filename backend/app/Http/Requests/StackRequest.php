@@ -23,8 +23,7 @@ class StackRequest extends BaseRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:3',
-            'user_id' => 'required'
+            'name' => 'required',
         ];
     }
 }
