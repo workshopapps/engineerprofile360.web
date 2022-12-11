@@ -177,7 +177,7 @@ function EmployeeCsvPreview() {
                 const { fullname, email, username,department_id=deptid, department=deptname, org_id, is_exist} = data;  
                 return !is_exist ? (
                   <tr key={index} className =  {is_exist ? "strike" : ""} >
-                    <td>{index }</td>
+                    <td>{index+1 }</td>
                     <td>{fullname}</td>
                     <td>{username}</td>
                     <td>{email}</td>
@@ -197,7 +197,8 @@ function EmployeeCsvPreview() {
             </tbody>
             </table>     
           </TableWrapper>
-          <TableWrapper>
+           {CsvData ? 
+           <TableWrapper>
             <p>Existing Data</p>
             <table>  
             <tbody >
@@ -208,8 +209,8 @@ function EmployeeCsvPreview() {
                 <th></th>
                 <th></th>
               </tr>
-              {CsvData
-              ? CsvData.map((data, index) => {
+             
+             {CsvData.map((data, index) => {
                 const { fullname, email, username,department_id=deptid, department=deptname, org_id, is_exist} = data;  
                 return is_exist ? (
                   <tr key={index} className =  {is_exist ? "strike" : ""} >
@@ -222,10 +223,11 @@ function EmployeeCsvPreview() {
                   </tr>
                 ) : "";
               
-              }): ""}
+                })
+              }
             </tbody>
             </table>     
-          </TableWrapper>
+          </TableWrapper> : ""}
         </CategoryListing>
         <ButtonWrapper>
           <Wrapper>
