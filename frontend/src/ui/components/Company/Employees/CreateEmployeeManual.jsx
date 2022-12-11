@@ -177,7 +177,13 @@ const CreateEmployeeManualContainer = styled.div`
   flex-direction: column;
   margin: 30px auto;
   padding: 32px 64px;
-  gap: 32px;
+  gap: 64px;
+
+  @media (max-width: 669px) {
+    
+      padding: 16px 32px;
+  
+  }
 
   p {
     font-weight: 400;
