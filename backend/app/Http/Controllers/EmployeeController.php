@@ -196,6 +196,7 @@ class EmployeeController extends Controller
             $username = $data["username"];
             $email = $data["email"];
             $org_id = $data["org_id"];
+            $department_id = $data["department_id"];
 
             // fetch organization info
             $orgData = Company::find($org_id); 
@@ -204,6 +205,7 @@ class EmployeeController extends Controller
 
             //insert only when organization exists
             $employee = Employee::create($data);
+            
 
             // send employee email
             $this->helper->sendOnboardMail($fullname, $username, $empPassword, $email, $org_name);
