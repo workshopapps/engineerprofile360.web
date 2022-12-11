@@ -40,6 +40,10 @@ const List = () => {
   const currentSelectedName = useRef();
   const currentSelectedId = useRef();
 
+  if (toggleCreateCat || toggleDelete || toggleEdit || toggleMaxDelete)
+    document.body.style.overflow = "hidden";
+  else document.body.style.overflow = "initial";
+
   useEffect(() => {
     setIsOverlayLoading(true);
     const getAllCatgories = async () => {
@@ -166,7 +170,7 @@ const List = () => {
         )}
       </ButtonCategory>
       <CategoryListing>
-      {isOverlayLoading ? (
+        {isOverlayLoading ? (
           <OverlayLoader contained>
             <div></div>
           </OverlayLoader>
@@ -230,7 +234,6 @@ const List = () => {
             </NoData>
           </>
         )}
-
       </CategoryListing>
 
       {toggleCreateCat && (
