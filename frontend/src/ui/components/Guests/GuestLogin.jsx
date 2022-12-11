@@ -1,39 +1,48 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { Container } from "../../../../styles/reusableElements.styled";
-import InputField from "../../../../components/InputField";
-import AuthTitle from "../../../components/molecules/Auth/AuthTitle";
+import { Container } from "../../../styles/reusableElements.styled";
+import InputField from "../../../components/InputField";
+import AuthTitle from "../../components/molecules/Auth/AuthTitle";
 
-import useInputValidation from "../../../../hooks/useInputValidation";
-import useAuth from "../../../../hooks/useAuth";
-import axios from "../../../../api/axios";
+import useInputValidation from "../../../hooks/useInputValidation";
+import useAuth from "../../../hooks/useAuth";
+import axios from "../../../api/axios";
 
 // import axios from "axios";
 
-import editSvg from "../../../../assets/icons/edit-2.svg";
-import arrowDown from "../../../../assets/icons/arrow-down-filled.svg";
-import smsSvg from "../../../../assets/icons/smsenvelope.svg";
-import { Loader } from "../../../../styles/reusableElements.styled";
-
+import editSvg from "../../../assets/icons/edit-2.svg";
+import arrowDown from "../../../assets/icons/arrow-down-filled.svg";
+import smsSvg from "../../../assets/icons/smsenvelope.svg";
+import { Loader } from "../../../styles/reusableElements.styled";
 
 const GuestLogin = () => {
   const { setAuth, persist, setPersist } = useAuth();
   const selectField = useRef();
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/dashboard";
+  // const location = useLocation();
+  // const from = location.state?.from?.pathname || "/dashboard";
 
   const [isSubmitted, setIsSubmitted] = useState("");
 
-  const [errorMessage, setErrorMessage] = useState("Please fill all fields correctly")
+  const [errorMessage, setErrorMessage] = useState(
+    "Please fill all fields correctly"
+  );
 
-  let [stacks, setStacks] = useState([]);
+  const sampleStacks = [
+    { name: "Javascript", id: 1 },
+    { name: "ReactJs", id: 1 },
+    { name: "Java", id: 1 },
+    { name: "PHP", id: 1 },
+    { name: "Laravel", id: 1 },
+  ];
 
-  const errorField = useRef()
+  let [stacks, setStacks] = useState(sampleStacks);
+
+  const errorField = useRef();
 
   const {
     formData,
@@ -50,32 +59,25 @@ const GuestLogin = () => {
     stack: "",
   });
 
-  const showErrorToast = (error) => {
-    toast.error(error, {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  };
-
   const togglePersist = () => {
     setPersist((prev) => !prev);
   };
 
   const handleStacks = (items) => {
-    setStacks(items)
-  }
+    setStacks(items);
+  };
   useEffect(() => {
     // localStorage.setItem("persist", persist);
-    const guest = JSON.parse(localStorage.getItem("guest"))
+    const guest = JSON.parse(localStorage.getItem("guest"));
     if (guest) {
-      navigate("/guest-assessment-list")
+      navigate("/guest-assessment-list");
     }
-      axios
+    axios
       .get("https://api.eval360.hng.tech/api/stack/all")
       .then((response) => {
-        handleStacks(JSON.parse(response.data.message))
+        handleStacks(JSON.parse(response.data.message));
       })
       .catch((error) => console.log(error));
-    
   });
 
   const { fname, email, stack } = formData;
@@ -83,39 +85,37 @@ const GuestLogin = () => {
   const handleSubmit = async (e, formData) => {
     e.preventDefault();
     const { fname, email, stack } = formData;
-    const nameIsValid = fname.length !== 0
-    const emailIsValid = email.length !== 0
-    const stackIsValid = stack.length!== 0
+    const nameIsValid = fname.length !== 0;
+    const emailIsValid = email.length !== 0;
+    const stackIsValid = stack.length !== 0;
 
     validation(formData);
 
-    const formIsValid = nameIsValid && emailIsValid && stackIsValid && persist
+    const formIsValid = nameIsValid && emailIsValid && stackIsValid && persist;
     if (!formIsValid) {
-      errorField.current.classList.add("show")
+      errorField.current.classList.add("show");
       setTimeout(() => {
-        errorField.current.classList.remove("show")
-      }, 3000)
+        errorField.current.classList.remove("show");
+      }, 3000);
 
-      if(!stackIsValid && nameIsValid && emailIsValid) {
-        setErrorMessage("You must select a stack to continue")
-        selectField.current.classList.add("error")
+      if (!stackIsValid && nameIsValid && emailIsValid) {
+        setErrorMessage("You must select a stack to continue");
+        selectField.current.classList.add("error");
         setTimeout(() => {
-          selectField.current.classList.remove("error")
-        }, 3000)
+          selectField.current.classList.remove("error");
+        }, 3000);
+      } else if (!persist && nameIsValid && emailIsValid && stackIsValid) {
+        setErrorMessage(
+          "You must agree to the terms and conditions to continue"
+        );
+      } else {
       }
-
-      else if(!persist && nameIsValid && emailIsValid && stackIsValid) {
-        setErrorMessage("You must agree to the terms and conditions to continue")
-      }
-
-      else {
-
-      }
-      
-    } 
-    else {
-      localStorage.setItem("guest", JSON.stringify({fullName: fname, email, stack}))
-      navigate("/guest-assessment-list")
+    } else {
+      localStorage.setItem(
+        "guest",
+        JSON.stringify({ fullName: fname, email, stack })
+      );
+      navigate("/guest-assessment-list");
     }
   };
 
@@ -201,13 +201,13 @@ const SelectField = ({
   return (
     <SelectDiv>
       <label>Select Stack</label>
-      <img src={endIcon} />
+      <img src={endIcon} alt="icon" />
       <Select
         error={error}
         id="stack"
         ref={selectField}
         onChange={(e) => selectChanged(e)}
-        defaultValue={'DEFAULT'} 
+        defaultValue={"DEFAULT"}
       >
         <option value="DEFAULT" disabled hidden>
           ------- Choose A Stack -------
@@ -224,17 +224,14 @@ const SelectField = ({
 };
 
 const FormError = styled.p`
-margin-bottom: 10px;
-color: #A80000;
-display: none;
+  margin-bottom: 10px;
+  color: #a80000;
+  display: none;
 
-&.show {
-  display: block;
-}
-
-`
-
-
+  &.show {
+    display: block;
+  }
+`;
 
 const Select = styled.select`
   display: inline;
@@ -252,7 +249,7 @@ const Select = styled.select`
   color: #605e5c;
 
   &.error {
-    border: 1px solid #A80000;
+    border: 1px solid #a80000;
   }
 `;
 

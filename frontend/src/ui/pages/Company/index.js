@@ -6,7 +6,6 @@ export { default as Category } from "./Category";
 
 export { default as CompanyLogin } from "./Auth/Login";
 export { default as CompanySignup } from "./Auth/Signup";
-export { default as GuestLogin } from "./Auth/GuestLogin";
 export { default as CompanyEmailVerified } from "./Auth/EmailVerified";
 export { default as CompanyPasswordSuccess } from "./Auth/PasswordSuccess";
 export { default as CompanyResetPassword } from "./Auth/ResetPassword";

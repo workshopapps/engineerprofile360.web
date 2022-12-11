@@ -1,13 +1,16 @@
 import styled, { css } from "styled-components";
-import Footer from "../../Layouts/Main/Partials/Footer";
+import Footer from "../../../Layouts/Main/Partials/Footer";
 
-import celebration from "../../assets/images/celebration.png";
+import celebration from "../../../assets/images/celebration.png";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const GuestEmail = () => {
+  // const navigate = useNavigate();
   useEffect(() => {
     localStorage.removeItem("guest");
-  })
+  });
+
   return (
     <>
       <Main>
@@ -23,7 +26,6 @@ const GuestEmail = () => {
           </div>
         </div>
       </Main>
-      <Footer />
     </>
   );
 };
@@ -85,46 +87,46 @@ const Main = styled.main`
 
   @media (max-width: 1240px) {
     .hero {
-        flex-direction: column;
-        justify-content: center;
+      flex-direction: column;
+      justify-content: center;
     }
     .cta__section {
-        justify-content: center;
-        align-items: center;
+      justify-content: center;
+      align-items: center;
     }
     img {
       display: none;
     }
-    h1{
-        font-size: 60px;
-        max-width:90%;
-        line-height: 100px;
-        text-align: center;
+    h1 {
+      font-size: 60px;
+      max-width: 90%;
+      line-height: 100px;
+      text-align: center;
     }
     h3 {
-        width: 100%;
-        text-align: center;
+      width: 100%;
+      text-align: center;
     }
   }
 
   @media screen and (max-width: 480px) {
     grid-template-rows: 400px 400px;
-    h1{
-        font-size: 30px;
-        max-width:100%;
-        line-height: 65px;
+    h1 {
+      font-size: 30px;
+      max-width: 100%;
+      line-height: 65px;
     }
     h3 {
-        width: 100%;
-        text-align: center;
+      width: 100%;
+      text-align: center;
     }
     .cta__section {
-        padding: 20px 15px;
+      padding: 20px 15px;
     }
     .cta__btn {
-        flex-direction: column;
-        width: 100%;
-        justify-self: center;
+      flex-direction: column;
+      width: 100%;
+      justify-self: center;
     }
   }
 `;
@@ -161,5 +163,3 @@ const Button = styled.button`
     width: 85%;
   }
 `;
-
-
