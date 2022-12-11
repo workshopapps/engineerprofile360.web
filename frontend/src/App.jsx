@@ -249,7 +249,6 @@ const App = () => {
                   element={<AdminViewAssessment />}
                 />
 
-                
                 <Route path="/departments" element={<DepartmentSection />} />
                 <Route path="/dashboard" element={<CompanyDashboard />} />
 
@@ -263,7 +262,10 @@ const App = () => {
                     />
                   </Route>
                   <Route path="add-employee" element={<EmployeeCSVUpload />} />
-                  <Route path="/employees/csv-upload-preview" element={<PreviewCsvUpload />}/>
+                  <Route
+                    path="/employees/csv-upload-preview"
+                    element={<PreviewCsvUpload />}
+                  />
                 </Route>
                 {/* <Route
                   path="/take-assessment"
@@ -301,15 +303,16 @@ const App = () => {
               {/* Overall Admin Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
                 <Route path="/admin/Assessmentss" element={<Assessmentss />} />
-                {/* Put in Protected pages in here */}
                 <Route
-                  path="/admin/dashboard"
-                  element={<Dashboard/>} />
-                <Route/>
+                  path="/admin/CreateAssessments"
+                  element={<CreateAssessment />}
+                />
+                {/* Put in Protected pages in here */}
+                <Route path="/admin/dashboard" element={<Dashboard />} />
+                <Route />
 
-                <Route path="/admin/stacks"
-                       element={<Stacks/>} />
-                </Route>
+                <Route path="/admin/stacks" element={<Stacks />} />
+              </Route>
 
               <Route element={<RequireAuth allowedRole={ROLES.Employees} />}>
                 {/* Put in Protected pages in here */}
