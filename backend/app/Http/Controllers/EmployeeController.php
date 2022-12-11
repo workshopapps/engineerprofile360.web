@@ -36,7 +36,7 @@ class EmployeeController extends Controller
         return $pwd;
     }
 
-    public function parseEmployeeCsv($b64, $org, $department_id)
+    public function parseEmployeeCsv($b64, $org, $department_id, $password)
     {
         $csvData = base64_decode(explode(",", $b64)[1]);
         $splitData = explode("\n", $csvData);
@@ -53,6 +53,8 @@ class EmployeeController extends Controller
                 "email" => str_replace('"', "", $item[2]),
                 "org_id" => $org,
                 "department_id" => $department_id,
+                "hash" => Hash::make($password),
+                "raw_password" => $password
             ];
             array_push($finalJsonData, $arr);
             $i++;
@@ -75,6 +77,7 @@ class EmployeeController extends Controller
                 $file = $payload['csv_file'];
                 $org = $payload["org_id"];
                 $dept = $payload['department_id'];
+                $password = $this->generateRandomPwd(10);
 
                 if (!isset($file) || !isset($org) || !isset($dept)) {
                     return $this->sendResponse(true, "expected a valid employee 'org_id, dept_id, file'  but got none", "missing employee data.", null,  Response::HTTP_BAD_REQUEST);
@@ -87,13 +90,13 @@ class EmployeeController extends Controller
                 if (is_null(Company::find($org))) return $this->sendResponse(true, "Not found", "Company not found", null, Response::HTTP_NOT_FOUND);
                 if (is_null(Department::find($dept))) return $this->sendResponse(true, "Not found", "Department not found", null, Response::HTTP_NOT_FOUND);
 
-                $result = $this->parseEmployeeCsv($file, $org, $dept);
+                $result = $this->parseEmployeeCsv($file, $org, $dept, $password);
                 $total = count($result['data']);
                 $success = 0;
                 foreach ($result['data'] as $key => $item) {
                     $empExists = Employee::where(["email" => $result['data'][$key]["email"], "org_id" => $result['data'][$key]["org_id"]]);
                     if (!$empExists->count()) {
-                        $this->insertEmployee($item, Hash::make($this->generateRandomPwd(10)));
+                        $this->insertEmployee($item, $password);
                         $success++;
                     }
                 } //add a new column to check if email exists in that organization
