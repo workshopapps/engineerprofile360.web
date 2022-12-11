@@ -214,7 +214,7 @@ Route::prefix('interview')->group(function () {
     Route::get('{id}', [InterviewController::class, 'getInterviewById']);
     Route::get('/stack/{stack_id}', [InterviewController::class, 'getInterviewByStack']);
     Route::delete('delete/{id}', [InterviewController::class, 'deleteInterview'])->middleware("isloggedin", "isadmin");
-    Route::post('add', [InterviewController::class, 'addInterview'])->middleware('isloggedin', 'isadmin');
+    Route::post('add', [InterviewController::class, 'addInterview']);
     Route::get('get/{id}', [InterviewController::class, 'getInterviewById']);
     Route::get('get/{company}', [InterviewController::class, 'getInterviewByCompanyName']);
     Route::put('update/{interviewId}', [InterviewController::class, 'updateInterview']);
