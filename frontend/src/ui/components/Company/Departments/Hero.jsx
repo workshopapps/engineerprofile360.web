@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Loader, Title } from "../../../../styles/reusableElements.styled";
 import { useState } from "react";
-import { More } from "iconsax-react";
+import { More, AddCircle } from "iconsax-react";
 import AddDept, { Load } from "./AddDept";
 import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
@@ -93,15 +93,16 @@ function Hero() {
             onClick={() => {
               setAddDept(true);
             }}
-            w={"197px"}
-            h={"44px"}
-            text={"white"}
+            w={"210px"}
+            h={"42px"}
+            text={"#fff"}
             bg={"#2667ff"}
             rounded={"4px"}
-            fs={"14px"}
+            fs={"16px"}
             fw={"400"}
             lh={"20px"}
             border={"2px solid #2667ff"}
+            m={" 0"}
           >
             Add New Department
           </Button>

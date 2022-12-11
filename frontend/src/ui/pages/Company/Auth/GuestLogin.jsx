@@ -4,20 +4,21 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { Container } from "../../../styles/reusableElements.styled";
-import { InputField } from "../../components";
+import { Container } from "../../../../styles/reusableElements.styled";
+import InputField from "../../../../components/InputField";
 import AuthTitle from "../../../components/molecules/Auth/AuthTitle";
 
-import useInputValidation from "../../../hooks/useInputValidation";
-import useAuth from "../../../hooks/useAuth";
-import axios from "../../../api/axios";
+import useInputValidation from "../../../../hooks/useInputValidation";
+import useAuth from "../../../../hooks/useAuth";
+import axios from "../../../../api/axios";
 
 // import axios from "axios";
 
-import editSvg from "../../../assets/icons/edit-2.svg";
-import arrowDown from "../../../assets/icons/arrow-down-filled.svg";
-import smsSvg from "../../../assets/icons/smsenvelope.svg";
-import { Loader } from "../../../styles/reusableElements.styled";
+import editSvg from "../../../../assets/icons/edit-2.svg";
+import arrowDown from "../../../../assets/icons/arrow-down-filled.svg";
+import smsSvg from "../../../../assets/icons/smsenvelope.svg";
+import { Loader } from "../../../../styles/reusableElements.styled";
+
 
 const GuestLogin = () => {
   const { setAuth, persist, setPersist } = useAuth();

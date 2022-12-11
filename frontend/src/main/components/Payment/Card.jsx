@@ -3,9 +3,9 @@ import styled from "styled-components";
 
 import InputField from "../../../components/InputField";
 
-const Card = ({ isOpened }) => {
+const Card = () => {
   return (
-    <CardForm height={isOpened && "300px"}>
+    <CardForm height="fit-content">
       <InputContainer>
         <label>Card Holder name</label>
         <div onChange={""}>

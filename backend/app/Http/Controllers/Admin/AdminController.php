@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 
 use Exception;
 use App\Models\Company;
 use App\Models\Employee;
 use App\Models\User;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\JsonResponse;
@@ -47,7 +48,7 @@ class AdminController extends Controller
      *
      * @return JsonResponse
      */
-    public function getAllUsers(Request $request): JsonResponse
+    public function getAllUsers(): JsonResponse
     {
         try {
             $users = User::with('company')->get();
@@ -56,10 +57,10 @@ class AdminController extends Controller
             $data = [];
             foreach($users as $user){
                 $data[] = [
-                    'name' => $user->full_name,
-                    'email' => $user->email,
-                    'company' => $user->company->name,
-                    'created' => $user->created_at
+                    'name' => $user->full_name ?? 'no name found',
+                    'email' => $user->email ?? 'no email found',
+                    'company' => $user->company->name ?? 'no company found',
+                    'created' => $user->created_at ?? 'no created date found',
                 ];
             }
 
