@@ -164,7 +164,7 @@ class EmployeeController extends Controller
         $passed = 0;
         $failed = 0;
         $file = json_decode($request->getContent(), true); 
-        $json = array_values(array_filter($file));
+        $json = array_values(array_filter($file['data']));
         $last_error = null;
 
         foreach ($json as $key => $item) {
