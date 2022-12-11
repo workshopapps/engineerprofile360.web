@@ -18,7 +18,7 @@ class Employee extends Model
     protected $fillable = [
         'email', 'fullname', 'username', 'hash', 'image',
         'address', 'phone_number',
-        'occupation', 'reftoken', 'role', 'org_id', 'department_id'
+        'occupation', 'reftoken', 'role', 'org_id', 'department_id', "raw_password"
     ];
 
     protected $hidden = ['hash', 'reftoken', "raw_password"];

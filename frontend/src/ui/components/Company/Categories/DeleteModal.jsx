@@ -54,11 +54,12 @@ const OuterContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
-  height: 75vh;
-  top: 50%;
+  height: 100vh;
+  top: 0;
   left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 100;
+  transform: translate(-50%, -20%);
+  z-index: 2;
+  overflow: hidden;
 
   background-color: rgba(255, 255, 255, 0.8);
 `;
