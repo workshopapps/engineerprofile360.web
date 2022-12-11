@@ -36,7 +36,7 @@ class EmployeeController extends Controller
         return $pwd;
     }
 
-    public function parseEmployeeCsv($b64, $org, $department_id, $password)
+    public function parseEmployeeCsv($b64, $org, $department_id)
     {
         $csvData = base64_decode(explode(",", $b64)[1]);
         $splitData = explode("\n", $csvData);
@@ -47,14 +47,12 @@ class EmployeeController extends Controller
             $ext = explode(",", str_replace("\r", "", $val));
             $item = array_slice($ext, 1);
             $arr = [
-                "id" => $i,
+                "id" => Str::uuid(),
                 "fullname" => str_replace('"', "", $item[0]),
                 "username" => str_replace('"', "", $item[1]),
                 "email" => str_replace('"', "", $item[2]),
                 "org_id" => $org,
-                "department_id" => $department_id,
-                "hash" => Hash::make($password),
-                "raw_password" => $password
+                "department_id" => $department_id
             ];
             array_push($finalJsonData, $arr);
             $i++;
@@ -77,7 +75,6 @@ class EmployeeController extends Controller
                 $file = $payload['csv_file'];
                 $org = $payload["org_id"];
                 $dept = $payload['department_id'];
-                $password = $this->generateRandomPwd(10);
 
                 if (!isset($file) || !isset($org) || !isset($dept)) {
                     return $this->sendResponse(true, "expected a valid employee 'org_id, dept_id, file'  but got none", "missing employee data.", null,  Response::HTTP_BAD_REQUEST);
@@ -90,22 +87,27 @@ class EmployeeController extends Controller
                 if (is_null(Company::find($org))) return $this->sendResponse(true, "Not found", "Company not found", null, Response::HTTP_NOT_FOUND);
                 if (is_null(Department::find($dept))) return $this->sendResponse(true, "Not found", "Department not found", null, Response::HTTP_NOT_FOUND);
 
-                $result = $this->parseEmployeeCsv($file, $org, $dept, $password);
-                $total = count($result['data']);
-                $success = 0;
-                foreach ($result['data'] as $key => $item) {
-                    $empExists = Employee::where(["email" => $result['data'][$key]["email"], "org_id" => $result['data'][$key]["org_id"]]);
-                    if (!$empExists->count()) {
-                        $this->insertEmployee($item, $password);
-                        $success++;
-                    }
-                } //add a new column to check if email exists in that organization
+                $result = $this->parseEmployeeCsv($file, $org, $dept);
 
                 if ($result["error"] == false && $result["message"] == "csv parsed") {
-                    $data = $result['data'];
-                    return $this->sendResponse(false, null, "CSV Parsed Successfully", [
+                    $total = count($result['data']);
+                    $success = 0;
+                    $errorMsg = null;
+                    foreach ($result['data'] as $key => $item) {
+                        $empExists = Employee::where(["email" => $result['data'][$key]["email"], "org_id" => $result['data'][$key]["org_id"]]);
+                        if (!$empExists->count()) {
+                            $raw_password = $this->generateRandomPwd(10);
+                            $hash = Hash::make($raw_password);
+                            $result['data'][$key]['hash'] = $hash;
+                            $result['data'][$key]['raw_password'] = $raw_password;  
+                          $response =  $this->insertEmployee($result['data'][$key], $raw_password);
+                            // return $result; exit;
+                            if (json_decode($response->getContent(), true)['errorState'] == false) $success++;
+                        }
+                    } //check if email exists in that organization then insert
+                    return $this->sendResponse(false, null, "CSV Uploaded Successfully", [
                         "total" => $total,
-                        "success" => $success
+                        "success" => $success 
                     ], Response::HTTP_OK);
                 } else {
                     return $this->sendResponse(true, $result["error"], "Invalid File Type", null, Response::HTTP_BAD_REQUEST);
@@ -204,13 +206,8 @@ class EmployeeController extends Controller
         $last_error = null;
 
         foreach ($json as $key => $item) {
-            // only add employee where is_exist != true
-            // if ($json[$key]['is_exist'] == false) {
             $raw_password = $this->generateRandomPwd(10);
             $hash = Hash::make($raw_password);
-            // unset($json[$key]['id']);
-            // unset($json[$key]['is_exist']); 
-            //...commented code will be removed after live testing...
             unset($json[$key]['department']);
             $json[$key]['id'] = Str::uuid();
             $json[$key]['hash'] = $hash;
@@ -219,8 +216,7 @@ class EmployeeController extends Controller
             $result = $this->insertEmployee($json[$key], $raw_password);
             if (json_decode($result->getContent(), true)['errorState'] == true) $failed++;
             else $passed++;
-            if (json_decode($result->getContent(), true)['error'] != null) $last_error = json_decode($result->getContent(), true)['message'];
-            // }
+            if (json_decode($result->getContent(), true)['error'] != null) $last_error = json_decode($result->getContent(), true)['message'];            
         }
         return $this->sendResponse(false, "$passed Employee Added Successfully, $failed failed", $last_error, $json, Response::HTTP_CREATED);
     }
