@@ -106,7 +106,7 @@ const AdminCSVUpload = () => {
                     <BsPlusCircle className="plus-icon" />
                     <p>Browse Computer</p>
                   </button>
-                  <button>
+                  <button onClick={() => inputRef.current.click()}>
                     <BsPlusCircle className="mobile-icon" />
                   </button>
                 </Buttons>
