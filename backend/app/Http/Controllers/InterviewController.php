@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateInterviewRequest;
-use App\Http\Requests\InterviewRequest;
 use Exception;
 use App\Models\Interview;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use App\Http\Requests\CreateInterviewRequest;
 
 class InterviewController extends Controller
 {
