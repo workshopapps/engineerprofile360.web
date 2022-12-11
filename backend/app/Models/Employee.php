@@ -21,7 +21,7 @@ class Employee extends Model
         'occupation', 'reftoken', 'role', 'org_id', 'department_id', "raw_password"
     ];
 
-    protected $hidden = ['hash', 'reftoken'];
+    protected $hidden = ['hash', 'reftoken', "raw_password"];
 
     public function assessment()
     {
