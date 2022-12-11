@@ -38,7 +38,6 @@ import {
 import {
   CompanyLogin,
   CompanySignup,
-  GuestLogin,
   CompanyEmailVerified,
   CompanyPasswordSuccess,
   CompanySetPassword,
@@ -46,11 +45,18 @@ import {
   CompanyVerifyEmail,
 } from "./ui/pages/Company/";
 
+import { GuestEmail, GuestLogin } from "./ui/components/Guests";
+import {
+  GuestAssessmentList,
+  GuestTakeAssessment,
+  GuestTakeAssessmentResult,
+} from "./ui/pages/Guest";
+
 import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 
 import { EmployeeLogin, EmployeeDashboard } from "./ui/pages/Employee";
 
-import { AdminLogin  } from "./ui/pages/Admin";
+import { AdminLogin } from "./ui/pages/Admin";
 
 import UserSupport from "./main/pages/UserSupport";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
@@ -66,8 +72,8 @@ import AdminCSVUpload from "./ui/components/Company/Assessments/AdminCSVUpload";
 // import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import EmployeeCSVUpload from "./ui/components/Company/Employees/EmployeeCSVUpload";
-import GuestEmail from "./main/pages/GuestEmail";
-import GuestAssessmentList from "./main/pages/GuestAssessmentList";
+// import GuestEmail from "./main/pages/GuestEmail";
+// import GuestAssessmentList from "./main/pages/GuestAssessmentList";
 
 import AdminViewAssessment from "./ui/components/Company/Assessments/admin-view-assessment/AdminViewAssessment";
 // import Assessment from "./miscellaneous/assessment/Assessment.js";
@@ -101,6 +107,7 @@ import EmployeeAssessmentList from "./ui/pages/Employee/EmployeeAssessmentList";
 import AdminAssessmmentListOutlet from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmmentListOutlet";
 import AdminAssessmentListAvailable from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmentListAvailable";
 import AssessmentList from "./ui/components/Company/Assessments/adminAssesmentList/AssessmentList";
+import GuestLayout from "./ui/components/Guests/GuestLayout";
 
 // This is for DevOps App Monitoring - START
 atatus.config("4010279ebbd747e7a752082eea130df6").install();
@@ -180,6 +187,7 @@ const App = () => {
                 path="/user-assessment-completed"
                 element={<UserAssessmentListCompleted />}
               /> */}
+            <Route path="/guest-email" element={<GuestEmail />} />
           </Route>
 
           {/* Authentication Layout */}
@@ -248,7 +256,6 @@ const App = () => {
                   element={<AdminViewAssessment />}
                 />
 
-                
                 <Route path="/departments" element={<DepartmentSection />} />
                 <Route path="/dashboard" element={<CompanyDashboard />} />
 
@@ -262,7 +269,10 @@ const App = () => {
                     />
                   </Route>
                   <Route path="add-employee" element={<EmployeeCSVUpload />} />
-                  <Route path="/employees/csv-upload-preview" element={<PreviewCsvUpload />}/>
+                  <Route
+                    path="/employees/csv-upload-preview"
+                    element={<PreviewCsvUpload />}
+                  />
                 </Route>
                 {/* <Route
                   path="/take-assessment"
@@ -300,14 +310,11 @@ const App = () => {
               {/* Overall Admin Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
                 {/* Put in Protected pages in here */}
-                <Route
-                  path="/admin/dashboard"
-                  element={<Dashboard/>} />
-                <Route/>
+                <Route path="/admin/dashboard" element={<Dashboard />} />
+                <Route />
 
-                <Route path="/admin/stacks"
-                       element={<Stacks/>} />
-                </Route>
+                <Route path="/admin/stacks" element={<Stacks />} />
+              </Route>
 
               <Route element={<RequireAuth allowedRole={ROLES.Employees} />}>
                 {/* Put in Protected pages in here */}
@@ -323,6 +330,18 @@ const App = () => {
 
               {/* <Route path="/assessment" element={<Assessment />} /> */}
             </Route>
+          </Route>
+          <Route element={<GuestLayout />}>
+            <Route
+              path="guest-assessment-list"
+              element={<GuestAssessmentList />}
+            />
+            <Route path="guest-assessment" element={<GuestTakeAssessment />} />
+
+            <Route
+              path="/guest-take-assessment-result"
+              element={<GuestTakeAssessmentResult />}
+            />
           </Route>
         </Routes>
       </ThemeProvider>
