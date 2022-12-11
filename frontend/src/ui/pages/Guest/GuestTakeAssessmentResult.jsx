@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import GuestTakeAssessmentHeader from "../../components/Guests/GuestTakeAssessmentHeader";
 import { useState, useEffect } from "react";
 import axios from "../../../api/axios";
 import { Link } from "react-router-dom";
+import { GuestTakeAssessmentResultHeader } from "../../components/Guests";
+import { Button } from "../../../styles/reusableElements.styled";
 
 export default function GuestTakeAssessmentResult() {
   const [correctAnswers, setCorrectAnswers] = useState(0);
@@ -44,14 +45,17 @@ export default function GuestTakeAssessmentResult() {
   const Prev = () => {
     if (currentPage > 1) {
       return (
-        <input
+        <Button
+          $variant="outlined"
+          $size="md"
+          $color="#106ebe"
           type="button"
-          className="button_next"
           onClick={(e) => {
             setCurrentPage(currentPage - 1);
           }}
-          value="Previous"
-        />
+        >
+          Previous
+        </Button>
       );
     }
   };
@@ -59,14 +63,17 @@ export default function GuestTakeAssessmentResult() {
   const Next = () => {
     if (currentPage < Math.ceil(currentPost.length / questionsPerPage)) {
       return (
-        <input
+        <Button
+          $variant="outlined"
+          $size="md"
+          $color="#106ebe"
           type="button"
-          className="button_next"
           onClick={(e) => {
             setCurrentPage(currentPage + 1);
           }}
-          value="Next"
-        />
+        >
+          Next
+        </Button>
       );
     }
   };
@@ -74,7 +81,7 @@ export default function GuestTakeAssessmentResult() {
   return (
     <>
       <GuestAssessmentContainer>
-        <GuestTakeAssessmentHeader
+        <GuestTakeAssessmentResultHeader
           correctA={correctAnswers}
           totalQ={totalQuestions}
         />
@@ -116,9 +123,9 @@ export default function GuestTakeAssessmentResult() {
               {<Prev />}
               {<Next />}
               <Link to="/guest-email">
-                <button type="button" className="button_submit">
+                <Button $size="md" type="button">
                   Done
-                </button>
+                </Button>
               </Link>
             </div>
           </form>

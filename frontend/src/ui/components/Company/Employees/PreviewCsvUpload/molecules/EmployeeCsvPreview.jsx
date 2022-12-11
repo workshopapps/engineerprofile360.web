@@ -54,8 +54,20 @@ function EmployeeCsvPreview() {
 
       data.push(rowData);
     }
+    // go through the data and remove empty object from the array
+    let results = data.filter((element) => {
+      if (
+        typeof element === "object" &&
+        !Array.isArray(element) &&
+        Object.keys(element).length === 0
+      ) {
+        return false;
+      } else {
+        return true;
+      }
+    });
 
-    return data;
+    return results;
   };
 
   const ref = useRef(null);
@@ -83,48 +95,49 @@ function EmployeeCsvPreview() {
         othercheckbox[i].checked = false;
       }
     }
-  };
 
-  const handleClick = async () => {
-    const checkboxes = document.querySelectorAll(
-      'td input[type="checkbox"]:checked'
-    );
+    const handleClick = async () => {
+      const checkboxes = document.querySelectorAll(
+        'td input[type="checkbox"]:checked'
+      );
 
-    if (checkboxes.length < 1) {
-      toast.error("Choose employees to be added");
-    } else {
-      setLoading(true);
-      const el = ref.current;
-      const data = tableToJson(el);
-      //console.log(data);
+      if (checkboxes.length < 1) {
+        toast.error("Choose employees to be added");
+      } else {
+        setLoading(true);
+        const el = ref.current;
+        const data = tableToJson(el);
+        //console.log(data);
 
-      try {
-        const response = await axios.post(
-          "/employee/confirm",
-          JSON.stringify({
-            data: data,
-          })
-        );
+        try {
+          const response = await axios.post(
+            "/employee/confirm",
+            JSON.stringify({
+              data: data,
+            })
+          );
 
-        if (response.data.errorState === false) {
+          if (response.data.errorState === false) {
+            setLoading(false);
+            toast.success(`${response.data.message}`);
+
+            setTimeout(() => navigate("/employees/", { replace: true }), 1000);
+          } else {
+            toast.error(`${response.data.message}`);
+          }
+          //console.log(response.data.data);
+        } catch (err) {
           setLoading(false);
-          toast.success(`${response.data.message}`);
-
-          setTimeout(() => navigate("/employees/", { replace: true }), 1000);
-        } else {
-          toast.error(`${response.data.message}`);
+          if (!err.response) {
+            toast.error("No Server Response");
+          } else {
+            toast.error(err.response?.data.message);
+          }
         }
-        //console.log(response.data.data);
-      } catch (err) {
         setLoading(false);
-        if (!err.response) {
-          toast.error("No Server Response");
-        } else {
-          toast.error(err.response?.data.message);
-        }
       }
       setLoading(false);
-    }
+    };
   };
 
   return loading ? (
@@ -175,8 +188,8 @@ function EmployeeCsvPreview() {
                         org_id,
                         is_exist,
                       } = data;
-                      return (
-                        <tr key={index}>
+                      return !is_exist ? (
+                        <tr key={index} className={is_exist ? "strike" : ""}>
                           <td>{index + 1}</td>
                           <td>{fullname}</td>
                           <td>{username}</td>
@@ -184,22 +197,71 @@ function EmployeeCsvPreview() {
                           <td>{department}</td>
                           <td className="hidden">{department_id}</td>
                           <td className="hidden">{org_id}</td>
-                          <td className="hidden">{is_exist ? true : false}</td>
+                          <td className="hidden">
+                            {is_exist ? "true" : "false"}
+                          </td>
                           <td>
-                            <Checkbox
-                              type="checkbox"
-                              onChange={(e) => {
-                                handleCounter(e);
-                              }}
-                            />
+                            {is_exist ? (
+                              ""
+                            ) : (
+                              <Checkbox
+                                type="checkbox"
+                                onChange={(e) => {
+                                  handleCounter(e);
+                                }}
+                              />
+                            )}
                           </td>
                         </tr>
+                      ) : (
+                        ""
                       );
                     })
                   : ""}
               </tbody>
             </table>
           </TableWrapper>
+          {CsvData ? (
+            <TableWrapper>
+              <p>Existing Data</p>
+              <table>
+                <tbody>
+                  <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+
+                  {CsvData.map((data, index) => {
+                    const {
+                      fullname,
+                      email,
+                      username,
+                      department_id = deptid,
+                      department = deptname,
+                      org_id,
+                      is_exist,
+                    } = data;
+                    return is_exist ? (
+                      <tr key={index} className={is_exist ? "strike" : ""}>
+                        <td></td>
+                        <td>{fullname}</td>
+                        <td>{username}</td>
+                        <td>{email}</td>
+                        <td>{department}</td>
+                      </tr>
+                    ) : (
+                      ""
+                    );
+                  })}
+                </tbody>
+              </table>
+            </TableWrapper>
+          ) : (
+            ""
+          )}
         </CategoryListing>
         <ButtonWrapper>
           <Wrapper>
@@ -252,6 +314,10 @@ export const Container = styled.div`
     width: 100%;
     border: none !important;
     border-spacing: 0px !important;
+  }
+
+  table:nth-child(2) th {
+    padding: 6px;
   }
 
   table tr:first-of-type {
@@ -311,6 +377,10 @@ export const Container = styled.div`
     font-size: 16px;
     font-weight: 600;
     color: #605e5c;
+  }
+
+  .strike {
+    text-decoration: line-through;
   }
 `;
 export const CSV = styled.div`

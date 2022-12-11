@@ -1,9 +1,64 @@
 import React from "react";
 import styled from "styled-components";
-import GuestTakeAssessmentHeader from "../../components/Guests/GuestTakeAssessmentHeader";
 import { useState, useEffect } from "react";
 import axios from "../../../api/axios";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../../../styles/reusableElements.styled";
+import { GuestTakeAssessmentHeader } from "../../components/Guests";
+
+const Questions = [
+  {
+    question_id: 1,
+    question_title:
+      "What is the first step in the software development lifecycle?",
+    options: [
+      "System Design",
+      "Coding",
+      "System Testing",
+      "Preliminary investigation and Analysis ",
+    ],
+  },
+
+  {
+    question_id: 2,
+    question_title:
+      "Which of the following refers to internal software equality?",
+    options: ["Reusability", "Scalability", "Reliability", "Usability"],
+  },
+
+  {
+    question_id: 3,
+    question_title: "What does RAD stands for?",
+    options: [
+      "Rapid Application Development",
+      "Rapid Application Document",
+      "Relative Application Development",
+      "None of the above",
+    ],
+  },
+  {
+    question_id: 4,
+    question_title:
+      "Which of the following prototype is not associated with prototyping Model?",
+    options: [
+      "Vertical Prototype",
+      "Horizontal Prototype",
+      "Domain Prototype",
+      "Diagonal Prototype",
+    ],
+  },
+  {
+    question_id: 5,
+    question_title:
+      "Which of the following prototype is not associated with prototyping Model?",
+    options: [
+      "Vertical Prototype",
+      "Domain Prototype",
+      "Horizontal Prototype",
+      "Diagonal Prototype",
+    ],
+  },
+];
 
 export default function GuestTakeAssessment() {
   useEffect(() => {
@@ -13,14 +68,14 @@ export default function GuestTakeAssessment() {
       );
       console.log(Object.keys(res.data.data).length);
       console.log(res);
-      setCurrentPost(res.data.data);
+      setCurrentPost(Questions);
     };
     fetchQuestion();
   }, []);
 
   const [currentPost, setCurrentPost] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [questionsPerPage] = useState(5);
+  const [questionsPerPage] = useState(3);
 
   const navigate = useNavigate();
 
@@ -33,14 +88,17 @@ export default function GuestTakeAssessment() {
   const Prev = () => {
     if (currentPage > 1) {
       return (
-        <input
+        <Button
+          $variant="outlined"
+          $size="md"
+          $color="#106ebe"
           type="button"
-          className="button_next"
           onClick={(e) => {
             setCurrentPage(currentPage - 1);
           }}
-          value="Previous"
-        />
+        >
+          Previous
+        </Button>
       );
     }
   };
@@ -48,14 +106,17 @@ export default function GuestTakeAssessment() {
   const Next = () => {
     if (currentPage < Math.ceil(currentPost.length / questionsPerPage)) {
       return (
-        <input
+        <Button
+          $variant="outlined"
+          $size="md"
+          $color="#106ebe"
           type="button"
-          className="button_next"
           onClick={(e) => {
             setCurrentPage(currentPage + 1);
           }}
-          value="Next"
-        />
+        >
+          Next
+        </Button>
       );
     }
   };
@@ -64,13 +125,21 @@ export default function GuestTakeAssessment() {
     <>
       <GuestAssessmentContainer>
         <GuestTakeAssessmentHeader />
-        <div className="questions">
+        <QuestionsContainer>
           <form>
             {currentPost.map((assessment, i) => {
-              const { question_id, options, correct_answers, id } = assessment;
+              const {
+                question_id,
+                question_title,
+                options,
+                correct_answers,
+                id,
+              } = assessment;
               return (
-                <div className="questionswrapper" key={i}>
-                  <p>{question_id}</p>
+                <QuestionsWrapper key={i}>
+                  <QuestionTitle>
+                    {question_id}: {question_title}
+                  </QuestionTitle>
                   {options.map((query, i) => {
                     return (
                       <div key={i}>
@@ -86,19 +155,19 @@ export default function GuestTakeAssessment() {
                       </div>
                     );
                   })}
-                </div>
+                </QuestionsWrapper>
               );
             })}
 
             <br />
 
-            <div className="filter_next_submit">
+            <FilterNextSubmit>
               {<Prev />}
               {<Next />}
 
-              <button
+              <Button
+                $size="md"
                 type="button"
-                className="button_submit"
                 onClick={() => {
                   localStorage.setItem(
                     "evalAssessment",
@@ -108,10 +177,10 @@ export default function GuestTakeAssessment() {
                 }}
               >
                 Submit
-              </button>
-            </div>
+              </Button>
+            </FilterNextSubmit>
           </form>
-        </div>
+        </QuestionsContainer>
       </GuestAssessmentContainer>
     </>
   );
@@ -127,60 +196,22 @@ const GuestAssessmentContainer = styled.div`
   padding: 10px;
   color: #323130;
   padding: 40px;
+`;
 
-  .button_next {
-    margin: 0 20px;
-    padding: 10px 16px;
-    width: 139px;
-    height: 60px;
-    background-color: #ffffff;
-    border: 1px solid #2667ff;
-    border-radius: 4px;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 20px;
-    color: #2667ff;
-    cursor: pointer;
-  }
+const QuestionsContainer = styled.div`
+  display: flex;
+  width: 100% !important;
+  flex-direction: column;
+  margin: 0px 0px;
 
-  .button_submit {
-    margin: 0 20px;
-    padding: 10px 16px;
-    width: 139px;
-    height: 60px;
-    background-color: #2667ff;
-    border: 1px solid #ffffff;
-    border-radius: 4px;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 20px;
-    color: #ffffff;
-    cursor: pointer;
-  }
-
-  .filter_next_submit {
-    display: flex;
-    width: 100% !important;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .questions {
-    display: flex;
-    width: 100% !important;
-    flex-direction: column;
-    margin: 0px 0px;
-  }
-
-  .questions p {
+  p {
     font-weight: 600;
     font-size: 18px;
     line-height: 24px;
     margin-top: 50px;
   }
 
-  .questions label {
+  label {
     font-weight: 400;
     font-size: 14px;
     line-height: 20px;
@@ -188,12 +219,8 @@ const GuestAssessmentContainer = styled.div`
     padding-left: 10px;
   }
 
-  .questions input[type="radio"] {
+  input[type="radio"] {
     margin-left: 10px;
-  }
-
-  .questionswrapper {
-    margin: 0;
   }
 
   @media screen and (max-width: 767px) {
@@ -203,4 +230,22 @@ const GuestAssessmentContainer = styled.div`
       width: 100%;
     }
   }
+`;
+
+const QuestionsWrapper = styled.div`
+  margin: 0;
+`;
+
+const QuestionTitle = styled.p`
+  margin-bottom: 16px;
+`;
+
+const FilterNextSubmit = styled.div`
+  display: flex;
+  gap: 40px;
+  width: 100% !important;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
 `;
