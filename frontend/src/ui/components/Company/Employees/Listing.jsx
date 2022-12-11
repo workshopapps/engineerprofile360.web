@@ -15,17 +15,16 @@ const Listing = () => {
   useEffect(() => {
     setAllEmployees(employees ? employees : []);
     setDepts(departments ? departments : []);
-    console.log(depts);
   }, [employees, departments]);
-
-  console.log(employees, departments);
 
   const handleFilter = (e) => {
     if (e.target.value === "all") {
       setAllEmployees(employees ? employees : []);
     } else {
       const filtered = employees.filter(
-        (employee) => e.target.value === employee.department.name
+        (employee) =>
+          employee.department !== null &&
+          e.target.value === employee.department.name
       );
       setAllEmployees(filtered);
     }
