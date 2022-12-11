@@ -1,32 +1,12 @@
 import React, { useState, useEffect } from "react";
-import axios from "../../../../api/axios";
+
 import styled from "styled-components";
 import TableComponent from "../../molecules/TableComponent";
 
 import { More } from "iconsax-react";
 
-const UsersList = () => {
+const UsersList = ({ users }) => {
   const [openMod, setOpenMod] = useState(false);
-  const [users, setUsers] = useState(null);
-  useEffect(() => {
-    const getDetails = async () => {
-      axios
-        .get(`admin/users`)
-        .then((res) => {
-          console.log(res.data.data);
-          setUsers(res.data.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-
-    getDetails();
-  }, []);
-
-  const toggleMod = () => {
-    setOpenMod(!openMod);
-  };
 
   return (
     <TableComponent>
@@ -47,13 +27,13 @@ const UsersList = () => {
             <td>{user.company}</td>
             <td>{Date(user.created)}</td>
             <td>
-              <More onClick={toggleMod} />
-              {openMod ? (
+              <More onClick={() => setOpenMod(!openMod)} />
+              {openMod && (
                 <Modal>
                   <ModalEdit>Edit</ModalEdit>
                   <ModalDelete>Delete</ModalDelete>
                 </Modal>
-              ) : null}
+              )}
             </td>
           </tr>
         ))}
