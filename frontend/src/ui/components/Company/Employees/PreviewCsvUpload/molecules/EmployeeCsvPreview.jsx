@@ -49,9 +49,21 @@ function EmployeeCsvPreview() {
           delete rowData[keys[8]];
     
          data.push(rowData);
-      }       
+      }
+      // go through the data and remove empty object from the array
+      let results= data.filter(element => {
+        if (
+          typeof element === 'object' &&
+          !Array.isArray(element) &&
+          Object.keys(element).length === 0
+        ) {
+          return false;
+        } else {
+          return true;
+        }
+      });
   
-      return data;
+      return results;
     }
     
     const ref = useRef(null);
@@ -88,11 +100,11 @@ function EmployeeCsvPreview() {
         toast.error("Choose employees to be added");
       }
       else{
-        setLoading(true);
+       setLoading(true);
         const el = ref.current;
         const data = tableToJson(el);
         //console.log(data);
-
+      
         
         try {
           const response = await axios.post(
@@ -106,7 +118,7 @@ function EmployeeCsvPreview() {
             toast.success(`${response.data.message}`);
             
             setTimeout(
-               () => navigate("/employees/", {replace:true}), 
+               () => navigate("/employees/", {replace: true}), 
                1000
              );
             
