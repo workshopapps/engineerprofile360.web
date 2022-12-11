@@ -1,13 +1,20 @@
 import styled from "styled-components";
 import { BsCloudUpload, BsPlusCircle } from "react-icons/bs";
-import { useRef, useState,useEffect } from "react";
-import { Link,useOutletContext,useNavigate } from "react-router-dom";
+import { useRef, useState, useEffect } from "react";
+import { Link, useOutletContext, useNavigate } from "react-router-dom";
 import close from "../../../../assets/icons/close.svg";
-import {OverlayLoader, Title } from "../../../../styles/reusableElements.styled";
+import {
+  OverlayLoader,
+  Title,
+} from "../../../../styles/reusableElements.styled";
 import CreateEmployeeManual from "./CreateEmployeeManual";
 import axios from "../../../../api/axios";
 import useAuth from "../../../../hooks/useAuth";
-import {showErrorToast,showSuccessToast,toBase64,} from "../../../../helpers/helper";
+import {
+  showErrorToast,
+  showSuccessToast,
+  toBase64,
+} from "../../../../helpers/helper";
 
 const EmployeeCSVUpload = () => {
   const [tab, setTab] = useState("manual");
@@ -19,12 +26,12 @@ const EmployeeCSVUpload = () => {
   const [depts, setDepts] = useState([]);
   const { auth } = useAuth();
   const navigate = useNavigate();
-  
+
   //const [departments, setDepartments] = useState([]);
   const [selecteddepartment, setSelectedepartment] = useState({});
   const [selecteddepartmentname, setSelectedepartmentname] = useState({});
 
-  //Select department event set department id 
+  //Select department event set department id
   const handleChange = (e) => {
     localStorage.setItem("departmentsID", JSON.stringify(e.target.value));
     setSelectedepartment(e.target.value);
@@ -42,9 +49,9 @@ const EmployeeCSVUpload = () => {
     e.preventDefault();
     console.log(`drop ${e}`);
     setFiles(e.dataTransfer.files);
-    
+
     //console.log(e.dataTransfer.files[0].name);
-    //console.log(e.dataTransfer.files[0]);    
+    //console.log(e.dataTransfer.files[0]);
 
     /*Array.from(e.dataTransfer.files)
     .filter((file) => file.type === "text/csv")
@@ -56,18 +63,17 @@ const EmployeeCSVUpload = () => {
     });*/
   };
 
-  
   //File convert to base64
   const handleConvertion = async () => {
     const file = files?.[0];
-    
-      try {
-        const result = await toBase64(file);
-        return result;
-      } catch (error) {
-        console.error(`Conversion error ${error}`);
-        return;
-      }
+
+    try {
+      const result = await toBase64(file);
+      return result;
+    } catch (error) {
+      console.error(`Conversion error ${error}`);
+      return;
+    }
   };
 
   //if there is a file then convert
@@ -77,30 +83,34 @@ const EmployeeCSVUpload = () => {
       console.log(`Conversion result ${result}`);
     });
 
-
   const handleUpload = async () => {
-    if(selecteddepartment){
+    if (selecteddepartment) {
       setLoading(true);
       try {
         const response = await axios.post(
           "employee/add?type=csv",
           JSON.stringify({
-            org_id:auth.org_id,
+            org_id: auth.org_id,
             department_id: selecteddepartment,
             csv_file: encodedFile,
           })
         );
-        if(response.data.errorState===false){
+        if (response.data.errorState === false) {
           setLoading(false);
           showSuccessToast(response.data.message);
           setTimeout(
-            () => navigate("/employees/csv-upload-preview" ,
-            {state:{csvData:response.data.data,orgID:auth.org_id,
-              departmentID:selecteddepartment, departmentName:selecteddepartmentname}}), 
+            () =>
+              navigate("/employees/csv-upload-preview", {
+                state: {
+                  csvData: response.data.data,
+                  orgID: auth.org_id,
+                  departmentID: selecteddepartment,
+                  departmentName: selecteddepartmentname,
+                },
+              }),
             1000
           );
-          
-        }else {
+        } else {
           showErrorToast(response.data.message);
         }
         console.log(response.data.data);
@@ -123,14 +133,14 @@ const EmployeeCSVUpload = () => {
 
   return loading ? (
     <OverlayLoader contained height={100}>
-          <div></div>
-          <span>Just a moment...</span>
-        </OverlayLoader>
-  ) :(
+      <div></div>
+      <span>Just a moment...</span>
+    </OverlayLoader>
+  ) : (
     <>
       <Main>
-      <Selectontainer>
-            <div
+        <SelectContainer>
+          <div
             style={{
               display: "flex",
               flexDirection: "column",
@@ -141,19 +151,18 @@ const EmployeeCSVUpload = () => {
               Department
             </Title>
             <select value={selecteddepartment} onChange={handleChange} required>
-            <option value="">Select Department</option>
-            {depts
-              ? depts.map((dept) => (
-                  <option key={dept.id} value={dept.id}>
-                    {dept.name}
-                  </option>
-                ))
-              : ""}
+              <option value="">Select Department</option>
+              {depts
+                ? depts.map((dept) => (
+                    <option key={dept.id} value={dept.id}>
+                      {dept.name}
+                    </option>
+                  ))
+                : ""}
             </select>
-
-            </div>
-          </Selectontainer>   
-        <Container> 
+          </div>
+        </SelectContainer>
+        <Container>
           <CreateTypeContainer>
             <Upload
               onClick={() => setTab("upload")}
@@ -187,7 +196,7 @@ const EmployeeCSVUpload = () => {
                       <BsPlusCircle className="plus-icon" />
                       <p>Browse Computer</p>
                     </button>
-                    <button>
+                    <button onClick={() => inputRef.current.click()}>
                       <BsPlusCircle className="mobile-icon" />
                     </button>
                   </Buttons>
@@ -196,17 +205,17 @@ const EmployeeCSVUpload = () => {
                 <NameContainer>
                   {files?.[0]?.type === "text/csv" ? (
                     <>
-                    <Success>
-                      <p>{files?.[0]?.name}</p>
-                      <img src={close} onClick={() => setFiles()} alt="" />
-                    </Success>
-                    <UploadButton>
-                      <CancelButton>
-                        <Link to={-1}>Cancel</Link>
-                      </CancelButton>
-                      <GoButton onClick={handleUpload}>Upload</GoButton>
-                    </UploadButton>
-                  </>
+                      <Success>
+                        <p>{files?.[0]?.name}</p>
+                        <img src={close} onClick={() => setFiles()} alt="" />
+                      </Success>
+                      <UploadButton>
+                        <CancelButton>
+                          <Link to={-1}>Cancel</Link>
+                        </CancelButton>
+                        <GoButton onClick={handleUpload}>Upload</GoButton>
+                      </UploadButton>
+                    </>
                   ) : (
                     <Error>
                       <p>Invalid File Type: Must be CSV</p>
@@ -231,29 +240,31 @@ const EmployeeCSVUpload = () => {
 export default EmployeeCSVUpload;
 
 const Main = styled.main`
-display: flex;
-flex-direction: column;
-width: 100%;
-margin: auto;
-position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: auto;
+  position: relative;
 
-@media (max-width: 546px) {
-  width: 100%;
-}
+  @media (max-width: 546px) {
+    border-radius: 10px;
+    width: 100%;
+  }
 `;
 const Container = styled.div`
-background: #f8fbfd;
-border: 1px dashed #c7e0f4;
-border-radius: 16px;
-position: relative;
-width: 90%;
-height: 100vh;
-
-@media (max-width: 546px) {
-  border-radius: 10px;
+  background: #f8fbfd;
+  border: 1px dashed #c7e0f4;
+  border-radius: 16px;
+  position: relative;
   width: 100%;
+  margin: auto;
+  height:600px;
 
-}`
+  @media (max-width: 546px) {
+    border-radius: 10px;
+    width: 100%;
+  }
+`;
 
 const CreateTypeContainer = styled.div`
   width: 100%;
@@ -290,7 +301,7 @@ const Upload = styled.div`
   border-top-left-radius: 16px;
   border: 1px solid #c7e0f4;
   cursor: pointer;
-  display:;
+  display: ;
 
   @media (max-width: 721px) {
     height: 55px;
@@ -345,7 +356,7 @@ const UploadCSVContent = styled.div`
   justify-content: center;
   flex-direction: column;
   color: ;
-  display:;
+  display: ;
 
   .icon {
     height: 150px;
@@ -359,7 +370,6 @@ const UploadCSVContent = styled.div`
   }
 `;
 
-
 const Buttons = styled.div`
   display: flex;
   width: 100%;
@@ -368,17 +378,17 @@ const Buttons = styled.div`
   gap: 10px;
   margin-top: 100px;
 
-  a{
+  a {
     gap: 8px;
     background-color: #fff !important;
     border-radius: 4px;
     padding: 12px 32px;
     cursor: pointer;
-    color: #2667ff!important;
-    border: 1px solid #2667ff!important;
+    color: #2667ff !important;
+    border: 1px solid #2667ff !important;
     height: 48px;
   }
-  
+
   a,
   button {
     gap: 8px;
@@ -417,7 +427,7 @@ const Buttons = styled.div`
     justify-items: center;
     border: none;
     color: #fff;
-    
+
     &:nth-child(3) {
       display: none;
     }
@@ -514,18 +524,16 @@ const Error = styled.div`
 
 const ManualUpload = styled.div``;
 
-const Selectontainer = styled.div`
+const SelectContainer = styled.div`
   width: 50%;
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 19px 5px;
+  margin-bottom: 50px;
 
   @media screen and (max-width: 676px) {
-    width:100%
-  }    
+    width: 100%;
+  }
 
   div:first-of-type {
     width: 100%;
@@ -533,10 +541,10 @@ const Selectontainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
+
     @media screen and (max-width: 669px) {
-        padding: 0px !important;
-      }  
+      padding: 0px !important;
+    }
 
     h1 {
       color: #323130;
@@ -547,9 +555,6 @@ const Selectontainer = styled.div`
         font-size: 14px;
         text-align: left;
       }
-      
-       
-
     }
   }
 
@@ -564,9 +569,9 @@ const Selectontainer = styled.div`
 
   select {
     width: 100%;
-    padding: 0 10px;
+    padding: 8px 10px;
     border: 1px solid #106ebe;
-    border-radius: 2px;
+    border-radius: 4px;
     height: 40px;
     outline: none;
   }

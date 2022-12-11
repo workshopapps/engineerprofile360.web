@@ -40,9 +40,6 @@ export default function Assessmentss() {
                         <th>Assessment Name</th>
                         <th>Stack</th>
                         <th>No of times taken</th>
-                        <th style={{
-                            textAlign: "center"
-                        }}>Yellow</th>
                     </tr>
                     <tr>
                         <td>1</td>

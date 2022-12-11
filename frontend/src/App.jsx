@@ -38,7 +38,6 @@ import {
 import {
   CompanyLogin,
   CompanySignup,
-  GuestLogin,
   CompanyEmailVerified,
   CompanyPasswordSuccess,
   CompanySetPassword,
@@ -46,11 +45,18 @@ import {
   CompanyVerifyEmail,
 } from "./ui/pages/Company/";
 
+import { GuestEmail, GuestLogin } from "./ui/components/Guests";
+import {
+  GuestAssessmentList,
+  GuestTakeAssessment,
+  GuestTakeAssessmentResult,
+} from "./ui/pages/Guest";
+
 import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 
 import { EmployeeLogin, EmployeeDashboard } from "./ui/pages/Employee";
 
-import { AdminLogin  } from "./ui/pages/Admin";
+import { AdminLogin } from "./ui/pages/Admin";
 
 import UserSupport from "./main/pages/UserSupport";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
@@ -66,8 +72,8 @@ import AdminCSVUpload from "./ui/components/Company/Assessments/AdminCSVUpload";
 // import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import EmployeeCSVUpload from "./ui/components/Company/Employees/EmployeeCSVUpload";
-import GuestEmail from "./main/pages/GuestEmail";
-import GuestAssessmentList from "./main/pages/GuestAssessmentList";
+// import GuestEmail from "./main/pages/GuestEmail";
+// import GuestAssessmentList from "./main/pages/GuestAssessmentList";
 
 import AdminViewAssessment from "./ui/components/Company/Assessments/admin-view-assessment/AdminViewAssessment";
 // import Assessment from "./miscellaneous/assessment/Assessment.js";
@@ -181,6 +187,7 @@ const App = () => {
                 path="/user-assessment-completed"
                 element={<UserAssessmentListCompleted />}
               /> */}
+            <Route path="/guest-email" element={<GuestEmail />} />
           </Route>
 
           {/* Authentication Layout */}
@@ -304,7 +311,7 @@ const App = () => {
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
                 <Route path="/admin/Assessmentss" element={<Assessmentss />} />
                 <Route
-                  path="/admin/CreateAssessments"
+                  path="/admin/create-assessmentss"
                   element={<CreateAssessment />}
                 />
                 {/* Put in Protected pages in here */}
@@ -329,6 +336,18 @@ const App = () => {
               {/* <Route path="/assessment" element={<Assessment />} /> */}
             </Route>
           </Route>
+          {/* <Route element={<GuestLayout />}>
+            <Route
+              path="guest-assessment-list"
+              element={<GuestAssessmentList />}
+            />
+            <Route path="guest-assessment" element={<GuestTakeAssessment />} />
+
+            <Route
+              path="/guest-take-assessment-result"
+              element={<GuestTakeAssessmentResult />}
+            />
+          </Route> */}
         </Routes>
       </ThemeProvider>
       <StyledToastContainer />
