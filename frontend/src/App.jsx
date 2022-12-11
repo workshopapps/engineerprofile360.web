@@ -54,7 +54,11 @@ import {
 
 import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 
-import { EmployeeLogin, EmployeeDashboard } from "./ui/pages/Employee";
+import {
+  EmployeeLogin,
+  EmployeeDashboard,
+  EmployeeUserAssessmentListOutlet,
+} from "./ui/pages/Employee";
 
 import { AdminLogin } from "./ui/pages/Admin";
 
@@ -89,7 +93,7 @@ import {
 } from "./ui/components/Company/Employees";
 
 import MainAssessment from "./ui/pages/Company/Assessment";
-import UserAssessmentListOutlet from "./ui/pages/Employee/EmployeeAssessmentList";
+import UserAssessmentListOutlet from "./ui/pages/Employee/EmployeeAssessmentListOutlet";
 import Error from "./ui/pages/404";
 
 // import GuestLogin from "./main/pages/Auth/GuestLogin";
@@ -103,7 +107,7 @@ import {
   AssessmentAvailable,
 } from "./ui/components/Employee";
 import EmployeeAssessmentResult from "./ui/pages/Employee/EmployeeAssessmentResult";
-import EmployeeAssessmentList from "./ui/pages/Employee/EmployeeAssessmentList";
+import EmployeeAssessmentList from "./ui/pages/Employee/EmployeeAssessmentListOutlet";
 import AdminAssessmmentListOutlet from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmmentListOutlet";
 import AdminAssessmentListAvailable from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmentListAvailable";
 import AssessmentList from "./ui/components/Company/Assessments/adminAssesmentList/AssessmentList";
@@ -322,6 +326,15 @@ const App = () => {
                   path="/employee/dashboard"
                   element={<EmployeeDashboard />}
                 />
+
+                <Route
+                  path="/employee/assessment"
+                  element={<EmployeeUserAssessmentListOutlet />}
+                >
+                  <Route path="" element={<AssessmentAvailable />} />
+                  <Route path="completed" element={<AssessmentCompleted />} />
+                </Route>
+
                 {/* <Route path="/employee/dashboard" element={"boss"} /> */}
               </Route>
 
