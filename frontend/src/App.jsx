@@ -88,6 +88,7 @@ import {
   EmployeesListing,
 } from "./ui/components/Company/Employees";
 
+import Users from "./ui/pages/Admin/Users/Users";
 import MainAssessment from "./ui/pages/Company/Assessment";
 import UserAssessmentListOutlet from "./ui/pages/Employee/EmployeeAssessmentList";
 import Error from "./ui/pages/404";
@@ -311,9 +312,11 @@ const App = () => {
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
                 {/* Put in Protected pages in here */}
                 <Route path="/admin/dashboard" element={<Dashboard />} />
+
                 <Route />
 
                 <Route path="/admin/stacks" element={<Stacks />} />
+                <Route path="/admin/users" element={<Users />} />
               </Route>
 
               <Route element={<RequireAuth allowedRole={ROLES.Employees} />}>
