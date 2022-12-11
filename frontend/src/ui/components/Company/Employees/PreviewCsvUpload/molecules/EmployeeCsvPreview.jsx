@@ -174,29 +174,58 @@ function EmployeeCsvPreview() {
               </tr>
               {CsvData
               ? CsvData.map((data, index) => {
-                const { fullname, email, username,department_id=deptid, department=deptname, org_id, is_exist} = data;
-                return (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
+                const { fullname, email, username,department_id=deptid, department=deptname, org_id, is_exist} = data;  
+                return !is_exist ? (
+                  <tr key={index} className =  {is_exist ? "strike" : ""} >
+                    <td>{index }</td>
                     <td>{fullname}</td>
                     <td>{username}</td>
                     <td>{email}</td>
                     <td>{department}</td>
                     <td className="hidden">{department_id}</td>
                     <td className="hidden">{org_id}</td>
-                    <td className="hidden">{is_exist ? true : false}</td>
+                    <td className="hidden">{is_exist ? "true" : "false"}</td>
                     <td>
-                      <Checkbox type="checkbox" onChange={(e)=>{
+                    {is_exist ? ""  : <Checkbox type="checkbox" onChange={(e)=>{
                         handleCounter(e);
-                      }}/>
+                      }}/>}
                     </td>
                   </tr>
-                );
+                ) : "";
+              
               }): ""}
             </tbody>
             </table>     
           </TableWrapper>
-          
+          <TableWrapper>
+            <p>Existing Data</p>
+            <table>  
+            <tbody >
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+              {CsvData
+              ? CsvData.map((data, index) => {
+                const { fullname, email, username,department_id=deptid, department=deptname, org_id, is_exist} = data;  
+                return is_exist ? (
+                  <tr key={index} className =  {is_exist ? "strike" : ""} >
+                    <td></td>
+                    <td>{fullname}</td>
+                    <td>{username}</td>
+                    <td>{email}</td>
+                    <td>{department}</td>
+                    
+                  </tr>
+                ) : "";
+              
+              }): ""}
+            </tbody>
+            </table>     
+          </TableWrapper>
         </CategoryListing>
         <ButtonWrapper>
           <Wrapper>
@@ -249,6 +278,10 @@ export const Container = styled.div`
     width:100%;
     border: none!important;
   border-spacing: 0px!important;
+  }
+
+  table:nth-child(2) th{
+    padding:6px;
   }
 
   table tr:first-of-type {
@@ -304,6 +337,10 @@ export const Container = styled.div`
       font-size: 16px;
       font-weight: 600;
       color: #605e5c;
+    }
+
+    .strike{
+      text-decoration: line-through;
     }
 `;
 export const CSV = styled.div`
