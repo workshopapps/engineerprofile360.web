@@ -61,7 +61,10 @@ const Questions = [
 ];
 
 export default function GuestTakeAssessment() {
+  const navigate = useNavigate();
   useEffect(() => {
+    let guest = localStorage.getItem("guest");
+    if (!guest) navigate("/guest-login");
     const fetchQuestion = async () => {
       let res = await axios.get(
         "question/assessment/2ea09b93-6682-11ed-9941-3863bbb7c6d/"
@@ -76,8 +79,6 @@ export default function GuestTakeAssessment() {
   const [currentPost, setCurrentPost] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [questionsPerPage] = useState(3);
-
-  const navigate = useNavigate();
 
   let useAnswers = {};
 
