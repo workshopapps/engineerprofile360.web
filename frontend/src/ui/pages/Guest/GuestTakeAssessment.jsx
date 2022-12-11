@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../../../styles/reusableElements.styled";
 import { GuestTakeAssessmentHeader } from "../../components/Guests";
 
-export const Questions = [
+const Questions = [
   {
     question_id: 1,
     question_title:
