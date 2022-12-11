@@ -49,9 +49,21 @@ function EmployeeCsvPreview() {
           delete rowData[keys[8]];
     
          data.push(rowData);
-      }       
+      }
+      // go through the data and remove empty object from the array
+      let results= data.filter(element => {
+        if (
+          typeof element === 'object' &&
+          !Array.isArray(element) &&
+          Object.keys(element).length === 0
+        ) {
+          return false;
+        } else {
+          return true;
+        }
+      });
   
-      return data;
+      return results;
     }
     
     const ref = useRef(null);
@@ -88,11 +100,11 @@ function EmployeeCsvPreview() {
         toast.error("Choose employees to be added");
       }
       else{
-        setLoading(true);
+       setLoading(true);
         const el = ref.current;
         const data = tableToJson(el);
         //console.log(data);
-
+      
         
         try {
           const response = await axios.post(
@@ -106,7 +118,7 @@ function EmployeeCsvPreview() {
             toast.success(`${response.data.message}`);
             
             setTimeout(
-               () => navigate("/employees/", {replace:true}), 
+               () => navigate("/employees/", {replace: true}), 
                1000
              );
             
@@ -162,29 +174,60 @@ function EmployeeCsvPreview() {
               </tr>
               {CsvData
               ? CsvData.map((data, index) => {
-                const { fullname, email, username,department_id=deptid, department=deptname, org_id, is_exist} = data;
-                return (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
+                const { fullname, email, username,department_id=deptid, department=deptname, org_id, is_exist} = data;  
+                return !is_exist ? (
+                  <tr key={index} className =  {is_exist ? "strike" : ""} >
+                    <td>{index+1 }</td>
                     <td>{fullname}</td>
                     <td>{username}</td>
                     <td>{email}</td>
                     <td>{department}</td>
                     <td className="hidden">{department_id}</td>
                     <td className="hidden">{org_id}</td>
-                    <td className="hidden">{is_exist ? true : false}</td>
+                    <td className="hidden">{is_exist ? "true" : "false"}</td>
                     <td>
-                      <Checkbox type="checkbox" onChange={(e)=>{
+                    {is_exist ? ""  : <Checkbox type="checkbox" onChange={(e)=>{
                         handleCounter(e);
-                      }}/>
+                      }}/>}
                     </td>
                   </tr>
-                );
+                ) : "";
+              
               }): ""}
             </tbody>
             </table>     
           </TableWrapper>
-          
+           {CsvData ? 
+           <TableWrapper>
+            <p>Existing Data</p>
+            <table>  
+            <tbody >
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+             
+             {CsvData.map((data, index) => {
+                const { fullname, email, username,department_id=deptid, department=deptname, org_id, is_exist} = data;  
+                return is_exist ? (
+                  <tr key={index} className =  {is_exist ? "strike" : ""} >
+                    <td></td>
+                    <td>{fullname}</td>
+                    <td>{username}</td>
+                    <td>{email}</td>
+                    <td>{department}</td>
+                    
+                  </tr>
+                ) : "";
+              
+                })
+              }
+            </tbody>
+            </table>     
+          </TableWrapper> : ""}
         </CategoryListing>
         <ButtonWrapper>
           <Wrapper>
@@ -237,6 +280,10 @@ export const Container = styled.div`
     width:100%;
     border: none!important;
   border-spacing: 0px!important;
+  }
+
+  table:nth-child(2) th{
+    padding:6px;
   }
 
   table tr:first-of-type {
@@ -292,6 +339,10 @@ export const Container = styled.div`
       font-size: 16px;
       font-weight: 600;
       color: #605e5c;
+    }
+
+    .strike{
+      text-decoration: line-through;
     }
 `;
 export const CSV = styled.div`
