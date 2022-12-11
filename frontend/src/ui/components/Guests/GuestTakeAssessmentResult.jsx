@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import GuestTakeAssessmentHeader from "../../components/Guests/GuestTakeAssessmentHeader";
 import { useState, useEffect } from "react";
 import axios from "../../../api/axios";
 import { Link } from "react-router-dom";
+import GuestTakeAssessmentResultHeader from "./GuestTakeAssessmentResultHeader";
 
 export default function GuestTakeAssessmentResult() {
   const [correctAnswers, setCorrectAnswers] = useState(0);
@@ -74,7 +74,7 @@ export default function GuestTakeAssessmentResult() {
   return (
     <>
       <GuestAssessmentContainer>
-        <GuestTakeAssessmentHeader
+        <GuestTakeAssessmentResultHeader
           correctA={correctAnswers}
           totalQ={totalQuestions}
         />
