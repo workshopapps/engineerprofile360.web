@@ -1,24 +1,14 @@
 import { useState } from "react";
 import MyDetails from "../components/AdminSetting/MyDetails";
 import Password from "../components/AdminSetting/Password";
-import Notifications from "../components/AdminSetting/Notifcations";
-import Teams from "../components/AdminSetting/Teams";
 import Integrations from "../components/AdminSetting/Integration";
-import API from "../components/AdminSetting/API";
 import styled from "styled-components";
 import { Title } from "../../styles/reusableElements.styled";
 
 const AdminSetting = () => {
   const [activeNav, setActiveNav] = useState("My Details");
 
-  const nav_heading = [
-    "My Details",
-    "Password",
-    "Notifications",
-    "Teams",
-    "Integrations",
-    "API",
-  ];
+  const nav_heading = ["My Details", "Password", "Integrations"];
 
   const navClickHandler = (event) => {
     setActiveNav(event.target.textContent);
@@ -49,10 +39,7 @@ const AdminSetting = () => {
         </nav>
         {activeNav === "My Details" && <MyDetails />}
         {activeNav === "Password" && <Password />}
-        {activeNav === "Notifications" && <Notifications />}
-        {activeNav === "Teams" && <Teams />}
         {activeNav === "Integrations" && <Integrations />}
-        {activeNav === "API" && <API />}
       </Container>
     </>
   );
