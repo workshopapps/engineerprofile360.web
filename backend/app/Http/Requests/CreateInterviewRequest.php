@@ -25,7 +25,7 @@ class CreateInterviewRequest extends BaseRequest
     {
         return [
             'stack_id' => "required|string|exists:stacks,id",
-            'name' => 'string|required',
+            'title' => 'string|required',
             'company_name' => 'string|required'
         ];
     }
