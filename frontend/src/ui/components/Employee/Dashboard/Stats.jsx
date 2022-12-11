@@ -133,7 +133,7 @@ const ChartSection = styled.div`
   width: 80%;
   border: 1px solid #ebf4f9;
   border-radius: 12px;
-  padding: 35.35px 40px;
+  padding: 5px 10px;
   min-height: 336px;
   ${({ theme }) => theme.breakpoints.down("lg")} {
     width: 100%;

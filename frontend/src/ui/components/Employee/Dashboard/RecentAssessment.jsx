@@ -6,8 +6,6 @@ import { Button, Title } from "../../../../styles/reusableElements.styled";
 import TableComponent from "../../molecules/TableComponent";
 import NoData from "../../molecules/NoData";
 
-import { More } from "iconsax-react";
-
 const RecentAssessment = ({ assessments }) => {
   const [availableAssessments, setAvailableAssessments] = useState([]);
 
@@ -18,7 +16,7 @@ const RecentAssessment = ({ assessments }) => {
   return (
     <>
       <AssessmentContainer>
-        <AssessmentTitle>
+        <AssessmentListTitle>
           <Title
             as="h5"
             $size="24px"
@@ -29,33 +27,35 @@ const RecentAssessment = ({ assessments }) => {
             Available Assessments
           </Title>
           <span>View all</span>
-        </AssessmentTitle>
-        <SortContainer></SortContainer>
+        </AssessmentListTitle>
       </AssessmentContainer>
       {availableAssessments.length > 0 ? (
         <TableComponent>
           <tbody>
             <tr>
               <th>#</th>
-              <th>Department</th>
-              <th>Course</th>
-              <th>Grade</th>
+              <th>Assessment name</th>
+              <th>Starting</th>
+              <th>Ending</th>
               <th>Actions</th>
             </tr>
 
             {availableAssessments.map((assessment, index) => (
               <tr key={assessment.id}>
                 <td>{index + 1}</td>
-                <td>{assessment.department}</td>
-                <td>{assessment.course}</td>
-                <td>{assessment.grade}</td>
+                <td>{assessment.name}</td>
+                <td>
+                  {assessment.start_date} {assessment.start_time}
+                </td>
+                <td>
+                  {assessment.end_date} {assessment.end_time}
+                </td>
                 <td>
                   <Link to="/employee/assessments">
                     <Button $variant="outlined" $color="#2667FF">
                       View Result
                     </Button>
                   </Link>
-                  <More />
                 </td>
               </tr>
             ))}
@@ -71,9 +71,10 @@ const RecentAssessment = ({ assessments }) => {
 export default RecentAssessment;
 
 const AssessmentContainer = styled.div`
-  margin-top: ${({theme}) => theme.spacing(6)};
+  margin-top: ${({ theme }) => theme.spacing(6)};
 `;
-const AssessmentTitle = styled.div`
+
+const AssessmentListTitle = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -88,38 +89,4 @@ const AssessmentTitle = styled.div`
     font-size: 20px;
     margin-left: auto;
   }
-`;
-
-const AssessmentSorting = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 20px;
-  }
-
-  button {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    border: 1px solid #939393;
-    border-radius: 4px;
-
-    span {
-      font-size: 16px;
-    }
-  }
-`;
-
-const SortContainer = styled.div`
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
 `;
