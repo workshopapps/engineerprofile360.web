@@ -63,7 +63,7 @@ class EmployeeController extends Controller
                 $result = $csv->parseEmployeeCsv($file, $org, $dept);
 
                 foreach ($result['data'] as $key => $item) {
-                    $empExists = Employee::where(["email" => $result['data'][$key]["email"], "org_id" => $result['data'][$key]["email"]]);
+                    $empExists = Employee::where(["email" => $result['data'][$key]["email"], "org_id" => $result['data'][$key]["org_id"]]);
                     if ($empExists->count() > 0) $result['data'][$key]['is_exist'] = true;
                     else $result['data'][$key]['is_exist'] = false;
                 } //add a new column to check if email exists in that organization
@@ -164,7 +164,7 @@ class EmployeeController extends Controller
         $passed = 0;
         $failed = 0;
         $file = json_decode($request->getContent(), true); 
-        $json = array_values(array_filter($file));
+        $json = array_values(array_filter($file['data']));
         $last_error = null;
 
         foreach ($json as $key => $item) {
@@ -181,11 +181,14 @@ class EmployeeController extends Controller
                 $json[$key]['raw_password'] = $raw_password;
 
                 $result = $this->insertEmployee($json[$key], $raw_password);
+
+                var_dump($result);
                 if (json_decode($result->getContent(), true)['errorState'] == true) $failed++;
                 else $passed++;
                 if (json_decode($result->getContent(), true)['error'] != null) $last_error = json_decode($result->getContent(), true)['message'];
             // }
         }
+        
         return $this->sendResponse(false, "$passed Employee Added Successfully, $failed failed", $last_error, $json, Response::HTTP_CREATED);
     }
 
