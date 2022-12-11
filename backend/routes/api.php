@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\StackController;
 use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\UserAssessmentController;
 use App\Helper\Helper;
+use Illuminate\Auth\Events\Authenticated;
 
 // util functions
 // employee csv file parser.
@@ -148,6 +149,9 @@ Route::prefix("auth")->group(function () {
             // forgot password
             Route::get("/forgot-password/{email}", [AuthenticateController::class, "forgotPassword"]);
             Route::post("/reset/{id}/{token}", [AuthenticateController::class, "verifyPasswordReset"]);
+
+            // update users password
+            Route::put("/update", [AuthenticateController::class, "updatePassword"])->middleware("isloggedin");
         }
 
     );
