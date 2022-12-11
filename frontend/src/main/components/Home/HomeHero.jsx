@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 import {
   Button,
@@ -10,6 +11,8 @@ import heroImg from "./assets/images/hero-img.svg";
 import heroSubImg from "./assets/images/hero-subimg.svg";
 
 const HomeHero = () => {
+  const navigate = useNavigate();
+
   return (
     <HomeHeroContainer>
       <HeroText>
@@ -20,7 +23,14 @@ const HomeHero = () => {
           Get Started With Skript <br /> Innovative Performance Solutions For
           Engineering Teams
         </p>
-        <Button $size="lg">Request A Demo</Button>
+        <Button
+          $size="lg"
+          onClick={() => {
+            navigate("/demo");
+          }}
+        >
+          Request A Demo
+        </Button>
       </HeroText>
       <HeroImage>
         <img src={heroImg} alt="" />

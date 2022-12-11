@@ -34,17 +34,15 @@ const Dashboard = () => {
 
         setIsLoading(false);
 
-        const employees = response[0]?.data.data.data.length;
+        const employees = response[0]?.data.data.total;
         const assessments = response[1]?.data.data.length;
         const availableAssessments = response[2]?.data.data.length;
         const completedAssessments = response[3]?.data.data.length;
-        const topEmployee = response[4]?.data.data.userscore[0];
+        const topEmployee = employees > 0 ? response[4]?.data.data.userscore[0] : {};
         const topEmployees = response[5]?.data;
-        const allDepartments = response[6].data;
+        const allDepartments = response[6]?.data;
 
-        console.log(topEmployees);
-
-        console.log(allDepartments);
+        console.log(response);
 
         setStats({
           employees,
@@ -66,13 +64,13 @@ const Dashboard = () => {
     };
 
     getDetails();
-  }, []);
+  }, [auth.org_id]);
 
   return (
     <>
+      <PageInfo pageTitle="Company's Dashboard" />
       {!isLoading ? (
         <>
-          <PageInfo pageTitle="Company's Dashboard" />
           <Stats stats={stats} topPerformance={topPerformance} />
           <TopEmployees
             topPerformances={topPerformances}

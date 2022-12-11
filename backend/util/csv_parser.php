@@ -60,8 +60,8 @@ class CsvParser
             return $oup;
         }
         $csvData = $oup["data"];
-        $splitData = explode("\n", $csvData);
-        $slicedData = array_slice(array_chunk($splitData, 4)[0], 1);
+        $splitData = explode("\n", $csvData); 
+        $slicedData = array_slice(array_filter($splitData, 'strlen'), 1);
         $finalJsonData = [];
         $i = 1;
 
@@ -74,7 +74,7 @@ class CsvParser
                 "username" => $item[1],
                 "email" => $item[2],
                 "org_id" => $org,
-                "department_id" => $department_id
+                "department_id" => $department_id,
             ];
             array_push($finalJsonData, $arr);
             $i++;

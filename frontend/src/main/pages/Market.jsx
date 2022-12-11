@@ -70,7 +70,7 @@ const Market = () => {
           <FirstPage>
             <Upper>
               <Left>
-                <Text1>Skript</Text1>
+                <Text1>Eval360</Text1>
                 <Textvs>VS</Textvs>
                 <Text1>Small Improvement</Text1>
               </Left>
@@ -84,7 +84,7 @@ const Market = () => {
               <DescBelow>
                 <Line></Line>
                 <Text>
-                  Skript, the solution to all your Engineering review needs: a
+                  Eval360, the solution to all your Engineering review needs: a
                   better solution to Small-Improvements.
                 </Text>
               </DescBelow>
@@ -93,27 +93,27 @@ const Market = () => {
         </Container>
         <SecondPage>
           <Container>
-            <UpperSvg src={UpperS} />
+            {/* <UpperSvg src={UpperS} /> */}
             <SPtext>
-              Skript and Small-improvements, are both performance analysis tools
-              that cater to companies seeking to make their engineers better.
-              Which is the better option to cater to your needs? Here, you can
-              see how Skript compares to Small-Improvements, a performance
-              review software for mid-sized companies.
+              Eval360 and Small-improvements, are both performance analysis
+              tools that cater to companies seeking to make their engineers
+              better. Which is the better option to cater to your needs? Here,
+              you can see how Eval360 compares to Small-Improvements, a
+              performance review software for mid-sized companies.
             </SPtext>
           </Container>
-          <LowerSvg src={UpperL} />
+          {/* <LowerSvg src={UpperL} /> */}
         </SecondPage>
         <ThirdPage>
           <Container>
             <How>
-              <ScriptText>How Skript works</ScriptText>
+              <ScriptText>How Eval360 works</ScriptText>
               <HowContent>
                 <HowFrag
                   logo={How1}
                   title={"Industry specific assessment"}
                   writeUp={
-                    "Skript allows you to sync data from recognised governing bodies of any engineering industry in any country. This data is used in preparing the evaluation questions, and ensures that you bring out the best in your engineers!"
+                    "Eval360 allows you to sync data from recognised governing bodies of any engineering industry in any country. This data is used in preparing the evaluation questions, and ensures that you bring out the best in your engineers!"
                   }
                 />
                 <Wrapper>
@@ -121,7 +121,7 @@ const Market = () => {
                     logo={How1}
                     title={"Top-notch security"}
                     writeUp={
-                      "Skript displays each engineer evaluation profile in the form of a spider web chart to show multivariate data. This allows you to evaluate your engineer using multiple variables, for the best possible result."
+                      "Eval360 displays each engineer evaluation profile in the form of a spider web chart to show multivariate data. This allows you to evaluate your engineer using multiple variables, for the best possible result."
                     }
                   />
                 </Wrapper>
@@ -129,7 +129,7 @@ const Market = () => {
                   logo={How1}
                   title={"Unique data representation"}
                   writeUp={
-                    "Skript ensures that the information used in the process of evaluation is secured at the highest level with multi factor authentication. No one is getting their hands on your data!"
+                    "Eval360 ensures that the information used in the process of evaluation is secured at the highest level with multi factor authentication. No one is getting their hands on your data!"
                   }
                 />
 
@@ -138,7 +138,7 @@ const Market = () => {
                     logo={How2}
                     title={"Automation"}
                     writeUp={
-                      "Your evaluation goes on without you having to lift a finger. All you have to do is set a time and date for your evaluations to be carried out, and Skript will handle the rest. Assessment and scoring is automated, and you can trust that the insights are accurate!"
+                      "Your evaluation goes on without you having to lift a finger. All you have to do is set a time and date for your evaluations to be carried out, and Eval360 will handle the rest. Assessment and scoring is automated, and you can trust that the insights are accurate!"
                     }
                   />
                 </Wrapper>
@@ -150,7 +150,7 @@ const Market = () => {
               <WhichContent>
                 <Heading>
                   <T1>Pricing</T1>
-                  <T2>Skript</T2>
+                  <T2>Eval360</T2>
                   <T3>Small Improvement</T3>
                 </Heading>
                 <BoxWhich>
@@ -306,7 +306,7 @@ const Market = () => {
               <TestimonyContent>
                 <PicTest src={Testimony} alt="/" />
                 <TC>
-                  “ With Skript, we’ve been able to optimize the performance of
+                  “ With Eval360, we’ve been able to optimize the performance of
                   our engineering team significantly. Engineers are given tasks
                   where they can produce efficient results, and redundancy is at
                   an all time low. The engineers also benefit personally. The
@@ -323,11 +323,11 @@ const Market = () => {
             <Fag>
               <FagText>FAQs</FagText>
               <FagComP1>
-                <FCompText>Can Skript be used in startup companies?</FCompText>
+                <FCompText>Can Eval360 be used in startup companies?</FCompText>
                 <FcTriangle src={Triangle} />
                 <FC1>
                   <FCText>
-                    Skript caters to all companies regardless of size.
+                    Eval360 caters to all companies regardless of size.
                   </FCText>
                 </FC1>
               </FagComP1>

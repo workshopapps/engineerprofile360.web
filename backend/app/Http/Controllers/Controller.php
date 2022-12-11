@@ -6,6 +6,9 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Log;
 
@@ -16,6 +19,8 @@ use Illuminate\Support\Facades\Log;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public int $perRequestPage = 10;
 
     /** Please do not touch this code here, I spent time refactoring it **/
 
@@ -60,5 +65,24 @@ class Controller extends BaseController
             'message' => ucfirst($message),
             'data' => $data,
         ], $code);
+    }
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     *
+     * @param $items
+     * @param null $page
+     * @param $total
+     * @param array $options
+     * @return LengthAwarePaginator
+     */
+    public function customPaginate($items, $total, $page = null, array $options = []) : LengthAwarePaginator
+    {
+
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+
+        return new LengthAwarePaginator($items->forPage(1, $this->perRequestPage), $total, $this->perRequestPage, $page, $options);
     }
 }

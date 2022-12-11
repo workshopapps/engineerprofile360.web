@@ -15,7 +15,7 @@ const BioMedicalHero = () => {
           A better way to know and build your engineers.
         </HeroTitle>
         <p>
-          Get started with skript innovative <br /> performance solutions for
+          Get started with Eval360 innovative <br /> performance solutions for
           engineering teams
         </p>
         <Button $size="lg">Request A Demo</Button>

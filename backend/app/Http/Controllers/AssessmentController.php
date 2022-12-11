@@ -117,8 +117,17 @@ class AssessmentController extends Controller
     public function getAssByOrgId($organization_id = "")
     {
         try {
-            $assessments = Assessment::where("org_id", $organization_id)->get();
+            $assessments = Assessment::where("org_id", $organization_id)->with("assessment", "department.employee")->get();
+            return $this->sendResponse(false, null, 'All assessments', $assessments, Response::HTTP_OK);
+        } catch (Exception $e) {
+            return $this->sendResponse(true, "something went wrong fetching assessments " . $e->getMessage(), 'failed fetching assessments.', null, 500);
+        }
+    }
 
+    public function getAssByDepartmentId($id)
+    {
+        try {
+            $assessments = Assessment::where("department_id", $id)->get();
             return $this->sendResponse(false, null, 'All assessments', $assessments, Response::HTTP_OK);
         } catch (Exception $e) {
             return $this->sendResponse(true, "something went wrong fetching assessments " . $e->getMessage(), 'failed fetching assessments.', null, 500);

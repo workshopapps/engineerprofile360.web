@@ -4,33 +4,46 @@ import styled from "styled-components";
 import { Loader, Title } from "../../../../styles/reusableElements.styled";
 import { toast } from "react-toastify";
 import { Button, Wrapper } from "./Hero";
-import { axiosPrivate } from "../../../../api/axios";
+import axios from "../../../../api/axios";
+import useAuth from "../../../../hooks/useAuth";
 
-function AddDept({ formData, setFormData, setAddDept }) {
+function AddDept({
+  formData,
+  setFormData,
+  setAddDept,
+  setRunEffect,
+  runEffect,
+}) {
+  //? useState HOOKS
   const [loading, setLoading] = useState(false);
   const { departmentName } = formData;
+
+  //? FUNCTION TO HANDLE FORM CHANGE
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const org_id = "c57d34e5-dcfe-4fba-821b-53c22ac27756";
+  const { auth } = useAuth();
+  const org_id = auth.org_id;
+
+  //? ASYNC FUNCTION TO ADD DEPARTMENTS
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData !== "") {
       setLoading(true);
       setFormData("");
-      axiosPrivate
+      axios
         .post("https://api.eval360.hng.tech/api/department/add", {
           name: departmentName,
           org_id: org_id,
         })
         .then((res) => {
           toast.success("department added successfully");
+          setRunEffect(!runEffect);
           setAddDept(false);
           setLoading(false);
         })
         .catch((error) => {
-          console.log(error);
           toast.error("could not add Department ");
           setAddDept(false);
         });
@@ -38,15 +51,17 @@ function AddDept({ formData, setFormData, setAddDept }) {
   };
 
   return loading ? (
+    // LOADER COMPONENTS
     <Load>
       <Loader />
     </Load>
   ) : (
+    // MAIN COMPONENTS
     <>
       <InputWrapper>
         <form>
           <Title as="h2" $size="28px" $color="#323130" $weight="400">
-            Create a new Category
+            Create a new Department
           </Title>
           <InputFieldWrapper>
             <Label htmlFor="departmentName"> Title</Label>
@@ -68,7 +83,7 @@ function AddDept({ formData, setFormData, setAddDept }) {
               onClick={(e) => {
                 setAddDept(false);
               }}
-              border={"2px solid ##2667FF"}
+              border={"1px solid#2667FF"}
               w={"117px"}
               h={"48px"}
               text={"#2667FF"}
@@ -101,31 +116,42 @@ function AddDept({ formData, setFormData, setAddDept }) {
 }
 
 export default AddDept;
+// STYLED COMPONENTS
 
 export const InputWrapper = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 100;
+  z-index: 1;
 
-  background-color: #d8cece4e;
-
+  background-color: rgba(248, 251, 253, 0);
+  overflow: hidden;
   form {
     display: flex;
     flex-direction: column;
     justify-content: center;
 
     align-items: center;
-    width: 686px;
+    width: 485px;
+    border: #c7e0f4;
     height: 338px;
+
     border-radius: 4px;
-    background-color: #c7e0f4;
+    background-color: #f8fbfd;
+    overflow: hidden;
+
+    ${({ theme }) => theme.breakpoints.up("xs")} {
+      width: 556px;
+    }
+    ${({ theme }) => theme.breakpoints.up("sm")} {
+      width: 686px;
+    }
   }
 `;
 
@@ -143,7 +169,7 @@ export const Label = styled.label`
 `;
 
 export const InputField = styled.input`
-  width: 555px;
+  width: 300px;
   height: 32px;
   display: flex;
   justify-content: center;
@@ -158,8 +184,15 @@ export const InputField = styled.input`
   padding: 0 10px;
   margin: 10px 0;
 
+  ${({ theme }) => theme.breakpoints.up("xs")} {
+    width: 450px;
+  }
+  ${({ theme }) => theme.breakpoints.up("sm")} {
+    width: 555px;
+  }
+
   &:focus {
-    border: 2px solid #2667ff;
+    border: 1px solid #2667ff;
   }
 `;
 export const Load = styled.div`

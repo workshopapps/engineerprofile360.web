@@ -10,9 +10,14 @@ import DeleteModal from "./DeleteModal";
 import { showErrorToast } from "../../../../helpers/helper";
 import { showSuccessToast } from "../../../../helpers/helper";
 
-import { More } from "iconsax-react";
-import { Button } from "../../../../styles/reusableElements.styled";
-import { click } from "@testing-library/user-event/dist/click";
+import { More, AddCircle } from "iconsax-react";
+import NoData from "../../molecules/NoData";
+import TableComponent from "../../molecules/TableComponent";
+import {
+  Button,
+  OverlayLoader,
+} from "../../../../styles/reusableElements.styled";
+import EditCategory from "./EditCategory";
 
 const List = () => {
   const { auth } = useAuth();
@@ -20,11 +25,13 @@ const List = () => {
   // USE STATES
   const [toggleCreateCat, setToggleCreateCat] = useState(false);
   const [toggleDelete, setToggleDelete] = useState(false);
+  const [toggleEdit, setToggleEdit] = useState(false);
   const [toggleMaxDelete, setToggleMaxDelete] = useState(false);
   const [categories, setCategories] = useState([]);
   const [updateCategories, setUpdateCategories] = useState(false);
   const [showMore, setShowMore] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState();
+  const [isOverlayLoading, setIsOverlayLoading] = useState(true);
   const [value, setValue] = useState({
     categoryId: [],
   });
@@ -33,14 +40,22 @@ const List = () => {
   const currentSelectedName = useRef();
   const currentSelectedId = useRef();
 
-  console.log(value.categoryId);
-
   useEffect(() => {
+    setIsOverlayLoading(true);
     const getAllCatgories = async () => {
-      const response = await axios.get(`/category/company/${auth.org_id}`);
-      setCategories(response.data.data);
+      try {
+        const response = await axios.get(`/category/company/${auth.org_id}`);
+        setCategories(response.data.data);
+        setIsOverlayLoading(false);
+      } catch (err) {
+        setIsOverlayLoading(false);
+        if (!err.response) {
+          showErrorToast("No server response");
+        } else {
+          showErrorToast(err.response.data.message);
+        }
+      }
     };
-
     getAllCatgories();
   }, [updateCategories]);
 
@@ -65,7 +80,16 @@ const List = () => {
       });
     }
   };
-  const handleEdit = () => {};
+  const onEditClick = (name, cat_id, id) => {
+    setToggleEdit(true);
+    currentSelectedId.current = cat_id;
+    currentSelectedName.current = name;
+
+    setShowMore({
+      ...showMore,
+      [id]: !showMore[id],
+    });
+  };
 
   const onDeleteClick = (name, cat_id, id) => {
     setToggleDelete(true);
@@ -107,8 +131,11 @@ const List = () => {
   const handleBulkDelete = async () => {
     setIsLoading(true);
     try {
+      const ids = { ids: [...value.categoryId] };
+      console.log(JSON.stringify(ids));
       const response = await axios.delete(
-        `category/${value.categoryId}/delete`
+        `category/${auth.org_id}/delete`,
+        JSON.stringify(ids)
       );
       if (response.data.errorState === false) {
         setToggleMaxDelete(false);
@@ -130,7 +157,7 @@ const List = () => {
     <OverallContainer>
       <ButtonCategory>
         <AddCategoryBtn onClick={() => setToggleCreateCat(true)}>
-          Add New Category
+          <AddCircle color="#FFFFFF" /> Add New Category
         </AddCategoryBtn>
         {value.categoryId.length > 1 && (
           <DeleteCategoryBtn onClick={onBulkDeleteClick}>
@@ -139,39 +166,47 @@ const List = () => {
         )}
       </ButtonCategory>
       <CategoryListing>
-        <table>
-          <tbody>
-            <>
-              {categories.data?.length > 0 && (
+      {isOverlayLoading ? (
+          <OverlayLoader contained>
+            <div></div>
+          </OverlayLoader>
+        ) : (
+          ""
+        )}
+        {categories.data?.length > 0 || categories.data ? (
+          <>
+            <TableComponent>
+              <tbody>
                 <tr>
                   <th>#</th>
                   <th>Category</th>
                   <th>Number of Questions</th>
                   <th></th>
-                  <th></th>
                 </tr>
-              )}
-              {categories.data?.length > 0 ? (
-                categories.data?.map((category, id) => (
-                  <tr>
+
+                {categories.data?.map((category, id) => (
+                  <tr key={category.id}>
                     <td>{`${id + 1}.`}</td>
                     <td>{category.name}</td>
-                    <td>105</td>
+                    <td>0</td>
                     <td>
                       <input
                         type="checkbox"
                         name={category.name}
                         value={category.id}
-                        // checked={isChecked}
                         onChange={handleChange}
                       />
-                    </td>
-                    <td>
                       <More onClick={() => toggleOpen(id)} />
                     </td>
                     {showMore[id] && (
-                      <div>
-                        <p>Edit</p>
+                      <Popup>
+                        <p
+                          onClick={() =>
+                            onEditClick(category.name, category.id, id)
+                          }
+                        >
+                          Edit
+                        </p>
                         <p
                           onClick={() =>
                             onDeleteClick(category.name, category.id, id)
@@ -179,19 +214,25 @@ const List = () => {
                         >
                           Delete
                         </p>
-                      </div>
+                      </Popup>
                     )}
                   </tr>
-                ))
-              ) : (
-                <NoData>
-                  Oops no data to return yet. Create a new category
-                </NoData>
-              )}
-            </>
-          </tbody>
-        </table>
+                ))}
+              </tbody>
+            </TableComponent>
+          </>
+        ) : (
+          <>
+            <NoData text="Oops! No data here yet">
+              <Button $weight="400" onClick={() => setToggleCreateCat(true)}>
+                <AddCircle color="#FFFFFF" /> Add Category
+              </Button>
+            </NoData>
+          </>
+        )}
+
       </CategoryListing>
+
       {toggleCreateCat && (
         <Modal
           setToggleCreateCat={setToggleCreateCat}
@@ -208,16 +249,31 @@ const List = () => {
         <DeleteModal
           handleDelete={handleDelete}
           isLoading={isLoading}
+          setIsLoading={setIsLoading}
           setToggleDelete={setToggleDelete}
-          text={`Are you sure you want to delete ${(
-            <span>{currentSelectedName.current}</span>
-          )}`}
+          text={`Are you sure you want to delete ${currentSelectedName.current}`}
         />
       )}
+      {toggleEdit && (
+        <Modal
+          setToggleCreateCat={setToggleEdit}
+          Form={
+            <EditCategory
+              setToggleEdit={setToggleEdit}
+              setUpdateCategories={setUpdateCategories}
+              updateCategories={updateCategories}
+              currentSelectedName={currentSelectedName.current}
+              currentSelectedId={currentSelectedId.current}
+            />
+          }
+        />
+      )}
+
       {toggleMaxDelete && (
         <DeleteModal
           handleDelete={handleBulkDelete}
           isLoading={isLoading}
+          setIsLoading={setIsLoading}
           setToggleDelete={setToggleMaxDelete}
           text={"Are you sure you want to delete selected categories"}
         />
@@ -230,7 +286,7 @@ export default List;
 
 const OverallContainer = styled.div`
   position: relative;
-  height: 75vh;
+  // height: 75vh;
 `;
 
 const ButtonCategory = styled.div`
@@ -269,106 +325,33 @@ const DeleteCategoryBtn = styled(Button)`
   }
 `;
 
-export const CategoryListing = styled.div`
-  width: 100%;
-  overflow: auto;
-  table {
-    width: 100%;
-    min-width: 960px;
-    text-align: left;
-    overflow: auto;
-    white-space: initial;
-    /* background: #f8fbfd; */
+export const CategoryListing = styled.div``;
 
-    @media (max-width: 517px) {
-      th:nth-child(2) {
-        padding-right: 50px;
-      }
+const Popup = styled.span`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 120px;
+  height: 70px;
+  background-color: #ffffff;
+  z-index: 1;
+  position: absolute;
+  padding: 8px;
+  gap: 12px;
+  border: 1px solid #8a8886;
 
-      th:nth-child(3) {
-        padding-right: 20px;
-      }
-    }
+  top: 0px;
+  right: 180px;
+  border-radius: 4px;
+  p {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #323130;
+    cursor: pointer;
 
-    tr:first-of-type {
-      width: 100%;
-      background: #f8fbfd;
-
-      th:first-of-type {
-        padding-right: 24px;
-      }
-
-      th:nth-child(2) {
-        padding-right: 200px;
-      }
-
-      th:nth-child(3) {
-        padding-right: 100px;
-      }
-
-      th {
-        font-size: 16px;
-        font-weight: 600;
-        color: #605e5c;
-      }
-    }
-
-    td {
-      color: #605e5c;
-      font-size: 16px;
-      font-weight: 600;
-    }
-
-    tr {
-      height: 74px;
-      td:last-of-type {
-        display: flex;
-        gap: ${({ theme }) => theme.spacing(4)};
-        justify-content: space-between;
-        align-items: center;
-        justify-content: center;
-        padding-top: 22px;
-
-        svg {
-          transform: rotate(90deg);
-          position: relative;
-          cursor: pointer;
-        }
-      }
-
-      div {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        padding: 8px;
-        gap: 16px;
-        position: absolute;
-        width: 120px;
-        height: 70px;
-        background-color: #ffffff;
-        z-index: 1;
-        border: 0.5px solid #8a8886;
-
-        border-radius: 4px;
-        top: 0;
-        right: 40px;
-        p {
-          font-weight: 400;
-          font-size: 16px;
-          line-height: 19px;
-          color: #323130;
-          cursor: pointer;
-
-          :last-child {
-            color: #b71f1f;
-          }
-        }
-      }
+    :last-child {
+      color: #b71f1f;
     }
   }
-`;
-
-const NoData = styled.div`
-  display: flex;
-  margin-top: 36px;
 `;
