@@ -186,7 +186,7 @@ Route::delete('category/{orgId}/delete', [CategoryController::class, 'deleteComp
 
 //Employee Routes
 Route::prefix('employee')->group(function () {
-    Route::post('add', [EmployeeController::class, 'addEmployee']);
+    Route::post('add', [EmployeeController::class, 'addEmployee'])->middleware("isloggedin", "isadmin");
     Route::post('confirm', [EmployeeController::class, 'confirmCSV'])->middleware("isloggedin", "isadmin");
     Route::get('{id}', [EmployeeController::class, 'getById']);
     Route::get('company/{orgId}', [EmployeeController::class, 'getEmployeesByCompanyId']);
