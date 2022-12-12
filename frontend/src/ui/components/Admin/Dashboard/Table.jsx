@@ -5,6 +5,7 @@ import { Title } from "../../../../styles/reusableElements.styled"
 import TableComponent from '../../molecules/TableComponent';
 import axios from '../../../../api/axios';
 
+
 function Table() {
 
   const  [table, setTable] = useState(null)
@@ -21,6 +22,8 @@ function Table() {
   }, [])
 
   console.log(table);
+
+
 
   return (
     <div>

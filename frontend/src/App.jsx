@@ -152,6 +152,8 @@ const App = () => {
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/privacy-policy" element={<Privacy />} />
+            {/* <Route path="/admin/stacks" element={<Stacks/>} /> */}
+               
 
             {/* UNKNOWN ROUTES */}
             {/* <Route path="/fill-employee" element={<Fillemployee />} /> */}
@@ -306,8 +308,8 @@ const App = () => {
                   element={<Dashboard/>} />
                 <Route/>
 
-                <Route path="/admin/stacks"
-                       element={<Stacks/>} />
+                 <Route path="/admin/stacks"
+                       element={<Stacks/>} /> 
                 </Route>
 
               <Route element={<RequireAuth allowedRole={ROLES.Employees} />}>
