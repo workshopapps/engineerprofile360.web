@@ -317,8 +317,6 @@ const App = () => {
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
                 {/* Put in Protected pages in here */}
                 <Route path="/admin/dashboard" element={<Dashboard />} />
-                <Route />
-
                 <Route path="/admin/stacks" element={<Stacks />} />
               </Route>
 
