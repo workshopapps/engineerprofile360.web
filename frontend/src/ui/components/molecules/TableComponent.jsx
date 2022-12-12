@@ -31,7 +31,9 @@ const Table = styled.table`
     position: relative;
   }
 
-  th,
+  th {
+    padding: ${({ theme }) => theme.spacing(2)} ${({ theme }) => theme.spacing(1.5)};
+  }
   td {
     padding: ${({ theme }) => theme.spacing(3)} ${({ theme }) => theme.spacing(1.5)};
     position: relative;

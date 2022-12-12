@@ -17,12 +17,11 @@ import {
 import { InputField } from "../../../main/components";
 import { Container } from "../../../styles/reusableElements.styled";
 
-import useAuth from "../../../hooks/useAuth";
 import Logo from "../../../components/Logo";
-import { Link } from "react-router-dom";
 
-const TopBar = ({ handleLeftBarToggle, leftBar }) => {
-  const { auth } = useAuth();
+const GuestTopBar = ({ handleLeftBarToggle, leftBar }) => {
+  let guest = localStorage.getItem("guest");
+  guest = JSON.parse(guest);
   const [dropDown, setDropDown] = useState(false);
   const handleDropDownToggle = () => {
     setDropDown(!dropDown);
@@ -44,7 +43,7 @@ const TopBar = ({ handleLeftBarToggle, leftBar }) => {
           <Options>
             <UserCon>
               <User color="#323130" />
-              <span>{auth.username ? auth.username : ""}</span>
+              <span>{guest?.fullName ? guest?.fullName : ""}</span>
             </UserCon>
             <Icons>
               <Notification color="#323130" />
@@ -55,11 +54,9 @@ const TopBar = ({ handleLeftBarToggle, leftBar }) => {
                   <li>
                     <User color="#323130" /> Profile
                   </li>
-                  <Link to={"/setting"} onClick={handleDropDownToggle}>
-                    <li>
-                      <Setting2 color="#323130" /> Settings
-                    </li>
-                  </Link>
+                  <li>
+                    <Setting2 color="#323130" /> Settings
+                  </li>
                   <li>
                     <LogoutCurve color="#323130" /> Logout
                   </li>
@@ -82,7 +79,7 @@ const TopBar = ({ handleLeftBarToggle, leftBar }) => {
   );
 };
 
-export default TopBar;
+export default GuestTopBar;
 
 const TopBarContainer = styled.header`
   height: 80px;

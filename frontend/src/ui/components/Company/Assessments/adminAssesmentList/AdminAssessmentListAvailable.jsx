@@ -8,6 +8,7 @@ import axios from "../../../../../api/axios";
 import useAuth from "../../../../../hooks/useAuth";
 import { showErrorToast } from "../../../../../helpers/helper";
 import { AddCircle } from "iconsax-react";
+import TableComponent from "../../../molecules/TableComponent";
 // import useAuth from "";
 
 const DataContext = createContext(null);
@@ -114,7 +115,7 @@ const List = () => {
         setIsLoading(false);
         const availableData = response?.data?.data;
         setAvailable(availableData);
-        
+
         //Get Completed Assessment Counts
         const responseCompleted = await axios.get(
           `/assessment/completed-assessments/${auth.org_id}/${auth.id}`
@@ -138,46 +139,49 @@ const List = () => {
           <Loader />
         </LoaderContainer>
       );
-    } else if (available.length === 0) {
+    }
+    else if (available.length === 0)
+    {
       return <Text>Oops no available assessments, create an assessment</Text>;
+
     }
     return (
-      <TableContainer>
-        <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <TH1>Assessment Name</TH1>
-              <th>Department</th>
-              <th>Accepted</th>
-              <th>Duration</th>
-              <th>Deadline</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {available.map((item, key) => {
-              return (
-                <tr key={key}>
-                  <td>{key + 1}</td>
-                  <TH2>{item?.name}</TH2>
-                  <td>{item?.department_id}</td>
-                  <td>{item?.start_date}</td>
-                  <td>{item?.end_date - item?.start_date}</td>
-                  <td>{item?.end_date}</td>
 
-                  <td>
-                    <Link to="/assessment/view-assessment">
-                      <Button $variant="outlined" $color="#2667ff">
-                        View Assessment
-                      </Button>
-                    </Link>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      <TableContainer>
+      <TableComponent>
+        <tbody>
+          <tr>
+            <th>#</th>
+            <th>Assessment Name</th>
+            <th>Department</th>
+            <th>Accepted</th>
+            <th>Duration</th>
+            <th>Deadline</th>
+            <th></th>
+          </tr>
+
+          {available.map((item, key) => {
+            return (
+              <tr key={key}>
+                <td>{key + 1}</td>
+                <td>{item?.name}</td>
+                <td>{item?.department_id}</td>
+                <td>{item?.start_date}</td>
+                <td>{item?.end_date - item?.start_date}</td>
+                <td>{item?.end_date}</td>
+
+                <td>
+                  <Link to="/assessment/view-assessment">
+                    <Button $variant="outlined" $color="#2667ff">
+                      View Assessment
+                    </Button>
+                  </Link>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </TableComponent>
       </TableContainer>
     );
   };
@@ -242,7 +246,7 @@ export default AvailableAssessmentList;
 
 //STYLED COMPONENTS
 
-const LoaderContainer = styled.div`
+export const LoaderContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -287,75 +291,7 @@ export const Show = styled.div`
 `;
 
 export const TableContainer = styled.div`
-  ${({ theme }) => theme.breakpoints.down("md")} {
-    overflow: auto;
-  }
-
-  table {
-    min-width: 1025px;
-    table-layout: fixed;
-    border-collapse: collapse;
-  }
-
-  thead {
-    background-color: #f8fbfd;
-    padding: 9px 0px;
-    text-align: left;
-  }
-
-  th:first-child {
-    width: 50px;
-  }
-
-  td:first-child {
-    width: 50px;
-  }
-
-  th,
-  td {
-    width: 200px;
-    overflow: hidden;
-    text-align: left;
-    padding-left: 12px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-  }
-
-  th {
-    color: #605e5c;
-  }
-
-  td {
-    font-size: 16px;
-    line-height: 22px;
-    color: #605e5c;
-  }
-
-  button {
-    background-color: #fff;
-    border: 1px solid #2667ff;
-  }
-
-  svg {
-    cursor: pointer;
-  }
-`;
-
-export const TH1 = styled.th`
-  min-width: 300px;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 22px;
-  color: #605e5c;
-  font-weight: bold;
-`;
-
-export const TH2 = styled.th`
-  min-width: 300px;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 22px;
-  color: #605e5c;
+  margin-top: -30px;
 `;
 
 export const ButtonContainer = styled.div`

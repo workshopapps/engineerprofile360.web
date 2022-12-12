@@ -68,7 +68,7 @@ function AddDept({
             <InputField
               type="text"
               required
-              placeholder="Javascript"
+              placeholder="Enter department name."
               name="departmentName"
               value={departmentName}
               onChange={(e) => {
@@ -144,7 +144,7 @@ export const InputWrapper = styled.div`
 
     border-radius: 4px;
     background-color: #f8fbfd;
-    overflow: hidden;
+   
 
     ${({ theme }) => theme.breakpoints.up("xs")} {
       width: 556px;
