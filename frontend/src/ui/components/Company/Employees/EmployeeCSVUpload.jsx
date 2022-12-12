@@ -97,17 +97,32 @@ const EmployeeCSVUpload = () => {
         );
         if (response.data.errorState === false) {
           setLoading(false);
-          showSuccessToast(response.data.message);
+          let csvtotal = response.data.data.total;
+          let csvsuccess= response.data.data.success;
+          let employeeText = csvsuccess < 2 ? "employee" : "employees";
+          let successText = csvsuccess > 0 ? "successfully" : "";
+          let csvfailed = csvtotal - csvsuccess
+
+          showSuccessToast(
+          <div>
+          {response.data.message}
+          <br /> 
+          {csvsuccess} new {employeeText} added {successText}
+          <br />
+          {csvfailed} entries already exists
+          </div>);
+
           setTimeout(
             () =>
-              navigate("/employees/csv-upload-preview", {
-                state: {
-                  csvData: response.data.data,
-                  orgID: auth.org_id,
-                  departmentID: selecteddepartment,
-                  departmentName: selecteddepartmentname,
-                },
-              }),
+            window.location.href="/employees",
+              // navigate("/employees/csv-upload-preview", {
+              //   state: {
+              //     csvData: response.data.data,
+              //     orgID: auth.org_id,
+              //     departmentID: selecteddepartment,
+              //     departmentName: selecteddepartmentname,
+              //   },
+              // }),
             1000
           );
         } else {
@@ -194,7 +209,7 @@ const EmployeeCSVUpload = () => {
                     <Link to={-1}>Cancel</Link>
                     <button onClick={() => inputRef.current.click()}>
                       <BsPlusCircle className="plus-icon" />
-                      <p>Browse Computer</p>
+                      <p>Browse</p>
                     </button>
                     <button onClick={() => inputRef.current.click()}>
                       <BsPlusCircle className="mobile-icon" />
@@ -350,7 +365,8 @@ const Manual = styled.div`
 `;
 
 const UploadCSVContent = styled.div`
-  height: 100%;
+  /*height: 100%;*/
+  padding:100px 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -525,7 +541,7 @@ const Error = styled.div`
 const ManualUpload = styled.div``;
 
 const SelectContainer = styled.div`
-  width: 50%;
+  width: 20%;
   max-width: 100%;
   display: flex;
   flex-direction: column;

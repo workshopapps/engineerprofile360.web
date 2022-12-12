@@ -11,10 +11,13 @@ import Flex from "../../layout/Flex";
 import { Button, Loader } from "../../../../styles/reusableElements.styled";
 import axios from "../../../../api/axios";
 import useAuth from "../../../../hooks/useAuth";
+import TableComponent from "../../molecules/TableComponent";
+import { showErrorToast } from "../../../../helpers/helper";
+import { AddCircle } from "iconsax-react";
 
 const DataContext = createContext(null);
 
-const info = [
+export const info = [
   {
     id: "1",
     dept: "HNG Tutorials",
@@ -73,280 +76,213 @@ const info = [
   },
 ];
 
-const Sort = () => {
-  const {
-    assessmentInfo,
-    setAssessmentInfo,
-    available,
-    setAvailable,
-    order,
-    setOrder,
-    auth,
-  } = useContext(DataContext);
-  const sorting = () => {
-    if (order === "asc") {
-      const sorted = [...available.data].sort((a, b) =>
-        a.dept.toLowerCase() > b.dept.toLowerCase() ? 1 : -1
-      );
-      setAssessmentInfo(sorted);
-      setOrder("dsc");
-    }
-    if (order === "dsc") {
-      const sorted = [...available.data].sort((a, b) =>
-        a.dept.toLowerCase() < b.dept.toLowerCase() ? 1 : -1
-      );
-      setAssessmentInfo(sorted);
-      setOrder("asc");
-    }
-  };
-
-  const dateSort = () => {
-    if (order === "asc") {
-      const sortedDate = [...available.data].sort((a, b) =>
-        new Date(b.date) > new Date(a.date) ? 1 : -1
-      );
-      setAssessmentInfo(sortedDate);
-      setOrder("dsc");
-    }
-    if (order === "dsc") {
-      const sortedDate = [...available.data].sort((a, b) =>
-        new Date(b.date) < new Date(a.date) ? 1 : -1
-      );
-      setAssessmentInfo(sortedDate);
-      setOrder("asc");
-    }
-  };
+const Buttons = () => {
   return (
-    <SortContainer>
-      <Flex
-        style={{
-          border: "1px solid #8A8886",
-          padding: "8px",
-          borderRadius: "4px",
-        }}
-        ai="center"
-      >
-        <select>
-          <option onClick={() => sorting()}>
-            <Text> Assessment Type</Text>
-          </option>
-        </select>
-      </Flex>
-      <Flex ai="center" spacing={30}>
-        <Flex
-          spacing={10}
-          style={{
-            border: "1px solid #8A8886",
-            padding: "8px",
-            borderRadius: "4px",
-          }}
-          ai="center"
-        >
-          <select>
-            <option>
-              <Text onClick={() => dateSort()}>Sort By Date</Text>
-            </option>
-          </select>
+    <ButtonContainer>
+      <Hide>
+        <ButtonInner>
+          <Link to="/assessment/create-assessment">
+            <Button>
+              <Flex spacing={10} ai="center">
+                <AddCircle size="24" color="#fff" />
+                <Text $color="white">Create New Assessment</Text>
+              </Flex>
+            </Button>
+          </Link>
+        </ButtonInner>
+      </Hide>
+      <Show>
+        <Flex jc="flex-end" spacing={10}>
+          <Link to="/assessment/create-assessment">
+            <Button>
+              <Flex spacing={10} ai="center">
+                <AddCircle size="24" color="#fff" />
+              </Flex>
+            </Button>
+          </Link>
         </Flex>
-        <Hide>
-          <Flex spacing={10}>
-            <img src={dashboard} alt="" />
-            <img src={hamburger} alt="" />
-          </Flex>
-        </Hide>
-      </Flex>
-    </SortContainer>
+      </Show>
+    </ButtonContainer>
   );
 };
 
 const List = () => {
-  const { available, setAvailable, isLoading, setIsLoading } =
+  const { available, setAvailable, isLoading, setIsLoading, setCompleted } =
     useContext(DataContext);
-  const { auth, setAuth } = useAuth();
+  const { auth } = useAuth();
 
-  const fetchAvailable = () => {
-    return axios(`/user-assessment/org/${auth.id}/org-available`);
-  };
+  //COMMENTED OUT THE FETCH LOGIC  //UNCOMMENT TO USE
+  // useEffect(() => {
+  //   const getAvailableAssessment = async () => {
+  //     try {
+  //       //Get Availlable Assessment
+  //       const response = await axios.get(`/assessment/${auth.id}`);
+  //       setIsLoading(false);
+  //       const availableData = response?.data?.data;
+  //       setAvailable(availableData);
 
-  const postData = (e) => {
-    axios.post(`/user-assessment/accept/${auth.id}/${auth.id}/${auth.id}`, {
-      assessmentId: auth.id,
-      employeeId: auth.id,
-      orgId: auth.id,
-    });
-  };
+  //       //Get Completed Assessment Counts
+  //       const responseCompleted = await axios.get(
+  //         `/assessment/completed-assessments/${auth.org_id}/${auth.id}`
+  //       );
+  //       setCompleted(responseCompleted?.data?.data?.data);
+  //     } catch (err) {
+  //       if (!err?.response) {
+  //         showErrorToast("No Server Response");
+  //       } else if (err?.response.data.errorState === true) {
+  //         showErrorToast(err.response.data.message);
+  //       }
+  //     }
+  //   };
+  //   getAvailableAssessment();
+  // }, []);
 
-  useEffect(() => {
-    fetchAvailable()
-      .then(({ data }) => {
-        setAvailable(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-        console.log();
-      });
-  }, []);
   const renderContent = () => {
-    if (isLoading) {
-      return (
-        <Flex jc="center">
-          <Loader />
-        </Flex>
-      );
-    } else if (available.data.length === 0) {
-      return (
-        <Text>
-          Oops no available assessments for this user, come back later
-        </Text>
-      );
-    }
+    //COMMENTED OUT TO SHOW THE TABLE WITH SAMPLE DATA  //UNCOMMENT TO USE
+
+    // if (isLoading) {
+    //   return (
+    //     <LoaderContainer>
+    //       <Loader />
+    //     </LoaderContainer>
+    //   );
+    // }
+
+    // else if (available.length === 0) {
+    //   return <Text>Oops no available assessments, create an assessment</Text>;
+    // }
 
     return (
-      <table>
-        <tbody>
-          <tr>
-            <th>#</th>
-            <th colSpan="2">Department</th>
-            <th>Course</th>
-            <th>Duration</th>
-            <th>Deadline</th>
-            <th>{""}</th>
-          </tr>
-          {available.data.map((d, idx) => {
-            return (
-              <tr key={idx}>
-                <td>{idx + 1}</td>
-                <td colSpan="2">{d.dept}</td>
-                <td>{d.course}</td>
-                <td>{d.duration}</td>
-                <td>{d.date}</td>
-                <td>
-                  <Button
-                    $variant="outlined"
-                    $color="#2667ff"
-                    onClick={() => postData()}
-                  >
-                    Take Test
-                  </Button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <TableContainer>
+        <TableComponent>
+          <tbody>
+            <tr>
+              <th>#</th>
+              <th>Assessment Name</th>
+              <th>Department</th>
+              <th>Accepted</th>
+              <th>Duration</th>
+              <th>Deadline</th>
+              <th></th>
+            </tr>
+            {/* {available.map} */}
+            {info.map((item, key) => {
+              return (
+                <tr key={key}>
+                  {/* <td>{key + 1}</td>
+                  <td>{item?.name}</td>
+                  <td>{item?.department_id}</td>
+                  <td>{item?.start_date}</td>
+                  <td>{item?.end_date - item?.start_date}</td>
+                  <td>{item?.end_date}</td> */}
+
+                  <td>{key + 1}</td>
+                  <td>{item?.dept}</td>
+                  <td>{item?.course}</td>
+                  <td>{item?.duration}</td>
+                  <td>{item?.date}</td>
+                  <td>{item.date}</td>
+
+                  <td>
+                    <Link to="/assessment/view-assessment">
+                      <Button $variant="outlined" $color="#2667ff">
+                        View Assessment
+                      </Button>
+                    </Link>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </TableComponent>
+      </TableContainer>
     );
   };
-
   return <AssessmentListings>{renderContent()}</AssessmentListings>;
 };
 
 const TableSection = () => {
-  return (
-    <Flex stack spacing={16}>
-      <Sort />
-      <List />
-    </Flex>
-  );
+  return <List />;
 };
 
-const Assessment = () => {
-  const { available, setAvailable, isLoading, setIsLoading } =
-    useContext(DataContext);
+const Assessment = ({ available, completed }) => {
   return (
-    <Flex stack spacing={70}>
-      <Flex
-        style={{
-          paddingBottom: "10px",
-          paddingTop: "20px",
-          borderBottom: "1px solid #8A8886",
-        }}
-        jc="space-between"
-      >
-        <Flex spacing={24} ai="flex-end">
-          <Link to="/user-assessment-list">
+    <>
+      <AssessmentTabContainer>
+        <AssessmentTab>
+          <Link to="/employee/assessment">
             <Text $color="#2667FF" $weight="600">
-              {`Available (${"0"})`}
+              Available ({available})
             </Text>
           </Link>
-          <Link to="/user-assessment-list/completed">
-            <Text>Completed (0)</Text>
+          <Link to="/employee/assessment/completed">
+            <Text>Completed ({completed})</Text>
           </Link>
-        </Flex>
-      </Flex>
-
+        </AssessmentTab>
+      </AssessmentTabContainer>
       <TableSection />
-    </Flex>
+    </>
   );
 };
+
+
 
 const UserAssessmentListAvailable = () => {
   const [assessmentInfo, setAssessmentInfo] = useState(info);
   const [order, setOrder] = useState("asc");
-  const [available, setAvailable] = useState({});
+  const [available, setAvailable] = useState([]);
+  const [completed, setCompleted] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
   return (
-    <div>
+    <>
       <DataContext.Provider
         value={{
           assessmentInfo,
           setAssessmentInfo,
           order,
           setOrder,
-          isLoading,
-          setIsLoading,
           available,
           setAvailable,
+          isLoading,
+          setIsLoading,
+          setCompleted,
+          completed,
         }}
       >
-        <PageInfo breadcrumb={["Assessments", "Assessment List"]} />
-        <Assessment />
+        <PageInfo breadcrumb={["Dashboard", "Assessment list"]} />
+        <Buttons />
+        <Assessment available={available.length} completed={completed.length} />
       </DataContext.Provider>
-    </div>
+    </>
   );
 };
 
 export default UserAssessmentListAvailable;
 
-const AssessmentListings = styled.div`
+//STYLED COMPONENTS
+
+export const LoaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const AssessmentListings = styled.div`
   padding-top: ${({ theme }) => theme.spacing(3)};
   width: 100%;
   overflow: auto;
-  table {
-    table-layout: fixed;
-    width: 100%;
-    min-width: 960px;
-    overflow: auto;
-
-    tr:first-of-type {
-      width: 100%;
-      background: #f8fbfd;
-
-      th:first-of-type {
-        padding-right: 24px;
-      }
-
-      th {
-        font-size: 16px;
-        font-weight: 600;
-        color: #605e5c;
-      }
-    }
-
-    td {
-      color: #605e5c;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 22px;
-      white-space: nowrap;
-    }
-  }
 `;
 
-const Text = styled.p`
+export const AssessmentTabContainer = styled.div`
+  border-bottom: 1px solid #8a8886;
+  padding-bottom: 10px;
+`;
+export const AssessmentTab = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+
+export const Text = styled.p`
   white-space: nowrap;
   color: ${({ $color }) => ($color ? $color : "initial")};
   font-size: ${({ $size }) => ($size ? $size : "14px")};
@@ -354,14 +290,14 @@ const Text = styled.p`
   line-height: ${({ $lHeight }) => ($lHeight ? $lHeight : "20px")};
 `;
 
-const Hide = styled.div`
+export const Hide = styled.div`
   display: block;
 
   @media screen and (max-width: 768px) {
     display: none;
   } ;
 `;
-const Show = styled.div`
+export const Show = styled.div`
   display: none;
 
   @media screen and (max-width: 768px) {
@@ -369,13 +305,17 @@ const Show = styled.div`
   } ;
 `;
 
-const SortContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 0 10px;
+export const TableContainer = styled.div`
+  margin-top: -30px;
+`;
 
-  @media screen and (max-width: 1023px) {
-    display: flex;
-    padding: 0;
-  } ;
+export const ButtonContainer = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: end;
+  margin-top: -50px;
+`;
+
+export const ButtonInner = styled.div`
+  width: fit-content;
 `;

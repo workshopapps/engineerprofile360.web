@@ -36,32 +36,35 @@ const TopEmployees = ({ topPerformances, departments }) => {
       </Header>
       {top.length > 0 ? (
         <TableComponent>
-            <tbody>
-              <tr>
-                <th>#</th>
-                <th>Staff name</th>
-                <th>Department</th>
-                <th>Assessments Taken</th>
-                <th>Percentage</th>
-                <th>Action</th>
+          <tbody>
+            <tr>
+              <th>#</th>
+              <th>Staff name</th>
+              <th>Department</th>
+              <th>Assessments Taken</th>
+              <th>Percentage</th>
+              <th>Action</th>
+            </tr>
+            {top.map((employee, index) => (
+              <tr key={employee.id}>
+                <td>{index + 1}.</td>
+                <td>{employee.fullname}</td>
+                <td>{employee.department.name}</td>
+                <td>{employee.completed_assessment_count}</td>
+                <td>
+                  {((employee.points / employee.total_points) * 100).toFixed(2)}
+                  %
+                </td>
+                <td>
+                  <Link to={`/employees/profile/${employee.id}`}>
+                    <Button $variant="outlined" $color="#2667ff">
+                      View Results
+                    </Button>
+                  </Link>
+                </td>
               </tr>
-              {top.map((employee, index) => (
-                <tr key={employee.id}>
-                  <td>{index + 1}.</td>
-                  <td>{employee.fullname}</td>
-                  <td>{employee.department.name}</td>
-                  <td>{employee.completed_assessment_count}</td>
-                  <td>{((employee.points / employee.total_points) * 100).toFixed(2)}%</td>
-                  <td>
-                    <Link to={`/employees/profile/${employee.id}`}>
-                      <Button $variant="outlined" $color="#2667ff">
-                        View Results
-                      </Button>
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+            ))}
+          </tbody>
         </TableComponent>
       ) : (
         <NoData text="Oops! No data here">
@@ -101,5 +104,3 @@ const Header = styled.div`
     font-size: 20px;
   }
 `;
-
-

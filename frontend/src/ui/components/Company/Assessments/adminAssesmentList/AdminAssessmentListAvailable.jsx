@@ -111,7 +111,7 @@ const List = () => {
     const getAvailableAssessment = async () => {
       try {
         //Get Availlable Assessment
-        const response = await axios.get(`/assessment/${auth.id}`);
+        const response = await axios.get(`/assessment/${auth.org_id}`);
         setIsLoading(false);
         const availableData = response?.data?.data;
         setAvailable(availableData);
@@ -139,49 +139,45 @@ const List = () => {
           <Loader />
         </LoaderContainer>
       );
-    }
-    else if (available.length === 0)
-    {
+    } else if (available.length === 0) {
       return <Text>Oops no available assessments, create an assessment</Text>;
-
     }
     return (
-
       <TableContainer>
-      <TableComponent>
-        <tbody>
-          <tr>
-            <th>#</th>
-            <th>Assessment Name</th>
-            <th>Department</th>
-            <th>Accepted</th>
-            <th>Duration</th>
-            <th>Deadline</th>
-            <th></th>
-          </tr>
+        <TableComponent>
+          <tbody>
+            <tr>
+              <th>#</th>
+              <th>Assessment Name</th>
+              <th>Department</th>
+              <th>Accepted</th>
+              <th>Duration</th>
+              <th>Deadline</th>
+              <th></th>
+            </tr>
 
-          {available.map((item, key) => {
-            return (
-              <tr key={key}>
-                <td>{key + 1}</td>
-                <td>{item?.name}</td>
-                <td>{item?.department_id}</td>
-                <td>{item?.start_date}</td>
-                <td>{item?.end_date - item?.start_date}</td>
-                <td>{item?.end_date}</td>
+            {available.map((item, key) => {
+              return (
+                <tr key={key}>
+                  <td>{key + 1}</td>
+                  <td>{item?.name}</td>
+                  <td>{item?.department_id}</td>
+                  <td>{item?.start_date}</td>
+                  <td>{item?.end_date - item?.start_date}</td>
+                  <td>{item?.end_date}</td>
 
-                <td>
-                  <Link to="/assessment/view-assessment">
-                    <Button $variant="outlined" $color="#2667ff">
-                      View Assessment
-                    </Button>
-                  </Link>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </TableComponent>
+                  <td>
+                    <Link to="/assessment/view-assessment">
+                      <Button $variant="outlined" $color="#2667ff">
+                        View Assessment
+                      </Button>
+                    </Link>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </TableComponent>
       </TableContainer>
     );
   };
