@@ -104,7 +104,7 @@ const EmployeeCSVUpload = () => {
           <div>
           {response.data.message}
           <br /> 
-          {csvsuccess} new employess added successfully
+          {csvsuccess} new employee(s) added successfully
           <br />
           {csvfailed} entries failed
           </div>);
