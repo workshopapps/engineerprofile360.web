@@ -12,14 +12,14 @@ import {
   ButtonContainer,
   ButtonInner,
   Hide,
+  LoaderContainer,
   Show,
   TableContainer,
   Text,
-  TH1,
-  TH2,
 } from "./AdminAssessmentListAvailable";
 import { showErrorToast } from "../../../../../helpers/helper";
 import { AddCircle } from "iconsax-react";
+import TableComponent from "../../../molecules/TableComponent";
 
 const DataContext = createContext(null);
 export const Buttons = () => {
@@ -86,9 +86,9 @@ export const List = () => {
   const renderContent = () => {
     if (isLoading) {
       return (
-        <Flex jc="center">
+        <LoaderContainer>
           <Loader />
-        </Flex>
+        </LoaderContainer>
       );
     } else if (completed.length === 0) {
       return (
@@ -98,33 +98,31 @@ export const List = () => {
         </Text>
       );
     }
+
     return (
       <>
-        <TableSection />
         <TableContainer>
-          <table>
-            <thead>
+          <TableComponent>
+            <tbody>
               <tr>
                 <th>#</th>
-                <TH1>Assessment Name</TH1>
+                <th>Assessment Name</th>
                 <th>Department</th>
                 <th>Accepted</th>
                 <th>Duration</th>
                 <th>Deadline</th>
                 <th></th>
               </tr>
-            </thead>
-            <tbody>
+
               {completed.map((item, key) => {
                 return (
                   <tr key={key}>
                     <td>{key + 1}</td>
-                    <TH2>{item?.name}</TH2>
+                    <td>{item?.name}</td>
                     <td>{item?.department_id}</td>
                     <td>{item?.start_date}</td>
                     <td>{item?.end_date - item?.start_date}</td>
                     <td>{item?.end_date}</td>
-
                     <td>
                       <Link to="/assessment/view-assessment">
                         <Button $variant="outlined" $color="#2667ff">
@@ -136,7 +134,7 @@ export const List = () => {
                 );
               })}
             </tbody>
-          </table>
+          </TableComponent>
         </TableContainer>
       </>
     );

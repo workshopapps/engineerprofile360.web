@@ -150,7 +150,7 @@ class AuthenticateController extends Controller
                 return $this->sendResponse(true, $validator->errors(), 'invalid credentials supplied', null, 422);
             }
 
-            $users = User::where('email', $email)->where("isAdmin", true);
+            $users = User::where('email', $email)->where("role", 3)->where("isAdmin", true);
 
             if ($users->count() > 0) {
 
@@ -234,7 +234,7 @@ class AuthenticateController extends Controller
                 return $this->sendResponse(true, $validator->errors(), 'invalid credentials supplied', null, 422);
             }
 
-            $users = User::where('email', $email);
+            $users = User::where('email', $email)->where("role", 2);
 
             if ($users->count() > 0) {
 
@@ -571,6 +571,101 @@ class AuthenticateController extends Controller
         } catch (\Exception $e) {
             return $this->sendResponse(true, "something went wrong refreshing token: " . $e->getMessage(), "Unauthorised.", null, 500);
         }
+    }
+
+    // password update
+    public function updatePassword(Request $req){
+        
+        try {
+            $payload = json_decode($req->getContent(), true);
+            $uid = $req->user["id"];
+
+            // return print_r(json_encode($payload));
+            
+            if(!isset($payload["current_password"]) && !isset($payload["new_password"]) && !isset($payload["user_type"])){
+                return $this->sendResponse(true, "expected a current and new password,user type, but got none", "invalid credentials supplied", null, 400);
+            }
+            
+            $type = $payload["user_type"];
+
+            if ($type === "employee") {
+                // check if emplopyee exists
+                $empExists = Employee::where("id", $uid);
+                
+                if($empExists->count() === 0){
+                    return $this->sendResponse(true, "failed updating password, employee not found.", "failed updating password", null, 404);
+                }
+
+                // checks if the current password is same as the one in DB
+                $currPwd = $empExists->first()["hash"];
+                $comparePwd = Hash::check($payload["current_password"], $currPwd);
+
+                if(!$comparePwd){
+                    return $this->sendResponse(true, "failed updating password, current password is invalid.", "invalid current password.", null, 400);
+                }
+
+                // update employee info
+                $newEmpPwd = Hash::make($payload["new_password"]);
+                Employee::where("id", $uid)->update(array("hash"=>$newEmpPwd));
+
+                // send response
+                return $this->sendResponse(false, null, "password successfully updated", null, 400);
+            }
+            elseif($type === "organization"){
+                // check if emplopyee exists
+                $orgExists = User::where("user_id", $uid)->where("role", 2);
+                
+                if($orgExists->count() === 0){
+                    return $this->sendResponse(true, "failed updating password, organization not found.", "failed updating password", null, 404);
+                }
+
+                // checks if the current password is same as the one in DB
+                $hash = $orgExists->first()["password"];
+                $comparePwd = Hash::check($payload["current_password"], $hash);
+                
+                if(!$comparePwd){
+                    return $this->sendResponse(true, "failed updating password, current password is invalid.", "invalid current password.", null, 400);
+                }
+
+                // update employee info
+                $newEmpPwd = Hash::make($payload["new_password"]);
+                $orgExists->update(array("password"=>$newEmpPwd));
+
+                // send response
+                return $this->sendResponse(false, null, "password successfully updated", null, 400);
+            }
+            elseif($type === "admin"){
+                // check if emplopyee exists
+                $adminExists = User::where("user_id", $uid)->where("role", 3);
+                                
+                if($adminExists->count() === 0){
+                    return $this->sendResponse(true, "failed updating password, admin not found.", "failed updating password", null, 404);
+                }
+
+                // checks if the current password is same as the one in DB
+                $currPwd = $adminExists->first()["password"];
+                $comparePwd = Hash::check($payload["current_password"], $currPwd);
+
+                if(!$comparePwd){
+                    return $this->sendResponse(true, "failed updating password, current password is invalid.", "invalid current password.", null, 400);
+                }
+
+                // update employee info
+                $newEmpPwd = Hash::make($payload["new_password"]);
+                $adminExists->update(array("password"=>$newEmpPwd));
+
+                // send response
+                return $this->sendResponse(false, null, "password successfully updated", null, 400);
+            }
+            else{
+                // invalid type specified
+                return $this->sendResponse(true, "failed updating password, expected a valid type.", "failed updating password.", null, 400);
+            }
+            
+        } catch (\Exception $e) {
+            return $this->sendResponse(true, "something went wrong updating password: .".$e->getMessage(), "failed updating password.", null, 500);
+        }
+        
     }
 
     // Logout users

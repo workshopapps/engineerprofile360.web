@@ -1,39 +1,43 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate,useOutletContext } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import useAuth from "../../../../hooks/useAuth";
 import styled from "styled-components";
 import axios from "../../../../api/axios";
-import { Loader,Title } from "../../../../styles/reusableElements.styled";
+import {
+  OverlayLoader,
+  Title,
+} from "../../../../styles/reusableElements.styled";
 import { toast } from "react-toastify";
 
 const CreateEmployeeManual = () => {
-    const [loading, setLoading] = useState(false);
-    const [formData, setFormData] = useState({});
-    const [touched, setTouched] = useState({});
-    const [errors, setErrors] = useState({});
-    const { auth }  = useAuth();
-    const org_id = auth.org_id;
-    const navigate = useNavigate();
-    const departmentid = JSON.parse(localStorage.getItem("departmentsID"));
-    const handleChange = (e) => {
-      setFormData({ ...formData, [e.target.id]: e.target.value });
-    };
-    const onBlur = (e) => {
-      setTouched((prevState) => ({
-        ...prevState,
-        [e.target.id]: true,
-      }));
-    };
-    const validate = (formData) => {
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({});
+  const [touched, setTouched] = useState({});
+  const [errors, setErrors] = useState({});
+  const { auth } = useAuth();
+  const org_id = auth.org_id;
+  const departmentid = JSON.parse(localStorage.getItem("departmentsID"));
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+  const onBlur = (e) => {
+    setTouched((prevState) => ({
+      ...prevState,
+      [e.target.id]: true,
+    }));
+  };
+  const validate = (formData) => {
     const error = {};
-    const validemail = new RegExp( /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+    const validemail = new RegExp(
+      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+    );
     if (!formData.username) {
       error.username = "Please enter your username";
     }
 
     if (!formData.email) {
       error.email = "Please enter your email";
-    } else if(!validemail.test(formData.email)){
+    } else if (!validemail.test(formData.email)) {
       error.email = "Please enter a valid email";
     }
 
@@ -41,71 +45,76 @@ const CreateEmployeeManual = () => {
       error.fullname = "Please enter your fullname";
     }
 
-    if (!departmentid || departmentid==="" || departmentid==="Select Department")  {
-        error.dept = "Please select a department";
+    if (
+      !departmentid ||
+      departmentid === "" ||
+      departmentid === "Select Department"
+    ) {
+      error.dept = "Please select a department";
     }
-    
-    setErrors(error);
-    };
 
-    useEffect(() => {
-      validate(formData);
-    }, [formData, touched]);
-    
-    const onNextPage = async (formData) => {
-      validate(formData);
-  
-      if (Object.keys(errors).length > 0) {
-        setTouched({
-          fullname: true,
-          username: true,
-          email: true,
-          dept: true,
-        });
-      }
-  
-      if (Object.keys(errors).length === 0) {
-        setTouched({
-          name: false,
-          username: false,
-          email: false,
-          dept: false,
-        });
-      }
-  
-      if (Object.keys(errors).length === 0) {
-        setLoading(true);
-        axios.post("employee/add?type=manual",
-            {   
-                org_id:org_id,
-                department_id:departmentid,
-                fullname:formData.fullname, 
-                username :formData.username,
-                email:formData.email
-            }
-        )
-        .then((res) => {  
+    setErrors(error);
+  };
+
+  useEffect(() => {
+    validate(formData);
+  }, [formData, touched]);
+
+  const onNextPage = async (formData) => {
+    validate(formData);
+
+    if (Object.keys(errors).length > 0) {
+      setTouched({
+        fullname: true,
+        username: true,
+        email: true,
+        dept: true,
+      });
+    }
+
+    if (Object.keys(errors).length === 0) {
+      setTouched({
+        name: false,
+        username: false,
+        email: false,
+        dept: false,
+      });
+    }
+
+    if (Object.keys(errors).length === 0) {
+      setLoading(true);
+      axios
+        .post("employee/add?type=manual", {
+          org_id: org_id,
+          department_id: departmentid,
+          fullname: formData.fullname,
+          username: formData.username,
+          email: formData.email,
+        })
+        .then((res) => {
           toast.success(res.data.message);
           setLoading(false);
-          localStorage.removeItem('departmentsID');
-          setTimeout(
-            () => navigate("/employees/"), 
-            5000
-          );
+          localStorage.removeItem("departmentsID");
+          setFormData({
+            fullname: "",
+            email: "",
+            username: "",
+          });
+          window.location.href = "/employees";
         })
         .catch((error) => {
           toast.error(error.response.data.message);
           setLoading(false);
         });
-      }
-    };
-    const { fullname, username, email } = formData;
+    }
+  };
+  const { fullname, username, email } = formData;
   return loading ? (
-    <Load>
-      <Loader />
-    </Load>
-  ) :(
-    
+    <OverlayLoader contained height={100}>
+      <div></div>
+      <span>Just a moment...</span>
+    </OverlayLoader>
+  ) : (
     <CreateEmployeeManualContainer>
       <InputItemContainer>
         <InputItem>
@@ -115,10 +124,12 @@ const CreateEmployeeManual = () => {
             type="text"
             placeholder="Fullname"
             onChange={handleChange}
-            value={fullname || ''}
+            value={fullname || ""}
             onBlur={onBlur}
           />
-          {errors.fullname && touched.fullname && <span>{errors.fullname}</span>}
+          {errors.fullname && touched.fullname && (
+            <span>{errors.fullname}</span>
+          )}
         </InputItem>
         <InputItem>
           <label>Username</label>
@@ -127,10 +138,12 @@ const CreateEmployeeManual = () => {
             type="text"
             placeholder="Username"
             onChange={handleChange}
-            value={username  || ''}
+            value={username || ""}
             onBlur={onBlur}
           />
-          {errors && errors.username && touched.username && <span>{errors.username}</span>}
+          {errors && errors.username && touched.username && (
+            <span>{errors.username}</span>
+          )}
         </InputItem>
 
         <InputItem>
@@ -140,21 +153,18 @@ const CreateEmployeeManual = () => {
             type="email"
             placeholder="youra@email.com"
             onChange={handleChange}
-            value={email  || ''}
+            value={email || ""}
             onBlur={onBlur}
           />
-          {errors && errors.email && touched.email && <span>{errors.email}</span>}
+          {errors && errors.email && touched.email && (
+            <span>{errors.email}</span>
+          )}
           {errors && errors.dept && touched.dept && <span>{errors.dept}</span>}
         </InputItem>
       </InputItemContainer>
       <Buttons>
         <Link to={-1}>Cancel</Link>
-        <button
-
-          onClick={() => onNextPage(formData)}
-        >
-          Submit
-        </button>
+        <button onClick={() => onNextPage(formData)}>Submit</button>
       </Buttons>
     </CreateEmployeeManualContainer>
   );
@@ -165,9 +175,15 @@ export default CreateEmployeeManual;
 const CreateEmployeeManualContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 95%;
   margin: 30px auto;
-  gap: 15px;
+  padding: 32px 64px;
+  gap: 64px;
+
+  @media (max-width: 669px) {
+    
+      padding: 16px 32px;
+  
+  }
 
   p {
     font-weight: 400;
@@ -198,9 +214,10 @@ const InputItem = styled.div`
   select,
   input {
     border: 1px solid #106ebe;
-    border-radius: 2px;
-    height: 40px;
+    border-radius: 4px;
+    min-height: 40px;
     outline: none;
+    padding: 10px 10px;
   }
 
   select {
@@ -208,8 +225,6 @@ const InputItem = styled.div`
   }
 
   input {
-    padding-left: 5px;
-
     ::placeholder {
       color: #605e5c;
     }
@@ -262,7 +277,6 @@ const Buttons = styled.div`
   @media (max-width: 669px) {
     a {
       font-size: 14px;
-      
     }
   }
 `;
@@ -272,5 +286,5 @@ export const Load = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height:100vh
+  height: 100vh;
 `;

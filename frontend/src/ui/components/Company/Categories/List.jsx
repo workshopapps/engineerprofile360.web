@@ -30,7 +30,8 @@ const List = () => {
   const [categories, setCategories] = useState([]);
   const [updateCategories, setUpdateCategories] = useState(false);
   const [showMore, setShowMore] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState();
+  const [isOverlayLoading, setIsOverlayLoading] = useState(true);
   const [value, setValue] = useState({
     categoryId: [],
   });
@@ -39,16 +40,27 @@ const List = () => {
   const currentSelectedName = useRef();
   const currentSelectedId = useRef();
 
-  useEffect(() => {
-    setIsLoading(true);
-    const getAllCatgories = async () => {
-      const response = await axios.get(`/category/company/${auth.org_id}`);
-      setCategories(response.data.data);
-      response.data.data.length > 0 && setIsLoading(false);
-    };
+  if (toggleCreateCat || toggleDelete || toggleEdit || toggleMaxDelete)
+    document.body.style.overflow = "hidden";
+  else document.body.style.overflow = "initial";
 
+  useEffect(() => {
+    setIsOverlayLoading(true);
+    const getAllCatgories = async () => {
+      try {
+        const response = await axios.get(`/category/company/${auth.org_id}`);
+        setCategories(response.data.data);
+        setIsOverlayLoading(false);
+      } catch (err) {
+        setIsOverlayLoading(false);
+        if (!err.response) {
+          showErrorToast("No server response");
+        } else {
+          showErrorToast(err.response.data.message);
+        }
+      }
+    };
     getAllCatgories();
-    setIsLoading(false);
   }, [updateCategories]);
 
   const toggleOpen = (id) => {
@@ -123,7 +135,7 @@ const List = () => {
   const handleBulkDelete = async () => {
     setIsLoading(true);
     try {
-      const ids = { ids: [...value.categoryId]};
+      const ids = { ids: [...value.categoryId] };
       console.log(JSON.stringify(ids));
       const response = await axios.delete(
         `category/${auth.org_id}/delete`,
@@ -158,7 +170,14 @@ const List = () => {
         )}
       </ButtonCategory>
       <CategoryListing>
-        {categories.data?.length > 0 ? (
+        {isOverlayLoading ? (
+          <OverlayLoader contained>
+            <div></div>
+          </OverlayLoader>
+        ) : (
+          ""
+        )}
+        {categories.data?.length > 0 && categories.data ? (
           <>
             <TableComponent>
               <tbody>
@@ -208,17 +227,11 @@ const List = () => {
           </>
         ) : (
           <>
-            {isLoading === false && categories.data?.length > 0 ? (
-              <NoData text="Oops! No data here yet">
-                <Button $weight="400" onClick={() => setToggleCreateCat(true)}>
-                  <AddCircle color="#FFFFFF" /> Add Category
-                </Button>
-              </NoData>
-            ) : (
-              <OverlayLoader contained>
-                <div></div>
-              </OverlayLoader>
-            )}
+            <NoData text="Oops! No data here yet">
+              <Button $weight="400" onClick={() => setToggleCreateCat(true)}>
+                <AddCircle color="#FFFFFF" /> Add Category
+              </Button>
+            </NoData>
           </>
         )}
       </CategoryListing>
@@ -276,7 +289,7 @@ export default List;
 
 const OverallContainer = styled.div`
   position: relative;
-  // height: 75vh;
+  min-height: 100vh;
 `;
 
 const ButtonCategory = styled.div`

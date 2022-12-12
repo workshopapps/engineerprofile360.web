@@ -2,23 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\InterviewRequest;
 use Exception;
 use App\Models\Interview;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use App\Http\Requests\CreateInterviewRequest;
 
 class InterviewController extends Controller
 {
 
-    public function addInterview(InterviewRequest $request): JsonResponse
+    public function addInterview(CreateInterviewRequest $request): JsonResponse
     {
-        $data = $request->all();
         try {
-           Interview::create($data);
-            return $this->sendResponse(false, null, 'Interview created', $data, Response::HTTP_CREATED);
+            $interview = Interview::create(["times_taken" => 0, ...$request->validated()]);
+            return $this->sendResponse(false, null, 'Interview created', $interview, Response::HTTP_CREATED);
         } catch (Exception $e) {
             return $this->sendResponse(true, 'Interview not created', $e->getMessage());
         }
@@ -27,10 +25,10 @@ class InterviewController extends Controller
     public function getInterviews()
     {
         try {
-           $interviews = Interview::with('stack')->paginate(10);
+            $interviews = Interview::with('stack')->paginate(10);
             return $this->sendResponse(false, null, 'Interviews retrieved', $interviews, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true, $e->getMessage(), 'Unable to retrieve interviews',null, Response::HTTP_BAD_REQUEST);
+            return $this->sendResponse(true, $e->getMessage(), 'Unable to retrieve interviews', null, Response::HTTP_BAD_REQUEST);
         }
     }
 
@@ -45,37 +43,40 @@ class InterviewController extends Controller
         }
     }
 
-    public function getInterviewByStack($stackId) {
+    public function getInterviewByStack($stackId)
+    {
         try {
             $interviews = Interview::where('stack_id', $stackId)->get();
 
-            if( !$interviews) {
+            if (!$interviews) {
                 return $this->sendResponse(
                     true,
                     'Interviews for this stack do not exist',
                     'Interviews not found',
                     null,
                     Response::HTTP_NOT_FOUND
-                );}
-
-                return $this->sendResponse(
-                    false,
-                    null,
-                    'Interviews',
-                    $interviews,
-                    Response::HTTP_OK
                 );
+            }
+
+            return $this->sendResponse(
+                false,
+                null,
+                'Interviews',
+                $interviews,
+                Response::HTTP_OK
+            );
         } catch (Exception $e) {
-                //throw $th;
-                return $this->sendResponse(true, $e->getMessage(), "Interviews Not Found", null, Response::HTTP_BAD_REQUEST);
+            //throw $th;
+            return $this->sendResponse(true, $e->getMessage(), "Interviews Not Found", null, Response::HTTP_BAD_REQUEST);
         }
     }
 
-    public function deleteInterview($id){
+    public function deleteInterview($id)
+    {
         try {
             //code...
             $interviewCheck = Interview::where('id', $id)->exists();
-            if(!$interviewCheck){
+            if (!$interviewCheck) {
                 $interviewCheck = [];
                 return $this->sendResponse(true, null, 'Interview does not exists', $interviewCheck, Response::HTTP_NOT_FOUND);
             }
@@ -108,14 +109,10 @@ class InterviewController extends Controller
         }
     }
 
-    public function getInterviewByCompanyName ($company)
+    public function getInterviewByCompanyName($company)
     {
         try {
-            $interview = Interview::with('company')
-                        ->whereHas('company', function (Builder $query) {
-                            $query->where('name', 'like', '%'.$company.'%');
-                        })
-                        ->get();
+            $interview = Interview::where('company_name', $company)->get();
             if (!$interview)
                 return $this->sendResponse(true, null, 'Interview not found', null, Response::HTTP_NOT_FOUND);
             return $this->sendResponse(false, null, 'Interview retrieved', $interview, Response::HTTP_OK);

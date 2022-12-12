@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 const Password = () => {
   return (
@@ -29,61 +29,13 @@ const Password = () => {
           />
         </div>
         <hr />
-        <div className="form__control">
-          <label className="form__label" htmlFor="name">
-            Website/Portfolio
-          </label>
-          <input
-            placeholder="https://www.markjilaga.com"
-            className="form__input"
-            type="text"
-            name="website"
-          />
-        </div>
-        <hr />
-        <div className="form__control">
-          <label className="form__label" htmlFor="name">
-            Role
-          </label>
-          <input
-            placeholder="Team lead II - Backend Engineer"
-            className="form__input"
-            type="text"
-            name="role"
-          />
-        </div>
-        <hr />
-        <div className="form__control">
-          <label className="form__label" htmlFor="name">
-            Country
-          </label>
-          <input
-            placeholder="Nigeria"
-            className="form__input"
-            type="text"
-            name="country"
-          />
-        </div>
-        <hr /> 
-        <div className="form__control">
-          <label className="form__label" htmlFor="name">
-            Timezone
-          </label>
-          <input
-            placeholder="West African Time"
-            className="form__input"
-            type="text"
-            name="timezone"
-          />
-        </div>
-        <hr />
       </form>
     </PasswordSection>
-  )
-}
+  );
+};
 
 const PasswordSection = styled.section`
-display: grid;
+  display: grid;
   grid-template-columns: auto;
 
   hr {
@@ -91,7 +43,7 @@ display: grid;
     height: 2px;
     background: #edebe9;
   }
-  
+
   .form__control {
     display: grid;
     justify-content: space-between;
@@ -100,7 +52,7 @@ display: grid;
     max-width: 50%;
     padding: 20px 0;
   }
-  
+
   .form__input {
     width: 284px;
     padding: 6px 12px;
@@ -119,7 +71,6 @@ display: grid;
     width: 200px;
   }
 
-  
   .form__password {
     background: #ffffff;
     border: 1px solid #8a8886;
@@ -129,29 +80,26 @@ display: grid;
     margin-left: 220px;
   }
 
-
   @media screen and (max-width: 769px) {
-
     margin: 25px 0;
     .form__control {
       grid-template-columns: 1fr;
       justify-items: center;
       text-align: center;
       max-width: 100%;
-      }
-      .form__label {
-        margin-bottom: 10px;
-      }
-      .form__input {
-        width: 80%
-      }
+    }
+    .form__label {
+      margin-bottom: 10px;
+    }
+    .form__input {
+      width: 80%;
+    }
 
-      .form__password {
-        max-width: 100%;
-        margin-left: 0;
-      }
+    .form__password {
+      max-width: 100%;
+      margin-left: 0;
+    }
   }
-  
-`
+`;
 
-export default Password
+export default Password;

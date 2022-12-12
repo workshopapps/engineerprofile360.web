@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import styled from "styled-components";
 import axios from "../../../../api/axios";
 import { Loader, Title } from "../../../../styles/reusableElements.styled";
 import { InputWrapper, Load } from "./AddDept";
@@ -48,9 +49,10 @@ function DeleteModal({
       <ModalContainer>
         <InputWrapper>
           <form>
-            <Title as="h2" $size="28px" $color="#ce2d2d" $weight="400">
-              Are you sure you want to Delete {name}?
-            </Title>
+            <ConfirmDelete>
+              Are you sure you want to Delete <span> {name}?</span>
+            </ConfirmDelete>
+
             <Wrapper>
               <Button
                 type="button"
@@ -92,3 +94,19 @@ function DeleteModal({
 }
 
 export default DeleteModal;
+
+export const ConfirmDelete = styled.h5`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 20px;
+  color: #323130;
+  padding-bottom: 25px;
+
+  span {
+    font-size: 25px;
+    color: #ce2d2d;
+    padding-left: 7px;
+  }
+`;
