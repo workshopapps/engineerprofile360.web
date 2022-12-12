@@ -9,6 +9,7 @@ import {
 } from "../../../../../../styles/reusableElements.styled";
 import { Text } from "./AssessmentStats";
 import NoData from "../../../../molecules/NoData";
+import TableComponent from "../../../../molecules/TableComponent";
 
 const TopStaff = ({ topStaff }) => {
   const [topEmp, setTopEmp] = useState([]);
@@ -32,7 +33,7 @@ const TopStaff = ({ topStaff }) => {
         </Link>
       </Flex>
       {topEmp.length > 0 ? (
-        <TopStaffTable>
+        <TableComponent>
           <table cellSpacing="0">
             <tbody>
               <tr>
@@ -72,7 +73,7 @@ const TopStaff = ({ topStaff }) => {
               })}
             </tbody>
           </table>
-        </TopStaffTable>
+        </TableComponent>
       ) : (
         <NoData text="Oops! No data here" />
       )}

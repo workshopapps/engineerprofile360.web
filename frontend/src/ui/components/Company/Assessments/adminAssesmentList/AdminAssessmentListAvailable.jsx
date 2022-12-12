@@ -110,11 +110,11 @@ const List = () => {
     const getAvailableAssessment = async () => {
       try {
         //Get Availlable Assessment
-        const response = await axios.get(`/assessment/${auth.id}`);
+        const response = await axios.get(`/assessment/${auth.org_id}`);
         setIsLoading(false);
         const availableData = response?.data?.data;
         setAvailable(availableData);
-        
+
         //Get Completed Assessment Counts
         const responseCompleted = await axios.get(
           `/assessment/completed-assessments/${auth.org_id}/${auth.id}`
@@ -161,7 +161,7 @@ const List = () => {
                 <tr key={key}>
                   <td>{key + 1}</td>
                   <TH2>{item?.name}</TH2>
-                  <td>{item?.department_id}</td>
+                  <td>{item?.department.name}</td>
                   <td>{item?.start_date}</td>
                   <td>{item?.end_date - item?.start_date}</td>
                   <td>{item?.end_date}</td>
