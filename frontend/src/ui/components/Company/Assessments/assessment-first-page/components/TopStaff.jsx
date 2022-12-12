@@ -3,13 +3,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { More } from "iconsax-react";
 import Flex from "../../../../layout/Flex";
-import {
-  Button,
-  Title,
-} from "../../../../../../styles/reusableElements.styled";
-import { Text } from "./AssessmentStats";
+import { Title } from "../../../../../../styles/reusableElements.styled";
 import NoData from "../../../../molecules/NoData";
-import TableComponent from "../../../../molecules/TableComponent";
 
 const TopStaff = ({ topStaff }) => {
   const [topEmp, setTopEmp] = useState([]);
@@ -50,21 +45,21 @@ const TopStaff = ({ topStaff }) => {
                     <td>
                       <Flex ai="center" jc="center" spacing={10}>
                         <img src={emp.photo} />
-                        <Text $weight="600" $size="18px">
+                        <TableText $weight="600" $size="18px">
                           {emp.fullname}
-                        </Text>
+                        </TableText>
                       </Flex>
                     </td>
                     <td>
-                      <Text $weight="400" $size="16px">
+                      <TableText $weight="400" $size="16px">
                         {emp.department.name}
-                      </Text>
+                      </TableText>
                     </td>
                     <td>
                       <Flex jc="space-between">
-                        <Text $weight="400" $size="16px">
+                        <TableText $weight="400" $size="16px">
                           {emp.points}
-                        </Text>
+                        </TableText>
                         <More />
                       </Flex>
                     </td>
@@ -103,6 +98,11 @@ const TopStaffTable = styled.div`
       th {
         font-weight: 600;
         color: #605e5c;
+
+        ${({ theme }) => theme.breakpoints.down("lg")} {
+        font-size: 14px;
+        color: #605e5c;
+        }
       }
     }
 
@@ -129,4 +129,15 @@ const View = styled.p`
   font-size: 20px;
   text-decoration: underline;
   text-underline-offset: 5px;
+`;
+
+const TableText = styled.p`
+  color: ${({ $color }) => ($color ? $color : "#323130")};
+  font-size: ${({ $size }) => ($size ? $size : "16px")};
+  font-weight: ${({ $weight }) => ($weight ? $weight : "400")};
+  line-height: ${({ $lHeight }) => ($lHeight ? $lHeight : "22px")};
+
+  ${({ theme }) => theme.breakpoints.down("lg")} {
+    font-size: 15px;
+  }
 `;
