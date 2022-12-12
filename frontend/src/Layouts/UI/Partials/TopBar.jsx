@@ -19,6 +19,7 @@ import { Container } from "../../../styles/reusableElements.styled";
 
 import useAuth from "../../../hooks/useAuth";
 import Logo from "../../../components/Logo";
+import { Link } from "react-router-dom";
 
 const TopBar = ({ handleLeftBarToggle, leftBar }) => {
   const { auth } = useAuth();
@@ -54,9 +55,11 @@ const TopBar = ({ handleLeftBarToggle, leftBar }) => {
                   <li>
                     <User color="#323130" /> Profile
                   </li>
-                  <li>
-                    <Setting2 color="#323130" /> Settings
-                  </li>
+                  <Link to={"/setting"} onClick={handleDropDownToggle}>
+                    <li>
+                      <Setting2 color="#323130" /> Settings
+                    </li>
+                  </Link>
                   <li>
                     <LogoutCurve color="#323130" /> Logout
                   </li>
