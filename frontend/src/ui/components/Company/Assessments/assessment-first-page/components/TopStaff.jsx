@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { More } from "iconsax-react";
 import Flex from "../../../../layout/Flex";
 import { Title } from "../../../../../../styles/reusableElements.styled";
-import { Text } from "./AssessmentStats";
+import NoData from "../../../../molecules/NoData";
 
 const TopStaff = ({ topStaff }) => {
   const [topEmp, setTopEmp] = useState([]);
@@ -18,8 +18,8 @@ const TopStaff = ({ topStaff }) => {
   }, [topStaff?.data]);
 
   return (
-    <Flex stack spacing={18} style={{ maxHeight: "600px", paddingTop: "10px" }}>
-      <Flex jc="space-between">
+    <Flex stack spacing={18} style={{ maxHeight: "600px" }}>
+      <Flex jc="space-between" ai="center">
         <Title as="h2" $size="24px" $color="#6E6E6E" $weight="400">
           Top Staff
         </Title>
@@ -40,26 +40,26 @@ const TopStaff = ({ topStaff }) => {
 
               {topEmp.map((emp, idx) => {
                 return (
-                  <tr>
+                  <tr key={idx}>
                     <td>{idx + 1}</td>
                     <td>
                       <Flex ai="center" jc="center" spacing={10}>
                         <img src={emp.photo} />
-                        <Text $weight="600" $size="18px">
-                          {emp.name}
-                        </Text>
+                        <TableText $weight="600" $size="18px">
+                          {emp.fullname}
+                        </TableText>
                       </Flex>
                     </td>
                     <td>
-                      <Text $weight="400" $size="16px">
+                      <TableText $weight="400" $size="16px">
                         {emp.department.name}
-                      </Text>
+                      </TableText>
                     </td>
                     <td>
                       <Flex jc="space-between">
-                        <Text $weight="400" $size="16px">
+                        <TableText $weight="400" $size="16px">
                           {emp.points}
-                        </Text>
+                        </TableText>
                         <More />
                       </Flex>
                     </td>
@@ -70,11 +70,7 @@ const TopStaff = ({ topStaff }) => {
           </table>
         </TopStaffTable>
       ) : (
-        <Flex>
-          <Text $weight="600">
-            Oops, no top staff to display at this moment
-          </Text>
-        </Flex>
+        <NoData text="Oops! No data here" />
       )}
     </Flex>
   );
@@ -102,6 +98,11 @@ const TopStaffTable = styled.div`
       th {
         font-weight: 600;
         color: #605e5c;
+
+        ${({ theme }) => theme.breakpoints.down("lg")} {
+        font-size: 14px;
+        color: #605e5c;
+        }
       }
     }
 
@@ -128,4 +129,15 @@ const View = styled.p`
   font-size: 20px;
   text-decoration: underline;
   text-underline-offset: 5px;
+`;
+
+const TableText = styled.p`
+  color: ${({ $color }) => ($color ? $color : "#323130")};
+  font-size: ${({ $size }) => ($size ? $size : "16px")};
+  font-weight: ${({ $weight }) => ($weight ? $weight : "400")};
+  line-height: ${({ $lHeight }) => ($lHeight ? $lHeight : "22px")};
+
+  ${({ theme }) => theme.breakpoints.down("lg")} {
+    font-size: 15px;
+  }
 `;
