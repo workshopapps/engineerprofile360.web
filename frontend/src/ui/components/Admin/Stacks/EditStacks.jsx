@@ -17,20 +17,20 @@ function EditStacks({ setEditModal, stacksDetails, setRunEffect, cancel }) {
 
   const { id, stacksName } = editedData;
   const stacks_id = id
-  console.log(stacks_id);
+
   //? ASYNC FUNCTION TO EDIT DEPARTMENTS
   const handleEdit = async (e) => {
     e.preventDefault();
     if (editedData.length !== "") {
       try {
         setLoading(true);
-       const response = await axios.put(
+   await axios.put(
           `https://api.eval360.hng.tech/api/admin/stack/${stacks_id}/update`,
           {
             name: stacksName,
           }
         );
-        console.log(response);
+     
         setRunEffect((prev) => !prev);
         setEditModal(false);
         cancel(null);
