@@ -108,6 +108,7 @@ import AdminAssessmmentListOutlet from "./ui/components/Company/Assessments/admi
 import AdminAssessmentListAvailable from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmentListAvailable";
 import AssessmentList from "./ui/components/Company/Assessments/adminAssesmentList/AssessmentList";
 import Assessmentss from "./ui/pages/Admin/Dashboard/Assessmentss";
+import CreateAssessmentss from "./ui/pages/Admin/Dashboard/CreateAssessments";
 
 // This is for DevOps App Monitoring - START
 atatus.config("4010279ebbd747e7a752082eea130df6").install();
@@ -312,7 +313,7 @@ const App = () => {
                 <Route path="/admin/Assessmentss" element={<Assessmentss />} />
                 <Route
                   path="/admin/create-assessmentss"
-                  element={<CreateAssessment />}
+                  element={<CreateAssessmentss />}
                 />
                 {/* Put in Protected pages in here */}
                 <Route path="/admin/dashboard" element={<Dashboard />} />
