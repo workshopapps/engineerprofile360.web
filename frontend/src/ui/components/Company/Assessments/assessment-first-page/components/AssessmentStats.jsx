@@ -109,7 +109,12 @@ const Assessments = () => {
     },
   ];
 
-  return (
+  return isLoading ? (
+    <OverlayLoader contained>
+      <div></div>
+      <span>Just a moment...</span>
+    </OverlayLoader>
+  ) : (
     <Flex stack spacing={58}>
       <Heading />
       <Grid span={12}>
@@ -142,18 +147,6 @@ const Assessments = () => {
         <GridItem span={6} md={12}>
           <TopPerformance />
         </GridItem>
-        {isLoading ? (
-          <OverlayLoader>
-            <div></div>
-            <span>
-              {fetchError !== ""
-                ? `${fetchError} - Please try again`
-                : "Just a moment..."}
-            </span>
-          </OverlayLoader>
-        ) : (
-          ""
-        )}
       </Grid>
     </Flex>
   );
