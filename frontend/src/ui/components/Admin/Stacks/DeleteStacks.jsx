@@ -38,11 +38,11 @@ function DeleteStacks({
     }
   };
   // LOADER COMPONENTS
-  return loading ? (
-    <Load>
-      <Loader />
-    </Load>
-  ) : (
+    return loading ? (
+      <Load>
+        <Loader />
+      </Load>
+    ) : (
     //   MAIN  COMPONENTS
     <>
       <ModalContainer>

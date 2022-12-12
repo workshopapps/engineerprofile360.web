@@ -7,7 +7,7 @@ function Update({ setDeleteModal, cancel, setEditModal }) {
   useEffect(() => {
     const handleCancel = (e) => {
       if (!updateRef.current.contains(e.target)) {
-        cancel(null);
+        cancel(null);   
       }
     };
     document.addEventListener("mousedown", handleCancel);
