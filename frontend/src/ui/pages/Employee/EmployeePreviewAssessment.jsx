@@ -174,7 +174,7 @@ export default function EmployeePreviewAssessment() {
                     "evalAssessment",
                     JSON.stringify(useAnswers)
                   );
-                  navigate("/guest-take-assessment-result");
+                  navigate("/employee/assessment/preview");
                 }}
               >
                 Submit
