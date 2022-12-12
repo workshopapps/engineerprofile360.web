@@ -99,15 +99,17 @@ const EmployeeCSVUpload = () => {
           setLoading(false);
           let csvtotal = response.data.data.total;
           let csvsuccess= response.data.data.success;
+          let employeeText = csvsuccess < 2 ? "employee" : "employees";
+          let successText = csvsuccess > 0 ? "successfully" : "";
           let csvfailed = csvtotal - csvsuccess
-          
+
           showSuccessToast(
           <div>
           {response.data.message}
           <br /> 
-          {csvsuccess} new employee(s) added successfully
+          {csvsuccess} new {employeeText} added {successText}
           <br />
-          {csvfailed} entries failed
+          {csvfailed} entries already exists
           </div>);
 
           setTimeout(
