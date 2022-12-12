@@ -55,6 +55,7 @@ const Assessments = () => {
         axios.get(`user-assessment/org/${auth.org_id}/org-available`),
         axios.get(`assessment/completed-assessments/${auth.org_id}/${auth.id}`),
         axios.get(`userscore/company/${auth.org_id}`),
+        // axios.get(`assessment/${auth.id}/${auth.org_id}/accepted-assessment`),
       ];
 
       console.log(auth);

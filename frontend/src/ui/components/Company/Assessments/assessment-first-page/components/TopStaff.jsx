@@ -23,8 +23,8 @@ const TopStaff = ({ topStaff }) => {
   }, [topStaff?.data]);
 
   return (
-    <Flex stack spacing={18} style={{ maxHeight: "600px", paddingTop: "10px" }}>
-      <Flex jc="space-between">
+    <Flex stack spacing={18} style={{ maxHeight: "600px" }}>
+      <Flex jc="space-between" ai="center">
         <Title as="h2" $size="24px" $color="#6E6E6E" $weight="400">
           Top Staff
         </Title>
@@ -33,7 +33,7 @@ const TopStaff = ({ topStaff }) => {
         </Link>
       </Flex>
       {topEmp.length > 0 ? (
-        <TableComponent>
+        <TopStaffTable>
           <table cellSpacing="0">
             <tbody>
               <tr>
@@ -45,13 +45,13 @@ const TopStaff = ({ topStaff }) => {
 
               {topEmp.map((emp, idx) => {
                 return (
-                  <tr>
+                  <tr key={idx}>
                     <td>{idx + 1}</td>
                     <td>
                       <Flex ai="center" jc="center" spacing={10}>
                         <img src={emp.photo} />
                         <Text $weight="600" $size="18px">
-                          {emp.name}
+                          {emp.fullname}
                         </Text>
                       </Flex>
                     </td>
@@ -73,7 +73,7 @@ const TopStaff = ({ topStaff }) => {
               })}
             </tbody>
           </table>
-        </TableComponent>
+        </TopStaffTable>
       ) : (
         <NoData text="Oops! No data here" />
       )}
