@@ -194,7 +194,7 @@ const EmployeeCSVUpload = () => {
                     <Link to={-1}>Cancel</Link>
                     <button onClick={() => inputRef.current.click()}>
                       <BsPlusCircle className="plus-icon" />
-                      <p>Browse Computer</p>
+                      <p>Browse</p>
                     </button>
                     <button onClick={() => inputRef.current.click()}>
                       <BsPlusCircle className="mobile-icon" />
