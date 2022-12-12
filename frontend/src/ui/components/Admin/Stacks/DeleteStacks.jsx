@@ -1,58 +1,56 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import styled from "styled-components";
 import axios from "../../../../api/axios";
 import { Loader, Title } from "../../../../styles/reusableElements.styled";
-import { InputWrapper, Load } from "./AddDept";
-import { ModalContainer } from "./EditModal";
-import { Button, Wrapper } from "./Hero";
+import { InputWrapper, Load } from "../../Company/Departments/AddDept";
+import { ModalContainer } from "../../Company/Departments/EditModal";
+import { Button, Wrapper } from "../../Company/Departments/Hero";
 
-function DeleteModal({
+
+function DeleteStacks({
   setDeleteModal,
-  departmentDetails,
+  stacksDetails,
   setRunEffect,
   cancel,
 }) {
   //? useState HOOKS
   const [loading, setLoading] = useState(false);
-  const { id: departmentId, departmentName: name } = departmentDetails;
+  const { id: Id, stacksName: name } = stacksDetails;
 
-  //? ASYNC FUNCTION TO EDIT DEPARTMENTS
+  //? ASYNC FUNCTION TO EDIT stacksS
   const handleDelete = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
       axios.delete(
-        `https://api.eval360.hng.tech/api/department/${departmentId}/delete/`
+        `https://api.eval360.hng.tech/api/admin/stack/${Id}/delete`
       );
-      setRunEffect((prev) => !prev);
       setDeleteModal(false);
-
+      setRunEffect((prev) => !prev);
       cancel(null);
       setLoading(false);
-      toast.success("Department deleted successfully");
+      toast.success("stacks deleted successfully");
     } catch (error) {
       cancel(null);
       setLoading(false);
       setDeleteModal(false);
-      toast.error("Could not add delete Department");
+      toast.error("Could not add delete stacks");
     }
   };
   // LOADER COMPONENTS
-  return loading ? (
-    <Load>
-      <Loader />
-    </Load>
-  ) : (
+    return loading ? (
+      <Load>
+        <Loader />
+      </Load>
+    ) : (
     //   MAIN  COMPONENTS
     <>
       <ModalContainer>
         <InputWrapper>
           <form>
-            <ConfirmDelete>
-              Are you sure you want to Delete <span> {name}?</span>
-            </ConfirmDelete>
-
+            <Title as="h2" $size="28px" $color="#ce2d2d" $weight="400">
+              Are you sure you want to Delete {name}?
+            </Title>
             <Wrapper>
               <Button
                 type="button"
@@ -93,20 +91,4 @@ function DeleteModal({
   );
 }
 
-export default DeleteModal;
-
-export const ConfirmDelete = styled.h5`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  font-size: 20px;
-  color: #323130;
-  padding-bottom: 25px;
-
-  span {
-    font-size: 25px;
-    color: #ce2d2d;
-    padding-left: 7px;
-  }
-`;
+export default DeleteStacks;

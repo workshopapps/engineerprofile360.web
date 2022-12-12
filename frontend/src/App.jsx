@@ -54,7 +54,11 @@ import {
 
 import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 
-import { EmployeeLogin, EmployeeDashboard } from "./ui/pages/Employee";
+import {
+  EmployeeLogin,
+  EmployeeDashboard,
+  EmployeeUserAssessmentListOutlet,
+} from "./ui/pages/Employee";
 
 import { AdminLogin } from "./ui/pages/Admin";
 
@@ -89,7 +93,7 @@ import {
 } from "./ui/components/Company/Employees";
 
 import MainAssessment from "./ui/pages/Company/Assessment";
-import UserAssessmentListOutlet from "./ui/pages/Employee/EmployeeAssessmentList";
+import UserAssessmentListOutlet from "./ui/pages/Employee/EmployeeAssessmentListOutlet";
 import Error from "./ui/pages/404";
 
 // import GuestLogin from "./main/pages/Auth/GuestLogin";
@@ -97,13 +101,13 @@ import DepartmentSection from "./ui/pages/Company/DepartmentSection";
 import { ServerError } from "./ui/pages/ServerError";
 
 import PersistLogin from "./components/PersistLogin";
-import PreviewCsvUpload from "./ui/components/Company/Employees/PreviewCsvUpload/PreviewCsvUpload";
+//import PreviewCsvUpload from "./ui/components/Company/Employees/PreviewCsvUpload/PreviewCsvUpload";
 import {
   AssessmentCompleted,
   AssessmentAvailable,
 } from "./ui/components/Employee";
 import EmployeeAssessmentResult from "./ui/pages/Employee/EmployeeAssessmentResult";
-import EmployeeAssessmentList from "./ui/pages/Employee/EmployeeAssessmentList";
+import EmployeeAssessmentList from "./ui/pages/Employee/EmployeeAssessmentListOutlet";
 import AdminAssessmmentListOutlet from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmmentListOutlet";
 import AdminAssessmentListAvailable from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmentListAvailable";
 import AssessmentList from "./ui/components/Company/Assessments/adminAssesmentList/AssessmentList";
@@ -111,10 +115,10 @@ import Assessmentss from "./ui/pages/Admin/Dashboard/Assessmentss";
 import CreateAssessmentss from "./ui/pages/Admin/Dashboard/CreateAssessments";
 
 // This is for DevOps App Monitoring - START
-atatus.config("4010279ebbd747e7a752082eea130df6").install();
+//atatus.config("4010279ebbd747e7a752082eea130df6").install();
 
-atatus.notify(new Error("Test Atatus Setup"));
-atatus.notify();
+//atatus.notify(new Error("Test Atatus Setup"));
+//atatus.notify();
 // This is for DevOps App Monitoring - END
 
 const ROLES = {
@@ -161,6 +165,8 @@ const App = () => {
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/privacy-policy" element={<Privacy />} />
+            {/* <Route path="/admin/stacks" element={<Stacks/>} /> */}
+               
 
             {/* UNKNOWN ROUTES */}
             {/* <Route path="/fill-employee" element={<Fillemployee />} /> */}
@@ -271,8 +277,8 @@ const App = () => {
                   </Route>
                   <Route path="add-employee" element={<EmployeeCSVUpload />} />
                   <Route
-                    path="/employees/csv-upload-preview"
-                    element={<PreviewCsvUpload />}
+                  // path="/employees/csv-upload-preview"
+                  // element={<PreviewCsvUpload />}
                   />
                 </Route>
                 {/* <Route
@@ -317,8 +323,6 @@ const App = () => {
                 />
                 {/* Put in Protected pages in here */}
                 <Route path="/admin/dashboard" element={<Dashboard />} />
-                <Route />
-
                 <Route path="/admin/stacks" element={<Stacks />} />
               </Route>
 
@@ -328,6 +332,15 @@ const App = () => {
                   path="/employee/dashboard"
                   element={<EmployeeDashboard />}
                 />
+
+                <Route
+                  path="/employee/assessment"
+                  element={<EmployeeUserAssessmentListOutlet />}
+                >
+                  <Route path="" element={<AssessmentAvailable />} />
+                  <Route path="completed" element={<AssessmentCompleted />} />
+                </Route>
+
                 {/* <Route path="/employee/dashboard" element={"boss"} /> */}
               </Route>
 

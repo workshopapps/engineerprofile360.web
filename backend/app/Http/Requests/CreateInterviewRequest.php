@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class InterviewRequest extends FormRequest
+class CreateInterviewRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,16 +19,14 @@ class InterviewRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, mixed>
+     * @return array
      */
     public function rules()
     {
         return [
-            //
-            'stack_id' => "required",
-            'title' => "required|string",
-            'times_taken' => 'nullable|string',
-
+            'stack_id' => "required|string|exists:stacks,id",
+            'title' => 'string|required',
+            'company_name' => 'string|required'
         ];
     }
 }

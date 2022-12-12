@@ -146,7 +146,7 @@ class Helper extends Controller
     public function sendOnboardMail($emp_fullname, $emp_username, $emp_password, $to, $org_name)
     {
         try {
-            $loginLink = "{$this->clientUrl}/login";
+            $loginLink = "{$this->clientUrl}/employee/login";
 
             $mail = new Mailer();
             $mail->sendEmployeeOnboardingMail($emp_fullname, $emp_username, $emp_password, $loginLink, $to, $org_name);

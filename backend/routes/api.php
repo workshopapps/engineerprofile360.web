@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\StackController;
 use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\UserAssessmentController;
 use App\Helper\Helper;
+use Illuminate\Auth\Events\Authenticated;
 
 // util functions
 // employee csv file parser.
@@ -148,6 +149,9 @@ Route::prefix("auth")->group(function () {
             // forgot password
             Route::get("/forgot-password/{email}", [AuthenticateController::class, "forgotPassword"]);
             Route::post("/reset/{id}/{token}", [AuthenticateController::class, "verifyPasswordReset"]);
+
+            // update users password
+            Route::put("/update", [AuthenticateController::class, "updatePassword"])->middleware("isloggedin");
         }
 
     );
@@ -214,7 +218,7 @@ Route::prefix('interview')->group(function () {
     Route::get('{id}', [InterviewController::class, 'getInterviewById']);
     Route::get('/stack/{stack_id}', [InterviewController::class, 'getInterviewByStack']);
     Route::delete('delete/{id}', [InterviewController::class, 'deleteInterview'])->middleware("isloggedin", "isadmin");
-    Route::post('add', [InterviewController::class, 'addInterview'])->middleware('isloggedin', 'isadmin');
+    Route::post('add', [InterviewController::class, 'addInterview']);
     Route::get('get/{id}', [InterviewController::class, 'getInterviewById']);
     Route::get('get/{company}', [InterviewController::class, 'getInterviewByCompanyName']);
     Route::put('update/{interviewId}', [InterviewController::class, 'updateInterview']);

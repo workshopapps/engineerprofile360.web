@@ -1,9 +1,9 @@
 import React from 'react'
-import Table from "../../../components/Admin/Stacks/Table"
+import StacksHero from "../../../components/Admin/Stacks/StacksHero"
 function Stacks() {
   return (
     <div>
-        <Table/>
+        <StacksHero/>
     </div>
   )
 }
