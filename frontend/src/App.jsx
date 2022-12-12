@@ -1,7 +1,7 @@
 // import React from "react";
 
 // This is for DevOps App Monitoring - START
-//import * as atatus from "atatus-spa";
+import * as atatus from "atatus-spa";
 // This is for DevOps App Monitoring - END
 
 //import * as Sentry from "@sentry/react";
@@ -97,7 +97,7 @@ import DepartmentSection from "./ui/pages/Company/DepartmentSection";
 import { ServerError } from "./ui/pages/ServerError";
 
 import PersistLogin from "./components/PersistLogin";
-import PreviewCsvUpload from "./ui/components/Company/Employees/PreviewCsvUpload/PreviewCsvUpload";
+//import PreviewCsvUpload from "./ui/components/Company/Employees/PreviewCsvUpload/PreviewCsvUpload";
 import {
   AssessmentCompleted,
   AssessmentAvailable,
@@ -270,8 +270,8 @@ const App = () => {
                   </Route>
                   <Route path="add-employee" element={<EmployeeCSVUpload />} />
                   <Route
-                    path="/employees/csv-upload-preview"
-                    element={<PreviewCsvUpload />}
+                  // path="/employees/csv-upload-preview"
+                  // element={<PreviewCsvUpload />}
                   />
                 </Route>
                 {/* <Route
