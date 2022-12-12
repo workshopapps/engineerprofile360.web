@@ -31,7 +31,7 @@
 
             reader.onload = async function() {
                 const base64 = reader.result;
-
+                console.log(base64)
                 // make an api call
                 const res = await fetch("https://api.eval360.hng.tech/api/test_csv", {
                     method: "POST",

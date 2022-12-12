@@ -38,32 +38,70 @@ class EmployeeController extends Controller
 
     public function parseEmployeeCsv($b64, $org, $department_id, $password)
     {
-        $csvData = base64_decode(explode(",", $b64)[1]);
-        $splitData = explode("\n", $csvData);
-        $slicedData = array_slice(array_filter($splitData, 'strlen'), 1);
-        $finalJsonData = [];
-        $i = 1;
-        foreach ($slicedData as $val) {
-            $ext = explode(",", str_replace("\r", "", $val));
-            $item = array_slice($ext, 1);
-            $arr = [
-                "id" => $i,
-                "fullname" => str_replace('"', "", $item[0]),
-                "username" => str_replace('"', "", $item[1]),
-                "email" => str_replace('"', "", $item[2]),
-                "org_id" => $org,
-                "department_id" => $department_id,
-                "hash" => Hash::make($password),
-                "raw_password" => $password
+        try {
+            $csvData = base64_decode(explode(",", $b64)[1]);
+            $splitData = explode("\n", $csvData);
+            $slicedData = array_slice(array_filter($splitData, 'strlen'), 1);
+            $finalJsonData = [];
+            $i = 1;
+            foreach ($slicedData as $val) {
+                $ext = explode(",", str_replace("\r", "", $val));
+                $item = array_slice($ext, 1);
+                $arr = [
+                    "id" => Str::uuid(),
+                    "fullname" => str_replace('"', "", $item[0]),
+                    "username" => str_replace('"', "", $item[1]),
+                    "email" => str_replace('"', "", $item[2]),
+                    "org_id" => $org,
+                    "department_id" => $department_id,
+                    "hash" => Hash::make($password),
+                    "raw_password" => $password
+                ];
+                array_push($finalJsonData, $arr);
+                $i++;
+            }
+            return [
+                "error" => false,
+                "message" => "csv parsed",
+                "data" => $finalJsonData
             ];
-            array_push($finalJsonData, $arr);
-            $i++;
+        } catch (\Exception $e) {
+            return [
+                "error" => true,
+                "message" => "Invalid CSV file: ".$e->getMessage(),
+                "data" => null
+            ];
         }
-        return [
-            "error" => false,
-            "message" => "csv parsed",
-            "data" => $finalJsonData
-        ];
+    }
+
+    public function removeDuplicatesEmployeeDataFromDatabaseandCsv(array $allEmpCsv, string $org_id, string $dept_id){   
+
+        $allOrgEmp = Employee::select("email")->where([
+            "org_id"=> $org_id,
+            "department_id"=>$dept_id
+        ]);
+
+        $allOrgEmpEmails = []; // store all employee emails from a particular organization in database
+        $allEmpCsvEmails = []; // store all non-duplicates emails from csv
+        $allEmpCsvEmailsWithoutDuplicates = []; // store all non-duplicates employee data from csv.
+        $final_filtered_data = []; // finally filter and store all non-duplicates employee data from both database and csv file.
+
+        // remove duplicates from DB & CSV.
+        foreach ($allOrgEmp->get() as $key => $value) {
+            array_push($allOrgEmpEmails, $value["email"]);
+        }
+        foreach ($allEmpCsv as $key => $value) {
+            if(in_array($value["email"], $allEmpCsvEmails)) continue;
+            array_push($allEmpCsvEmails, $value["email"]);
+            array_push($allEmpCsvEmailsWithoutDuplicates, $value);
+        }
+        foreach ($allEmpCsvEmailsWithoutDuplicates as $key => $value) {
+            if(!in_array($value["email"], $allOrgEmpEmails)){
+                array_push($final_filtered_data, $value);
+            }
+        }
+
+        return $final_filtered_data;
     }
 
     public function addEmployee(Request $request)
@@ -90,26 +128,24 @@ class EmployeeController extends Controller
                 if (is_null(Company::find($org))) return $this->sendResponse(true, "Not found", "Company not found", null, Response::HTTP_NOT_FOUND);
                 if (is_null(Department::find($dept))) return $this->sendResponse(true, "Not found", "Department not found", null, Response::HTTP_NOT_FOUND);
 
+                // parse the employee csv file
                 $result = $this->parseEmployeeCsv($file, $org, $dept, $password);
-                $total = count($result['data']);
-                $success = 0;
-                foreach ($result['data'] as $key => $item) {
-                    $empExists = Employee::where(["email" => $result['data'][$key]["email"], "org_id" => $result['data'][$key]["org_id"]]);
-                    if (!$empExists->count()) {
-                        $this->insertEmployee($item, $password);
-                        $success++;
-                    }
-                } //add a new column to check if email exists in that organization
 
-                if ($result["error"] == false && $result["message"] == "csv parsed") {
-                    $data = $result['data'];
-                    return $this->sendResponse(false, null, "CSV Parsed Successfully", [
-                        "total" => $total,
-                        "success" => $success
-                    ], Response::HTTP_OK);
-                } else {
-                    return $this->sendResponse(true, $result["error"], "Invalid File Type", null, Response::HTTP_BAD_REQUEST);
+                // check if the csv parsed isnt invalid
+                if($result["error"]){
+                    return $this->sendResponse(true, $result["message"], "Invalid File Type", null, Response::HTTP_BAD_REQUEST);
                 }
+
+                // Get filtered employee data
+                $empFilteredData = $this->removeDuplicatesEmployeeDataFromDatabaseandCsv($result["data"], $org, $dept);
+
+                // if empFilteredData is empty, it means all employee has been added into database
+                if(count($empFilteredData) === 0){
+                    return $this->sendResponse(true, "failed to add employee, employee already exists.", "employee data already exists.", null, Response::HTTP_BAD_REQUEST);    
+                }
+
+                return $this->insertEmployee($empFilteredData, "CSV");
+
             } else if ($query === "manual") {
                 $payload = json_decode($request->getContent(), true);
 
@@ -145,7 +181,7 @@ class EmployeeController extends Controller
                     "raw_password" => $defaultPwd
                 ];
 
-                return $this->insertEmployee($empData, $defaultPwd);
+                return $this->insertEmployee($empData, "MANUAL");
             } else {
                 return $this->sendResponse(true, "query parameter not found", "Invalid query parameter", null, Response::HTTP_NOT_FOUND);
             }
@@ -225,28 +261,54 @@ class EmployeeController extends Controller
         return $this->sendResponse(false, "$passed Employee Added Successfully, $failed failed", $last_error, $json, Response::HTTP_CREATED);
     }
 
-    public function insertEmployee($data, $empPassword)
+    public function insertEmployee($data, $type)
     {
         try {
-            $fullname = $data["fullname"];
-            $username = $data["username"];
-            $email = $data["email"];
-            $org_id = $data["org_id"];
-            $department_id = $data["department_id"];
+            // MANUAL
+            if($type === "MANUAL"){
+                $fullname = $data["fullname"];
+                $username = $data["username"];
+                $email = $data["email"];
+                $org_id = $data["org_id"];
+                $department_id = $data["department_id"];
+            
+                // fetch organization info
+                $orgData = Company::find($org_id);
+                $org_name = ucfirst($orgData->first()["name"]);
+            
+                // insert only when organization exists
+                Employee::create($data);
 
-            // fetch organization info
-            $orgData = Company::find($org_id);
-            if (is_null($orgData)) return $this->sendResponse(true, "Not found", "Company not found", null, Response::HTTP_NOT_FOUND);
-            $org_name = ucfirst($orgData->first()["name"]);
+                // send employee mail
+                $this->helper->sendOnboardMail($fullname, $username, $data["raw_password"], $email, $org_name);
+                
+                return $this->sendResponse(false, null, "Employee Added Successfully", $data, 200);
+            }
+            // CSV
+            if($type === "CSV"){
+                // bulk insert employee data into database
+                Employee::insert($data);
 
-            //insert only when organization exists
-            $employee = Employee::create($data);
+                foreach ($data as $key => $value) {
+                    $fullname = $value["fullname"];
+                    $username = $value["username"];
+                    $email = $value["email"];
+                    $org_id = $value["org_id"];
+                    $department_id = $value["department_id"];
+                
+                    // fetch organization info
+                    $orgData = Company::find($org_id);
+                    $org_name = ucfirst($orgData->first()["name"]);
+                
+                    // send employee mail
+                    $this->helper->sendOnboardMail($fullname, $username, $value["raw_password"], $email, $org_name);
+                }
 
+                return $this->sendResponse(false, null, "Employee Added Successfully", $data, 200);
+            }
 
             // send employee email
-            $this->helper->sendOnboardMail($fullname, $username, $empPassword, $email, $org_name);
 
-            return $this->sendResponse(false, null, "Employee Added Successfully", $employee, Response::HTTP_CREATED);
         } catch (\Exception $e) {
             return $this->sendResponse(true, " Employee Action Failed", $e->getMessage(),  null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
