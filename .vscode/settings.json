@@ -1,0 +1,7 @@
+{
+    "vetur.format.defaultFormatter.js": "prettier-eslint",
+    "reactSnippets.settings.prettierEnabled": false,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true
+}
