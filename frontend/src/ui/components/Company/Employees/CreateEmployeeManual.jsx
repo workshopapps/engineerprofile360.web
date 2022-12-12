@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useOutletContext } from "react-router-dom";
+import { Link} from "react-router-dom";
 import useAuth from "../../../../hooks/useAuth";
 import styled from "styled-components";
 import axios from "../../../../api/axios";
 import {
   OverlayLoader,
-  Title,
 } from "../../../../styles/reusableElements.styled";
 import { toast } from "react-toastify";
 
-const CreateEmployeeManual = () => {
+const CreateEmployeeManual = (props) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({});
   const [touched, setTouched] = useState({});
   const [errors, setErrors] = useState({});
   const { auth } = useAuth();
   const org_id = auth.org_id;
-  const departmentid = JSON.parse(localStorage.getItem("departmentsID"));
+  const departmentid = props.departmentID;
+  console.log(departmentid);
+  // JSON.parse(localStorage.getItem("departmentsID"));
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -48,6 +49,7 @@ const CreateEmployeeManual = () => {
     if (
       !departmentid ||
       departmentid === "" ||
+      departmentid === null ||
       departmentid === "Select Department"
     ) {
       error.dept = "Please select a department";
@@ -94,7 +96,7 @@ const CreateEmployeeManual = () => {
         .then((res) => {
           toast.success(res.data.message);
           setLoading(false);
-          localStorage.removeItem("departmentsID");
+          // localStorage.removeItem("departmentsID");
           setFormData({
             fullname: "",
             email: "",
@@ -116,6 +118,7 @@ const CreateEmployeeManual = () => {
     </OverlayLoader>
   ) : (
     <CreateEmployeeManualContainer>
+      <p></p>
       <InputItemContainer>
         <InputItem>
           <label>Employee Name</label>
