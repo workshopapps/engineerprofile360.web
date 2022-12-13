@@ -190,7 +190,7 @@ const CardBody = styled.div`
   width: 100%;
   height: 85rem;
   padding: 0 10rem;
-  top: -25rem;
+  top: -15rem;
   background: #2667ff;
   border-radius: 4px;
   /* overflow-y: hidden; */

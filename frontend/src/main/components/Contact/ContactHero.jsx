@@ -35,13 +35,13 @@ const HeroSection = styled.div`
   }
 `;
 const HeroText = styled.div`
-  position: relative;
+  /* position: relative; */
   width: 100%;
   text-align: center;
-  padding: 10rem 20rem;
+  padding: 1rem 20rem;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 0 5rem;
