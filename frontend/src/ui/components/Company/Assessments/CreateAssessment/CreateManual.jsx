@@ -3,11 +3,13 @@ import styled from "styled-components";
 
 import QuestionTemplate from "./QuestionTemplate";
 
-const CreateManual = () => {
+const CreateManual = ({ assessment_id }) => {
+  console.log(assessment_id);
+
   return (
     <CreateManualContainer>
       <p>Input assessment and select response type below:</p>
-      <QuestionTemplate questionNumber={1} />
+      <QuestionTemplate assessment_id={assessment_id} />
     </CreateManualContainer>
   );
 };

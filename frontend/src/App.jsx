@@ -45,11 +45,13 @@ import {
   CompanyVerifyEmail,
 } from "./ui/pages/Company/";
 
-import { GuestEmail, GuestLogin } from "./ui/components/Guests";
+import { GuestLogin } from "./ui/components/Guests";
+
 import {
   GuestAssessmentList,
   GuestTakeAssessment,
   GuestTakeAssessmentResult,
+  GuestEmail,
 } from "./ui/pages/Guest";
 
 import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
@@ -58,6 +60,7 @@ import {
   EmployeeLogin,
   EmployeeDashboard,
   EmployeeUserAssessmentListOutlet,
+  EmployeePreviewAssessment,
 } from "./ui/pages/Employee";
 
 import { AdminLogin } from "./ui/pages/Admin";
@@ -76,7 +79,6 @@ import AdminCSVUpload from "./ui/components/Company/Assessments/AdminCSVUpload";
 // import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import EmployeeCSVUpload from "./ui/components/Company/Employees/EmployeeCSVUpload";
-// import GuestEmail from "./main/pages/GuestEmail";
 // import GuestAssessmentList from "./main/pages/GuestAssessmentList";
 
 import AdminViewAssessment from "./ui/components/Company/Assessments/admin-view-assessment/AdminViewAssessment";
@@ -164,6 +166,8 @@ const App = () => {
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/privacy-policy" element={<Privacy />} />
+            {/* <Route path="/admin/stacks" element={<Stacks/>} /> */}
+               
 
             {/* UNKNOWN ROUTES */}
             {/* <Route path="/fill-employee" element={<Fillemployee />} /> */}
@@ -315,8 +319,6 @@ const App = () => {
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
                 {/* Put in Protected pages in here */}
                 <Route path="/admin/dashboard" element={<Dashboard />} />
-                <Route />
-
                 <Route path="/admin/stacks" element={<Stacks />} />
               </Route>
 
@@ -334,6 +336,11 @@ const App = () => {
                   <Route path="" element={<AssessmentAvailable />} />
                   <Route path="completed" element={<AssessmentCompleted />} />
                 </Route>
+
+                <Route
+                  path="/employee/assessment/preview"
+                  element={<EmployeePreviewAssessment />}
+                />
 
                 {/* <Route path="/employee/dashboard" element={"boss"} /> */}
               </Route>

@@ -40,10 +40,12 @@ class EmployeeController extends Controller
     {
         try {
             $csvData = base64_decode(explode(",", $b64)[1]);
-            $splitData = explode("\n", $csvData);
-            $slicedData = array_slice(array_filter($splitData, 'strlen'), 1);
+            $splitData = explode("\n", trim($csvData));
+            $slicedData = array_slice(array_filter($splitData), 1);
             $finalJsonData = [];
             $i = 1;
+            $nonEmptyObj = [];
+            
             foreach ($slicedData as $val) {
                 $ext = explode(",", str_replace("\r", "", $val));
                 $item = array_slice($ext, 1);
@@ -60,10 +62,18 @@ class EmployeeController extends Controller
                 array_push($finalJsonData, $arr);
                 $i++;
             }
+
+            foreach ($finalJsonData as $key => $value) {
+                if(!empty($value["id"]) && !empty($value["fullname"]) && !empty($value["username"]) && !empty($value["email"]) && !empty($value["org_id"]) && !empty($value["department_id"]) && !empty($value["hash"]) && !empty($value["raw_password"])){
+                    array_push($nonEmptyObj, $value);
+                }
+            }
+
+            
             return [
                 "error" => false,
                 "message" => "csv parsed",
-                "data" => $finalJsonData
+                "data" => $nonEmptyObj
             ];
         } catch (\Exception $e) {
             return [
