@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { BsCloudUpload, BsPlusCircle } from "react-icons/bs";
+import { FaFileCsv } from "react-icons/fa";
 import { useRef, useState, useEffect } from "react";
 import { Link, useOutletContext, useNavigate } from "react-router-dom";
 import close from "../../../../assets/icons/close.svg";
@@ -25,29 +26,27 @@ const EmployeeCSVUpload = () => {
   const { departments } = useOutletContext();
   const [depts, setDepts] = useState([]);
   const { auth } = useAuth();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   //const [departments, setDepartments] = useState([]);
   const [selecteddepartment, setSelectedepartment] = useState({});
-  const [selecteddepartmentname, setSelectedepartmentname] = useState({});
-
+  
   //Select department event set department id
   const handleChange = (e) => {
-    localStorage.setItem("departmentsID", JSON.stringify(e.target.value));
+    // localStorage.setItem("departmentsID", JSON.stringify(e.target.value));
     setSelectedepartment(e.target.value);
-    setSelectedepartmentname(e.target.selectedOptions[0].text);
   };
 
   //File dragover event
   const handleDragOver = (e) => {
     e.preventDefault();
-    console.log(`dragover ${e}`);
+    //console.log(`dragover ${e}`);
   };
 
   //File drop event
   const handleDrop = (e) => {
     e.preventDefault();
-    console.log(`drop ${e}`);
+    //console.log(`drop ${e}`);
     setFiles(e.dataTransfer.files);
 
     //console.log(e.dataTransfer.files[0].name);
@@ -71,7 +70,7 @@ const EmployeeCSVUpload = () => {
       const result = await toBase64(file);
       return result;
     } catch (error) {
-      console.error(`Conversion error ${error}`);
+      //console.error(`Conversion error ${error}`);
       return;
     }
   };
@@ -80,11 +79,11 @@ const EmployeeCSVUpload = () => {
   files &&
     handleConvertion().then((result) => {
       setEndcodedFile(result);
-      console.log(`Conversion result ${result}`);
+      //console.log(`Conversion result ${result}`);
     });
 
   const handleUpload = async () => {
-    if (selecteddepartment) {
+    if (selecteddepartment!=="") {
       setLoading(true);
       try {
         const response = await axios.post(
@@ -97,17 +96,24 @@ const EmployeeCSVUpload = () => {
         );
         if (response.data.errorState === false) {
           setLoading(false);
-          showSuccessToast(response.data.message);
+          // let csvtotal = response.data.data.total;
+          // let csvsuccess= response.data.data.success;
+          // let employeeText = csvsuccess < 2 ? "employee" : "employees";
+          // let successText = csvsuccess > 0 ? "successfully" : "";
+          // let csvfailed = csvtotal - csvsuccess
+
+          showSuccessToast(
+          <div>
+          {response.data.message}
+          {/* <br /> 
+          {csvsuccess} new {employeeText} added {successText}
+          <br />
+          {csvfailed} entries already exists */}
+          </div>);
+
           setTimeout(
             () =>
-              navigate("/employees/csv-upload-preview", {
-                state: {
-                  csvData: response.data.data,
-                  orgID: auth.org_id,
-                  departmentID: selecteddepartment,
-                  departmentName: selecteddepartmentname,
-                },
-              }),
+            window.location.href="/employees",
             1000
           );
         } else {
@@ -173,6 +179,7 @@ const EmployeeCSVUpload = () => {
             <Manual
               onClick={() => setTab("manual")}
               className={tab === "manual" ? "active" : ""}
+              
             >
               <p>Add employee manually</p>
             </Manual>
@@ -182,6 +189,7 @@ const EmployeeCSVUpload = () => {
               {!files || files?.[0] === undefined ? (
                 <>
                   <BsCloudUpload className="icon" color="#696969" />
+                 
                   <p>Drag and drop CSV</p>
                   <input
                     type="file"
@@ -194,7 +202,7 @@ const EmployeeCSVUpload = () => {
                     <Link to={-1}>Cancel</Link>
                     <button onClick={() => inputRef.current.click()}>
                       <BsPlusCircle className="plus-icon" />
-                      <p>Browse Computer</p>
+                      <p>Browse</p>
                     </button>
                     <button onClick={() => inputRef.current.click()}>
                       <BsPlusCircle className="mobile-icon" />
@@ -206,8 +214,16 @@ const EmployeeCSVUpload = () => {
                   {files?.[0]?.type === "text/csv" ? (
                     <>
                       <Success>
+                        <div style={{flexDirection:'column'}}>
+                        <div style={{display: 'flex'}}>
+                        <FaFileCsv className="icon" color="#696969" />
+                        </div>
+                      
+                        <div style={{display: 'flex',width:'100%',justifyContent:'space-between'}}>
                         <p>{files?.[0]?.name}</p>
                         <img src={close} onClick={() => setFiles()} alt="" />
+                        </div>
+                        </div>
                       </Success>
                       <UploadButton>
                         <CancelButton>
@@ -228,7 +244,7 @@ const EmployeeCSVUpload = () => {
           )}
           {tab === "manual" && (
             <ManualUpload>
-              <CreateEmployeeManual />
+              <CreateEmployeeManual departmentID={selecteddepartment}/>
             </ManualUpload>
           )}
         </Container>
@@ -258,7 +274,6 @@ const Container = styled.div`
   position: relative;
   width: 100%;
   margin: auto;
-  height:600px;
 
   @media (max-width: 546px) {
     border-radius: 10px;
@@ -350,7 +365,8 @@ const Manual = styled.div`
 `;
 
 const UploadCSVContent = styled.div`
-  height: 100%;
+  /*height: 100%;*/
+  padding:100px 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -483,13 +499,13 @@ const NameContainer = styled.div`
 
 const Success = styled.div`
   padding: 10px 15px;
-  background: ${({ theme }) => theme.palette.main.primary.light};
+  /*background: ${({ theme }) => theme.palette.main.primary.light};*/
   border-radius: 15px;
   display: flex;
   align-items: center;
   justify-items: center;
   gap: 15px;
-  border: 1px solid ${({ theme }) => theme.palette.main.tertiary.tertiary};
+  /*border: 1px solid ${({ theme }) => theme.palette.main.tertiary.tertiary};*/
 
   p {
     font-size: 16px;
@@ -525,7 +541,7 @@ const Error = styled.div`
 const ManualUpload = styled.div``;
 
 const SelectContainer = styled.div`
-  width: 50%;
+  width: 20%;
   max-width: 100%;
   display: flex;
   flex-direction: column;

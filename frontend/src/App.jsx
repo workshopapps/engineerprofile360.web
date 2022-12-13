@@ -60,6 +60,7 @@ import {
   EmployeeLogin,
   EmployeeDashboard,
   EmployeeUserAssessmentListOutlet,
+  EmployeePreviewAssessment,
 } from "./ui/pages/Employee";
 
 import { AdminLogin } from "./ui/pages/Admin";
@@ -165,6 +166,8 @@ const App = () => {
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/privacy-policy" element={<Privacy />} />
+            {/* <Route path="/admin/stacks" element={<Stacks/>} /> */}
+               
 
             {/* UNKNOWN ROUTES */}
             {/* <Route path="/fill-employee" element={<Fillemployee />} /> */}
@@ -316,8 +319,6 @@ const App = () => {
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
                 {/* Put in Protected pages in here */}
                 <Route path="/admin/dashboard" element={<Dashboard />} />
-                <Route />
-
                 <Route path="/admin/stacks" element={<Stacks />} />
               </Route>
 
@@ -335,6 +336,11 @@ const App = () => {
                   <Route path="" element={<AssessmentAvailable />} />
                   <Route path="completed" element={<AssessmentCompleted />} />
                 </Route>
+
+                <Route
+                  path="/employee/assessment/preview"
+                  element={<EmployeePreviewAssessment />}
+                />
 
                 {/* <Route path="/employee/dashboard" element={"boss"} /> */}
               </Route>

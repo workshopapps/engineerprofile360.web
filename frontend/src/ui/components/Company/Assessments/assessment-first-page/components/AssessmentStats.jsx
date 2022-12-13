@@ -34,10 +34,10 @@ const Card = (props) => {
   );
 };
 
-const TopPerformance = () => {
+const TopPerformance = ({ topPerformance }) => {
   return (
     <Flex stack>
-      <Chart />
+      <Chart topPerformance={topPerformance} />
     </Flex>
   );
 };
@@ -47,14 +47,16 @@ const Assessments = () => {
   const [stats, setStats] = useState({});
   const [topStaff, setTopStaff] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [topPerformance, setTopPerformance] = useState({});
   const [fetchError, setFetchError] = useState("");
 
   useEffect(() => {
     const getStats = async () => {
       const ENDPOINTS = [
         axios.get(`user-assessment/org/${auth.org_id}/org-available`),
-        axios.get(`assessment/completed-assessments/${auth.org_id}/${auth.id}`),
+        axios.get(`user-assessment/org/${auth.org_id}/org-completed`),
         axios.get(`userscore/company/${auth.org_id}`),
+        axios.get(`userscore/company/${auth.org_id}/max`),
       ];
 
       console.log(auth);
@@ -67,9 +69,10 @@ const Assessments = () => {
         setIsLoading(false);
 
         const availableAssessments = response[0]?.data.data.length;
-        const completedAssessments = response[1]?.data.data.data.length;
-        const acceptedAssessments = Array(12).length;
+        const completedAssessments = response[1]?.data.data.length;
         const topstaff = response[2]?.data;
+        const topPerformer = response[3]?.data.data.userscore[0];
+        const acceptedAssessments = Array(1).length;
 
         setStats({
           availableAssessments,
@@ -77,6 +80,7 @@ const Assessments = () => {
           acceptedAssessments,
         });
         setTopStaff(topstaff);
+        setTopPerformance(topPerformer);
       } catch (err) {
         setIsLoading(false);
         if (!err?.response) {
@@ -109,7 +113,12 @@ const Assessments = () => {
     },
   ];
 
-  return (
+  return isLoading ? (
+    <OverlayLoader contained>
+      <div></div>
+      <span>Just a moment...</span>
+    </OverlayLoader>
+  ) : (
     <Flex stack spacing={58}>
       <Heading />
       <Grid span={12}>
@@ -140,20 +149,8 @@ const Assessments = () => {
           <TopStaff topStaff={topStaff} />
         </GridItem>
         <GridItem span={6} md={12}>
-          <TopPerformance />
+          <TopPerformance topPerformance={topPerformance} />
         </GridItem>
-        {isLoading ? (
-          <OverlayLoader>
-            <div></div>
-            <span>
-              {fetchError !== ""
-                ? `${fetchError} - Please try again`
-                : "Just a moment..."}
-            </span>
-          </OverlayLoader>
-        ) : (
-          ""
-        )}
       </Grid>
     </Flex>
   );
