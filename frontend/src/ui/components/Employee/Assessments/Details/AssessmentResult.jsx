@@ -78,8 +78,8 @@ const AssessmentResult = ({ assessment_id, setModal }) => {
           {!isLoading ? (
             <>
               <Heading>
-                <p>Name</p>
-                <span>Ogharandukun-Brown Meyiwa Louis</span>
+                <p>Username</p>
+                <span>{auth.username}</span>
               </Heading>
               <AssessmentInfo>
                 <Details>
