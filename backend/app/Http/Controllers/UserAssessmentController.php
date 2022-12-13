@@ -79,7 +79,7 @@ class UserAssessmentController extends Controller
                 return $this->sendResponse(true, 'Employee not found', "", null, Response::HTTP_NOT_FOUND);
             }
 
-            $employeeAssessments = UserAssessment::where('employee_id', $employee_id)->with(["assessment", "department"])->get();
+            $employeeAssessments = UserAssessment::where('employee_id', $employee_id)->with("assessment.department")->get();
 
             return $this->sendResponse(false, null, 'Employee assessments sent successfully', $employeeAssessments, Response::HTTP_OK);
         } catch (Exception $e) {
@@ -144,7 +144,7 @@ class UserAssessmentController extends Controller
 
 
             // Get all assessments completed by an employee where completed = true
-            $completedAssessments = UserAssessment::where('employee_id', $employee_id)->where('completed', true)->with(["assessment", "department"])->get();
+            $completedAssessments = UserAssessment::where('employee_id', $employee_id)->where('completed', true)->with("assessment.department")->get();
             $msg = count($completedAssessments) < 1 ? "No completed assessment found" : "All completed assessments";
 
             return $this->sendResponse(
