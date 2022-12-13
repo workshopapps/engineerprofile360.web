@@ -88,10 +88,9 @@ const Login = () => {
         const id = response?.data?.data.id || "";
         const username = response?.data?.data.username || "";
 
-        console.log(response);
-
+        if (response.data.errorState === false && roles === 1) {
           setAuth({ email, accessToken, username, roles, id });
-          // persist &&
+
           localStorage.setItem(
             "Eval360",
             JSON.stringify({
@@ -103,16 +102,12 @@ const Login = () => {
             })
           );
 
-        console.log(response.data);
-        if (response.data.errorState === false) {
-          // Clear input fields
           setFormData({
             email: "",
             password: "",
           });
-  
-          window.location.href = from;
 
+          window.location.href = from;
         } else if (response.data.errorState === true) {
           showErrorToast(response.data.message);
         }
@@ -133,10 +128,7 @@ const Login = () => {
     <>
       <FormContainer>
         <ToastContainer />
-        <AuthTitle
-          title="Welcome back"
-          text="Pick up where you left from"
-        />
+        <AuthTitle title="Welcome back" text="Pick up where you left from" />
         <LoginForm onSubmit={(e) => handleSubmit(e, formData)}>
           <InputField
             $size="md"
@@ -196,7 +188,6 @@ const Login = () => {
           >
             {isSubmitted ? <Loader /> : "Sign In"}
           </Button>
-
         </LoginForm>
       </FormContainer>
     </>

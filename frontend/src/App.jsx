@@ -59,7 +59,7 @@ import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 import {
   EmployeeLogin,
   EmployeeDashboard,
-  EmployeeUserAssessmentListOutlet,
+  EmployeeAssessment,
   EmployeePreviewAssessment,
 } from "./ui/pages/Employee";
 
@@ -330,10 +330,11 @@ const App = () => {
 
                 <Route
                   path="/employee/assessment"
-                  element={<EmployeeUserAssessmentListOutlet />}
+                  element={<EmployeeAssessment />}
                 >
                   <Route path="" element={<AssessmentAvailable />} />
                   <Route path="completed" element={<AssessmentCompleted />} />
+
                 </Route>
 
                 <Route

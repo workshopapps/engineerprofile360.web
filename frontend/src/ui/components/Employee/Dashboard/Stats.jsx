@@ -8,7 +8,7 @@ const Stats = ({ stats }) => {
 
   useEffect(() => {
     const topScore =
-      stats.completed_assessment.length > 0
+      stats?.completed_assessment?.length > 0
         ? stats.completed_assessment.reduce((max, assessment) =>
             max.points > assessment.points ? max : assessment
           )
@@ -49,28 +49,10 @@ const Stats = ({ stats }) => {
             $lHeight="28px"
             $color="#142245"
           >
-            Your Skill Rating
+            Your Recent Assessments Score
           </Title>
 
-          {/* {isChartLoading ? (
-            "Loading"
-          ) : ( */}
-          <SkillRatingSection>
-            {/* <div>
-                {chartDetails
-                  ? JSON.parse(
-                      chartDetails?.data[0]?.categories?.split("/").join("")
-                    ).map((item, key) => <SKillRating key={key} title={item} />)
-                  : ""}
-              </div>
-              <div>
-                {chartDetails
-                  ? JSON.parse(chartDetails?.data[0]?.passed_questions).map(
-                      (item, key) => <SKillRating key={key} title={item} />
-                    )
-                  : ""}
-              </div> */}
-          </SkillRatingSection>
+          <SkillRatingSection></SkillRatingSection>
         </SkillSection>
         <ChartSection>
           <Radar data={data} />
