@@ -261,7 +261,7 @@ const SelectType = () => {
           // color={Object.keys(errors).length > 0 ? true : false}
           onClick={() => onSubmit(formData)}
         >
-          {isLoading ? <Loader /> : "Proceed"}
+          {isLoading ? <Loader sm /> : "Proceed"}
         </button>
       </Buttons>
     </SelectContainer>
