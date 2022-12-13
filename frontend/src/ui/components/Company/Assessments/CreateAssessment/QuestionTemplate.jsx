@@ -5,7 +5,10 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 
 import Frame from "../../../../../assets/icons/app/Frame.svg";
 import useAuth from "../../../../../hooks/useAuth";
-import { showErrorToast } from "../../../../../helpers/helper";
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "../../../../../helpers/helper";
 import close from "../../../../../assets/icons/close.svg";
 import { Loader } from "../../../../../styles/reusableElements.styled";
 
@@ -45,7 +48,7 @@ const QuestionTemplate = ({ assessment_id }) => {
 
   const [onEdit, setOnEdit] = useState(false);
 
-  const navigation = useNavigate();
+  const navigate = useNavigate();
 
   const handleChangeInput = (index, e) => {
     const values = [...inputFields];
@@ -132,11 +135,8 @@ const QuestionTemplate = ({ assessment_id }) => {
     }
   };
 
-  const { questionText, options, language, question_type, answers } =
-    inputFields[0];
-
   // This function handles the necessary things that should take place when a user submits the form
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     setIsSubmitted(true);
@@ -155,7 +155,7 @@ const QuestionTemplate = ({ assessment_id }) => {
         });
       });
 
-      const response = axios.post(
+      const response = await axios.post(
         "question/add",
         JSON.stringify({
           assessment_id,
@@ -163,12 +163,17 @@ const QuestionTemplate = ({ assessment_id }) => {
         })
       );
 
+      console.log(response);
+
       if (response.data.errorState === false) {
         setIsSubmitted(false);
-
-        Navigate("assessment/view-assessment");
+        showSuccessToast("Successfully Created Assessment");
+        setTimeout(() => {
+          window.location.href = `/assessment/view-assessment/${assessment_id}`;
+        }, 2000);
       }
     } catch (err) {
+      console.log(err);
       setIsSubmitted(false);
       if (!err.response) {
         showErrorToast("No Server Response");
