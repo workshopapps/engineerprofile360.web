@@ -32,6 +32,7 @@ export { default as BioMedicalBooking } from "./BioMedical/BioMedicalBooking";
 
 export { default as ContactHero } from "./Contact/ContactHero";
 export { default as ContactBody } from "./Contact/ContactBody";
+export { default as ContactFooter } from "./Contact/ContactFooter";
 
 //  Auth Layout export
 

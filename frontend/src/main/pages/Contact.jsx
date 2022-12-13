@@ -1,11 +1,16 @@
 import React, { Fragment } from "react";
-import { ContactHero, ContactBody } from "../components";
+import { ContactHero, ContactBody, ContactFooter } from "../components";
+import { Container } from "../../styles/reusableElements.styled";
 
 const Contact = () => {
   return (
     <Fragment>
       <ContactHero />
-      <ContactBody />
+
+      <Container>
+        <ContactBody />
+        <ContactFooter />
+      </Container>
     </Fragment>
   );
 };

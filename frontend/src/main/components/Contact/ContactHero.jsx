@@ -27,15 +27,34 @@ const HeroSection = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  /* background-image: url("./assets/hero.png"); */
+  overflow: hidden;
+
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    height: 30vh;
+    width: 100vw;
+  }
 `;
 const HeroText = styled.div`
+  position: relative;
   width: 100%;
   text-align: center;
   padding: 10rem 20rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
+
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    padding: 0 5rem;
+    gap: 0rem;
+  }
+
+  ${({ theme }) => theme.breakpoints.down("md")} {
+    padding: 2rem 2rem;
+  }
+
+  /* ${({ theme }) => theme.breakpoints.down("sm")} {
+    display: none;
+  } */
 `;
 const Get = styled.h1`
   font-family: "Inter";
@@ -46,6 +65,12 @@ const Get = styled.h1`
   text-align: center;
   text-transform: capitalize;
   color: #ffffff;
+
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    font-weight: Bolder;
+    font-size: 20px;
+    line-height: 20px;
+  }
 `;
 const GetExplain = styled.h1`
   font-family: "Inter";
@@ -55,4 +80,10 @@ const GetExplain = styled.h1`
   line-height: 144.02%;
   letter-spacing: 0.03em;
   color: #ffffff;
+
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 20px;
+  }
 `;
