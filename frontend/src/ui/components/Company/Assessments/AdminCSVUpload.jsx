@@ -13,6 +13,7 @@ import close from "../../../../assets/icons/close.svg";
 import CreateManual from "./CreateAssessment/CreateManual";
 import axios from "../../../../api/axios";
 import useAuth from "../../../../hooks/useAuth";
+import { useLocation } from "react-router-dom";
 
 const AdminCSVUpload = () => {
   const [tab, setTab] = useState("upload");
@@ -20,6 +21,7 @@ const AdminCSVUpload = () => {
   const [encodedFile, setEndcodedFile] = useState("");
   const inputRef = useRef();
   const { auth } = useAuth();
+  const location = useLocation();
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -49,8 +51,6 @@ const AdminCSVUpload = () => {
       console.log(result);
     });
 
-  console.log(files);
-
   const handleUpload = async () => {
     try {
       const response = await axios.post(
@@ -70,6 +70,8 @@ const AdminCSVUpload = () => {
       }
     }
   };
+
+  // console.log(location.state?.data);
 
   return (
     <>
@@ -138,7 +140,7 @@ const AdminCSVUpload = () => {
         )}
         {tab === "manual" && (
           <ManualUpload>
-            <CreateManual />
+            <CreateManual assessment_id={location.state?.data} />
           </ManualUpload>
         )}
       </Main>
