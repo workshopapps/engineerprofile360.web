@@ -58,6 +58,7 @@ import {
   EmployeeLogin,
   EmployeeDashboard,
   EmployeeUserAssessmentListOutlet,
+  EmployeePreviewAssessment,
 } from "./ui/pages/Employee";
 
 import { AdminLogin } from "./ui/pages/Admin";
@@ -340,6 +341,11 @@ const App = () => {
                   <Route path="" element={<AssessmentAvailable />} />
                   <Route path="completed" element={<AssessmentCompleted />} />
                 </Route>
+
+                <Route
+                  path="/employee/assessment/preview"
+                  element={<EmployeePreviewAssessment />}
+                />
 
                 {/* <Route path="/employee/dashboard" element={"boss"} /> */}
               </Route>
