@@ -23,7 +23,7 @@ const Dashboard = () => {
       try {
         await Promise.all(ENDPOINTS).then((data) => {
           setStats(data[0]?.data?.data[0]);
-          setAssessments(data[0]?.data.data);
+          setAssessments(data[1]?.data.data);
         });
         
         setIsLoading(false);
