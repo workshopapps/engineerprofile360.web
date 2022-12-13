@@ -21,7 +21,7 @@ const QuestionTemplate = () => {
       answers: [],
     },
   ]);
-
+  const [toggleDelete, setToggleDelete] = useState({});
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -64,10 +64,14 @@ const QuestionTemplate = () => {
     ]);
   };
 
+  // This function will delete the current question fields
   const handleRemoveFields = (index) => {
     const values = [...inputFields];
-    values.splice(index, 1);
-    setInputFields(values);
+    if (values.length > 1) {
+      values.splice(index, 1);
+      setInputFields(values);
+    }
+    setToggleDelete({ ...toggleDelete, [index]: !toggleDelete[index] });
   };
 
   // This function edits the question type.
@@ -122,11 +126,6 @@ const QuestionTemplate = () => {
       removeQuestionOptions[index].options.splice(oindex, 1);
       setInputFields(removeQuestionOptions);
     }
-  };
-
-  const HandleOnChangeAnswer = (index, e) => {
-    const questionOptions = [...inputFields];
-    questionOptions[index].answers = e.target.value;
   };
 
   // This function handles the necessary things that should take place when a user submits the form
@@ -228,10 +227,23 @@ const QuestionTemplate = () => {
                 >
                   <option defaultValue>{"Select Category"}</option>
                   {categories.length > 0 &&
-                    categories.map((category, index) => (
+                    categories.map((category, cindex) => (
                       <option value={category.name}>{category.name}</option>
                     ))}
                 </select>
+                <img
+                  src={Frame}
+                  onClick={() =>
+                    setToggleDelete({
+                      ...toggleDelete,
+                      [index]: !toggleDelete[index],
+                    })
+                  }
+                  alt=""
+                />
+                {toggleDelete[index] && (
+                  <div onClick={() => handleRemoveFields(index)}>Delete</div>
+                )}
               </RightContainer>
             </InputContainer>
           </Options>
@@ -259,6 +271,10 @@ const QuestionTemplateContainer = styled.form`
     left: 50%;
     cursor: pointer;
     color: green;
+  }
+
+  button {
+    cursor: pointer;
   }
 `;
 
@@ -414,7 +430,8 @@ const RightContainer = styled.div`
   /* height: 30px; */
   align-items: flex-start;
   justify-content: space-between;
-  /* gap: 36px; */
+  gap: 24px;
+  position: relative;
 
   select {
     width: 100%;
@@ -429,6 +446,22 @@ const RightContainer = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;
+  }
+
+  img {
+    cursor: pointer;
+  }
+
+  div {
+    padding: 10px 20px;
+    background-color: #fff;
+    border: 1px solid #edebe9;
+    position: absolute;
+    right: 0;
+    bottom: 25px;
+    color: #d83b01;
+    font-size: 15px;
+    cursor: pointer;
   }
 `;
 
