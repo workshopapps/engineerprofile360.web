@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ["GET", "POST", "PUT", 'DELETE', "PATCH",'*'],
 
-    'allowed_origins' => ["https://eval360.hng.tech", "https://eval360.hng.tech", "http://localhost:3000", "http://localhost:8000", "https://api.eval360.hng.tech", '*'],
+    'allowed_origins' => ["https://eval360.hng.tech", "https://eval360.hng.tech", "http://127.0.0.1:5173", "http://localhost:8000", "https://api.eval360.hng.tech", '*'],
 
     'allowed_origins_patterns' => [],
 

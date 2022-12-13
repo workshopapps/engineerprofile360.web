@@ -22,6 +22,11 @@ class UserAssessment extends Model
         return $this->belongsTo(Assessment::class, 'assessment_id');
     }
 
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'department_id');
+    }
+
     public function userscore()
     {
         return $this->belongsTo(UserScore::class, 'userscore_id');
