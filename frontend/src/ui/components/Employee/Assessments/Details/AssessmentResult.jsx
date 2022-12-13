@@ -30,14 +30,40 @@ ChartJS.register(
 );
 
 const AssessmentResult = ({ assessment_id, setModal }) => {
-
   const { auth } = useAuth();
+  const [performance, setPerformance] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const getDetails = async () => {
+      try {
+        await axios
+          .get(`userscore/${auth.id}/${assessment_id}`)
+          .then((data) => {
+            console.log(data);
+            setPerformance(data.data.data[0]);
+          });
+
+        setIsLoading(false);
+      } catch (err) {
+        setIsLoading(false);
+        console.log(err);
+      }
+    };
+
+    getDetails();
+  }, [assessment_id]);
+
   const data = {
-    labels: ["", "", "", "", "", ""],
+    labels: performance.userscore?.categories
+      ? JSON.parse(performance.userscore?.categories)
+      : ["", "", "", "", "", ""],
     datasets: [
       {
         label: "Categories",
-        data: [0, 0, 0, 0, 0, 0],
+        data: performance.userscore?.passed_questions
+          ? performance.userscore?.passed_questions
+          : [0, 0, 0, 0, 0, 0],
         backgroundColor: "rgba(95, 210, 85, 0.2)",
         borderColor: "#107C10",
         borderWidth: 2,
@@ -45,49 +71,63 @@ const AssessmentResult = ({ assessment_id, setModal }) => {
     ],
   };
 
-
   return (
     <>
       <ResultModal onClick={() => setModal(false)}>
         <ResultContainer>
-          <Heading>
-            <p>Name</p>
-            <span>Ogharandukun-Brown Meyiwa Louis</span>
-          </Heading>
-          <AssessmentInfo>
-            <Details>
-              <Detail>
-                <span>
-                  <b>Name</b>
-                </span>
-                <p>UI/UX Engineer</p>
-              </Detail>
+          {!isLoading ? (
+            <>
+              <Heading>
+                <p>Name</p>
+                <span>Ogharandukun-Brown Meyiwa Louis</span>
+              </Heading>
+              <AssessmentInfo>
+                <Details>
+                  <Detail>
+                    <span>
+                      <b>Name</b>
+                    </span>
+                    <p>UI/UX Engineer</p>
+                  </Detail>
 
-              <Detail>
-                <span>
-                  <b>Name</b>
-                </span>
-                <p>UI/UX Engineer</p>
-              </Detail>
+                  <Detail>
+                    <span>
+                      <b>Name</b>
+                    </span>
+                    <p>UI/UX Engineer</p>
+                  </Detail>
 
-              <Detail>
-                <span>
-                  <b>Percentage</b>
-                </span>
-                <p
-                  style={{
-                    color: "green",
-                  }}
-                >
-                  96.00%
-                </p>
-              </Detail>
-            </Details>
-            <ChartDetails>
-              <Radar data={data} />
-              <Button fullWidth>View Full Profile</Button>
-            </ChartDetails>
-          </AssessmentInfo>
+                  <Detail>
+                    <span>
+                      <b>Percentage</b>
+                    </span>
+                    <p
+                      style={{
+                        color: "green",
+                      }}
+                    >
+                      {performance
+                        ? (
+                            (performance.result / performance.total_questions) *
+                            100
+                          ).toFixed(2)
+                        : 0}
+                      %
+                    </p>
+                  </Detail>
+                </Details>
+                <ChartDetails>
+                  <Radar data={data} />
+                  <Button fullWidth>View Full Profile</Button>
+                </ChartDetails>
+              </AssessmentInfo>
+            </>
+          ) : (
+            <OverlayLoader contained>
+              <div></div>
+              Loading Result...
+            </OverlayLoader>
+          )}
         </ResultContainer>
       </ResultModal>
     </>
@@ -124,6 +164,10 @@ const ResultContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(6)};
+
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    padding: ${({ theme }) => theme.spacing(3)};
+  }
 `;
 
 const Heading = styled.div`
@@ -145,6 +189,10 @@ const AssessmentInfo = styled.div`
   width: 100%;
   justify-content: space-between;
   align-items: flex-start;
+
+  ${({ theme }) => theme.breakpoints.down("touch")} {
+    flex-direction: column;
+  }
 `;
 
 const Details = styled.div`
@@ -155,6 +203,10 @@ const Details = styled.div`
   gap: ${({ theme }) => theme.spacing(2)};
   border: 1px solid grey;
   border-radius: ${({ theme }) => theme.spacing(3)};
+
+  ${({ theme }) => theme.breakpoints.down("touch")} {
+    flex: 0 0 100%;
+  }
 `;
 
 const Detail = styled.div`
@@ -185,6 +237,10 @@ const ChartDetails = styled.div`
   flex-direction: column;
   align-items: center;
   padding-bottom: ${({ theme }) => theme.spacing(6)};
+
+  ${({ theme }) => theme.breakpoints.down("touch")} {
+    flex: 0 0 100%;
+  }
 
   ${Button} {
     width: 100%;
