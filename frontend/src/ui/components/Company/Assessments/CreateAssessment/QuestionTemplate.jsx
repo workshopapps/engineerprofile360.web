@@ -1,12 +1,13 @@
 import React, { Fragment, useEffect, useState } from "react";
 import axios from "../../../../../api/axios";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 import Frame from "../../../../../assets/icons/app/Frame.svg";
 import useAuth from "../../../../../hooks/useAuth";
 import { showErrorToast } from "../../../../../helpers/helper";
 import close from "../../../../../assets/icons/close.svg";
+import { Loader } from "../../../../../styles/reusableElements.styled";
 
 const QuestionTemplate = ({ assessment_id }) => {
   const { auth } = useAuth();
@@ -23,6 +24,7 @@ const QuestionTemplate = ({ assessment_id }) => {
   ]);
   const [toggleDelete, setToggleDelete] = useState({});
   const [categories, setCategories] = useState([]);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   console.log(assessment_id);
   useEffect(() => {
     const getAllCatgories = async () => {
@@ -42,6 +44,8 @@ const QuestionTemplate = ({ assessment_id }) => {
   }, []);
 
   const [onEdit, setOnEdit] = useState(false);
+
+  const navigation = useNavigate();
 
   const handleChangeInput = (index, e) => {
     const values = [...inputFields];
@@ -134,7 +138,8 @@ const QuestionTemplate = ({ assessment_id }) => {
   // This function handles the necessary things that should take place when a user submits the form
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(assessment_id);
+
+    setIsSubmitted(true);
 
     try {
       const array = [];
@@ -158,8 +163,13 @@ const QuestionTemplate = ({ assessment_id }) => {
         })
       );
 
-      console.log(response.data);
+      if (response.data.errorState === false) {
+        setIsSubmitted(false);
+
+        Navigate("assessment/view-assessment");
+      }
     } catch (err) {
+      setIsSubmitted(false);
       if (!err.response) {
         showErrorToast("No Server Response");
       } else {
@@ -292,7 +302,7 @@ const QuestionTemplate = ({ assessment_id }) => {
       </Button>
       <Buttons>
         <Link to={-1}>Cancel</Link>
-        <button type="submit">Submit</button>
+        <button type="submit">{isSubmitted ? <Loader sm /> : "Submit"}</button>
       </Buttons>
     </QuestionTemplateContainer>
   );
