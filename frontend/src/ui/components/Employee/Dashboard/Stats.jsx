@@ -8,7 +8,7 @@ const Stats = ({ stats }) => {
 
   useEffect(() => {
     const topScore =
-      stats.completed_assessment.length > 0
+      stats?.completed_assessment?.length > 0
         ? stats.completed_assessment.reduce((max, assessment) =>
             max.points > assessment.points ? max : assessment
           )

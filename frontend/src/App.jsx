@@ -59,7 +59,7 @@ import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 import {
   EmployeeLogin,
   EmployeeDashboard,
-  EmployeeUserAssessmentListOutlet,
+  EmployeeAssessment,
   EmployeePreviewAssessment,
 } from "./ui/pages/Employee";
 
@@ -167,7 +167,6 @@ const App = () => {
             <Route path="/payment" element={<Payment />} />
             <Route path="/privacy-policy" element={<Privacy />} />
             {/* <Route path="/admin/stacks" element={<Stacks/>} /> */}
-               
 
             {/* UNKNOWN ROUTES */}
             {/* <Route path="/fill-employee" element={<Fillemployee />} /> */}
@@ -331,10 +330,11 @@ const App = () => {
 
                 <Route
                   path="/employee/assessment"
-                  element={<EmployeeUserAssessmentListOutlet />}
+                  element={<EmployeeAssessment />}
                 >
                   <Route path="" element={<AssessmentAvailable />} />
                   <Route path="completed" element={<AssessmentCompleted />} />
+
                 </Route>
 
                 <Route
