@@ -45,11 +45,13 @@ import {
   CompanyVerifyEmail,
 } from "./ui/pages/Company/";
 
-import { GuestEmail, GuestLogin } from "./ui/components/Guests";
+import { GuestLogin } from "./ui/components/Guests";
+
 import {
   GuestAssessmentList,
   GuestTakeAssessment,
   GuestTakeAssessmentResult,
+  GuestEmail,
 } from "./ui/pages/Guest";
 
 import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
@@ -76,7 +78,6 @@ import AdminCSVUpload from "./ui/components/Company/Assessments/AdminCSVUpload";
 // import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import EmployeeCSVUpload from "./ui/components/Company/Employees/EmployeeCSVUpload";
-// import GuestEmail from "./main/pages/GuestEmail";
 // import GuestAssessmentList from "./main/pages/GuestAssessmentList";
 
 import AdminViewAssessment from "./ui/components/Company/Assessments/admin-view-assessment/AdminViewAssessment";
