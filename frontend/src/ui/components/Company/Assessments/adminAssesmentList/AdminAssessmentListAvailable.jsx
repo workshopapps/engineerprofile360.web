@@ -9,68 +9,8 @@ import useAuth from "../../../../../hooks/useAuth";
 import { showErrorToast } from "../../../../../helpers/helper";
 import { AddCircle } from "iconsax-react";
 import TableComponent from "../../../molecules/TableComponent";
-// import useAuth from "";
 
 const DataContext = createContext(null);
-
-const info = [
-  {
-    id: "1",
-    dept: "HNG Tutorials",
-    course: "Zuri 101",
-    duration: "30 mins",
-    date: "25 Apr 2020",
-  },
-  {
-    id: "2",
-    dept: "Basics of software engineering",
-    course: "PHP 252",
-    duration: "30 mins",
-    date: "24 Jan 2022",
-  },
-  {
-    id: "3",
-    dept: "Introduction to cybersecurity",
-    course: "CYB 110",
-    duration: "30 mins",
-    date: "23 Apr 2021",
-  },
-  {
-    id: "4",
-    dept: "Principles of software engineering",
-    course: "Laravel 540",
-    duration: "30 mins",
-    date: "22 Mar 2022",
-  },
-  {
-    id: "5",
-    dept: "General Engineering assessment",
-    course: "Engineer 101",
-    duration: "30 mins",
-    date: "21 Feb 2022",
-  },
-  {
-    id: "6",
-    dept: "Introduction to Django Framework",
-    course: "Framework 505",
-    duration: "30 mins",
-    date: "20 Dec 2022",
-  },
-  {
-    id: "7",
-    dept: "HTML, CSS and Javascript",
-    course: "FE 360",
-    duration: "30 mins",
-    date: "19 Aug 2022",
-  },
-  {
-    id: "8",
-    dept: "General Software Engineering Work",
-    course: "GST 210",
-    duration: "30 mins",
-    date: "18 Oct 2022",
-  },
-];
 
 const Buttons = () => {
   return (
@@ -161,7 +101,7 @@ const List = () => {
                 <tr key={key}>
                   <td>{key + 1}</td>
                   <td>{item?.name}</td>
-                  <td>{item?.department_id}</td>
+                  <td>{item?.department.name}</td>
                   <td>{item?.start_date}</td>
                   <td>{item?.end_date - item?.start_date}</td>
                   <td>{item?.end_date}</td>
@@ -209,8 +149,6 @@ const Assessment = ({ available, completed }) => {
 };
 
 const AvailableAssessmentList = () => {
-  const [assessmentInfo, setAssessmentInfo] = useState(info);
-  const [order, setOrder] = useState("asc");
   const [available, setAvailable] = useState([]);
   const [completed, setCompleted] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -218,10 +156,6 @@ const AvailableAssessmentList = () => {
     <>
       <DataContext.Provider
         value={{
-          assessmentInfo,
-          setAssessmentInfo,
-          order,
-          setOrder,
           available,
           setAvailable,
           isLoading,
@@ -233,6 +167,7 @@ const AvailableAssessmentList = () => {
         <PageInfo breadcrumb={["Dashboard", "Assessment list"]} />
         <Buttons />
         <Assessment available={available.length} completed={completed.length} />
+        {console.log(available, completed)}
       </DataContext.Provider>
     </>
   );

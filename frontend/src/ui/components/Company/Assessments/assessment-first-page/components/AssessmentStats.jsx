@@ -53,10 +53,13 @@ const Assessments = () => {
   useEffect(() => {
     const getStats = async () => {
       const ENDPOINTS = [
-        axios.get(`user-assessment/org/${auth.org_id}/org-available`),
-        axios.get(`user-assessment/org/${auth.org_id}/org-completed`),
+        axios.get(`/assessment/${auth.org_id}`),
+        axios.get(
+          `/assessment/completed-assessments/${auth.org_id}/${auth.id}`
+        ),
         axios.get(`userscore/company/${auth.org_id}`),
         axios.get(`userscore/company/${auth.org_id}/max`),
+        axios.get(`assessment/accepted-assessments`),
       ];
 
       console.log(auth);
@@ -69,10 +72,10 @@ const Assessments = () => {
         setIsLoading(false);
 
         const availableAssessments = response[0]?.data.data.length;
-        const completedAssessments = response[1]?.data.data.length;
+        const completedAssessments = response[1]?.data.data.data.length;
         const topstaff = response[2]?.data;
         const topPerformer = response[3]?.data.data.userscore[0];
-        const acceptedAssessments = Array(1).length;
+        const acceptedAssessments = response[4]?.data.data.length;
 
         setStats({
           availableAssessments,

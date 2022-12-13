@@ -101,7 +101,6 @@ const Profile = () => {
 
           {/* Renders outlet */}
           <Outlet context={{ employee }} />
-
         </EmployeeProfileContainer>
       ) : (
         <OverlayLoader contained>
