@@ -50,9 +50,9 @@ class AssessmentController extends Controller
 
             Assessment::create($data);
 
-            return $this->sendResponse(false, null, "assessment created.", $data, Response::HTTP_CREATED);
+            return $this->sendResponse(false, null, "assessment created.", $data, Response::HTTP_CREATED); 
         } catch (\Exception $e) {
-            return $this->sendResponse(true, 'something went wrong creating assessment', $e->getMessage(), null, 500);
+            return $this->sendResponse(true, 'something went wrong creating assessment', $e->getMessage(), null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -74,7 +74,7 @@ class AssessmentController extends Controller
 
             return $this->sendResponse(false, null, 'assessment deleted successfully', null, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true, "something went wrong deleting assessment " . $e->getMessage(), 'failed deleting assessment.', null, 500);
+            return $this->sendResponse(true, "something went wrong deleting assessment " . $e->getMessage(), 'failed deleting assessment.', null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -89,7 +89,7 @@ class AssessmentController extends Controller
             }
 
             if (!isset($assessmentId) || empty($assessmentId)) {
-                return $this->sendResponse(true, "expected a valid category 'id'  but got none", "category id is missing.", null, 400);
+                return $this->sendResponse(true, "expected a valid category 'id'  but got none", "category id is missing.", null, Response::HTTP_INTERNAL_BAD_REQUEST);
             }
 
             $updatedName = $payload["name"];
@@ -108,7 +108,7 @@ class AssessmentController extends Controller
 
             return $this->sendResponse(false, null, 'assessment updated successfully', $assessment->first()->refresh(), Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true, "something went wrong updating assessment " . $e->getMessage(), 'failed updating assessment.', null, 500);
+            return $this->sendResponse(true, "something went wrong updating assessment " . $e->getMessage(), 'failed updating assessment.', null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -120,7 +120,7 @@ class AssessmentController extends Controller
             $assessments = Assessment::where("org_id", $organization_id)->with("assessment", "department.employee")->get();
             return $this->sendResponse(false, null, 'All assessments', $assessments, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true, "something went wrong fetching assessments " . $e->getMessage(), 'failed fetching assessments.', null, 500);
+            return $this->sendResponse(true, "something went wrong fetching assessments " . $e->getMessage(), 'failed fetching assessments.', null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -130,7 +130,7 @@ class AssessmentController extends Controller
             $assessments = Assessment::where("department_id", $id)->get();
             return $this->sendResponse(false, null, 'All assessments', $assessments, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true, "something went wrong fetching assessments " . $e->getMessage(), 'failed fetching assessments.', null, 500);
+            return $this->sendResponse(true, "something went wrong fetching assessments " . $e->getMessage(), 'failed fetching assessments.', null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
