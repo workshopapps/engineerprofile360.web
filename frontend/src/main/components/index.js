@@ -28,6 +28,11 @@ export { default as BioMedicalTestimonials } from "./BioMedical/BioMedicalTestim
 export { default as BioMedicalSteps } from "./BioMedical/BioMedicalSteps";
 export { default as BioMedicalBooking } from "./BioMedical/BioMedicalBooking";
 
+// Contact exports
+
+export { default as ContactHero } from "./Contact/ContactHero";
+export { default as ContactBody } from "./Contact/ContactBody";
+
 //  Auth Layout export
 
 // export { default as AdminAuthLayout } from "./Auth/Layout/AdminAuthLayout";
