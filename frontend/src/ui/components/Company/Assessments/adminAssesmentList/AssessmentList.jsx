@@ -119,12 +119,17 @@ export const List = () => {
                   <tr key={key}>
                     <td>{key + 1}</td>
                     <td>{item?.name}</td>
-                    <td>{item?.department_id}</td>
+                    <td>{item?.department.name}</td>
                     <td>{item?.start_date}</td>
-                    <td>{item?.end_date - item?.start_date}</td>
+                    <td>
+                      {Number(
+                        item?.end_time.split(":").join("") -
+                          item?.start_time.split(":").join("")
+                      )}
+                    </td>
                     <td>{item?.end_date}</td>
                     <td>
-                      <Link to="/assessment/view-assessment">
+                      <Link to={`/assessment/view-assessment/${item.id}`}>
                         <Button $variant="outlined" $color="#2667ff">
                           View Assessment
                         </Button>

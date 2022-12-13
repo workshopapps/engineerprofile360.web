@@ -167,7 +167,6 @@ const App = () => {
             <Route path="/payment" element={<Payment />} />
             <Route path="/privacy-policy" element={<Privacy />} />
             {/* <Route path="/admin/stacks" element={<Stacks/>} /> */}
-               
 
             {/* UNKNOWN ROUTES */}
             {/* <Route path="/fill-employee" element={<Fillemployee />} /> */}
@@ -260,7 +259,7 @@ const App = () => {
               {/* Organization Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
                 <Route
-                  path="/assessment/view-assessment"
+                  path="/assessment/view-assessment/:id"
                   element={<AdminViewAssessment />}
                 />
 
