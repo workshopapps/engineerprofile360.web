@@ -15,7 +15,7 @@ const Profile = () => {
   const [employee, setEmployee] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
-  // Get Employee Details
+
   useEffect(() => {
     setEmployeeID(ID);
     const getDetails = async () => {
@@ -39,6 +39,9 @@ const Profile = () => {
   return (
     <>
       {!isLoading ? (
+
+        // Employee Overview Container
+        
         <EmployeeProfileContainer>
           <EmployeeProfileStatsCard>
             <EmployeeProfileInfoCard>
@@ -100,6 +103,7 @@ const Profile = () => {
           </EmployeeProfileStatsCard>
 
           {/* Renders outlet */}
+
           <Outlet context={{ employee }} />
         </EmployeeProfileContainer>
       ) : (
