@@ -1,14 +1,15 @@
 import React, { Fragment, useEffect, useState } from "react";
 import axios from "../../../../../api/axios";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 import Frame from "../../../../../assets/icons/app/Frame.svg";
 import useAuth from "../../../../../hooks/useAuth";
 import { showErrorToast } from "../../../../../helpers/helper";
 import close from "../../../../../assets/icons/close.svg";
+import { Loader } from "../../../../../styles/reusableElements.styled";
 
-const QuestionTemplate = () => {
+const QuestionTemplate = ({ assessment_id }) => {
   const { auth } = useAuth();
   const [inputFields, setInputFields] = useState([
     {
@@ -23,7 +24,8 @@ const QuestionTemplate = () => {
   ]);
   const [toggleDelete, setToggleDelete] = useState({});
   const [categories, setCategories] = useState([]);
-
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  console.log(assessment_id);
   useEffect(() => {
     const getAllCatgories = async () => {
       try {
@@ -42,6 +44,8 @@ const QuestionTemplate = () => {
   }, []);
 
   const [onEdit, setOnEdit] = useState(false);
+
+  const navigation = useNavigate();
 
   const handleChangeInput = (index, e) => {
     const values = [...inputFields];
@@ -95,7 +99,7 @@ const QuestionTemplate = () => {
   //  This function adds options dynamically to questions onblur
   const addOption = (index, e) => {
     const questionOptions = [...inputFields];
-    if (questionOptions[index].options.length < 5) {
+    if (questionOptions[index].options.length < 4) {
       if (e.target.value.length > 1) {
         questionOptions[index].options.push({
           optionText: e.target.value,
@@ -128,16 +132,57 @@ const QuestionTemplate = () => {
     }
   };
 
+  const { questionText, options, language, question_type, answers } =
+    inputFields[0];
+
   // This function handles the necessary things that should take place when a user submits the form
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    setIsSubmitted(true);
+
+    try {
+      const array = [];
+
+      inputFields.forEach((input, index) => {
+        array.push({
+          category_id: input.language,
+          question: input.questionText,
+          options: input.options,
+          is_multiple_answers: input.question_type === "radio" ? false : true,
+          correct_answers: [input.answers.selectedAnswer],
+          timeframe: "1",
+        });
+      });
+
+      const response = axios.post(
+        "question/add",
+        JSON.stringify({
+          assessment_id,
+          questions: array,
+        })
+      );
+
+      if (response.data.errorState === false) {
+        setIsSubmitted(false);
+
+        Navigate("assessment/view-assessment");
+      }
+    } catch (err) {
+      setIsSubmitted(false);
+      if (!err.response) {
+        showErrorToast("No Server Response");
+      } else {
+        showErrorToast(err.response?.data.message);
+      }
+    }
   };
   console.log(inputFields);
 
   return (
-    <QuestionTemplateContainer>
+    <QuestionTemplateContainer onSubmit={handleSubmit}>
       {inputFields.map((inputfield, index) => (
-        <QuestionContainer onSubmit={handleSubmit} key={inputfield.name}>
+        <QuestionContainer key={inputfield.name}>
           <Question>
             <label>{`Question ${index + 1}`}</label>
             <div>
@@ -168,7 +213,7 @@ const QuestionTemplate = () => {
                     <OptionContainer>
                       <Fragment>
                         {inputfield.options?.map((item, oindex) => (
-                          <Option>
+                          <Option key={oindex}>
                             <input
                               type={inputfield.question_type}
                               name={
@@ -204,7 +249,7 @@ const QuestionTemplate = () => {
                         ))}
                       </Fragment>
                     </OptionContainer>
-                    {inputfield.options?.length < 5 && (
+                    {inputfield.options?.length < 4 && (
                       <InsertOption>
                         <input
                           type="text"
@@ -229,7 +274,9 @@ const QuestionTemplate = () => {
                   <option defaultValue>{"Select Category"}</option>
                   {categories.length > 0 &&
                     categories.map((category, cindex) => (
-                      <option value={category.name}>{category.name}</option>
+                      <option key={cindex} value={category.id}>
+                        {category.name}
+                      </option>
                     ))}
                 </select>
                 <img
@@ -255,7 +302,7 @@ const QuestionTemplate = () => {
       </Button>
       <Buttons>
         <Link to={-1}>Cancel</Link>
-        <button type="submit">Submit</button>
+        <button type="submit">{isSubmitted ? <Loader sm /> : "Submit"}</button>
       </Buttons>
     </QuestionTemplateContainer>
   );

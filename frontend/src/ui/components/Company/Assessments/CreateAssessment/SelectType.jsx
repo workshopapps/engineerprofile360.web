@@ -8,8 +8,10 @@ import {
   checkTime,
   compareDate,
   compareTime,
+  showErrorToast,
 } from "../../../../../helpers/helper";
 import useAuth from "../../../../../hooks/useAuth";
+import { Loader } from "../../../../../styles/reusableElements.styled";
 
 const SelectType = () => {
   const { auth } = useAuth();
@@ -24,6 +26,7 @@ const SelectType = () => {
   const [touched, setTouched] = useState({});
   const [errors, setErrors] = useState({});
   const [comDepartment, setComDepartment] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -89,10 +92,13 @@ const SelectType = () => {
     getDepartment();
   }, []);
 
-  const onNextPage = (formData) => {
-    
-   
+  const { name, department, start_date, end_date, start_time, end_time } =
+    formData;
+
+  const onSubmit = async (formData) => {
     validate(formData);
+    const org_id = auth.org_id;
+    const department_id = department;
 
     if (Object.keys(errors).length > 0) {
       setTouched({
@@ -117,12 +123,39 @@ const SelectType = () => {
     }
 
     if (Object.keys(errors).length === 0) {
-      navigate("/assessment/admin-csv-upload", { state: { formData } });
+      setIsLoading(true);
+      try {
+        const response = await axios.post(
+          "assessment/create",
+          JSON.stringify({
+            org_id,
+            name,
+            start_date,
+            start_time,
+            end_date,
+            end_time,
+            department_id,
+          })
+        );
+        console.log(response.data);
+
+        if (response.data.errorState === false) {
+          const data = response.data.data.id;
+
+          console.log(data);
+          navigate("/assessment/admin-csv-upload", { state: { data } });
+        }
+      } catch (err) {
+        setIsLoading(false);
+        if (!err.response) {
+          showErrorToast("No Server Response");
+        } else {
+          showErrorToast(err.response?.data.message);
+        }
+      }
     }
   };
 
-  const { name, department, start_date, end_date, start_time, end_time } =
-    formData;
   return (
     <SelectContainer>
       <p>Select the target staffs for the assessment</p>
@@ -138,7 +171,7 @@ const SelectType = () => {
           >
             <option defaultValue>Select Department</option>
             {comDepartment.map((dept, id) => (
-              <option key={id} value={dept.name}>
+              <option key={id} value={dept.id}>
                 {dept.name}
               </option>
             ))}
@@ -223,11 +256,12 @@ const SelectType = () => {
       </SelectItemContainer>
       <Buttons>
         <Link to={-1}>Cancel</Link>
+
         <button
           // color={Object.keys(errors).length > 0 ? true : false}
-          onClick={() => onNextPage(formData)}
+          onClick={() => onSubmit(formData)}
         >
-          Proceed
+          {isLoading ? <Loader sm /> : "Proceed"}
         </button>
       </Buttons>
     </SelectContainer>
