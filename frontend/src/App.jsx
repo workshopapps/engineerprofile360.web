@@ -259,7 +259,7 @@ const App = () => {
               {/* Organization Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
                 <Route
-                  path="/assessment/view-assessment"
+                  path="/assessment/view-assessment/:id"
                   element={<AdminViewAssessment />}
                 />
 
