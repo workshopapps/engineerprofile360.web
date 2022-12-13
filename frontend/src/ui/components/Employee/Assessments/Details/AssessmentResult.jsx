@@ -30,6 +30,7 @@ ChartJS.register(
 );
 
 const AssessmentResult = ({ assessment_id, setModal }) => {
+
   const { auth } = useAuth();
   const data = {
     labels: ["", "", "", "", "", ""],
@@ -44,7 +45,6 @@ const AssessmentResult = ({ assessment_id, setModal }) => {
     ],
   };
 
-  useEffect(() => {}, []);
 
   return (
     <>
@@ -103,8 +103,8 @@ const ResultModal = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
-  min-height: 100vh;
-  top: 0;
+  height: 100vh;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -20%);
   z-index: 2;
@@ -114,7 +114,8 @@ const ResultModal = styled.div`
 `;
 
 const ResultContainer = styled.div`
-  width: 100%;
+  width: 95%;
+
   // max-width: 720px;
   border-radius: ${({ theme }) => theme.spacing(2)};
   background: #f8fcfe;

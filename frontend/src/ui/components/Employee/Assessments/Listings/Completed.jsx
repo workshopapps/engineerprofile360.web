@@ -23,6 +23,9 @@ const Completed = () => {
     setModal(true);
   };
 
+  if (modal) document.body.style.overflow = "hidden";
+  else document.body.style.overflow = "initial";
+
   return (
     <>
       <CompletedContainer>
