@@ -4,7 +4,8 @@ import styled from "styled-components";
 import axios from "../../../../../api/axios";
 import useAuth from "../../../../../hooks/useAuth";
 
-    const SelectType = () => {
+const SelectType = () => {
+    const [createStackss, setCreateStackss ] = useState([])
     const { auth } = useAuth();
     const [formData, setFormData] = useState({
         stackSelect: "",
@@ -61,59 +62,81 @@ import useAuth from "../../../../../hooks/useAuth";
         }
     };
 
-    const { name, department, } =
-        formData;
-    return (
-    <SelectContainer>
-        <p>Select the Assessment Stack</p>
+    useEffect(() => {
+        axios.get("https://api.eval360.hng.tech/api/admin/stack/all")
+        .then( response => {
+                setCreateStackss(response.data.data);
+                console.log(response.data.data)
+            })
+        .catch((e) => console.log(e));
+    }, [])
 
-        <SelectItemContainer>
-        <SelectItem>
-            <label>Select Stack</label>
-            <select
-            id="department"
-            value={department}
-            onChange={handleChange}
-            onBlur={onBlur}
-            >
-            <option defaultValue>Select Stack</option>
-            {/* {comDepartment.map((dept, id) => (
-                <option key={id} value={dept.name}>
-                {dept.name}
-                </option>
-            ))} */}
-            </select>
-            {errors.department && touched.department && (
-            <span>{errors.department}</span>
-            )}
-        </SelectItem>
-        <SelectItem>
-            <label>Title of Assessment</label>
-            <input
-            id="name"
-            type="text"
-            placeholder="Title of Assessment"
-            onChange={handleChange}
-            value={name}
-            onBlur={onBlur}
-            />
-            {errors && errors.name && touched.name && <span>{errors.name}</span>}
-        </SelectItem>
-        </SelectItemContainer>
-        <Buttons>
-        <Link to={-1}>Cancel</Link>
-        <button
-            onClick={() => onNextPage(formData)}
-        >
-            Proceed
-        </button>
-        </Buttons>
-    </SelectContainer>
+    const { name, assessment, } =
+        formData;
+
+
+    return (
+        <Container>
+
+            <AssessmentHeadingText>CreateAssessments</AssessmentHeadingText>
+            <SelectContainer>
+                <p>Select the Assessment Stack</p>
+
+                <SelectItemContainer>
+                <SelectItem>
+                    <label>Select Stack</label>
+                    <select
+                    id="assessment"
+                    value={assessment}
+                    onChange={handleChange}
+                    onBlur={onBlur}
+                    >
+                    <option defaultValue>Select Stack</option>
+                    {createStackss.map((stack, id) => (
+                        <option key={id} value={stack.name}>
+                        {stack.name}
+                        </option>
+                    ))}
+                    </select>
+                    {errors.department && touched.department && (
+                    <span>{errors.department}</span>
+                    )}
+                </SelectItem>
+                <SelectItem>
+                    <label>Title of Assessment</label>
+                    <input
+                    id="name"
+                    type="text"
+                    placeholder="Title of Assessment"
+                    onChange={handleChange}
+                    value={name}
+                    onBlur={onBlur}
+                    />
+                    {errors && errors.name && touched.name && (
+                        <span>{errors.name}</span>
+                        )}
+                </SelectItem>
+                </SelectItemContainer>
+                <Buttons>
+                <Link to={-1}>Cancel</Link>
+                <button onClick={() => onNextPage(formData)}>Proceed</button>
+                </Buttons>
+            </SelectContainer>
+        </Container>
     );
 };
 
 export default SelectType;
 
+const Container = styled.div`
+`
+const AssessmentHeadingText = styled.p`
+    font-family: "Red Hat Display";
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 37px;
+    color: #6e6e6e;
+`;
 const SelectContainer = styled.div`
     display: flex;
     flex-direction: column;

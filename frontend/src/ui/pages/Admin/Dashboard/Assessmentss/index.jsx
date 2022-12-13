@@ -1,36 +1,38 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import TableComponent from '../../../../components/molecules/TableComponent';
 import axios from '../../../../../api/axios'
+import { More } from 'iconsax-react';
+import { Link } from 'react-router-dom';
+// import EditAssessment from "./EditAssessment";
+// import DeleteAssessment from "./DeleteAssessment";
+// import UpdateAssessment from './UpdateAssessment';
 
 
-export default function Assessmentss() {
-
-    // fetch("https://eval360.hng.tech/interview/admin/all")
-    //     .then((response) => {
-    //         console.log(response.body)
-    //     })
-    //     .catch((error) => {
-    //         console.log(error)
-    // });
-
+export default function Assessments() {
+    const [table, setTable] = useState([]);
     useEffect(() => {
         axios.get("interview/all")
-            .then((data) => {console.log(data)})
+        .then( response => {
+                setTable(response.data.data.data)
+                console.log(response.data.data.data)
+            })
             .catch((e) => console.log(e));
-    }, [])
-
-
-    
-    return (
+        }, [])
+        
+        // console.log(table);
+        
+        return (
         <Container>
             <AssessmentHeading>
                 <AssessmentHeadingText>
                     Assessments
                 </AssessmentHeadingText>
-                <AssessmentHeadingButton>
-                    Create Assessment
-                </AssessmentHeadingButton>
+                <Link to="/admin/create-assessmentss">
+                    <AssessmentHeadingButton>
+                        Create Assessment
+                    </AssessmentHeadingButton>
+                </Link>
             </AssessmentHeading>
 
             <TableComponent>
@@ -40,25 +42,27 @@ export default function Assessmentss() {
                         <th>Assessment Name</th>
                         <th>Stack</th>
                         <th>No of times taken</th>
+                        <td>
+                        </td>
                     </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Introduction to software engineering</td>
-                        <td>PHP</td>
-                        <td>1000</td>
-                        <th>
-                            <AssessmentViewButton>View Assessments</AssessmentViewButton>
-                        </th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Introduction to software engineering</td>
-                        <td>PHP</td>
-                        <td>1000</td>
-                        <th>
-                            <AssessmentViewButton>View Assessments</AssessmentViewButton>
-                        </th>
-                    </tr>
+                    {table.map((table, index) => {
+                        const { id, title, stacks, times_taken  } = table;                        
+                        return(
+                            
+                            <tr key={id}>
+                            <td>{index + 1}</td>
+                            <td>{title}</td>
+                            <td>{stacks}</td>
+                            <td>{times_taken}</td>
+                            <td>
+                                <AssessmentViewButton>View Assessments</AssessmentViewButton>
+                            </td>
+                            <td>
+                                <More />
+                            </td>
+                        </tr>
+                        )
+                    })}
                 </tbody>
             </TableComponent>
         </Container>

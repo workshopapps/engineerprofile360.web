@@ -111,7 +111,7 @@ import EmployeeAssessmentList from "./ui/pages/Employee/EmployeeAssessmentListOu
 import AdminAssessmmentListOutlet from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmmentListOutlet";
 import AdminAssessmentListAvailable from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmentListAvailable";
 import AssessmentList from "./ui/components/Company/Assessments/adminAssesmentList/AssessmentList";
-import Assessmentss from "./ui/pages/Admin/Dashboard/Assessmentss";
+import Assessments from "./ui/pages/Admin/Dashboard/Assessmentss";
 import CreateAssessmentss from "./ui/pages/Admin/Dashboard/CreateAssessments";
 
 // This is for DevOps App Monitoring - START
@@ -316,7 +316,7 @@ const App = () => {
 
               {/* Overall Admin Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
-                <Route path="/admin/Assessmentss" element={<Assessmentss />} />
+                <Route path="/admin/Assessments" element={<Assessments />} />
                 <Route
                   path="/admin/create-assessmentss"
                   element={<CreateAssessmentss />}
