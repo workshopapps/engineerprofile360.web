@@ -146,6 +146,7 @@ const QuestionTemplate = () => {
                 name={"questionText"}
                 placeholder="This is a template text"
                 value={inputfield.questionText}
+                required
                 onChange={(e) => handleChangeInput(index, e)}
               />
             </div>
@@ -175,7 +176,7 @@ const QuestionTemplate = () => {
                                   ? `Question${index}`
                                   : ""
                               }
-                              // checked={inputfield.answers === oindex}
+                              required
                               value={oindex}
                               onChange={(e) => addAnswers(index, e)}
                             />
