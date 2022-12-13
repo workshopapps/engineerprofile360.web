@@ -155,8 +155,6 @@ const ResultModal = styled.div`
 
 const ResultContainer = styled.div`
   width: 95%;
-
-  // max-width: 720px;
   border-radius: ${({ theme }) => theme.spacing(2)};
   background: #f8fcfe;
   padding: ${({ theme }) => theme.spacing(6)};
@@ -192,6 +190,11 @@ const AssessmentInfo = styled.div`
 
   ${({ theme }) => theme.breakpoints.down("touch")} {
     flex-direction: column;
+    width: 80%;
+  }
+
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    width: 100%;
   }
 `;
 
