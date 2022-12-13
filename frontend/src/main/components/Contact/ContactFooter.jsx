@@ -46,7 +46,7 @@ const Section = styled.div`
 const Main = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: -15rem;
+  margin-top: -8rem;
   margin-bottom: 5rem;
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
