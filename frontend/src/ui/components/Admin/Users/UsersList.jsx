@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import styled from "styled-components";
 import TableComponent from "../../molecules/TableComponent";
@@ -19,9 +19,9 @@ const UsersList = ({ users }) => {
           <th>Created</th>
           <th>Actions</th>
         </tr>
-        {users?.data.map((user, i) => (
-          <tr key={i}>
-            <td>{i + 1}</td>
+        {users?.data.map((user, index) => (
+          <tr key={user.id}>
+            <td>{index + 1}</td>
             <td>{user.name}</td>
             <td>{user.email}</td>
             <td>{user.company}</td>
