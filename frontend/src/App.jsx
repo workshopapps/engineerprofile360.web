@@ -350,11 +350,12 @@ const App = () => {
               </Route>
 
               <Route path="/setting" element={<AdminSetting />} />
-              <Route path="/404" element={<Error />} />
+              {/* <Route path="/404" element={<Error />} /> */}
 
               {/* <Route path="/assessment" element={<Assessment />} /> */}
             </Route>
           </Route>
+          <Route path="*" element={<Error />} />
           {/* <Route element={<GuestLayout />}>
             <Route
               path="guest-assessment-list"
