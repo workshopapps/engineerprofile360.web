@@ -103,15 +103,30 @@ const Buttons = () => {
 };
 
 //Duration
-export const AssessmentTimer = (timer) => {
-  const duration =
-    ((timer?.end_time ? Number(timer?.end_time?.split(":").join("")) : 0) -
-      (timer?.start_time
-        ? Number(timer?.start_time?.split(":").join(""))
-        : 0)) /
-    60;
-  return duration;
+export const TimeStamp = (timestamp) => {
+  let TimeDuration =
+    (timestamp?.end_time
+      ? Number(timestamp?.end_time?.split(":").join(""))
+      : 0) -
+    (timestamp?.start_time
+      ? Number(timestamp?.start_time?.split(":").join(""))
+      : 0);
+  let Hours = Math.floor(TimeDuration / 60);
+  let Minutes = TimeDuration % 60;
+
+  var DurationTime =
+    Hours +
+    `${Hours === 1 ? " Hour " : " Hours "}` +
+    (Minutes === 0 ? "" : Minutes) +
+    `${Minutes === 0 ? "" : " Minutes "}`;
+
+  if (Hours <= 1) {
+    return Minutes + " Minutes ";
+  }
+
+  return DurationTime;
 };
+
 const List = () => {
   const { available, setAvailable, isLoading, setIsLoading, setCompleted } =
     useContext(DataContext);
@@ -173,23 +188,7 @@ const List = () => {
                   <td>{item?.name}</td>
                   <td>{item?.department.name}</td>
                   <td>{item?.start_date}</td>
-                  <td>
-                    {`${
-                      AssessmentTimer(item) < 1
-                        ? parseFloat((AssessmentTimer(item) / 100) * 60)
-                            .toFixed(2)
-                            .split(".")
-                            .join(":")
-                        : (AssessmentTimer(item).toFixed(2))
-                    } 
-           ${
-             AssessmentTimer(item) < 1
-               ? "Minutes"
-               : AssessmentTimer(item) > 1
-               ? "Hours"
-               : "Hour"
-           }`}
-                  </td>
+                  <td>{TimeStamp(item)}</td>
                   <td>{item?.end_date}</td>
 
                   <td>
