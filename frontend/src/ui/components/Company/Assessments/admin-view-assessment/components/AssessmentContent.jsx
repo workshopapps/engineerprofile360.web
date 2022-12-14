@@ -8,7 +8,7 @@ import {
   Loader,
 } from "../../../../../../styles/reusableElements.styled";
 
-import ViewAssessmentHeader, { AssessmentTimer } from "./ViewAssessmentHeader";
+import ViewAssessmentHeader, { TimeStamp } from "./ViewAssessmentHeader";
 import axios from "../../../../../../api/axios";
 import useAuth from "../../../../../../hooks/useAuth";
 import { showErrorToast } from "../../../../../../helpers/helper";
@@ -109,6 +109,7 @@ const AssessmentContent = () => {
       );
     }
   };
+
   const navigate = useNavigate();
   return loading ? (
     <ButtonWrapper>
@@ -125,21 +126,7 @@ const AssessmentContent = () => {
               ? assessmentDetails?.department?.name
               : "loading"
           }
-          duration={`${
-            AssessmentTimer(assessmentDetails) < 1
-              ? parseFloat((AssessmentTimer(assessmentDetails) / 100) * 60)
-                  .toFixed(2)
-                  .split(".")
-                  .join(":")
-              : AssessmentTimer(assessmentDetails).toFixed(2)
-          } 
-           ${
-             AssessmentTimer(assessmentDetails) < 1
-               ? "Minutes"
-               : AssessmentTimer(assessmentDetails) > 1
-               ? "Hours"
-               : "Hour"
-           }`}
+          duration={TimeStamp(assessmentDetails)}
           deadline={
             assessmentDetails?.end_date
               ? assessmentDetails?.end_date
@@ -150,7 +137,8 @@ const AssessmentContent = () => {
           <form>
             {currentAssessments.map((assessment, i) => {
               const { question, options, correct_answers, id } = assessment;
-              const optionsData = JSON.parse(options);
+              const optionsData = options ? JSON.parse(options) : {};
+              const correctAnswerParse = Number(JSON.parse(correct_answers));
               return (
                 <QuestionsWrapper key={i}>
                   <QuestionTitle>
@@ -166,8 +154,8 @@ const AssessmentContent = () => {
                           onChange={() => {
                             handleChange(id, i);
                           }}
-                          checked={correct_answers}
                           id={id}
+                          checked={correctAnswerParse === i ? true : false}
                         />
                         <label htmlFor={id}>{option?.optionText}</label>
                       </InputWrapper>

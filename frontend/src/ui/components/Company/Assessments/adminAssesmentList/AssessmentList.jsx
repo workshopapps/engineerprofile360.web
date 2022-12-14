@@ -9,7 +9,6 @@ import {
   AssessmentListings,
   AssessmentTab,
   AssessmentTabContainer,
-  AssessmentTimer,
   ButtonContainer,
   ButtonInner,
   Hide,
@@ -17,6 +16,7 @@ import {
   Show,
   TableContainer,
   Text,
+  TimeStamp,
 } from "./AdminAssessmentListAvailable";
 import { showErrorToast } from "../../../../../helpers/helper";
 import { AddCircle } from "iconsax-react";
@@ -124,24 +124,7 @@ export const List = () => {
                     <td>{item?.name}</td>
                     <td>{item?.department.name}</td>
                     <td>{item?.start_date}</td>
-                    <td>
-                      {" "}
-                      {`${
-                        AssessmentTimer(item) < 1
-                          ? parseFloat((AssessmentTimer(item) / 100) * 60)
-                              .toFixed(2)
-                              .split(".")
-                              .join(":")
-                          : AssessmentTimer(item).toFixed(2)
-                      } 
-           ${
-             AssessmentTimer(item) < 1
-               ? "Minutes"
-               : AssessmentTimer(item) > 1
-               ? "Hours"
-               : "Hour"
-           }`}
-                    </td>
+                    <td>{TimeStamp(item)}</td>
                     <td>{item?.end_date}</td>
                     <td>
                       <Link to={`/assessment/view-assessment/${item.id}`}>

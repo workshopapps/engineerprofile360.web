@@ -5,14 +5,28 @@ import PageInfo from "../../../../molecules/PageInfo";
 import timer from "../assets/timer-start.png";
 
 //Duration
-export const AssessmentTimer = (timer) => {
-  const duration =
-    ((timer?.end_time ? Number(timer?.end_time?.split(":").join("")) : 0) -
-      (timer?.start_time
-        ? Number(timer?.start_time?.split(":").join(""))
-        : 0)) /
-    60;
-  return duration;
+export const TimeStamp = (timestamp) => {
+  let TimeDuration =
+    (timestamp?.end_time
+      ? Number(timestamp?.end_time?.split(":").join(""))
+      : 0) -
+    (timestamp?.start_time
+      ? Number(timestamp?.start_time?.split(":").join(""))
+      : 0);
+  let Hours = Math.floor(TimeDuration / 60);
+  let Minutes = TimeDuration % 60;
+
+  var DurationTime =
+    Hours +
+    `${Hours === 1 ? " Hour " : " Hours "}` +
+    (Minutes === 0 ? "" : Minutes) +
+    `${Minutes === 0 ? "" : " Minutes "}`;
+
+  if (Hours <= 1) {
+    return Minutes + " Minutes ";
+  }
+
+  return DurationTime;
 };
 
 function ViewAssessmentHeader({
