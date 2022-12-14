@@ -2,9 +2,9 @@ import styles from "./Product.module.css";
 
 const Product = () => {
   return (
-    <div className={styles.container}>
+    <div className={styles.product}>
+      <h2>Product Growth Goals</h2>
       <div className={styles.wrapper}>
-        <h2>Product Growth Goals</h2>
         <div className={styles.numbers}>
           <div className={styles.number}>
             <small>companies</small>
