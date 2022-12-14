@@ -16,6 +16,7 @@ import EditModal from "./EditModal";
 import DeleteModal from "./DeleteModal";
 import { toast } from "react-toastify";
 import TableComponent from "../../molecules/TableComponent";
+import PageInfo from "../../molecules/PageInfo";
 
 function Hero() {
   //? useState HOOKS
@@ -74,9 +75,11 @@ function Hero() {
         />
       )}
       <Container>
-        <Title as="h2" $size="28px" $color="#1E1E1E" $weight="600">
+        {/* <Title as="h2" $size="28px" $color="#1E1E1E" $weight="600">
           Departments
-        </Title>
+        </Title> */}
+
+        <PageInfo pageTitle="Departments" />
         {addDept && (
           <AddDept
             formData={formData}

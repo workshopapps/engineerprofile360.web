@@ -50,7 +50,9 @@ const Employees = () => {
 
   return (
     <>
-      <PageInfo breadcrumb={breadcrumbs} />
+      <PageInfo 
+      // breadcrumb={breadcrumbs} 
+      pageTitle="Employees" />
       {!isLoading ? (
         <Outlet context={{ employees, departments }} />
       ) : (
