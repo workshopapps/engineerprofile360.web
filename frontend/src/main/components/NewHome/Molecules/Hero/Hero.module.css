@@ -7,7 +7,7 @@
   font-family: "Inter", sans-serif;
 }
 
-.container {
+.hero {
   max-width: 85vw;
   margin: 0 auto;
   display: flex;
@@ -16,33 +16,33 @@
   flex-direction: column;
 }
 
-.content {
+.hero .content {
   margin-top: 4rem;
   text-align: center;
 }
 
-.content h1 {
+.hero .content h1 {
   font-weight: 700;
   font-size: 3.5rem;
   margin-bottom: 1.5rem;
 }
 
-h1 span {
+.hero h1 span {
   font-size: 4rem;
   color: #2667ff;
 }
 
-p {
+.hero p {
   font-weight: bold;
   margin-bottom: 1.2rem;
 }
 
-p span {
+.hero p span {
   font-size: 1.2rem;
   color: #2667ff;
 }
 
-button {
+.hero button {
   background-color: #2667ff;
   color: #fff;
   font-weight: bold;
@@ -54,15 +54,40 @@ button {
   transition: all 0.4s ease-in-out;
 }
 
-button:hover {
+.hero button:hover {
   transform: scale(1.05);
 }
 
-button:active {
+.hero button:active {
   transform: scale(0.95);
 }
 
-img {
+.hero img {
   position: relative;
   z-index: 1;
+}
+
+@media (max-width: 767px) {
+  .hero {
+    max-width: 95vw;
+    margin: 0 auto;
+  }
+
+  .hero .content {
+    margin-top: 2rem;
+  }
+
+  .hero .content h1,
+  .hero h1 span {
+    font-size: 2.7rem;
+  }
+
+  .hero p,
+  .hero p span {
+    font-size: 0.9rem;
+  }
+
+  .hero img {
+    width: 90vw;
+  }
 }

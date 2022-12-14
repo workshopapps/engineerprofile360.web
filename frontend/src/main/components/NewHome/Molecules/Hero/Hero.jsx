@@ -3,7 +3,7 @@ import hero from "../../assets/hero_image.png";
 
 const Hero = () => {
   return (
-    <div className={styles.container}>
+    <div className={styles.hero}>
       <div className={styles.content}>
         <h1>
           <span>Assess</span> Your Engineering <br /> <span> Teams’</span>{" "}
