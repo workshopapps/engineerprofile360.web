@@ -118,6 +118,7 @@ import AdminAssessmentListAvailable from "./ui/components/Company/Assessments/ad
 import AssessmentList from "./ui/components/Company/Assessments/adminAssesmentList/AssessmentList";
 import Assessments from "./ui/pages/Admin/Dashboard/Assessmentss";
 import CreateAssessmentss from "./ui/pages/Admin/Dashboard/CreateAssessments";
+import Index from "./main/components/NewHome/Atom/Index";
 
 // This is for DevOps App Monitoring - START
 //atatus.config("4010279ebbd747e7a752082eea130df6").install();
@@ -155,7 +156,7 @@ const App = () => {
 
           {/* PUBLIC ROUTES */}
           <Route element={<MainLayout />}>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Index />} />
             <Route path="/about-us" element={<About />} />
             <Route path="/biomedical-landing" element={<BioMedical />} />
             <Route path="/contact" element={<Contact />} />
@@ -205,7 +206,6 @@ const App = () => {
           {/* Authentication Layout */}
           <Route element={<AuthLayout />}>
             {/* Company Auth Routes */}
-
 
             <Route
               path="/register"
@@ -266,11 +266,9 @@ const App = () => {
                   <CompanySetPassword />
                 )
               }
-
             />
             <Route
               path="/reset-password-success"
-
               element={
                 auth.id && auth.roles === 2 ? (
                   <Navigate to="/dashboard" />
