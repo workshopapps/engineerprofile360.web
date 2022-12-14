@@ -224,6 +224,7 @@ const Icons = styled.div`
   display: flex;
   align-items: flex-end;
   gap: ${({ theme }) => theme.spacing(2)};
+  cursor: pointer;
 
   svg:nth-of-type(2) {
     ${({ theme }) => theme.breakpoints.up("sm")} {
