@@ -18,11 +18,25 @@ const Assessment = () => {
   useEffect(() => {
     const getDetails = async () => {
       try {
+        const ENDPOINTS = [
+          axios.get(`user-assessment/${auth.id}`),
+          axios.get(`assessment/department/${auth.dept_id}`),
+        ];
+        await Promise.all(ENDPOINTS).then((data) => {
+          setCompleted(
+            data[0]?.data?.data.filter(
+              (assessment) => assessment.completed === 1
+            )
+          );
 
-        await axios.get(`user-assessment/${auth.id}`).then((data) => {
-          setAvailable(data?.data?.data.filter((assessment) => assessment.completed === 0));
-          setCompleted(data?.data?.data.filter((assessment) => assessment.completed === 1));
-          console.log(data.data.data, data?.data.data);
+          setAvailable(
+            data[1]?.data?.data.filter(
+              (assessment) =>
+                !data[0]?.data?.data.some(
+                  (completed) => assessment.id === completed.assessment_id
+                )
+            )
+          );
         });
 
         setIsLoading(false);
