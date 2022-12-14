@@ -27,7 +27,7 @@ function StacksHero() {
   const [data, allData] = useState([]);
 
   // LIST ALL DATA
-     useEffect(() => {
+    useEffect(() => {
       try {
       axios.get("admin/stack/all")
       .then((response) => {
@@ -38,7 +38,6 @@ function StacksHero() {
       } catch (error) {
         toast.error("Could not fetch stacks")
       }
-       
   }, [runEffect]);
 
   return loading ? (

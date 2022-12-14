@@ -21,10 +21,9 @@ const Completed = () => {
   const handleClick = (assessment_id) => {
     setAssessmentId(assessment_id);
     setModal(true);
+    window.scrollTo(0, 0);
   };
 
-  if (modal) document.body.style.overflow = "hidden";
-  else document.body.style.overflow = "initial";
 
   return (
     <>
@@ -85,4 +84,7 @@ export default Completed;
 
 const CompletedContainer = styled.div`
   width: 100%;
+  min-height: 130vh;
+  height: auto;
+  overflow: auto;
 `;

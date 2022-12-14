@@ -9,7 +9,6 @@ import {
   AssessmentListings,
   AssessmentTab,
   AssessmentTabContainer,
-  AssessmentTimer,
   ButtonContainer,
   ButtonInner,
   Hide,
@@ -17,12 +16,14 @@ import {
   Show,
   TableContainer,
   Text,
+  TimeStamp,
 } from "./AdminAssessmentListAvailable";
 import { showErrorToast } from "../../../../../helpers/helper";
 import { AddCircle } from "iconsax-react";
 import TableComponent from "../../../molecules/TableComponent";
 
 const DataContext = createContext(null);
+
 export const Buttons = () => {
   return (
     <ButtonContainer>
@@ -73,6 +74,7 @@ export const List = () => {
         const responseAvailable = await axios.get(`/assessment/${auth.id}`);
         const availableCount = responseAvailable?.data?.data;
         setAvailable(availableCount);
+        console.log(availableCount);
       } catch (err) {
         if (!err?.response) {
           showErrorToast("No Server Response");
@@ -122,24 +124,7 @@ export const List = () => {
                     <td>{item?.name}</td>
                     <td>{item?.department.name}</td>
                     <td>{item?.start_date}</td>
-                    <td>
-                      {" "}
-                      {`${
-                        AssessmentTimer(item) < 1
-                          ? parseFloat((AssessmentTimer(item) / 100) * 60)
-                              .toFixed(2)
-                              .split(".")
-                              .join(":")
-                          : AssessmentTimer(item).toFixed(2)
-                      } 
-           ${
-             AssessmentTimer(item) < 1
-               ? "Minutes"
-               : AssessmentTimer(item) > 1
-               ? "Hours"
-               : "Hour"
-           }`}
-                    </td>
+                    <td>{TimeStamp(item)}</td>
                     <td>{item?.end_date}</td>
                     <td>
                       <Link to={`/assessment/view-assessment/${item.id}`}>
@@ -189,7 +174,6 @@ export const Assessment = ({ available, completed }) => {
 };
 
 export const CompletedAssessmentList = () => {
-  const [order, setOrder] = useState("asc");
   const [completed, setCompleted] = useState([]);
   const [available, setAvailable] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -201,8 +185,6 @@ export const CompletedAssessmentList = () => {
           setCompleted,
           available,
           setAvailable,
-          order,
-          setOrder,
           isLoading,
           setIsLoading,
         }}
