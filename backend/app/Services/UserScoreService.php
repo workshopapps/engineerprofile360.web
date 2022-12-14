@@ -51,7 +51,7 @@ class UserScoreService
             //get question details
             $questions = Question::where(["id" => $value["question_id"]])->with("category")->first();
             // compare the answers
-            if (!array_diff($value["answer"], $questions->correct_answers)) {
+            if (!array_diff($value["answer"], str_split($questions->correct_answers, strlen($questions->correct_answers)))) {
                 //store the categories of the questions
                 if (!in_array($questions->category->name, $result["data"]["categories"])) {
                     array_push($result["data"]["categories"], $questions->category->name);
