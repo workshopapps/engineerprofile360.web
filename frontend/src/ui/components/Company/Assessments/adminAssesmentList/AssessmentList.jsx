@@ -9,6 +9,7 @@ import {
   AssessmentListings,
   AssessmentTab,
   AssessmentTabContainer,
+  AssessmentTimer,
   ButtonContainer,
   ButtonInner,
   Hide,
@@ -117,23 +118,33 @@ export const List = () => {
               </tr>
 
               {completed.map((item, key) => {
-                const time1 = new Date("2001-01-01T" + item?.end_time);
-                const time2 = new Date("2001-01-01T" + item?.start_time);
-                const time1Milliseconds = time1.getTime();
-                const time2Milliseconds = time2.getTime();
-                const difference = time1Milliseconds - time2Milliseconds;
-                const hours = Math.floor(difference / 1000 / 60 / 60);
-                const mins = Math.floor(difference / 1000 / 60) % 60;
                 return (
                   <tr key={key}>
                     <td>{key + 1}</td>
                     <td>{item?.name}</td>
                     <td>{item?.department.name}</td>
                     <td>{item?.start_date}</td>
-                    <td>{`${hours}hrs ${mins}mins`}</td>
+                    <td>
+                      {" "}
+                      {`${
+                        AssessmentTimer(item) < 1
+                          ? parseFloat((AssessmentTimer(item) / 100) * 60)
+                              .toFixed(2)
+                              .split(".")
+                              .join(":")
+                          : AssessmentTimer(item).toFixed(2)
+                      } 
+           ${
+             AssessmentTimer(item) < 1
+               ? "Minutes"
+               : AssessmentTimer(item) > 1
+               ? "Hours"
+               : "Hour"
+           }`}
+                    </td>
                     <td>{item?.end_date}</td>
                     <td>
-                      <Link to="/assessment/view-assessment">
+                      <Link to={`/assessment/view-assessment/${item.id}`}>
                         <Button $variant="outlined" $color="#2667ff">
                           View Assessment
                         </Button>

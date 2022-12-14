@@ -8,7 +8,7 @@ const Stats = ({ stats }) => {
 
   useEffect(() => {
     const topScore =
-      stats.completed_assessment.length > 0
+      stats?.completed_assessment?.length > 0
         ? stats.completed_assessment.reduce((max, assessment) =>
             max.points > assessment.points ? max : assessment
           )
@@ -38,6 +38,8 @@ const Stats = ({ stats }) => {
     ],
   };
 
+  console.log(stats?.completed_assessment);
+
   return (
     <>
       <StatsContainer>
@@ -52,7 +54,31 @@ const Stats = ({ stats }) => {
             Your Recent Assessments Score
           </Title>
 
-          <SkillRatingSection></SkillRatingSection>
+          <SkillRatingSection>
+            {stats.completed_assessment.map((assessment, index) => (
+              <div key={assessment.id}>
+                <p>{assessment.assessment.name}</p>
+                <span
+                  style={{
+                    color:
+                      assessment &&
+                      (
+                        (assessment.result / assessment.total_questions) *
+                        100
+                      ).toFixed(2) > 50
+                        ? "green"
+                        : "red",
+                  }}
+                >
+                  {(
+                    (assessment.result / assessment.total_questions) *
+                    100
+                  ).toFixed(2)}
+                  %
+                </span>
+              </div>
+            ))}
+          </SkillRatingSection>
         </SkillSection>
         <ChartSection>
           <Radar data={data} />
@@ -92,19 +118,35 @@ const SkillSection = styled.div`
   border-radius: 12px;
   background-color: #fff;
   padding: 49px 32px;
-  gap: 12px;
+  gap: 24px;
   min-height: 336px;
+
+  ${({ theme }) => theme.breakpoints.down("xs")} {
+    padding: 49px 16px;
+  }
 `;
 
 const SkillRatingSection = styled.div`
   display: flex;
   width: 100%;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 50px;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing(2)};
 
   div {
-    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    p {
+      font-size: 16px;
+      color: #323130;
+      font-weight: 600;
+    }
+
+    span {
+      font-size: 14px;
+      font-weight: 600;
+    }
   }
 `;
 const ChartSection = styled.div`
