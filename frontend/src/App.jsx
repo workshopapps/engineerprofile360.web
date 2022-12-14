@@ -1,11 +1,11 @@
 // import React from "react";
 
 // This is for DevOps App Monitoring - START
-import * as atatus from "atatus-spa";
+//import * as atatus from "atatus-spa";
 // This is for DevOps App Monitoring - END
 
 //import * as Sentry from "@sentry/react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import RequireAuth from "./components/requireAuth";
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
@@ -45,11 +45,13 @@ import {
   CompanyVerifyEmail,
 } from "./ui/pages/Company/";
 
-import { GuestEmail, GuestLogin } from "./ui/components/Guests";
+import { GuestLogin } from "./ui/components/Guests";
+
 import {
   GuestAssessmentList,
   GuestTakeAssessment,
   GuestTakeAssessmentResult,
+  GuestEmail,
 } from "./ui/pages/Guest";
 
 import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
@@ -57,10 +59,12 @@ import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 import {
   EmployeeLogin,
   EmployeeDashboard,
-  EmployeeUserAssessmentListOutlet,
+  EmployeeAssessment,
 } from "./ui/pages/Employee";
 
 import { AdminLogin } from "./ui/pages/Admin";
+
+import useAuth from "./hooks/useAuth";
 
 import UserSupport from "./main/pages/UserSupport";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
@@ -76,7 +80,6 @@ import AdminCSVUpload from "./ui/components/Company/Assessments/AdminCSVUpload";
 // import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import EmployeeCSVUpload from "./ui/components/Company/Employees/EmployeeCSVUpload";
-// import GuestEmail from "./main/pages/GuestEmail";
 // import GuestAssessmentList from "./main/pages/GuestAssessmentList";
 
 import AdminViewAssessment from "./ui/components/Company/Assessments/admin-view-assessment/AdminViewAssessment";
@@ -105,13 +108,16 @@ import PersistLogin from "./components/PersistLogin";
 import {
   AssessmentCompleted,
   AssessmentAvailable,
+  EmployeePreviewAssessment,
 } from "./ui/components/Employee";
+
 import EmployeeAssessmentResult from "./ui/pages/Employee/EmployeeAssessmentResult";
 import EmployeeAssessmentList from "./ui/pages/Employee/EmployeeAssessmentListOutlet";
 import AdminAssessmmentListOutlet from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmmentListOutlet";
 import AdminAssessmentListAvailable from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmentListAvailable";
 import AssessmentList from "./ui/components/Company/Assessments/adminAssesmentList/AssessmentList";
-import GuestLayout from "./ui/components/Guests/GuestLayout";
+import Assessments from "./ui/pages/Admin/Dashboard/Assessmentss";
+import CreateAssessmentss from "./ui/pages/Admin/Dashboard/CreateAssessments";
 
 // This is for DevOps App Monitoring - START
 //atatus.config("4010279ebbd747e7a752082eea130df6").install();
@@ -127,6 +133,7 @@ const ROLES = {
 };
 
 const App = () => {
+  const { auth } = useAuth();
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -165,7 +172,6 @@ const App = () => {
             <Route path="/payment" element={<Payment />} />
             <Route path="/privacy-policy" element={<Privacy />} />
             {/* <Route path="/admin/stacks" element={<Stacks/>} /> */}
-               
 
             {/* UNKNOWN ROUTES */}
             {/* <Route path="/fill-employee" element={<Fillemployee />} /> */}
@@ -200,28 +206,83 @@ const App = () => {
           <Route element={<AuthLayout />}>
             {/* Company Auth Routes */}
 
-            <Route path="/register" element={<CompanySignup />} />
-            <Route path="/login" element={<CompanyLogin />} />
-            <Route path="/verify-email" element={<CompanyVerifyEmail />} />
+
+            <Route
+              path="/register"
+              element={
+                auth.id && auth.roles === 2 ? (
+                  <Navigate to="/dashboard" />
+                ) : (
+                  <CompanySignup />
+                )
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                auth.id && auth.roles === 2 ? (
+                  <Navigate to="/dashboard" />
+                ) : (
+                  <CompanyLogin />
+                )
+              }
+            />
+            <Route
+              path="/verify-email"
+              element={
+                auth.id && auth.roles === 2 ? (
+                  <Navigate to="/dashboard" />
+                ) : (
+                  <CompanyVerifyEmail />
+                )
+              }
+            />
             <Route
               path={"/auth/verify/:user_id/:token"}
-              element={<CompanyEmailVerified />}
+              element={
+                auth.id && auth.roles === 2 ? (
+                  <Navigate to="/dashboard" />
+                ) : (
+                  <CompanyEmailVerified />
+                )
+              }
             />
-            <Route path="/reset-password" element={<CompanyResetPassword />} />
-            <Route path="/password/reset" element={<CompanySetPassword />} />
+            <Route
+              path="/reset-password"
+              element={
+                auth.id && auth.roles === 2 ? (
+                  <Navigate to="/dashboard" />
+                ) : (
+                  <CompanyResetPassword />
+                )
+              }
+            />
+            <Route
+              path="/password/reset"
+              element={
+                auth.id && auth.roles === 2 ? (
+                  <Navigate to="/dashboard" />
+                ) : (
+                  <CompanySetPassword />
+                )
+              }
+
+            />
             <Route
               path="/reset-password-success"
-              element={<CompanyPasswordSuccess />}
+
+              element={
+                auth.id && auth.roles === 2 ? (
+                  <Navigate to="/dashboard" />
+                ) : (
+                  <CompanyPasswordSuccess />
+                )
+              }
             />
-
             {/* Employee Auth Routes */}
-
             <Route path="/employee/login" element={<EmployeeLogin />} />
-
             {/* Admin Auth Routes */}
-
             <Route path="/admin/login" element={<AdminLogin />} />
-
             <Route path="/guest-login" element={<GuestLogin />} />
           </Route>
 
@@ -258,7 +319,7 @@ const App = () => {
               {/* Organization Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
                 <Route
-                  path="/assessment/view-assessment"
+                  path="/assessment/view-assessment/:id"
                   element={<AdminViewAssessment />}
                 />
 
@@ -315,6 +376,11 @@ const App = () => {
 
               {/* Overall Admin Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
+                <Route path="/admin/Assessments" element={<Assessments />} />
+                <Route
+                  path="/admin/create-assessmentss"
+                  element={<CreateAssessmentss />}
+                />
                 {/* Put in Protected pages in here */}
                 <Route path="/admin/dashboard" element={<Dashboard />} />
                 <Route path="/admin/stacks" element={<Stacks />} />
@@ -329,22 +395,28 @@ const App = () => {
 
                 <Route
                   path="/employee/assessment"
-                  element={<EmployeeUserAssessmentListOutlet />}
+                  element={<EmployeeAssessment />}
                 >
                   <Route path="" element={<AssessmentAvailable />} />
                   <Route path="completed" element={<AssessmentCompleted />} />
                 </Route>
 
+                <Route
+                  path="/employee/assessment/:assessment_id/preview"
+                  element={<EmployeePreviewAssessment />}
+                />
+
                 {/* <Route path="/employee/dashboard" element={"boss"} /> */}
               </Route>
 
               <Route path="/setting" element={<AdminSetting />} />
-              <Route path="/404" element={<Error />} />
+              {/* <Route path="/404" element={<Error />} /> */}
 
               {/* <Route path="/assessment" element={<Assessment />} /> */}
             </Route>
           </Route>
-          <Route element={<GuestLayout />}>
+          <Route path="*" element={<Error />} />
+          {/* <Route element={<GuestLayout />}>
             <Route
               path="guest-assessment-list"
               element={<GuestAssessmentList />}
@@ -355,7 +427,7 @@ const App = () => {
               path="/guest-take-assessment-result"
               element={<GuestTakeAssessmentResult />}
             />
-          </Route>
+          </Route> */}
         </Routes>
       </ThemeProvider>
       <StyledToastContainer />

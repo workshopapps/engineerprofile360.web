@@ -42,7 +42,8 @@ const Details = () => {
       <EmployeeProfileInnerContainer>
         <EmployeeDataContainer>
           <Title as="h5" $size="14px" $lHeight="40px" $weight="500">
-            Employee Data <Edit size={24} />
+            Employee Data 
+            {/* <Edit size={24} /> */}
           </Title>
 
           <EmployeeCard>
@@ -107,11 +108,15 @@ const Details = () => {
               ).toFixed(2)}%`}</p>
             </EmployeeCard>
           ))}
-          <ButtonContainer>
-            <Link to={`/employees/profile/${employee.id}/assessments`}>
-              <Button style={{ marginTop: "57px" }}>View Assessments</Button>
-            </Link>
-          </ButtonContainer>
+          {employee.completed_assessment.length > 0 ? (
+            <ButtonContainer>
+              <Link to={`/employees/profile/${employee.id}/assessments`}>
+                <Button style={{ marginTop: "57px" }}>View Assessments</Button>
+              </Link>
+            </ButtonContainer>
+          ) : (
+            <span>No Assessment Found For {employee.fullname}</span>
+          )}
         </EmployeeStatsContainer>
         <OverallContainer>
           <Radar data={data} />
@@ -134,7 +139,7 @@ const EmployeeProfileInnerContainer = styled.div`
   width: 100%;
   justify-content: space-between;
   gap: 20px;
-  align-items: flex-start;
+  // align-items: flex-start;
   padding-top: 80px;
 
   ${({ theme }) => theme.breakpoints.down("touch")} {
@@ -191,13 +196,12 @@ const OverallContainer = styled.div`
   border: 1px solid #edebe9;
   border-radius: 8px;
   width: 100%;
-  padding: ${({theme}) => theme.spacing(1)};
-
+  padding: ${({ theme }) => theme.spacing(1)};
 `;
 
 const ChartCard = styled.div`
   // padding: 28px 30px;
-    padding: ${({theme}) => theme.spacing(1)};
+  padding: ${({ theme }) => theme.spacing(1)};
 `;
 
 const ButtonContainer = styled.div`

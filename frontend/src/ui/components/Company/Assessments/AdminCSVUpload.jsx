@@ -13,13 +13,15 @@ import close from "../../../../assets/icons/close.svg";
 import CreateManual from "./CreateAssessment/CreateManual";
 import axios from "../../../../api/axios";
 import useAuth from "../../../../hooks/useAuth";
+import { useLocation } from "react-router-dom";
 
 const AdminCSVUpload = () => {
-  const [tab, setTab] = useState("upload");
+  const [tab, setTab] = useState("manual");
   const [files, setFiles] = useState(null);
   const [encodedFile, setEndcodedFile] = useState("");
   const inputRef = useRef();
   const { auth } = useAuth();
+  const location = useLocation();
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -49,8 +51,6 @@ const AdminCSVUpload = () => {
       console.log(result);
     });
 
-  console.log(files);
-
   const handleUpload = async () => {
     try {
       const response = await axios.post(
@@ -71,21 +71,23 @@ const AdminCSVUpload = () => {
     }
   };
 
+  // console.log(location.state?.data);
+
   return (
     <>
       <Main>
         <CreateTypeContainer>
-          <Upload
+          {/* <Upload
             onClick={() => setTab("upload")}
             className={tab === "upload" ? "active" : ""}
           >
             <p>Upload CSV file</p>
-          </Upload>
+          </Upload> */}
           <Manual
             onClick={() => setTab("manual")}
             className={tab === "manual" ? "active" : ""}
           >
-            <p>Create assessment manually</p>
+            <p>Create Assessment</p>
           </Manual>
         </CreateTypeContainer>
         {tab === "upload" && (
@@ -138,7 +140,7 @@ const AdminCSVUpload = () => {
         )}
         {tab === "manual" && (
           <ManualUpload>
-            <CreateManual />
+            <CreateManual assessment_id={location.state?.data} />
           </ManualUpload>
         )}
       </Main>

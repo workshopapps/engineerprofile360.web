@@ -15,23 +15,31 @@ const Dashboard = () => {
 
   useEffect(() => {
     const getDetails = async () => {
+      const ENDPOINTS = [
+        axios.get(`userscore/employee/${auth.id}`),
+        axios.get(`user-assessment/${auth.id}`),
+        axios.get(`assessment/department/${auth.dept_id}`),
+      ];
+
       try {
-        await axios.get(`userscore/employee/${auth.id}`).then((data) => {
-          console.log(data.data.data);
-          setStats(data?.data?.data[0]);
-          axios
-            .get(`assessment/department/${data.data.data[0].department_id}`)
-            .then((data) => {
-              console.log(data?.data?.data);
-              setAssessments(data?.data?.data);
-            });
+        await Promise.all(ENDPOINTS).then((data) => {
+          setStats(data[0]?.data?.data[0]);
+          setAssessments(
+            data[2]?.data?.data.filter(
+              (assessment) =>
+                !data[1]?.data?.data.some(
+                  (completed) => assessment.id === completed.assessment_id
+                )
+            )
+          );
         });
+
         setIsLoading(false);
       } catch (err) {
         setIsLoading(false);
-        if(!err.response) {
+        if (!err.response) {
           showErrorToast("No Server Response");
-        }else {
+        } else {
           showErrorToast(err.response.data.message);
         }
       }

@@ -52,6 +52,7 @@ const BreadCrumb = styled.div`
   width: 100%;
   display: flex;
   gap: ${({ theme }) => theme.spacing(1)};
+  flex-wrap: wrap;
 `;
 
 const Item = styled.div`

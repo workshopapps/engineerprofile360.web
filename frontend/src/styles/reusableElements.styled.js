@@ -88,11 +88,11 @@ export const Button = styled.button`
 `;
 
 export const Loader = styled.div`
-  border: 8px solid #106ebe;
-  border-top: 8px solid lightblue;
+  border: 5px solid #106ebe;
+  border-top: 5px solid lightblue;
   border-radius: 50%;
-  height: 60px;
-  width: 60px;
+  height: ${(props) => (props.sm ? "28px" : "60px")};
+  width: ${(props) => (props.sm ? "28px" : "60px")};
   animation: spin 2s linear infinite;
 
   @keyframes spin {
@@ -108,7 +108,7 @@ export const Loader = styled.div`
 
 export const OverlayLoader = styled.div`
   width: 100%;
-  height: ${(props) => (props.contained ? "calc(100vh - 180px)" : "100vh")};
+  height: ${(props) => (props.contained ? "300px" : "100vh")};
   background: rgb(255, 255, 255);
   position: ${(props) => (props.contained ? "initial" : "fixed")};
   top: ${(props) => (props.contained ? "initial" : "0")};
@@ -123,8 +123,8 @@ export const OverlayLoader = styled.div`
   gap: ${({ theme }) => theme.spacing(2)};
 
   div {
-    border: 8px solid #106ebe;
-    border-top: 8px solid lightblue;
+    border: 5px solid #106ebe;
+    border-top: 5px solid lightblue;
     border-radius: 50%;
     height: 60px;
     width: 60px;

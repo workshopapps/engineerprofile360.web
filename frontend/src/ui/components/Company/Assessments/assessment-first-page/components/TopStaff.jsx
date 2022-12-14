@@ -44,7 +44,13 @@ const TopStaff = ({ topStaff }) => {
                     <td>{idx + 1}</td>
                     <td>
                       <Flex ai="center" jc="center" spacing={10}>
-                        <img src={emp.photo} />
+                        <img
+                          src={`https://avatars.dicebear.com/api/micah/${
+                            emp.username ? emp.username : "photo"
+                          }.svg`}
+                          alt="avatar"
+                          width="25px"
+                        />
                         <TableText $weight="600" $size="18px">
                           {emp.fullname}
                         </TableText>
@@ -60,7 +66,7 @@ const TopStaff = ({ topStaff }) => {
                         <TableText $weight="400" $size="16px">
                           {emp.points}
                         </TableText>
-                        <More />
+                        {/* <More /> */}
                       </Flex>
                     </td>
                   </tr>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-
 import useAuth from "../../../hooks/useAuth";
 import axios from "../../../api/axios";
 import { showErrorToast } from "../../../helpers/helper";
@@ -23,23 +22,17 @@ const Employees = () => {
       ];
 
       try {
-        const response = await Promise.all(ENDPOINTS).then((data) => {
-          return data;
+        await Promise.all(ENDPOINTS).then((data) => {
+          setEmployees(data[0]?.data?.data.data);
+          setDepartments(data[1]?.data.data);
         });
-        const allEmployees = response[0]?.data?.data.data;
-        const allDepartments = response[1]?.data.data;
-        console.log(allEmployees, allDepartments);
-        setIsLoading(false);
 
-        setEmployees(allEmployees);
-        setDepartments(allDepartments);
+        setIsLoading(false);
       } catch (err) {
         setIsLoading(false);
-        if (!err?.response) {
-          showErrorToast(err.message);
-        } else if (err?.response.data.errorState === true) {
+        if (!err?.response) showErrorToast(err.message);
+        else if (err?.response.data.errorState === true)
           showErrorToast(err.response.data.message);
-        }
       }
     };
 
@@ -57,7 +50,9 @@ const Employees = () => {
 
   return (
     <>
-      <PageInfo breadcrumb={breadcrumbs} />
+      <PageInfo 
+      // breadcrumb={breadcrumbs} 
+      pageTitle="Employees" />
       {!isLoading ? (
         <Outlet context={{ employees, departments }} />
       ) : (

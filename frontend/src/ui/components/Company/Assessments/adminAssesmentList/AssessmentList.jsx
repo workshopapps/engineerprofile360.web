@@ -16,12 +16,14 @@ import {
   Show,
   TableContainer,
   Text,
+  TimeStamp,
 } from "./AdminAssessmentListAvailable";
 import { showErrorToast } from "../../../../../helpers/helper";
 import { AddCircle } from "iconsax-react";
 import TableComponent from "../../../molecules/TableComponent";
 
 const DataContext = createContext(null);
+
 export const Buttons = () => {
   return (
     <ButtonContainer>
@@ -72,6 +74,7 @@ export const List = () => {
         const responseAvailable = await axios.get(`/assessment/${auth.id}`);
         const availableCount = responseAvailable?.data?.data;
         setAvailable(availableCount);
+        console.log(availableCount);
       } catch (err) {
         if (!err?.response) {
           showErrorToast("No Server Response");
@@ -119,12 +122,12 @@ export const List = () => {
                   <tr key={key}>
                     <td>{key + 1}</td>
                     <td>{item?.name}</td>
-                    <td>{item?.department_id}</td>
+                    <td>{item?.department.name}</td>
                     <td>{item?.start_date}</td>
-                    <td>{item?.end_date - item?.start_date}</td>
+                    <td>{TimeStamp(item)}</td>
                     <td>{item?.end_date}</td>
                     <td>
-                      <Link to="/assessment/view-assessment">
+                      <Link to={`/assessment/view-assessment/${item.id}`}>
                         <Button $variant="outlined" $color="#2667ff">
                           View Assessment
                         </Button>
@@ -171,7 +174,6 @@ export const Assessment = ({ available, completed }) => {
 };
 
 export const CompletedAssessmentList = () => {
-  const [order, setOrder] = useState("asc");
   const [completed, setCompleted] = useState([]);
   const [available, setAvailable] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -183,8 +185,6 @@ export const CompletedAssessmentList = () => {
           setCompleted,
           available,
           setAvailable,
-          order,
-          setOrder,
           isLoading,
           setIsLoading,
         }}

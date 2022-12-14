@@ -41,7 +41,8 @@ const List = () => {
   const currentSelectedId = useRef();
 
   if (toggleCreateCat || toggleDelete || toggleEdit || toggleMaxDelete)
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
+    document.body.style.overflow = "auto";
   else document.body.style.overflow = "initial";
 
   useEffect(() => {
@@ -160,9 +161,9 @@ const List = () => {
   return (
     <OverallContainer>
       <ButtonCategory>
-        <AddCategoryBtn onClick={() => setToggleCreateCat(true)}>
+        <Button onClick={() => setToggleCreateCat(true)}>
           <AddCircle color="#FFFFFF" /> Add New Category
-        </AddCategoryBtn>
+        </Button>
         {value.categoryId.length > 1 && (
           <DeleteCategoryBtn onClick={onBulkDeleteClick}>
             Delete
@@ -227,11 +228,15 @@ const List = () => {
           </>
         ) : (
           <>
-            <NoData text="Oops! No data here yet">
-              <Button $weight="400" onClick={() => setToggleCreateCat(true)}>
-                <AddCircle color="#FFFFFF" /> Add Category
-              </Button>
-            </NoData>
+            {isOverlayLoading ? (
+              ""
+            ) : (
+              <NoData text="Oops! No data here yet">
+                <Button $weight="400" onClick={() => setToggleCreateCat(true)}>
+                  <AddCircle color="#FFFFFF" /> Add Category
+                </Button>
+              </NoData>
+            )}
           </>
         )}
       </CategoryListing>
@@ -299,13 +304,13 @@ const ButtonCategory = styled.div`
   margin-bottom: 20px;
 `;
 
-const AddCategoryBtn = styled(Button)`
-  background-color: #2667ff;
-  color: #f0f0f0;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 20px;
-`;
+// const AddCategoryBtn = styled(Button)`
+//   background-color: #2667ff;
+//   color: #f0f0f0;
+//   font-weight: 400;
+//   font-size: 14px;
+//   line-height: 20px;
+// `;
 
 const DeleteCategoryBtn = styled(Button)`
   background-color: transparent;

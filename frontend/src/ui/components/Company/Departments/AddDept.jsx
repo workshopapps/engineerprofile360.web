@@ -119,7 +119,7 @@ export default AddDept;
 // STYLED COMPONENTS
 
 export const InputWrapper = styled.div`
-  width: 100%;
+  /* width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -131,7 +131,24 @@ export const InputWrapper = styled.div`
   z-index: 1;
 
   background-color: rgba(248, 251, 253, 0);
+  overflow: hidden; */
+
+  width: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  /* height: 100vh; */
+  min-height: 1000px;
+  height: 100%;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -20%);
+  z-index: 2;
   overflow: hidden;
+
+  background-color: rgba(0, 0, 0, 0.7);
   form {
     display: flex;
     flex-direction: column;
@@ -139,12 +156,12 @@ export const InputWrapper = styled.div`
 
     align-items: center;
     width: 485px;
-    border: #c7e0f4;
+
     height: 338px;
+    border: 1px solid #c7e0f4;
 
     border-radius: 4px;
     background-color: #f8fbfd;
-   
 
     ${({ theme }) => theme.breakpoints.up("xs")} {
       width: 556px;

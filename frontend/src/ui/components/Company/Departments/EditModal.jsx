@@ -126,7 +126,7 @@ export default EditModal;
 // STYLED COMPONENTS
 
 export const ModalContainer = styled.div`
-  position: absolute;
+  /* position: absolute;
   top: 0;
   right: 0;
   overflow: hidden;
@@ -137,5 +137,19 @@ export const ModalContainer = styled.div`
   justify-content: center;
 
   align-items: center;
+  z-index: 2; */
+
+  width: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  height: 100vh;
+  min-height: 100%;
+  top: 0;
+  right: 0;
+  /* transform: translate(-50%, -20%); */
   z-index: 2;
+  overflow: hidden;
 `;

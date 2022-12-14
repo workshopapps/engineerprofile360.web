@@ -89,8 +89,7 @@ const Login = () => {
         const id = response?.data?.data.id || "";
         const username = response?.data?.data.username || "";
 
-        console.log(response);
-
+        if (response.data.errorState === false && roles === 3) {
           setAuth({ email, accessToken, username, roles, id });
 
           localStorage.setItem(
@@ -104,17 +103,13 @@ const Login = () => {
             })
           );
 
-
-        console.log(response.data);
-        if (response.data.errorState === false) {
-          // Clear input fields
           setFormData({
             email: "",
             password: "",
           });
 
-            window.location.href = from;
-       } else if (response.data.errorState === true) {
+          window.location.href = from;
+        } else if (response.data.errorState === true) {
           showErrorToast(response.data.message);
         }
       }

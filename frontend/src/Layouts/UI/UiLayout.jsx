@@ -37,6 +37,7 @@ const Main = styled(Container)`
   display: flex;
   padding: ${({ theme }) => theme.spacing(4)} 0;
   width: 100%;
+
 `;
 
 const NavBar = styled.div`
