@@ -87,9 +87,10 @@ const Login = () => {
         const roles = response?.data?.data.role || "";
         const id = response?.data?.data.id || "";
         const username = response?.data?.data.username || "";
+        const dept_id = response?.data?.data.department_id || "";
 
         if (response.data.errorState === false && roles === 1) {
-          setAuth({ email, accessToken, username, roles, id });
+          setAuth({ email, accessToken, username, roles, id, dept_id });
 
           localStorage.setItem(
             "Eval360",
@@ -99,6 +100,7 @@ const Login = () => {
               roles,
               id,
               username,
+              dept_id,
             })
           );
 

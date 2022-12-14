@@ -46,36 +46,30 @@ const RecentAssessment = ({ assessments }) => {
             <tbody>
               <tr>
                 <th>#</th>
-                <th>Assessment name</th>
-                <th>Starting</th>
-                <th>Ending</th>
-                <th>Actions</th>
+                <th>Assessment</th>
+                <th>Department</th>
+                <th>Start Date</th>
+                <th>Deadline</th>
+                <th></th>
               </tr>
 
               {availableAssessments.map((item, index) => (
-                <tr key={item.assessment.id}>
+                <tr key={item.id}>
                   <td>{index + 1}</td>
-                  <td>{item.assessment.name}</td>
+                  <td>{item.name}</td>
+                  <td>{""}</td>
                   <td>
-                    {item.assessment.start_date} - {item.assessment.start_time}
+                    {item.start_date} - {item.start_time}
                   </td>
                   <td>
-                    {item.assessment.end_date} - {item.assessment.end_time}
+                    {item.end_date} - {item.end_time}
                   </td>
                   <td>
-                    {item.completed === 1 ? (
-                      <Button
-                        $variant="outlined"
-                        $color="#2667ff"
-                        onClick={() => handleClick(item.assessment.id)}
-                      >
-                        View Result
+                    <Link to={`/employee/assessment/${item.id}/preview`}>
+                      <Button $variant="outlined" $color="#2667ff">
+                        Take Test
                       </Button>
-                    ) : (
-                      <Link to="/">
-                        <Button>View Result</Button>
-                      </Link>
-                    )}
+                    </Link>
                   </td>
                 </tr>
               ))}
