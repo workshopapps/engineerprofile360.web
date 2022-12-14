@@ -26,7 +26,7 @@ const Flex = ({
         flexDirection: stack ? "column" : "row",
         alignItems: ai,
         justifyContent: jc,
-        cursor: "pointer",
+        // cursor: "pointer",
         height: isStretched ? "100%" : "auto",
         gap: spacing || "initial",
 

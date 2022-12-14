@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -11,18 +11,20 @@ import {
 } from "../../../../styles/reusableElements.styled";
 
 import InputField from "../../../../components/InputField";
-import AuthTitle from "../../../components/molecules/Auth/AuthTitle";
+import AuthTitle from "../../../components/Company/Auth/molecules/AuthTitle";
 
 import useInputValidation from "../../../../hooks/useInputValidation";
 import useAuth from "../../../../hooks/useAuth";
 import axios from "../../../../api/axios";
 
-import { Eye, Sms } from "iconsax-react";
+import eyeSvg from "../../../../assets/icons/eye.svg";
+import smsSvg from "../../../../assets/icons/smsenvelope.svg";
 
-const Login = () => {
+const AdminLogin = () => {
   const { setAuth, persist, setPersist } = useAuth();
+  const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/employee/dashboard";
+  const from = location.state?.from?.pathname || "/dashboard";
 
   const [isSubmitted, setIsSubmitted] = useState("");
   const [showPassword, setShowPassword] = useState(true);
@@ -79,18 +81,34 @@ const Login = () => {
 
         const { email, password } = formData;
         const response = await axios.post(
-          "auth/employee/login",
+          "auth/organization/login",
           JSON.stringify({ email, password })
         );
 
         const accessToken = response?.data?.data?.accessToken || "";
         const roles = response?.data?.data.role || "";
         const id = response?.data?.data.id || "";
+        const org_id = response?.data?.data.org_id || "";
         const username = response?.data?.data.username || "";
-        const dept_id = response?.data?.data.department_id || "";
 
-        if (response.data.errorState === false && roles === 1) {
-          setAuth({ email, accessToken, username, roles, id, dept_id });
+        console.log(response);
+
+        if (roles === 2) {
+          setAuth({ email, accessToken, username, roles, id, org_id });
+          persist &&
+            localStorage.setItem(
+              "Eval360",
+              JSON.stringify({
+                email,
+                accessToken,
+                roles,
+                id,
+                org_id,
+                username,
+              })
+            );
+        } else if (roles === 3) {
+          setAuth({ email, accessToken, username, roles, id });
 
           localStorage.setItem(
             "Eval360",
@@ -100,16 +118,23 @@ const Login = () => {
               roles,
               id,
               username,
-              dept_id,
             })
           );
+        }
 
+        console.log(response.data);
+        if (response.data.errorState === false) {
+          // Clear input fields
           setFormData({
             email: "",
             password: "",
           });
 
-          window.location.href = from;
+          if (roles === 2) {
+            navigate(from, { replace: true });
+          } else if (roles === 3) {
+            navigate("/admin/dashboard", { replace: true });
+          }
         } else if (response.data.errorState === true) {
           showErrorToast(response.data.message);
         }
@@ -130,7 +155,10 @@ const Login = () => {
     <>
       <FormContainer>
         <ToastContainer />
-        <AuthTitle title="Welcome back" text="Pick up where you left from" />
+        <AuthTitle
+          title="Welcome back"
+          text="Please enter your login details"
+        />
         <LoginForm onSubmit={(e) => handleSubmit(e, formData)}>
           <InputField
             $size="md"
@@ -142,7 +170,7 @@ const Login = () => {
             handleChange={(e) => changeInputValue(e)}
             handleBlur={onBlur}
             error={errors && touched.email && errors.email?.length > 0}
-            endIcon={<Sms />}
+            endIcon={<img src={smsSvg} alt="" />}
             helperText={
               errors && errors.email && touched.email ? errors.email : ""
             }
@@ -158,8 +186,10 @@ const Login = () => {
             error={errors && touched.password && errors.password?.length > 0}
             handleBlur={onBlur}
             endIcon={
-              <Eye
+              <img
                 onClick={() => setShowPassword((prevState) => !prevState)}
+                src={eyeSvg}
+                alt=""
                 style={{ cursor: "pointer" }}
               />
             }
@@ -180,7 +210,7 @@ const Login = () => {
               <span>Remember me</span>
             </label>
 
-            <Link to="/employee/reset-password">Forgot password?</Link>
+            <Link to="/reset-password">Forgot password?</Link>
           </Checkbox>
 
           <Button
@@ -190,13 +220,19 @@ const Login = () => {
           >
             {isSubmitted ? <Loader /> : "Sign In"}
           </Button>
+
+          <div>
+            <span>
+              Don't have an account? <Link to="/register">Sign up</Link>
+            </span>
+          </div>
         </LoginForm>
       </FormContainer>
     </>
   );
 };
 
-export default Login;
+export default AdminLogin;
 
 const FormContainer = styled(Container)`
   width: 100%;

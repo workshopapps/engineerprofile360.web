@@ -60,7 +60,6 @@ import {
   EmployeeLogin,
   EmployeeDashboard,
   EmployeeAssessment,
-  EmployeePreviewAssessment,
 } from "./ui/pages/Employee";
 
 import { AdminLogin } from "./ui/pages/Admin";
@@ -109,7 +108,9 @@ import PersistLogin from "./components/PersistLogin";
 import {
   AssessmentCompleted,
   AssessmentAvailable,
+  EmployeePreviewAssessment,
 } from "./ui/components/Employee";
+
 import EmployeeAssessmentResult from "./ui/pages/Employee/EmployeeAssessmentResult";
 import EmployeeAssessmentList from "./ui/pages/Employee/EmployeeAssessmentListOutlet";
 import AdminAssessmmentListOutlet from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmmentListOutlet";
@@ -205,43 +206,83 @@ const App = () => {
           <Route element={<AuthLayout />}>
             {/* Company Auth Routes */}
 
+
             <Route
               path="/register"
-              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
+              element={
+                auth.id && auth.roles === 2 ? (
+                  <Navigate to="/dashboard" />
+                ) : (
+                  <CompanySignup />
+                )
+              }
             />
             <Route
               path="/login"
-              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
+              element={
+                auth.id && auth.roles === 2 ? (
+                  <Navigate to="/dashboard" />
+                ) : (
+                  <CompanyLogin />
+                )
+              }
             />
             <Route
               path="/verify-email"
-              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
+              element={
+                auth.id && auth.roles === 2 ? (
+                  <Navigate to="/dashboard" />
+                ) : (
+                  <CompanyVerifyEmail />
+                )
+              }
             />
             <Route
               path={"/auth/verify/:user_id/:token"}
-              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
+              element={
+                auth.id && auth.roles === 2 ? (
+                  <Navigate to="/dashboard" />
+                ) : (
+                  <CompanyEmailVerified />
+                )
+              }
             />
             <Route
               path="/reset-password"
-              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
+              element={
+                auth.id && auth.roles === 2 ? (
+                  <Navigate to="/dashboard" />
+                ) : (
+                  <CompanyResetPassword />
+                )
+              }
             />
             <Route
               path="/password/reset"
-              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
+              element={
+                auth.id && auth.roles === 2 ? (
+                  <Navigate to="/dashboard" />
+                ) : (
+                  <CompanySetPassword />
+                )
+              }
+
             />
             <Route
               path="/reset-password-success"
-              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
+
+              element={
+                auth.id && auth.roles === 2 ? (
+                  <Navigate to="/dashboard" />
+                ) : (
+                  <CompanyPasswordSuccess />
+                )
+              }
             />
-
             {/* Employee Auth Routes */}
-
             <Route path="/employee/login" element={<EmployeeLogin />} />
-
             {/* Admin Auth Routes */}
-
             <Route path="/admin/login" element={<AdminLogin />} />
-
             <Route path="/guest-login" element={<GuestLogin />} />
           </Route>
 
@@ -361,7 +402,7 @@ const App = () => {
                 </Route>
 
                 <Route
-                  path="/employee/assessment/preview"
+                  path="/employee/assessment/:assessment_id/preview"
                   element={<EmployeePreviewAssessment />}
                 />
 
@@ -369,11 +410,12 @@ const App = () => {
               </Route>
 
               <Route path="/setting" element={<AdminSetting />} />
-              <Route path="/404" element={<Error />} />
+              {/* <Route path="/404" element={<Error />} /> */}
 
               {/* <Route path="/assessment" element={<Assessment />} /> */}
             </Route>
           </Route>
+          <Route path="*" element={<Error />} />
           {/* <Route element={<GuestLayout />}>
             <Route
               path="guest-assessment-list"

@@ -148,7 +148,7 @@ function Hero() {
                           <td>{employeeCount}</td>
                           <td>{assessmentCount}</td>
                           <td>
-                            <Button
+                            {/* <Button
                               disabled
                               w={"201px"}
                               h={"42px"}
@@ -162,7 +162,7 @@ function Hero() {
                               m={" 0"}
                             >
                               View Departments
-                            </Button>
+                            </Button> */}
 
                             <More
                               onClick={() => {

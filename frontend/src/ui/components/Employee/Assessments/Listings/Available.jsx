@@ -29,20 +29,20 @@ const Available = () => {
                 <th></th>
               </tr>
               {availableAssessments.map((item, index) => (
-                <tr key={item.assessment.id}>
+                <tr key={item.id}>
                   <td>{index + 1}</td>
-                  <td>{item.assessment.name}</td>
-                  <td>{item.assessment.department.name}</td>
+                  <td>{item.name}</td>
+                  <td>{item.department.name}</td>
                   <td>
-                    {item.assessment.start_date} - {item.assessment.start_time}
+                    {item.start_date} - {item.start_time}
                   </td>
                   <td>
-                    {item.assessment.end_date} - {item.assessment.end_time}
+                    {item.end_date} - {item.end_time}
                   </td>
                   <td>
-                    <Link to="/">
+                    <Link to={`/employee/assessment/${item.id}/preview`}>
                       <Button $variant="outlined" $color="#2667ff">
-                        View Result
+                        Take Test
                       </Button>
                     </Link>
                   </td>

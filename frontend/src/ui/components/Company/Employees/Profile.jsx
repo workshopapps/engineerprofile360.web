@@ -1,3 +1,4 @@
+import { User } from "iconsax-react";
 import React, { useState, useEffect } from "react";
 import { useParams, Outlet } from "react-router-dom";
 import styled from "styled-components";
@@ -7,14 +8,12 @@ import {
   Title,
   OverlayLoader,
 } from "../../../../styles/reusableElements.styled";
-import { ReactComponent as EmployeeProfilePhoto } from "../../../components/assets/user-photo.svg";
 
 const Profile = () => {
   const { ID } = useParams();
   const [employeeID, setEmployeeID] = useState(ID);
   const [employee, setEmployee] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-
 
   useEffect(() => {
     setEmployeeID(ID);
@@ -39,14 +38,19 @@ const Profile = () => {
   return (
     <>
       {!isLoading ? (
-
         // Employee Overview Container
-        
+
         <EmployeeProfileContainer>
           <EmployeeProfileStatsCard>
             <EmployeeProfileInfoCard>
               <EmployeeProfileInfo>
-                <EmployeeProfilePhoto />
+                <img
+                  src={`https://avatars.dicebear.com/api/micah/${
+                    employee.username ? employee.username : "photo"
+                  }.svg`}
+                  width="150px"
+                  alt="Avatar"
+                />
                 <EmployeeProfileInfoDetails>
                   <Title
                     as="h5"
@@ -105,7 +109,6 @@ const Profile = () => {
           {/* Renders outlet */}
 
           <Outlet context={{ employee }} />
-
         </EmployeeProfileContainer>
       ) : (
         <OverlayLoader contained>

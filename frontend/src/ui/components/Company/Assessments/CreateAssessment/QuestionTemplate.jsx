@@ -207,8 +207,8 @@ const QuestionTemplate = ({ assessment_id }) => {
               <select
                 onChange={(e) => editFieldType(inputfield.name, e.target.value)}
               >
-                <option value="radio">Multi-choice</option>
-                <option value="checkbox">Check-box</option>
+                <option value="radio">Single-Option</option>
+                <option value="checkbox">Multiple-Option</option>
               </select>
             </Title>
             <InputContainer>
