@@ -1,7 +1,7 @@
+import { Timer } from "iconsax-react";
 import React from "react";
 import styled from "styled-components";
 import pointer from "../assets/pointer.png";
-import timer from "../assets/timer-start.png";
 
 function ViewAssessmentHeader() {
   return (
@@ -35,25 +35,13 @@ function ViewAssessmentHeader() {
             </TextWrapper>
           </TextDiv>
           <TimerDiv>
-            <img src={timer} alt="count-down timer" />
+            <Timer />
             <div>
               <p> 00:00:00</p>
               <span>Timer</span>
             </div>
           </TimerDiv>
         </HeaderContainer>
-        <Description>
-          <h5>
-            Description :
-            <span>
-              This assessment was created to ensure that the participant of this
-              test understands the core basics of software engineering. This
-              test consists of four stages with 5 questions each. The stages
-              include basic general knowledge, backend knowledge, frontend
-              knowledge and DevOps Knowledge.
-            </span>
-          </h5>
-        </Description>
       </WrapperDiv>
     </>
   );

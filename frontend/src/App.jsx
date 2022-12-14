@@ -1,7 +1,7 @@
 // import React from "react";
 
 // This is for DevOps App Monitoring - START
-import * as atatus from "atatus-spa";
+//import * as atatus from "atatus-spa";
 // This is for DevOps App Monitoring - END
 
 //import * as Sentry from "@sentry/react";
@@ -54,11 +54,7 @@ import {
 
 import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 
-import {
-  EmployeeLogin,
-  EmployeeDashboard,
-  EmployeeUserAssessmentListOutlet,
-} from "./ui/pages/Employee";
+import { EmployeeLogin, EmployeeDashboard } from "./ui/pages/Employee";
 
 import { AdminLogin } from "./ui/pages/Admin";
 
@@ -107,7 +103,7 @@ import {
   AssessmentAvailable,
 } from "./ui/components/Employee";
 import EmployeeAssessmentResult from "./ui/pages/Employee/EmployeeAssessmentResult";
-import EmployeeAssessmentList from "./ui/pages/Employee/EmployeeAssessmentListOutlet";
+//import EmployeeAssessmentList from "./ui/pages/Employee/EmployeeAssessmentList";
 import AdminAssessmmentListOutlet from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmmentListOutlet";
 import AdminAssessmentListAvailable from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmentListAvailable";
 import AssessmentList from "./ui/components/Company/Assessments/adminAssesmentList/AssessmentList";
@@ -239,7 +235,7 @@ const App = () => {
               /> */}
               <Route
                 path="/employee-assessment-list"
-                element={<EmployeeAssessmentList />}
+                element={<UserAssessmentListOutlet />}
               >
                 <Route
                   path="employee-assessment-completed"
@@ -326,15 +322,6 @@ const App = () => {
                   path="/employee/dashboard"
                   element={<EmployeeDashboard />}
                 />
-
-                <Route
-                  path="/employee/assessment"
-                  element={<EmployeeUserAssessmentListOutlet />}
-                >
-                  <Route path="" element={<AssessmentAvailable />} />
-                  <Route path="completed" element={<AssessmentCompleted />} />
-                </Route>
-
                 {/* <Route path="/employee/dashboard" element={"boss"} /> */}
               </Route>
 
