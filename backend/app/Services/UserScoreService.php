@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Assessment;
 use App\Models\Question;
 use App\Models\UserAssessment;
 use App\Models\UserScore;
@@ -13,10 +14,11 @@ class UserScoreService
         extract($request);
         $result = self::calculateResult($request);
         $uerScore = UserScore::create(self::prepareRequest($result["data"]));
+        $org_id = Assessment::find($assessment_id)->first()['org_id'];
         UserAssessment::where(["assessment_id" => $assessment_id])->update([
             "completed" => 1,
             "userscore_id" => $uerScore->id,
-            "org_id" => $request["org_id"],
+            "org_id" => $org_id,
             "result" => $result["points"],
             "correct_questions" => $result["points"],
             "total_questions" => $result["data"]["total_questions"]
@@ -49,7 +51,7 @@ class UserScoreService
             //get question details
             $questions = Question::where(["id" => $value["question_id"]])->with("category")->first();
             // compare the answers
-            if (!array_diff($value["answer"], $questions->correct_answers)) {
+            if (!array_diff($value["answer"], str_split($questions->correct_answers, strlen($questions->correct_answers)))) {
                 //store the categories of the questions
                 if (!in_array($questions->category->name, $result["data"]["categories"])) {
                     array_push($result["data"]["categories"], $questions->category->name);

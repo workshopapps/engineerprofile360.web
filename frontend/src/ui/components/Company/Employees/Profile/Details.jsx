@@ -42,7 +42,8 @@ const Details = () => {
       <EmployeeProfileInnerContainer>
         <EmployeeDataContainer>
           <Title as="h5" $size="14px" $lHeight="40px" $weight="500">
-            Employee Data <Edit size={24} />
+            Employee Data 
+            {/* <Edit size={24} /> */}
           </Title>
 
           <EmployeeCard>

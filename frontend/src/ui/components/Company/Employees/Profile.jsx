@@ -44,7 +44,13 @@ const Profile = () => {
           <EmployeeProfileStatsCard>
             <EmployeeProfileInfoCard>
               <EmployeeProfileInfo>
-                <User size="100" color="#2667FF" />
+                <img
+                  src={`https://avatars.dicebear.com/api/micah/${
+                    employee.username ? employee.username : "photo"
+                  }.svg`}
+                  width="150px"
+                  alt="Avatar"
+                />
                 <EmployeeProfileInfoDetails>
                   <Title
                     as="h5"

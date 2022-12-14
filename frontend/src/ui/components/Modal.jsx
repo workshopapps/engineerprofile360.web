@@ -20,14 +20,16 @@ const InputWrapper = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
-  height: 100vh;
+  min-height: 100vh;
+  /* min-height: 1000px; */
+  height: 100%;
   top: 0;
   left: 50%;
   transform: translate(-50%, -20%);
   z-index: 2;
   overflow: hidden;
 
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(0, 0, 0, 0.7);
 
   form {
     display: flex;

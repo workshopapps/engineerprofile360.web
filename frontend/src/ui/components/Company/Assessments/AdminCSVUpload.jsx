@@ -16,7 +16,7 @@ import useAuth from "../../../../hooks/useAuth";
 import { useLocation } from "react-router-dom";
 
 const AdminCSVUpload = () => {
-  const [tab, setTab] = useState("upload");
+  const [tab, setTab] = useState("manual");
   const [files, setFiles] = useState(null);
   const [encodedFile, setEndcodedFile] = useState("");
   const inputRef = useRef();
@@ -77,17 +77,17 @@ const AdminCSVUpload = () => {
     <>
       <Main>
         <CreateTypeContainer>
-          <Upload
+          {/* <Upload
             onClick={() => setTab("upload")}
             className={tab === "upload" ? "active" : ""}
           >
             <p>Upload CSV file</p>
-          </Upload>
+          </Upload> */}
           <Manual
             onClick={() => setTab("manual")}
             className={tab === "manual" ? "active" : ""}
           >
-            <p>Create assessment manually</p>
+            <p>Create Assessment</p>
           </Manual>
         </CreateTypeContainer>
         {tab === "upload" && (

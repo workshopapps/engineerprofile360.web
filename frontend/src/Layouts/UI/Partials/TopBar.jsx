@@ -60,22 +60,28 @@ const TopBar = ({ handleLeftBarToggle, leftBar }) => {
           />
           <Options>
             <UserCon>
-              <User color="#323130" />
+              <img
+                src={`https://avatars.dicebear.com/api/micah/${
+                  auth.username ? auth.username : "photo"
+                }.svg`}
+                alt="Avatar"
+                width="35px"
+              />
               <span>{auth.username ? auth.username : ""}</span>
             </UserCon>
             <Icons>
-              <Notification color="#323130" />
-              <SearchNormal1 color="#323130" />
+              {/* <Notification color="#323130" /> */}
+              {/* <SearchNormal1 color="#323130" /> */}
               <ArrowDown2 onClick={handleDropDownToggle} />
               <DropDown $open={dropDown ? "open" : "close"}>
                 <List>
-                  <li>
+                  {/* <li>
                     <User color="#323130" /> Profile
-                  </li>
+                  </li> */}
                   <Link to={"/setting"} onClick={handleDropDownToggle}>
-                    <li>
+                    {/* <li>
                       <Setting2 color="#323130" /> Settings
-                    </li>
+                    </li> */}
                   </Link>
                   <li onClick={logout}>
                     <LogoutCurve color="#323130" /> Logout
@@ -143,8 +149,10 @@ const Navigation = styled.div`
 `;
 
 const SearchInputField = styled(InputField)`
+  opacity: 0;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     display: none;
+    pointer-events: none;
   }
 `;
 
@@ -216,6 +224,7 @@ const Icons = styled.div`
   display: flex;
   align-items: flex-end;
   gap: ${({ theme }) => theme.spacing(2)};
+  cursor: pointer;
 
   svg:nth-of-type(2) {
     ${({ theme }) => theme.breakpoints.up("sm")} {
