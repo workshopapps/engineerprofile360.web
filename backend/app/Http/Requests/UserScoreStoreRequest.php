@@ -26,7 +26,6 @@ class UserScoreStoreRequest extends BaseRequest
         return [
             "assessment_id" => 'required|exists:assessments,id',
             "employee_id" => 'required|exists:employees,id',
-            "org_id" => 'required|exists:companies,id',
             "answers" => 'required|array',
             "answers.*.question_id" => 'required|string',
             "answers.*.answer" => 'required|array'
