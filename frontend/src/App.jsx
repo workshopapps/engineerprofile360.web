@@ -1,7 +1,7 @@
 // import React from "react";
 
 // This is for DevOps App Monitoring - START
-import * as atatus from "atatus-spa";
+//import * as atatus from "atatus-spa";
 // This is for DevOps App Monitoring - END
 
 //import * as Sentry from "@sentry/react";
@@ -206,6 +206,7 @@ const App = () => {
           <Route element={<AuthLayout />}>
             {/* Company Auth Routes */}
 
+
             <Route
               path="/register"
               element={
@@ -265,9 +266,11 @@ const App = () => {
                   <CompanySetPassword />
                 )
               }
+
             />
             <Route
               path="/reset-password-success"
+
               element={
                 auth.id && auth.roles === 2 ? (
                   <Navigate to="/dashboard" />
@@ -276,15 +279,10 @@ const App = () => {
                 )
               }
             />
-
             {/* Employee Auth Routes */}
-
             <Route path="/employee/login" element={<EmployeeLogin />} />
-
             {/* Admin Auth Routes */}
-
             <Route path="/admin/login" element={<AdminLogin />} />
-
             <Route path="/guest-login" element={<GuestLogin />} />
           </Route>
 
@@ -412,11 +410,12 @@ const App = () => {
               </Route>
 
               <Route path="/setting" element={<AdminSetting />} />
-              <Route path="/404" element={<Error />} />
+              {/* <Route path="/404" element={<Error />} /> */}
 
               {/* <Route path="/assessment" element={<Assessment />} /> */}
             </Route>
           </Route>
+          <Route path="*" element={<Error />} />
           {/* <Route element={<GuestLayout />}>
             <Route
               path="guest-assessment-list"

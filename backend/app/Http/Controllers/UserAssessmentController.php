@@ -134,7 +134,6 @@ class UserAssessmentController extends Controller
     public function getEmployeeCompletedAssessment($employee_id): JsonResponse
     {
         try {
-
             // Check if employee exists in employees table
             $employee = Employee::where('id', $employee_id)->first();
 
