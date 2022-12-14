@@ -8,7 +8,7 @@ import {
   Loader,
 } from "../../../../../../styles/reusableElements.styled";
 
-import ViewAssessmentHeader from "./ViewAssessmentHeader";
+import ViewAssessmentHeader, { AssessmentTimer } from "./ViewAssessmentHeader";
 import axios from "../../../../../../api/axios";
 import useAuth from "../../../../../../hooks/useAuth";
 import { showErrorToast } from "../../../../../../helpers/helper";
@@ -109,7 +109,6 @@ const AssessmentContent = () => {
       );
     }
   };
-
   const navigate = useNavigate();
   return loading ? (
     <ButtonWrapper>
@@ -126,14 +125,21 @@ const AssessmentContent = () => {
               ? assessmentDetails?.department?.name
               : "loading"
           }
-          duration={
-            (assessmentDetails?.end_time
-              ? Number(assessmentDetails?.end_time?.split(":").join(""))
-              : 0) -
-            (assessmentDetails?.start_time
-              ? Number(assessmentDetails?.start_time?.split(":").join(""))
-              : 0)
-          }
+          duration={`${
+            AssessmentTimer(assessmentDetails) < 1
+              ? parseFloat((AssessmentTimer(assessmentDetails) / 100) * 60)
+                  .toFixed(2)
+                  .split(".")
+                  .join(":")
+              : AssessmentTimer(assessmentDetails).toFixed(2)
+          } 
+           ${
+             AssessmentTimer(assessmentDetails) < 1
+               ? "Minutes"
+               : AssessmentTimer(assessmentDetails) > 1
+               ? "Hours"
+               : "Hour"
+           }`}
           deadline={
             assessmentDetails?.end_date
               ? assessmentDetails?.end_date
@@ -152,7 +158,7 @@ const AssessmentContent = () => {
                   </QuestionTitle>
                   {optionsData.map((option, i) => {
                     return (
-                      <div key={i}>
+                      <InputWrapper key={i}>
                         <input
                           type="radio"
                           value={i}
@@ -160,9 +166,11 @@ const AssessmentContent = () => {
                           onChange={() => {
                             handleChange(id, i);
                           }}
+                          checked={correct_answers}
+                          id={id}
                         />
                         <label htmlFor={id}>{option?.optionText}</label>
-                      </div>
+                      </InputWrapper>
                     );
                   })}
                 </QuestionsWrapper>
@@ -174,20 +182,21 @@ const AssessmentContent = () => {
             <FilterNextSubmit>
               {<Prev />}
               {<Next />}
-
-              <Button
-                $size="md"
-                type="button"
-                onClick={() => {
-                  localStorage.setItem(
-                    "evalAssessment",
-                    JSON.stringify(useAnswers)
-                  );
-                  navigate(`/assessment/view-assessment/${assessment_id}`);
-                }}
-              >
-                Edit
-              </Button>
+              <ButtonEditWrapper>
+                <Button
+                  $size="md"
+                  type="button"
+                  onClick={() => {
+                    localStorage.setItem(
+                      "evalAssessment",
+                      JSON.stringify(useAnswers)
+                    );
+                    navigate(`/assessment/view-assessment/${assessment_id}`);
+                  }}
+                >
+                  Edit
+                </Button>
+              </ButtonEditWrapper>
             </FilterNextSubmit>
           </form>
         </QuestionsContainer>
@@ -231,9 +240,20 @@ const QuestionsContainer = styled.div`
   }
 
   input[type="radio"] {
-    margin-left: 10px;
+    accent-color: #4ecb71;
+    border-radius: 50%;
+    appearance: none;
+    border: 5px solid #fff;
+    outline: 1px solid #323130;
   }
 
+  input[type="radio"]:checked {
+    accent-color: #4ecb71;
+    background-color: #4ecb71;
+    border-radius: 50%;
+    border: 5px solid #4ecb71;
+    outline: 1px solid #4ecb71;
+  }
   @media screen and (max-width: 767px) {
     text-align: left;
 
@@ -265,4 +285,15 @@ const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const ButtonEditWrapper = styled.div`
+  display: none;
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
 `;

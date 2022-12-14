@@ -9,6 +9,7 @@ import {
   AssessmentListings,
   AssessmentTab,
   AssessmentTabContainer,
+  AssessmentTimer,
   ButtonContainer,
   ButtonInner,
   Hide,
@@ -122,10 +123,22 @@ export const List = () => {
                     <td>{item?.department.name}</td>
                     <td>{item?.start_date}</td>
                     <td>
-                      {Number(
-                        item?.end_time.split(":").join("") -
-                          item?.start_time.split(":").join("")
-                      )}
+                      {" "}
+                      {`${
+                        AssessmentTimer(item) < 1
+                          ? parseFloat((AssessmentTimer(item) / 100) * 60)
+                              .toFixed(2)
+                              .split(".")
+                              .join(":")
+                          : AssessmentTimer(item).toFixed(2)
+                      } 
+           ${
+             AssessmentTimer(item) < 1
+               ? "Minutes"
+               : AssessmentTimer(item) > 1
+               ? "Hours"
+               : "Hour"
+           }`}
                     </td>
                     <td>{item?.end_date}</td>
                     <td>

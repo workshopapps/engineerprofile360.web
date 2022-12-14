@@ -102,6 +102,16 @@ const Buttons = () => {
   );
 };
 
+//Duration
+export const AssessmentTimer = (timer) => {
+  const duration =
+    ((timer?.end_time ? Number(timer?.end_time?.split(":").join("")) : 0) -
+      (timer?.start_time
+        ? Number(timer?.start_time?.split(":").join(""))
+        : 0)) /
+    60;
+  return duration;
+};
 const List = () => {
   const { available, setAvailable, isLoading, setIsLoading, setCompleted } =
     useContext(DataContext);
@@ -164,10 +174,21 @@ const List = () => {
                   <td>{item?.department.name}</td>
                   <td>{item?.start_date}</td>
                   <td>
-                    {Number(
-                      item?.end_time.split(":").join("") -
-                        item?.start_time.split(":").join("")
-                    )}
+                    {`${
+                      AssessmentTimer(item) < 1
+                        ? parseFloat((AssessmentTimer(item) / 100) * 60)
+                            .toFixed(2)
+                            .split(".")
+                            .join(":")
+                        : (AssessmentTimer(item).toFixed(2))
+                    } 
+           ${
+             AssessmentTimer(item) < 1
+               ? "Minutes"
+               : AssessmentTimer(item) > 1
+               ? "Hours"
+               : "Hour"
+           }`}
                   </td>
                   <td>{item?.end_date}</td>
 
