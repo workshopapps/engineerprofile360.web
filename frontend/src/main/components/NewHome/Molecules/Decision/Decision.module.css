@@ -7,7 +7,7 @@
   font-family: "Inter", sans-serif;
 }
 
-.container {
+.decision {
   max-width: 85vw;
   margin: 0 auto;
   display: flex;
@@ -17,33 +17,34 @@
   position: relative;
 }
 
-.circle {
+.decision .circle {
   position: absolute;
   top: -10rem;
   right: 8.5rem;
   z-index: 1;
 }
 
-.board {
+.decision .board {
   position: relative;
   z-index: 2;
 }
 
-.content {
+.decision .content {
   text-align: center;
   margin: 2rem 0 3rem;
 }
 
-.content h2 {
+.decision .content h2 {
+  margin: 0 auto;
   text-align: center;
-  margin-bottom: 1rem;
 }
 
-.content p {
+.decision .content p {
   font-weight: normal;
+  margin: 1rem 0 2rem;
 }
 
-button {
+.decision button {
   background-color: #2667ff;
   color: #fff;
   font-weight: bold;
@@ -55,10 +56,17 @@ button {
   transition: all 0.4s ease-in-out;
 }
 
-button:hover {
+.decision button:hover {
   transform: scale(1.05);
 }
 
-button:active {
+.decision button:active {
   transform: scale(0.95);
+}
+
+@media (max-width: 767px) {
+  .decision img {
+    max-width: 90vw;
+    margin: 0auto;
+  }
 }

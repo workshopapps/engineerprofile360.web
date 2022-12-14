@@ -4,7 +4,7 @@ import circle from "../../assets/circle.png";
 
 const Decision = () => {
   return (
-    <div className={styles.container}>
+    <div className={styles.decision}>
       <img src={circle} alt="circle" className={styles.circle} />
       <div className={styles.image}>
         <img src={board} alt="board" className={styles.board} />
