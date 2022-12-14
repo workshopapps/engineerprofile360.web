@@ -5,7 +5,7 @@
 // This is for DevOps App Monitoring - END
 
 //import * as Sentry from "@sentry/react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import RequireAuth from "./components/requireAuth";
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
@@ -65,6 +65,8 @@ import {
 
 import { AdminLogin } from "./ui/pages/Admin";
 
+import useAuth from "./hooks/useAuth";
+
 import UserSupport from "./main/pages/UserSupport";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
 // import AdminAssessmentList from "./ui/pages/admin-settings/adminAssesmentList/AssessmentList";
@@ -113,7 +115,8 @@ import EmployeeAssessmentList from "./ui/pages/Employee/EmployeeAssessmentListOu
 import AdminAssessmmentListOutlet from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmmentListOutlet";
 import AdminAssessmentListAvailable from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmentListAvailable";
 import AssessmentList from "./ui/components/Company/Assessments/adminAssesmentList/AssessmentList";
-import GuestLayout from "./ui/components/Guests/GuestLayout";
+import Assessments from "./ui/pages/Admin/Dashboard/Assessmentss";
+import CreateAssessmentss from "./ui/pages/Admin/Dashboard/CreateAssessments";
 
 // This is for DevOps App Monitoring - START
 //atatus.config("4010279ebbd747e7a752082eea130df6").install();
@@ -129,6 +132,7 @@ const ROLES = {
 };
 
 const App = () => {
+  const { auth } = useAuth();
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -201,18 +205,33 @@ const App = () => {
           <Route element={<AuthLayout />}>
             {/* Company Auth Routes */}
 
-            <Route path="/register" element={<CompanySignup />} />
-            <Route path="/login" element={<CompanyLogin />} />
-            <Route path="/verify-email" element={<CompanyVerifyEmail />} />
+            <Route
+              path="/register"
+              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
+            />
+            <Route
+              path="/login"
+              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
+            />
+            <Route
+              path="/verify-email"
+              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
+            />
             <Route
               path={"/auth/verify/:user_id/:token"}
-              element={<CompanyEmailVerified />}
+              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
             />
-            <Route path="/reset-password" element={<CompanyResetPassword />} />
-            <Route path="/password/reset" element={<CompanySetPassword />} />
+            <Route
+              path="/reset-password"
+              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
+            />
+            <Route
+              path="/password/reset"
+              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
+            />
             <Route
               path="/reset-password-success"
-              element={<CompanyPasswordSuccess />}
+              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
             />
 
             {/* Employee Auth Routes */}
@@ -316,6 +335,11 @@ const App = () => {
 
               {/* Overall Admin Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
+                <Route path="/admin/Assessments" element={<Assessments />} />
+                <Route
+                  path="/admin/create-assessmentss"
+                  element={<CreateAssessmentss />}
+                />
                 {/* Put in Protected pages in here */}
                 <Route path="/admin/dashboard" element={<Dashboard />} />
                 <Route path="/admin/stacks" element={<Stacks />} />
@@ -350,7 +374,7 @@ const App = () => {
               {/* <Route path="/assessment" element={<Assessment />} /> */}
             </Route>
           </Route>
-          <Route element={<GuestLayout />}>
+          {/* <Route element={<GuestLayout />}>
             <Route
               path="guest-assessment-list"
               element={<GuestAssessmentList />}
@@ -361,7 +385,7 @@ const App = () => {
               path="/guest-take-assessment-result"
               element={<GuestTakeAssessmentResult />}
             />
-          </Route>
+          </Route> */}
         </Routes>
       </ThemeProvider>
       <StyledToastContainer />
