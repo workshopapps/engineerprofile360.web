@@ -67,12 +67,18 @@
   z-index: 1;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1000px) {
   .hero {
     max-width: 95vw;
     margin: 0 auto;
   }
 
+  .hero img {
+    width: 90vw;
+  }
+}
+
+@media (max-width: 767px) {
   .hero .content {
     margin-top: 2rem;
   }
@@ -85,9 +91,5 @@
   .hero p,
   .hero p span {
     font-size: 0.9rem;
-  }
-
-  .hero img {
-    width: 90vw;
   }
 }
