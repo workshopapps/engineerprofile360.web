@@ -5,7 +5,7 @@ import * as atatus from "atatus-spa";
 // This is for DevOps App Monitoring - END
 
 //import * as Sentry from "@sentry/react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import RequireAuth from "./components/requireAuth";
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
@@ -64,6 +64,8 @@ import {
 } from "./ui/pages/Employee";
 
 import { AdminLogin } from "./ui/pages/Admin";
+
+import useAuth from "./hooks/useAuth";
 
 import UserSupport from "./main/pages/UserSupport";
 // import UserProfile from "./ui/pages/user-profile/UserProfile";
@@ -129,6 +131,7 @@ const ROLES = {
 };
 
 const App = () => {
+  const { auth } = useAuth();
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -201,18 +204,33 @@ const App = () => {
           <Route element={<AuthLayout />}>
             {/* Company Auth Routes */}
 
-            <Route path="/register" element={<CompanySignup />} />
-            <Route path="/login" element={<CompanyLogin />} />
-            <Route path="/verify-email" element={<CompanyVerifyEmail />} />
+            <Route
+              path="/register"
+              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
+            />
+            <Route
+              path="/login"
+              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
+            />
+            <Route
+              path="/verify-email"
+              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
+            />
             <Route
               path={"/auth/verify/:user_id/:token"}
-              element={<CompanyEmailVerified />}
+              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
             />
-            <Route path="/reset-password" element={<CompanyResetPassword />} />
-            <Route path="/password/reset" element={<CompanySetPassword />} />
+            <Route
+              path="/reset-password"
+              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
+            />
+            <Route
+              path="/password/reset"
+              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
+            />
             <Route
               path="/reset-password-success"
-              element={<CompanyPasswordSuccess />}
+              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
             />
 
             {/* Employee Auth Routes */}
@@ -259,7 +277,7 @@ const App = () => {
               {/* Organization Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
                 <Route
-                  path="/assessment/view-assessment"
+                  path="/assessment/view-assessment/:id"
                   element={<AdminViewAssessment />}
                 />
 
