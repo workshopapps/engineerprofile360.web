@@ -22,6 +22,8 @@ const RecentAssessment = ({ assessments }) => {
     window.scrollTo(0, 0);
   };
 
+  console.log(assessments);
+
   return (
     <>
       <AssessmentContainer>
@@ -57,7 +59,7 @@ const RecentAssessment = ({ assessments }) => {
                 <tr key={item.id}>
                   <td>{index + 1}</td>
                   <td>{item.name}</td>
-                  <td>{""}</td>
+                  <td>{item.department.name}</td>
                   <td>
                     {item.start_date} - {item.start_time}
                   </td>

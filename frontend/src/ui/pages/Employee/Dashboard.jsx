@@ -25,9 +25,9 @@ const Dashboard = () => {
         await Promise.all(ENDPOINTS).then((data) => {
           setStats(data[0]?.data?.data[0]);
           setAssessments(
-            data[1]?.data?.data.filter(
+            data[2]?.data?.data.filter(
               (assessment) =>
-                !data[2]?.data?.data.some(
+                !data[1]?.data?.data.some(
                   (completed) => assessment.id === completed.assessment_id
                 )
             )
