@@ -5,7 +5,7 @@ import box from "../../assets/box.png";
 
 const Feature = () => {
   return (
-    <div className={styles.container}>
+    <div className={styles.feature}>
       <h2>Product Core Features</h2>
       <div className={styles.boxes}>
         <div className={styles.box}>

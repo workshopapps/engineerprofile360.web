@@ -7,32 +7,62 @@
   font-family: "Inter", sans-serif;
 }
 
-.container {
+.feature {
   max-width: 85vw;
-  margin: 0 auto;
+  margin: 3rem auto;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 }
 
-.box,
-.left {
+.boxes {
+  transform: scale(1);
+}
+
+.feature h2 {
+  margin: 0 auto 5rem;
+}
+
+.feature .box,
+.feature .left {
   display: flex;
   align-items: center;
   gap: 3rem;
   border: 2px solid #2667ff;
   padding: 2rem;
   border-radius: 1rem;
-  width: 65%;
+  width: 70%;
   margin-bottom: 1.5rem;
 }
 
-.left {
-  margin-left: 30rem;
-  align-self: flex-end;
+.feature .left {
+  transform: translateX(43%);
 }
 
-.content {
+.feature .content {
   flex-direction: column;
+}
+
+.feature .content h4 {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 767px) {
+  .feature .box,
+  .feature .left {
+    text-align: center;
+    flex-direction: column;
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  .feature h2 {
+    text-align: center;
+  }
+
+  .feature .left {
+    margin: 2rem auto;
+    transform: translateX(0);
+  }
 }
