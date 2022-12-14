@@ -40,19 +40,19 @@ const RecentAssessment = ({ assessments }) => {
               <th>Actions</th>
             </tr>
 
-            {availableAssessments.map((assessment, index) => (
-              <tr key={assessment.id}>
+            {availableAssessments.map((item, index) => (
+              <tr key={item.assessment.id}>
                 <td>{index + 1}</td>
-                <td>{assessment.name}</td>
+                <td>{item.assessment.name}</td>
                 <td>
-                  {assessment.start_date} {assessment.start_time}
+                  {item.assessment.start_date} - {item.assessment.start_time}
                 </td>
                 <td>
-                  {assessment.end_date} {assessment.end_time}
+                  {item.assessment.end_date} - {item.assessment.end_time}
                 </td>
                 <td>
-                  <Link to="/employee/assessments">
-                    <Button $variant="outlined" $color="#2667FF">
+                  <Link to="/">
+                    <Button $variant="outlined" $color="#2667ff">
                       View Result
                     </Button>
                   </Link>

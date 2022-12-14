@@ -3,7 +3,14 @@ import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import useAuth from "../../../hooks/useAuth";
 
-import { Menu, TaskSquare, Profile2User, Home3, Folder2, Box1 } from "iconsax-react";
+import {
+  Menu,
+  TaskSquare,
+  Profile2User,
+  Home3,
+  Folder2,
+  Box1,
+} from "iconsax-react";
 
 const LeftBar = () => {
   const { pathname } = useLocation();
@@ -15,25 +22,25 @@ const LeftBar = () => {
         <List>
           <ListItem
             $active={
-              pathname.split("/")[1] === "dashboard" ||
-              pathname === "/dashboard"
+              pathname.split("/")[2] === "dashboard" ||
+              pathname === "/employee/dashboard"
                 ? "active"
                 : ""
             }
           >
-            <Link to="/dashboard">
+            <Link to="/employee/dashboard">
               <Menu /> Dashboard
             </Link>
           </ListItem>
           <ListItem
             $active={
-              pathname.split("/")[1] === "assessment" ||
-              pathname === "/assessment"
+              pathname.split("/")[2] === "assessment" ||
+              pathname === "/employee/assessment"
                 ? "active"
                 : ""
             }
           >
-            <Link to="/assessment">
+            <Link to="/employee/assessment">
               <TaskSquare /> Assessment
             </Link>
           </ListItem>

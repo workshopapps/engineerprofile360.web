@@ -79,6 +79,7 @@ const Login = () => {
         setIsSubmitted(true);
 
         const { email, password } = formData;
+
         const response = await axios.post(
           "auth/organization/login",
           JSON.stringify({ email, password })
@@ -90,10 +91,9 @@ const Login = () => {
         const org_id = response?.data?.data.org_id || "";
         const username = response?.data?.data.username || "";
 
-        console.log(response);
-
+        if (response.data.errorState === false && roles === 2) {
           setAuth({ email, accessToken, username, roles, id, org_id });
-          // persist &&
+
           localStorage.setItem(
             "Eval360",
             JSON.stringify({
@@ -105,17 +105,14 @@ const Login = () => {
               username,
             })
           );
-        
-        console.log(auth);
-        if (response.data.errorState === false) {
+
           // Clear input fields
           setFormData({
             email: "",
             password: "",
           });
 
-            window.location.href = from;
-
+          window.location.href = from;
         } else if (response.data.errorState === true) {
           showErrorToast(response.data.message);
         }
