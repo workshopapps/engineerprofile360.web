@@ -40,7 +40,10 @@ const Available = () => {
                     {item.end_date} - {item.end_time}
                   </td>
                   <td>
-                    <Link to={`/employee/assessment/${item.id}/preview`}>
+                    <Link
+                      to={`/employee/assessment/${item.id}`}
+                      state={{ assessment: item }}
+                    >
                       <Button $variant="outlined" $color="#2667ff">
                         Take Test
                       </Button>

@@ -109,6 +109,7 @@ import {
   AssessmentCompleted,
   AssessmentAvailable,
   EmployeePreviewAssessment,
+  EmployeeTakeAssessment,
 } from "./ui/components/Employee";
 
 import EmployeeAssessmentResult from "./ui/pages/Employee/EmployeeAssessmentResult";
@@ -206,7 +207,6 @@ const App = () => {
           <Route element={<AuthLayout />}>
             {/* Company Auth Routes */}
 
-
             <Route
               path="/register"
               element={
@@ -266,11 +266,9 @@ const App = () => {
                   <CompanySetPassword />
                 )
               }
-
             />
             <Route
               path="/reset-password-success"
-
               element={
                 auth.id && auth.roles === 2 ? (
                   <Navigate to="/dashboard" />
@@ -402,9 +400,14 @@ const App = () => {
                 </Route>
 
                 <Route
-                  path="/employee/assessment/:assessment_id/preview"
+                  path="/employee/assessment/:assessment_id"
                   element={<EmployeePreviewAssessment />}
-                />
+                >
+                  <Route
+                    path="take-assessment"
+                    element={<EmployeeTakeAssessment />}
+                  />
+                </Route>
 
                 {/* <Route path="/employee/dashboard" element={"boss"} /> */}
               </Route>
