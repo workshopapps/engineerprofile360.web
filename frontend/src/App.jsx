@@ -115,7 +115,8 @@ import EmployeeAssessmentList from "./ui/pages/Employee/EmployeeAssessmentListOu
 import AdminAssessmmentListOutlet from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmmentListOutlet";
 import AdminAssessmentListAvailable from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmentListAvailable";
 import AssessmentList from "./ui/components/Company/Assessments/adminAssesmentList/AssessmentList";
-import GuestLayout from "./ui/components/Guests/GuestLayout";
+import Assessments from "./ui/pages/Admin/Dashboard/Assessmentss";
+import CreateAssessmentss from "./ui/pages/Admin/Dashboard/CreateAssessments";
 
 // This is for DevOps App Monitoring - START
 //atatus.config("4010279ebbd747e7a752082eea130df6").install();
@@ -334,6 +335,11 @@ const App = () => {
 
               {/* Overall Admin Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
+                <Route path="/admin/Assessments" element={<Assessments />} />
+                <Route
+                  path="/admin/create-assessmentss"
+                  element={<CreateAssessmentss />}
+                />
                 {/* Put in Protected pages in here */}
                 <Route path="/admin/dashboard" element={<Dashboard />} />
                 <Route path="/admin/stacks" element={<Stacks />} />
@@ -369,7 +375,7 @@ const App = () => {
               {/* <Route path="/assessment" element={<Assessment />} /> */}
             </Route>
           </Route>
-          <Route element={<GuestLayout />}>
+          {/* <Route element={<GuestLayout />}>
             <Route
               path="guest-assessment-list"
               element={<GuestAssessmentList />}
@@ -380,7 +386,7 @@ const App = () => {
               path="/guest-take-assessment-result"
               element={<GuestTakeAssessmentResult />}
             />
-          </Route>
+          </Route> */}
         </Routes>
       </ThemeProvider>
       <StyledToastContainer />
