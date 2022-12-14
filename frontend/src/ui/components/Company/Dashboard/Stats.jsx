@@ -27,6 +27,8 @@ ChartJS.register(
 
 const Stats = ({ stats, topPerformance }) => {
   console.log(topPerformance);
+  console.log(stats);
+
   return (
     <>
       <StatsContainer>

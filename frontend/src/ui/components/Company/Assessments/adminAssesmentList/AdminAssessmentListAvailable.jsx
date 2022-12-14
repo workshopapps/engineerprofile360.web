@@ -9,68 +9,8 @@ import useAuth from "../../../../../hooks/useAuth";
 import { showErrorToast } from "../../../../../helpers/helper";
 import { AddCircle } from "iconsax-react";
 import TableComponent from "../../../molecules/TableComponent";
-// import useAuth from "";
 
 const DataContext = createContext(null);
-
-const info = [
-  {
-    id: "1",
-    dept: "HNG Tutorials",
-    course: "Zuri 101",
-    duration: "30 mins",
-    date: "25 Apr 2020",
-  },
-  {
-    id: "2",
-    dept: "Basics of software engineering",
-    course: "PHP 252",
-    duration: "30 mins",
-    date: "24 Jan 2022",
-  },
-  {
-    id: "3",
-    dept: "Introduction to cybersecurity",
-    course: "CYB 110",
-    duration: "30 mins",
-    date: "23 Apr 2021",
-  },
-  {
-    id: "4",
-    dept: "Principles of software engineering",
-    course: "Laravel 540",
-    duration: "30 mins",
-    date: "22 Mar 2022",
-  },
-  {
-    id: "5",
-    dept: "General Engineering assessment",
-    course: "Engineer 101",
-    duration: "30 mins",
-    date: "21 Feb 2022",
-  },
-  {
-    id: "6",
-    dept: "Introduction to Django Framework",
-    course: "Framework 505",
-    duration: "30 mins",
-    date: "20 Dec 2022",
-  },
-  {
-    id: "7",
-    dept: "HTML, CSS and Javascript",
-    course: "FE 360",
-    duration: "30 mins",
-    date: "19 Aug 2022",
-  },
-  {
-    id: "8",
-    dept: "General Software Engineering Work",
-    course: "GST 210",
-    duration: "30 mins",
-    date: "18 Oct 2022",
-  },
-];
 
 const Buttons = () => {
   return (
@@ -103,15 +43,30 @@ const Buttons = () => {
 };
 
 //Duration
-export const AssessmentTimer = (timer) => {
-  const duration =
-    ((timer?.end_time ? Number(timer?.end_time?.split(":").join("")) : 0) -
-      (timer?.start_time
-        ? Number(timer?.start_time?.split(":").join(""))
-        : 0)) /
-    60;
-  return duration;
+export const TimeStamp = (timestamp) => {
+  let TimeDuration =
+    (timestamp?.end_time
+      ? Number(timestamp?.end_time?.split(":").join(""))
+      : 0) -
+    (timestamp?.start_time
+      ? Number(timestamp?.start_time?.split(":").join(""))
+      : 0);
+  let Hours = Math.floor(TimeDuration / 60);
+  let Minutes = TimeDuration % 60;
+
+  var DurationTime =
+    Hours +
+    `${Hours === 1 ? " Hour " : " Hours "}` +
+    (Minutes === 0 ? "" : Minutes) +
+    `${Minutes === 0 ? "" : " Minutes "}`;
+
+  if (Hours <= 1) {
+    return Minutes + " Minutes ";
+  }
+
+  return DurationTime;
 };
+
 const List = () => {
   const { available, setAvailable, isLoading, setIsLoading, setCompleted } =
     useContext(DataContext);
@@ -125,6 +80,7 @@ const List = () => {
         setIsLoading(false);
         const availableData = response?.data?.data;
         setAvailable(availableData);
+        console.log(availableData);
 
         //Get Completed Assessment Counts
         const responseCompleted = await axios.get(
@@ -173,23 +129,7 @@ const List = () => {
                   <td>{item?.name}</td>
                   <td>{item?.department.name}</td>
                   <td>{item?.start_date}</td>
-                  <td>
-                    {`${
-                      AssessmentTimer(item) < 1
-                        ? parseFloat((AssessmentTimer(item) / 100) * 60)
-                            .toFixed(2)
-                            .split(".")
-                            .join(":")
-                        : (AssessmentTimer(item).toFixed(2))
-                    } 
-           ${
-             AssessmentTimer(item) < 1
-               ? "Minutes"
-               : AssessmentTimer(item) > 1
-               ? "Hours"
-               : "Hour"
-           }`}
-                  </td>
+                  <td>{TimeStamp(item)}</td>
                   <td>{item?.end_date}</td>
 
                   <td>
@@ -235,8 +175,6 @@ const Assessment = ({ available, completed }) => {
 };
 
 const AvailableAssessmentList = () => {
-  const [assessmentInfo, setAssessmentInfo] = useState(info);
-  const [order, setOrder] = useState("asc");
   const [available, setAvailable] = useState([]);
   const [completed, setCompleted] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -244,10 +182,6 @@ const AvailableAssessmentList = () => {
     <>
       <DataContext.Provider
         value={{
-          assessmentInfo,
-          setAssessmentInfo,
-          order,
-          setOrder,
           available,
           setAvailable,
           isLoading,
