@@ -112,7 +112,8 @@ class AuthenticateController extends Controller
                         "accessToken" => $accToken,
                         "id" => $employees->first()["id"],
                         "role" => $employees->first()["role"],
-                        "username" => $employees->first()["username"]
+                        "username" => $employees->first()["username"],
+                        "department_id" => $employees->first()["department_id"]
                     ];
 
 
