@@ -79,20 +79,20 @@ const AssessmentResult = ({ assessment_id, setModal }) => {
             <>
               <Heading>
                 <p>Username</p>
-                <span>{auth.username}</span>
+                <span>John Snow</span>
               </Heading>
               <AssessmentInfo>
                 <Details>
                   <Detail>
                     <span>
-                      <b>Name</b>
+                      <b>Department</b>
                     </span>
                     <p>UI/UX Engineer</p>
                   </Detail>
 
                   <Detail>
                     <span>
-                      <b>Name</b>
+                      <b>Assessment</b>
                     </span>
                     <p>UI/UX Engineer</p>
                   </Detail>
@@ -103,7 +103,14 @@ const AssessmentResult = ({ assessment_id, setModal }) => {
                     </span>
                     <p
                       style={{
-                        color: "green",
+                        color:
+                          performance &&
+                          (
+                            (performance.result / performance.total_questions) *
+                            100
+                          ).toFixed(2) > 50
+                            ? "green"
+                            : "red",
                       }}
                     >
                       {performance
@@ -118,7 +125,11 @@ const AssessmentResult = ({ assessment_id, setModal }) => {
                 </Details>
                 <ChartDetails>
                   <Radar data={data} />
-                  <Button fullWidth>View Full Profile</Button>
+                  <Link to={`/employee/profile/${auth.id}`}>
+                    <Button fullWidth $weight="400">
+                      View Full Profile
+                    </Button>
+                  </Link>
                 </ChartDetails>
               </AssessmentInfo>
             </>
@@ -138,17 +149,14 @@ export default AssessmentResult;
 
 const ResultModal = styled.div`
   width: 100%;
-  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
-  height: 100vh;
-  top: 30%;
+  top: 190px;
   left: 50%;
-  transform: translate(-50%, -20%);
+  transform: translate(-50%, -15%);
   z-index: 2;
-  overflow: auto;
 
   background-color: rgba(255, 255, 255, 0.8);
 `;
@@ -191,6 +199,10 @@ const AssessmentInfo = styled.div`
   ${({ theme }) => theme.breakpoints.down("touch")} {
     flex-direction: column;
     width: 80%;
+    margin: auto;
+    gap: ${({ theme }) => theme.spacing(6)};
+    justify-content: center;
+    align-items: center;
   }
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -208,7 +220,7 @@ const Details = styled.div`
   border-radius: ${({ theme }) => theme.spacing(3)};
 
   ${({ theme }) => theme.breakpoints.down("touch")} {
-    flex: 0 0 100%;
+    width: 100%;
   }
 `;
 
@@ -235,18 +247,23 @@ const Detail = styled.div`
 
 const ChartDetails = styled.div`
   flex: 0 0 calc(55% - ${({ theme }) => theme.spacing(2)});
-  max-height: 400px;
+  max-height: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  // padding: 0 ${({ theme }) => theme.spacing(1.5)};
   padding-bottom: ${({ theme }) => theme.spacing(6)};
 
   ${({ theme }) => theme.breakpoints.down("touch")} {
-    flex: 0 0 100%;
+    width: 100%;
+  }
+
+  a {
+    width: 100%;
   }
 
   ${Button} {
     width: 100%;
-    max-width: initial;
+    max-width: 100%;
   }
 `;
