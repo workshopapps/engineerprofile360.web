@@ -28,6 +28,23 @@ const TopBar = ({ handleLeftBarToggle, leftBar }) => {
     setDropDown(!dropDown);
   };
 
+  function deleteAllCookies() {
+    var cookies = document.cookie.split(";");
+
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i];
+      var eqPos = cookie.indexOf("=");
+      var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+  }
+
+  const logout = () => {
+    localStorage.clear();
+    deleteAllCookies();
+    window.location.href = "/";
+  };
+
   return (
     <TopBarContainer>
       <TopBarContent>
@@ -60,7 +77,7 @@ const TopBar = ({ handleLeftBarToggle, leftBar }) => {
                       <Setting2 color="#323130" /> Settings
                     </li>
                   </Link>
-                  <li>
+                  <li onClick={logout}>
                     <LogoutCurve color="#323130" /> Logout
                   </li>
                 </List>
@@ -162,6 +179,7 @@ const List = styled.ul`
     align-items: center;
     font-size: 14px;
     color: #323130;
+    cursor: pointer;
 
     img:first-of-type {
       display: initial;
