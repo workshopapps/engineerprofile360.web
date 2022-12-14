@@ -204,44 +204,25 @@ const App = () => {
           {/* Authentication Layout */}
           <Route element={<AuthLayout />}>
             {/* Company Auth Routes */}
-
-            <Route
-              path="/register"
-              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
-            />
-            <Route
-              path="/login"
-              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
-            />
-            <Route
-              path="/verify-email"
-              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
-            />
+            CompanyEmailVerified, CompanyPasswordSuccess, CompanySetPassword,
+            CompanyResetPassword, CompanyVerifyEmail,
+            <Route path="/register" element={<CompanySignup />} />
+            <Route path="/login" element={<CompanyLogin />} />
+            <Route path="/verify-email" element={<CompanyVerifyEmail />} />
             <Route
               path={"/auth/verify/:user_id/:token"}
-              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
+              element={<CompanyEmailVerified />}
             />
-            <Route
-              path="/reset-password"
-              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
-            />
-            <Route
-              path="/password/reset"
-              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
-            />
+            <Route path="/reset-password" element={<CompanyResetPassword />} />
+            <Route path="/password/reset" element={<CompanySetPassword />} />
             <Route
               path="/reset-password-success"
-              element={auth ? <Navigate to="/dashboard" /> : <CompanySignup />}
+              element={<CompanyPasswordSuccess />}
             />
-
             {/* Employee Auth Routes */}
-
             <Route path="/employee/login" element={<EmployeeLogin />} />
-
             {/* Admin Auth Routes */}
-
             <Route path="/admin/login" element={<AdminLogin />} />
-
             <Route path="/guest-login" element={<GuestLogin />} />
           </Route>
 

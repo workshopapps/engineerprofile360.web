@@ -23,6 +23,7 @@ import { AddCircle } from "iconsax-react";
 import TableComponent from "../../../molecules/TableComponent";
 
 const DataContext = createContext(null);
+
 export const Buttons = () => {
   return (
     <ButtonContainer>
@@ -73,6 +74,7 @@ export const List = () => {
         const responseAvailable = await axios.get(`/assessment/${auth.id}`);
         const availableCount = responseAvailable?.data?.data;
         setAvailable(availableCount);
+        console.log(availableCount);
       } catch (err) {
         if (!err?.response) {
           showErrorToast("No Server Response");
@@ -172,7 +174,6 @@ export const Assessment = ({ available, completed }) => {
 };
 
 export const CompletedAssessmentList = () => {
-  const [order, setOrder] = useState("asc");
   const [completed, setCompleted] = useState([]);
   const [available, setAvailable] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -184,8 +185,6 @@ export const CompletedAssessmentList = () => {
           setCompleted,
           available,
           setAvailable,
-          order,
-          setOrder,
           isLoading,
           setIsLoading,
         }}
