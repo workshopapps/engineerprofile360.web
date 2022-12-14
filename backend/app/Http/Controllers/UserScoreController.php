@@ -24,7 +24,7 @@ class UserScoreController extends Controller
         try {
             $result = UserScoreService::submit($request->validated());
             return $this->sendResponse(false, null, "Your assessment has been submitted successfully!", $result, Response::HTTP_CREATED);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return $this->sendResponse(true, "Error storing the userr score", $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
@@ -41,7 +41,7 @@ class UserScoreController extends Controller
         try {
             $userScore  = UserAssessment::where(["employee_id" => $employeeId, "assessment_id" => $assessmentId])->with('userscore');
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return $this->sendResponse(true, "Error fetching the userscores", $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
@@ -57,7 +57,7 @@ class UserScoreController extends Controller
         try {
             $userScore = UserAssessment::where('assessment_id', $id)->with('userscore');
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return $this->sendResponse(true, "Error fetching user scores", $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
@@ -82,7 +82,7 @@ class UserScoreController extends Controller
                     }
                 ]);
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return $this->sendResponse(true, "Error fetching user scores", $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
@@ -102,7 +102,7 @@ class UserScoreController extends Controller
                 }
             ])->orderBy('points', 'desc');
             return $this->sendResponse(false, null, "Successful", $userScore->first(), Response::HTTP_OK);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return $this->sendResponse(true, "Error fetching user scores", $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
@@ -127,7 +127,7 @@ class UserScoreController extends Controller
                 }
             ])->orderBy('points', 'desc');
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return $this->sendResponse(true, "Error fetching user scores", $e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
     }
