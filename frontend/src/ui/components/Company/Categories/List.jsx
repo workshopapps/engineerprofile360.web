@@ -42,7 +42,7 @@ const List = () => {
 
   if (toggleCreateCat || toggleDelete || toggleEdit || toggleMaxDelete)
     // document.body.style.overflow = "hidden";
-     document.body.style.overflow = "auto";
+    document.body.style.overflow = "auto";
   else document.body.style.overflow = "initial";
 
   useEffect(() => {
