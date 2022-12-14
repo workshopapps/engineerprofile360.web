@@ -1,0 +1,59 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+.container {
+  background-color: #2667ff;
+  color: #fff;
+  position: relative;
+  top: -13rem;
+  z-index: 2;
+}
+
+.wrapper {
+  max-width: 85vw;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+h2 {
+  font-size: 3rem;
+  margin-bottom: 4rem;
+  font-weight: normal;
+}
+
+.numbers {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10rem;
+  position: relative;
+}
+
+.number small {
+  position: absolute;
+  top: 0;
+  left: 10rem;
+  border: 1px solid #fff;
+  border-radius: 1rem;
+  padding: 0.5rem 0.8rem;
+}
+
+.number h3 {
+  margin: 1.5rem 0;
+  font-size: 8rem;
+}
+
+.number p {
+  font-size: 1.2rem;
+  font-weight: normal;
+}
