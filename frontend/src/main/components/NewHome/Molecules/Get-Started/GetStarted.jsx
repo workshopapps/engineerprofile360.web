@@ -2,7 +2,7 @@ import styles from "./GetStarted.module.css";
 
 const GetStarted = () => {
   return (
-    <div className={styles.container}>
+    <div className={styles.get}>
       <div className={styles.wrapper}>
         <h2>Ready to get started?</h2>
         <p>

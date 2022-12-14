@@ -7,7 +7,7 @@
   font-family: "Inter", sans-serif;
 }
 
-.container {
+.get {
   background-color: #2667ff;
   padding: 3rem 0;
   margin-top: 7rem;
@@ -17,7 +17,7 @@ h2 {
   font-weight: bold;
 }
 
-.wrapper {
+.get .wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,11 +28,34 @@ h2 {
   color: #fff;
 }
 
-p {
+.get p {
   font-weight: normal;
 }
 
-.btn {
+.get .btn {
   background-color: #fff;
   color: #2667ff;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.3rem;
+  padding: 1rem 3rem;
+  margin-bottom: 2rem;
+  margin-top: 3rem;
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+}
+
+.get .btn button:hover {
+  transform: scale(1.05);
+}
+
+.get .btn button:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 767px) {
+  .get .wrapper {
+    max-width: 90vw;
+    margin: 0 auto;
+  }
 }
