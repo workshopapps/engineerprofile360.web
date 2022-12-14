@@ -352,7 +352,6 @@ const App = () => {
                 >
                   <Route path="" element={<AssessmentAvailable />} />
                   <Route path="completed" element={<AssessmentCompleted />} />
-
                 </Route>
 
                 <Route
