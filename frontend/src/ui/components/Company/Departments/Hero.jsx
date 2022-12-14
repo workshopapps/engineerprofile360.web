@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { Loader, Title } from "../../../../styles/reusableElements.styled";
+import {
+  Loader,
+  OverlayLoader,
+  Title,
+} from "../../../../styles/reusableElements.styled";
 import { useState } from "react";
 import { More, AddCircle } from "iconsax-react";
 import AddDept, { Load } from "./AddDept";
@@ -103,9 +107,10 @@ function Hero() {
         </CRUDContainer>
         {loading ? (
           // lOADER COMPONENT
-          <Load>
-            <Loader />
-          </Load>
+          <OverlayLoader contained>
+            <div></div>
+            <span>Just a moment...</span>
+          </OverlayLoader>
         ) : (
           <CategoryListing>
             <TableComponent>

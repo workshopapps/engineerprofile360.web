@@ -1,23 +1,54 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
+import axios from "../../../../../api/axios";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 import Frame from "../../../../../assets/icons/app/Frame.svg";
+import useAuth from "../../../../../hooks/useAuth";
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "../../../../../helpers/helper";
+import close from "../../../../../assets/icons/close.svg";
+import { Loader } from "../../../../../styles/reusableElements.styled";
 
-const QuestionTemplate = ({ questionNumber }) => {
+const QuestionTemplate = ({ assessment_id }) => {
+  const { auth } = useAuth();
   const [inputFields, setInputFields] = useState([
     {
       name: "question_0",
-      question: "",
+      questionText: "",
       option_input: "",
-      options: [{ option: "" }],
+      options: [],
       language: "",
-      question_type: "multichoice",
-      list: [],
+      question_type: "radio",
+      answers: [],
     },
   ]);
+  const [toggleDelete, setToggleDelete] = useState({});
+  const [categories, setCategories] = useState([]);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  console.log(assessment_id);
+  useEffect(() => {
+    const getAllCatgories = async () => {
+      try {
+        const response = await axios.get(`/category/company/${auth.org_id}`);
+        setCategories(response.data.data.data);
+      } catch (err) {
+        if (!err.response) {
+          showErrorToast("No server response");
+        } else {
+          showErrorToast(err.response.data.message);
+        }
+      }
+    };
 
-  const [textField, setTextField] = useState("");
+    getAllCatgories();
+  }, []);
+
+  const [onEdit, setOnEdit] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleChangeInput = (index, e) => {
     const values = [...inputFields];
@@ -25,28 +56,32 @@ const QuestionTemplate = ({ questionNumber }) => {
     setInputFields(values);
   };
 
-  console.log(inputFields);
-
   const handleAddFields = () => {
     setInputFields([
       ...inputFields,
       {
         name: `question_${inputFields.length}`,
-        question: "",
+        questionText: "",
         option_input: "",
+        options: [],
         language: "",
-        question_type: "multichoice",
+        question_type: "radio",
         list: [],
       },
     ]);
   };
 
+  // This function will delete the current question fields
   const handleRemoveFields = (index) => {
     const values = [...inputFields];
-    values.splice(index, 1);
-    setInputFields(values);
+    if (values.length > 1) {
+      values.splice(index, 1);
+      setInputFields(values);
+    }
+    setToggleDelete({ ...toggleDelete, [index]: !toggleDelete[index] });
   };
 
+  // This function edits the question type.
   const editFieldType = (fieldName, fieldLabel) => {
     const values = [...inputFields];
     const fieldIndex = values.findIndex((f) => f.name === fieldName);
@@ -56,26 +91,101 @@ const QuestionTemplate = ({ questionNumber }) => {
     }
   };
 
-  const addFieldOption = (fieldName, option) => {
-    const values = [...inputFields];
-    const fieldIndex = values.findIndex((f) => f.name === fieldName);
-    if (fieldIndex > -1) {
-      if (option && option !== "") {
-        values[fieldIndex].list.push(option);
-        setInputFields(values);
-        setTextField("");
+  // This function edits an already existing option
+  const editOptions = (text, index, oindex) => {
+    const questionOptions = [...inputFields];
+    questionOptions[index].options[oindex].optionText = text;
+
+    setInputFields(questionOptions);
+  };
+
+  //  This function adds options dynamically to questions onblur
+  const addOption = (index, e) => {
+    const questionOptions = [...inputFields];
+    if (questionOptions[index].options.length < 4) {
+      if (e.target.value.length > 1) {
+        questionOptions[index].options.push({
+          optionText: e.target.value,
+        });
       }
+    }
+    setInputFields(questionOptions);
+
+    questionOptions[index].option_input = "";
+    setInputFields(questionOptions);
+  };
+
+  const addAnswers = (index, e) => {
+    const questionOptions = [...inputFields];
+    if (questionOptions[index].question_type === "radio") {
+      questionOptions[index].answers = { selectedAnswer: e.target.value };
+    } else {
+      questionOptions[index].answers?.push({ selectedAnswer: e.target.value });
+    }
+
+    setInputFields(questionOptions);
+  };
+
+  // This function deletes options form the list of options.
+  const deleteOption = (index, oindex) => {
+    const removeQuestionOptions = [...inputFields];
+    if (removeQuestionOptions[index].options.length > 1) {
+      removeQuestionOptions[index].options.splice(oindex, 1);
+      setInputFields(removeQuestionOptions);
     }
   };
 
-  const handleSubmit = (e) => {
+  // This function handles the necessary things that should take place when a user submits the form
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("inputfields", inputFields);
+    setIsSubmitted(true);
+
+    try {
+      const array = [];
+
+      inputFields.forEach((input, index) => {
+        array.push({
+          category_id: input.language,
+          question: input.questionText,
+          options: input.options,
+          is_multiple_answers: input.question_type === "radio" ? false : true,
+          correct_answers: [input.answers.selectedAnswer],
+          timeframe: "1",
+        });
+      });
+
+      const response = await axios.post(
+        "question/add",
+        JSON.stringify({
+          assessment_id,
+          questions: array,
+        })
+      );
+
+      console.log(response);
+
+      if (response.data.errorState === false) {
+        setIsSubmitted(false);
+        showSuccessToast("Successfully Created Assessment");
+        setTimeout(() => {
+          window.location.href = `/assessment/view-assessment/${assessment_id}`;
+        }, 2000);
+      }
+    } catch (err) {
+      console.log(err);
+      setIsSubmitted(false);
+      if (!err.response) {
+        showErrorToast("No Server Response");
+      } else {
+        showErrorToast(err.response?.data.message);
+      }
+    }
   };
+  console.log(inputFields);
 
   return (
-    <QuestionTemplateContainer>
+    <QuestionTemplateContainer onSubmit={handleSubmit}>
       {inputFields.map((inputfield, index) => (
         <QuestionContainer key={inputfield.name}>
           <Question>
@@ -83,68 +193,81 @@ const QuestionTemplate = ({ questionNumber }) => {
             <div>
               <input
                 type="text"
-                name={"question"}
+                name={"questionText"}
                 placeholder="This is a template text"
-                value={inputfield.question}
+                value={inputfield.questionText}
+                required
                 onChange={(e) => handleChangeInput(index, e)}
               />
             </div>
           </Question>
-          <Option>
+          <Options>
             <Title>
               <label>Answer Type</label>
               <select
                 onChange={(e) => editFieldType(inputfield.name, e.target.value)}
               >
-                <option value="multichoice">Multi-choice</option>
+                <option value="radio">Multi-choice</option>
                 <option value="checkbox">Check-box</option>
               </select>
             </Title>
             <InputContainer>
               <LeftContainer>
-                <div>
-                  {inputfield.question_type === "multichoice" && (
-                    <>
-                      {/* {inputfield.list.map((item) => ( */}
+                <OverallOptionContainer>
+                  <>
+                    <OptionContainer>
                       <Fragment>
-                        <Fragment>
-                          <input type="radio" />
-                          <label></label>
-                        </Fragment>
-                        <Fragment>
-                          <input
-                            type="text"
-                            name="option_input"
-                            placeholder="Add option"
-                            value={inputfield.option_input}
-                            onChange={(e) => handleChangeInput(index, e)}
-                            //   onBlur={(e) => handleAddOptionFields(index)}
-                          />
-                          <img src={Frame} alt="" />
-                          {/* <div>Delete</div> */}
-                        </Fragment>
+                        {inputfield.options?.map((item, oindex) => (
+                          <Option key={oindex}>
+                            <input
+                              type={inputfield.question_type}
+                              name={
+                                inputfield.question_type === "radio"
+                                  ? `Question${index}`
+                                  : ""
+                              }
+                              required
+                              value={oindex}
+                              onChange={(e) => addAnswers(index, e)}
+                            />
+                            {onEdit ? (
+                              <input
+                                type="text"
+                                value={inputfield.options[oindex].optionText}
+                                onChange={(e) =>
+                                  editOptions(e.target.value, index, oindex)
+                                }
+                              />
+                            ) : (
+                              <label
+                                onClick={() => setOnEdit({ [oindex]: true })}
+                              >
+                                {inputfield.options[oindex].optionText}
+                              </label>
+                            )}
+                            <img
+                              src={close}
+                              onClick={() => deleteOption(index, oindex)}
+                              alt=""
+                            />
+                          </Option>
+                        ))}
                       </Fragment>
-                      {/* ))} */}
-                    </>
-                  )}
-                  {inputfield.question_type === "checkbox" && (
-                    <>
-                      <input type="checkbox" name="" value="" />
-                      <input
-                        type="text"
-                        name="option_input"
-                        placeholder="Add option"
-                        value={inputfield.option_input}
-                        onChange={(e) => handleChangeInput(index, e)}
-                        onClick={() =>
-                          addFieldOption(inputfield.name, textField)
-                        }
-                      />
-                      <img src={Frame} alt="" />
-                      {/* <div>Delete</div> */}
-                    </>
-                  )}
-                </div>
+                    </OptionContainer>
+                    {inputfield.options?.length < 4 && (
+                      <InsertOption>
+                        <input
+                          type="text"
+                          name="option_input"
+                          placeholder="Add option"
+                          value={inputfield.option_input}
+                          onChange={(e) => handleChangeInput(index, e)}
+                          onBlur={(e) => addOption(index, e)}
+                        />
+                      </InsertOption>
+                    )}
+                  </>
+                </OverallOptionContainer>
               </LeftContainer>
 
               <RightContainer>
@@ -153,18 +276,30 @@ const QuestionTemplate = ({ questionNumber }) => {
                   value={inputfield["language"]}
                   onChange={(e) => handleChangeInput(index, e)}
                 >
-                  <option selected>{"Select Category"}</option>
-                  <option value="PHP">{"PHP"}</option>
-                  <option value="Laravel">{"Laravel"}</option>
-                  <option value="HTML">{"HTML"}</option>
-                  <option value="CSS">{"CSS"}</option>
-                  <option value="React">{"React"}</option>
-                  <option value="Vue">{"Vue"}</option>
+                  <option defaultValue>{"Select Category"}</option>
+                  {categories.length > 0 &&
+                    categories.map((category, cindex) => (
+                      <option key={cindex} value={category.id}>
+                        {category.name}
+                      </option>
+                    ))}
                 </select>
-                <img src={Frame} alt="" />
+                <img
+                  src={Frame}
+                  onClick={() =>
+                    setToggleDelete({
+                      ...toggleDelete,
+                      [index]: !toggleDelete[index],
+                    })
+                  }
+                  alt=""
+                />
+                {toggleDelete[index] && (
+                  <div onClick={() => handleRemoveFields(index)}>Delete</div>
+                )}
               </RightContainer>
             </InputContainer>
-          </Option>
+          </Options>
         </QuestionContainer>
       ))}
       <Button type="button" onClick={() => handleAddFields()}>
@@ -172,7 +307,7 @@ const QuestionTemplate = ({ questionNumber }) => {
       </Button>
       <Buttons>
         <Link to={-1}>Cancel</Link>
-        <button type="submit">Submit</button>
+        <button type="submit">{isSubmitted ? <Loader sm /> : "Submit"}</button>
       </Buttons>
     </QuestionTemplateContainer>
   );
@@ -189,6 +324,10 @@ const QuestionTemplateContainer = styled.form`
     left: 50%;
     cursor: pointer;
     color: green;
+  }
+
+  button {
+    cursor: pointer;
   }
 `;
 
@@ -241,10 +380,10 @@ const Question = styled.div`
   }
 `;
 
-const Option = styled.div`
+const Options = styled.div`
   display: flex;
-  flex-direction: column;
   gap: 15px;
+  flex-direction: column;
 
   label {
     font-weight: 400;
@@ -262,36 +401,6 @@ const LeftContainer = styled.div`
   align-items: left;
   flex-direction: column;
   gap: 25px;
-
-  div {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    position: relative;
-    margin-bottom: 15px;
-    background: #f8fbfd;
-    border: 1px solid #edebe9;
-    border-radius: 4px;
-    padding: 15px 8px;
-
-    img {
-      width: 16px;
-      height: 16px;
-      cursor: pointer;
-    }
-
-    div {
-      position: absolute;
-      padding: 8px;
-      background-color: #ffe3e5;
-      font-weight: 600;
-      font-size: 14px;
-      line-height: 20px;
-      color: #a4262c;
-      bottom: -35px;
-      right: -15px;
-    }
-  }
 
   input {
     outline: none;
@@ -315,11 +424,57 @@ const LeftContainer = styled.div`
   }
 `;
 
+const OverallOptionContainer = styled.div`
+  display: flex;
+  /* align-items: center; */
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+  margin-bottom: 15px;
+  background: #f8fbfd;
+  border: 1px solid #edebe9;
+  border-radius: 4px;
+  padding: 15px 8px;
+
+  img {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+`;
+
+const OptionContainer = styled.div`
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+  position: relative;
+
+  img {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+  }
+`;
+
+const Option = styled.div`
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  label {
+    /* width: 90%; */
+  }
+`;
+
 const InputContainer = styled.div`
   display: flex;
   width: 100%;
   gap: 32px;
 `;
+
+const InsertOption = styled.div``;
 
 const RightContainer = styled.div`
   display: flex;
@@ -328,11 +483,8 @@ const RightContainer = styled.div`
   /* height: 30px; */
   align-items: flex-start;
   justify-content: space-between;
-  /* gap: 36px; */
-
-  img {
-    cursor: pointer;
-  }
+  gap: 24px;
+  position: relative;
 
   select {
     width: 100%;
@@ -347,6 +499,22 @@ const RightContainer = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;
+  }
+
+  img {
+    cursor: pointer;
+  }
+
+  div {
+    padding: 10px 20px;
+    background-color: #fff;
+    border: 1px solid #edebe9;
+    position: absolute;
+    right: 0;
+    bottom: 25px;
+    color: #d83b01;
+    font-size: 15px;
+    cursor: pointer;
   }
 `;
 

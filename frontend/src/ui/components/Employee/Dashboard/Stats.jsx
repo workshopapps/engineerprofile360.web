@@ -1,63 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import axios from "../../../../api/axios";
-import { showErrorToast } from "../../../../helpers/helper";
-import useAuth from "../../../../hooks/useAuth";
 import { Radar } from "react-chartjs-2";
 import { Title } from "../../../../styles/reusableElements.styled";
 
-const SKillRating = ({ title }) => {
-  return (
-    <Title
-      as="h5"
-      $size="16px"
-      $weight="normal"
-      $lHeight="22px"
-      $color="#142245"
-    >
-      {title}
-    </Title>
-  );
-};
+const Stats = ({ stats }) => {
+  const [info, setInfo] = useState([]);
 
-const Stats = () => {
-  const { auth } = useAuth();
-  const [chartDetails, setChartDetails] = React.useState(null);
-  const [isChartLoading, setIsChartLoading] = React.useState(true);
-  //Get Chart Details
-  React.useEffect(() => {
-    const getChartDetails = async () => {
-      try {
-        // const response = await axios.get(`userscore/employee/${auth.id}`);
-        const response = await axios.get(
-          `userscore/employee/aab92dfa-336d-4d63-8c43-7a9826529988`
-        );
-        setChartDetails(response.data);
-        setIsChartLoading(false);
-      } catch (err) {
-        if (!err?.response) {
-          showErrorToast("No Server Response");
-        } else if (err?.response.data.errorState === true) {
-          showErrorToast(err.response.data.message);
-          // setFetchError(err.response.data.message);
-        }
-      }
-    };
-    getChartDetails();
-  }, [auth, chartDetails]);
+  useEffect(() => {
+    const topScore =
+      stats?.completed_assessment?.length > 0
+        ? stats.completed_assessment.reduce((max, assessment) =>
+            max.points > assessment.points ? max : assessment
+          )
+        : [];
 
-  //Chart Data Schema
+    setInfo(topScore);
+  }, [stats]);
+
   const data = {
-    labels: [0, 0, 0, 0],
-    // labels: chartDetails
-    //   ? JSON.parse(chartDetails?.data[0]?.categories?.split("/").join(""))
-    //   : [0, 0, 0, 0],
+    labels: info.assessment?.userscore?.categories
+      ? JSON.parse(info.assessment?.userscore?.categories)
+      : [""],
     datasets: [
       {
-        label: "Dataset",
-        data: chartDetails
-          ? chartDetails?.data[0]?.passed_questions
-          : [0, 0, 0, 0],
+        label: "Categories",
+        data: info.assessment?.userscore?.passed_questions
+          ? info.assessment?.userscore?.passed_questions
+          : [],
         fill: true,
         backgroundColor: "rgba(255, 99, 132, 0.2)",
         borderColor: "rgb(255, 99, 132)",
@@ -79,37 +48,14 @@ const Stats = () => {
             $weight="100"
             $lHeight="28px"
             $color="#142245"
-            style={{ marginBottom: "16px" }}
           >
-            Your Skill Rating
+            Your Recent Assessments Score
           </Title>
 
-          {isChartLoading ? (
-            "Loading"
-          ) : (
-            <SkillRatingSection>
-              {/* <div>
-                {chartDetails
-                  ? JSON.parse(
-                      chartDetails?.data[0]?.categories?.split("/").join("")
-                    ).map((item, key) => <SKillRating key={key} title={item} />)
-                  : ""}
-              </div>
-              <div>
-                {chartDetails
-                  ? JSON.parse(chartDetails?.data[0]?.passed_questions).map(
-                      (item, key) => <SKillRating key={key} title={item} />
-                    )
-                  : ""}
-              </div> */}
-            </SkillRatingSection>
-          )}
+          <SkillRatingSection></SkillRatingSection>
         </SkillSection>
         <ChartSection>
-          {
-            // isChartLoading ? "Loading" :
-            <Radar data={data} />
-          }
+          <Radar data={data} />
         </ChartSection>
       </StatsContainer>
     </>
@@ -169,7 +115,7 @@ const ChartSection = styled.div`
   width: 80%;
   border: 1px solid #ebf4f9;
   border-radius: 12px;
-  padding: 35.35px 40px;
+  padding: 5px 10px;
   min-height: 336px;
   ${({ theme }) => theme.breakpoints.down("lg")} {
     width: 100%;

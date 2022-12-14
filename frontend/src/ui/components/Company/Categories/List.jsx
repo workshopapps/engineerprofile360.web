@@ -177,7 +177,7 @@ const List = () => {
         ) : (
           ""
         )}
-        {categories.data?.length > 0 || categories.data ? (
+        {categories.data?.length > 0 && categories.data ? (
           <>
             <TableComponent>
               <tbody>
@@ -289,7 +289,7 @@ export default List;
 
 const OverallContainer = styled.div`
   position: relative;
-  // height: 75vh;
+  min-height: 100vh;
 `;
 
 const ButtonCategory = styled.div`

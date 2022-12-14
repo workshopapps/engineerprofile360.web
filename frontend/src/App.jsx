@@ -45,16 +45,23 @@ import {
   CompanyVerifyEmail,
 } from "./ui/pages/Company/";
 
-import { GuestEmail, GuestLogin } from "./ui/components/Guests";
+import { GuestLogin } from "./ui/components/Guests";
+
 import {
   GuestAssessmentList,
   GuestTakeAssessment,
   GuestTakeAssessmentResult,
+  GuestEmail,
 } from "./ui/pages/Guest";
 
 import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
 
-import { EmployeeLogin, EmployeeDashboard } from "./ui/pages/Employee";
+import {
+  EmployeeLogin,
+  EmployeeDashboard,
+  EmployeeAssessment,
+  EmployeePreviewAssessment,
+} from "./ui/pages/Employee";
 
 import { AdminLogin } from "./ui/pages/Admin";
 
@@ -72,7 +79,6 @@ import AdminCSVUpload from "./ui/components/Company/Assessments/AdminCSVUpload";
 // import GuestTakeAssessmentResult from "./ui/pages/guest/GuestTakeAssessmentResult";
 import Testimonial from "./main/components/Testimonials/Testimonial";
 import EmployeeCSVUpload from "./ui/components/Company/Employees/EmployeeCSVUpload";
-// import GuestEmail from "./main/pages/GuestEmail";
 // import GuestAssessmentList from "./main/pages/GuestAssessmentList";
 
 import AdminViewAssessment from "./ui/components/Company/Assessments/admin-view-assessment/AdminViewAssessment";
@@ -103,7 +109,7 @@ import {
   AssessmentAvailable,
 } from "./ui/components/Employee";
 import EmployeeAssessmentResult from "./ui/pages/Employee/EmployeeAssessmentResult";
-//import EmployeeAssessmentList from "./ui/pages/Employee/EmployeeAssessmentList";
+import EmployeeAssessmentList from "./ui/pages/Employee/EmployeeAssessmentListOutlet";
 import AdminAssessmmentListOutlet from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmmentListOutlet";
 import AdminAssessmentListAvailable from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmentListAvailable";
 import AssessmentList from "./ui/components/Company/Assessments/adminAssesmentList/AssessmentList";
@@ -160,6 +166,7 @@ const App = () => {
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/privacy-policy" element={<Privacy />} />
+            {/* <Route path="/admin/stacks" element={<Stacks/>} /> */}
 
             {/* UNKNOWN ROUTES */}
             {/* <Route path="/fill-employee" element={<Fillemployee />} /> */}
@@ -235,7 +242,7 @@ const App = () => {
               /> */}
               <Route
                 path="/employee-assessment-list"
-                element={<UserAssessmentListOutlet />}
+                element={<EmployeeAssessmentList />}
               >
                 <Route
                   path="employee-assessment-completed"
@@ -252,7 +259,7 @@ const App = () => {
               {/* Organization Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
                 <Route
-                  path="/assessment/view-assessment"
+                  path="/assessment/view-assessment/:id"
                   element={<AdminViewAssessment />}
                 />
 
@@ -311,8 +318,6 @@ const App = () => {
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
                 {/* Put in Protected pages in here */}
                 <Route path="/admin/dashboard" element={<Dashboard />} />
-                <Route />
-
                 <Route path="/admin/stacks" element={<Stacks />} />
               </Route>
 
@@ -322,6 +327,20 @@ const App = () => {
                   path="/employee/dashboard"
                   element={<EmployeeDashboard />}
                 />
+
+                <Route
+                  path="/employee/assessment"
+                  element={<EmployeeAssessment />}
+                >
+                  <Route path="" element={<AssessmentAvailable />} />
+                  <Route path="completed" element={<AssessmentCompleted />} />
+                </Route>
+
+                <Route
+                  path="/employee/assessment/preview"
+                  element={<EmployeePreviewAssessment />}
+                />
+
                 {/* <Route path="/employee/dashboard" element={"boss"} /> */}
               </Route>
 
