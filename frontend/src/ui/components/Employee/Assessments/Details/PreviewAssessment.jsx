@@ -1,6 +1,6 @@
 import { Timer } from "iconsax-react";
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import styled from "styled-components";
 import { Button } from "../../../../../styles/reusableElements.styled";
 import PageInfo from "../../../molecules/PageInfo";
