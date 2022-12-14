@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Assessment;
 use App\Models\Question;
 use App\Models\UserAssessment;
 use App\Models\UserScore;
@@ -13,10 +14,11 @@ class UserScoreService
         extract($request);
         $result = self::calculateResult($request);
         $uerScore = UserScore::create(self::prepareRequest($result["data"]));
+        $org_id = Assessment::find($assessment_id)->first()['org_id'];
         UserAssessment::where(["assessment_id" => $assessment_id])->update([
             "completed" => 1,
             "userscore_id" => $uerScore->id,
-            "org_id" => $request["org_id"],
+            "org_id" => $org_id,
             "result" => $result["points"],
             "correct_questions" => $result["points"],
             "total_questions" => $result["data"]["total_questions"]
