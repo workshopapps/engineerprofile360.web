@@ -1,7 +1,7 @@
 // import React from "react";
 
 // This is for DevOps App Monitoring - START
-import * as atatus from "atatus-spa";
+//import * as atatus from "atatus-spa";
 // This is for DevOps App Monitoring - END
 
 //import * as Sentry from "@sentry/react";
@@ -358,7 +358,6 @@ const App = () => {
                 >
                   <Route path="" element={<AssessmentAvailable />} />
                   <Route path="completed" element={<AssessmentCompleted />} />
-
                 </Route>
 
                 <Route

@@ -139,8 +139,9 @@ export const InputWrapper = styled.div`
 
     align-items: center;
     width: 485px;
-    border: #c7e0f4;
+  
     height: 338px;
+      border: 1px solid #c7e0f4; 
 
     border-radius: 4px;
     background-color: #f8fbfd;

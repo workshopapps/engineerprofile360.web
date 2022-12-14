@@ -82,17 +82,14 @@ const FilterWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-
   p {
     margin-bottom: 20px;
     font-size: 16px;
     color: #323130;
   }
-
   span {
     font-size: 16px;
   }
-
   @media screen and (max-width: 767px) {
     text-align: left;
   }
@@ -114,7 +111,6 @@ const DescriptionMain = styled.div`
   line-height: 22px;
   padding: 20px 0;
   border-bottom: 1px solid #323130;
-
   @media screen and (max-width: 767px) {
     text-align: left;
   }
@@ -133,7 +129,6 @@ const FilterFlex = styled.div`
   padding: 20px;
   border: 1px solid;
   justify-content: space-between;
-
   @media screen and (max-width: 767px) {
     width: 100%;
   }
