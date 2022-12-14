@@ -27,8 +27,10 @@ const Card = (props) => {
   return (
     <CardContainer>
       <Flex stack spacing={16} style={{ textAlign: "center" }}>
-        <p style={{ whiteSpace: "nowrap" }}>{props.text}</p>
-        <p>{props.num}</p>
+        <Text>{props.text}</Text>
+        <Text $size="28px" $weight="600" $lHeight="36px">
+          {props.num}
+        </Text>
       </Flex>
     </CardContainer>
   );
@@ -129,14 +131,7 @@ const Assessments = () => {
           return (
             <GridItem span={4} md={12} key={idx}>
               <Link to={info.url}>
-                <Card
-                  text={<Text>{info.text}</Text>}
-                  num={
-                    <Text $size="28px" $weight="600" $lHeight="36px">
-                      {info.number}
-                    </Text>
-                  }
-                />
+                <Card text={info.text} num={info.number} />
               </Link>
             </GridItem>
           );
