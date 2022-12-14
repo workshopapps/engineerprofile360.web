@@ -117,13 +117,20 @@ export const List = () => {
               </tr>
 
               {completed.map((item, key) => {
+                const time1 = new Date("2001-01-01T" + item?.end_time);
+                const time2 = new Date("2001-01-01T" + item?.start_time);
+                const time1Milliseconds = time1.getTime();
+                const time2Milliseconds = time2.getTime();
+                const difference = time1Milliseconds - time2Milliseconds;
+                const hours = Math.floor(difference / 1000 / 60 / 60);
+                const mins = Math.floor(difference / 1000 / 60) % 60;
                 return (
                   <tr key={key}>
                     <td>{key + 1}</td>
                     <td>{item?.name}</td>
                     <td>{item?.department.name}</td>
                     <td>{item?.start_date}</td>
-                    <td>{item?.end_date - item?.start_date}</td>
+                    <td>{`${hours}hrs ${mins}mins`}</td>
                     <td>{item?.end_date}</td>
                     <td>
                       <Link to="/assessment/view-assessment">
@@ -173,7 +180,6 @@ export const Assessment = ({ available, completed }) => {
 };
 
 export const CompletedAssessmentList = () => {
-  const [order, setOrder] = useState("asc");
   const [completed, setCompleted] = useState([]);
   const [available, setAvailable] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -185,8 +191,6 @@ export const CompletedAssessmentList = () => {
           setCompleted,
           available,
           setAvailable,
-          order,
-          setOrder,
           isLoading,
           setIsLoading,
         }}
@@ -194,7 +198,6 @@ export const CompletedAssessmentList = () => {
         <PageInfo breadcrumb={["Dashboard", "Assessment list"]} />
         <Buttons />
         <Assessment available={available.length} completed={completed.length} />
-        {console.log(available, completed)}
       </DataContext.Provider>
     </div>
   );

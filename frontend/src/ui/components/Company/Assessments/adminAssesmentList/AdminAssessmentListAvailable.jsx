@@ -55,6 +55,7 @@ const List = () => {
         setIsLoading(false);
         const availableData = response?.data?.data;
         setAvailable(availableData);
+        console.log(availableData);
 
         //Get Completed Assessment Counts
         const responseCompleted = await axios.get(
@@ -97,15 +98,35 @@ const List = () => {
             </tr>
 
             {available.map((item, key) => {
+              const time1 = new Date("2001-01-01T" + item?.end_time);
+              const time2 = new Date("2001-01-01T" + item?.start_time);
+              const time1Milliseconds = time1.getTime();
+              const time2Milliseconds = time2.getTime();
+              const difference = time1Milliseconds - time2Milliseconds;
+              const hours = Math.floor(difference / 1000 / 60 / 60);
+              const mins = Math.floor(difference / 1000 / 60) % 60;
+              const options = {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              };
+              const refinedStartDate = new Date(
+                item?.start_date
+              ).toLocaleDateString("en-US", options);
+              console.log(refinedStartDate);
+              const refinedEndDate = new Date(
+                item?.end_date
+              ).toLocaleDateString("en-US", options);
+              console.log(refinedEndDate);
+
               return (
                 <tr key={key}>
                   <td>{key + 1}</td>
                   <td>{item?.name}</td>
                   <td>{item?.department.name}</td>
-                  <td>{item?.start_date}</td>
-                  <td>{item?.end_date - item?.start_date}</td>
-                  <td>{item?.end_date}</td>
-
+                  <td>{refinedStartDate}</td>
+                  <td>{`${hours}hrs ${mins}mins`}</td>
+                  <td>{refinedEndDate}</td>
                   <td>
                     <Link to="/assessment/view-assessment">
                       <Button $variant="outlined" $color="#2667ff">
@@ -167,7 +188,6 @@ const AvailableAssessmentList = () => {
         <PageInfo breadcrumb={["Dashboard", "Assessment list"]} />
         <Buttons />
         <Assessment available={available.length} completed={completed.length} />
-        {console.log(available, completed)}
       </DataContext.Provider>
     </>
   );
