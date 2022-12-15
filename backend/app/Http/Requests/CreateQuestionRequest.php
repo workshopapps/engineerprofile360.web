@@ -30,7 +30,6 @@ class CreateQuestionRequest extends BaseRequest
             'questions.*.category_id' => "required|string|exists:categories,id",
             'questions.*.correct_answers' => "required|array",
             'questions.*.options' => 'required|array',
-            'questions.*.timeframe' => 'required|string',
             'questions.*.is_multiple_answers' => 'required|boolean'
         ];
     }
