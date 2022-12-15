@@ -18,7 +18,6 @@ const Header = () => {
   };
 
   const getUser = JSON.parse(localStorage.getItem("Eval360"));
-  console.log("first", getUser);
   return (
     <HeaderTag>
       <HeaderContainer>
