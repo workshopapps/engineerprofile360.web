@@ -65,9 +65,12 @@ function EditModal({ setEditModal, departmentDetails, setRunEffect, cancel }) {
               handleEdit(e);
             }}
           >
-            <Title as="h2" $size="28px" $color="#323130" $weight="400">
-              Edit Departments
-            </Title>
+            <TitleContainer>
+              <Title as="h2" $size="20px" $color="#323130" $weight="400">
+                Edit Departments
+              </Title>
+            </TitleContainer>
+
             <InputFieldWrapper>
               <Label>Title</Label>
               <InputField
@@ -152,4 +155,8 @@ export const ModalContainer = styled.div`
   /* transform: translate(-50%, -20%); */
   z-index: 2;
   overflow: hidden;
+`;
+
+const TitleContainer = styled.div`
+  margin-bottom: -40px;
 `;
