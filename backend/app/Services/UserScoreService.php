@@ -13,6 +13,8 @@ class UserScoreService
     public static function submit(array $request): array
     {
         extract($request);
+        $UserAssessment = UserAssessment::where(["assessment_id" => $assessment_id, "employee_id" => $employee_id]);
+        if ($UserAssessment->first()) return ["result" => "You've taken the assessment before now"];
         $result = self::calculateResult($request);
         $userScore = UserScore::create(self::prepareRequest($result["data"]));
         $org_id = Assessment::find($assessment_id)->first()['org_id'];
