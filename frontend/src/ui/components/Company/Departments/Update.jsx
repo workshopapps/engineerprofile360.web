@@ -49,13 +49,11 @@ export const Container = styled.section`
   right: 150px;
   top: 11px;
   background-color: #fff;
-
-  padding: 4px;
+  /* padding: 4px 15px; */
   border-radius: 4px;
-
-  border: 1px solid black;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.2);
   z-index: 1;
-  border: 1px solid #8a8886;
+  border: none;
 
   div {
   }
@@ -67,6 +65,10 @@ export const Edit = styled.p`
   color: #323130;
   margin: 1px;
   cursor: pointer;
+  padding: 4px 15px;
+  :hover {
+    background-color: #f8fbfd;
+  }
 `;
 export const Delete = styled.p`
   font-size: 16px;
@@ -74,6 +76,10 @@ export const Delete = styled.p`
   text-align: end;
   color: #b71f1f;
   cursor: pointer;
+  padding: 4px 15px;
+  :hover {
+    background-color: #f8fbfd;
+  }
 `;
 export const Cancel = styled.p`
   font-size: 16px;
