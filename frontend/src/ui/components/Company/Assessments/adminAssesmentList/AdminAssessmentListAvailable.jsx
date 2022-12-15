@@ -126,13 +126,13 @@ const List = () => {
                 <tr key={key}>
                   <td>{key + 1}</td>
                   <td>{item?.name}</td>
-                  <td>{item?.department.name}</td>
+                  <td>{item?.department?.name}</td>
                   <td>{item?.start_date}</td>
                   <td>{TimeStamp(item)}</td>
                   <td>{item?.end_date}</td>
 
                   <td>
-                    <Link to={`/assessment/view-assessment/${item.id}`}>
+                    <Link to={`/assessment/view-assessment/${item?.id}`}>
                       <Button $variant="outlined" $color="#2667ff">
                         View Assessment
                       </Button>

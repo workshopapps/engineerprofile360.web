@@ -60,7 +60,7 @@ export const List = () => {
     setCompleted,
     isLoading,
     setIsLoading,
-    available,
+    // available,
     setAvailable,
   } = useContext(DataContext);
   const { auth } = useAuth();
@@ -127,13 +127,13 @@ export const List = () => {
                 return (
                   <tr key={key}>
                     <td>{key + 1}</td>
-                    <td>{item?.assessment.name}</td>
+                    <td>{item?.assessment?.name}</td>
                     <td>{}</td>
-                    <td>{item?.assessment.start_date}</td>
+                    <td>{item?.assessment?.start_date}</td>
                     <td>{TimeStamp(item)}</td>
-                    <td>{item?.assessment.end_date}</td>
+                    <td>{item?.assessment?.end_date}</td>
                     <td>
-                      <Link to={`/assessment/view-assessment/${item.id}`}>
+                      <Link to={`/assessment/view-assessment/${item?.id}`}>
                         <Button $variant="outlined" $color="#2667ff">
                           View Assessment
                         </Button>
