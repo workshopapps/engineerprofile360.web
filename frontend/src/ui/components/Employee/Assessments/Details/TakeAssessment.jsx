@@ -27,13 +27,6 @@ const TakeAssessment = () => {
       showErrorToast("Invalid Request");
       navigate(-1);
     }
-  }, []);
-
-  useEffect(() => {
-    if (info?.completed === 1) {
-      showErrorToast("Invalid Request");
-      navigate(-1);
-    }
     setAssessmentsQuestions(questions ? questions : []);
     setAnswers(response ? response : []);
   }, [questions, response]);
@@ -71,7 +64,7 @@ const TakeAssessment = () => {
         .then((data) => {
           showSuccessToast(data?.data?.message);
           setTimeout(() => {
-            navigate("/employee/assessment", { replace: true });
+            navigate("/employee/assessment/completed", { replace: true });
           }, 2000);
         });
     } catch (err) {

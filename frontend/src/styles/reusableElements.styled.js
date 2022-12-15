@@ -96,8 +96,10 @@ export const Loader = styled.div`
   border: 5px solid #106ebe;
   border-top: 5px solid lightblue;
   border-radius: 50%;
-  height: ${(props) => (props.sm ? "28px" : "60px")};
-  width: ${(props) => (props.sm ? "28px" : "60px")};
+  height: 25px;
+  width: 25px;
+  // height: ${(props) => (props.sm ? "28px" : "60px")};
+  // width: ${(props) => (props.sm ? "28px" : "60px")};
   animation: spin 2s linear infinite;
 
   @keyframes spin {

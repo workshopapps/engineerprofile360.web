@@ -22,27 +22,35 @@ const PreviewAssessment = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (info?.completed) {
-      showErrorToast("Invalid Request");
-      navigate(-1);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (info?.completed) {
+  //     showErrorToast("Invalid Request");
+  //     navigate(-1);
+  //   }
+  // }, []);
 
   useEffect(() => {
-    setInfo(location.state?.assessment);
     const getDetails = async () => {
       try {
-        await axios.get(`question/assessment/${assessment_id}`).then((data) => {
-          setQuestions(data?.data?.data);
+        const ENDPOINTS = [
+          axios.get(`question/assessment/${assessment_id}`),
+          axios.get(`assessment/single/${assessment_id}`),
+        ];
+        await Promise.all(ENDPOINTS).then((data) => {
+          if (data[1]?.data?.data.completed === 1) {
+            showErrorToast("Invalid Request");
+            navigate(-1);
+          }
 
-          const question = data?.data?.data;
+          const question = data[0]?.data?.data;
           const arr = [];
-
           for (let i = 0; i < question.length; i++) {
             arr.push({ question_id: question[i].id, answer: [] });
           }
+          console.log(data);
 
+          setQuestions(question);
+          setInfo(data[1]?.data?.data);
           setResponse(arr);
         });
 
@@ -55,7 +63,7 @@ const PreviewAssessment = () => {
     };
 
     getDetails();
-  }, [location.state?.assessment]);
+  }, [assessment_id]);
 
   return (
     <>
