@@ -106,8 +106,8 @@ import { ServerError } from "./ui/pages/ServerError";
 import PersistLogin from "./components/PersistLogin";
 //import PreviewCsvUpload from "./ui/components/Company/Employees/PreviewCsvUpload/PreviewCsvUpload";
 import {
-  AssessmentCompleted,
-  AssessmentAvailable,
+  EmployeeCompletedAssessment,
+  EmployeeAvailableAssessment,
   EmployeePreviewAssessment,
   EmployeeTakeAssessment,
   EmployeeCancelOrStartAssessment,
@@ -397,8 +397,11 @@ const App = () => {
                   path="/employee/assessment"
                   element={<EmployeeAssessment />}
                 >
-                  <Route path="" element={<AssessmentAvailable />} />
-                  <Route path="completed" element={<AssessmentCompleted />} />
+                  <Route path="" element={<EmployeeAvailableAssessment />} />
+                  <Route
+                    path="completed"
+                    element={<EmployeeCompletedAssessment />}
+                  />
                 </Route>
 
                 <Route
