@@ -5,6 +5,7 @@ import { Title } from "../../../../styles/reusableElements.styled";
 
 const Stats = ({ stats }) => {
   const [info, setInfo] = useState([]);
+  const [recent, setRecent] = useState([]);
 
   useEffect(() => {
     const topScore =
@@ -15,6 +16,7 @@ const Stats = ({ stats }) => {
         : [];
 
     setInfo(topScore);
+    setRecent(stats?.completed_assessment ? stats.completed_assessment : []);
   }, [stats]);
 
   const data = {
@@ -38,8 +40,6 @@ const Stats = ({ stats }) => {
     ],
   };
 
-  console.log(stats?.completed_assessment);
-
   return (
     <>
       <StatsContainer>
@@ -55,7 +55,7 @@ const Stats = ({ stats }) => {
           </Title>
 
           <SkillRatingSection>
-            {stats.completed_assessment.map((assessment, index) => (
+            {recent.map((assessment, index) => (
               <div key={assessment.id}>
                 <p>{assessment.assessment.name}</p>
                 <span
