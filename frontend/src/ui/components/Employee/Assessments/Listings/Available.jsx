@@ -42,7 +42,6 @@ const Available = () => {
                   <td>
                     <Link
                       to={`/employee/assessment/${item.id}`}
-                      state={{ assessment: item }}
                     >
                       <Button $variant="outlined" $color="#2667ff">
                         Take Test
