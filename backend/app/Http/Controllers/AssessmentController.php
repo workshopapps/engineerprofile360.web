@@ -143,7 +143,7 @@ class AssessmentController extends Controller
     public function getAssessmentbyId($id): JsonResponse
     {
         try {
-            $assessment = Assessment::find($id);
+            $assessment = Assessment::where("id", $id)->with("department");
             if (!$assessment) return $this->sendResponse(true, 'Assessment not found', 'The assessment doesn\'t exists', null, Response::HTTP_NOT_FOUND);
             return $this->sendResponse(false, null, 'Assessment fetched successfully', $assessment, Response::HTTP_OK);
         } catch (Exception $e) {

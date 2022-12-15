@@ -283,7 +283,7 @@ class EmployeeController extends Controller
                 $department_id = $data["department_id"];
             
                 // fetch organization info
-                $orgData = Company::find($org_id);
+                $orgData = Company::where("id",$org_id);
                 $org_name = ucfirst($orgData->first()["name"]);
             
                 // insert only when organization exists
