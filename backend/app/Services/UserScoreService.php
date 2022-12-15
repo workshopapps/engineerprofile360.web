@@ -6,22 +6,23 @@ use App\Models\Assessment;
 use App\Models\Question;
 use App\Models\UserAssessment;
 use App\Models\UserScore;
+use Illuminate\Support\Str;
 
 class UserScoreService
 {
     public static function submit(array $request): array
     {
         extract($request);
+        $UserAssessment = UserAssessment::where(["assessment_id" => $assessment_id, "employee_id" => $employee_id]);
+        if ($UserAssessment->first()) return ["result" => "You've taken the assessment before now"];
         $result = self::calculateResult($request);
-        $uerScore = UserScore::create(self::prepareRequest($result["data"]));
+        $userScore = UserScore::create(self::prepareRequest($result["data"]));
         $org_id = Assessment::find($assessment_id)->first()['org_id'];
-        UserAssessment::where(["assessment_id" => $assessment_id])->update([
-            "completed" => 1,
-            "userscore_id" => $uerScore->id,
-            "org_id" => $org_id,
-            "result" => $result["points"],
-            "correct_questions" => $result["points"],
-            "total_questions" => $result["data"]["total_questions"]
+        $uid = Str::uuid();
+        UserAssessment::create([
+            'id' => $uid, 'employee_id' => $employee_id, 'assessment_id' => $assessment_id,
+            'org_id' => $org_id, 'userscore_id' => $userScore->id, 'completed' => 1,
+            'total_questions' => $result["data"]["total_questions"], 'correct_questions' => $result["points"], 'result' => $result["points"]
         ]);
         return ["result" => $result["points"] . "/" . $result["data"]["total_questions"]];
     }
