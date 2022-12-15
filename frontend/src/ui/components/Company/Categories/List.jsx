@@ -26,6 +26,10 @@ const List = () => {
   const { auth } = useAuth();
 
   // USE STATES
+  const [categoryDetails, setCategoryDetails] = useState({
+    id: "",
+    categoryName: "",
+  });
   const [toggleCreateCat, setToggleCreateCat] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(null);
   const [toggleDelete, setToggleDelete] = useState(false);
@@ -109,17 +113,22 @@ const List = () => {
       [id]: !showMore[id],
     });
   };
+  const { id: categoryId, categoryName: name } = categoryDetails;
 
   const onBulkDeleteClick = () => {
     setToggleMaxDelete(true);
   };
 
   // Fucntions to be passed to the Delete Modal
+
   const handleDelete = async () => {
     setIsLoading(true);
     try {
       const response = await axios.delete(
-        `category/${currentSelectedId.current}/${auth.org_id}/delete`
+        `api/category/${auth.org_id}/delete`,
+        {
+          id: [categoryId],
+        }
       );
       if (response.data.errorState === false) {
         setToggleDelete(false);
@@ -199,6 +208,7 @@ const List = () => {
                   data={categories?.data}
                   rowsPerPage={5}
                   handleChange={handleChange}
+                  setCategoryDetails={setCategoryDetails}
                 />
               </>
             ) : (
