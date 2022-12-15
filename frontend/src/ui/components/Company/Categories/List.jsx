@@ -237,7 +237,12 @@ const List = () => {
               isLoading={isLoading}
               setIsLoading={setIsLoading}
               setToggleDelete={setToggleDelete}
-              text={`${currentSelectedName.current}`}
+              text={
+                <div>
+                  <p>Are you sure you want to delete </p>
+                  <p>{currentSelectedName.current} ?</p>
+                </div>
+              }
             />
           )}
           {toggleEdit && (
@@ -261,7 +266,12 @@ const List = () => {
               isLoading={isLoading}
               setIsLoading={setIsLoading}
               setToggleDelete={setToggleMaxDelete}
-              text={"Are you sure you want to delete selected categories"}
+              text={
+                <div>
+                  <p>Are you sure you want to delete selected </p>
+                  <p>categories ?</p>
+                </div>
+              }
             />
           )}
         </OverallContainer>
@@ -305,7 +315,7 @@ const DeleteCategoryBtn = styled(Button)`
   height: 35px;
   :hover {
     background-color: #b71f1f;
-    color: #fff
+    color: #fff;
   }
 
   @media (max-width: 517px) {
