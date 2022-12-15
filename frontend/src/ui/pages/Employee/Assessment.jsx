@@ -53,6 +53,9 @@ const Assessment = () => {
     getDetails();
   }, []);
 
+  console.log(available);
+  console.log(completed);
+
   return (
     <>
       <PageInfo breadcrumb={["assessment"]} />
