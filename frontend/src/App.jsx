@@ -372,13 +372,10 @@ const App = () => {
                   />
                 </Route>
 
-                {/* <Route path="/employee/dashboard" element={"boss"} /> */}
               </Route>
 
               <Route path="/setting" element={<AdminSetting />} />
-              {/* <Route path="/404" element={<Error />} /> */}
 
-              {/* <Route path="/assessment" element={<Assessment />} /> */}
             </Route>
           </Route>
           <Route path="*" element={<Error />} />
