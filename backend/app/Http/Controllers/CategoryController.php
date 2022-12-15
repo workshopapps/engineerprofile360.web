@@ -160,7 +160,7 @@ class CategoryController extends Controller
 
             return $this->sendResponse(false, null, 'Category deleted successfully', null, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true, "Could not fetch category ", $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->sendResponse(true, "Could not delete category ", $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }
