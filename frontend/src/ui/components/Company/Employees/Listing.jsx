@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Button } from "../../../../styles/reusableElements.styled";
 
-import { More, AddCircle } from "iconsax-react";
+import { AddCircle } from "iconsax-react";
 import { Link, useOutletContext } from "react-router-dom";
 import NoData from "../../molecules/NoData";
-import TableComponent, { LengthShortner } from "../../molecules/TableComponent";
 import EmployeeListingTable from "./EmployeeListingTable";
 
 
@@ -53,7 +52,7 @@ const Listing = () => {
       </Filter>
 
       {allEmployees.length > 0 ? (
-        <EmployeeListingTable data={allEmployees} rowsPerPage={4} />
+        <EmployeeListingTable data={allEmployees} rowsPerPage={5} />
       ) : (
         <NoData text="Oops! No data here">
           <Link to="/employees/add-employee">

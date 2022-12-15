@@ -303,6 +303,10 @@ const DeleteCategoryBtn = styled(Button)`
   padding: 8px 10px;
   width: 120px;
   height: 35px;
+  :hover {
+    background-color: #b71f1f;
+    color: #fff
+  }
 
   @media (max-width: 517px) {
     width: 60px;
