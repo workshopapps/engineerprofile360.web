@@ -80,13 +80,12 @@ const List = () => {
         setIsLoading(false);
         const availableData = response?.data?.data;
         setAvailable(availableData);
-        console.log(availableData);
 
         //Get Completed Assessment Counts
         const responseCompleted = await axios.get(
-          `/assessment/completed-assessments/${auth.org_id}/${auth.id}`
+          `user-assessment/org/${auth.org_id}/org-completed`
         );
-        setCompleted(responseCompleted?.data?.data?.data);
+        setCompleted(responseCompleted?.data?.data);
       } catch (err) {
         if (!err?.response) {
           showErrorToast("No Server Response");
@@ -127,13 +126,13 @@ const List = () => {
                 <tr key={key}>
                   <td>{key + 1}</td>
                   <td>{item?.name}</td>
-                  <td>{item?.department.name}</td>
+                  <td>{item?.department?.name}</td>
                   <td>{item?.start_date}</td>
                   <td>{TimeStamp(item)}</td>
                   <td>{item?.end_date}</td>
 
                   <td>
-                    <Link to={`/assessment/view-assessment/${item.id}`}>
+                    <Link to={`/assessment/view-assessment/${item?.id}`}>
                       <Button $variant="outlined" $color="#2667ff">
                         View Assessment
                       </Button>

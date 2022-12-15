@@ -50,6 +50,11 @@ export const Button = styled.button`
     ${({ theme }) => theme.spacing(2.5)};
   cursor: pointer;
   outline: none;
+  //Hover State
+  :hover {
+      background-color: #106ebe;
+      color: #fff;
+  }
 
   ${(props) => {
     switch (props.$variant) {

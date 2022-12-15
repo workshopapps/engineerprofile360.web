@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('interviews', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
+            $table->string('title');
             $table->string('times_taken');
             $table->string('company_name');
             $table->string('stack_id');

@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\StackController;
 use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\UserAssessmentController;
 use App\Helper\Helper;
+use App\Http\Controllers\RequestDemoFromUsers;
 use Illuminate\Auth\Events\Authenticated;
 
 // util functions
@@ -69,7 +70,7 @@ Route::prefix("user")->group(function () {
 
 // User Assessment routes
 Route::prefix("user-assessment")->group(function () {
-    Route::get('/accept/{assessmentId}/{employeeId}/{orgId}', [UserAssessmentController::class, 'acceptUserAssessment']);
+    Route::get('/accept/{assessmentId}/{employeeId}', [UserAssessmentController::class, 'acceptUserAssessment']);
     Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
     Route::get('/org/{org_id}/org-available', [UserAssessmentController::class, 'getOrgAvailableAssessment']);
     Route::get('/org/{org_id}/org-completed', [UserAssessmentController::class, 'getOrgCompletedAssessment']);
@@ -85,6 +86,7 @@ Route::prefix("assessment")->group(function () {
     // Route::get('/{assessmentId}/notify/{employeeId}', [AssessmentController::class, 'notifyEmployeeAssessment']); // do not uncomment this route, some adjusments is currently been made
     Route::get('/{organization_id}', [AssessmentController::class, 'getAssByOrgId'])->middleware("isloggedin", "isadmin");
     Route::get('/department/{id}', [AssessmentController::class, 'getAssByDepartmentId'])->middleware("isloggedin");
+    Route::get('/single/{id}', [AssessmentController::class, 'getAssessmentbyId'])->middleware("isloggedin");
     Route::put('/{assessmentId}', [AssessmentController::class, 'updateAssessment'])->middleware("isloggedin", "isadmin");
     Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAssessment'])->middleware("isloggedin", "isadmin");
     Route::get('/{companyId}/{orgId}/accepted-assessments', [AssessmentController::class, 'getCompanyAcceptedAssessments'])->middleware("isloggedin", "isadmin");
@@ -182,11 +184,10 @@ Route::prefix("question")->group(function () {
 Route::prefix("category")->group(function () {
     Route::put('/{orgId}/{categoryId}/update', [CategoryController::class, 'updateCategory'])->middleware("isloggedin");
     Route::post('/add', [CategoryController::class, 'createCategory'])->middleware("isloggedin", "isadmin");
-    Route::delete('{categoryId}/{orgId}/delete', [CategoryController::class, 'deleteCategory'])->middleware("isloggedin", "isadmin");
+    Route::delete('{orgId}/delete', [CategoryController::class, 'deleteCompanyCategories'])->middleware("isloggedin", "isadmin");
     Route::get('/company/{id}', [CategoryController::class, 'getCompanyCategories'])->middleware("isloggedin", "isadmin");
     Route::get('/{orgId}/{categoryId}', [CategoryController::class, 'getCategoryById'])->middleware("isloggedin", "isadmin");
 });
-Route::delete('category/{orgId}/delete', [CategoryController::class, 'deleteCompanyCategories'])->middleware("isloggedin", "isadmin");
 
 //Employee Routes
 Route::prefix('employee')->group(function () {
@@ -235,6 +236,10 @@ Route::prefix("user-assessment")->group(function () {
     Route::put('/{id}/update', [UserAssessmentController::class, 'updateUserAssessment']);
     Route::delete('/{id}/delete', [UserAssessmentController::class, 'deleteUserAssessment']);
 });
+
+
+// send requests demo
+Route::post("/request-demo", [RequestDemoFromUsers::class, "sendRequestsDemo"]);
 
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);

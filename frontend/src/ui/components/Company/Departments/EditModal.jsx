@@ -65,9 +65,12 @@ function EditModal({ setEditModal, departmentDetails, setRunEffect, cancel }) {
               handleEdit(e);
             }}
           >
-            <Title as="h2" $size="28px" $color="#323130" $weight="400">
-              Edit Departments
-            </Title>
+            <TitleContainer>
+              <Title as="h2" $size="20px" $color="#323130" $weight="400">
+                Edit Departments
+              </Title>
+            </TitleContainer>
+
             <InputFieldWrapper>
               <Label>Title</Label>
               <InputField
@@ -89,9 +92,9 @@ function EditModal({ setEditModal, departmentDetails, setRunEffect, cancel }) {
                 }}
                 type="button"
                 w={"117px"}
-                border={"1px solid#2667FF"}
+                border={"1px solid #106ebe"}
                 h={"48px"}
-                text={"#2667FF"}
+                text={"#106ebe"}
                 bg={"#fff"}
                 rounded={"4px"}
                 m={" 6px"}
@@ -104,11 +107,11 @@ function EditModal({ setEditModal, departmentDetails, setRunEffect, cancel }) {
                 onClick={(e) => {
                   handleEdit(e);
                 }}
-                border={"1px solid #2667FF"}
+                border={"1px solid #106ebe"}
                 w={"117px"}
                 h={"48px"}
                 text={"#fff"}
-                bg={"#2667FF"}
+                bg={"#106ebe"}
                 rounded={"4px"}
                 m={" 6px"}
               >
@@ -152,4 +155,8 @@ export const ModalContainer = styled.div`
   /* transform: translate(-50%, -20%); */
   z-index: 2;
   overflow: hidden;
+`;
+
+const TitleContainer = styled.div`
+  margin-bottom: -40px;
 `;

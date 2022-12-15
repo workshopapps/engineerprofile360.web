@@ -1,0 +1,83 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+.cover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.blog {
+  max-width: 85vw;
+  margin: 0 auto;
+  margin: 2rem 0 6rem;
+}
+
+.blog h2 {
+  text-align: left;
+}
+
+.blog h3 {
+  font-size: 1.5rem;
+  margin: 1rem 0 2rem;
+}
+
+.blog .cards {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5rem;
+}
+
+.blog .card,
+.blog .card2 {
+  border: 1px solid #2667ff;
+  border-radius: 0.4rem;
+  padding: 2rem 1.5rem 0 1.1rem;
+  width: 35rem;
+  height: 700px;
+}
+
+.blog .card p,
+.blog .card2 p {
+  font-weight: normal;
+}
+
+.blog .card2 {
+  transform: translateY(-70px);
+}
+
+@media (max-width: 1100px) {
+  .blog .cards {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5rem;
+  }
+
+  .blog .card2 {
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .blog .card img,
+  .blog .card2 img {
+    width: 98%;
+  }
+  .blog .card,
+  .blog .card2 {
+    border: 1px solid #2667ff;
+    border-radius: 0.4rem;
+    padding: 2rem 1.5rem 0 1.1rem;
+    width: 90vw;
+    height: auto;
+  }
+}

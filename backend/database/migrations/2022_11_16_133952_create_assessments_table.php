@@ -17,6 +17,7 @@ return new class extends Migration
             $table->uuid('id')->unique();
             $table->string("name");
             $table->string("live")->nullable();
+            $table->string('duration')->nullable();
             $table->string("start_date");
             $table->string("start_time");
             $table->string("end_date");

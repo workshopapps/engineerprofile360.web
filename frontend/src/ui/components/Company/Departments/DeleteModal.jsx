@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 import axios from "../../../../api/axios";
-import { Loader, Title } from "../../../../styles/reusableElements.styled";
+import { Loader } from "../../../../styles/reusableElements.styled";
 import { InputWrapper, Load } from "./AddDept";
 import { ModalContainer } from "./EditModal";
 import { Button, Wrapper } from "./Hero";
@@ -50,41 +50,43 @@ function DeleteModal({
         <InputWrapper>
           <form>
             <ConfirmDelete>
-              Are you sure you want to Delete <span> {name}?</span>
+              <p>Are you sure you want to Delete</p> <span> {name}?</span>
             </ConfirmDelete>
 
             <Wrapper>
-              <Button
-                type="button"
-                onClick={(e) => {
-                  setDeleteModal(false);
-                  cancel(null);
-                }}
-                w={"117px"}
-                border={"1px solid#2667FF"}
-                h={"48px"}
-                text={"#2667FF"}
-                bg={"#fff"}
-                rounded={"4px"}
-                m={" 6px"}
-              >
-                No
-              </Button>
-              <Button
-                type="submit"
-                onClick={(e) => {
-                  handleDelete(e);
-                }}
-                border={"1px solid #2667FF"}
-                w={"117px"}
-                h={"48px"}
-                text={"#fff"}
-                bg={"#2667FF"}
-                rounded={"4px"}
-                m={" 6px"}
-              >
-                Yes
-              </Button>
+              <ButtonContainer>
+                <Button
+                  type="button"
+                  onClick={(e) => {
+                    setDeleteModal(false);
+                    cancel(null);
+                  }}
+                  w={"117px"}
+                  border={"1px solid #106ebe"}
+                  h={"48px"}
+                  text={"#106ebe"}
+                  bg={"transparent"}
+                  rounded={"4px"}
+                  m={" 6px"}
+                >
+                  No
+                </Button>
+                <Button
+                  type="submit"
+                  onClick={(e) => {
+                    handleDelete(e);
+                  }}
+                  border={"1px solid #b71f1f"}
+                  w={"117px"}
+                  h={"48px"}
+                  text={"#fff"}
+                  bg={"#ce2d2d"}
+                  rounded={"4px"}
+                  m={" 6px"}
+                >
+                  Yes
+                </Button>
+              </ButtonContainer>
             </Wrapper>
           </form>
         </InputWrapper>
@@ -97,16 +99,34 @@ export default DeleteModal;
 
 export const ConfirmDelete = styled.h5`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   font-size: 20px;
   color: #323130;
   padding-bottom: 25px;
-
+  gap: 12px;
   span {
-    font-size: 25px;
-    color: #ce2d2d;
+    font-size: 20px;
+    /* color: #ce2d2d; */
     padding-left: 7px;
+  }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 20px;
+
+  button:last-child {
+    background-color: transparent;
+    /* font-weight: 500; */
+    color: #b71f1f;
+    border: 1px solid #b71f1f;
+  }
+
+  button:last-child:hover {
+    background-color: #b71f1f;
+    color: #fff;
   }
 `;

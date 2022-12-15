@@ -155,8 +155,15 @@ class Helper extends Controller
         }
     }
 
-    public function notifyEmployee($emp_email, $emp_id)
+    public function demoRequests($to, $type, $userName, $companyName, $companyEmail, $companyPhone)
     {
-        return "hey";
+        try {
+            $mail = new Mailer();
+            $mail->requetsDemo($to, $type, $userName, $companyName, $companyEmail, $companyPhone);
+            return true;
+        } catch (\Exception $e) {
+            Log::error("Could not send requests demo link" . $e->getMessage());
+            return false;
+        }
     }
 }
