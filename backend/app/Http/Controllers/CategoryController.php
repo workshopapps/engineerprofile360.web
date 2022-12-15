@@ -74,25 +74,8 @@ class CategoryController extends Controller
      * @param string $orgId
      *
      * @return JsonResponse
-     */
-    public function deleteCategory($categoryId, $orgId): JsonResponse
-    {
-        try {
-
-            $category = Category::where('id', $categoryId)->where('org_id', $orgId)->first();
-
-            if(!$category){
-                return $this->sendResponse(true, "Category does not exist", "Category not found for this user", null, Response::HTTP_NOT_FOUND);
-            }
-
-            $category->delete();
-
-            return $this->sendResponse(false, null, 'Category deleted successfully', null, Response::HTTP_OK);
-        } catch (Exception $e) {
-            return $this->sendResponse(true, "Could not fetch category ", $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-    }
-
+    **/
+    
     public function getCategoryById($orgId, $categoryId): JsonResponse
     {
         try {
@@ -147,32 +130,37 @@ class CategoryController extends Controller
      *
      * @return JsonResponse
     */
-    public function deleteCompanyCategories( DeleteCategoriesRequest $request) : JsonResponse
+    public function deleteCompanyCategories(Request $req, $orgId)
     {
-        $data = $request->all();
+        
+        try {
 
-        try{
-            $categories = Category::destroy($data['ids']);
-
-            if(!$categories){
-                return $this->sendResponse(
-                    true,
-                    'One or more categories not found',
-                    'Category does not exist',
-                    null,
-                    Response::HTTP_NOT_FOUND
-                );
+            $payload = json_decode($req->getContent(), true);
+            $categoryIds = $payload["id"];
+            $allCategories = Category::select("id")->where('org_id', $orgId)->get();
+            $orgCategoryIds = [];
+            $filteredIds = [];
+            
+            foreach ($allCategories as $value) {
+                array_push($orgCategoryIds, $value["id"]);
             }
 
-            return $this->sendResponse(
-                false,
-                null,
-                'Categories deleted successfully',
-                'Successfully deleted categories',
-                Response::HTTP_OK
-            );
+            foreach ($categoryIds as $id) {
+                if(in_array($id, $orgCategoryIds)){
+                    array_push($filteredIds, $id);
+                }
+            }
+
+            if(count($filteredIds) === 0){
+                return $this->sendResponse(true, "Category does not exist", "Category not found for this user", null, Response::HTTP_NOT_FOUND);    
+            }
+
+            // delete categories / category
+            Category::whereIn("id", $filteredIds)->delete();
+
+            return $this->sendResponse(false, null, 'Category deleted successfully', null, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true,"Error fetching category", $e->getMessage(), null, Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->sendResponse(true, "Could not delete category ", $e->getMessage(), null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

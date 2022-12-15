@@ -11,6 +11,11 @@ const TableComponent = ({ children }) => {
 
 export default TableComponent;
 
+//String Shortner/Replacer
+export const LengthShortner = (string) => {
+  return string.slice(0, 10) + "...";
+};
+
 const TableWrapper = styled.div`
   padding-top: ${({ theme }) => theme.spacing(3)};
   width: 100%;
@@ -32,10 +37,12 @@ const Table = styled.table`
   }
 
   th {
-    padding: ${({ theme }) => theme.spacing(2)} ${({ theme }) => theme.spacing(1.5)};
+    padding: ${({ theme }) => theme.spacing(2)}
+      ${({ theme }) => theme.spacing(1.5)};
   }
   td {
-    padding: ${({ theme }) => theme.spacing(3)} ${({ theme }) => theme.spacing(1.5)};
+    padding: ${({ theme }) => theme.spacing(3)}
+      ${({ theme }) => theme.spacing(1.5)};
     position: relative;
   }
 
@@ -50,7 +57,7 @@ const Table = styled.table`
 
     th {
       font-size: 16px;
-      font-weight: 600;
+      font-weight: 400;
       color: #605e5c;
     }
   }
@@ -58,14 +65,14 @@ const Table = styled.table`
   td {
     color: #605e5c;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 400;
   }
 
   td:last-of-type {
     display: flex;
     align-items: center;
     position: relative;
-    gap: ${({theme}) => theme.spacing(2)};
+    gap: ${({ theme }) => theme.spacing(2)};
     svg {
       transform: rotate(90deg);
       position: relative;

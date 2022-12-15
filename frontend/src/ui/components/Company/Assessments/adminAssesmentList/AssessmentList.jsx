@@ -55,8 +55,14 @@ export const Buttons = () => {
 };
 
 export const List = () => {
-  const { completed, setCompleted, isLoading, setIsLoading, setAvailable } =
-    useContext(DataContext);
+  const {
+    completed,
+    setCompleted,
+    isLoading,
+    setIsLoading,
+    available,
+    setAvailable,
+  } = useContext(DataContext);
   const { auth } = useAuth();
 
   useEffect(() => {
@@ -64,17 +70,17 @@ export const List = () => {
       try {
         //Get Completed Assessment
         const response = await axios.get(
-          `/assessment/completed-assessments/${auth.org_id}/${auth.id}`
+          `user-assessment/org/${auth.org_id}/org-completed`
+          // `/assessment/completed-assessments/${auth.org_id}/${auth.id}`
         );
         setIsLoading(false);
-        const completedData = response?.data?.data?.data;
+        const completedData = response?.data?.data;
         setCompleted(completedData);
 
         //Get Availlable Assessment Count
-        const responseAvailable = await axios.get(`/assessment/${auth.id}`);
+        const responseAvailable = await axios.get(`/assessment/${auth.org_id}`);
         const availableCount = responseAvailable?.data?.data;
         setAvailable(availableCount);
-        console.log(availableCount);
       } catch (err) {
         if (!err?.response) {
           showErrorToast("No Server Response");
@@ -121,11 +127,11 @@ export const List = () => {
                 return (
                   <tr key={key}>
                     <td>{key + 1}</td>
-                    <td>{item?.name}</td>
-                    <td>{item?.department.name}</td>
-                    <td>{item?.start_date}</td>
+                    <td>{item?.assessment.name}</td>
+                    <td>{}</td>
+                    <td>{item?.assessment.start_date}</td>
                     <td>{TimeStamp(item)}</td>
-                    <td>{item?.end_date}</td>
+                    <td>{item?.assessment.end_date}</td>
                     <td>
                       <Link to={`/assessment/view-assessment/${item.id}`}>
                         <Button $variant="outlined" $color="#2667ff">
@@ -191,7 +197,10 @@ export const CompletedAssessmentList = () => {
       >
         <PageInfo breadcrumb={["Dashboard", "Assessment list"]} />
         <Buttons />
-        <Assessment available={available.length} completed={completed.length} />
+        <Assessment 
+        available={available?.length} 
+        completed={completed?.length} 
+        />
       </DataContext.Provider>
     </div>
   );

@@ -10,16 +10,19 @@ const GlobalStyles = createGlobalStyle`
         margin: 0;
         box-sizing: border-box;
         position: relative;
-        font-family: 'Inter', sans-serif;
+        /* font-family: 'Inter', sans-serif; */
+         font-family: 'Poppins', sans-serif;
     }
 
     body {
-        font-family: 'Inter', sans-serif;
+        /* font-family: 'Inter', sans-serif; */
+        font-family: 'Poppins', sans-serif;
         background-color: ${({ theme }) => theme.palette.grey.white};
     }
 
     button {
-        font-family: 'Inter', sans-serif;
+        /* font-family: 'Inter', sans-serif; */
+         font-family: 'Poppins', sans-serif;
     }
 
     ul, ol {
