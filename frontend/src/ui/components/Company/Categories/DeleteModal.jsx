@@ -24,8 +24,7 @@ const DeleteModal = ({
           $weight="600"
           $height="18px"
         >
-          <p>Are you sure you want to delete</p>
-          {text}?
+          {text}
         </Title>
         <ButtonContainer>
           {!isLoading ? (
