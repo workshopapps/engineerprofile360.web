@@ -86,6 +86,7 @@ Route::prefix("assessment")->group(function () {
     // Route::get('/{assessmentId}/notify/{employeeId}', [AssessmentController::class, 'notifyEmployeeAssessment']); // do not uncomment this route, some adjusments is currently been made
     Route::get('/{organization_id}', [AssessmentController::class, 'getAssByOrgId'])->middleware("isloggedin", "isadmin");
     Route::get('/department/{id}', [AssessmentController::class, 'getAssByDepartmentId'])->middleware("isloggedin");
+    Route::get('/single/{id}', [AssessmentController::class, 'getAssessmentbyId'])->middleware("isloggedin");
     Route::put('/{assessmentId}', [AssessmentController::class, 'updateAssessment'])->middleware("isloggedin", "isadmin");
     Route::delete('/{assessmentId}/delete', [AssessmentController::class, 'deleteAssessment'])->middleware("isloggedin", "isadmin");
     Route::get('/{companyId}/{orgId}/accepted-assessments', [AssessmentController::class, 'getCompanyAcceptedAssessments'])->middleware("isloggedin", "isadmin");
