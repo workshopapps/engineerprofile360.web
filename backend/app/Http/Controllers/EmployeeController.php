@@ -286,7 +286,6 @@ class EmployeeController extends Controller
                 $orgData = Company::where("id",$org_id);
                 $org_name = ucfirst($orgData->first()["name"]);
             
-                return print_r($org_name);
                 // insert only when organization exists
                 Employee::create($data);
 
