@@ -94,18 +94,19 @@ function Hero() {
             onClick={() => {
               setAddDept(true);
             }}
-            w={"210px"}
+            w={"240px"}
             h={"42px"}
             text={"#fff"}
-            bg={"#2667ff"}
+            bg={"#106ebe"}
             rounded={"4px"}
-            fs={"16px"}
+            fs={"14px"}
             fw={"400"}
             lh={"20px"}
-            border={"2px solid #2667ff"}
+            border={"2px solid #106ebe"}
             m={" 0"}
           >
-            Add New Department
+            <AddCircle color="#FFFFFF" style={{ marginRight: "10px" }} /> Add New
+            Department
           </Button>
         </CRUDContainer>
         {loading ? (
@@ -225,11 +226,14 @@ export const Button = styled.button`
   margin: ${(props) => props.m};
 
   &:hover {
-    background-color: ${(props) => props.text};
+    /* background-color: ${(props) => props.text}; */
     color: ${(props) => props.bg};
     border: none;
     border: ${(props) => props.border};
     cursor: pointer;
+    //Hover State
+      background-color: #106ebe;
+      color: #fff;
   }
 
   @media (min-width: 746px) {
@@ -242,7 +246,8 @@ export const CRUDContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 30px 0;
+  /* margin: 30px 0; */
+  margin: 0px 0;
 `;
 export const Wrapper = styled.div`
   display: flex;

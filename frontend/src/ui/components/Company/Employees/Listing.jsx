@@ -5,7 +5,10 @@ import { Button } from "../../../../styles/reusableElements.styled";
 import { More, AddCircle } from "iconsax-react";
 import { Link, useOutletContext } from "react-router-dom";
 import NoData from "../../molecules/NoData";
-import TableComponent from "../../molecules/TableComponent";
+import TableComponent, { LengthShortner } from "../../molecules/TableComponent";
+
+
+
 
 const Listing = () => {
   const [allEmployees, setAllEmployees] = useState([]);
@@ -63,7 +66,7 @@ const Listing = () => {
               allEmployees.map((employee, index) => (
                 <tr key={employee?.id}>
                   <td>{index + 1}.</td>
-                  <td>{employee?.fullname}</td>
+                  <td>{LengthShortner(employee?.fullname)}</td>
                   <td>{employee.department?.name}</td>
                   <td>{employee?.email}</td>
                   <td>{employee?.username}</td>
@@ -73,7 +76,7 @@ const Listing = () => {
                         View Profile
                       </Button>
                     </Link>
-                    <More />
+                    {/* <More /> */}
                   </td>
                 </tr>
               ))}

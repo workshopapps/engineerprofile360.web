@@ -80,13 +80,12 @@ const List = () => {
         setIsLoading(false);
         const availableData = response?.data?.data;
         setAvailable(availableData);
-        console.log(availableData);
 
         //Get Completed Assessment Counts
         const responseCompleted = await axios.get(
-          `/assessment/completed-assessments/${auth.org_id}/${auth.id}`
+          `user-assessment/org/${auth.org_id}/org-completed`
         );
-        setCompleted(responseCompleted?.data?.data?.data);
+        setCompleted(responseCompleted?.data?.data);
       } catch (err) {
         if (!err?.response) {
           showErrorToast("No Server Response");
