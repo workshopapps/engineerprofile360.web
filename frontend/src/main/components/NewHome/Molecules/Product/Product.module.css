@@ -1,0 +1,110 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+.product {
+  background-color: #2667ff;
+  color: #fff;
+  position: relative;
+  top: -13rem;
+  z-index: 2;
+}
+
+.product .wrapper {
+  max-width: 80vw;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 5rem;
+}
+
+.product h2 {
+  font-size: 3rem;
+  padding: 4rem 0;
+  font-weight: normal;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.numbers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* flex-wrap: wrap; */
+  gap: 3rem;
+  position: relative;
+}
+
+.number small {
+  position: absolute;
+  top: 0;
+  left: 5rem;
+  border: 1px solid #fff;
+  border-radius: 1rem;
+  padding: 0.5rem 0.8rem;
+}
+
+.number h3 {
+  margin: 1.5rem 0;
+  font-size: 5rem;
+}
+
+.number p {
+  font-size: 1.2rem;
+  font-weight: normal;
+}
+
+@media (max-width: 1000px) {
+  .numbers {
+    flex-direction: column;
+  }
+
+  .number {
+    width: 20rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .product .wrapper {
+    max-width: 95vw;
+    margin: 0 auto;
+    padding: 1rem 1rem 3rem;
+  }
+
+  .product {
+    background-color: #2667ff;
+    color: #fff;
+    position: relative;
+    top: -5rem;
+    z-index: 2;
+  }
+
+  .product h2 {
+    font-size: 2.5rem;
+    padding: 2rem 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .product h2 {
+    font-size: 1.5rem;
+    padding: 2rem 0;
+  }
+
+  .number h3 {
+    margin: 1.5rem 0 0.5rem;
+    font-size: 3.5rem;
+  }
+
+  .number small {
+    top: -0.5rem;
+    left: 1rem;
+  }
+
+  .number p {
+    font-size: 1rem;
+  }
+}

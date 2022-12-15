@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\StackController;
 use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\UserAssessmentController;
 use App\Helper\Helper;
+use App\Http\Controllers\RequestDemoFromUsers;
 use Illuminate\Auth\Events\Authenticated;
 
 // util functions
@@ -69,7 +70,7 @@ Route::prefix("user")->group(function () {
 
 // User Assessment routes
 Route::prefix("user-assessment")->group(function () {
-    Route::get('/accept/{assessmentId}/{employeeId}/{orgId}', [UserAssessmentController::class, 'acceptUserAssessment']);
+    Route::get('/accept/{assessmentId}/{employeeId}', [UserAssessmentController::class, 'acceptUserAssessment']);
     Route::get('/org/{orgId}', [UserAssessmentController::class, 'getOrgUserAssessmentByPerformance']);
     Route::get('/org/{org_id}/org-available', [UserAssessmentController::class, 'getOrgAvailableAssessment']);
     Route::get('/org/{org_id}/org-completed', [UserAssessmentController::class, 'getOrgCompletedAssessment']);
@@ -234,6 +235,10 @@ Route::prefix("user-assessment")->group(function () {
     Route::put('/{id}/update', [UserAssessmentController::class, 'updateUserAssessment']);
     Route::delete('/{id}/delete', [UserAssessmentController::class, 'deleteUserAssessment']);
 });
+
+
+// send requests demo
+Route::post("/request-demo", [RequestDemoFromUsers::class, "sendRequestsDemo"]);
 
 Route::fallback(function () {
     return response()->json(['message' => 'no Route matched with those values!'], 404);
