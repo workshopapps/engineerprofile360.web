@@ -24,7 +24,7 @@ class UserScoreController extends Controller
         try {
             $data = $request->validated();
             $UserAssessment = UserAssessment::where(["assessment_id" => $data['assessment_id'], "employee_id" => $data['employee_id']]);
-            if ($UserAssessment->first()) return $this->sendResponse(true, "Assessment Taken", "Sorry, you've taken this assessment", Response::HTTP_BAD_REQUEST);
+            if ($UserAssessment->first()) return $this->sendResponse(true, "Assessment Taken", "Sorry, you've taken this assessment",null,  Response::HTTP_BAD_REQUEST);
             $result = UserScoreService::submit($data);
             return $this->sendResponse(false, null, "Your assessment has been submitted successfully!", $result, Response::HTTP_CREATED);
         } catch (\Exception $e) {
