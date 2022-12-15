@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { More } from "iconsax-react";
 import Flex from "../../../../layout/Flex";
 import { Title } from "../../../../../../styles/reusableElements.styled";
 import NoData from "../../../../molecules/NoData";
+import { LengthShortner } from "../../../../molecules/TableComponent";
 
 const TopStaff = ({ topStaff }) => {
   const [topEmp, setTopEmp] = useState([]);
@@ -52,7 +52,7 @@ const TopStaff = ({ topStaff }) => {
                           width="25px"
                         />
                         <TableText $weight="600" $size="18px">
-                          {emp.fullname}
+                          {LengthShortner(emp.fullname)}
                         </TableText>
                       </Flex>
                     </td>
@@ -66,7 +66,6 @@ const TopStaff = ({ topStaff }) => {
                         <TableText $weight="400" $size="16px">
                           {emp.points}
                         </TableText>
-                        {/* <More /> */}
                       </Flex>
                     </td>
                   </tr>
