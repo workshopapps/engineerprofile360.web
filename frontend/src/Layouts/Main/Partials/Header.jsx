@@ -17,8 +17,7 @@ const Header = () => {
     setMenu(!menu);
   };
 
-  const getUser = localStorage.getItem("Eval360");
-  console.log("first", getUser);
+  const getUser = JSON.parse(localStorage.getItem("Eval360"));
   return (
     <HeaderTag>
       <HeaderContainer>
@@ -28,9 +27,21 @@ const Header = () => {
 
         <NavBar />
         {getUser ? (
-          <Link to="/dashboard">
-            <Button>Dashboard</Button>
-          </Link>
+          getUser.roles === 1 ? (
+            <Link to="/employee/dashboard">
+              <Button>Dashboard</Button>
+            </Link>
+          ) : getUser.roles === 2 ? (
+            <Link to="/dashboard">
+              <Button>Dashboard</Button>
+            </Link>
+          ) : getUser.roles === 3 ? (
+            <Link to="/admin/dashboard">
+              <Button>Dashboard</Button>
+            </Link>
+          ) : (
+            ""
+          )
         ) : (
           <ButtonGroup>
             <Link
