@@ -17,12 +17,11 @@ return new class extends Migration
             $table->uuid('id')->unique();
             $table->string("question");
             $table->string("options");
-            $table->string("timeframe");
             $table->string("correct_answers");
             $table->boolean("is_multiple_answers");
             $table->string('category_id');
             $table->string('assessment_id'); 
-            $table->string('company_id');
+            $table->string('company_id')->nullable();
             $table->timestamps();
         });
     }

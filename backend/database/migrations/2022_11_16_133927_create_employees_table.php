@@ -27,6 +27,9 @@ return new class extends Migration
             $table->string("reftoken")->nullable();
             $table->integer("role")->length(1)->default(1);
             $table->string('org_id');
+            $table->string('date_of_birth')->nullable();
+            $table->string('address')->nullable();
+            $table->string('phone_number')->nullable();
             $table->timestamps();
         });
     }
