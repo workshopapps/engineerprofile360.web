@@ -89,9 +89,9 @@ function EditModal({ setEditModal, departmentDetails, setRunEffect, cancel }) {
                 }}
                 type="button"
                 w={"117px"}
-                border={"1px solid#2667FF"}
+                border={"1px solid #106ebe"}
                 h={"48px"}
-                text={"#2667FF"}
+                text={"#106ebe"}
                 bg={"#fff"}
                 rounded={"4px"}
                 m={" 6px"}
@@ -104,11 +104,11 @@ function EditModal({ setEditModal, departmentDetails, setRunEffect, cancel }) {
                 onClick={(e) => {
                   handleEdit(e);
                 }}
-                border={"1px solid #2667FF"}
+                border={"1px solid #106ebe"}
                 w={"117px"}
                 h={"48px"}
                 text={"#fff"}
-                bg={"#2667FF"}
+                bg={"#106ebe"}
                 rounded={"4px"}
                 m={" 6px"}
               >
