@@ -61,7 +61,7 @@ const EditCategory = ({
       onClick={(e) => e.stopPropagation()}
       onSubmit={(e) => handleSubmit(e)}
     >
-      <Title as="h2" $size="18px" $color="#323130" $weight="400">
+      <Title as="h3" $size="20px" $color="#323130" $weight="400">
         Edit Category
       </Title>
       <InputFieldWrapper>
