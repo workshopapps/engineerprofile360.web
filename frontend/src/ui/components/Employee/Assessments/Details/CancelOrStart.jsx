@@ -9,7 +9,6 @@ import { Button } from "../../../../../styles/reusableElements.styled";
 
 const CancelOrStart = () => {
   const { assessment_id } = useParams();
-  const { info } = useOutletContext();
 
   return (
     <Buttons>
@@ -20,7 +19,6 @@ const CancelOrStart = () => {
       </Link>
       <Link
         to={`/employee/assessment/${assessment_id}/take-assessment`}
-        state={{ assessment: info }}
       >
         <Button $weight="400">Take Assessment</Button>
       </Link>
