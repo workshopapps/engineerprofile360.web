@@ -27,12 +27,24 @@ class RequestDemoFromUsers extends Controller
                 return $this->sendResponse(true, "some inputs are missing", "There was a problem with your submission, please try again", null, 400);
             }
 
-            // validate email
+            
             $userName = $payload["username"];
             $companyName = $payload["companyName"];
             $companyEmail = $payload["companyEmail"];
             $companyPhone = $payload["companyPhone"];
             $userMail = $companyEmail;
+            
+            // validate email and phonenumber
+            $phoneRegexp = '/^\(?\d{3}\)?\d{3}\d{4}$/';
+            $emailRegexp = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
+            
+            if(!preg_match($emailRegexp, $companyEmail)){
+                return $this->sendResponse(true, "email given is invalid", "invalid email address", null, 400);
+            }
+
+            if(!preg_match($phoneRegexp, $companyPhone)){
+                return $this->sendResponse(true, "phonenumber given is invalid", "invalid phonenumber", null, 400);
+            }
 
             // send mail to demo user.
             $this->helper->demoRequests($userMail, "demo_user", $userName, $companyName, $companyEmail, $companyPhone);
