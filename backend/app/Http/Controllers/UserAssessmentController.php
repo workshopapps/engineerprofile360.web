@@ -181,7 +181,7 @@ class UserAssessmentController extends Controller
             if (!$employee) return $this->sendResponse(true, 'Employee not found', "", null, Response::HTTP_NOT_FOUND);
             // Get all assessments completed by an employee where completed = true
             $completedAssessments = UserAssessment::where(['employee_id' => $employee_id, "assessment_id" => $assessment_id])->where('completed', true)->with("assessment.department")->first();
-            $msg = count($completedAssessments) < 1 ? "No completed assessment found" : "Assessment Details";
+            $msg = "Assessment Details";
             return $this->sendResponse(false, null, $msg, $completedAssessments, Response::HTTP_OK);
         } catch (Throwable $th) {
             return $this->sendResponse(true, $th->getMessage(), "Error", null, Response::HTTP_INTERNAL_SERVER_ERROR);
