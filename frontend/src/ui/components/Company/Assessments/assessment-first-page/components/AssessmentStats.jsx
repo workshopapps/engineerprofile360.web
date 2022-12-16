@@ -55,7 +55,7 @@ const Assessments = () => {
   useEffect(() => {
     const getStats = async () => {
       const ENDPOINTS = [
-        axios.get(`/assessment/${auth.org_id}`),
+        axios.get(`assessment/${auth.org_id}`),
         axios.get(`user-assessment/org/${auth.org_id}/org-completed`),
         axios.get(`userscore/company/${auth.org_id}`),
         axios.get(`userscore/company/${auth.org_id}/max`),

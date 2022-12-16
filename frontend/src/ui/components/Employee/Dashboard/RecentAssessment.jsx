@@ -67,10 +67,7 @@ const RecentAssessment = ({ assessments }) => {
                     {item.end_date} - {item.end_time}
                   </td>
                   <td>
-                    <Link
-                      to={`/employee/assessment/${item.id}/preview`}
-                      state={{ assessment: item }}
-                    >
+                    <Link to={`/employee/assessment/${item.id}`}>
                       <Button $variant="outlined" $color="#2667ff">
                         Take Test
                       </Button>
