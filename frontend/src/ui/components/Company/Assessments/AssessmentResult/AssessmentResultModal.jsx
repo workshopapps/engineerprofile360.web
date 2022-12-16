@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import useAuth from "../../../../../hooks/useAuth";
 import axios from "../../../../../api/axios";
@@ -34,13 +34,16 @@ const AssessmentResultModal = ({ assessment_id, setModal }) => {
   const [performance, setPerformance] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
+  const { ID } = useParams();
+  const [employeeID, setEmployeeID] = useState(ID);
+
   useEffect(() => {
     const getDetails = async () => {
       try {
         await axios
-          .get(`userscore/${auth.id}/${assessment_id}`)
+          .get(`/userscore/${employeeID}/${assessment_id}`)
           .then((data) => {
-            console.log(data);
+            console.log("data", data);
             setPerformance(data.data.data[0]);
           });
 
@@ -55,14 +58,14 @@ const AssessmentResultModal = ({ assessment_id, setModal }) => {
   }, [assessment_id]);
 
   const data = {
-    labels: performance.userscore?.categories
+    labels: performance?.userscore?.categories
       ? JSON.parse(performance.userscore?.categories)
       : ["", "", "", "", "", ""],
     datasets: [
       {
         label: "Categories",
-        data: performance.userscore?.passed_questions
-          ? performance.userscore?.passed_questions
+        data: performance?.userscore?.passed_questions
+          ? performance?.userscore?.passed_questions
           : [0, 0, 0, 0, 0, 0],
         backgroundColor: "rgba(95, 210, 85, 0.2)",
         borderColor: "#107C10",
@@ -125,7 +128,7 @@ const AssessmentResultModal = ({ assessment_id, setModal }) => {
                 </Details>
                 <ChartDetails>
                   <Radar data={data} />
-                  <Link to={`/employee/profile/${auth.id}`}>
+                  <Link to={`/employees/profile/${employeeID}`}>
                     <Button fullWidth $weight="400">
                       View Full Profile
                     </Button>
@@ -134,10 +137,12 @@ const AssessmentResultModal = ({ assessment_id, setModal }) => {
               </AssessmentInfo>
             </>
           ) : (
-            <OverlayLoader contained>
-              <div></div>
-              Loading Result...
-            </OverlayLoader>
+            <OverlayContainer>
+              <OverlayLoader contained>
+                <div></div>
+                Loading Result...
+              </OverlayLoader>
+            </OverlayContainer>
           )}
         </ResultContainer>
       </ResultModal>
@@ -153,12 +158,12 @@ const ResultModal = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 190px;
+  top: 95px;
   left: 50%;
   transform: translate(-50%, -15%);
   z-index: 2;
 
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 1);
 `;
 
 const ResultContainer = styled.div`
@@ -266,4 +271,9 @@ const ChartDetails = styled.div`
     width: 100%;
     max-width: 100%;
   }
+`;
+
+const OverlayContainer = styled.div`
+  margin: 75px 0px;
+  background-color: #fff;
 `;
