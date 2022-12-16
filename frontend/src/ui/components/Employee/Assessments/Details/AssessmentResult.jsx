@@ -79,23 +79,23 @@ const AssessmentResult = ({ assessment_id, setModal }) => {
             <>
               <Heading>
                 <p>Username</p>
-                <span>John Snow</span>
+                <span>{performance?.employee?.username}</span>
               </Heading>
               <AssessmentInfo>
                 <Details>
-                  <Detail>
+                  {/* <Detail>
                     <span>
                       <b>Department</b>
                     </span>
                     <p>UI/UX Engineer</p>
-                  </Detail>
+                  </Detail> */}
 
-                  <Detail>
+                  {/* <Detail>
                     <span>
                       <b>Assessment</b>
                     </span>
                     <p>UI/UX Engineer</p>
-                  </Detail>
+                  </Detail> */}
 
                   <Detail>
                     <span>
@@ -125,19 +125,21 @@ const AssessmentResult = ({ assessment_id, setModal }) => {
                 </Details>
                 <ChartDetails>
                   <Radar data={data} />
-                  <Link to={`/employee/profile/${auth.id}`}>
+                  {/* <Link to={`/employee/profile/${auth.id}`}>
                     <Button fullWidth $weight="400">
                       View Full Profile
                     </Button>
-                  </Link>
+                  </Link> */}
                 </ChartDetails>
               </AssessmentInfo>
             </>
           ) : (
-            <OverlayLoader contained>
-              <div></div>
-              Loading Result...
-            </OverlayLoader>
+            <OverlayContainer>
+              <OverlayLoader contained>
+                <div></div>
+                Loading Result...
+              </OverlayLoader>
+            </OverlayContainer>
           )}
         </ResultContainer>
       </ResultModal>
@@ -158,7 +160,7 @@ const ResultModal = styled.div`
   transform: translate(-50%, -15%);
   z-index: 2;
 
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 1);
 `;
 
 const ResultContainer = styled.div`
@@ -234,7 +236,7 @@ const Detail = styled.div`
   border-radius: ${({ theme }) => theme.spacing(2)};
 
   p {
-    font-size: 24px;
+    font-size: 30px;
     color: #323130;
     font-weight: 600;
   }
@@ -266,4 +268,9 @@ const ChartDetails = styled.div`
     width: 100%;
     max-width: 100%;
   }
+`;
+
+const OverlayContainer = styled.div`
+  margin: 75px 0px;
+  background-color: #fff;
 `;

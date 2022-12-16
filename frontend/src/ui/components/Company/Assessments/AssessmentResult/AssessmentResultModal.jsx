@@ -82,23 +82,23 @@ const AssessmentResultModal = ({ assessment_id, setModal }) => {
             <>
               <Heading>
                 <p>Username</p>
-                <span>John Snow</span>
+                <span>{performance?.employee?.username}</span>
               </Heading>
               <AssessmentInfo>
                 <Details>
-                  <Detail>
+                  {/* <Detail>
                     <span>
                       <b>Department</b>
                     </span>
                     <p>UI/UX Engineer</p>
-                  </Detail>
+                  </Detail> */}
 
-                  <Detail>
+                  {/* <Detail>
                     <span>
                       <b>Assessment</b>
                     </span>
                     <p>UI/UX Engineer</p>
-                  </Detail>
+                  </Detail> */}
 
                   <Detail>
                     <span>
@@ -239,7 +239,7 @@ const Detail = styled.div`
   border-radius: ${({ theme }) => theme.spacing(2)};
 
   p {
-    font-size: 24px;
+    font-size: 30px;
     color: #323130;
     font-weight: 600;
   }

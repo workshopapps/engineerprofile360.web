@@ -104,11 +104,11 @@ const Assessments = () => {
       number: stats.availableAssessments,
       url: "/assessment/assessment-list",
     },
-    {
-      text: "Accepted Assessment",
-      number: stats.acceptedAssessments,
-      url: "",
-    },
+    // {
+    //   text: "Accepted Assessment",
+    //   number: stats.acceptedAssessments,
+    //   url: "",
+    // },
     {
       text: "Completed Assessments",
       number: stats.completedAssessments,
@@ -127,7 +127,7 @@ const Assessments = () => {
       <Grid span={12}>
         {stat.map((info, idx) => {
           return (
-            <GridItem span={4} md={12} key={idx}>
+            <GridItem span={6} md={12} key={idx}>
               <Link to={info.url}>
                 <Card text={info.text} num={info.number} />
               </Link>
