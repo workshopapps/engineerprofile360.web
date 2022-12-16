@@ -125,7 +125,7 @@ const List = () => {
     setIsLoading(true);
     try {
       const response = await axios.delete(
-        `api/category/${auth.org_id}/delete`,
+        `category/${auth.org_id}/delete`,
         {
           id: [categoryId],
         }
