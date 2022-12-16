@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 import MobileNav from "./MobileNav";
 import Logo from "../../../components/Logo";
 
+ export const getUser = JSON.parse(localStorage.getItem("Eval360"));
+
 const Header = () => {
   const { pathname } = useLocation();
   const [menu, setMenu] = useState(false);
@@ -17,7 +19,7 @@ const Header = () => {
     setMenu(!menu);
   };
 
-  const getUser = JSON.parse(localStorage.getItem("Eval360"));
+ 
   return (
     <HeaderTag>
       <HeaderContainer>
@@ -28,17 +30,23 @@ const Header = () => {
         <NavBar />
         {getUser ? (
           getUser.roles === 1 ? (
-            <Link to="/employee/dashboard">
-              <Button>Dashboard</Button>
-            </Link>
+            <ButtonGroup>
+              <Link to="/employee/dashboard">
+                <Button>Dashboard</Button>
+              </Link>
+            </ButtonGroup>
           ) : getUser.roles === 2 ? (
-            <Link to="/dashboard">
-              <Button>Dashboard</Button>
-            </Link>
+            <ButtonGroup>
+              <Link to="/dashboard">
+                <Button>Dashboard</Button>
+              </Link>
+            </ButtonGroup>
           ) : getUser.roles === 3 ? (
-            <Link to="/admin/dashboard">
-              <Button>Dashboard</Button>
-            </Link>
+            <ButtonGroup>
+              <Link to="/admin/dashboard">
+                <Button>Dashboard</Button>
+              </Link>
+            </ButtonGroup>
           ) : (
             ""
           )
