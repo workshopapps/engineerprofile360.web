@@ -1,4 +1,5 @@
 import styles from "./GetStarted.module.css";
+import {Link} from "react-router-dom";
 
 const GetStarted = () => {
   return (
@@ -11,7 +12,9 @@ const GetStarted = () => {
           One of our solutions specialists will show you the platform and answer
           any questions you have.
         </p>
+        <Link to="/demo">
         <button className={styles.btn}>Request a Demo</button>
+        </Link>
       </div>
     </div>
   );

@@ -14,14 +14,10 @@ const NavBar = () => {
         <Link to="/pricing">
           <li>Pricing</li>
         </Link>
-        <li>
-          Resources
-          {/* <img src={arrowDown} alt="" /> */}
-        </li>
+        <Link to="/help-center">Support</Link>
         <Link to="/about-us">
           <li>
             About
-            {/* <img src={arrowDown} alt="" /> */}
           </li>
         </Link>
       </List>

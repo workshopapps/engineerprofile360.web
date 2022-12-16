@@ -238,7 +238,7 @@ const ContactSection = () => {
 
       {isModalOpen ? <Modal setIsModalOpen={setIsModalOpen} /> : ""}
       {isSubmitted ? (
-        <OverlayLoader contained>
+        <OverlayLoader>
           <div></div>
           <span>Sending info</span>
         </OverlayLoader>

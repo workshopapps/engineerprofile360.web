@@ -21,8 +21,8 @@ export const sleep = (sec = 1) => {
 };
 
 export const checkDate = (date) => {
-  const receivedDate = new Date(date).getTime();
-  const currentDate = new Date().getTime();
+  const receivedDate = new Date(date).getDate();
+  const currentDate = new Date().getDate();
   return receivedDate >= currentDate;
 };
 

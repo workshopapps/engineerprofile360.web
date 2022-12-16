@@ -1,6 +1,7 @@
 import styles from "./Decision.module.css";
 import board from "../../assets/board.png";
 import circle from "../../assets/circle.png";
+import {Link} from "react-router-dom";
 
 const Decision = () => {
   return (
@@ -18,7 +19,9 @@ const Decision = () => {
           time to make important decisions and with a clear overview of the
           team’s abilities, engineering management decisions can be made faster.
         </p>
+        <Link to="/demo">
         <button>Request a Demo</button>
+        </Link>
       </div>
     </div>
   );

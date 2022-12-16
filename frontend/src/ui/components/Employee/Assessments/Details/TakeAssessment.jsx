@@ -24,15 +24,6 @@ const TakeAssessment = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (new Date(`${info?.start_date} ${info?.start_time}`) < new Date()) {
-      showErrorToast("Assessment is yet to begin");
-      navigate(-1);
-    }
-
-    // if (new Date(`${info?.end_date} ${info?.end_time}`) > new Date()) {
-    //   showErrorToast("Assessment Duration has elapsed");
-    //   navigate(-1);
-    // }
     setAssessmentsQuestions(questions ? questions : []);
     setAnswers(response ? response : []);
   }, [questions, response]);
