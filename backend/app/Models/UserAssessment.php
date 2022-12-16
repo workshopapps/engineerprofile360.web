@@ -17,6 +17,11 @@ class UserAssessment extends Model
         'correct_questions', 'result'
     ];
 
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, "employee_id");
+    }
+
     public function assessment()
     {
         return $this->belongsTo(Assessment::class, 'assessment_id');

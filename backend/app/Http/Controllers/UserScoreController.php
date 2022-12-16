@@ -42,7 +42,7 @@ class UserScoreController extends Controller
     public function getScores(string $employeeId, string $assessmentId)
     {
         try {
-            $userScore  = UserAssessment::where(["employee_id" => $employeeId, "assessment_id" => $assessmentId])->with("employee")->with('userscore');
+            $userScore  = UserAssessment::where(["employee_id" => $employeeId, "assessment_id" => $assessmentId])->with('userscore', "employee");
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
         } catch (\Exception $e) {
             return $this->sendResponse(true, "Error fetching the userscores", $e->getMessage(), Response::HTTP_BAD_REQUEST);
