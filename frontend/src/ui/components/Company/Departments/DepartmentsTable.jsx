@@ -5,13 +5,16 @@ import TablePaginate from "../../molecules/TablePaginate";
 import { More } from "iconsax-react";
 import Update from "./Update";
 import { DepartmentsDataContext } from "./Hero";
+import styled from "styled-components";
+import { Button, Title } from "../../../../styles/reusableElements.styled";
 
 const DepartmentsTable = ({ data, rowsPerPage, editModal, deleteModal }) => {
   const [page, setPage] = useState(1);
   const { slice, range } = usePagination(data, page, rowsPerPage);
 
-  const { setDepartmentDetails, openUpdate, setOpenUpdate } =
-    useContext(DepartmentsDataContext);
+  const { setDepartmentDetails, openUpdate, setOpenUpdate } = useContext(
+    DepartmentsDataContext
+  );
 
   return (
     <>
@@ -86,9 +89,17 @@ const DepartmentsTable = ({ data, rowsPerPage, editModal, deleteModal }) => {
                   </tr>
                 );
               })
-            : "Oops! you have no departments to show, create a new Department."}
+            : ""}
         </tbody>
       </TableComponent>
+      {slice.length > 0 ? (
+        ""
+      ) : (
+        <NoTableData>
+          <p>Oops! you have no departments to show.</p>
+          <p>Create a New Department.</p>
+        </NoTableData>
+      )}
       <br />
       <br />
       <TablePaginate
@@ -102,3 +113,12 @@ const DepartmentsTable = ({ data, rowsPerPage, editModal, deleteModal }) => {
 };
 
 export default DepartmentsTable;
+
+const NoTableData = styled.div`
+  display: flex;
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 40px 30px;
+`;

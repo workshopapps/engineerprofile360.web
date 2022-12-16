@@ -49,7 +49,7 @@ class RequestDemoFromUsers extends Controller
             // send mail to demo user.
             $this->helper->demoRequests($userMail, "demo_user", $userName, $companyName, $companyEmail, $companyPhone);
             // sends mail to eval360 admin
-            $this->helper->demoRequests($this->Eval360_EMAIL, "eval360_admin",$userName, $companyName, $companyEmail, $companyPhone);
+            $this->helper->demoRequests($companyEmail, "eval360_admin",$userName, $companyName, $companyEmail, $companyPhone);
 
             return $this->sendResponse(false, null, "requests demo sent successfully", null, 200);
 

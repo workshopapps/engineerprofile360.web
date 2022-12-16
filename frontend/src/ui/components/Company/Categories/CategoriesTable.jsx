@@ -8,6 +8,7 @@ import { CategoryDataContext } from "./List";
 
 function Update({ setDeleteModal, cancel, setEditModal }) {
   // HOLDS THE EDIT , DELETE AND CANCEL BUTTONS
+
   const updateRef = useRef();
   useEffect(() => {
     const handleCancel = (e) => {
@@ -45,7 +46,12 @@ function Update({ setDeleteModal, cancel, setEditModal }) {
   );
 }
 
-const CategoriesTable = ({ data, rowsPerPage, handleChange }) => {
+const CategoriesTable = ({
+  data,
+  rowsPerPage,
+  handleChange,
+  setCategoryDetails,
+}) => {
   const [page, setPage] = useState(1);
   const { slice, range } = usePagination(data, page, rowsPerPage);
 
@@ -58,6 +64,7 @@ const CategoriesTable = ({ data, rowsPerPage, handleChange }) => {
     openUpdate,
   } = useContext(CategoryDataContext);
 
+  console.log(slice);
   return (
     <>
       <TableComponent>
@@ -82,7 +89,7 @@ const CategoriesTable = ({ data, rowsPerPage, handleChange }) => {
               <tr key={category.id}>
                 <td>{rowsPerPage * (page - 1) + id + 1}</td>
                 <td>{category.name}</td>
-                <td>0</td>
+                <td>{category.questions_count}</td>
                 <td>
                   <input
                     type="checkbox"
@@ -93,6 +100,10 @@ const CategoriesTable = ({ data, rowsPerPage, handleChange }) => {
                   {/* <More onClick={() => toggleOpen(id)} /> */}
                   <More
                     onClick={() => {
+                      setCategoryDetails({
+                        id: category.id,
+                        categoryName: category.name,
+                      });
                       handleModal(id);
                       toggleOpen(id);
                     }}

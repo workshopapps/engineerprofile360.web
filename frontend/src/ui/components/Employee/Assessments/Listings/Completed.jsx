@@ -44,7 +44,7 @@ const Completed = () => {
                   <tr key={item.assessment.id}>
                     <td>{index + 1}</td>
                     <td>{item.assessment.name}</td>
-                    <td>{item.assessment.department.name}</td>
+                    <td>{item.assessment.department?.name}</td>
                     <td>
                       {item.assessment.start_date} -{" "}
                       {item.assessment.start_time}

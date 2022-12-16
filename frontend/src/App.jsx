@@ -110,6 +110,7 @@ import {
   AssessmentAvailable,
   EmployeePreviewAssessment,
   EmployeeTakeAssessment,
+  EmployeeCancelOrStartAssessment,
 } from "./ui/components/Employee";
 
 import EmployeeAssessmentResult from "./ui/pages/Employee/EmployeeAssessmentResult";
@@ -118,7 +119,7 @@ import AdminAssessmmentListOutlet from "./ui/components/Company/Assessments/admi
 import AdminAssessmentListAvailable from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmentListAvailable";
 import AssessmentList from "./ui/components/Company/Assessments/adminAssesmentList/AssessmentList";
 import Assessments from "./ui/pages/Admin/Dashboard/Assessmentss";
-import CreateAssessmentss from "./ui/pages/Admin/Dashboard/CreateAssessments";
+import CreateAssessments from "./ui/pages/Admin/Dashboard/CreateAssessments";
 import Index from "./main/components/NewHome/Atom/Index";
 
 // This is for DevOps App Monitoring - START
@@ -377,8 +378,8 @@ const App = () => {
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
                 <Route path="/admin/Assessments" element={<Assessments />} />
                 <Route
-                  path="/admin/create-assessmentss"
-                  element={<CreateAssessmentss />}
+                  path="/admin/create-assessments"
+                  element={<CreateAssessments />}
                 />
                 {/* Put in Protected pages in here */}
                 <Route path="/admin/dashboard" element={<Dashboard />} />
@@ -404,6 +405,10 @@ const App = () => {
                   path="/employee/assessment/:assessment_id"
                   element={<EmployeePreviewAssessment />}
                 >
+                  <Route
+                    path=""
+                    element={<EmployeeCancelOrStartAssessment />}
+                  />
                   <Route
                     path="take-assessment"
                     element={<EmployeeTakeAssessment />}
