@@ -110,6 +110,7 @@ import {
   AssessmentAvailable,
   EmployeePreviewAssessment,
   EmployeeTakeAssessment,
+  EmployeeCancelOrStartAssessment,
 } from "./ui/components/Employee";
 
 import EmployeeAssessmentResult from "./ui/pages/Employee/EmployeeAssessmentResult";
@@ -404,6 +405,10 @@ const App = () => {
                   path="/employee/assessment/:assessment_id"
                   element={<EmployeePreviewAssessment />}
                 >
+                  <Route
+                    path=""
+                    element={<EmployeeCancelOrStartAssessment />}
+                  />
                   <Route
                     path="take-assessment"
                     element={<EmployeeTakeAssessment />}

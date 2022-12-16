@@ -11,12 +11,18 @@ const Stats = ({ stats }) => {
     const topScore =
       stats?.completed_assessment?.length > 0
         ? stats.completed_assessment.reduce((max, assessment) =>
-            max.points > assessment.points ? max : assessment
+            ((max.result / max.total_questions) * 100).toFixed(2) >
+            ((assessment.result / assessment.total_questions) * 100).toFixed(2)
+              ? max
+              : assessment
           )
         : [];
 
     setInfo(topScore);
     setRecent(stats?.completed_assessment ? stats.completed_assessment : []);
+
+    console.log(topScore);
+    console.log(recent);
   }, [stats]);
 
   const data = {

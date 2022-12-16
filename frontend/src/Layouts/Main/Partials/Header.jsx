@@ -17,6 +17,8 @@ const Header = () => {
     setMenu(!menu);
   };
 
+  const getUser = localStorage.getItem("Eval360");
+  console.log("first", getUser);
   return (
     <HeaderTag>
       <HeaderContainer>
@@ -25,31 +27,37 @@ const Header = () => {
         </Link>
 
         <NavBar />
-        <ButtonGroup>
-          <Link
-            to={
-              pathname === "/"
-                ? "/register"
-                : pathname === "/contact"
-                ? "/demo"
-                : "/register"
-            }
-          >
-            <Button $variant={pathname === "/contact" ? "outlined" : ""}>
-              {pathname === "/about-us"
-                ? "Get Started"
-                : pathname === "/contact"
-                ? "Request Demo"
-                : "Register"}
-            </Button>
+        {getUser ? (
+          <Link to="/dashboard">
+            <Button>Dashboard</Button>
           </Link>
+        ) : (
+          <ButtonGroup>
+            <Link
+              to={
+                pathname === "/"
+                  ? "/register"
+                  : pathname === "/contact"
+                  ? "/demo"
+                  : "/register"
+              }
+            >
+              <Button $variant={pathname === "/contact" ? "outlined" : ""}>
+                {pathname === "/about-us"
+                  ? "Get Started"
+                  : pathname === "/contact"
+                  ? "Request Demo"
+                  : "Register"}
+              </Button>
+            </Link>
 
-          <Link to="/login">
-            <Button $variant={pathname === "/contact" ? "" : "outlined"}>
-              Login
-            </Button>
-          </Link>
-        </ButtonGroup>
+            <Link to="/login">
+              <Button $variant={pathname === "/contact" ? "" : "outlined"}>
+                Login
+              </Button>
+            </Link>
+          </ButtonGroup>
+        )}
 
         <div onClick={handleMenu}>
           <img src={menuIcon} alt="" />
