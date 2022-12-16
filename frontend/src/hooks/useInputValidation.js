@@ -10,11 +10,20 @@ const useInputValidation = (initialState = {}, type = null) => {
       error.fname = "Name is required";
     }
 
+    if (formData.cname?.length <= 0) {
+      error.cname = "Company name is required";
+    }
+
+    if (formData.number?.length <= 0) {
+      error.number = "Phone number is required";
+    }
+
     if (formData.uname?.length <= 0) {
       error.uname = "Username is required";
     } else if (formData.uname?.length < 6) {
       error.uname = "Username must be at least 6 characters.";
     }
+
     // if (formData && !formData.email) {
     if (formData.email?.length <= 0) {
       error.email = "Email is required";
