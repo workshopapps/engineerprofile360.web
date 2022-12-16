@@ -1,22 +1,162 @@
+// import { validate } from "css-minimizer-webpack-plugin/node_modules/schema-utils/declarations/validate";
 import React, { useState } from "react";
 import styled from "styled-components";
+import axios from "../../../api/axios";
+import { showErrorToast } from "../../../helpers/helper";
 
-import { Container } from "../../../styles/reusableElements.styled";
+import {
+  Container,
+  OverlayLoader,
+} from "../../../styles/reusableElements.styled";
 import { Title } from "../../../styles/reusableElements.styled";
+import Flex from "../../../ui/components/layout/Flex";
 import { InputField } from "../../components";
 import Modal from "./Modal";
 
 const ContactSection = () => {
-  const [formData, setFormData] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [fetchError, setFetchError] = useState();
+  const [errors, setErrors] = useState({
+    name: [],
+    companyName: [],
+    email: [],
+    phone: [],
+  });
 
-  const handleSubmit = (e) => {
-    console.log("is this working");
-    e.preventDefault();
-    setIsModalOpen(true);
+  const handleNameChange = (e) => {
+    const name = e.target.value;
+    if (!name) {
+      setName(name);
+      setErrors({
+        ...errors,
+        name: ["Name is required", ...errors.name],
+      });
+      return;
+    }
+
+    setName(name);
+    setErrors({
+      ...errors,
+      name: [],
+    });
+  };
+  const handleCompanyNameChange = (e) => {
+    const companyName = e.target.value;
+    if (!companyName) {
+      setCompanyName("");
+      setErrors({
+        ...errors,
+        companyName: ["Company Name is required", ...errors.companyName],
+      });
+      return;
+    }
+
+    setCompanyName(companyName);
+    setErrors({
+      ...errors,
+      companyName: [],
+    });
+  };
+  const handleEmailChange = (e) => {
+    const email = e.target.value;
+    if (!email) {
+      setEmail("");
+      setErrors({
+        ...errors,
+        email: ["Company Email is required", ...errors.email],
+      });
+      return;
+    }
+
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      setEmail(email);
+      setErrors({
+        ...errors,
+        email: ["Enter a valid email", ...errors.email],
+      });
+      return;
+    }
+
+    setEmail(email);
+    setErrors({
+      ...errors,
+      email: [],
+    });
+  };
+  const handlePhoneChange = (e) => {
+    const phone = e.target.value.trim();
+    if (!phone) {
+      setPhone("");
+      setErrors({
+        ...errors,
+        phone: ["Company Phone is required", ...errors.phone],
+      });
+      return;
+    }
+
+    if (phone.length !== 10) {
+      setPhone(phone);
+      setErrors({
+        ...errors,
+        phone: ["Phone number should be 10 digits", ...errors.phone],
+      });
+      return;
+    }
+    setPhone(phone);
+    setErrors({
+      ...errors,
+      phone: [],
+    });
   };
 
-  const { name, cname, cemail, phonenumber } = formData;
+  const isDisabled = Object.keys(errors).some((key) => errors[key].length > 0);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if ([name, companyName, email, phone].some((val) => !val)) return;
+
+    try {
+      if (
+        errors.name.length === 0 &&
+        errors.companyName.length === 0 &&
+        errors.email.length === 0 &&
+        errors.phone.length === 0
+      ) {
+        setIsSubmitted(true);
+        const response = await axios.post(
+          "request-demo",
+          JSON.stringify({
+            username: name,
+            companyName: companyName,
+            companyEmail: email,
+            companyPhone: phone,
+          })
+        );
+
+        if (response.data.errorState === false) {
+          setIsModalOpen(true);
+        }
+
+        setName("");
+        setCompanyName("");
+        setEmail("");
+        setPhone("");
+      }
+    } catch (err) {
+      if (!err?.response) {
+        setFetchError("No Server Response");
+      } else if (err.response?.data.errorState === true)
+        showErrorToast(err.response.data.message);
+    } finally {
+      setIsSubmitted(false);
+    }
+  };
 
   return (
     <Container>
@@ -48,16 +188,13 @@ const ContactSection = () => {
               $size="md"
               type="text"
               label="Name"
+              name="name"
               id="name"
               placeholder="Enter Name"
-              // value={email}
-              //   handleChange={(e) => changeInputValue(e)}
-              //   handleBlur={onBlur}
-              //   error={errors && touched.email && errors.email?.length > 0}
-              //   endIcon={<img src={smsSvg} alt="" />}
-              //   helperText={
-              //     errors && errors.email && touched.email ? errors.email : ""
-              //   }
+              value={name}
+              handleChange={handleNameChange}
+              error={errors.name?.[0]}
+              helperText={errors && errors.name?.[0] ? errors.name?.[0] : ""}
             />
             <InputField
               $size="md"
@@ -65,14 +202,10 @@ const ContactSection = () => {
               label="Company Name"
               id="company_name"
               placeholder="Enter Your Company Name"
-              // value={email}
-              //   handleChange={(e) => changeInputValue(e)}
-              //   handleBlur={onBlur}
-              //   error={errors && touched.email && errors.email?.length > 0}
-              //   endIcon={<img src={smsSvg} alt="" />}
-              //   helperText={
-              //     errors && errors.email && touched.email ? errors.email : ""
-              //   }
+              value={companyName}
+              handleChange={handleCompanyNameChange}
+              error={errors.companyName?.[0]}
+              helperText={errors.companyName?.[0]}
             />
             <InputField
               $size="md"
@@ -80,51 +213,38 @@ const ContactSection = () => {
               label="Company Email"
               id="email"
               placeholder="Enter Your Company Email"
-              // value={email}
-              //   handleChange={(e) => changeInputValue(e)}
-              //   handleBlur={onBlur}
-              //   error={errors && touched.email && errors.email?.length > 0}
-              //   endIcon={<img src={smsSvg} alt="" />}
-              //   helperText={
-              //     errors && errors.email && touched.email ? errors.email : ""
-              //   }
+              value={email}
+              handleChange={handleEmailChange}
+              error={errors.email?.[0]}
+              helperText={errors.email?.[0]}
             />
             <InputField
               $size="md"
-              type="tel"
+              type="number"
               label="Company Phone"
               id="comapany_phone"
               placeholder="Enter Your Company Phone"
-              // value={email}
-              //   handleChange={(e) => changeInputValue(e)}
-              //   handleBlur={onBlur}
-              //   error={errors && touched.email && errors.email?.length > 0}
-              //   endIcon={<img src={smsSvg} alt="" />}
-              //   helperText={
-              //     errors && errors.email && touched.email ? errors.email : ""
-              //   }
-            />
-            {/* <InputField
-              $size="md"
-              type="tel"
-              label="Company Phone"
-              id="comapany_phone"
-              placeholder="Enter Your Company Email"
               value={phone}
-              handleChange={(e) => changeInputValue(e)} 
-              //   handleBlur={onBlur}
-              //   error={errors && touched.email && errors.email?.length > 0}
-              //   endIcon={<img src={smsSvg} alt="" />}
-              //   helperText={
-                  //     errors && errors.email && touched.email ? errors.email : ""
-              //   }
-            // />
-            */}
+              handleChange={handlePhoneChange}
+              error={errors.phone?.[0]}
+              helperText={errors.phone?.[0]}
+            />
           </InputContainer>
-          <button type="submit">Submit</button>
+          <button type="submit" disabled={isDisabled}>
+            Submit
+          </button>
         </Form>
       </ContactContainer>
+
       {isModalOpen ? <Modal setIsModalOpen={setIsModalOpen} /> : ""}
+      {isSubmitted ? (
+        <OverlayLoader contained>
+          <div></div>
+          <span>Sending info</span>
+        </OverlayLoader>
+      ) : (
+        ""
+      )}
     </Container>
   );
 };
