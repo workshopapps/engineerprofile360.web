@@ -110,7 +110,8 @@ const PreviewAssessment = () => {
             <FilterFlex>
               <Timer size="32" color="#323130" />
               <DurationTimer>
-                {Math.floor(datesDiff / 1000 / (60 * 60))} mins
+                {/* {Math.floor(datesDiff / 1000 / (60 * 60))} mins */}
+                {TimeStamp(info)}
                 <br />
                 Timer
               </DurationTimer>
