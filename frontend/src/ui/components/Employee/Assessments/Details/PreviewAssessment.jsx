@@ -37,11 +37,6 @@ const PreviewAssessment = () => {
           axios.get(`assessment/single/${assessment_id}`),
         ];
         await Promise.all(ENDPOINTS).then((data) => {
-          if (data[1]?.data?.data.completed === 1) {
-            showErrorToast("Invalid Request");
-            navigate(-1);
-          }
-
           const question = data[0]?.data?.data;
           const arr = [];
           for (let i = 0; i < question.length; i++) {
