@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import arrowDown from "../../../assets/icons/arrow-down.svg";
 import close from "../../../assets/icons/close.svg";
 import { Button } from "../../../styles/reusableElements.styled";
+import { getUser } from "./Header";
 
 const MobileNav = ({ handleMenu }) => {
   return (
@@ -31,11 +32,29 @@ const MobileNav = ({ handleMenu }) => {
           </li>
         </Link>
         <li>
-          <ButtonGroup>
-            <Link to="/register">
-              <MobileMenuButton>Get Started</MobileMenuButton>
-            </Link>
-          </ButtonGroup>
+          {getUser ? (
+            getUser.roles === 1 ? (
+              <Link to="/employee/dashboard">
+                <MobileMenuButton>Dashboard </MobileMenuButton>
+              </Link>
+            ) : getUser.roles === 2 ? (
+              <Link to="/dashboard">
+                <MobileMenuButton>Dashboard </MobileMenuButton>
+              </Link>
+            ) : getUser.roles === 3 ? (
+              <Link to="/admin/dashboard">
+                <MobileMenuButton>Dashboard </MobileMenuButton>
+              </Link>
+            ) : (
+              ""
+            )
+          ) : (
+            <ButtonGroup>
+              <Link to="/register">
+                <MobileMenuButton>Get Started</MobileMenuButton>
+              </Link>
+            </ButtonGroup>
+          )}
         </li>
       </List>
     </MobileNavBar>
