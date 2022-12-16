@@ -27,8 +27,12 @@ class UserScoreService
 
     public static function prepareRequest(array $data): array
     {
+        $result = [];
+        foreach ($data['passed_questions'] as $key => $value) {
+            array_push($result, ($value['passed'] / $value['total']) * 100);
+        }
         $data['categories'] = json_encode($data['categories']);
-        $data['passed_questions'] = json_encode($data['passed_questions']);
+        $data['passed_questions'] = json_encode($result);
         return  $data;
     }
 
@@ -61,11 +65,23 @@ class UserScoreService
                 $index = array_search($questions->category->name, $result["data"]["categories"]);
                 $points = count($value["answer"]);
                 if (isset($result["data"]["passed_questions"][$index])) {
-                    $result["data"]["passed_questions"][$index] += $points;
+                    $result["data"]["passed_questions"][$index]["passed"] += $points;
                 } else {
-                    array_push($result["data"]["passed_questions"], $points);
+                    array_push($result["data"]["passed_questions"], [
+                        "total" => 0,
+                        "passed" => $points
+                    ]);
                 }
                 $result["points"] += $points;
+            }
+
+            //update question number count for each category
+            $index = array_search($questions->category->name, $result["data"]["categories"]);
+            $points = count($value["answer"]);
+            if (isset($result["data"]["passed_questions"][$index])) {
+                $result["data"]["passed_questions"][$index]["total"] += $points;
+            } else {
+                array_push($result["data"]["passed_questions"], ["total" => $points, "passed" => 0]);
             }
             $result["data"]["total_questions"] += $points ?? 1;
         }
