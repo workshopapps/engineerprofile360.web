@@ -136,10 +136,16 @@ class CategoryController extends Controller
         try {
 
             $payload = json_decode($req->getContent(), true);
+            
+            if(!isset($payload["id"]) || empty($payload["id"])){
+                return $this->sendResponse(true, "Category 'id' is missing", "Category 'id' is missing ", null, Response::HTTP_NOT_FOUND);
+            }
+
             $categoryIds = $payload["id"];
             $allCategories = Category::select("id")->where('org_id', $orgId)->get();
             $orgCategoryIds = [];
             $filteredIds = [];
+
             
             foreach ($allCategories as $value) {
                 array_push($orgCategoryIds, $value["id"]);
