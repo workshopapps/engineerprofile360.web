@@ -31,7 +31,7 @@ class CategoryController extends Controller
             //this checks if category already exists for the current user
             $categoryExists = Category::where('name', $data['name'])->where('org_id', $data['org_id'])->first();
 
-            if($categoryExists){
+            if ($categoryExists) {
                 return $this->sendResponse(true, "category already exists", "name already exists.", null, Response::HTTP_BAD_REQUEST);
             }
 
@@ -43,7 +43,7 @@ class CategoryController extends Controller
         }
     }
 
-	public function updateCategory(UpdateCategoryRequest $request, $orgId, $categorId): JsonResponse
+    public function updateCategory(UpdateCategoryRequest $request, $orgId, $categorId): JsonResponse
     {
         $updatedData = $request->all();
         try {
@@ -52,11 +52,11 @@ class CategoryController extends Controller
 
             $categoryExists = Category::where('name', $updatedData['name'])->where('org_id', $category->org_id)->first();
 
-            if($categoryExists){
+            if ($categoryExists) {
                 return $this->sendResponse(true, "category already exists", "name already exists", null, Response::HTTP_BAD_REQUEST);
             }
 
-            if(!$category){
+            if (!$category) {
                 return $this->sendResponse(true, "Category does not exist", "Category not found for this user", null, Response::HTTP_NOT_FOUND);
             }
 
@@ -74,8 +74,8 @@ class CategoryController extends Controller
      * @param string $orgId
      *
      * @return JsonResponse
-    **/
-    
+     **/
+
     public function getCategoryById($orgId, $categoryId): JsonResponse
     {
         try {
@@ -87,7 +87,8 @@ class CategoryController extends Controller
                     'Category not found',
                     'Category does not exist',
                     null,
-                    Response::HTTP_NOT_FOUND);
+                    Response::HTTP_NOT_FOUND
+                );
             }
 
             return $this->sendResponse(
@@ -98,7 +99,7 @@ class CategoryController extends Controller
                 Response::HTTP_OK
             );
         } catch (Exception $e) {
-            return $this->sendResponse(true,"Error fetching category", $e->getMessage(), null, Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->sendResponse(true, "Error fetching category", $e->getMessage(), null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -107,12 +108,11 @@ class CategoryController extends Controller
      * @param string $orgId
      *
      * @return JsonResponse
-    */
-    public function getCompanyCategories($id) : JsonResponse
+     */
+    public function getCompanyCategories($id): JsonResponse
     {
-        try{
-            $categories = Category::where('org_id', $id)->paginate(10);
-
+        try {
+            $categories = Category::where('org_id', $id)->withCount("questions")->paginate(10);
             return $this->sendResponse(
                 false,
                 null,
@@ -121,7 +121,7 @@ class CategoryController extends Controller
                 Response::HTTP_OK
             );
         } catch (Exception $e) {
-            return $this->sendResponse(true,"Error fetching category", $e->getMessage(), null, Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->sendResponse(true, "Error fetching category", $e->getMessage(), null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -129,15 +129,15 @@ class CategoryController extends Controller
      * Delete multiple categories
      *
      * @return JsonResponse
-    */
+     */
     public function deleteCompanyCategories(Request $req, $orgId)
     {
-        
+
         try {
 
             $payload = json_decode($req->getContent(), true);
-            
-            if(!isset($payload["id"]) || empty($payload["id"])){
+
+            if (!isset($payload["id"]) || empty($payload["id"])) {
                 return $this->sendResponse(true, "Category 'id' is missing", "Category 'id' is missing ", null, Response::HTTP_NOT_FOUND);
             }
 
@@ -146,19 +146,19 @@ class CategoryController extends Controller
             $orgCategoryIds = [];
             $filteredIds = [];
 
-            
+
             foreach ($allCategories as $value) {
                 array_push($orgCategoryIds, $value["id"]);
             }
 
             foreach ($categoryIds as $id) {
-                if(in_array($id, $orgCategoryIds)){
+                if (in_array($id, $orgCategoryIds)) {
                     array_push($filteredIds, $id);
                 }
             }
 
-            if(count($filteredIds) === 0){
-                return $this->sendResponse(true, "Category does not exist", "Category not found for this user", null, Response::HTTP_NOT_FOUND);    
+            if (count($filteredIds) === 0) {
+                return $this->sendResponse(true, "Category does not exist", "Category not found for this user", null, Response::HTTP_NOT_FOUND);
             }
 
             // delete categories / category
@@ -166,7 +166,7 @@ class CategoryController extends Controller
 
             return $this->sendResponse(false, null, 'Category deleted successfully', null, Response::HTTP_OK);
         } catch (Exception $e) {
-            return $this->sendResponse(true, "Could not delete category: ".$e->getMessage(),"something went wrong while deleting category, try later.", null,  Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->sendResponse(true, "Could not delete category: " . $e->getMessage(), "something went wrong while deleting category, try later.", null,  Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }
