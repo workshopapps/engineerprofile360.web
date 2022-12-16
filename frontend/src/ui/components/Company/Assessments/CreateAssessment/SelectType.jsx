@@ -190,6 +190,7 @@ const SelectType = () => {
                 onChange={handleChange}
                 value={start_time}
                 onBlur={onBlur}
+                title="Set start time to at least 5mins ahead of time depending on number of questions for assessment"
               />
               {errors.start_time && touched.start_time && (
                 <span>{errors.start_time}</span>
@@ -204,6 +205,7 @@ const SelectType = () => {
                 onChange={handleChange}
                 value={end_time}
                 onBlur={onBlur}
+                title="Set end time ahead of start time"
               />
               {errors.end_time && touched.end_time && (
                 <span>{errors.end_time}</span>
