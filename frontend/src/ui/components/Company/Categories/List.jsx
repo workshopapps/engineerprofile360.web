@@ -125,8 +125,8 @@ const List = () => {
     setIsLoading(true);
     try {
       const response = await axios.delete(`category/${auth.org_id}/delete`, {
-        data: categoryId  ,
-        headers: { "Authorization" : `Bearer ${auth.accessToken}` }
+        data : {id : [categoryId]},
+         headers: { "Authorization" : `Bearer ${auth.accessToken}` }
       });
       if (response.data.errorState === false) {
         setToggleDelete(false);
