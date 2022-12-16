@@ -4,7 +4,7 @@ import axios from "../../../api/axios";
 import { showErrorToast } from "../../../helpers/helper";
 
 import { OverlayLoader } from "../../../styles/reusableElements.styled";
-import { RecentAssessment, Stats } from "../../components/Employee";
+import { EmployeeRecentAssessment, EmployeeStats } from "../../components/Employee";
 import PageInfo from "../../components/molecules/PageInfo";
 
 const Dashboard = () => {
@@ -56,8 +56,8 @@ const Dashboard = () => {
       />
       {!isLoading ? (
         <>
-          <Stats stats={stats} />
-          <RecentAssessment assessments={assessments} />
+          <EmployeeStats stats={stats} />
+          <EmployeeRecentAssessment assessments={assessments} />
         </>
       ) : (
         <OverlayLoader contained>
