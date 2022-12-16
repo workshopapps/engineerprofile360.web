@@ -33,18 +33,42 @@ const TakeAssessment = () => {
 
   console.log(questions);
 
-  const handleAnswer = (e, question_id) => {
-    setAnswers((answers) =>
-      answers.map((question, i) =>
-        question.question_id === question_id
-          ? {
-              ...question,
-              answer: [+e.target.value],
-            }
-          : question
-      )
-    );
+
+  const handleAnswer = (e, question_id, is_multiple_answers) => {
+    // Checks if type of answer is multiple or not
+    if (is_multiple_answers === 1) {
+
+      // Some explanation coming here
+
+      setAnswers((answers) =>
+        answers.map((question, i) =>
+          question.question_id === question_id
+            ? {
+                ...question,
+                answer: question.answer.includes(+e.target.value)
+                  ? question.answer.filter(
+                      (answer) => +e.target.value !== answer
+                    )
+                  : [...question.answer, +e.target.value],
+              }
+            : question
+        )
+      );
+    } else {
+      setAnswers((answers) =>
+        answers.map((question, i) =>
+          question.question_id === question_id
+            ? {
+                ...question,
+                answer: [+e.target.value],
+              }
+            : question
+        )
+      );
+    }
   };
+
+  console.log(answers);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -96,13 +120,19 @@ const TakeAssessment = () => {
                 </Title>
                 <Options
                   id={question.id}
-                  onChange={(e) => handleAnswer(e, question.id)}
+                  onChange={(e) =>
+                    handleAnswer(e, question.id, question.is_multiple_answers)
+                  }
                 >
                   {Array.from(JSON.parse(question.options)).map(
                     (option, index) => (
                       <InputWrapper key={index}>
                         <input
-                          type="radio"
+                          type={
+                            question.is_multiple_answers === 1
+                              ? "checkbox"
+                              : "radio"
+                          }
                           id={`${index}-${question.id}`}
                           value={index}
                           name={question.id}
