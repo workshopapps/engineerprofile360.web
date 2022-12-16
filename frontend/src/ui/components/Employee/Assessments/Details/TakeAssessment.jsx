@@ -9,6 +9,7 @@ import {
   showErrorToast,
   showSuccessToast,
 } from "../../../../../helpers/helper";
+import NoData from "../../../molecules/NoData";
 
 const TakeAssessment = () => {
   const { auth } = useAuth();
@@ -23,28 +24,53 @@ const TakeAssessment = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (info?.completed === 1) {
-      showErrorToast("Invalid Request");
+    if (new Date(`${info?.start_date} ${info?.start_time}`) < new Date()) {
+      showErrorToast("Assessment is yet to begin");
+      navigate(-1);
+    }
+
+    if (new Date(`${info?.end_date} ${info?.end_time}`) > new Date()) {
+      showErrorToast("Assessment Duration has elapsed");
       navigate(-1);
     }
     setAssessmentsQuestions(questions ? questions : []);
     setAnswers(response ? response : []);
   }, [questions, response]);
 
-  console.log(questions);
+  const handleAnswer = (e, question_id, is_multiple_answers) => {
+    // Checks if type of answer is multiple or not
+    if (is_multiple_answers === 1) {
+      // Some explanation coming here
 
-  const handleAnswer = (e, question_id) => {
-    setAnswers((answers) =>
-      answers.map((question, i) =>
-        question.question_id === question_id
-          ? {
-              ...question,
-              answer: [+e.target.value],
-            }
-          : question
-      )
-    );
+      setAnswers((answers) =>
+        answers.map((question, i) =>
+          question.question_id === question_id
+            ? {
+                ...question,
+                answer: question.answer.includes(+e.target.value)
+                  ? question.answer.filter(
+                      (answer) => +e.target.value !== answer
+                    )
+                  : [...question.answer, +e.target.value],
+              }
+            : question
+        )
+      );
+    } else {
+      setAnswers((answers) =>
+        answers.map((question, i) =>
+          question.question_id === question_id
+            ? {
+                ...question,
+                answer: [+e.target.value],
+              }
+            : question
+        )
+      );
+    }
   };
+
+  console.log(answers);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,44 +107,54 @@ const TakeAssessment = () => {
   return (
     <>
       <QuestionsContainer>
-        <form onSubmit={handleSubmit}>
-          <Questions>
-            {assessmentQuestions.map((question, index) => (
-              <Question key={question.id}>
-                <Title
-                  as="h2"
-                  $size="16px"
-                  $color="#323130"
-                  $weight="600"
-                  $lHeight="35px"
-                >
-                  {index + 1}. {question.question}
-                </Title>
-                <Options
-                  id={question.id}
-                  onChange={(e) => handleAnswer(e, question.id)}
-                >
-                  {Array.from(JSON.parse(question.options)).map(
-                    (option, index) => (
-                      <InputWrapper key={index}>
-                        <input
-                          type="radio"
-                          id={`${index}-${question.id}`}
-                          value={index}
-                          name={question.id}
-                        />
-                        <label htmlFor={`${index}-${question.id}`}>
-                          {option.optionText}
-                        </label>
-                      </InputWrapper>
-                    )
-                  )}
-                </Options>
-              </Question>
-            ))}
-          </Questions>
-          <Button type="submit">Submit Assessment</Button>
-        </form>
+        {assessmentQuestions.length > 0 ? (
+          <form onSubmit={handleSubmit}>
+            <Questions>
+              {assessmentQuestions.map((question, index) => (
+                <Question key={question.id}>
+                  <Title
+                    as="h2"
+                    $size="16px"
+                    $color="#323130"
+                    $weight="600"
+                    $lHeight="35px"
+                  >
+                    {index + 1}. {question.question}
+                  </Title>
+                  <Options
+                    id={question.id}
+                    onChange={(e) =>
+                      handleAnswer(e, question.id, question.is_multiple_answers)
+                    }
+                  >
+                    {Array.from(JSON.parse(question.options)).map(
+                      (option, index) => (
+                        <InputWrapper key={index}>
+                          <input
+                            type={
+                              question.is_multiple_answers === 1
+                                ? "checkbox"
+                                : "radio"
+                            }
+                            id={`${index}-${question.id}`}
+                            value={index}
+                            name={question.id}
+                          />
+                          <label htmlFor={`${index}-${question.id}`}>
+                            {option.optionText}
+                          </label>
+                        </InputWrapper>
+                      )
+                    )}
+                  </Options>
+                </Question>
+              ))}
+            </Questions>
+            <Button type="submit">Submit Assessment</Button>
+          </form>
+        ) : (
+          <NoData text="Oops! No available questions set for this assessment yet!" />
+        )}
       </QuestionsContainer>
     </>
   );

@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import axios from "../../../../../api/axios";
 import styled from "styled-components";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Frame from "../../../../../assets/icons/app/Frame.svg";
 import useAuth from "../../../../../hooks/useAuth";
@@ -28,7 +28,9 @@ const QuestionTemplate = ({ assessment_id }) => {
   const [toggleDelete, setToggleDelete] = useState({});
   const [categories, setCategories] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  console.log(assessment_id);
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     const getAllCatgories = async () => {
       try {
@@ -47,8 +49,6 @@ const QuestionTemplate = ({ assessment_id }) => {
   }, []);
 
   const [onEdit, setOnEdit] = useState(false);
-
-  const navigate = useNavigate();
 
   const handleChangeInput = (index, e) => {
     const values = [...inputFields];
@@ -169,7 +169,9 @@ const QuestionTemplate = ({ assessment_id }) => {
         setIsSubmitted(false);
         showSuccessToast("Successfully Created Assessment");
         setTimeout(() => {
-          window.location.href = `/assessment/view-assessment/${assessment_id}`;
+          navigate(`/assessment/view-assessment/${assessment_id}`, {
+            replace: true,
+          });
         }, 2000);
       }
     } catch (err) {
@@ -226,7 +228,11 @@ const QuestionTemplate = ({ assessment_id }) => {
                                   ? `Question${index}`
                                   : ""
                               }
-                              required
+                              required={
+                                inputfield.question_type === "radio"
+                                  ? "required"
+                                  : null
+                              }
                               value={oindex}
                               onChange={(e) => addAnswers(index, e)}
                             />

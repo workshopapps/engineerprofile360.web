@@ -116,9 +116,7 @@ export default DepartmentsTable;
 
 const NoTableData = styled.div`
   display: flex;
-  top: 0;
-  z-index
-  position: absolute;
+
   flex-direction: column;
   justify-content: center;
   align-items: center;

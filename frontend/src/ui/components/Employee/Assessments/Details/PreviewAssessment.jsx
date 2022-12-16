@@ -37,11 +37,6 @@ const PreviewAssessment = () => {
           axios.get(`assessment/single/${assessment_id}`),
         ];
         await Promise.all(ENDPOINTS).then((data) => {
-          if (data[1]?.data?.data.completed === 1) {
-            showErrorToast("Invalid Request");
-            navigate(-1);
-          }
-
           const question = data[0]?.data?.data;
           const arr = [];
           for (let i = 0; i < question.length; i++) {
@@ -65,6 +60,11 @@ const PreviewAssessment = () => {
     getDetails();
   }, [assessment_id]);
 
+  const datesDiff = Math.abs(
+    new Date(`${info?.start_date} ${info?.start_time}`) -
+      new Date(`${info?.end_date} ${info?.end_time}`)
+  );
+
   return (
     <>
       <PageInfo
@@ -82,6 +82,10 @@ const PreviewAssessment = () => {
                 <TextMuted>Department :</TextMuted>
                 {info?.department?.name ? info.department?.name : ""}
               </p>
+              <p>
+                <TextMuted>Questions :</TextMuted>
+                {questions ? questions.length : ""}
+              </p>
             </DetailContainer>
 
             <DetailContainer>
@@ -95,11 +99,16 @@ const PreviewAssessment = () => {
                 {info?.end_date ? info.end_date : ""} -{" "}
                 {info?.end_time ? info.end_time : ""}
               </p>
+              <p>
+                <TextMuted>Duration :</TextMuted>
+                {Math.floor(datesDiff / 1000 / (60 * 60))} mins
+              </p>
             </DetailContainer>
 
             <FilterFlex>
               <Timer size="32" color="#323130" />
               <DurationTimer>
+                {Math.floor(datesDiff / 1000 / (60 * 60))} mins
                 <br />
                 Timer
               </DurationTimer>

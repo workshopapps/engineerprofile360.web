@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 import MobileNav from "./MobileNav";
 import Logo from "../../../components/Logo";
 
+ export const getUser = JSON.parse(localStorage.getItem("Eval360"));
+
 const Header = () => {
   const { pathname } = useLocation();
   const [menu, setMenu] = useState(false);
@@ -17,6 +19,7 @@ const Header = () => {
     setMenu(!menu);
   };
 
+ 
   return (
     <HeaderTag>
       <HeaderContainer>
@@ -25,31 +28,55 @@ const Header = () => {
         </Link>
 
         <NavBar />
-        <ButtonGroup>
-          <Link
-            to={
-              pathname === "/"
-                ? "/register"
-                : pathname === "/contact"
-                ? "/demo"
-                : "/register"
-            }
-          >
-            <Button $variant={pathname === "/contact" ? "outlined" : ""}>
-              {pathname === "/about-us"
-                ? "Get Started"
-                : pathname === "/contact"
-                ? "Request Demo"
-                : "Register"}
-            </Button>
-          </Link>
+        {getUser ? (
+          getUser.roles === 1 ? (
+            <ButtonGroup>
+              <Link to="/employee/dashboard">
+                <Button>Dashboard</Button>
+              </Link>
+            </ButtonGroup>
+          ) : getUser.roles === 2 ? (
+            <ButtonGroup>
+              <Link to="/dashboard">
+                <Button>Dashboard</Button>
+              </Link>
+            </ButtonGroup>
+          ) : getUser.roles === 3 ? (
+            <ButtonGroup>
+              <Link to="/admin/dashboard">
+                <Button>Dashboard</Button>
+              </Link>
+            </ButtonGroup>
+          ) : (
+            ""
+          )
+        ) : (
+          <ButtonGroup>
+            <Link
+              to={
+                pathname === "/"
+                  ? "/register"
+                  : pathname === "/contact"
+                  ? "/demo"
+                  : "/register"
+              }
+            >
+              <Button $variant={pathname === "/contact" ? "outlined" : ""}>
+                {pathname === "/about-us"
+                  ? "Get Started"
+                  : pathname === "/contact"
+                  ? "Request Demo"
+                  : "Register"}
+              </Button>
+            </Link>
 
-          <Link to="/login">
-            <Button $variant={pathname === "/contact" ? "" : "outlined"}>
-              Login
-            </Button>
-          </Link>
-        </ButtonGroup>
+            <Link to="/login">
+              <Button $variant={pathname === "/contact" ? "" : "outlined"}>
+                Login
+              </Button>
+            </Link>
+          </ButtonGroup>
+        )}
 
         <div onClick={handleMenu}>
           <img src={menuIcon} alt="" />

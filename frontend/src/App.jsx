@@ -12,12 +12,17 @@ import { ThemeProvider } from "styled-components";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GlobalStyles, theme } from "./styles/globalStyles";
+
+//  NAMED EXPORTS FOR ALL LAYOUT OF THE APP
+
 import { MainLayout, UiLayout, AuthLayout } from "./Layouts";
 
 // Admin dashboard
 import Dashboard from "./ui/pages/Admin/Dashboard/Dashboard";
 import Stacks from "./ui/pages/Admin/Stacks/Stacks";
-//DEFAULT EXPORTS FROM MAIN
+
+//  NAMED EXPORTS FROM MAIN
+
 import {
   Home,
   About,
@@ -35,6 +40,8 @@ import {
   Terms,
 } from "./main/pages";
 
+//  NAMED EXPORTS FROM COMPANY
+
 import {
   CompanyLogin,
   CompanySignup,
@@ -45,6 +52,36 @@ import {
   CompanyVerifyEmail,
 } from "./ui/pages/Company/";
 
+import {
+  CompanyEmployeeAssessments,
+  CompanyEmployeeDetails,
+  CompanyEmployeeProfile,
+  CompanyEmployeesListing,
+} from "./ui/components/Company/Employees";
+
+import {
+  CompanyDashboard,
+  CompanyEmployees,
+  CompanyCategory,
+} from "./ui/pages/Company";
+
+//  NAMED EXPORTS FROM EMPLOYEE
+
+import { EmployeeLogin } from "./ui/pages/Employee";
+
+import { EmployeeDashboard, EmployeeAssessment } from "./ui/pages/Employee";
+
+import {
+  EmployeeCompletedAssessment,
+  EmployeeAvailableAssessment,
+  EmployeePreviewAssessment,
+  EmployeeTakeAssessment,
+  EmployeeCancelOrStartAssessment,
+  EmployeeAssessmentResult,
+} from "./ui/components/Employee";
+
+//  NAMED EXPORTS FROM GUEST
+
 import { GuestLogin } from "./ui/components/Guests";
 
 import {
@@ -53,14 +90,6 @@ import {
   GuestTakeAssessmentResult,
   GuestEmail,
 } from "./ui/pages/Guest";
-
-import { CompanyDashboard, Employees, Category } from "./ui/pages/Company";
-
-import {
-  EmployeeLogin,
-  EmployeeDashboard,
-  EmployeeAssessment,
-} from "./ui/pages/Employee";
 
 import { AdminLogin } from "./ui/pages/Admin";
 
@@ -88,15 +117,8 @@ import { ComparisonPage } from "./main/pages/ComparisonPage/ComparisonPage";
 import AssessmentFirstPage from "./ui/components/Company/Assessments/AssessmentFirstPage";
 import CreateAssessment from "./ui/components/Company/Assessments/CreateAssessment";
 
-import {
-  EmployeeAssessments,
-  EmployeeDetails,
-  EmployeeProfile,
-  EmployeesListing,
-} from "./ui/components/Company/Employees";
-
 import MainAssessment from "./ui/pages/Company/Assessment";
-import UserAssessmentListOutlet from "./ui/pages/Employee/EmployeeAssessmentListOutlet";
+
 import Error from "./ui/pages/404";
 
 // import GuestLogin from "./main/pages/Auth/GuestLogin";
@@ -105,21 +127,12 @@ import { ServerError } from "./ui/pages/ServerError";
 
 import PersistLogin from "./components/PersistLogin";
 //import PreviewCsvUpload from "./ui/components/Company/Employees/PreviewCsvUpload/PreviewCsvUpload";
-import {
-  AssessmentCompleted,
-  AssessmentAvailable,
-  EmployeePreviewAssessment,
-  EmployeeTakeAssessment,
-  EmployeeCancelOrStartAssessment,
-} from "./ui/components/Employee";
 
-import EmployeeAssessmentResult from "./ui/pages/Employee/EmployeeAssessmentResult";
-import EmployeeAssessmentList from "./ui/pages/Employee/EmployeeAssessmentListOutlet";
 import AdminAssessmmentListOutlet from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmmentListOutlet";
 import AdminAssessmentListAvailable from "./ui/components/Company/Assessments/adminAssesmentList/AdminAssessmentListAvailable";
 import AssessmentList from "./ui/components/Company/Assessments/adminAssesmentList/AssessmentList";
 import Assessments from "./ui/pages/Admin/Dashboard/Assessmentss";
-import CreateAssessmentss from "./ui/pages/Admin/Dashboard/CreateAssessments";
+import CreateAssessments from "./ui/pages/Admin/Dashboard/CreateAssessments";
 import Index from "./main/components/NewHome/Atom/Index";
 
 // This is for DevOps App Monitoring - START
@@ -174,34 +187,6 @@ const App = () => {
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/privacy-policy" element={<Privacy />} />
-            {/* <Route path="/admin/stacks" element={<Stacks/>} /> */}
-
-            {/* UNKNOWN ROUTES */}
-            {/* <Route path="/fill-employee" element={<Fillemployee />} /> */}
-            {/* <Route
-              path="/guest-take-assessment"
-              element={<GuestTakeAssessment />}
-            />
-            <Route
-              path="/guest-take-assessment-result"
-              element={<GuestTakeAssessmentResult />}
-            />
-
-            <Route path="/csv-uploading" element={<CsvUploading />} />
-
-            <Route
-              path="/csv-uploading-complete"
-              element={<CsvUploadComplete />}
-            />
-            <Route path="/privacy-policy" element={<Privacy />} />
-            /> */}
-
-            <Route path="/employee-profile" element={<EmployeeProfile />} />
-
-            {/* <Route
-                path="/user-assessment-completed"
-                element={<UserAssessmentListCompleted />}
-              /> */}
             <Route path="/guest-email" element={<GuestEmail />} />
           </Route>
 
@@ -289,33 +274,6 @@ const App = () => {
           {/* Private Route */}
           <Route element={<UiLayout />}>
             <Route element={<PersistLogin />}>
-              {/* Employee Route */}
-              {/* <Route element={<RequireAuth allowedRole={ROLES.Employees} />}> */}
-              {/* Put in Protected pages in here */}
-              <Route
-                path="/employee-assessment-result"
-                element={<EmployeeAssessmentResult />}
-              />
-              {/* <Route
-                path="/employee-user-dashboard"
-                element={<EmployeeUserDashboard />}
-              /> */}
-              <Route
-                path="/employee-assessment-list"
-                element={<EmployeeAssessmentList />}
-              >
-                <Route
-                  path="employee-assessment-completed"
-                  element={<AssessmentCompleted />}
-                />
-                <Route
-                  path="employee-assessment-available"
-                  element={<AssessmentAvailable />}
-                />
-              </Route>
-              <Route path="/employee-profile" element={<EmployeeProfile />} />
-              {/* </Route> */}
-
               {/* Organization Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Organization} />}>
                 <Route
@@ -326,13 +284,16 @@ const App = () => {
                 <Route path="/departments" element={<DepartmentSection />} />
                 <Route path="/dashboard" element={<CompanyDashboard />} />
 
-                <Route path="/employees" element={<Employees />}>
-                  <Route path="" element={<EmployeesListing />} />
-                  <Route path="profile/:ID" element={<EmployeeProfile />}>
-                    <Route path="" element={<EmployeeDetails />} />
+                <Route path="/employees" element={<CompanyEmployees />}>
+                  <Route path="" element={<CompanyEmployeesListing />} />
+                  <Route
+                    path="profile/:ID"
+                    element={<CompanyEmployeeProfile />}
+                  >
+                    <Route path="" element={<CompanyEmployeeDetails />} />
                     <Route
                       path="assessments"
-                      element={<EmployeeAssessments />}
+                      element={<CompanyEmployeeAssessments />}
                     />
                   </Route>
                   <Route path="add-employee" element={<EmployeeCSVUpload />} />
@@ -341,14 +302,7 @@ const App = () => {
                   // element={<PreviewCsvUpload />}
                   />
                 </Route>
-                {/* <Route
-                  path="/take-assessment"
-                  element={<UserTakeAssessment />}
-                /> */}
-                {/* <Route
-                  path="/take-assessment-result"
-                  element={<UserTakeAssessmentResult />}
-                /> */}
+
                 <Route path="/assessment" element={<MainAssessment />}>
                   <Route path="" element={<AssessmentFirstPage />} />
 
@@ -371,15 +325,15 @@ const App = () => {
                   <Route path="admin-csv-upload" element={<AdminCSVUpload />} />
                 </Route>
 
-                <Route path="/categories" element={<Category />} />
+                <Route path="/categories" element={<CompanyCategory />} />
               </Route>
 
               {/* Overall Admin Route */}
               <Route element={<RequireAuth allowedRole={ROLES.Admin} />}>
                 <Route path="/admin/Assessments" element={<Assessments />} />
                 <Route
-                  path="/admin/create-assessmentss"
-                  element={<CreateAssessmentss />}
+                  path="/admin/create-assessments"
+                  element={<CreateAssessments />}
                 />
                 {/* Put in Protected pages in here */}
                 <Route path="/admin/dashboard" element={<Dashboard />} />
@@ -397,8 +351,11 @@ const App = () => {
                   path="/employee/assessment"
                   element={<EmployeeAssessment />}
                 >
-                  <Route path="" element={<AssessmentAvailable />} />
-                  <Route path="completed" element={<AssessmentCompleted />} />
+                  <Route path="" element={<EmployeeAvailableAssessment />} />
+                  <Route
+                    path="completed"
+                    element={<EmployeeCompletedAssessment />}
+                  />
                 </Route>
 
                 <Route
@@ -415,13 +372,10 @@ const App = () => {
                   />
                 </Route>
 
-                {/* <Route path="/employee/dashboard" element={"boss"} /> */}
               </Route>
 
               <Route path="/setting" element={<AdminSetting />} />
-              {/* <Route path="/404" element={<Error />} /> */}
 
-              {/* <Route path="/assessment" element={<Assessment />} /> */}
             </Route>
           </Route>
           <Route path="*" element={<Error />} />
