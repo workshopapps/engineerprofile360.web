@@ -29,10 +29,10 @@ const TakeAssessment = () => {
       navigate(-1);
     }
 
-    if (new Date(`${info?.end_date} ${info?.end_time}`) > new Date()) {
-      showErrorToast("Assessment Duration has elapsed");
-      navigate(-1);
-    }
+    // if (new Date(`${info?.end_date} ${info?.end_time}`) > new Date()) {
+    //   showErrorToast("Assessment Duration has elapsed");
+    //   navigate(-1);
+    // }
     setAssessmentsQuestions(questions ? questions : []);
     setAnswers(response ? response : []);
   }, [questions, response]);

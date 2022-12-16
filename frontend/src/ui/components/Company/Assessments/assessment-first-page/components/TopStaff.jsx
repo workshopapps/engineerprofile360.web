@@ -64,7 +64,7 @@ const TopStaff = ({ topStaff }) => {
                     <td>
                       <Flex jc="space-between">
                         <TableText $weight="400" $size="16px">
-                          {emp.points}
+                          {((emp.points / emp.total_points) * 100).toFixed(2)} %
                         </TableText>
                       </Flex>
                     </td>
