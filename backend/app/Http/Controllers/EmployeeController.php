@@ -279,7 +279,7 @@ class EmployeeController extends Controller
                 $fullname = $data["fullname"];
                 $username = $data["username"];
                 $email = $data["email"];
-                $org_id = $data["org_id"];
+                $org_id = $data["org_id"]; 
                 $department_id = $data["department_id"];
             
                 // fetch organization info
