@@ -27,11 +27,19 @@ export default TablePaginate;
 
 const TablePaginateContainer = styled.div`
   display: flex;
+  justify-content:center;
   gap: 20px;
 
   .inactive {
     background-color: #fff;
     border: 1px solid #106ebe;
     color: #106ebe;
+  }
+
+  button{
+    min-width:initial;
+    min-height:initial;
+    width:30px;
+    height:30px;
   }
 `;
