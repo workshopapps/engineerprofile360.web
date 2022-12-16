@@ -8,6 +8,7 @@ import { OverlayLoader } from "../../../../../styles/reusableElements.styled";
 
 import PageInfo from "../../../molecules/PageInfo";
 import { showErrorToast } from "../../../../../helpers/helper";
+import { TimeStamp } from "../../../Company/Assessments/admin-view-assessment/components/ViewAssessmentHeader";
 
 const PreviewAssessment = () => {
   const { assessment_id } = useParams();
@@ -101,7 +102,8 @@ const PreviewAssessment = () => {
               </p>
               <p>
                 <TextMuted>Duration :</TextMuted>
-                {Math.floor(datesDiff / 1000 / (60 * 60))} mins
+                {/* {Math.floor(datesDiff / 1000 / (60 * 60))} mins */}
+                {TimeStamp(info)}
               </p>
             </DetailContainer>
 
