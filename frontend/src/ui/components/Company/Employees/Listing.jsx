@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Button } from "../../../../styles/reusableElements.styled";
 
-import { More, AddCircle } from "iconsax-react";
+import { AddCircle } from "iconsax-react";
 import { Link, useOutletContext } from "react-router-dom";
 import NoData from "../../molecules/NoData";
-import TableComponent, { LengthShortner } from "../../molecules/TableComponent";
+import EmployeeListingTable from "./EmployeeListingTable";
 
 
 
@@ -52,36 +52,7 @@ const Listing = () => {
       </Filter>
 
       {allEmployees.length > 0 ? (
-        <TableComponent>
-          <tbody>
-            <tr>
-              <th>#</th>
-              <th>Employee name</th>
-              <th>Department</th>
-              <th>Employee Email</th>
-              <th>Username</th>
-              <th>Actions</th>
-            </tr>
-            {allEmployees.length > 0 &&
-              allEmployees.map((employee, index) => (
-                <tr key={employee?.id}>
-                  <td>{index + 1}.</td>
-                  <td>{LengthShortner(employee?.fullname)}</td>
-                  <td>{employee.department?.name}</td>
-                  <td>{employee?.email}</td>
-                  <td>{employee?.username}</td>
-                  <td>
-                    <Link to={`/employees/profile/${employee.id}`}>
-                      <Button $variant="outlined" $color="#2667ff">
-                        View Profile
-                      </Button>
-                    </Link>
-                    {/* <More /> */}
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </TableComponent>
+        <EmployeeListingTable data={allEmployees} rowsPerPage={5} />
       ) : (
         <NoData text="Oops! No data here">
           <Link to="/employees/add-employee">

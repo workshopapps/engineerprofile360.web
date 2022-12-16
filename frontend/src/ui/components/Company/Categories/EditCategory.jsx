@@ -61,7 +61,7 @@ const EditCategory = ({
       onClick={(e) => e.stopPropagation()}
       onSubmit={(e) => handleSubmit(e)}
     >
-      <Title as="h2" $size="18px" $color="#323130" $weight="400">
+      <Title as="h3" $size="20px" $color="#323130" $weight="400">
         Edit Category
       </Title>
       <InputFieldWrapper>
@@ -84,6 +84,7 @@ const EditCategory = ({
             onClick={(e) => {
               setToggleEdit(false);
             }}
+            $variant="outlined"
           >
             Cancel
           </Button>
@@ -94,11 +95,11 @@ const EditCategory = ({
         {!isSubmitted && (
           <Button
             type="submit"
-            border={"1px solid #2667FF"}
+            border={"1px solid #106ebe"}
             w={"117px"}
             h={"48px"}
             text={"#fff"}
-            bg={"#2667FF"}
+            bg={"#106ebe"}
             rounded={"4px"}
             m={" 6px"}
           >
@@ -171,7 +172,7 @@ const ButtonContainer = styled.div`
   gap: 10px;
   margin-top: 24px;
 
-  button {
+  /* button {
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
@@ -187,5 +188,5 @@ const ButtonContainer = styled.div`
   button:last-child {
     background: #2667ff;
     border-radius: 4px;
-  }
+  } */
 `;

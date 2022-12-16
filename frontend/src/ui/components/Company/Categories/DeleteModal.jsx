@@ -1,9 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-
-import axios from "../../../../api/axios";
-import { showErrorToast, showSuccessToast } from "../../../../helpers/helper";
-import useAuth from "../../../../hooks/useAuth";
 
 import { Title } from "../../../../styles/reusableElements.styled";
 import { Button, Loader } from "../../../../styles/reusableElements.styled";
@@ -24,7 +20,7 @@ const DeleteModal = ({
         <Title
           as={"h3"}
           $color="#323130"
-          $size="18px"
+          $size="20px"
           $weight="600"
           $height="18px"
         >
@@ -33,7 +29,13 @@ const DeleteModal = ({
         <ButtonContainer>
           {!isLoading ? (
             <>
-              <Button onClick={() => setToggleDelete(false)}>No</Button>
+              <Button
+                $variant="outlined"
+                $color="#106ebe"
+                onClick={() => setToggleDelete(false)}
+              >
+                No
+              </Button>
               <Button onClick={handleDelete}>Yes</Button>
             </>
           ) : (
@@ -101,18 +103,23 @@ const ButtonContainer = styled.div`
   margin-top: 24px;
   justify-content: center;
 
-  button {
+  /* button {
     font-weight: 500;
-  }
+  } */
+
+  /* button:first-child {
+    background-color: #2667ff;
+  } */
 
   button:last-child {
     background-color: transparent;
-    font-weight: 500;
+    /* font-weight: 500; */
     color: #b71f1f;
     border: 1px solid #b71f1f;
   }
 
-  button:first-child {
-    background-color: #2667ff;
+  button:last-child:hover {
+    background-color: #b71f1f;
+    color: #fff;
   }
 `;

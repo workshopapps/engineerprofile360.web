@@ -50,7 +50,7 @@ const Assessments = () => {
       const ENDPOINTS = [
         axios.get(`user-assessment/org/${auth.org_id}/org-available`),
         axios.get(`assessment/completed-assessments/${auth.org_id}/${auth.id}`),
-        axios.get(`userscore/company/${auth.org_id}`),
+        // axios.get(`user_score/company/${auth.org_id}`),
       ];
 
       console.log(auth);

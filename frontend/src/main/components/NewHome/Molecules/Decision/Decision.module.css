@@ -1,0 +1,72 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+.decision {
+  max-width: 85vw;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.decision .circle {
+  position: absolute;
+  top: -10rem;
+  right: 8.5rem;
+  z-index: 1;
+}
+
+.decision .board {
+  position: relative;
+  z-index: 2;
+}
+
+.decision .content {
+  text-align: center;
+  margin: 2rem 0 3rem;
+}
+
+.decision .content h2 {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.decision .content p {
+  font-weight: normal;
+  margin: 1rem 0 2rem;
+}
+
+.decision button {
+  background-color: #2667ff;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.3rem;
+  padding: 1rem 3rem;
+  margin-bottom: 2rem;
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+}
+
+.decision button:hover {
+  transform: scale(1.05);
+}
+
+.decision button:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 767px) {
+  .decision img {
+    max-width: 90vw;
+    margin: 0auto;
+  }
+}

@@ -28,7 +28,7 @@ class UserScoreStoreRequest extends BaseRequest
             "employee_id" => 'required|exists:employees,id',
             "answers" => 'required|array',
             "answers.*.question_id" => 'required|string',
-            "answers.*.answer" => 'required|array'
+            "answers.*.answer" => 'array'
         ];
     }
 }

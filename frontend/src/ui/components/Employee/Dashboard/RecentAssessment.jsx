@@ -59,7 +59,7 @@ const RecentAssessment = ({ assessments }) => {
                 <tr key={item.id}>
                   <td>{index + 1}</td>
                   <td>{item.name}</td>
-                  <td>{item.department.name}</td>
+                  <td>{item.department?.name}</td>
                   <td>
                     {item.start_date} - {item.start_time}
                   </td>
@@ -67,10 +67,7 @@ const RecentAssessment = ({ assessments }) => {
                     {item.end_date} - {item.end_time}
                   </td>
                   <td>
-                    <Link
-                      to={`/employee/assessment/${item.id}/preview`}
-                      state={{ assessment: item }}
-                    >
+                    <Link to={`/employee/assessment/${item.id}`}>
                       <Button $variant="outlined" $color="#2667ff">
                         Take Test
                       </Button>

@@ -2,6 +2,7 @@
 
 use App\Mail\Onboarding;
 use App\Mail\PasswordReset;
+use App\Mail\RequestDemo;
 use App\Mail\Signup;
 use App\Mail\Verification;
 use Illuminate\Support\Facades\Mail;
@@ -84,6 +85,24 @@ class Mailer
             Mail::to($to)->send(new PasswordReset($mailData));
         } catch (\Exception $e) {
             echo ("Something went wrong sending mail " . $e->getMessage());
+        }
+    }
+
+
+    public function requetsDemo($to,$type, $userName, $companyName, $companyEmail, $companyPhone)
+    {
+        $mailData = [
+            "name" => $userName,
+            "company_name" => $companyName,
+            "company_email" => $companyEmail,
+            "company_phone" => $companyPhone,
+            "type"=>$type
+        ];
+
+        try {
+            Mail::to($to)->send(new RequestDemo($mailData));
+        } catch (\Exception $e) {
+            return print("Something went wrong sending mail " . $e->getMessage());
         }
     }
 }

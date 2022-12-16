@@ -1,6 +1,6 @@
 export { default as CompanyDashboard } from "./Dashboard";
-export { default as Employees } from "./Employees";
-export { default as Category } from "./Category";
+export { default as CompanyEmployees } from "./Employees";
+export { default as CompanyCategory } from "./Category";
 
 // Exports all Auth Pages
 

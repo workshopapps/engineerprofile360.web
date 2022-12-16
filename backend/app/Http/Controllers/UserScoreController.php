@@ -22,7 +22,10 @@ class UserScoreController extends Controller
     public function store(UserScoreStoreRequest $request)
     {
         try {
-            $result = UserScoreService::submit($request->validated());
+            $data = $request->validated();
+            $UserAssessment = UserAssessment::where(["assessment_id" => $data['assessment_id'], "employee_id" => $data['employee_id']]);
+            if ($UserAssessment->first()) return $this->sendResponse(true, "Assessment Taken", "Sorry, you've taken this assessment",null,  Response::HTTP_BAD_REQUEST);
+            $result = UserScoreService::submit($data);
             return $this->sendResponse(false, null, "Your assessment has been submitted successfully!", $result, Response::HTTP_CREATED);
         } catch (\Exception $e) {
             return $this->sendResponse(true, "Error storing the userr score", $e->getMessage(), Response::HTTP_BAD_REQUEST);
@@ -39,7 +42,7 @@ class UserScoreController extends Controller
     public function getScores(string $employeeId, string $assessmentId)
     {
         try {
-            $userScore  = UserAssessment::where(["employee_id" => $employeeId, "assessment_id" => $assessmentId])->with('userscore');
+            $userScore  = UserAssessment::where(["employee_id" => $employeeId, "assessment_id" => $assessmentId])->with("employee")->with('userscore');
             return $this->sendResponse(false, null, "Successful", $userScore->get(), Response::HTTP_OK);
         } catch (\Exception $e) {
             return $this->sendResponse(true, "Error fetching the userscores", $e->getMessage(), Response::HTTP_BAD_REQUEST);

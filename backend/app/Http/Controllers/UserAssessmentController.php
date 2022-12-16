@@ -16,7 +16,7 @@ use Throwable;
 class UserAssessmentController extends Controller
 {
     //Accepts user assessment
-    public function acceptUserAssessment($assessmentId, $employeeId, $orgId): JsonResponse
+    public function acceptUserAssessment($assessmentId, $employeeId): JsonResponse
     {
 
         try {
@@ -25,16 +25,16 @@ class UserAssessmentController extends Controller
             if (!$assessment_exist) {
                 return $this->sendResponse(true, 'Provide a valid assessment Id', '', null, Response::HTTP_BAD_REQUEST);
             }
-            $employee_exist = Employee::find($employeeId);
+            $employee = Employee::find($employeeId);
             //checks if employee exist
-            if (!$employee_exist) {
+            if (!$employee) {
                 return $this->sendResponse(true, 'Provide a valid employee Id', '', null, Response::HTTP_BAD_REQUEST);
             }
 
             $uid = Str::uuid();
             UserAssessment::create([
                 'id' => $uid, 'employee_id' => $employeeId, 'assessment_id' => $assessmentId,
-                'org_id' => $orgId, 'userscore_id' => '', 'completed' => 0,
+                'org_id' => $employee->org_id, 'userscore_id' => '', 'completed' => 0,
                 'total_questions' => 0, 'correct_questions' => 0, 'result' => 0
             ]);
             return $this->sendResponse(false, null, 'Accepted user assessment successfully', null, Response::HTTP_CREATED);
@@ -124,6 +124,8 @@ class UserAssessmentController extends Controller
     }
 
 
+
+
     /**
      * It gets all assessments completed by an employee where completed = true
      *
@@ -161,6 +163,28 @@ class UserAssessmentController extends Controller
                 null,
                 Response::HTTP_INTERNAL_SERVER_ERROR
             );
+        }
+    }
+
+    /**
+     * It gets all assessments completed by an employee where completed = true
+     *
+     * @param string employee_id The id of the employee whose completed assessments you want to get.
+     *
+     * @return JsonResponse All the assessments completed by the employee.
+     */
+    public function getEmployeeAssessmentStatus($employee_id, $assessment_id): JsonResponse
+    {
+        try {
+            // Check if employee exists in employees table
+            $employee = Employee::where('id', $employee_id)->first();
+            if (!$employee) return $this->sendResponse(true, 'Employee not found', "", null, Response::HTTP_NOT_FOUND);
+            // Get all assessments completed by an employee where completed = true
+            $completedAssessments = UserAssessment::where(['employee_id' => $employee_id, "assessment_id" => $assessment_id])->where('completed', true)->with("assessment.department")->first();
+            $msg = "Assessment Details";
+            return $this->sendResponse(false, null, $msg, $completedAssessments, Response::HTTP_OK);
+        } catch (Throwable $th) {
+            return $this->sendResponse(true, $th->getMessage(), "Error", null, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 

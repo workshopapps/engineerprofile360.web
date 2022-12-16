@@ -1,0 +1,90 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #c7e0f498;
+  padding: 3rem;
+  position: relative;
+}
+
+.quotes {
+  position: absolute;
+  right: -13.75rem;
+  top: -3rem;
+  z-index: 0;
+}
+
+.container h2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  position: relative;
+  z-index: 6rem;
+  margin: 1rem auto 3rem;
+}
+
+h2 span {
+  font-size: 2rem;
+  color: #2667ff;
+}
+
+.card {
+  max-width: 70vw;
+  text-align: center;
+  background-color: #222222;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border-radius: 0.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.card p {
+  font-weight: normal;
+  margin-top: 4rem;
+  color: #fff;
+}
+
+.card button {
+  background-color: #fff;
+  color: #2667ff;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.3rem;
+  padding: 1rem 3rem;
+  margin-bottom: 2rem;
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+  margin-top: 2rem;
+}
+
+.card button:hover {
+  transform: scale(1.05);
+}
+
+.card button:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 1300px) {
+  .quotes {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .card {
+    max-width: 98vw;
+    margin: 0 auto;
+  }
+}

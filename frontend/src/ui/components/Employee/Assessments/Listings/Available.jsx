@@ -32,7 +32,7 @@ const Available = () => {
                 <tr key={item.id}>
                   <td>{index + 1}</td>
                   <td>{item.name}</td>
-                  <td>{item.department.name}</td>
+                  <td>{item.department?.name}</td>
                   <td>
                     {item.start_date} - {item.start_time}
                   </td>
@@ -42,7 +42,6 @@ const Available = () => {
                   <td>
                     <Link
                       to={`/employee/assessment/${item.id}`}
-                      state={{ assessment: item }}
                     >
                       <Button $variant="outlined" $color="#2667ff">
                         Take Test

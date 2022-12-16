@@ -279,11 +279,11 @@ class EmployeeController extends Controller
                 $fullname = $data["fullname"];
                 $username = $data["username"];
                 $email = $data["email"];
-                $org_id = $data["org_id"];
+                $org_id = $data["org_id"]; 
                 $department_id = $data["department_id"];
             
                 // fetch organization info
-                $orgData = Company::find($org_id);
+                $orgData = Company::where("id",$org_id);
                 $org_name = ucfirst($orgData->first()["name"]);
             
                 // insert only when organization exists
@@ -307,7 +307,7 @@ class EmployeeController extends Controller
                     $department_id = $value["department_id"];
                 
                     // fetch organization info
-                    $orgData = Company::find($org_id);
+                    $orgData = Company::where("id",$org_id);
                     $org_name = ucfirst($orgData->first()["name"]);
                 
                     // send employee mail

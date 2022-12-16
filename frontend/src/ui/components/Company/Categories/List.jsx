@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { createContext, useEffect, useRef } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -10,20 +10,28 @@ import DeleteModal from "./DeleteModal";
 import { showErrorToast } from "../../../../helpers/helper";
 import { showSuccessToast } from "../../../../helpers/helper";
 
-import { More, AddCircle } from "iconsax-react";
+import { AddCircle } from "iconsax-react";
 import NoData from "../../molecules/NoData";
-import TableComponent from "../../molecules/TableComponent";
+
 import {
   Button,
   OverlayLoader,
 } from "../../../../styles/reusableElements.styled";
 import EditCategory from "./EditCategory";
+import CategoriesTable from "./CategoriesTable";
+
+export const CategoryDataContext = createContext(null);
 
 const List = () => {
   const { auth } = useAuth();
 
   // USE STATES
+  const [categoryDetails, setCategoryDetails] = useState({
+    id: "",
+    categoryName: "",
+  });
   const [toggleCreateCat, setToggleCreateCat] = useState(false);
+  const [openUpdate, setOpenUpdate] = useState(null);
   const [toggleDelete, setToggleDelete] = useState(false);
   const [toggleEdit, setToggleEdit] = useState(false);
   const [toggleMaxDelete, setToggleMaxDelete] = useState(false);
@@ -105,17 +113,22 @@ const List = () => {
       [id]: !showMore[id],
     });
   };
+  const { id: categoryId, categoryName: name } = categoryDetails;
 
   const onBulkDeleteClick = () => {
     setToggleMaxDelete(true);
   };
 
   // Fucntions to be passed to the Delete Modal
+
   const handleDelete = async () => {
     setIsLoading(true);
     try {
       const response = await axios.delete(
-        `category/${currentSelectedId.current}/${auth.org_id}/delete`
+        `category/${auth.org_id}/delete`,
+        {
+          id: [categoryId],
+        }
       );
       if (response.data.errorState === false) {
         setToggleDelete(false);
@@ -159,134 +172,121 @@ const List = () => {
   };
 
   return (
-    <OverallContainer>
-      <ButtonCategory>
-        <Button onClick={() => setToggleCreateCat(true)}>
-          <AddCircle color="#FFFFFF" /> Add New Category
-        </Button>
-        {value.categoryId.length > 1 && (
-          <DeleteCategoryBtn onClick={onBulkDeleteClick}>
-            Delete
-          </DeleteCategoryBtn>
-        )}
-      </ButtonCategory>
-      <CategoryListing>
-        {isOverlayLoading ? (
-          <OverlayLoader contained>
-            <div></div>
-          </OverlayLoader>
-        ) : (
-          ""
-        )}
-        {categories.data?.length > 0 && categories.data ? (
-          <>
-            <TableComponent>
-              <tbody>
-                <tr>
-                  <th>#</th>
-                  <th>Category</th>
-                  <th>Number of Questions</th>
-                  <th></th>
-                </tr>
-
-                {categories.data?.map((category, id) => (
-                  <tr key={category.id}>
-                    <td>{`${id + 1}.`}</td>
-                    <td>{category.name}</td>
-                    <td>0</td>
-                    <td>
-                      <input
-                        type="checkbox"
-                        name={category.name}
-                        value={category.id}
-                        onChange={handleChange}
-                      />
-                      <More onClick={() => toggleOpen(id)} />
-                    </td>
-                    {showMore[id] && (
-                      <Popup>
-                        <p
-                          onClick={() =>
-                            onEditClick(category.name, category.id, id)
-                          }
-                        >
-                          Edit
-                        </p>
-                        <p
-                          onClick={() =>
-                            onDeleteClick(category.name, category.id, id)
-                          }
-                        >
-                          Delete
-                        </p>
-                      </Popup>
-                    )}
-                  </tr>
-                ))}
-              </tbody>
-            </TableComponent>
-          </>
-        ) : (
-          <>
-            {isOverlayLoading ? (
-              ""
-            ) : (
-              <NoData text="Oops! No data here yet">
-                <Button $weight="400" onClick={() => setToggleCreateCat(true)}>
-                  <AddCircle color="#FFFFFF" /> Add Category
-                </Button>
-              </NoData>
+    <>
+      <CategoryDataContext.Provider
+        value={{
+          toggleOpen,
+          onEditClick,
+          showMore,
+          onDeleteClick,
+          openUpdate,
+          setOpenUpdate,
+        }}
+      >
+        <OverallContainer>
+          <ButtonCategory>
+            <Button onClick={() => setToggleCreateCat(true)}>
+              <AddCircle color="#FFFFFF" /> Add New Category
+            </Button>
+            {value.categoryId.length > 1 && (
+              <DeleteCategoryBtn onClick={onBulkDeleteClick}>
+                Delete
+              </DeleteCategoryBtn>
             )}
-          </>
-        )}
-      </CategoryListing>
+          </ButtonCategory>
+          <CategoryListing>
+            {isOverlayLoading ? (
+              <OverlayLoader contained>
+                <div></div>
+              </OverlayLoader>
+            ) : (
+              ""
+            )}
+            {categories.data?.length > 0 && categories.data ? (
+              <>
+                <CategoriesTable
+                  data={categories?.data}
+                  rowsPerPage={5}
+                  handleChange={handleChange}
+                  setCategoryDetails={setCategoryDetails}
+                />
+              </>
+            ) : (
+              <>
+                {isOverlayLoading ? (
+                  ""
+                ) : (
+                  <NoData text="Oops! No data here yet">
+                    <Button
+                      $weight="400"
+                      onClick={() => setToggleCreateCat(true)}
+                    >
+                      <AddCircle color="#FFFFFF" /> Add Category
+                    </Button>
+                  </NoData>
+                )}
+              </>
+            )}
+          </CategoryListing>
 
-      {toggleCreateCat && (
-        <Modal
-          setToggleCreateCat={setToggleCreateCat}
-          Form={
-            <CategoryForm
+          {toggleCreateCat && (
+            <Modal
               setToggleCreateCat={setToggleCreateCat}
-              setUpdateCategories={setUpdateCategories}
-              updateCategories={updateCategories}
+              Form={
+                <CategoryForm
+                  setToggleCreateCat={setToggleCreateCat}
+                  setUpdateCategories={setUpdateCategories}
+                  updateCategories={updateCategories}
+                />
+              }
             />
-          }
-        />
-      )}
-      {toggleDelete && (
-        <DeleteModal
-          handleDelete={handleDelete}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
-          setToggleDelete={setToggleDelete}
-          text={`Are you sure you want to delete ${currentSelectedName.current}`}
-        />
-      )}
-      {toggleEdit && (
-        <Modal
-          setToggleCreateCat={setToggleEdit}
-          Form={
-            <EditCategory
-              setToggleEdit={setToggleEdit}
-              setUpdateCategories={setUpdateCategories}
-              updateCategories={updateCategories}
-              currentSelectedName={currentSelectedName.current}
-              currentSelectedId={currentSelectedId.current}
+          )}
+          {toggleDelete && (
+            <DeleteModal
+              handleDelete={handleDelete}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+              setToggleDelete={setToggleDelete}
+              text={
+                <div>
+                  <p>Are you sure you want to delete </p>
+                  <p>{currentSelectedName.current} ?</p>
+                </div>
+              }
             />
-          }
-        />
-      )}
+          )}
+          {toggleEdit && (
+            <Modal
+              setToggleCreateCat={setToggleEdit}
+              Form={
+                <EditCategory
+                  setToggleEdit={setToggleEdit}
+                  setUpdateCategories={setUpdateCategories}
+                  updateCategories={updateCategories}
+                  currentSelectedName={currentSelectedName.current}
+                  currentSelectedId={currentSelectedId.current}
+                />
+              }
+            />
+          )}
 
-      {toggleMaxDelete && (
-        <DeleteModal
-          handleDelete={handleBulkDelete}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
-          setToggleDelete={setToggleMaxDelete}
-          text={"Are you sure you want to delete selected categories"}
-        />
-      )}
-    </OverallContainer>
+          {toggleMaxDelete && (
+            <DeleteModal
+              handleDelete={handleBulkDelete}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+              setToggleDelete={setToggleMaxDelete}
+              text={
+                <div>
+                  <p>Are you sure you want to delete selected </p>
+                  <p>categories ?</p>
+                </div>
+              }
+            />
+          )}
+        </OverallContainer>
+      </CategoryDataContext.Provider>
+    </>
   );
 };
 
@@ -323,6 +323,10 @@ const DeleteCategoryBtn = styled(Button)`
   padding: 8px 10px;
   width: 120px;
   height: 35px;
+  :hover {
+    background-color: #b71f1f;
+    color: #fff;
+  }
 
   @media (max-width: 517px) {
     width: 60px;
@@ -335,8 +339,8 @@ const DeleteCategoryBtn = styled(Button)`
 
 export const CategoryListing = styled.div``;
 
-const Popup = styled.span`
-  display: flex;
+export const Popup = styled.span`
+  /* display: flex;
   flex-direction: column;
   align-items: flex-end;
   width: 120px;
@@ -346,7 +350,18 @@ const Popup = styled.span`
   position: absolute;
   padding: 8px;
   gap: 12px;
-  border: 1px solid #8a8886;
+  border: 1px solid #8a8886; */
+  width: 112px;
+  height: 70px;
+  position: absolute;
+  right: 150px;
+  top: 11px;
+  background-color: #fff;
+  /* padding: 4px 15px; */
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.2);
+  z-index: 1;
+  border: none;
 
   top: 0px;
   right: 180px;
