@@ -89,7 +89,7 @@ const CategoriesTable = ({
               <tr key={category.id}>
                 <td>{rowsPerPage * (page - 1) + id + 1}</td>
                 <td>{category.name}</td>
-                <td>{category.questions_count}</td>
+                <td>{category.questions_count || 0}</td>
                 <td>
                   <input
                     type="checkbox"
@@ -105,7 +105,7 @@ const CategoriesTable = ({
                         categoryName: category.name,
                       });
                       handleModal(id);
-                      toggleOpen(id);
+                      //toggleOpen(id);
                     }}
                   />
                 </td>

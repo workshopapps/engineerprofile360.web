@@ -70,7 +70,7 @@ const List = () => {
       }
     };
     getAllCatgories();
-  }, [updateCategories]);
+  }, [auth.org_id, updateCategories]);
 
   const toggleOpen = (id) => {
     setShowMore({
@@ -124,12 +124,10 @@ const List = () => {
   const handleDelete = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.delete(
-        `category/${auth.org_id}/delete`,
-        {
-          id: [categoryId],
-        }
-      );
+      const response = await axios.delete(`category/${auth.org_id}/delete`, {
+        data : {id : [categoryId]},
+         headers: { "Authorization" : `Bearer ${auth.accessToken}` }
+      });
       if (response.data.errorState === false) {
         setToggleDelete(false);
         setIsLoading(false);
@@ -149,17 +147,21 @@ const List = () => {
   const handleBulkDelete = async () => {
     setIsLoading(true);
     try {
-      const ids = { ids: [...value.categoryId] };
+      const ids = { id: [...value.categoryId] };
       console.log(JSON.stringify(ids));
       const response = await axios.delete(
         `category/${auth.org_id}/delete`,
-        JSON.stringify(ids)
+        { 
+         data: ids  ,
+         headers: { "Authorization" : `Bearer ${auth.accessToken}` }
+        }
       );
       if (response.data.errorState === false) {
         setToggleMaxDelete(false);
         setIsLoading(false);
-        setUpdateCategories(!setUpdateCategories);
+        setUpdateCategories(!updateCategories);
         showSuccessToast(response.data.message);
+        
       }
     } catch (err) {
       setIsLoading(false);
