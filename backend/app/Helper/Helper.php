@@ -20,7 +20,7 @@ class Helper extends Controller
 
     public $baseUrl = "https://api.eval360.hng.tech";
     // public $baseUrl = "https://localhost:8000";
-    public $clientUrl = "https://eval360.hng.tech"; // this would be the frontend client url
+    public $clientUrl = "https://eval360.app"; // this would be the frontend client url
 
     public function returnExpireTime()
     {

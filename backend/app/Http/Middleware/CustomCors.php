@@ -18,10 +18,10 @@ class CustomCors
     {
         // return print_r("welcome");
         return $next($request)
-        ->header('Access-Control-Allow-Origin', 'http://localhost:3000, https://eval360.hng.tech')
-        ->header('Access-Control-Allow-Methods', '*')
-        ->header('Access-Control-Allow-Credentials', false)
-        ->header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,X-Token-Auth,Authorization')
-        ->header('Accept', 'application/json');
+            ->header('Access-Control-Allow-Origin', 'http://localhost:3000, https://eval360.app')
+            ->header('Access-Control-Allow-Methods', '*')
+            ->header('Access-Control-Allow-Credentials', false)
+            ->header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,X-Token-Auth,Authorization')
+            ->header('Accept', 'application/json');
     }
 }

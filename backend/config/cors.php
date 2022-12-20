@@ -17,13 +17,13 @@ return [
 
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    'allowed_methods' => ["GET", "POST", "PUT", 'DELETE', "PATCH",'*'],
+    'allowed_methods' => ["GET", "POST", "PUT", 'DELETE', "PATCH", '*'],
 
-    'allowed_origins' => ["https://eval360.hng.tech", "https://eval360.hng.tech", "http://127.0.0.1:5173", "http://localhost:8000", "https://api.eval360.hng.tech", '*'],
+    'allowed_origins' => ["https://eval360.app", "https://eval360.app", "http://127.0.0.1:5173", "http://localhost:8000", "https://api.eval360.hng.tech", '*'],
 
     'allowed_origins_patterns' => [],
 
-    'allowed_headers' => ['X-Custom-Header', 'Upgrade-Insecure-Requests','*'],
+    'allowed_headers' => ['X-Custom-Header', 'Upgrade-Insecure-Requests', '*'],
 
     'exposed_headers' => [],
 
