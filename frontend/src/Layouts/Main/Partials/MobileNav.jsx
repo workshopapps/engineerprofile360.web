@@ -69,7 +69,7 @@ const MobileNavBar = styled.nav`
   width: 100%;
   height: 100vh;
   background: ${({ theme }) => theme.palette.overlay.dark};
-  z-index: 2;
+  z-index: 10;
 
   @media (min-width: 961px) {
     display: none;
