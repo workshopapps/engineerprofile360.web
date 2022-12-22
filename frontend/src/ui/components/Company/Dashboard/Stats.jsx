@@ -1,4 +1,4 @@
-import React from "react";
+import {useState,useEffect,React} from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -80,14 +80,33 @@ const Stats = ({ stats, topPerformance }) => {
 };
 
 export const Chart = ({ topPerformance }) => {
+  const [newarr, setNewarr] = useState([]);
+  const [newarrscore, setNewarrscore] = useState([]);
+  let arr = [];
+  let arrscore = [];
+  
+  const dataa = topPerformance;
+  const dataaLength = dataa.length
+  console.log(dataaLength);
+  useEffect(() => {
+    for (let i = 0; i < dataaLength; i++) {
+      arr.push(JSON.parse(dataa[i].categories).toString());
+    }
+    setNewarr(arr);
+
+    for (let j = 0; j < dataaLength; j++) {
+      arrscore.push(JSON.parse(dataa[j].passed_questions).toString());      
+    }
+    setNewarrscore(arrscore);
+  }, []);
+
   const data = {
-    labels: topPerformance?.categories
-      ? JSON.parse(topPerformance?.categories)
+    labels: newarr?newarr
       : ["", "", "", "", "", ""],
     datasets: [
       {
-        label: "Categories",
-        data: topPerformance?.passed_questions || [0, 0, 0, 0, 0, 0],
+        label:"Categories",
+        data: newarrscore || [0, 0, 0, 0, 0, 0],
         backgroundColor: "rgba(95, 210, 85, 0.2)",
         borderColor: "#107C10",
         borderWidth: 2,
