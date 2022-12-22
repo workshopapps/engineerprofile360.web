@@ -18,7 +18,7 @@ const CancelOrStart = () => {
   const end = new Date(`${endDate} ${endTime}`);
 
   useEffect(() => {
-    if (begin >= new Date()) {
+    if (begin <= new Date()) {
       //set begin state to true
       setBeginState(true);
     }

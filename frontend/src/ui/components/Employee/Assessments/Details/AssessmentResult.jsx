@@ -40,7 +40,7 @@ const AssessmentResult = ({ assessment_id, setModal }) => {
         await axios
           .get(`userscore/${auth.id}/${assessment_id}`)
           .then((data) => {
-            console.log(data);
+            console.log(data.data);
             setPerformance(data.data.data[0]);
           });
 
@@ -62,7 +62,7 @@ const AssessmentResult = ({ assessment_id, setModal }) => {
       {
         label: "Categories",
         data: performance.userscore?.passed_questions
-          ? performance.userscore?.passed_questions
+          ? JSON.parse(performance.userscore?.passed_questions)
           : [0, 0, 0, 0, 0, 0],
         backgroundColor: "rgba(95, 210, 85, 0.2)",
         borderColor: "#107C10",
