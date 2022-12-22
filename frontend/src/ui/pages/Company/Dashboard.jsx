@@ -35,7 +35,7 @@ const Dashboard = () => {
           const availableAssessments = response[2]?.data.data.length;
           const completedAssessments = response[3]?.data.data.length;
           const topEmployee =
-            employees > 0 ? response[4]?.data.data.userscore[0] : {};
+            employees > 0 ? response[4]?.data.data.userscore : {};
           const topEmployees = response[5]?.data;
           const allDepartments = response[6]?.data;
 
@@ -48,6 +48,8 @@ const Dashboard = () => {
           setTopPerformance(topEmployee);
           setTopPerformances(topEmployees);
           setDepartments(allDepartments);
+
+          console.log(topEmployee);
         });
 
         setIsLoading(false);
