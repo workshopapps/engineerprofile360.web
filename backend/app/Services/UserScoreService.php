@@ -53,17 +53,17 @@ class UserScoreService
         foreach ($answers as $key => $value) {
             //get question details
             $questions = Question::where(["id" => $value["question_id"]])->with("category")->first();
+            //store the categories of the questions
+            if (!in_array($questions->category->name, $result["data"]["categories"])) {
+                array_push($result["data"]["categories"], $questions->category->name);
+            }
+            
+            $points = count($value["answer"]);
+            $index = array_search($questions->category->name, $result["data"]["categories"]);
             // compare the answers
             $numberTypeAnswers = intval($questions->correct_answers);
             if (!array_diff($value["answer"], str_split($numberTypeAnswers, strlen($questions->correct_answers)))) {
-                //store the categories of the questions
-                if (!in_array($questions->category->name, $result["data"]["categories"])) {
-                    array_push($result["data"]["categories"], $questions->category->name);
-                }
-
                 //update answer count for each question category
-                $index = array_search($questions->category->name, $result["data"]["categories"]);
-                $points = count($value["answer"]);
                 if (isset($result["data"]["passed_questions"][$index])) {
                     $result["data"]["passed_questions"][$index]["passed"] += $points;
                 } else {
@@ -76,8 +76,6 @@ class UserScoreService
             }
 
             //update question number count for each category
-            $index = array_search($questions->category->name, $result["data"]["categories"]);
-            $points = count($value["answer"]);
             if (isset($result["data"]["passed_questions"][$index])) {
                 $result["data"]["passed_questions"][$index]["total"] += $points;
             } else {
