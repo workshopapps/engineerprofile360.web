@@ -23,4 +23,9 @@ class UserScore extends Model
      * @var array<int, string>
      */
     protected $hidden = ['hash', 'raw_password', 'reftoken'];
+
+    public function assessment()
+    {
+        return $this->belongsTo(Assessment::class, 'assessment_id');
+    }
 }
