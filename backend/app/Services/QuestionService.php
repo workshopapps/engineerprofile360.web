@@ -35,7 +35,6 @@ class QuestionService
                     "category_id" => $category['id'],
                     "assessment_id" => $payload['assessment_id'],
                     "correct_answers" => [intval($answer) - 1],
-                    "timeframe" => 1,
                     "is_multiple_answers" => false
                 ];
                 Question::create($output);
