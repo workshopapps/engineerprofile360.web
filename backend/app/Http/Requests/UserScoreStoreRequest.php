@@ -27,7 +27,7 @@ class UserScoreStoreRequest extends BaseRequest
             "assessment_id" => 'required|exists:assessments,id',
             "employee_id" => 'required|exists:employees,id',
             "answers" => 'required|array',
-            "answers.*.question_id" => 'required|string',
+            "answers.*.question_id" => 'required|string|exists:questions,id',
             "answers.*.answer" => 'array'
         ];
     }
