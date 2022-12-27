@@ -57,12 +57,11 @@ class UserScoreService
             if (!in_array($questions->category->name, $result["data"]["categories"])) {
                 array_push($result["data"]["categories"], $questions->category->name);
             }
-            
+
             $points = count($value["answer"]);
             $index = array_search($questions->category->name, $result["data"]["categories"]);
             // compare the answers
-            $numberTypeAnswers = intval($questions->correct_answers);
-            if (!array_diff($value["answer"], str_split($numberTypeAnswers, strlen($questions->correct_answers)))) {
+            if (!array_diff($value["answer"], json_decode($questions->correct_answers))) {
                 //update answer count for each question category
                 if (isset($result["data"]["passed_questions"][$index])) {
                     $result["data"]["passed_questions"][$index]["passed"] += $points;
