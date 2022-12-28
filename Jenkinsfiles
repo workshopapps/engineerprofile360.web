@@ -34,6 +34,7 @@ pipeline {
 
 				sh "sudo cp -fr ${WORKSPACE}/engineerprofile360.web/backend/* /home/omiebi/eval360/backend"
 				sh "sudo systemctl restart eval360.service"
+				sh "sudo rm -rf *"
 			} 
 	    }
 		
