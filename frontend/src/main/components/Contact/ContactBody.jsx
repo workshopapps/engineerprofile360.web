@@ -75,7 +75,8 @@ const SubmitBtn = styled.div`
   padding-left: 64rem;
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    padding: 0 10px;
+    padding: 0 12px;
+    align: right;
   }
   ${({ theme }) => theme.breakpoints.down("md")} {
     padding: 0 1px;
@@ -171,10 +172,10 @@ const Box = styled.div`
   flex-direction: column;
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    /* display: none;  */
+    /* display: none; */
     top: -3rem;
     width: 100%;
-    margin-left: -7rem;
+    /* margin-left: -7rem; */
   }
 
   ${({ theme }) => theme.breakpoints.down("md")} {
@@ -199,22 +200,22 @@ const CardBody = styled.div`
     /* display: none; */
     height: 50rem;
     top: -5rem;
+    padding: 0 1rem;
   }
 `;
 
 const FormBox = styled.div`
   position: relative;
   padding: 3rem 0;
-  width: 80%;
+  /* width: 80%; */
   height: 823px;
   background: #ffffff;
   border-radius: 4px;
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
     /* display: none; */
-    height: 47rem;
-    width: 90%;
-    margin: 0 -4.5rem;
+    height: 50rem;
+    width: 310px;
   }
 `;
 

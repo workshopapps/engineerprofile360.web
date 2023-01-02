@@ -423,7 +423,7 @@ const Section = styled.section``;
 const Title = styled.h1`
   padding: 25px 2px 0;
   color: black;
-  font-weight: 600;
+  font-weight: bolder;
   font-size: 25px
   line-height: 2.25rem;
 `;
