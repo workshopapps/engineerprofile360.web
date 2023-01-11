@@ -52,7 +52,7 @@ const Header = () => {
           )
         ) : (
           <ButtonGroup>
-            <Link
+            {/* <Link
               to={
                 pathname === "/"
                   ? "/register"
@@ -68,7 +68,7 @@ const Header = () => {
                   ? "Request Demo"
                   : "Register"}
               </Button>
-            </Link>
+            </Link> */}
 
             <Link to="/login">
               <Button $variant={pathname === "/contact" ? "" : "outlined"}>

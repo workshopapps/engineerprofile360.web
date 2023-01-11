@@ -12,6 +12,7 @@ import ViewAssessmentHeader, { TimeStamp } from "./ViewAssessmentHeader";
 import axios from "../../../../../../api/axios";
 import useAuth from "../../../../../../hooks/useAuth";
 import { showErrorToast } from "../../../../../../helpers/helper";
+import moment from "moment";
 
 const AssessmentContent = () => {
   const [loading, setLoading] = useState(true);
@@ -27,6 +28,14 @@ const AssessmentContent = () => {
   const { id } = useParams();
   const assessment_id = id;
   const { auth } = useAuth();
+
+  let timeDuration = moment
+    .utc(
+      moment(assessmentDetails?.end_time, "HH:mm").diff(
+        moment(assessmentDetails?.start_time, "HH:mm")
+      )
+    )
+    .format("HH:mm:ss");
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -126,10 +135,10 @@ const AssessmentContent = () => {
               ? assessmentDetails?.department?.name
               : "loading"
           }
-          duration={TimeStamp(assessmentDetails)}
+          duration={timeDuration}
           deadline={
             assessmentDetails?.end_date
-              ? assessmentDetails?.end_date
+              ? moment(assessmentDetails?.end_date).format("yy-MM-DD")
               : "loading"
           }
         />

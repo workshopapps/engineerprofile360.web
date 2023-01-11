@@ -8,7 +8,7 @@ import { OverlayLoader } from "../../../../../styles/reusableElements.styled";
 
 import PageInfo from "../../../molecules/PageInfo";
 import { showErrorToast } from "../../../../../helpers/helper";
-import { TimeStamp } from "../../../Company/Assessments/admin-view-assessment/components/ViewAssessmentHeader";
+import moment from "moment";
 
 const PreviewAssessment = () => {
   const { assessment_id } = useParams();
@@ -66,6 +66,12 @@ const PreviewAssessment = () => {
       new Date(`${info?.end_date} ${info?.end_time}`)
   );
 
+  let timeDuration = moment
+    .utc(
+      moment(info?.end_time, "HH:mm").diff(moment(info?.start_time, "HH:mm"))
+    )
+    .format("HH:mm:ss");
+
   return (
     <>
       <PageInfo
@@ -93,17 +99,21 @@ const PreviewAssessment = () => {
               <p>
                 <TextMuted>Begins :</TextMuted>
                 {info?.start_date ? info.start_date : ""} -{" "}
-                {info?.start_time ? info.start_time : ""}
+                {info?.start_time
+                  ? moment(info.start_time, "hh:mm").format("hh:mm a")
+                  : ""}
               </p>
               <p>
                 <TextMuted>Deadline :</TextMuted>
                 {info?.end_date ? info.end_date : ""} -{" "}
-                {info?.end_time ? info.end_time : ""}
+                {info?.end_time
+                  ? moment(info.end_time, "hh:mm").format("hh:mm a")
+                  : ""}
               </p>
               <p>
                 <TextMuted>Duration :</TextMuted>
                 {/* {Math.floor(datesDiff / 1000 / (60 * 60))} mins */}
-                {TimeStamp(info)}
+                {timeDuration}
               </p>
             </DetailContainer>
 
@@ -111,7 +121,9 @@ const PreviewAssessment = () => {
               <Timer size="32" color="#323130" />
               <DurationTimer>
                 {/* {Math.floor(datesDiff / 1000 / (60 * 60))} mins */}
-                {TimeStamp(info)}
+                {/* {timeDuration} */}
+                {/* {durationTime} */}
+                {timeDuration}
                 <br />
                 Timer
               </DurationTimer>
