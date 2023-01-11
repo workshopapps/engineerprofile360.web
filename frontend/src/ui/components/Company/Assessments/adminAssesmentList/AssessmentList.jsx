@@ -21,6 +21,7 @@ import {
 import { showErrorToast } from "../../../../../helpers/helper";
 import { AddCircle } from "iconsax-react";
 import TableComponent from "../../../molecules/TableComponent";
+import moment from "moment";
 
 const DataContext = createContext(null);
 
@@ -129,9 +130,27 @@ export const List = () => {
                     <td>{key + 1}</td>
                     <td>{item?.assessment?.name}</td>
                     <td>{}</td>
-                    <td>{item?.assessment?.start_date}</td>
-                    <td>{TimeStamp(item)}</td>
-                    <td>{item?.assessment?.end_date}</td>
+                    <td>
+                      {item?.assessment?.start_date
+                        ? moment(item?.assessment?.start_date).format(
+                            "yy-MM-DD"
+                          )
+                        : "loading"}
+                    </td>
+                    <td>
+                      {moment
+                        .utc(
+                          moment(item?.end_time, "HH:mm").diff(
+                            moment(item?.start_time, "HH:mm")
+                          )
+                        )
+                        .format("HH:mm:ss")}
+                    </td>
+                    <td>
+                      {item?.assessment?.end_date
+                        ? moment(item?.assessment?.end_date).format("yy-MM-DD")
+                        : "loading"}
+                    </td>
                     <td>
                       <Link to={`/assessment/view-assessment/${item?.id}`}>
                         <Button $variant="outlined" $color="#2667ff">
@@ -197,9 +216,9 @@ export const CompletedAssessmentList = () => {
       >
         <PageInfo breadcrumb={["Dashboard", "Assessment list"]} />
         <Buttons />
-        <Assessment 
-        available={available?.length} 
-        completed={completed?.length} 
+        <Assessment
+          available={available?.length}
+          completed={completed?.length}
         />
       </DataContext.Provider>
     </div>

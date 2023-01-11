@@ -5,6 +5,7 @@ import { Link, useOutletContext } from "react-router-dom";
 import { Button } from "../../../../../styles/reusableElements.styled";
 import TableComponent from "../../../molecules/TableComponent";
 import NoData from "../../../molecules/NoData";
+import moment from "moment";
 
 const Available = () => {
   const [availableAssessments, setAvailableAssessments] = useState([]);
@@ -34,15 +35,15 @@ const Available = () => {
                   <td>{item.name}</td>
                   <td>{item.department?.name}</td>
                   <td>
-                    {item.start_date} - {item.start_time}
+                    {moment(item.start_date).format("yy-MM-DD")} -{" "}
+                    {moment(item.start_time, "hh:mm").format("hh:mm a")}
                   </td>
                   <td>
-                    {item.end_date} - {item.end_time}
+                    {moment(item.end_date).format("yy-MM-DD")} -{" "}
+                    {moment(item.end_time, "hh:mm").format("hh:mm a")}
                   </td>
                   <td>
-                    <Link
-                      to={`/employee/assessment/${item.id}`}
-                    >
+                    <Link to={`/employee/assessment/${item.id}`}>
                       <Button $variant="outlined" $color="#2667ff">
                         Take Test
                       </Button>

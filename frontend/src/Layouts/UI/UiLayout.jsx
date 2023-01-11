@@ -1,16 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 
 import { Container } from "../../styles/reusableElements.styled";
 import TopBar from "./Partials/TopBar";
 import LeftBar from "./Partials/LeftBar";
+import moment from "moment";
 
 const UiLayout = () => {
   const [leftBar, setLeftBar] = useState(false);
   const handleLeftBarToggle = () => {
     setLeftBar(!leftBar);
   };
+
+  //Custom Momment Invalid Date Message
+  moment.updateLocale("language_code", {
+    invalidDate: "Loading",
+  });
 
   return (
     <>
@@ -37,7 +43,6 @@ const Main = styled(Container)`
   display: flex;
   padding: ${({ theme }) => theme.spacing(4)} 0;
   width: 100%;
-
 `;
 
 const NavBar = styled.div`
