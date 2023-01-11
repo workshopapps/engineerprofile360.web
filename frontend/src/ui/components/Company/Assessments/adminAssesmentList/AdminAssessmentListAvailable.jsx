@@ -9,6 +9,7 @@ import useAuth from "../../../../../hooks/useAuth";
 import { showErrorToast } from "../../../../../helpers/helper";
 import { AddCircle } from "iconsax-react";
 import TableComponent from "../../../molecules/TableComponent";
+import moment from "moment";
 
 const DataContext = createContext(null);
 
@@ -40,31 +41,6 @@ const Buttons = () => {
       </Show>
     </ButtonContainer>
   );
-};
-
-//Duration
-export const TimeStamp = (timestamp) => {
-  let TimeDuration =
-    (timestamp?.end_time
-      ? Number(timestamp?.end_time?.split(":").join(""))
-      : 0) -
-    (timestamp?.start_time
-      ? Number(timestamp?.start_time?.split(":").join(""))
-      : 0);
-  let Hours = Math.floor(TimeDuration / 60);
-  let Minutes = TimeDuration % 60;
-
-  var DurationTime =
-    Hours +
-    `${Hours === 1 ? " Hour " : " Hours "}` +
-    (Minutes === 0 ? "" : Minutes) +
-    `${Minutes === 0 ? "" : " Minutes "}`;
-
-  if (Hours <= 1) {
-    return Minutes + " Minutes ";
-  }
-
-  return DurationTime;
 };
 
 const List = () => {
@@ -127,9 +103,25 @@ const List = () => {
                   <td>{key + 1}</td>
                   <td>{item?.name}</td>
                   <td>{item?.department?.name}</td>
-                  <td>{item?.start_date}</td>
-                  <td>{TimeStamp(item)}</td>
-                  <td>{item?.end_date}</td>
+                  <td>
+                    {item?.start_date
+                      ? moment(item?.start_date).format("yy-MM-DD")
+                      : "loading"}
+                  </td>
+                  <td>
+                    {moment
+                      .utc(
+                        moment(item?.end_time, "HH:mm").diff(
+                          moment(item?.start_time, "HH:mm")
+                        )
+                      )
+                      .format("HH:mm:ss")}
+                  </td>
+                  <td>
+                    {item?.end_date
+                      ? moment(item?.end_date).format("yy-MM-DD")
+                      : "loading"}
+                  </td>
 
                   <td>
                     <Link to={`/assessment/view-assessment/${item?.id}`}>

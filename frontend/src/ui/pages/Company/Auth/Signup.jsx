@@ -235,12 +235,20 @@ const Signup = () => {
             </label>
           </Checkbox>
 
-          <Button
+          {/* <Button
             $size="xl"
             type={isSubmitted ? "button" : "submit"}
             $variant={isSubmitted ? "disabled" : null}
           >
             {isSubmitted ? <Loader /> : "Proceed to Signup"}
+          </Button> */}
+
+          <Button $size="xl" type="button" $variant="disabled">
+            {isSubmitted ? (
+              <Loader />
+            ) : (
+              "Registration Not Available At This Time"
+            )}
           </Button>
 
           <div>

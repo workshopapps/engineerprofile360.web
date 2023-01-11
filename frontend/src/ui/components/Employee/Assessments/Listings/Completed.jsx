@@ -7,6 +7,7 @@ import TableComponent from "../../../molecules/TableComponent";
 import NoData from "../../../molecules/NoData";
 
 import { EmployeeAssessmentResult } from "../..";
+import moment from "moment";
 
 const Completed = () => {
   const [completedAssessments, setCompletedAssessments] = useState([]);
@@ -23,7 +24,6 @@ const Completed = () => {
     setModal(true);
     window.scrollTo(0, 0);
   };
-
 
   return (
     <>
@@ -46,11 +46,16 @@ const Completed = () => {
                     <td>{item.assessment.name}</td>
                     <td>{item.assessment.department?.name}</td>
                     <td>
-                      {item.assessment.start_date} -{" "}
-                      {item.assessment.start_time}
+                      {moment(item.assessment.start_date).format("yy-MM-DD")} -{" "}
+                      {moment(item.assessment.start_time, "hh:mm").format(
+                        "hh:mm a"
+                      )}
                     </td>
                     <td>
-                      {item.assessment.end_date} - {item.assessment.end_time}
+                      {moment(item.assessment.end_date).format("yy-MM-DD")} -{" "}
+                      {moment(item.assessment.end_time, "hh:mm").format(
+                        "hh:mm a"
+                      )}
                     </td>
                     <td>
                       <Button
