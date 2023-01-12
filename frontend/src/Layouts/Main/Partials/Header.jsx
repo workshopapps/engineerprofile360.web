@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import MobileNav from "./MobileNav";
 import Logo from "../../../components/Logo";
 
- export const getUser = JSON.parse(localStorage.getItem("Eval360"));
+export const getUser = JSON.parse(localStorage.getItem("Eval360"));
 
 const Header = () => {
   const { pathname } = useLocation();
@@ -19,7 +19,6 @@ const Header = () => {
     setMenu(!menu);
   };
 
- 
   return (
     <HeaderTag>
       <HeaderContainer>
@@ -98,7 +97,7 @@ const HeaderContainer = styled(Container)`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 ${({ theme }) => theme.spacing(6)};
+  padding: 0 ${({ theme }) => theme.spacing(10)};
 
   ${({ theme }) => theme.breakpoints.down("xs")} {
     padding: ${({ theme }) => theme.spacing(6)}
