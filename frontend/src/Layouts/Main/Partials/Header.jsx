@@ -93,11 +93,11 @@ const HeaderTag = styled.header`
 `;
 
 const HeaderContainer = styled(Container)`
-  height: 96px;
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 ${({ theme }) => theme.spacing(10)};
+  padding: 0 ${({ theme }) => theme.spacing(14)};
 
   ${({ theme }) => theme.breakpoints.down("xs")} {
     padding: ${({ theme }) => theme.spacing(6)}

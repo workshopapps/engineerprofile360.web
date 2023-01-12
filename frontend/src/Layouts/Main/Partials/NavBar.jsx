@@ -39,7 +39,7 @@ const List = styled.ul`
   gap: ${({ theme }) => theme.spacing(3)};
 
   li {
-    font-size: 14px;
+    font-size: 12px;
     color: #000000;
     display: flex;
     align-items: center;

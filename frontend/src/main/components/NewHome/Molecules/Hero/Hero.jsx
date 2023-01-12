@@ -1,6 +1,6 @@
 import styles from "./Hero.module.css";
 import hero from "../../assets/hero_image.png";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -15,7 +15,7 @@ const Hero = () => {
           solutions for engineering teams
         </p>
         <Link to="/demo">
-        <button >Request A Demo</button>
+          <button>Request A Demo</button>
         </Link>
       </div>
       <div className={styles.image}>

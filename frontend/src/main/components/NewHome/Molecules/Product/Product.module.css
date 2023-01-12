@@ -11,19 +11,20 @@
   background-color: #2667ff;
   color: #fff;
   position: relative;
-  top: -13rem;
+  top: -16rem;
   z-index: 2;
+  padding: -35rem 0;
 }
 
 .product .wrapper {
   max-width: 80vw;
   margin: 0 auto;
-  padding: 3rem 1.5rem 5rem;
+  padding: 3rem 1.5rem 10rem;
 }
 
 .product h2 {
-  font-size: 3rem;
-  padding: 4rem 0;
+  font-size: 2.5rem;
+  padding: 2.5rem 0;
   font-weight: normal;
   text-align: center;
   margin: 0 auto;
@@ -34,14 +35,15 @@
   align-items: center;
   justify-content: center;
   /* flex-wrap: wrap; */
-  gap: 3rem;
+  gap: 4rem;
   position: relative;
+  padding: 0 10rem;
 }
 
 .number small {
   position: absolute;
   top: 0;
-  left: 5rem;
+  left: 2.5rem;
   border: 1px solid #fff;
   border-radius: 1rem;
   padding: 0.5rem 0.8rem;
@@ -49,11 +51,11 @@
 
 .number h3 {
   margin: 1.5rem 0;
-  font-size: 5rem;
+  font-size: 4rem;
 }
 
 .number p {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: normal;
 }
 
