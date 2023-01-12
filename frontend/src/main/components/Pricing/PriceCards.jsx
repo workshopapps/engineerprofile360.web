@@ -143,7 +143,8 @@ export const CardWrapper = styled.section`
   margin: 0 auto;
   overflow: hidden;
   font-family: "Inter", sans-serif;
-  padding-bottom: 30px;
+  padding-bottom: 50px;
+  padding-top: -30px;
 
   background-color: #fff;
   overflow-x: hidden;
@@ -157,8 +158,8 @@ export const CardWrapper = styled.section`
   }
 `;
 export const Cards = styled.div`
-  width: 416px;
-  height: 596px;
+  width: 400px;
+  height: 526px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -178,22 +179,23 @@ export const CardsHero = styled.div`
   align-items: center;
 
   h2 {
-    font-weight: 400;
-    font-size: 20px;
+    font-weight: 300;
+    font-size: 18px;
     line-height: 28px;
     color: #323130;
-    margin: 0 0 30px;
+    margin: 0 0 10px;
+    /* padding-top: 20px 0; */
   }
   p {
     font-weight: 400;
-    font-size: 42px;
+    font-size: 35px;
     line-height: 52px;
     color: #605e5c;
     margin-bottom: 15px;
 
     span {
       font-weight: 400;
-      font-size: 42px;
+      font-size: 35px;
       line-height: 52px;
       color: #87bfff;
     }
@@ -201,7 +203,7 @@ export const CardsHero = styled.div`
 
   h5 {
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 24px;
     color: #323130;
   }
@@ -257,9 +259,8 @@ export const CardTextDiv = styled.div`
 
   div {
     display: flex;
-
     align-items: center;
-    margin: 13px 0;
+    margin: 10px 0;
     margin-left: 10px;
   }
 
@@ -278,7 +279,7 @@ export const CardTextDiv = styled.div`
 `;
 
 export const MostPopularWrapper = styled.div`
-  height: 636px;
+  height: 567px
   width: 416px;
   display: flex;
   flex-direction: column;
@@ -287,7 +288,7 @@ export const MostPopularWrapper = styled.div`
   border-bottom: "1px solid  #2667FF";
 
   h4 {
-    width: 416px;
+    width: 400px;
     height: 40px;
 
     font-size: 16px;
