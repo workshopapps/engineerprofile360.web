@@ -27,7 +27,7 @@ function PricingHero() {
 export default PricingHero;
 
 export const HeroHeader = styled.h2`
-  font-size: 42px;
+  font-size: 40px;
   text-align: center;
   font-weight: 600;
   line-height: 52px;

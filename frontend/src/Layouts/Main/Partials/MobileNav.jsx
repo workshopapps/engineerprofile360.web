@@ -21,7 +21,9 @@ const MobileNav = ({ handleMenu }) => {
         <Link to="/pricing">
           <li>Pricing</li>
         </Link>
-        <Link to="/help-center">Support</Link>
+        <Link to="/help-center">
+          <li>Support</li>
+        </Link>
         <Link to="/about-us">
           <li>
             About

@@ -17,6 +17,7 @@ function PricingHero() {
           month for business plan and $49
         </HeroText>
         <HeroText>per month for enterprise plan.</HeroText>
+
         <HeroButtonDiv>
           <HeroButtonShade
             onClick={() => {
@@ -41,24 +42,26 @@ function PricingHero() {
 export default PricingHero;
 
 export const HeroHeader = styled.h2`
-  font-size: 42px;
+  font-size: 30px;
   text-align: center;
   font-weight: 600;
   line-height: 52px;
+  margin-top: -5rem;
 `;
 export const HeroText = styled.p`
-  font-size: 18px;
-  margin-top: 20px;
+  font-size: 12px;
+  margin-top: 5px;
   font-weight: 400;
   line-height: 24px;
   text-align: center;
 `;
+
 export const HeroButtonDiv = styled.p`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 30px;
-  padding-bottom: 50px;
+  margin-top: 20px;
+  padding-bottom: 30px;
 `;
 export const HeroButtonShade = styled.button`
   font-size: 18px;

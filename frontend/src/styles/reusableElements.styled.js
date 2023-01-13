@@ -52,8 +52,8 @@ export const Button = styled.button`
   outline: none;
   //Hover State
   :hover {
-      background-color: #106ebe;
-      color: #fff;
+    background-color: #106ebe;
+    color: #fff;
   }
 
   ${(props) => {
