@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import { useOutletContext, Link } from "react-router-dom";
 import styled from "styled-components";
 import { Radar } from "react-chartjs-2";
@@ -8,23 +8,43 @@ import { Title, Button } from "../../../../../styles/reusableElements.styled";
 
 const Details = () => {
   const { employee } = useOutletContext();
-  const topScore =
+  const completed = employee?.completed_assessment ? employee.completed_assessment : [];
+
+  let arr = [];
+  let arrscore = [];
+  const [newarr, setNewarr] = useState([]);
+  const [newarrscore, setNewarrscore] = useState([]);
+const topScore =
     employee.completed_assessment.length > 0
       ? employee.completed_assessment.reduce((max, assessment) =>
           max.points > assessment.points ? max : assessment
         )
-      : [];
+      : 
+    [];
+  useEffect(()=>{
+    for (let i = 0; i < completed.length; i++) {
+      arr.push(JSON.parse(completed[i].assessment.userscore.categories).toString());
+    }
+   setNewarr(arr);
+
+    for (let j = 0; j < completed.length; j++) {
+      arrscore.push(JSON.parse(completed[j].assessment.userscore.passed_questions).toString());      
+    }
+    setNewarrscore(arrscore);
+
+  } , [completed]);
+  
+    
+     
 
   const data = {
-    labels: topScore.assessment?.userscore?.categories
-      ? JSON.parse(topScore.assessment?.userscore?.categories)
-      : [""],
+    labels: newarr?newarr
+      : ["", "", "", "", "", ""],
     datasets: [
       {
         label: "Categories",
-        data: topScore.assessment?.userscore?.passed_questions
-          ? topScore.assessment?.userscore?.passed_questions
-          : [],
+        data:  newarrscore?newarrscore
+          : [0, 0, 0, 0, 0, 0],
         fill: true,
         backgroundColor: "rgba(255, 99, 132, 0.2)",
         borderColor: "rgb(255, 99, 132)",

@@ -1,11 +1,34 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Radar } from "react-chartjs-2";
 import { Title } from "../../../../styles/reusableElements.styled";
+import {
+  Chart as ChartJS,
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Radar } from "react-chartjs-2";
+ChartJS.register(
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend
+);
 
 const Stats = ({ stats }) => {
   const [info, setInfo] = useState([]);
   const [recent, setRecent] = useState([]);
+
+  const [newarr, setNewarr] = useState([]);
+  const [newarrscore, setNewarrscore] = useState([]);
+  const completed = stats?.completed_assessment ? stats.completed_assessment : []
+  let arr = [];
+  let arrscore = [];
 
   useEffect(() => {
     const topScore =
@@ -21,20 +44,34 @@ const Stats = ({ stats }) => {
     setInfo(topScore);
     setRecent(stats?.completed_assessment ? stats.completed_assessment : []);
 
+    for (let i = 0; i < completed.length; i++) {
+      arr.push(JSON.parse(completed[i].userscore.categories).toString());
+    }
+   setNewarr(arr);
+
+    for (let j = 0; j < completed.length; j++) {
+      arrscore.push(JSON.parse(completed[j].userscore.passed_questions).toString());      
+    }
+    setNewarrscore(arrscore);
+
     console.log(topScore);
     console.log(recent);
+    console.log(completed);
+    console.log(arr);
+
   }, [stats]);
 
-  const data = {
-    labels: info.assessment?.userscore?.categories
-      ? JSON.parse(info.assessment?.userscore?.categories)
-      : [""],
+  
+
+   const data = {
+    labels: newarr?newarr
+      : ["", "", "", "", "", ""],
     datasets: [
       {
         label: "Categories",
-        data: info.assessment?.userscore?.passed_questions
-          ? info.assessment?.userscore?.passed_questions
-          : [],
+        data: 
+          newarrscore?newarrscore
+          : [0, 0, 0, 0, 0, 0],
         fill: true,
         backgroundColor: "rgba(255, 99, 132, 0.2)",
         borderColor: "rgb(255, 99, 132)",
@@ -44,6 +81,42 @@ const Stats = ({ stats }) => {
         pointHoverBorderColor: "rgb(255, 99, 132)",
       },
     ],
+  };
+
+ const Chart = ({ topScore }) => {
+    const [newarr, setNewarr] = useState([]);
+    const [newarrscore, setNewarrscore] = useState([]);
+    let arr = [];
+    let arrscore = [];
+    
+    const dataa = topScore;
+    const dataaLength = dataa.length
+    console.log(dataaLength);
+    useEffect(() => {
+      for (let i = 0; i < dataaLength; i++) {
+        arr.push(JSON.parse(dataa[i].categories).toString());
+      }
+      setNewarr(arr);
+  
+      for (let j = 0; j < dataaLength; j++) {
+        arrscore.push(JSON.parse(dataa[j].passed_questions).toString());      
+      }
+      setNewarrscore(arrscore);
+    }, []);
+  
+    const data = {
+      labels: newarr?newarr
+        : ["", "", "", "", "", ""],
+      datasets: [
+        {
+          label:"Categories",
+          data: newarrscore || [0, 0, 0, 0, 0, 0],
+          backgroundColor: "rgba(95, 210, 85, 0.2)",
+          borderColor: "#107C10",
+          borderWidth: 2,
+        },
+      ],
+    };
   };
 
   return (
@@ -63,7 +136,7 @@ const Stats = ({ stats }) => {
           <SkillRatingSection>
             {recent.map((assessment, index) => (
               <div key={assessment.id}>
-                <p>{assessment.assessment.name}</p>
+                <p>{assessment.userscore.assessment.name}</p>
                 <span
                   style={{
                     color:
@@ -93,6 +166,11 @@ const Stats = ({ stats }) => {
     </>
   );
 };
+
+
+ 
+
+
 
 export default Stats;
 

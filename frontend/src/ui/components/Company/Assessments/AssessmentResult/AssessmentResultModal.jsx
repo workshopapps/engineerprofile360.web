@@ -43,9 +43,28 @@ const AssessmentResultModal = ({ assessment_id, setModal }) => {
         await axios
           .get(`/userscore/${employeeID}/${assessment_id}`)
           .then((data) => {
-            console.log("data", data);
+            console.log(data);
             setPerformance(data.data.data[0]);
+            console.log(
+              performance.userscore?.passed_questions ? 
+              (JSON.parse(performance.userscore?.passed_questions).toString() > 0 ?
+              [JSON.parse(performance.userscore?.passed_questions).toString(),"", "", "", "", ""] : [0])
+            : [0] );
+
+            console.log(
+              performance.userscore?.categories ? 
+              (JSON.parse(performance.userscore?.categories).length > 0 ?
+              [JSON.parse(performance.userscore?.categories).length,"", "", "", "", ""] : ["null"])
+            : [0] );
+
+            console.log(
+              performance.userscore?.categories && JSON.parse(performance.userscore?.categories).length > 0 
+             ? [JSON.parse(performance.userscore?.categories).length,"", "", "", "", ""] 
+            : ["0"] );
+
+
           });
+          
 
         setIsLoading(false);
       } catch (err) {
@@ -58,15 +77,15 @@ const AssessmentResultModal = ({ assessment_id, setModal }) => {
   }, [assessment_id]);
 
   const data = {
-    labels: performance?.userscore?.categories
-      ? JSON.parse(performance.userscore?.categories)
-      : ["", "", "", "", "", ""],
+    labels: performance?.userscore?.categories && JSON.parse(performance.userscore?.categories).length > 0 
+      ? [JSON.parse(performance.userscore?.categories), "", "", "", "", ""]
+      : ["Null"],
     datasets: [
       {
         label: "Categories",
-        data: performance?.userscore?.passed_questions
-          ? performance?.userscore?.passed_questions
-          : [0, 0, 0, 0, 0, 0],
+        data:  performance.userscore?.passed_questions && JSON.parse(performance.userscore?.passed_questions).toString() > 0 
+        ? [JSON.parse(performance.userscore?.passed_questions).toString(),"", "", "", "", ""] 
+       : ["0"] ,
         backgroundColor: "rgba(95, 210, 85, 0.2)",
         borderColor: "#107C10",
         borderWidth: 2,
