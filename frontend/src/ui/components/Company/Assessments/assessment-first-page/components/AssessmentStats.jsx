@@ -74,7 +74,7 @@ const Assessments = () => {
         const availableAssessments = response[0]?.data.data.length;
         const completedAssessments = response[1]?.data.data.length;
         const topstaff = response[2]?.data;
-        const topPerformer = response[3]?.data.data.userscore[0];
+        const topPerformer = response[3]?.data.data.userscore;
         const acceptedAssessments = response[4]?.data.data.length;
 
         setStats({
