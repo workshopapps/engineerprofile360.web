@@ -20,7 +20,7 @@ const HelpTopics = () => {
             $color="#A19F9D"
             $weight="400"
             $lHeight="36px"
-            $size="28px"
+            $size="20px"
           >
             Getting started
           </Title>
@@ -35,7 +35,7 @@ const HelpTopics = () => {
             $color="#A19F9D"
             $weight="400"
             $lHeight="36px"
-            $size="24px"
+            $size="20px"
           >
             How it Works
           </Title>
@@ -51,7 +51,7 @@ const HelpTopics = () => {
             $color="#A19F9D"
             $weight="400"
             $lHeight="36px"
-            $size="24px"
+            $size="20px"
           >
             Account Management
           </Title>
@@ -64,7 +64,7 @@ const HelpTopics = () => {
             $color="#A19F9D"
             $weight="400"
             $lHeight="36px"
-            $size="24px"
+            $size="20px"
           >
             FAQs
           </Title>
@@ -77,7 +77,7 @@ const HelpTopics = () => {
             $color="#A19F9D"
             $weight="400"
             $lHeight="36px"
-            $size="24px"
+            $size="20px"
           >
             Privacy policy
           </Title>
@@ -92,7 +92,7 @@ export default HelpTopics;
 
 const HelpTopicsContainer = styled.div`
   width: 100%;
-  margin-top: 100px;
+  margin-top: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -127,14 +127,14 @@ const TopicContainer = styled.div`
 `;
 
 const Box = styled.div`
-  width: 30%;
-  height: 280px;
+  width: 25%;
+  height: 250px;
   border: 1px solid rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: 10px;
   padding: 24px 14px;
 
   h3 {
@@ -142,13 +142,13 @@ const Box = styled.div`
   }
 
   img {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
   }
 
   p {
     font-weight: 400;
-    font-size: 16px;
+    font-size: 12px;
     line-height: 22px;
     text-align: center;
     color: #000;
