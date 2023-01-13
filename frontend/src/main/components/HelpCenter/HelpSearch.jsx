@@ -8,7 +8,7 @@ const HelpSearch = () => {
   return (
     <Hero>
       <TextContainer>
-        <Title $color="#323130" $size="42px" $weight="400" $lHeight="52px">
+        <Title $color="#323130" $size="35px" $weight="400" $lHeight="52px">
           Eval360 Help Center
         </Title>
         <Input>
@@ -30,7 +30,7 @@ const Hero = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  height: 348px;
+  height: 220px;
   background: #87bfff;
   padding: 0 48px;
 
@@ -48,7 +48,7 @@ const TextContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 28px;
+  gap: 15px;
 
   @media (max-width: 680px) {
     h1 {
@@ -77,7 +77,7 @@ const TextContainer = styled.div`
 const Input = styled.div`
   display: flex;
   align-items: center;
-  height: 56px;
+  height: 40px;
   width: 584px;
   padding-left: 15px;
   background: #f0f0f0;
