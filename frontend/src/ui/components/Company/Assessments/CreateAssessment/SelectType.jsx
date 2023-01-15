@@ -137,13 +137,12 @@ const SelectType = () => {
             department_id,
           })
         );
-        console.log(response.data);
+        console.log("data", response.data);
 
         if (response.data.errorState === false) {
           const data = response.data.data.id;
-
-          console.log(data);
-          navigate("/assessment/admin-csv-upload", { state: { data } });
+          console.log("data", data);
+          navigate("/assessment/add-assessment", { state: { data } });
         }
       } catch (err) {
         setIsLoading(false);
