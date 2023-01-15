@@ -72,12 +72,26 @@ const Footer = () => {
             <li>
               <img src={instagram} alt="" /> Instagram
             </li>
-            <li>
-              <img src={twitter} alt="" /> Twitter
-            </li>
-            <li>
-              <img src={linkedin} alt="" /> LinkedIn
-            </li>
+
+            <a
+              href="https://twitter.com/Eval_360?t=z-SXo1JxzC0ZSxz9k_EMNA&s=09"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <li>
+                <img src={twitter} alt="" /> Twitter
+              </li>
+            </a>
+
+            <a
+              href="https://www.linkedin.com/company/eval360/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <li>
+                <img src={linkedin} alt="" /> LinkedIn
+              </li>
+            </a>
           </List>
         </Follow>
 
