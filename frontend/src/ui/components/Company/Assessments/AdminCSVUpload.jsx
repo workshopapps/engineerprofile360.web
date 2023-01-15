@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { BsCloudUpload, BsPlusCircle } from "react-icons/bs";
-import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   fileToBase64,
   showErrorToast,
+  showSuccessToast,
   toBase64,
 } from "../../../../helpers/helper";
 
@@ -14,14 +15,29 @@ import CreateManual from "./CreateAssessment/CreateManual";
 import axios from "../../../../api/axios";
 import useAuth from "../../../../hooks/useAuth";
 import { useLocation } from "react-router-dom";
+import PageInfo from "../../molecules/PageInfo";
+import { Loader } from "../../../../styles/reusableElements.styled";
 
 const AdminCSVUpload = () => {
-  const [tab, setTab] = useState("manual");
+  const [tab, setTab] = useState("upload");
   const [files, setFiles] = useState(null);
   const [encodedFile, setEndcodedFile] = useState("");
   const inputRef = useRef();
   const { auth } = useAuth();
   const location = useLocation();
+  const [uploadLoader, setUploadLoader] = useState(false);
+
+  console.log("assessmentID", location?.state?.data);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!location?.state?.data) {
+      navigate("/assessment/create-assessment");
+    }
+  }, []);
+
+  window.history.replaceState({}, document.title);
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -52,37 +68,44 @@ const AdminCSVUpload = () => {
     });
 
   const handleUpload = async () => {
+    setUploadLoader(true);
     try {
       const response = await axios.post(
         "question/add_csv",
         JSON.stringify({
           org_id: auth.org_id,
-          assessment_id: "9cc7279d-31d1-4a81-85a1-c9c1cd9db91f",
+          assessment_id: location.state.data,
           base64: encodedFile,
         })
       );
-      console.log(response.data);
+      console.log("response", response.data);
+      console.log("location", location?.state?.data);
+      showSuccessToast("CSV Uploaded successfully");
+      setUploadLoader(false);
+      navigate(`/assessment/view-assessment/${location?.state?.data}`);
     } catch (err) {
       if (!err.response) {
         showErrorToast("No Server Response");
       } else {
-        showErrorToast(err.response?.data.message);
+        showErrorToast(err.response?.data?.message);
       }
     }
   };
 
-  // console.log(location.state?.data);
-
   return (
     <>
+      <PageInfo
+        breadcrumb={["Assessment", "Create Assessment"]}
+        pageTitle="Create Assessment"
+      />
       <Main>
         <CreateTypeContainer>
-          {/* <Upload
+          <Upload
             onClick={() => setTab("upload")}
             className={tab === "upload" ? "active" : ""}
           >
             <p>Upload CSV file</p>
-          </Upload> */}
+          </Upload>
           <Manual
             onClick={() => setTab("manual")}
             className={tab === "manual" ? "active" : ""}
@@ -125,7 +148,9 @@ const AdminCSVUpload = () => {
                       <CancelButton>
                         <Link to={-1}>Cancel</Link>
                       </CancelButton>
-                      <GoButton onClick={handleUpload}>Upload</GoButton>
+                      <GoButton onClick={handleUpload}>
+                        {uploadLoader ? <Loader sm /> : "Upload"}
+                      </GoButton>
                     </UploadButton>
                   </>
                 ) : (
@@ -153,7 +178,7 @@ export default AdminCSVUpload;
 const Main = styled.main`
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 100%;
   height: 100vh;
   background: #f8fbfd;
   border: 1px dashed #c7e0f4;
@@ -247,16 +272,16 @@ const Manual = styled.div`
 `;
 
 const UploadCSVContent = styled.div`
-  height: 100%;
+  height: 60%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  color: #fff;
+  color: #000;
 
   .icon {
-    height: 150px;
-    width: 150px;
+    height: 100px;
+    width: 100px;
 
     @media (max-width: 400px) {
       margin-top: 24px;
@@ -278,7 +303,7 @@ const Buttons = styled.div`
   align-items: center;
   justify-content: center;
   gap: 10px;
-  margin-top: 200px;
+  margin-top: 50px;
 
   a,
   button {
@@ -347,7 +372,11 @@ const Buttons = styled.div`
 `;
 
 const NameContainer = styled.div`
-  width: 30%;
+  width: 60%;
+
+  @media (max-width: 768px) {
+    width: 90%;
+  }
 `;
 
 const Success = styled.div`
