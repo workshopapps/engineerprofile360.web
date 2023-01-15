@@ -146,14 +146,31 @@ const AssessmentContent = () => {
           <form>
             {currentAssessments.map((assessment, i) => {
               const { question, options, correct_answers, id } = assessment;
-              const optionsData = options ? JSON.parse(options) : {};
+
+              const isJson = (obj) => {
+                try {
+                  JSON.parse(obj);
+                } catch (e) {
+                  //Error
+                  //JSON is not okay
+                  return false;
+                }
+
+                return true;
+              };
+ console.log("isJason", isJson(options))
+              const optionsData = isJson(options)
+                ? JSON.parse(options)
+                : options;
+              console.log("optionData", optionsData);
+              console.log("optionData", options);
               const correctAnswerParse = Number(JSON.parse(correct_answers));
               return (
                 <QuestionsWrapper key={i}>
                   <QuestionTitle>
                     {nextIndex + i}: {question}
                   </QuestionTitle>
-                  {optionsData.map((option, i) => {
+                  {optionsData?.map((option, i) => {
                     return (
                       <InputWrapper key={i}>
                         <input
@@ -166,7 +183,9 @@ const AssessmentContent = () => {
                           id={id}
                           checked={correctAnswerParse === i ? true : false}
                         />
-                        <label htmlFor={id}>{option?.optionText}</label>
+                        <label htmlFor={id}>
+                          {option?.optionText || option}
+                        </label>
                       </InputWrapper>
                     );
                   })}
