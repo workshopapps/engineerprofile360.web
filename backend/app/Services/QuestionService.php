@@ -15,7 +15,7 @@ class QuestionService
         $data = explode("\n", trim(base64_decode(explode(",", $base64)[1])));
 
         $success = 0;
-        $count = count($data);
+        $count = 0;
         for ($i = 1; $i < $count; $i++) {
             //explode each line
             $item = explode("],", str_replace(']"', "]", $data[$i]));
@@ -40,10 +40,11 @@ class QuestionService
                 Question::create($output);
                 $success++;
             }
+            $count++;
         }
         return [
             "success" => $success,
-            "total" => $count - 1
+            "total" => $count
         ];
     }
 
