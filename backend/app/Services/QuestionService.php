@@ -16,7 +16,7 @@ class QuestionService
 
         $success = 0;
         $count = 0;
-        for ($i = 1; $i < $count; $i++) {
+        for ($i = 1; $i < count($data); $i++) {
             //explode each line
             $item = explode("],", str_replace(']"', "]", $data[$i]));
             //assign varibles removing the starting and ending square brackets
