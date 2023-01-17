@@ -13,10 +13,12 @@ class QuestionService
         $type = explode(",", $base64)[0];
         // if ($type != "") return;
         $data = explode("\n", trim(base64_decode(explode(",", $base64)[1])));
-
+    
         $success = 0;
         $count = 0;
         for ($i = 1; $i < count($data); $i++) {
+            $data = str_replace("\r", "", $data);
+            
             //explode each line
             $item = explode("],", str_replace(']"', "]", $data[$i]));
             //assign varibles removing the starting and ending square brackets
