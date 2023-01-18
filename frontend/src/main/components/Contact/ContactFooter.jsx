@@ -53,7 +53,7 @@ const Main = styled.div`
     display: none;
     position: relative;
     bottom: -10rem;
-    flex-direction: column;
+    /* flex-direction: column; */
   }
   ${({ theme }) => theme.breakpoints.down("md")} {
     margin-top: -20rem;

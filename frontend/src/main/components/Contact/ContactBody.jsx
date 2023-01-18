@@ -70,12 +70,11 @@ const ContactBody = () => {
 export default ContactBody;
 
 const SubmitBtn = styled.div`
-  width: 100%;
-  align: right;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    padding: 0 12px;
-    align: right;
   }
   ${({ theme }) => theme.breakpoints.down("md")} {
     padding: 0 1px;
@@ -146,7 +145,8 @@ const Bottom = styled.div`
   padding: 2rem 0;
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    display: none;
+    /* display: none; */
+    padding: 1rem 0;
   }
 `;
 
@@ -160,6 +160,11 @@ const BottomText = styled.h1`
   letter-spacing: 0.03em;
   color: #ffffff;
   padding: 0 5rem;
+
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    font-size: 10px;
+    padding: 1rem 2rem;
+  }
 `;
 
 const Box = styled.div`
@@ -173,8 +178,9 @@ const Box = styled.div`
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
     /* display: none; */
+    width: 10rem;
     top: -3rem;
-    width: 100%;
+    left: 5.2rem;
     /* margin-left: -7rem; */
   }
 
@@ -199,8 +205,10 @@ const CardBody = styled.div`
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
     /* display: none; */
-    height: 50rem;
+    width: 28rem;
+    height: 54rem;
     top: -5rem;
+    left: 1rem;
     padding: 0 1rem;
   }
 `;
@@ -217,6 +225,7 @@ const FormBox = styled.div`
     /* display: none; */
     height: 50rem;
     width: 310px;
+    padding: 4rem 0rem;
   }
 `;
 
