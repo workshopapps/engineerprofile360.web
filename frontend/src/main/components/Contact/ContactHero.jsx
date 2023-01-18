@@ -23,7 +23,7 @@ const ContactHero = () => {
 export default ContactHero;
 
 const HeroSection = styled.div`
-  height: 60vh;
+  height: 50vh;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
