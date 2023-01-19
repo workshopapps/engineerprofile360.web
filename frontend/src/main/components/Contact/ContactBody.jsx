@@ -70,13 +70,11 @@ const ContactBody = () => {
 export default ContactBody;
 
 const SubmitBtn = styled.div`
-  width: 100%;
-  align: right;
-  padding-left: 64rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    padding: 0 12px;
-    align: right;
   }
   ${({ theme }) => theme.breakpoints.down("md")} {
     padding: 0 1px;
@@ -132,8 +130,9 @@ const TextAreaField = styled.textarea`
 `;
 
 const CardButton = styled.div`
-  width: 100%;
-  padding: 0 35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
     display: none;
@@ -143,38 +142,45 @@ const CardButton = styled.div`
   }
 `;
 const Bottom = styled.div`
-  padding: 5rem 0;
+  padding: 2rem 0;
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    display: none;
+    /* display: none; */
+    padding: 1rem 0;
   }
 `;
 
 const BottomText = styled.h1`
   text-align: center;
-  width: 80%;
   font-family: "Inter";
   font-style: normal;
   font-weight: 500;
-  font-size: 24px;
+  font-size: 15px;
   line-height: 144.02%;
   letter-spacing: 0.03em;
   color: #ffffff;
+  padding: 0 5rem;
+
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    font-size: 10px;
+    padding: 1rem 2rem;
+  }
 `;
 
 const Box = styled.div`
   position: absolute;
-  width: 100%;
+  width: 71rem;
   height: 100%;
-  top: -10rem;
+  top: -7rem;
   /* padding: 0 1rem; */
   display: flex;
   flex-direction: column;
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
     /* display: none; */
+    width: 10rem;
     top: -3rem;
-    width: 100%;
+    left: 5.2rem;
     /* margin-left: -7rem; */
   }
 
@@ -188,25 +194,28 @@ const Box = styled.div`
 
 const CardBody = styled.div`
   position: relative;
-  width: 100%;
-  height: 85rem;
-  padding: 0 10rem;
+  width: 85rem;
+  height: 75rem;
+  padding: 0 7rem;
   top: -15rem;
+  left: 10rem;
   background: #2667ff;
   border-radius: 4px;
   /* overflow-y: hidden; */
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
     /* display: none; */
-    height: 50rem;
+    width: 28rem;
+    height: 54rem;
     top: -5rem;
+    left: 1rem;
     padding: 0 1rem;
   }
 `;
 
 const FormBox = styled.div`
   position: relative;
-  padding: 3rem 0;
+  padding: 4rem 2rem;
   /* width: 80%; */
   height: 823px;
   background: #ffffff;
@@ -216,6 +225,7 @@ const FormBox = styled.div`
     /* display: none; */
     height: 50rem;
     width: 310px;
+    padding: 4rem 0rem;
   }
 `;
 
@@ -223,7 +233,7 @@ const FormHeading = styled.h1`
   font-family: "Inter";
   font-style: normal;
   font-weight: 700;
-  font-size: 36px;
+  font-size: 30px;
   line-height: 50px;
   text-align: center;
   text-transform: capitalize;
@@ -238,7 +248,7 @@ const FormText = styled.h1`
   font-family: "Inter";
   font-style: normal;
   font-weight: 500;
-  font-size: 24px;
+  font-size: 18px;
   line-height: 144.02%;
   text-align: center;
   letter-spacing: 0.03em;
@@ -254,7 +264,7 @@ const FormEmail = styled.h1`
   font-family: "Inter";
   font-style: normal;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 12px;
   line-height: 144.02%;
   text-align: center;
   letter-spacing: 0.03em;
