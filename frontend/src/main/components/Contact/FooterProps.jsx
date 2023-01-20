@@ -20,13 +20,13 @@ export default FooterProps;
 const InnerText = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 1px;
 `;
 const HeadingText = styled.h1`
   font-family: "Inter";
   font-style: normal;
   font-weight: 600;
-  font-size: 28px;
+  font-size: 20px;
   line-height: 36px;
   color: #222222;
 
@@ -46,7 +46,7 @@ const MiddleText = styled.h1`
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 12px;
   line-height: 22px;
   text-transform: capitalize;
   color: #2667ff;
@@ -67,7 +67,7 @@ const LastText = styled.h1`
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 10px;
   line-height: 24px;
   color: #222222;
 

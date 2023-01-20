@@ -9,19 +9,18 @@ const ContactFooter = (props) => {
     <>
       <Main>
         <Section>
-          <Messages3 size={60} />
-
+          <Messages3 size={30} />
           <FooterProps
             head={"Chat With Us"}
             lastText={"Support@Eval360hq.com"}
           />
         </Section>
         <Section>
-          <Call size={60} />
+          <Call size={30} />
           <FooterProps head={"Phone"} lastText={"(406) 555-0120"} />
         </Section>
         <Section>
-          <Map1 size={60} />
+          <Map1 size={30} />
           <FooterProps
             head={"Locate Us"}
             lastText={"3517 W. Gray St. Utica, Pennsylvania 57867"}
@@ -48,12 +47,13 @@ const Main = styled.div`
   justify-content: space-between;
   margin-top: -8rem;
   margin-bottom: 5rem;
+  padding: 0 12rem;
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
     display: none;
     position: relative;
     bottom: -10rem;
-    flex-direction: column;
+    /* flex-direction: column; */
   }
   ${({ theme }) => theme.breakpoints.down("md")} {
     margin-top: -20rem;
