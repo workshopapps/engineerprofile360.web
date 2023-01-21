@@ -41,7 +41,7 @@ function ViewAssessmentHeader({
     <>
       <FilterWrapper>
         <FilterNav>
-          <PageInfo breadcrumb={["Assessment", `${title}`]} pageTitle={title} />
+          <PageInfo breadcrumb={["Assessment", `${title}`]} />
           <Outlet />
           {loginId ? (
             <div>

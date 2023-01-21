@@ -112,6 +112,7 @@ import EmployeeCSVUpload from "./ui/components/Company/Employees/EmployeeCSVUplo
 // import GuestAssessmentList from "./main/pages/GuestAssessmentList";
 
 import AdminViewAssessment from "./ui/components/Company/Assessments/admin-view-assessment/AdminViewAssessment";
+import EditAssessment from "./ui/components/Company/Assessments/admin-view-assessment/EditAssessment";
 // import Assessment from "./miscellaneous/assessment/Assessment.js";
 import { ComparisonPage } from "./main/pages/ComparisonPage/ComparisonPage";
 import AssessmentFirstPage from "./ui/components/Company/Assessments/AssessmentFirstPage";
@@ -281,6 +282,11 @@ const App = () => {
                   element={<AdminViewAssessment />}
                 />
 
+                <Route
+                  path="/assessment/edit/:id"
+                  element={<EditAssessment />}
+                />
+
                 <Route path="/departments" element={<DepartmentSection />} />
                 <Route path="/dashboard" element={<CompanyDashboard />} />
 
@@ -371,11 +377,9 @@ const App = () => {
                     element={<EmployeeTakeAssessment />}
                   />
                 </Route>
-
               </Route>
 
               <Route path="/setting" element={<AdminSetting />} />
-
             </Route>
           </Route>
           <Route path="*" element={<Error />} />
