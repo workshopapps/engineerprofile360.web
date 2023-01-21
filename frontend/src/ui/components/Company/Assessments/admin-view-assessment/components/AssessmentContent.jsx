@@ -144,7 +144,7 @@ const AssessmentContent = () => {
         />
         <QuestionsContainer>
           <form>
-            {currentAssessments.map((assessment, i) => {
+            {questions.map((assessment, i) => {
               const { question, options, correct_answers, id } = assessment;
 
               const isJson = (obj) => {
@@ -158,12 +158,9 @@ const AssessmentContent = () => {
 
                 return true;
               };
- console.log("isJason", isJson(options))
               const optionsData = isJson(options)
                 ? JSON.parse(options)
                 : options;
-              console.log("optionData", optionsData);
-              console.log("optionData", options);
               const correctAnswerParse = Number(JSON.parse(correct_answers));
               return (
                 <QuestionsWrapper key={i}>
@@ -207,7 +204,7 @@ const AssessmentContent = () => {
                       "evalAssessment",
                       JSON.stringify(useAnswers)
                     );
-                    navigate(`/assessment/view-assessment/${assessment_id}`);
+                    navigate(`/assessment/edit/${assessment_id}`);
                   }}
                 >
                   Edit
@@ -304,7 +301,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const ButtonEditWrapper = styled.div`
-  display: none;
+  display: block;
 `;
 
 const InputWrapper = styled.div`
