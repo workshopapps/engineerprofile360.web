@@ -80,6 +80,7 @@ const AdminCSVUpload = () => {
       );
       console.log("response", response.data);
       console.log("location", location?.state?.data);
+      console.log("file", encodedFile);
       showSuccessToast("CSV Uploaded successfully");
       setUploadLoader(false);
       navigate(`/assessment/view-assessment/${location?.state?.data}`);
