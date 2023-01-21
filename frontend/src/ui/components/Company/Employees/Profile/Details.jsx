@@ -14,143 +14,165 @@ const Details = () => {
   let arrscore = [];
   const [newarr, setNewarr] = useState([]);
   const [newarrscore, setNewarrscore] = useState([]);
-const topScore =
-    employee.completed_assessment.length > 0
-      ? employee.completed_assessment.reduce((max, assessment) =>
-          max.points > assessment.points ? max : assessment
-        )
-      : 
-    [];
-  useEffect(()=>{
-    for (let i = 0; i < completed.length; i++) {
-      arr.push(JSON.parse(completed[i].assessment.userscore.categories).toString());
-    }
-   setNewarr(arr);
-
-    for (let j = 0; j < completed.length; j++) {
-      arrscore.push(JSON.parse(completed[j].assessment.userscore.passed_questions).toString());      
-    }
-    setNewarrscore(arrscore);
-
-  } , [completed]);
   
+  const topScore =
+  employee.completed_assessment.length > 0
+    ? employee.completed_assessment.reduce((max, assessment) =>
+        max.points > assessment.points ? max : assessment
+      )
+    : 
+  [];
+
+  console.log(completed);
+  
+  useEffect(()=>{
+      for (let i = 0; i < completed.length; i++) {
+        const categories_data = JSON.parse(completed[i].assessment.userscore.categories);
+
+        if (categories_data.length > 0) {
+          for (let c = 0; c < categories_data.length; c++) {
+            arr.push(categories_data[c].toString());
+          }
+        }
+      }
+     setNewarr(arr);
+     console.log(arr);
+
+      for (let j = 0; j < completed.length; j++) {
+        
+        const passed_questions_data = JSON.parse(completed[j].assessment.userscore.passed_questions);
+        
+        if (passed_questions_data.length > 0) {
+          for (let p = 0; p < passed_questions_data.length; p++) {
+            if(passed_questions_data[p].toString() > 0){
+              arrscore.push(  passed_questions_data[p].toString())
+            }
+          }
+        }
+        //arrscore.push(.toString());      
+      }
+      setNewarrscore(arrscore);
+      console.log(arrscore);
+
+    } , [completed]);
     
-     
+      
+       
 
-  const data = {
-    labels: newarr?newarr
-      : ["", "", "", "", "", ""],
-    datasets: [
-      {
-        label: "Categories",
-        data:  newarrscore?newarrscore
-          : [0, 0, 0, 0, 0, 0],
-        fill: true,
-        backgroundColor: "rgba(255, 99, 132, 0.2)",
-        borderColor: "rgb(255, 99, 132)",
-        pointBackgroundColor: "rgb(255, 99, 132)",
-        pointBorderColor: "#fff",
-        pointHoverBackgroundColor: "#fff",
-        pointHoverBorderColor: "rgb(255, 99, 132)",
-      },
-    ],
-  };
+    const data = {
+      labels: newarr?newarr
+        : ["", "", "", "", "", ""],
+      datasets: [
+        {
+          label: "Score",
+          data:  newarrscore?newarrscore
+            : [0, 0, 0, 0, 0, 0],
+          fill: true,
+          backgroundColor: "rgba(255, 99, 132, 0.2)",
+          borderColor: "rgb(255, 99, 132)",
+          pointBackgroundColor: "rgb(255, 99, 132)",
+          pointBorderColor: "#fff",
+          pointHoverBackgroundColor: "#fff",
+          pointHoverBorderColor: "rgb(255, 99, 132)",
+        },
+      ],
+    };
 
-  console.log(topScore);
-  return (
-    <>
-      <EmployeeProfileInnerContainer>
-        <EmployeeDataContainer>
-          <Title as="h5" $size="14px" $lHeight="40px" $weight="500">
-            Employee Data 
-            {/* <Edit size={24} /> */}
-          </Title>
-
-          <EmployeeCard>
-            <p style={{ color: "#8E8E8E" }}>Name:</p>
-            <p style={{ color: "#323130" }}>
-              {employee.fullname ? employee.fullname : ""}
-            </p>
-          </EmployeeCard>
-
-          <EmployeeCard>
-            <p style={{ color: "#8E8E8E" }}>Phone Number:</p>
-            <p style={{ color: "#323130" }}>
-              {employee.phone_number ? employee.phone_number : "NIL"}
-            </p>
-          </EmployeeCard>
-
-          <EmployeeCard>
-            <p style={{ color: "#8E8E8E" }}>Email:</p>
-            <p style={{ color: "#323130" }}>
-              {employee.email ? employee.email : "NIL"}
-            </p>
-          </EmployeeCard>
-
-          <EmployeeCard>
-            <p style={{ color: "#8E8E8E" }}>Username:</p>
-            <p style={{ color: "#323130" }}>
-              {employee.username ? employee.username : "NIL"}
-            </p>
-          </EmployeeCard>
-
-          <EmployeeCard>
-            <p style={{ color: "#8E8E8E" }}>Address:</p>
-            <p style={{ color: "#323130" }}>
-              {employee.address ? employee.address : "NIL"}
-            </p>
-          </EmployeeCard>
-
-          <EmployeeCard>
-            <p style={{ color: "#8E8E8E" }}>Date of Birth:</p>
-            <p style={{ color: "#323130" }}>
-              {employee.date_of_birth ? employee.date_of_birth : "NIL"}
-            </p>
-          </EmployeeCard>
-
-          <EmployeeCard>
-            <p style={{ color: "#8E8E8E" }}>Occupation:</p>
-            <p style={{ color: "#323130" }}>
-              {employee.occupation ? employee.occupation : "NIL"}
-            </p>
-          </EmployeeCard>
-        </EmployeeDataContainer>
-        <EmployeeStatsContainer>
-          <Title $size="14px" $lHeight="40px" $weight="500">
-            Employee Stats
-          </Title>
-          {employee.completed_assessment.map((assessment) => (
-            <EmployeeCard key={assessment.assessment_id}>
-              <p style={{ color: "#8E8E8E" }}>{assessment.assessment.name}:</p>
-              <p style={{ color: "#323130" }}>{`${(
-                (assessment.correct_questions / assessment.total_questions) *
-                100
-              ).toFixed(2)}%`}</p>
-            </EmployeeCard>
-          ))}
-          {employee.completed_assessment.length > 0 ? (
-            <ButtonContainer>
-              <Link to={`/employees/profile/${employee.id}/assessments`}>
-                <Button style={{ marginTop: "57px" }}>View Assessments</Button>
-              </Link>
-            </ButtonContainer>
-          ) : (
-            <span>No Assessment Found For {employee.fullname}</span>
-          )}
-        </EmployeeStatsContainer>
-        <OverallContainer>
-          <Radar data={data} />
-          <ChartCard>
-            <Title $size="20px" $lHeight="28px" $color="#323130" $weight="400">
-              Tetra
+    console.log(topScore);
+    return (
+      <>
+        <EmployeeProfileInnerContainer>
+          <EmployeeDataContainer>
+            <Title as="h5" $size="14px" $lHeight="40px" $weight="500">
+              Employee Data 
+              {/* <Edit size={24} /> */}
             </Title>
-            <p style={{ fontSize: "16px" }}>Software Vendor</p>
-          </ChartCard>
-        </OverallContainer>
-      </EmployeeProfileInnerContainer>
-    </>
-  );
-};
+
+            <EmployeeCard>
+              <p style={{ color: "#8E8E8E" }}>Name:</p>
+              <p style={{ color: "#323130" }}>
+                {employee.fullname ? employee.fullname : ""}
+              </p>
+            </EmployeeCard>
+
+            <EmployeeCard>
+              <p style={{ color: "#8E8E8E" }}>Phone Number:</p>
+              <p style={{ color: "#323130" }}>
+                {employee.phone_number ? employee.phone_number : "NIL"}
+              </p>
+            </EmployeeCard>
+
+            <EmployeeCard>
+              <p style={{ color: "#8E8E8E" }}>Email:</p>
+              <p style={{ color: "#323130" }}>
+                {employee.email ? employee.email : "NIL"}
+              </p>
+            </EmployeeCard>
+
+            <EmployeeCard>
+              <p style={{ color: "#8E8E8E" }}>Username:</p>
+              <p style={{ color: "#323130" }}>
+                {employee.username ? employee.username : "NIL"}
+              </p>
+            </EmployeeCard>
+
+            <EmployeeCard>
+              <p style={{ color: "#8E8E8E" }}>Address:</p>
+              <p style={{ color: "#323130" }}>
+                {employee.address ? employee.address : "NIL"}
+              </p>
+            </EmployeeCard>
+
+            <EmployeeCard>
+              <p style={{ color: "#8E8E8E" }}>Date of Birth:</p>
+              <p style={{ color: "#323130" }}>
+                {employee.date_of_birth ? employee.date_of_birth : "NIL"}
+              </p>
+            </EmployeeCard>
+
+            <EmployeeCard>
+              <p style={{ color: "#8E8E8E" }}>Occupation:</p>
+              <p style={{ color: "#323130" }}>
+                {employee.occupation ? employee.occupation : "NIL"}
+              </p>
+            </EmployeeCard>
+          </EmployeeDataContainer>
+          <EmployeeStatsContainer>
+            <Title $size="14px" $lHeight="40px" $weight="500">
+              Employee Stats
+            </Title>
+            {employee.completed_assessment.map((assessment) => (
+              <EmployeeCard key={assessment.assessment_id}>
+                <p style={{ color: "#8E8E8E" }}>{assessment.assessment.name}:</p>
+                <p style={{ color: "#323130" }}>{`${(
+                  (assessment.correct_questions / assessment.total_questions) *
+                  100
+                ).toFixed(2)}%`}</p>
+              </EmployeeCard>
+            ))}
+            {employee.completed_assessment.length > 0 ? (
+              <ButtonContainer>
+                <Link to={`/employees/profile/${employee.id}/assessments`}>
+                  <Button style={{ marginTop: "57px" }}>View Assessments</Button>
+                </Link>
+              </ButtonContainer>
+            ) : (
+              <span>No Assessment Found For {employee.fullname}</span>
+            )}
+          </EmployeeStatsContainer>
+          <OverallContainer>
+            <Radar data={data} />
+            <ChartCard>
+              <Title $size="20px" $lHeight="28px" $color="#323130" $weight="400">
+                Tetra
+              </Title>
+              <p style={{ fontSize: "16px" }}>Software Vendor</p>
+            </ChartCard>
+          </OverallContainer>
+        </EmployeeProfileInnerContainer>
+      </>
+    );
+  };
 
 export default Details;
 

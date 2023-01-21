@@ -55,15 +55,15 @@ const AssessmentResult = ({ assessment_id, setModal }) => {
   }, [assessment_id]);
 
   const data = {
-    labels: performance.userscore?.categories
-      ? [JSON.parse(performance.userscore?.categories), "", "", "", "", ""]
-      : ["", "", "", "", "", ""],
+    labels: performance.userscore?.categories && JSON.parse(performance.userscore?.categories).length > 0 
+      ? [JSON.parse(performance.userscore?.categories), "", ""]
+      : [""],
     datasets: [
       {
-        label: "Categories",
+        label: "Score",
         data: performance.userscore?.passed_questions
-          ? [JSON.parse(performance.userscore?.passed_questions).toString(), 0, 0, 0, 0, 0]
-          : [0, 0, 0, 0, 0, 0],
+          ? [JSON.parse(performance.userscore?.passed_questions).toString(), 0, 0]
+          : [0],
         backgroundColor: "rgba(95, 210, 85, 0.2)",
         borderColor: "#107C10",
         borderWidth: 2,

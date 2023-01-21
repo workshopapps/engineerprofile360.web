@@ -33,9 +33,13 @@ const AssessmentResultModal = ({ assessment_id, setModal }) => {
   const { auth } = useAuth();
   const [performance, setPerformance] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-
   const { ID } = useParams();
   const [employeeID, setEmployeeID] = useState(ID);
+
+  let arr = [];
+  let arrscore = [];
+  const [newarr, setNewarr] = useState([]);
+  const [newarrscore, setNewarrscore] = useState([]);
 
   useEffect(() => {
     const getDetails = async () => {
@@ -45,23 +49,78 @@ const AssessmentResultModal = ({ assessment_id, setModal }) => {
           .then((data) => {
             console.log(data);
             setPerformance(data.data.data[0]);
-            console.log(
-              performance.userscore?.passed_questions ? 
-              (JSON.parse(performance.userscore?.passed_questions).toString() > 0 ?
-              [JSON.parse(performance.userscore?.passed_questions).toString(),"", "", "", "", ""] : [0])
-            : [0] );
+            const performanceData = data.data.data[0];
 
-            console.log(
-              performance.userscore?.categories ? 
-              (JSON.parse(performance.userscore?.categories).length > 0 ?
-              [JSON.parse(performance.userscore?.categories).length,"", "", "", "", ""] : ["null"])
-            : [0] );
+            // console.log(
+            //   performance.userscore?.passed_questions ? 
+            //   (JSON.parse(performance.userscore?.passed_questions).toString() > 0 ?
+            //   [JSON.parse(performance.userscore?.passed_questions).toString(),"", "", "", "", ""] : [0])
+            // : [0] );
 
-            console.log(
-              performance.userscore?.categories && JSON.parse(performance.userscore?.categories).length > 0 
-             ? [JSON.parse(performance.userscore?.categories).length,"", "", "", "", ""] 
-            : ["0"] );
+            // console.log(
+            //   performance.userscore?.categories ? 
+            //   (JSON.parse(performance.userscore?.categories).length > 0 ?
+            //   [JSON.parse(performance.userscore?.categories).length,"", "", "", "", ""] : ["null"])
+            // : [0] );
 
+            // console.log(
+            //   performance.userscore?.categories && JSON.parse(performance.userscore?.categories).length > 0 
+            //  ? [JSON.parse(performance.userscore?.categories).length,"", "", "", "", ""] 
+            // : ["0"] );
+
+              
+                const categories_data = JSON.parse(performanceData.userscore.categories);
+                console.log(categories_data.length);
+
+
+                
+                  for (let c = 0; c < categories_data.length; c++) {
+                    
+                    if (categories_data.length === 0) {
+                      arr.push("","","");
+                    } else if (categories_data.length === 1) {
+                      console.log(categories_data);
+                      arr.push(categories_data[c].toString(),"","");
+
+                    } else if (categories_data.length === 2) {
+                      arr.push(categories_data[c].toString(),"");
+                    }else {
+                      arr.push(categories_data[c].toString());
+                    }
+                  }
+              
+             setNewarr(arr);
+             console.log(arr);
+
+              
+                
+                const passed_questions_data = JSON.parse(performanceData.userscore.passed_questions);
+                
+              //   if (passed_questions_data.length > 0) {
+              //     for (let p = 0; p < passed_questions_data.length; p++) {
+              //       if(passed_questions_data[p].toString() > 0){
+              //         arrscore.push(  passed_questions_data[p].toString())
+              //       }
+              //     }
+              //   //arrscore.push(.toString());      
+              // }
+
+                for (let p= 0; p < passed_questions_data.length; p++) {
+                    
+                    if (passed_questions_data.length === 0) {
+                      arrscore.push("","","");
+                    } else if (passed_questions_data.length === 1) {
+                      console.log(passed_questions_data);
+                      arrscore.push(passed_questions_data[p],0,0);
+
+                    } else if (passed_questions_data.length === 2) {
+                      arrscore.push(passed_questions_data[p],0);
+                    }else {
+                      arrscore.push(passed_questions_data[p]);
+                    }
+                  }
+              setNewarrscore(arrscore);
+              console.log(arrscore);
 
           });
           
@@ -77,15 +136,11 @@ const AssessmentResultModal = ({ assessment_id, setModal }) => {
   }, [assessment_id]);
 
   const data = {
-    labels: performance?.userscore?.categories && JSON.parse(performance.userscore?.categories).length > 0 
-      ? [JSON.parse(performance.userscore?.categories), "", "", "", "", ""]
-      : ["Null"],
+    labels: newarr,
     datasets: [
       {
-        label: "Categories",
-        data:  performance.userscore?.passed_questions && JSON.parse(performance.userscore?.passed_questions).toString() > 0 
-        ? [JSON.parse(performance.userscore?.passed_questions).toString(),"", "", "", "", ""] 
-       : ["0"] ,
+        label: "Score",
+        data:  newarrscore,
         backgroundColor: "rgba(95, 210, 85, 0.2)",
         borderColor: "#107C10",
         borderWidth: 2,
