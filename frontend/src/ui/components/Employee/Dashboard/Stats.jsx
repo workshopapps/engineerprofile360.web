@@ -68,7 +68,7 @@ const Stats = ({ stats }) => {
       : ["", "", "", "", "", ""],
     datasets: [
       {
-        label: "Categories",
+        label: "Score",
         data: 
           newarrscore?newarrscore
           : [0, 0, 0, 0, 0, 0],

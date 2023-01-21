@@ -80,32 +80,74 @@ const Stats = ({ stats, topPerformance }) => {
 };
 
 export const Chart = ({ topPerformance }) => {
-  const [newarr, setNewarr] = useState([]);
-  const [newarrscore, setNewarrscore] = useState([]);
-  let arr = [];
-  let arrscore = [];
+  // const [newarr, setNewarr] = useState([]);
+  // const [newarrscore, setNewarrscore] = useState([]);
+  // let arr = [];
+  // let arrscore = [];
   
-  const dataa = topPerformance;
-  const dataaLength = dataa.length
-  console.log(dataaLength);
-  useEffect(() => {
-    for (let i = 0; i < dataaLength; i++) {
-      arr.push(JSON.parse(dataa[i].categories).toString());
-    }
-    setNewarr(arr);
+  // const dataa = topPerformance;
+  // const dataaLength = dataa.length
+  
+  // useEffect(() => {
+  //   for (let i = 0; i < dataaLength; i++) {
+  //     //console.log(JSON.parse(dataa[i].categories).toString());
+  //     arr.push(JSON.parse(dataa[i].categories).toString());
+  //   }
+  //   setNewarr(arr);
+  //   console.log(arr);
+  //   for (let j = 0; j < dataaLength; j++) {
+  //     arrscore.push(JSON.parse(dataa[j].passed_questions).toString());      
+  //   }
+  //   setNewarrscore(arrscore);
+  // }, []);
 
-    for (let j = 0; j < dataaLength; j++) {
-      arrscore.push(JSON.parse(dataa[j].passed_questions).toString());      
+  const [newarr, setNewarr] = useState([]);
+const [newarrscore, setNewarrscore] = useState([]);
+//const [categoryCounts, setCategoryCounts] = useState({});
+
+let arr = [];
+let arrscore = [];
+
+const dataa = topPerformance;
+const dataaLength = dataa.length;
+
+useEffect(() => {
+  for (let i = 0; i < dataaLength; i++) {
+    const categories = JSON.parse(dataa[i].categories);
+
+    // Check if categories is not empty
+    if (categories.length > 0) {
+      for (let c = 0; c < categories.length; c++) {
+      arr.push(categories[c].toString());
     }
-    setNewarrscore(arrscore);
-  }, []);
+    } 
+  }
+  setNewarr(arr);
+  //setCategoryCounts(categoryCounts);
+  console.log(arr);
+
+  for (let j = 0; j < dataaLength; j++) {
+    const passed_questions = JSON.parse(dataa[j].passed_questions);
+
+    if (passed_questions.length > 0) {
+      for (let p = 0; p < passed_questions.length; p++) {
+        if(passed_questions[p].toString() > 0){
+          arrscore.push(passed_questions[p].toString());  
+        }
+        
+      }
+    }
+  }
+  setNewarrscore(arrscore);
+  console.log(arrscore);
+}, []);
 
   const data = {
     labels: newarr?newarr
       : ["", "", "", "", "", ""],
     datasets: [
       {
-        label:"Categories",
+        label:"Score",
         data: newarrscore || [0, 0, 0, 0, 0, 0],
         backgroundColor: "rgba(95, 210, 85, 0.2)",
         borderColor: "#107C10",
