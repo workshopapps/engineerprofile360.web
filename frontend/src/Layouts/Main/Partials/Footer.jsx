@@ -66,13 +66,6 @@ const Footer = () => {
         <Follow>
           <ListTitle as="h6">Follow Us</ListTitle>
           <List>
-            <li>
-              <img src={facebook} alt="" /> Facebook
-            </li>
-            <li>
-              <img src={instagram} alt="" /> Instagram
-            </li>
-
             <a
               href="https://twitter.com/Eval_360?t=z-SXo1JxzC0ZSxz9k_EMNA&s=09"
               target="_blank"
@@ -97,7 +90,7 @@ const Footer = () => {
 
         <Copyright>
           <span>
-            &copy; {new Date().getFullYear()} Skript. All rights reserved.
+            &copy; {new Date().getFullYear()} Eval360. All rights reserved.
           </span>
           <ul>
             <Link to="/privacy-policy">

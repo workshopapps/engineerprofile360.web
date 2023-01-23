@@ -44,20 +44,106 @@ const Stats = ({ stats }) => {
     setInfo(topScore);
     setRecent(stats?.completed_assessment ? stats.completed_assessment : []);
 
-    for (let i = 0; i < completed.length; i++) {
-      arr.push(JSON.parse(completed[i].userscore.categories).toString());
-    }
-   setNewarr(arr);
+   //  for (let i = 0; i < completed.length; i++) {
+   //    arr.push(JSON.parse(completed[i].userscore.categories).toString());
+   //  }
+   // setNewarr(arr);
 
-    for (let j = 0; j < completed.length; j++) {
-      arrscore.push(JSON.parse(completed[j].userscore.passed_questions).toString());      
-    }
-    setNewarrscore(arrscore);
+   //  for (let j = 0; j < completed.length; j++) {
+   //    arrscore.push(JSON.parse(completed[j].userscore.passed_questions).toString());      
+   //  }
+   //  setNewarrscore(arrscore);
+    //console.log(completed.length);
 
-    console.log(topScore);
-    console.log(recent);
-    console.log(completed);
-    console.log(arr);
+    for (let c = 0; c < completed.length; c++) {
+      const categories_data = JSON.parse(completed[c].userscore.categories);
+      //console.log(categories_data.length);
+
+      if (completed.length ===0 && categories_data.length === 0) {
+        arr.push("","","");
+      }
+
+      if(completed.length >=3 ){
+        if (categories_data.length > 0) {
+          console.log(completed.length >=3);
+          arr.push(categories_data.toString());
+        }
+      } 
+      
+      // else if (categories_data.length === 1 && completed.length===1) {
+      //   console.log(categories_data);
+      //   arr.push(categories_data.toString(),"","");
+
+      // }
+      //  else if (categories_data.length === 2 && completed.length===2) {
+      //   arr.push(categories_data.toString(),"");
+      // }
+      else {
+        if (categories_data.length === 1) {
+          arr.push(categories_data.toString(),"","");
+        }
+
+        if (categories_data.length === 2) {
+          arr.push(categories_data.toString(),"");
+        }        
+   
+      }
+     
+    }
+     setNewarr(arr);
+     console.log(arr);
+
+      for (let j = 0; j < completed.length; j++) {
+        
+        const passed_questions_data = JSON.parse(completed[j].userscore.passed_questions);
+        
+
+        // if (passed_questions_data.length > 0) {
+        //   for (let p = 0; p < passed_questions_data.length; p++) {
+        //     if(passed_questions_data[p].toString() > 0){
+        //       arrscore.push(  passed_questions_data[p].toString())
+        //     }
+        //   }
+        // }
+        // //arrscore.push(.toString());  
+        if (passed_questions_data.length > 0) {
+          //for (let p = 0; p < passed_questions_data.length; p++) {
+            //const passed_questions_string = passed_questions_data[p].toString()
+            
+
+            if (completed.length ===0 && passed_questions_data.length === 0) {
+              arrscore.push("","","");
+            }
+
+            if(completed.length >=3 ){
+              if (passed_questions_data.length > 0 && passed_questions_data.toString()!=0) {
+                console.log(passed_questions_data.toString());
+                arrscore.push(passed_questions_data.toString());
+              }
+            } 
+
+            else {
+              if (passed_questions_data.length === 1) {
+                console.log(passed_questions_data.toString());
+                arrscore.push(passed_questions_data.toString(),"","");
+              }
+
+              if (passed_questions_data.length === 2) {
+                console.log(passed_questions_data.toString().length);
+                arrscore.push(passed_questions_data.toString(),"");
+              }        
+
+            }
+          //}
+        }    
+      }
+      setNewarrscore(arrscore);
+      console.log(arrscore);
+
+    // console.log(topScore);
+    // console.log(recent);
+    // console.log(completed);
+    // console.log(arr);
 
   }, [stats]);
 
