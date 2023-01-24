@@ -20,7 +20,7 @@ const HomeHero = () => {
           Assess Your Engineering Teams’ Strength
         </HeroTitle>
         <p>
-          Get Started With Skript <br /> Innovative Performance Solutions For
+          Get Started With Eval360 <br /> Innovative Performance Solutions For
           Engineering Teams
         </p>
         <Button

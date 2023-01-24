@@ -20,7 +20,7 @@ const features = [
   {
     icon: checkbox,
     heading: "All-inclusive assessments",
-    desc: "Skript tests are simple to take and can be used across a variety of engineering teams.",
+    desc: "Eval360 tests are simple to take and can be used across a variety of engineering teams.",
   },
 ];
 

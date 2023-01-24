@@ -9,7 +9,7 @@ const Testimonials = [
     name: "Mark Ezele - HNG Solutions",
     image: UserPhoto,
     description:
-      "We've been using Skript for 2 years now and I can say there's been improvements on our biomedical engineers.",
+      "We've been using Eval360 for 2 years now and I can say there's been improvements on our biomedical engineers.",
     position: 1,
   },
 
@@ -17,7 +17,7 @@ const Testimonials = [
     name: "Mark Ezele - HNG Solutions",
     image: UserPhoto,
     description:
-      "Our engineering team saw a faster completion rate on tasks after we did a reshuffling responsibilities based on the evaluation results from Skript, Now we successfully ship over 90% of projects within deadline, an improvement on our 47% completion rate.",
+      "Our engineering team saw a faster completion rate on tasks after we did a reshuffling responsibilities based on the evaluation results from Eval360, Now we successfully ship over 90% of projects within deadline, an improvement on our 47% completion rate.",
     position: 2,
   },
 ];

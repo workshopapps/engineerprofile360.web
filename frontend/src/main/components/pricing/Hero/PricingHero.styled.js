@@ -11,7 +11,7 @@ function PricingHero() {
           Find the right assessment plan that works for you
         </HeroHeader>
         <HeroText>
-          Skript plans start as low as $19 per month for basic plan, $29 per
+          Eval360 plans start as low as $19 per month for basic plan, $29 per
           month for business plan and $49
         </HeroText>
         <HeroText>per month for enterprise plan.</HeroText>
