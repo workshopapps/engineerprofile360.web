@@ -8,7 +8,7 @@ const GetStarted = () => {
         <h2>Ready to get started?</h2>
         <p>
           Stay ahead of your engineering teams’ performance and skills by
-          Sheduling an online demo and learn how skript can help your company.
+          Sheduling an online demo and learn how Eval360 can help your company.
           One of our solutions specialists will show you the platform and answer
           any questions you have.
         </p>

@@ -26,7 +26,7 @@ const HomeTestimonials = () => {
           <p>
             “ Our engineering team saw a faster completion rate on tasks after
             we did a reshuffling responsibilities based on the evaluation
-            results from Skript, Now we successfully ship over 90% of projects
+            results from Eval360, Now we successfully ship over 90% of projects
             within deadline, an improvement on our 47% completion rate. “
           </p>
           <ClientsName>
