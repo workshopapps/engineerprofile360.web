@@ -17,7 +17,7 @@ const Footer = () => {
   return (
     <FooterTag>
       <FooterContainer>
-        <SkriptContact>
+        <Eval360Contact>
           <Logo size="lg" />
           <Newsletter>
             <p>
@@ -35,7 +35,7 @@ const Footer = () => {
               and provide consent to receive updates from our company.
             </span>
           </Newsletter>
-        </SkriptContact>
+        </Eval360Contact>
 
         <Resources>
           <ListTitle as="h6">Resources</ListTitle>
@@ -132,7 +132,7 @@ const FooterContainer = styled(Container)`
   }
 `;
 
-const SkriptContact = styled.div`
+const Eval360Contact = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(4)};

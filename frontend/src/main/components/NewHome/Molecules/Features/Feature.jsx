@@ -33,7 +33,7 @@ const Feature = () => {
           <div className={styles.content}>
             <h4>All-inclusive assessments</h4>
             <p>
-              skript tests are simple to take and can be used across a variety
+              Eval360 tests are simple to take and can be used across a variety
               of engineering teams.
             </p>
           </div>
